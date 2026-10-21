@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>LinkScribe — turn video into text</title>
+  <style>
+    :root { color-scheme:dark; --bg:#0b1020; --surface:#151d31; --surface2:#1b263e; --stroke:#34415c; --text:#f4f6ff; --muted:#a8b5cf; --accent:#9c8aff; --accent2:#6dd9cf; --red:#ffb5bc; }
+    * { box-sizing:border-box; }
+    html { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; scroll-behavior:smooth; }
+    body { min-height:100vh; margin:0; background:radial-gradient(900px 580px at 7% -7%,#293068 0%,transparent 60%),radial-gradient(920px 650px at 94% 1%,#113e4b 0%,transparent 55%),var(--bg); color:var(--text); }
+    .page { width:min(1080px,calc(100% - 36px)); margin:0 auto; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; font-size:19px; }
+    .mark { width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(130deg,var(--accent),#6ee0d3); color:#0e1630; font-size:21px; font-weight:900; }
+    .locally { font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; white-space:nowrap; }
+    .hero { max-width:810px; margin:0 auto 33px; text-align:center; }
+    .eyebrow { letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:850; color:#b6acf9; margin-bottom:15px; }
+    h1 { font-size:clamp(36px,6vw,66px); line-height:1.08; letter-spacing:-.065em; font-weight:820; margin:0 0 17px; }
+    .hgrad { background:linear-gradient(110deg,#a79aff 20%,#b59df8 45%,#66ddd7 85%); background-clip:text; -webkit-background-clip:text; color:transparent; }
+    .lead { margin:0 auto; max-width:650px; line-height:1.7; color:var(--muted); font-size:16px; }
+    .panel { max-width:850px; margin:auto; background:linear-gradient(140deg,#192339,#11192c); border:1px solid #34435f; border-radius:23px; box-shadow:0 24px 90px #0005; overflow:hidden; }
+    .tabs { display:flex; background:#111a2e; border-bottom:1px solid var(--stroke); padding:13px 18px 0; gap:8px; }
+    .tab { font:inherit; background:transparent; border:0; border-radius:10px 10px 0 0; color:var(--muted); padding:12px 22px; cursor:pointer; font-weight:700; }
+    .tab[aria-selected="true"] { background:#202b44; color:#fff; box-shadow:inset 0 -2px #a18eff; }
+    .content { padding:26px; }
+    .input-title { display:block; font-size:14px; font-weight:750; margin:0 0 11px; }
+    .input-note { color:var(--muted); font-size:12px; margin:8px 0 0; line-height:1.6; }
+    input[type="url"], select, input[type="file"] { font:inherit; width:100%; color:#f4f6ff; background:#0e1729; border:1px solid #495671; border-radius:11px; outline:none; }
+    input[type="url"] { height:54px; padding:14px 17px; }
+    input[type="url"]::placeholder { color:#73809c; }
+    input[type="url"]:focus, select:focus, input[type="file"]:focus { border-color:#a798ff; box-shadow:0 0 0 3px #8472fa40; }
+    select { height:47px; padding:8px 12px; }
+    .upload-area { display:block; padding:30px 20px; background:#0e1729; border:1.5px dashed #657394; border-radius:14px; text-align:center; cursor:pointer; }
+    .upload-area:focus-within, .upload-area.dragging { border-color:#a798ff; background:#25254c; }
+    input[type="file"] { display:block; width:100%; margin:15px auto 0; border:0; max-width:430px; font-size:13px; }
+    input[type="file"]::file-selector-button { border-radius:8px; border:1px solid #64729c; color:#fff; padding:10px; background:#283653; cursor:pointer; margin-right:12px; }
+    .drop-head { font-weight:800; margin:0 0 5px; }
+    .drop-sub { font-size:12px; color:var(--muted); margin:0; }
+    .settings { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:15px; margin-top:24px; }
+    .setting label { display:block; font-size:12px; margin-bottom:8px; font-weight:750; color:#cfdaef; }
+    .setting p { font-size:11px; line-height:1.5; color:var(--muted); margin:6px 0 0; }
+    .consent { display:flex; align-items:flex-start; gap:10px; margin:24px 0 19px; color:#b6c2db; font-size:13px; line-height:1.5; cursor:pointer; }
+    .consent input { margin-top:2px; accent-color:#a796ff; width:16px; height:16px; flex-shrink:0; }
+    .submit { min-height:54px; display:flex; gap:12px; align-items:center; justify-content:center; width:100%; border-radius:12px; border:0; background:linear-gradient(100deg,#a391ff,#8cbbff); color:#10152d; font:inherit; font-size:15px; font-weight:850; cursor:pointer; transition:filter .2s,transform .2s; }
+    .submit:not(:disabled):hover { filter:brightness(1.11); transform:translateY(-1px); }
+    .submit:disabled { opacity:.55; cursor:wait; }
+    .status { margin-top:18px; background:#0f1d32; border:1px solid #465474; border-radius:12px; padding:15px; }
+    .statushead { display:flex; gap:10px; align-items:center; font-weight:700; }
+    .spin { width:18px; height:18px; border:2px solid #56637c; border-top-color:#b8abff; border-radius:50%; animation:turn 1s linear infinite; }
+    @keyframes turn { to { transform:rotate(360deg) } }
+    .status p { color:var(--muted); margin:8px 0 0; font-size:13px; line-height:1.65; }
+    .status.error { border-color:#8e4854; background:#31212d; }
+    .status.error .statushead { color:var(--red); }
+    .results { max-width:850px; margin:24px auto 0; background:var(--surface); border:1px solid var(--stroke); border-radius:20px; padding:24px; }
+    .result-title { font-size:23px; letter-spacing:-.035em; margin:0 0 7px; }
+    .result-meta { color:var(--muted); font-size:13px; line-height:1.6; overflow-wrap:anywhere; }
+    .downloads { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0; }
+    .downloads a { border:1px solid #576582; border-radius:10px; background:#223149; color:#f4f6ff; padding:11px 14px; text-decoration:none; font-size:13px; font-weight:750; }
+    .downloads a:hover { border-color:#a698ff; }
+    .downloads a:first-child { background:#384567; border-color:#998df2; }
+    .preview-title { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
+    .copy { border:1px solid #576582; color:var(--muted); border-radius:8px; background:transparent; font:inherit; padding:7px 10px; cursor:pointer; }
+    .transcript { margin:0; padding:18px; max-height:330px; overflow:auto; background:#0c1425; border:1px solid #35445e; border-radius:12px; color:#dce5f9; white-space:pre-wrap; font:13px/1.9 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace; overflow-wrap:anywhere; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; max-width:850px; margin:30px auto 60px; }
+    .feature { padding:20px; background:#11192c90; border:1px solid #303c55; border-radius:15px; }
+    .feature .symbol { font-size:23px; margin-bottom:10px; }
+    .feature strong { font-size:13px; display:block; margin-bottom:6px; }
+    .feature p { font-size:12px; line-height:1.7; color:var(--muted); margin:0; }
+    footer { text-align:center; color:#7885a2; font-size:12px; padding:0 12px 35px; line-height:1.7; }
+    [hidden] { display:none !important; }
+    @media(max-width:650px){header{padding:20px 0 38px}.hero{margin-bottom:25px}.lead{font-size:14px}.content{padding:19px}.settings{grid-template-columns:1fr}.features{grid-template-columns:1fr}.features{margin-bottom:35px}.tab{padding:12px 15px}.results{padding:18px}.locally{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.spin{animation:none}html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand"><div class="mark" aria-hidden="true">L</div><span>LinkScribe</span></div>
+    <div class="locally">● Local-first · no API fees</div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">Your words. Your files.</div>
+    <h1>Turn any conversation<br><span class="hgrad">into text.</span></h1>
+    <p class="lead">Paste a YouTube video link or upload audio and video. Get readable transcripts and subtitles you can keep, search, and share.</p>
+  </section>
+  <main>
+    <section class="panel" aria-label="Create a transcript">
+      <div class="tabs" role="tablist" aria-label="Choose a source">
+        <button type="button" class="tab" id="tab-link" role="tab" aria-selected="true" aria-controls="view-link">↗ &nbsp; Video link</button>
+        <button type="button" class="tab" id="tab-upload" role="tab" aria-selected="false" aria-controls="view-upload">↑ &nbsp; Upload file</button>
+      </div>
+      <div class="content">
+        <form id="job-form">
+          <div id="view-link" role="tabpanel" aria-labelledby="tab-link">
+            <label class="input-title" for="url">Paste a YouTube link</label>
+            <input type="url" id="url" name="url" placeholder="https://www.youtube.com/watch?v=..." spellcheck="false" autocomplete="url">
+            <p class="input-note">YouTube videos, Shorts and live replay links. Playlists and other services are not supported yet.</p>
+          </div>
+          <div id="view-upload" role="tabpanel" aria-labelledby="tab-upload" hidden>
+            <label class="input-title" for="file">Upload a media file</label>
+            <div class="upload-area" id="dropzone">
+              <p class="drop-head">Drop a recording here or select a file</p>
+              <p class="drop-sub">MP3, WAV, M4A, MP4, WebM and more · max 150 MB</p>
+              <input type="file" id="file" accept="audio/*,video/*,.mkv,.opus,.flac,.aac">
+            </div>
+          </div>
+          <div class="settings">
+            <div class="setting" id="mode-block">
+              <label for="mode">Transcription method</label>
+              <select id="mode">
+                <option value="smart">Smart: captions first, then AI</option>
+                <option value="audio">Audio AI: listen to the recording</option>
+                <option value="captions">Captions only: fastest</option>
+              </select>
+              <p>Audio AI is best for transcribing what is actually spoken.</p>
+            </div>
+            <div class="setting">
+              <label for="language">Language</label>
+              <select id="language">
+                <option value="auto">Auto-detect</option><option value="en">English</option><option value="el">Greek</option>
+                <option value="es">Spanish</option><option value="fr">French</option><option value="de">German</option>
+                <option value="it">Italian</option><option value="pt">Portuguese</option><option value="ja">Japanese</option>
+                <option value="ko">Korean</option><option value="zh">Chinese</option><option value="ar">Arabic</option>
+              </select>
+            </div>
+            <div class="setting">
+              <label for="model">Local AI model</label>
+              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option></select>
+              <p>Used when audio AI is needed.</p>
+            </div>
+          </div>
+          <label class="consent"><input id="consent" type="checkbox" required><span>I own this content or have permission to download and transcribe it. I understand that YouTube may restrict access to some videos.</span></label>
+          <button type="submit" class="submit" id="submit">✧ &nbsp; Generate transcript →</button>
+        </form>
+        <div id="status-box" class="status" role="status" aria-live="polite" hidden>
+          <div class="statushead"><span class="spin" id="status-spinner"></span><span id="status-title">Working...</span></div>
+          <p id="status-detail"></p>
+        </div>
+      </div>
+    </section>
+    <section class="results" id="results" aria-label="Transcript results" hidden>
+      <h2 class="result-title">✓ &nbsp;Your transcript is ready</h2>
+      <div class="result-meta" id="result-meta"></div>
+      <nav class="downloads" id="downloads" aria-label="Download transcript formats"></nav>
+      <div class="preview-title"><span>Transcript preview</span><button class="copy" id="copy" type="button">Copy preview</button></div>
+      <pre class="transcript" id="preview"></pre>
+      <p class="input-note">Files remain locally available for approximately one hour. Copy or download them now.</p>
+    </section>
+  </main>
+  <section class="features" aria-label="Features">
+    <div class="feature"><div class="symbol">⚡</div><strong>Instant when captions exist</strong><p>Use subtitles from eligible YouTube videos rather than processing audio unnecessarily.</p></div>
+    <div class="feature"><div class="symbol">◉</div><strong>Local speech recognition</strong><p>Whisper processes audio on your machine, with no paid speech API needed.</p></div>
+    <div class="feature"><div class="symbol">⇩</div><strong>Export any way you need</strong><p>Plain text, timed subtitle files, structured JSON, or all formats in a ZIP.</p></div>
+  </section>
+  <footer>This starter runs only on your computer. Results may contain mistakes; review important transcripts. Process content lawfully and with permission.</footer>
+</div>
+<script>
+(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const form = byId('job-form');
+  const tabs = {link:byId('tab-link'), upload:byId('tab-upload')};
+  const views = {link:byId('view-link'), upload:byId('view-upload')};
+  let tab = 'link'; let currentJob = null;
+
+  function chooseTab(value) {
+    tab = value;
+    for (const name of ['link', 'upload']) {
+      tabs[name].setAttribute('aria-selected', String(name === value));
+      views[name].hidden = (name !== value);
+    }
+    byId('mode-block').hidden = value === 'upload';
+    byId('url').required = value === 'link';
+    byId('file').required = value === 'upload';
+  }
+  tabs.link.addEventListener('click', () => chooseTab('link'));
+  tabs.upload.addEventListener('click', () => chooseTab('upload'));
+  chooseTab('link');
+
+  const dropzone = byId('dropzone');
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragging'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragging'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault(); dropzone.classList.remove('dragging');
+    if (e.dataTransfer && e.dataTransfer.files.length) byId('file').files = e.dataTransfer.files;
+  });
+  byId('url').addEventListener('drop', e => {
+    const dropped = e.dataTransfer?.getData('text/uri-list') || e.dataTransfer?.getData('text/plain');
+    if (dropped) { e.preventDefault(); byId('url').value = dropped.split('\n')[0].trim(); }
+  });
+
+  function showStatus(title, detail='', isError=false, spinning=true) {
+    byId('status-box').hidden = false;
+    byId('status-box').classList.toggle('error', isError);
+    byId('status-title').textContent = title;
+    byId('status-detail').textContent = detail;
+    byId('status-spinner').hidden = !spinning;
+  }
+  function setWorking(value) { byId('submit').disabled = value; }
+  async function readError(response) {
+    try {
+      const result = await response.json();
+      if (typeof result.detail === 'string') return result.detail;
+    } catch(_) {}
+    return `Request failed (HTTP ${response.status}).`;
+  }
+  async function trackJob(id) {
+    for (;;) {
+      if (id !== currentJob) return;
+      try {
+        const response = await fetch(`/api/jobs/${encodeURIComponent(id)}`, {cache:'no-store'});
+        if (!response.ok) throw new Error(await readError(response));
+        const job = await response.json();
+        if (job.status === 'done') {
+          showStatus('Transcript created', 'Choose a format below to download your transcript.', false, false);
+          showResults(job);
+          setWorking(false);
+          return;
+        }
+        if (job.status === 'error') {
+          showStatus('Unable to finish', job.error || 'The transcription failed.', true, false);
+          setWorking(false);
+          return;
+        }
+        showStatus('Processing your recording', job.stage || 'Working...');
+      } catch(error) {
+        showStatus('Connection interrupted', `${error.message}. Is the local server still running?`, true, false);
+        setWorking(false);
+        return;
+      }
+      await new Promise(resolve => setTimeout(resolve, 1700));
+    }
+  }
+  function showResults(job) {
+    const container = byId('results');
+    byId('result-meta').textContent = `${job.title} · ${job.language || 'unknown language'} · ${job.method === 'youtube_captions' ? 'YouTube captions' : 'Local AI audio transcription'} · ${job.segments} segments`;
+    byId('preview').textContent = job.preview || '(Empty preview)';
+    const downloads = byId('downloads');
+    downloads.replaceChildren();
+    const formats = [['txt','↓ TXT'],['srt','↓ SRT'],['vtt','↓ VTT'],['json','↓ JSON'],['zip','↓ All files (ZIP)']];
+    for (const [extension, label] of formats) {
+      const link = document.createElement('a');
+      link.href = `/api/jobs/${encodeURIComponent(job.id)}/download/${extension}`;
+      link.download = `transcript.${extension}`;
+      link.textContent = label;
+      downloads.appendChild(link);
+    }
+    container.hidden = false;
+    container.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  byId('copy').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(byId('preview').textContent);
+      byId('copy').textContent = 'Copied!';
+      setTimeout(() => byId('copy').textContent = 'Copy preview', 1800);
+    } catch(_) { byId('copy').textContent = 'Select and copy the text'; }
+  });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const consent = byId('consent').checked;
+    if (!consent) { showStatus('Permission required', 'Please confirm you may use the media.', true, false); return; }
+    const data = new FormData();
+    data.set('language', byId('language').value);
+    data.set('model', byId('model').value);
+    data.set('consent', 'true');
+    let endpoint;
+    if (tab === 'link') {
+      data.set('url', byId('url').value.trim());
+      data.set('mode', byId('mode').value);
+      endpoint = '/api/link';
+    } else {
+      if (!byId('file').files.length) { showStatus('File required', 'Choose a recording first.', true, false); return; }
+      data.set('file', byId('file').files[0]);
+      endpoint = '/api/upload';
+    }
+    byId('results').hidden = true;
+    setWorking(true);
+    showStatus('Starting a new job', 'Transcription happens on your computer. First use of an AI model requires a download.');
+    try {
+      const response = await fetch(endpoint, {method:'POST', body:data});
+      if (!response.ok) throw new Error(await readError(response));
+      const result = await response.json();
+      currentJob = result.id;
+      await trackJob(result.id);
+    } catch(error) {
+      showStatus('Could not start', error.message, true, false);
+      setWorking(false);
+    }
+  });
+})();
+</script>
+</body>
+</html>
