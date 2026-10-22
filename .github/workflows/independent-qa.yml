@@ -1,0 +1,61 @@
+name: Independent LinkScribe QA
+
+on:
+  push:
+    branches: ['qa/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  api-test-matrix:
+    name: API and regressions / Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install real app dependencies and test tools
+        run: python -m pip install -r requirements.txt pytest httpx
+      - name: All unit/API and independent tests
+        run: python -m pytest -q
+      - name: Verify packaging and shell scripts
+        run: |
+          python -m compileall -q app.py library.py sources.py enhancements.py runtime_check.py
+          python -m pip check
+          bash -n start_linux.sh launch.sh
+
+  real-speech-integration:
+    name: Real file upload / PyAV / Whisper / SQLite / exports
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: api-test-matrix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install synthesis tool and media dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg
+          python -m pip install -r requirements.txt pytest httpx
+      - name: Generate owned sample speech locally
+        run: |
+          espeak-ng -v en -s 125 -a 170 -w /tmp/linkscr-qa-voice.wav 'Hello. This is an independent speech recognition test. I am speaking these words for the LinkScribe app.'
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 /tmp/linkscr-qa-voice.wav
+      - name: Exercise full actual audio pipeline (downloads open-source Whisper tiny model)
+        env:
+          LINKSCRIBE_DEVICE: cpu
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          LINKSCRIBE_QA_AUDIO: /tmp/linkscr-qa-voice.wav
+        run: python tests/smoke_real_speech.py
