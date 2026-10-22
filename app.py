@@ -16,6 +16,7 @@ import time
 import uuid
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -23,6 +24,9 @@ from typing import Any
 from urllib.parse import parse_qs, urlsplit
 
 import library
+import batch_store
+import library_backup
+import diagnostics
 from sources import Source, parse_source
 from runtime_check import runtime_details, yt_dlp_js_options
 from enhancements import EnhancementError, assign_speakers, translate_segments, summarize_segments
@@ -49,7 +53,16 @@ FORMATS = {"txt", "srt", "vtt", "json", "zip", "summary_md", "summary_json",
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 JOB_ID_RE = re.compile(r"^[a-f0-9]{32}$")
 
-app = FastAPI(title="LinkScribe", version="0.2.0", docs_url=None, redoc_url=None)
+@asynccontextmanager
+async def _linkscr_lifespan(_application: FastAPI):
+    # FastAPI 0.160+ uses lifespan contexts in place of the removed
+    # add_event_handler API. Recovery is performed once per ASGI server start.
+    _restore_pending_batches()
+    yield
+
+
+app = FastAPI(title="LinkScribe", version="0.3.0", docs_url=None, redoc_url=None,
+              lifespan=_linkscr_lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
 pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="linkscr")
 lock = threading.RLock()
@@ -510,48 +523,128 @@ def _process_upload(job_id: str, file_path: Path, language: str, model: str,
                       speakers, target, summary_enabled)
 
 
+def _batch_archive(batch_id: str) -> bytes:
+    """Rebuild the archive from durable transcripts, even after a restart.
+
+    Job workdirs and their temporary exports expire, but the library does not.
+    """
+    stored = batch_store.get(batch_id)
+    if stored is None:
+        raise ReadableError("Batch not found in persistent history.")
+    stream = io.BytesIO()
+    records: list[dict[str, Any]] = []
+    with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for index, item in enumerate(stored["jobs"], start=1):
+            record = library.get(item["id"]) if item["status"] == "done" else None
+            entry = {"number": index, "source": item["source"], "status": item["status"],
+                     "title": record["title"] if record else item["title"],
+                     "error": item["error"], "warnings": [],
+                     "library_id": item["id"] if record else None}
+            if record:
+                prefix = f"{index:02d}_{item['id'][:8]}"
+                for filename, content in _exports(record).items():
+                    if filename.endswith((".txt", ".srt", ".vtt", ".json", ".md")):
+                        archive.writestr(f"{prefix}/{filename}", content)
+            elif item["status"] == "done":
+                entry["status"] = "error"
+                entry["error"] = "Transcript was removed from the library after processing."
+            records.append(entry)
+        manifest = {"batch_id": batch_id, "total": len(records),
+                    "completed": sum(item["status"] in {"done", "error"} for item in records),
+                    "failed": sum(item["status"] == "error" for item in records), "items": records}
+        archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
+    return stream.getvalue()
+
+
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
                    model: str, speakers: bool, target: str, summary_enabled: bool) -> None:
     batch = batches[batch_id]
+    batch_store.mark_batch(batch_id, "working")
     batch.status = "working"
+    persisted = batch_store.get(batch_id)
+    assert persisted is not None
+    previous = {item["id"]: item for item in persisted["jobs"]}
     for index, (job_id, source) in enumerate(zip(batch.job_ids, items)):
+        job = jobs[job_id]
+        old = previous[job_id]
         batch.stage = f"Processing {index + 1} of {len(items)}: {source.provider}"
-        _guarded_worker(job_id, _process_link, source, mode, language, model,
-                        speakers, target, summary_enabled)
+        # If a crash occurred after the transcript was saved but before the
+        # journal acknowledged it, skip costly retranscription on recovery.
+        saved = library.get(job_id)
+        if saved is not None:
+            job.status, job.title, job.library_id = "done", saved["title"], job_id
+            job.stage = "Restored completed transcript from library"
+            batch_store.mark_item(job_id, "done", title=job.title, library_id=job_id)
+        elif old["status"] == "error":
+            # A definite per-video failure stays recorded; recovery does not
+            # silently retry blocked or unauthorized sources forever.
+            job.status, job.error, job.stage = "error", old["error"], "Previous attempt failed"
+        else:
+            batch_store.mark_item(job_id, "working")
+            _guarded_worker(job_id, _process_link, source, mode, language, model,
+                            speakers, target, summary_enabled)
+            batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
+                                  library_id=job.library_id)
         batch.completed += 1
-        if jobs[job_id].status == "error": batch.failed += 1
+        if job.status == "error":
+            batch.failed += 1
     batch.stage = "Preparing batch archive..."
-    zip_path = batch.workdir / "batch.zip"
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for index, job_id in enumerate(batch.job_ids, start=1):
-            job = jobs[job_id]
-            prefix = f"{index:02d}_{job_id[:8]}"
-            for file in sorted(job.workdir.iterdir()):
-                if file.name.endswith((".txt",".srt",".vtt",".json",".md")) and file.is_file():
-                    archive.write(file, f"{prefix}/{file.name}")
-        # Keep a report in the ZIP even if every source failed. The archive
-        # otherwise looked like a successful but inexplicably empty batch.
-        manifest = {"batch_id": batch.id, "total": len(batch.job_ids),
-                    "completed": batch.completed, "failed": batch.failed, "items": []}
-        for index, job_id in enumerate(batch.job_ids, start=1):
-            job = jobs[job_id]
-            manifest["items"].append({"number": index, "source": job.source,
-                                      "status": job.status, "title": job.title,
-                                      "error": job.error, "warnings": job.warnings,
-                                      "library_id": job.library_id if job.status == "done" else None})
-        archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
-    batch.status="done"
-    batch.stage="Batch complete"
-    batch.finished_at=time.time()
+    payload = _batch_archive(batch_id)
+    batch.workdir.mkdir(parents=True, exist_ok=True)
+    (batch.workdir / "batch.zip").write_bytes(payload)
+    batch_store.mark_batch(batch_id, "done")
+    batch.status, batch.stage, batch.finished_at = "done", "Batch complete", time.time()
 
 
 def _guarded_batch(batch_id: str, *args: Any) -> None:
     try:
-        _process_batch(batch_id,*args)
+        _process_batch(batch_id, *args)
     except Exception as exc:
         print(f"[LinkScribe] Batch {batch_id} failed: {type(exc).__name__}: {exc}")
-        batch=batches[batch_id]
-        batch.status="error"; batch.stage="Batch failed; check the server log"; batch.finished_at=time.time()
+        batch = batches[batch_id]
+        batch.status, batch.stage, batch.finished_at = "error", "Batch failed; check server log", time.time()
+        try: batch_store.mark_batch(batch_id, "error")
+        except Exception as journal_exc:
+            print(f"[LinkScribe] Unable to mark batch {batch_id} error: {type(journal_exc).__name__}")
+
+
+def _restore_pending_batches() -> None:
+    """Run at application startup to resume interrupted local video batches."""
+    for stored in batch_store.unfinished():
+        batch_id = stored["id"]
+        with lock:
+            if batch_id in batches:
+                continue
+        try:
+            cfg = stored["options"]
+            links = [parse_source(item["source"]) for item in stored["jobs"]]
+            if any(item["source"] != source.url for item, source in zip(stored["jobs"], links)):
+                raise ValueError("Non-canonical stored batch URL")
+            mode, language, model = cfg["mode"], cfg["language"], cfg["model"]
+            speakers, target, summary = cfg["speakers"], cfg["target"], cfg["summary"]
+            _validate_common(language, model, True)
+            if mode not in MODES or target not in {"none", "en", "el"}:
+                raise ValueError("Unsupported stored batch options")
+            for source in links:
+                _validate_enhancements(mode, source.provider, speakers, target)
+            directory = DATA_DIR / "batches" / batch_id
+            directory.mkdir(parents=True, exist_ok=True)
+            batch = Batch(id=batch_id, workdir=directory,
+                          job_ids=[item["id"] for item in stored["jobs"]])
+            with lock:
+                batches[batch_id] = batch
+                for item in stored["jobs"]:
+                    identifier = item["id"]
+                    workdir = DATA_DIR / identifier
+                    workdir.mkdir(parents=True, exist_ok=True)
+                    jobs[identifier] = Job(id=identifier, workdir=workdir,
+                        source=item["source"], title=item["title"], batch_id=batch_id,
+                        stage="Resuming interrupted batch...", status="queued")
+            pool.submit(_guarded_batch, batch_id, links, mode, language, model,
+                        speakers, target, summary)
+        except Exception as exc:
+            print(f"[LinkScribe] Cannot recover batch {batch_id}: {type(exc).__name__}: {exc}")
+            batch_store.mark_batch(batch_id, "error")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -562,6 +655,11 @@ def index():
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "LinkScribe", "js_runtime": runtime_details()}
+
+
+@app.get("/api/diagnostics")
+def local_diagnostics():
+    return diagnostics.report()
 
 
 def _validate_enhancements(mode: str, provider: str, speakers: bool, target: str) -> None:
@@ -650,46 +748,71 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
         for source in items:
             child=_new_job(source.url,f"{source.provider.title()} {source.video_id}",batch_id=batch_id)
             batch.job_ids.append(child.id)
+    options = {"mode": mode, "language": language, "model": model,
+               "speakers": speakers, "target": target_language, "summary": summary}
     try:
+        batch_store.create(batch_id, [{"id": jobs[job_id].id,
+                        "source": jobs[job_id].source, "title": jobs[job_id].title}
+                        for job_id in batch.job_ids], options)
         pool.submit(_guarded_batch,batch_id,items,mode,language,model,speakers,target_language,summary)
-    except RuntimeError:
+    except (RuntimeError, OSError) as exc:
         with lock:
             batches.pop(batch_id,None)
             for identifier in batch.job_ids:
                 job=jobs.pop(identifier,None)
                 if job: shutil.rmtree(job.workdir,ignore_errors=True)
         shutil.rmtree(directory,ignore_errors=True)
-        raise HTTPException(503,"Processing service is shutting down.") from None
+        try: batch_store.mark_batch(batch_id, "error")
+        except Exception: pass
+        raise HTTPException(503,"Processing service is unavailable.") from None
     return {"id":batch_id,"count":len(items)}
+
+
+@app.get("/api/batches")
+def list_saved_batches():
+    """Allow reconnecting to past batches after server restart."""
+    return {"items": [{"id": batch["id"], "status": batch["status"],
+                       "total": len(batch["jobs"]),
+                       "completed": sum(j["status"] in {"done", "error"} for j in batch["jobs"]),
+                       "failed": sum(j["status"] == "error" for j in batch["jobs"])}
+                      for batch in batch_store.recent()]}
 
 
 @app.get("/api/batches/{batch_id}")
 def batch_status(batch_id: str):
     _cleanup_expired()
-    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404,"Batch not found.")
+    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404, "Batch not found.")
+    saved = batch_store.get(batch_id)
+    if saved is None: raise HTTPException(404, "Batch not found.")
     with lock:
-        batch=batches.get(batch_id)
-        if not batch: raise HTTPException(404,"Batch expired or not found.")
-        children=[]
-        for child_id in batch.job_ids:
-            job=jobs.get(child_id)
-            if job:
-                children.append({"id":job.id,"title":job.title,"source":job.source,
-                                 "status":job.status,"stage":job.stage,"error":job.error,
-                                 "warnings":job.warnings,"library_id":job.library_id})
-        return {"id":batch.id,"status":batch.status,"stage":batch.stage,"total":len(batch.job_ids),
-                "completed":batch.completed,"failed":batch.failed,"jobs":children}
+        batch = batches.get(batch_id)
+        children = []
+        for item in saved["jobs"]:
+            child = jobs.get(item["id"])
+            children.append({"id": item["id"], "title": child.title if child else item["title"],
+                             "source": item["source"], "status": child.status if child else item["status"],
+                             "stage": child.stage if child else "Restored from disk",
+                             "error": child.error if child else item["error"],
+                             "warnings": child.warnings if child else [],
+                             "library_id": child.library_id if child else item["library_id"]})
+        return {"id": batch_id, "status": batch.status if batch else saved["status"],
+                "stage": batch.stage if batch else "Saved batch",
+                "total": len(children),
+                "completed": sum(child["status"] in {"done", "error"} for child in children),
+                "failed": sum(child["status"] == "error" for child in children),
+                "jobs": children}
 
 
 @app.get("/api/batches/{batch_id}/download")
 def batch_download(batch_id: str):
-    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404,"Batch not found.")
-    with lock:
-        batch=batches.get(batch_id)
-        if not batch or batch.status != "done": raise HTTPException(404,"Batch not ready.")
-        filename=batch.workdir / "batch.zip"
-        if not filename.is_file(): raise HTTPException(404,"Archive not found.")
-    return FileResponse(filename,media_type="application/zip",filename=f"linkscr-batch-{batch_id[:8]}.zip")
+    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404, "Batch not found.")
+    saved = batch_store.get(batch_id)
+    if not saved or saved["status"] != "done":
+        raise HTTPException(404, "Batch not ready.")
+    payload = _batch_archive(batch_id)
+    return StreamingResponse(io.BytesIO(payload), media_type="application/zip",
+               headers={"Content-Disposition": f'attachment; filename="linkscr-batch-{batch_id[:8]}.zip"',
+                        "Cache-Control": "no-store"})
 
 
 @app.get("/api/jobs/{job_id}")
@@ -728,6 +851,33 @@ def download(job_id: str,file_type: str):
 def list_library(q: str = "", limit: int = 50):
     if len(q) > 200: raise HTTPException(400,"Search query is too long.")
     return {"items":library.list_items(q,limit)}
+
+
+@app.get("/api/library/backup")
+def export_library_backup():
+    try:
+        content, _count = library_backup.make_backup()
+    except library_backup.BackupError as exc:
+        raise HTTPException(413, str(exc)) from None
+    return StreamingResponse(io.BytesIO(content), media_type="application/zip",
+               headers={"Content-Disposition": 'attachment; filename="linkscr-library-backup.zip"',
+                        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
+
+@app.post("/api/library/restore")
+async def import_library_backup(request: Request, file: UploadFile = File(...)):
+    _check_browser_origin(request)
+    buffer = bytearray()
+    try:
+        while chunk := await file.read(1024 * 1024):
+            buffer.extend(chunk)
+            if len(buffer) > library_backup.MAX_ARCHIVE_BYTES:
+                raise HTTPException(413, "Backup upload exceeds the 50 MB limit.")
+        return {"ok": True, **library_backup.restore_backup(bytes(buffer))}
+    except library_backup.BackupError as exc:
+        raise HTTPException(400, str(exc)) from None
+    finally:
+        await file.close()
 
 
 @app.get("/api/library/{item_id}")
@@ -788,3 +938,4 @@ def library_download(item_id: str, file_type: str):
     return StreamingResponse(io.BytesIO(content),media_type=mime,
                              headers={"Content-Disposition":f'attachment; filename="{name}"',
                                       "Cache-Control":"no-store"})
+

@@ -1,6 +1,6 @@
 # LinkScribe — local-first video transcription, translation and transcript library
 
-LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. This branch contains new features; the original stable `master` branch remains unchanged until a reviewed merge.
+LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
 ## Features
 
@@ -19,16 +19,14 @@ No paid API keys are required for base transcription. Optional speaker labeling 
 ```bash
 sudo apt update
 sudo apt install -y git python3 python3-venv python3-pip ffmpeg
-# Use your branch name for this feature preview; stable release is master.
 git clone https://github.com/YellowBrokeIt/LinkScribe.git
 cd LinkScribe
-git switch feature/linkscr-v02
 bash start_linux.sh
 ```
 
 Open `http://127.0.0.1:8765` **on the same machine** (by design it only listens on loopback). On a desktop, optional `bash launch.sh` starts the local server in the background and opens a browser if the venv is already installed. If you run Linux remotely, do not bind this app to `0.0.0.0`; use an authenticated tunnel/SSH port forwarding for personal access.
 
-For a stable version without the new features, clone and run `master` instead.
+To inspect the **unreleased v0.3 candidate** separately from a stable clone, use `git switch feature/linkscribe-v03-reliability` before `bash start_linux.sh`. This is not required for the latest stable `master`.
 
 ## YouTube JS runtime — Deno preferred, Node fallback
 
@@ -71,13 +69,21 @@ Speaker identity estimates can be wrong, especially with simultaneous speech or 
 
 Enter one supported video URL per line (1–20) in the **Batch links** tab. Jobs are processed sequentially to avoid overloading a small CPU machine. Each completed transcript is stored in the persistent library. If an individual video fails, subsequent links still run. At the end, download one ZIP for successful jobs; failures are listed in the browser.
 
-Note: the batch queue is **in-memory**. Restarting the server interrupts active or queued jobs; already completed transcripts remain in SQLite.
+In **v0.3**, a SQLite batch journal saves queued jobs and completion statuses. On server startup, interrupted link batches resume from their next unsaved item; completed transcripts are never retranscribed if their library record exists. Explicit per-video failures remain failures rather than retrying restricted sources forever. Saved batch reports and ZIP exports can be downloaded again after restart. Use only **one** local server process with a given data directory. Individual uploads do not resume after interruption.
+
+## Back up and restore your library (v0.3)
+
+In the **Library** tab, choose **Download backup** to save a versioned ZIP containing all saved transcripts, timestamps, your edits, translation outputs, and summaries. Only text and metadata are included; audio, API secrets, and active batch work are not exported. Keep the backup in a safe place: it may contain sensitive transcript text.
+
+To restore, select the saved ZIP and choose **Restore backup**. LinkScribe checks its SHA-256 integrity hash and validates the records **before any insertion**. Existing IDs and edits are never overwritten; only missing transcripts are imported. ZIP entries are allowlisted and bounded to 50 MB compressed / 100 MB transcript data. This protects against accidental or malformed imports, but is not a substitute for protecting your device and backups.
+
+**Check setup** in the Library tab reports installed dependencies and optional AI readiness without showing the Hugging Face token. The API is `GET /api/diagnostics` and stays on the local-only server.
 
 ## Local storage and limits
 
 - 150 MB maximum input, 2 hours maximum audio recording, 8 queued/active slots and one worker. Larger batches can run for many hours.
 - `data/library.sqlite3` stores transcript text, source URL, titles and optional enhancements **until manually deleted**. Back it up if you want to keep the transcripts. Avoid keeping sensitive recordings in the library unless your machine is secured.
-- Original input audio is cleaned up after each job. Temporary exports and in-memory job details expire after 1 hour; saved library text does not.
+- Original input audio is cleaned up after each job. Temporary exports and in-memory job details expire after 1 hour; saved library text and batch reports do not. Recovery of interrupted link batches does not store video audio.
 - All services bind to localhost, with origin and Host checks. **This is a single-user app with no authentication, no per-user isolation and no public-web protections. Do not expose it to the Internet or serve it through GitHub Pages as a working backend.**
 - Sources must be permitted and allowed by their hosting platform. Do not use for unlicensed content.
 - Only YouTube, Vimeo and Dailymotion allowlisted individual URLs are accepted; this is not a general-purpose fetch-any-URL API.
@@ -89,7 +95,9 @@ Note: the batch queue is **in-memory**. Restarting the server interrupts active 
 - `POST /api/upload` — media file, plus model/language/enhancement fields
 - `POST /api/batch` — newline-separated `urls` (1–20), plus link options
 - `GET /api/jobs/{id}` and `/api/jobs/{id}/download/{format}`
-- `GET /api/batches/{id}` and `/api/batches/{id}/download`
+- `GET /api/batches`, `GET /api/batches/{id}` and `/api/batches/{id}/download` (persistent batch history and exports)
+- `GET /api/diagnostics` (dependency and supported-JS-runtime checks, no access-token disclosures)
+- `GET /api/library/backup` (versioned transcript ZIP) and `POST /api/library/restore` (non-destructive validated import)
 - `GET /api/library?q=...` and `GET /api/library/{id}`
 - `PUT /api/library/{id}` — title/segments edit (segment timestamps fixed)
 - `DELETE /api/library/{id}`
@@ -102,7 +110,7 @@ Note: the batch queue is **in-memory**. Restarting the server interrupts active 
 ./.venv/bin/python -m pytest -q
 ```
 
-Network-free tests use stubbed audio, translation and diarization responses and exercise validation, queueing, exports, CRUD and failure cases. Browser UI smoke tests also use mocked responses. **Full live integration testing with YouTube, Vimeo, Dailymotion, Hugging Face and Ollama is still required on a real Linux host with these dependencies installed.**
+Network-free tests exercise validation, queueing, journal recovery, backup integrity, imports, exports, CRUD and failure cases. GitHub Actions independently tests the real file-upload → PyAV → Whisper Tiny → SQLite → export path on a generated speech sample, plus fresh Linux installation. Browser UI controls are checked with simulated API responses. **Live YouTube/Vimeo/Dailymotion extraction and real Ollama/pyannote-model inference have not all been independently verified.**
 
 ## GitHub Pages
 
