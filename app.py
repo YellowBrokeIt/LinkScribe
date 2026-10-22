@@ -16,6 +16,7 @@ import time
 import uuid
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -52,7 +53,16 @@ FORMATS = {"txt", "srt", "vtt", "json", "zip", "summary_md", "summary_json",
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 JOB_ID_RE = re.compile(r"^[a-f0-9]{32}$")
 
-app = FastAPI(title="LinkScribe", version="0.3.0", docs_url=None, redoc_url=None)
+@asynccontextmanager
+async def _linkscr_lifespan(_application: FastAPI):
+    # FastAPI 0.160+ uses lifespan contexts in place of the removed
+    # add_event_handler API. Recovery is performed once per ASGI server start.
+    _restore_pending_batches()
+    yield
+
+
+app = FastAPI(title="LinkScribe", version="0.3.0", docs_url=None, redoc_url=None,
+              lifespan=_linkscr_lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
 pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="linkscr")
 lock = threading.RLock()
@@ -929,6 +939,3 @@ def library_download(item_id: str, file_type: str):
                              headers={"Content-Disposition":f'attachment; filename="{name}"',
                                       "Cache-Control":"no-store"})
 
-
-# Recover interrupted batches when ASGI starts (not during module import).
-app.add_event_handler("startup", _restore_pending_batches)
