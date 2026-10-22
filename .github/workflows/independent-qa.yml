@@ -2,7 +2,7 @@ name: Independent LinkScribe QA
 
 on:
   push:
-    branches: ['qa/**']
+    branches: ['qa/**', 'feature/linkscribe-v03-reliability']
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
         run: python -m pytest -q
       - name: Verify packaging and shell scripts
         run: |
-          python -m compileall -q app.py library.py sources.py enhancements.py runtime_check.py
+          python -m compileall -q app.py library.py sources.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py
           python -m pip check
           bash -n start_linux.sh launch.sh
 
@@ -98,6 +98,9 @@ jobs:
           assert health['status']=='ok',health
           assert health['service']=='LinkScribe',health
           assert 'js_runtime' in health,health
+          with urlopen('http://127.0.0.1:8765/api/diagnostics') as response:
+              check=json.load(response)
+              assert check['app']=='LinkScribe' and 'libraries' in check,check
           with urlopen('http://127.0.0.1:8765/') as response:
               html=response.read().decode('utf-8')
               assert '<title>LinkScribe' in html
