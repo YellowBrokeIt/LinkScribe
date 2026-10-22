@@ -1,82 +1,109 @@
-# LinkScribe — video links to downloadable transcripts
+# LinkScribe — local-first video transcription, translation and transcript library
 
-A **local-first** web app: paste a YouTube video link or upload your own media, transcribe it, preview it, and download TXT, SRT, VTT, JSON, or a ZIP containing them all. The browser UI is mobile-friendly; the transcription runs on **your computer** rather than a commercial speech API.
+LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. This branch contains new features; the original stable `master` branch remains unchanged until a reviewed merge.
 
-## Quick start — Windows
+## Features
 
-1. Install Python 3.11, 3.12, or 3.13 from https://www.python.org/downloads/ (on Windows, ensure the Python launcher `py` is installed).
-2. Extract the ZIP and double-click `start_windows.bat`.
-3. Open http://127.0.0.1:8765 if your browser does not open automatically.
-4. Paste a video link, choose a mode, confirm you have permission, and click **Transcribe**.
+- **Single links or batches of 1–20 links**: YouTube, Vimeo and Dailymotion, allowlisted/canonicalized; sequential processing and batch ZIP of successful results. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions.
+- **Speaker identification (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from pyannote Community-1 diarization, aligned with Whisper segments. Requires extra dependencies and Hugging Face model access; labels are estimates and names must be assigned manually.
+- **Translation**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports.
+- **AI summary and chapters**: local Ollama creates summaries, key points and chapter titles anchored to transcript segment timestamps. Review outputs for errors.
+- **Persistent transcript library**: local SQLite store with full-text search by title/transcript, editing of segment text/speaker names, deletion and on-demand exports. Original audio is deleted after each processing job. Edit invalidates stale translation/summary so saved exports remain consistent.
+- **Uploads**: MP3, WAV, MP4 and other accepted audio/video formats.
+- **Exports**: TXT, SRT, VTT, JSON, ZIP, translated TXT/SRT/VTT/JSON, and summary MD/JSON.
 
-## Quick start — Ubuntu / Linux
+No paid API keys are required for base transcription. Optional speaker labeling requires HF_TOKEN to download its model. Optional translation/summaries require an Ollama model installed locally.
 
-```bash
-sudo apt update && sudo apt install -y python3 python3-venv python3-pip
-unzip LinkScribe-starter.zip
-cd LinkScribe-starter
-./start_linux.sh
-```
-
-Open http://127.0.0.1:8765 . If launching from an IDE, you can use `.venv/bin/python -m uvicorn app:app --host 127.0.0.1 --port 8765`.
-
-## Modes
-
-- **Smart** (recommended for speed): fetch available YouTube captions. If absent or blocked, try downloading audio and transcribing it locally.
-- **AI audio**: always recognize speech **from audio** with faster-whisper. This is the closest to “whatever is actually said,” although no speech recognizer is 100% accurate.
-- **Captions only**: use existing subtitles, with no speech-model download. Useful if you want text quickly.
-- **Upload media**: upload an audio/video file directly and transcribe the audio. This is the most robust option for media you control.
-
-**Language** can be auto-detected, or pinned to Greek, English, and several other options. Whisper generally detects one dominant language per recording; a mixed-language video might need review.
-
-## YouTube setup for audio mode
-
-YouTube sometimes requires yt-dlp to solve JavaScript challenges. As of October 2026, yt-dlp recommends **Deno 2.3+**. **Node 22+** is another supported option; the app enables Node if Deno isn't found. Install either and keep `yt-dlp[default]` updated:
-
-- Deno: https://docs.deno.com/runtime/getting_started/installation/
-- yt-dlp setup: https://github.com/yt-dlp/yt-dlp/wiki/EJS
-
-Even then, some videos may be inaccessible (copyright restrictions, age gates, bot restrictions, private streams, site changes). The app **does not** attempt to bypass such restrictions. Use the local upload route when you have a lawful copy and permission to process it.
-
-**YouTube's official API cannot download transcripts for arbitrary videos:** the documented `captions.download` endpoint requires edit permission on the video. This starter uses a third-party package that accesses YouTube's undocumented caption endpoints; it can break when YouTube changes its implementation.
-
-## Models / CPU vs GPU
-
-- `tiny`: fastest, lower accuracy.
-- `base`: faster, reasonable for quick drafts.
-- `small` (default): generally a better accuracy/speed compromise on CPU, especially for multilingual speech.
-
-The first audio-transcription request downloads the selected model from Hugging Face. Model downloads, YouTube fetching, and checking dependencies need network access. **Your uploaded media is not sent to a paid transcription API**; speech recognition runs locally. You can explicitly enable NVIDIA CUDA with `LINKSCRIBE_DEVICE=cuda` if you have a compatible CUDA setup, otherwise it uses CPU INT8.
-
-On a modest CPU, an hour-long file may take a while. Using preexisting captions is much faster.
-
-## Limits / privacy / safety
-
-- **Starter is local only:** binds to `127.0.0.1:8765`, no accounts, billing, tracking, or database.
-- Accepts **individual YouTube URLs only**, not arbitrary external URLs, livestream archives that cannot be accessed, or playlists. This helps prevent remote-server-side request forgery (SSRF).
-- Uploaded files must be one of: MP3, WAV, M4A, MP4, WebM, OGG, FLAC, MOV, MKV, AAC, OPUS.
-- Maximum audio input size **150 MB**, maximum audio recording duration **2 hours** (longer caption-only videos may still work), and up to 8 queued/active jobs (1 model-processing worker).
-- After processing, original input audio is deleted. Transcript files are kept locally under `data/` for **1 hour**, then removed when the service handles a later request. Stopping the service also stops cleanup; delete `data/` manually if desired.
-- The app uses local-only binding, a Host allowlist, and cross-origin POST checks. Anyone with direct access to the local web server during that hour can retrieve the generated outputs if they know the unguessable job ID; it has no user-authentication feature. **Do not expose this version directly to the public internet**. A hosted version needs authentication, per-user isolation, rate limits, abuse controls, retention policy, and separate worker servers.
-- Transcribe only media you own or are authorized to process; YouTube downloads and reproductions may be restricted by platform terms and applicable law.
-
-## Developer API
-
-- `GET /health`
-- `POST /api/link` as multipart form: `url`, `mode=smart|audio|captions`, `language=auto|en|el|...`, `model=tiny|base|small`, `consent=true`
-- `POST /api/upload`: multipart `file`, `language`, `model`, `consent=true`
-- `GET /api/jobs/{job_id}` for queue/stage/results.
-- `GET /api/jobs/{job_id}/download/{txt|srt|vtt|json|zip}` for output.
-
-## Tests
+## Quick start — Linux (Ubuntu)
 
 ```bash
-python -m pip install pytest httpx
-python -m pytest -q
+sudo apt update
+sudo apt install -y git python3 python3-venv python3-pip ffmpeg
+# Use your branch name for this feature preview; stable release is master.
+git clone https://github.com/YellowBrokeIt/LinkScribe.git
+cd LinkScribe
+git switch feature/linkscr-v02
+bash start_linux.sh
 ```
 
-Unit tests use dummy segments to verify URL validation, subtitle exports, API job behavior, and permission checks, without downloading YouTube content or transcription models. End-to-end transcription **requires installation and a real permitted video/audio file**. This starter was tested with local unit/API tests and browser UI smoke tests, but it has not been validated against a live YouTube video or a downloaded Whisper model in the creation environment (network access was unavailable).
+Open `http://127.0.0.1:8765` **on the same machine** (by design it only listens on loopback). On a desktop, optional `bash launch.sh` starts the local server in the background and opens a browser if the venv is already installed. If you run Linux remotely, do not bind this app to `0.0.0.0`; use an authenticated tunnel/SSH port forwarding for personal access.
 
-## Next steps for a public service
+For a stable version without the new features, clone and run `master` instead.
 
-Separate web app + persistent queue (Redis/RQ or Celery) + GPU worker + object storage with auto-expiry + domain-specific link providers + subscription/pay-as-you-go billing. Optional paid speech API can be swapped in as another worker backend. Build platform permission checks and terms compliance into each provider.
+## YouTube JS runtime — Deno preferred, Node fallback
+
+yt-dlp needs a JavaScript runtime for some YouTube playback challenges. **Deno 2.3+** is recommended and enabled by default; **Node.js is permitted only on release lines patched against the October 21, 2026 security advisory**. This app checks installed major/minor/patch versions, prefers Deno when supported, and explicitly enables Node only if Deno is unavailable or outdated *and* Node meets its security floor. Older, end-of-life and unreviewed release lines are rejected. It does not force Node when Deno is working. The `/health` endpoint shows detected runtime and installation advice.
+
+- Install Deno 2.3+ from https://docs.deno.com/runtime/getting_started/installation/
+- Or install a supported **security-patched Node.js release** from https://nodejs.org/en/download:
+  - **22.x:** `22.23.4` or newer within 22.x
+  - **24.x:** `24.22.1` or newer within 24.x (**recommended Node LTS fallback**)
+  - **26.x:** `26.12.1` or newer within 26.x
+- Security advisory: https://nodejs.org/en/blog/vulnerability/october-2026-security-releases (October 21, 2026). These are minimum patched versions **as of this advisory**; keep Node and Deno updated for future advisories. Do not assume an unreviewed newer Node major is permitted until LinkScribe's allowlist has been updated.
+- Keep `yt-dlp[default]` updated with `./.venv/bin/python -m pip install -U 'yt-dlp[default]'`. The `[default]` extra installs matched EJS scripts.
+- YouTube can block some videos, age-gated content, private links, or automated downloads despite valid setup. Do not bypass restrictions; upload an authorized recording instead.
+
+Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube sources may not require a JS runtime. LinkScribe will show a clear download error if access fails.
+
+## Optional translation, summaries and chapters (Ollama)
+
+1. Install Ollama from https://ollama.com/download and start the local daemon (`ollama serve` if it isn't already running).
+2. Pull an instruction model with multilingual and JSON output support: `ollama pull qwen3:4b`.
+3. Optionally set `LINKSCRIBE_OLLAMA_MODEL=qwen3:4b` (default) in the environment **before starting** LinkScribe.
+4. Check **AI summary & chapters** and/or choose the English or Greek translation target.
+
+Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not sent to Ollama; only transcript text is sent to the **local Ollama process**. These operations are optional. If Ollama fails, the original transcript and library record remain available, with warnings.
+
+## Optional speaker identification (pyannote)
+
+```bash
+# from the repository root, after initial start_linux.sh created .venv
+./.venv/bin/python -m pip install -r requirements-speakers.txt
+```
+
+1. Accept the model conditions at https://huggingface.co/pyannote/speaker-diarization-community-1 and create a Hugging Face access token at https://huggingface.co/settings/tokens.
+2. Export it in the same shell **before** starting LinkScribe: `export HF_TOKEN=...` (replace dots with your token, and never commit it).
+3. Enable **Speaker labels** when submitting a video or upload. For links, LinkScribe uses audio AI instead of existing captions when speaker labeling is selected.
+
+Speaker identity estimates can be wrong, especially with simultaneous speech or short segments. Speaker names are anonymous labels, not real identification. pyannote and its ML dependencies are substantial; an appropriate CPU/GPU and extra disk space are needed.
+
+## Batch jobs
+
+Enter one supported video URL per line (1–20) in the **Batch links** tab. Jobs are processed sequentially to avoid overloading a small CPU machine. Each completed transcript is stored in the persistent library. If an individual video fails, subsequent links still run. At the end, download one ZIP for successful jobs; failures are listed in the browser.
+
+Note: the batch queue is **in-memory**. Restarting the server interrupts active or queued jobs; already completed transcripts remain in SQLite.
+
+## Local storage and limits
+
+- 150 MB maximum input, 2 hours maximum audio recording, 8 queued/active slots and one worker. Larger batches can run for many hours.
+- `data/library.sqlite3` stores transcript text, source URL, titles and optional enhancements **until manually deleted**. Back it up if you want to keep the transcripts. Avoid keeping sensitive recordings in the library unless your machine is secured.
+- Original input audio is cleaned up after each job. Temporary exports and in-memory job details expire after 1 hour; saved library text does not.
+- All services bind to localhost, with origin and Host checks. **This is a single-user app with no authentication, no per-user isolation and no public-web protections. Do not expose it to the Internet or serve it through GitHub Pages as a working backend.**
+- Sources must be permitted and allowed by their hosting platform. Do not use for unlicensed content.
+- Only YouTube, Vimeo and Dailymotion allowlisted individual URLs are accepted; this is not a general-purpose fetch-any-URL API.
+
+## API
+
+- `GET /health` — status and JS runtime diagnosis
+- `POST /api/link` — form fields: `url`, `mode` (`smart`, `audio`, `captions`), `language`, `model`, `consent=true`, `speakers`, `target_language` (`none`, `el`, `en`), `summary`
+- `POST /api/upload` — media file, plus model/language/enhancement fields
+- `POST /api/batch` — newline-separated `urls` (1–20), plus link options
+- `GET /api/jobs/{id}` and `/api/jobs/{id}/download/{format}`
+- `GET /api/batches/{id}` and `/api/batches/{id}/download`
+- `GET /api/library?q=...` and `GET /api/library/{id}`
+- `PUT /api/library/{id}` — title/segments edit (segment timestamps fixed)
+- `DELETE /api/library/{id}`
+- `GET /api/library/{id}/download/{format}` — full export, even after server restart
+
+## Run tests
+
+```bash
+./.venv/bin/python -m pip install pytest httpx
+./.venv/bin/python -m pytest -q
+```
+
+Network-free tests use stubbed audio, translation and diarization responses and exercise validation, queueing, exports, CRUD and failure cases. Browser UI smoke tests also use mocked responses. **Full live integration testing with YouTube, Vimeo, Dailymotion, Hugging Face and Ollama is still required on a real Linux host with these dependencies installed.**
+
+## GitHub Pages
+
+The `gh-pages` branch is a **separate UI demonstration**, not the Python backend. The real application and all its features run on your own computer/instance.
