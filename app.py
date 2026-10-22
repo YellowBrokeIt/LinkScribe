@@ -450,6 +450,10 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
             _set(job_id, stage="Identifying speaker turns with pyannote...")
             try: segments = assign_speakers(audio, segments)
             except EnhancementError as exc: warnings.append(str(exc))
+            except Exception as exc:
+                # Optional model bugs must never discard already recognized speech.
+                print(f"[LinkScribe] Speaker labeling failed ({type(exc).__name__}) for job {job_id}")
+                warnings.append("Speaker labeling failed unexpectedly; original transcript retained.")
     translations: dict[str, Any] = {}
     if target != "none":
         if language == target:
@@ -458,11 +462,17 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
             _set(job_id, stage=f"Translating into {target} with local Ollama...")
             try: translations[target] = translate_segments(segments, target)
             except EnhancementError as exc: warnings.append("Translation: " + str(exc))
+            except Exception as exc:
+                print(f"[LinkScribe] Translation failed ({type(exc).__name__}) for job {job_id}")
+                warnings.append("Translation failed unexpectedly; original transcript retained.")
     summary = None
     if summary_enabled:
         _set(job_id, stage="Creating chapters and AI summary locally...")
         try: summary = summarize_segments(segments)
         except EnhancementError as exc: warnings.append("Summary: " + str(exc))
+        except Exception as exc:
+            print(f"[LinkScribe] Summary failed ({type(exc).__name__}) for job {job_id}")
+            warnings.append("Summary failed unexpectedly; original transcript retained.")
     _set(job_id, warnings=warnings, stage="Saving transcript to library...")
     _write_exports(job_id, segments, language, method, translations, summary)
 
@@ -519,6 +529,17 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
             for file in sorted(job.workdir.iterdir()):
                 if file.name.endswith((".txt",".srt",".vtt",".json",".md")) and file.is_file():
                     archive.write(file, f"{prefix}/{file.name}")
+        # Keep a report in the ZIP even if every source failed. The archive
+        # otherwise looked like a successful but inexplicably empty batch.
+        manifest = {"batch_id": batch.id, "total": len(batch.job_ids),
+                    "completed": batch.completed, "failed": batch.failed, "items": []}
+        for index, job_id in enumerate(batch.job_ids, start=1):
+            job = jobs[job_id]
+            manifest["items"].append({"number": index, "source": job.source,
+                                      "status": job.status, "title": job.title,
+                                      "error": job.error, "warnings": job.warnings,
+                                      "library_id": job.library_id if job.status == "done" else None})
+        archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
     batch.status="done"
     batch.stage="Batch complete"
     batch.finished_at=time.time()
