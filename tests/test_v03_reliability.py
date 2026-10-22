@@ -205,3 +205,17 @@ def test_empty_library_backup_roundtrip(site):
     content=site.get("/api/library/backup").content
     result=site.post("/api/library/restore",files={"file":("empty.zip",content)})
     assert result.json()=={"ok":True,"total":0,"imported":0,"already_present":0}
+
+
+def test_actual_asgi_startup_resumes_queued_batch(site,monkeypatch):
+    """Tests the framework lifecycle, not just a direct recovery function call."""
+    hits=install_dummy_recognition(monkeypatch)
+    monkeypatch.setattr(app.pool,"submit",lambda func,*args:None)
+    bid=site.post("/api/batch",data={"urls":VIMEO,"mode":"audio","consent":"true"}).json()["id"]
+    app.batches.clear();app.jobs.clear()
+    monkeypatch.setattr(app.pool,"submit",lambda func,*args:func(*args))
+    with TestClient(app.app) as restarted:
+        status=restarted.get(f"/api/batches/{bid}").json()
+        assert status["status"]=="done"
+        assert status["completed"]==1
+        assert len(hits)==1
