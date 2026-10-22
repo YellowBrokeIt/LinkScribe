@@ -85,6 +85,17 @@
     .library-toolbar {display:flex; gap:10px; margin-bottom:16px}
     .library-toolbar input {flex:1; min-width:0}
     .library-items {display:grid; gap:10px}
+    .library-tools {margin:18px 0; padding:17px; border:1px solid #35445e; border-radius:12px; background:#10192b}
+    .library-tools h3 {font-size:15px; margin:0 0 7px}
+    .library-tools .input-note {margin-bottom:12px}
+    .backup-actions {display:flex; flex-wrap:wrap; align-items:center; gap:9px}
+    .backup-actions input {max-width:235px; color:var(--muted);font-size:12px}
+    .backup-actions a {color:#fff; text-decoration:none; display:inline-flex; align-items:center}
+    .library-feedback {color:var(--muted);font-size:12px; margin:12px 0 0; overflow-wrap:anywhere; line-height:1.6}
+    .saved-batches {display:grid; gap:8px; margin-top:12px}
+    .saved-batches .batch-item a {color:#c4bbff; text-decoration:none;white-space:nowrap}
+    .setup-info {white-space:pre-wrap; font:12px/1.65 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;max-height:180px;overflow:auto}
+
     .library-item {display:flex; justify-content:space-between; gap:14px; padding:14px; border:1px solid #394761; border-radius:12px; background:#131f34; align-items:center}
     .library-item strong {display:block; word-break:break-word; font-size:14px}
     .library-item small {display:block; color:var(--muted); margin-top:6px; font-size:11px; overflow-wrap:anywhere}
@@ -184,7 +195,23 @@
         <div id="view-library" role="tabpanel" aria-labelledby="tab-library" hidden>
           <label class="input-title" for="library-search">Search your saved transcripts</label>
           <div class="library-toolbar"><input id="library-search" type="search" placeholder="Search titles or spoken words"><button type="button" id="library-refresh" class="copy">Search</button></div>
+          <div class="library-tools" aria-label="Transcript backup and restore">
+            <h3>Keep a copy of your transcript library</h3>
+            <p class="input-note">Backup saves transcripts, edits, translations and summaries into a ZIP. Restoring imports missing records without overwriting existing ones; no audio or access tokens are included.</p>
+            <div class="backup-actions">
+              <a class="copy" href="/api/library/backup" download="linkscr-library-backup.zip">↓ Download backup</a>
+              <input id="library-restore-file" type="file" accept=".zip,application/zip" aria-label="Select library backup ZIP">
+              <button id="library-restore-btn" class="copy" type="button">Restore backup</button>
+              <button id="diagnostics-btn" class="copy" type="button">Check setup</button>
+            </div>
+            <p class="library-feedback" id="library-feedback" role="status" aria-live="polite"></p>
+            <pre id="setup-info" class="setup-info" hidden></pre>
+          </div>
           <div id="library-items" class="library-items" aria-live="polite">Open Library to load saved transcripts.</div>
+          <div class="library-tools">
+            <h3>Recent batches (available after restart)</h3>
+            <div id="saved-batches" class="saved-batches" aria-live="polite">Checking saved batches...</div>
+          </div>
           <p class="input-note">Stored in SQLite on this machine, not in your GitHub repository. Saved text remains until you delete it.</p>
         </div>
         <div id="status-box" class="status" role="status" aria-live="polite" hidden>
@@ -243,6 +270,7 @@
      tabs[key].setAttribute("aria-selected",String(key===name));
      views[key].hidden=key!==name;
    }
+   form.hidden=name==="library";
    $("mode-block").hidden=name==="upload" || name==="library";
    $("enhancements").hidden=name==="library";
    $("url").required=false; $("file").required=false;
@@ -251,6 +279,7 @@
    if(name==="library") {
      $("status-box").hidden=true;
      loadLibrary();
+     loadSavedBatches();
    }
  }
  for(const key in tabs) tabs[key].addEventListener("click",()=>chooseTab(key));
@@ -387,6 +416,48 @@
      }
    }catch(e){$("library-items").textContent="Could not load library: "+e.message;}
  }
+ async function loadSavedBatches(){
+   const target=$("saved-batches");
+   try{
+     const response=await api("/api/batches");
+     target.replaceChildren();
+     if(!response.items.length){target.textContent="No previous batches yet.";return;}
+     for(const item of response.items.slice(0,20)){
+       const box=document.createElement("div");box.className="batch-item";
+       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.status}`;
+       const button=addButton(box,"View",async()=>{
+         try{const batch=await api(`/api/batches/${encodeURIComponent(item.id)}`);renderBatch(batch);
+           if(batch.status==="working"||batch.status==="queued"){currentBatch=batch.id;trackBatch(batch.id);}
+           $("batch-results").scrollIntoView({behavior:"smooth",block:"start"});}
+         catch(e){$("library-feedback").textContent=e.message;}
+       });
+       box.insertBefore(title,button);target.appendChild(box);
+     }
+   }catch(e){target.textContent="Could not read batch history: "+e.message;}
+ }
+ $("library-restore-btn").addEventListener("click",async()=>{
+   const file=$("library-restore-file").files[0];
+   if(!file){$("library-feedback").textContent="Select a LinkScribe backup ZIP first.";return;}
+   if(!confirm("Import missing transcripts from this backup? Existing transcripts and edits will not be changed."))return;
+   $("library-feedback").textContent="Validating the backup...";
+   const body=new FormData();body.set("file",file);
+   try{const result=await api("/api/library/restore",{method:"POST",body});
+     $("library-feedback").textContent=`Restore complete: ${result.imported} imported; ${result.already_present} already in your library.`;
+     $("library-restore-file").value="";await loadLibrary();}
+   catch(e){$("library-feedback").textContent="Restore rejected: "+e.message;}
+ });
+ $("diagnostics-btn").addEventListener("click",async()=>{
+   $("setup-info").hidden=false;$("setup-info").textContent="Checking local installation...";
+   try{const info=await api("/api/diagnostics");
+     $("setup-info").textContent=[`Python ${info.python}`,
+       `JavaScript: ${info.js_runtime.runtime||"not available"} ${info.js_runtime.version||""}`,
+       `Whisper: ${info.libraries.faster_whisper?"installed":"missing"}`,
+       `FFmpeg: ${info.ffmpeg_available?"installed":"missing"}`,
+       `Ollama: ${info.ollama.available?"available":"not running"}`,
+       `Speakers: ${info.speakers_configured?"configured":"optional setup required"}`,
+       ...(info.warnings||[])].join("\n");}
+   catch(e){$("setup-info").textContent="Diagnostics unavailable: "+e.message;}
+ });
  $("library-refresh").addEventListener("click",loadLibrary);
  $("library-search").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loadLibrary();}});
  function showEditorPage(){
