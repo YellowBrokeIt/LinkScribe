@@ -32,6 +32,8 @@ To inspect the **unreleased v0.3 candidate** separately from a stable clone, use
 
 yt-dlp needs a JavaScript runtime for some YouTube playback challenges. **Deno 2.3+** is recommended and enabled by default; **Node.js is permitted only on release lines patched against the October 21, 2026 security advisory**. This app checks installed major/minor/patch versions, prefers Deno when supported, and explicitly enables Node only if Deno is unavailable or outdated *and* Node meets its security floor. Older, end-of-life and unreviewed release lines are rejected. It does not force Node when Deno is working. The `/health` endpoint shows detected runtime and installation advice.
 
+When no installed runtime meets those requirements, LinkScribe explicitly disables yt-dlp's runtime selection so an unsupported Deno installation cannot be re-enabled by downloader defaults.
+
 - Install Deno 2.3+ from https://docs.deno.com/runtime/getting_started/installation/
 - Or install a supported **security-patched Node.js release** from https://nodejs.org/en/download:
   - **22.x:** `22.23.4` or newer within 22.x
@@ -50,7 +52,9 @@ Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube
 3. Optionally set `LINKSCRIBE_OLLAMA_MODEL=qwen3:4b` (default) in the environment **before starting** LinkScribe.
 4. Check **AI summary & chapters** and/or choose the English or Greek translation target.
 
-Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not sent to Ollama; only transcript text is sent to the **local Ollama process**. These operations are optional. If Ollama fails, the original transcript and library record remain available, with warnings.
+Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not sent to Ollama; only transcript text is sent directly to the **local Ollama process**, without environment proxies or HTTP redirects. **Check setup** distinguishes a running Ollama server from a missing selected model. These operations are optional. If Ollama fails or returns incomplete output, the original transcript and library record remain available, with warnings.
+
+The default `qwen3:4b` integration has been exercised with real English and Greek examples, but its wording still needs review: the test run included an incorrect Greek term for “transcript” and an unnatural English article before a name. Successful timing, storage and export checks do not certify translation quality. The original transcript is retained for comparison.
 
 ## Optional speaker identification (pyannote)
 
@@ -69,13 +73,13 @@ Speaker identity estimates can be wrong, especially with simultaneous speech or 
 
 Enter one supported video URL per line (1–20) in the **Batch links** tab. Jobs are processed sequentially to avoid overloading a small CPU machine. Each completed transcript is stored in the persistent library. If an individual video fails, subsequent links still run. At the end, download one ZIP for successful jobs; failures are listed in the browser.
 
-In **v0.3**, a SQLite batch journal saves queued jobs and completion statuses. On server startup, interrupted link batches resume from their next unsaved item; completed transcripts are never retranscribed if their library record exists. Explicit per-video failures remain failures rather than retrying restricted sources forever. Saved batch reports and ZIP exports can be downloaded again after restart. Use only **one** local server process with a given data directory. Individual uploads do not resume after interruption.
+In **v0.3**, a SQLite batch journal saves queued jobs and completion statuses. On server startup, interrupted link batches resume from their next unsaved item; completed transcripts are never retranscribed if their library record exists. Deleting a saved transcript records its removal atomically, so a restart cannot recreate it, even if the job had not yet acknowledged its save. Explicit per-video failures remain failures rather than retrying restricted sources forever. Recovery removes leftover media and partial downloads, and recovered completed jobs expire normally. Saved batch reports and ZIP exports can be downloaded again after restart. Use only **one** local server process with a given data directory. Individual uploads do not resume after interruption.
 
 ## Back up and restore your library (v0.3)
 
 In the **Library** tab, choose **Download backup** to save a versioned ZIP containing all saved transcripts, timestamps, your edits, translation outputs, and summaries. Only text and metadata are included; audio, API secrets, and active batch work are not exported. Keep the backup in a safe place: it may contain sensitive transcript text.
 
-To restore, select the saved ZIP and choose **Restore backup**. LinkScribe checks its SHA-256 integrity hash and validates the records **before any insertion**. Existing IDs and edits are never overwritten; only missing transcripts are imported. ZIP entries are allowlisted and bounded to 50 MB compressed / 100 MB transcript data. This protects against accidental or malformed imports, but is not a substitute for protecting your device and backups.
+To restore, select the saved ZIP and choose **Restore backup**. LinkScribe checks its SHA-256 integrity hash and validates the records **before any insertion**, including translated segments, summaries, chapter times and finite numeric values. One invalid record rejects the whole import without partially adding transcripts. Existing IDs and edits are never overwritten; only missing transcripts are imported. ZIP entries are allowlisted and bounded to 50 MB compressed / 100 MB transcript data; generated backups obey the same limits. This protects against accidental or malformed imports, but is not a substitute for protecting your device and backups.
 
 **Check setup** in the Library tab reports installed dependencies and optional AI readiness without showing the Hugging Face token. The API is `GET /api/diagnostics` and stays on the local-only server.
 
@@ -110,7 +114,18 @@ To restore, select the saved ZIP and choose **Restore backup**. LinkScribe check
 ./.venv/bin/python -m pytest -q
 ```
 
-Network-free tests exercise validation, queueing, journal recovery, backup integrity, imports, exports, CRUD and failure cases. GitHub Actions independently tests the real file-upload → PyAV → Whisper Tiny → SQLite → export path on a generated speech sample, plus fresh Linux installation. Browser UI controls are checked with simulated API responses. **Live YouTube/Vimeo/Dailymotion extraction and real Ollama/pyannote-model inference have not all been independently verified.**
+For the optional real annotation-alignment check without downloading the gated speaker model, also install `pyannote.core==6.1.0`. CI installs it as a test dependency; the base app does not require it.
+
+Network-free tests exercise validation, queueing, journal recovery, backup integrity, imports, exports, CRUD and failure cases. The recovery suite kills a separate process immediately after a transcript's SQLite commit and starts a fresh process to verify recovery without duplicate transcription. Source media in that particular test is synthetic. GitHub Actions independently exercises the real file-upload → PyAV → Whisper Tiny → SQLite → export path on generated speech, checks recognizable source words, and verifies fresh Linux installation. A separate QA job runs the actual default `qwen3:4b` model for English↔Greek translation, summaries and subtitle/summary exports using owned text fixtures. Browser UI controls were previously checked with simulated API responses.
+
+Optional live probes can also be run explicitly:
+
+```bash
+PYTHONPATH=. ./.venv/bin/python tests/smoke_real_ollama.py
+PYTHONPATH=. ./.venv/bin/python tests/smoke_live_providers.py --url https://www.youtube.com/watch?v=aqz-KE-bpKQ
+```
+
+The Ollama script requires the selected model already running locally. The provider script checks metadata and playable stream extraction by default; it is **not** a full transcription test. Live provider tests remain separate from CI because availability and access restrictions can change. The current live probe reached YouTube metadata with patched Node, while the selected Vimeo video required login and Dailymotion returned no playable formats in the test environment. **Full live link-to-transcript coverage across all three providers and gated pyannote Community-1 inference remain unverified.** The pyannote-core alignment check does not imply that the speaker model was run.
 
 ## GitHub Pages
 

@@ -11,6 +11,7 @@ import json
 import math
 import re
 import zipfile
+import zlib
 from typing import Any
 
 import library
@@ -28,6 +29,80 @@ class BackupError(ValueError):
 
 def _encode(value: Any) -> bytes:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def _finite_number(value: Any) -> bool:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        return False
+
+
+def _text(value: Any, limit: int) -> bool:
+    if not isinstance(value, str) or len(value) > limit:
+        return False
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError:
+        return False
+    return True
+
+
+def _load_json(payload: bytes) -> Any:
+    def reject_constant(_value: str) -> Any:
+        raise BackupError("Backup JSON contains a non-finite number.")
+
+    def finite_float(value: str) -> float:
+        number = float(value)
+        if not math.isfinite(number):
+            reject_constant(value)
+        return number
+
+    try:
+        # JSON's NaN/Infinity extensions and overflowing exponents can poison
+        # later exports even when they occur in otherwise unused metadata.
+        return json.loads(payload, parse_constant=reject_constant, parse_float=finite_float)
+    except BackupError:
+        raise
+    except (UnicodeDecodeError, ValueError, RecursionError) as exc:
+        raise BackupError("Backup contains invalid JSON.") from exc
+
+
+def _json_text(value: Any) -> str:
+    try:
+        return _encode(value).decode("utf-8")
+    except (ValueError, UnicodeError, RecursionError) as exc:
+        raise BackupError("Backup contains invalid JSON values.") from exc
+
+
+def _validate_segments(segments: Any) -> None:
+    if not isinstance(segments, list) or not 1 <= len(segments) <= 30000:
+        raise BackupError("Backup contains invalid transcript segments.")
+    for segment in segments:
+        if not isinstance(segment, dict):
+            raise BackupError("Backup contains an invalid segment.")
+        start, end, text = segment.get("start"), segment.get("end"), segment.get("text")
+        if (not _finite_number(start) or not _finite_number(end) or
+                start < 0 or end < start or end > 7 * 24 * 3600 or not _text(text, 25000)):
+            raise BackupError("Backup contains invalid segment timestamps or text.")
+        if "speaker" in segment and not _text(segment["speaker"], 120):
+            raise BackupError("Backup contains an invalid speaker label.")
+
+
+def _validate_summary(summary: Any) -> None:
+    if summary is None or summary == {}:
+        return
+    if (not isinstance(summary, dict) or not _text(summary.get("summary"), 12000) or
+            not isinstance(summary.get("key_points"), list) or len(summary["key_points"]) > 30 or
+            any(not _text(point, 900) for point in summary["key_points"]) or
+            not isinstance(summary.get("chapters"), list) or len(summary["chapters"]) > 100):
+        raise BackupError("Backup contains an invalid summary.")
+    for chapter in summary["chapters"]:
+        if (not isinstance(chapter, dict) or not _finite_number(chapter.get("start")) or
+                not 0 <= chapter["start"] <= 7 * 24 * 3600 or not _text(chapter.get("title"), 120)):
+            raise BackupError("Backup contains an invalid summary chapter.")
 
 
 def make_backup() -> tuple[bytes, int]:
@@ -48,7 +123,10 @@ def make_backup() -> tuple[bytes, int]:
     with zipfile.ZipFile(buff, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zipout:
         zipout.writestr("manifest.json", _encode(meta))
         zipout.writestr("transcripts.json", contents)
-    return buff.getvalue(), len(records)
+    archive_bytes = buff.getvalue()
+    if len(archive_bytes) > MAX_ARCHIVE_BYTES:
+        raise BackupError("Library backup exceeds the 50 MB restore limit; use the local SQLite backup procedure.")
+    return archive_bytes, len(records)
 
 
 def _validated_record(record: Any) -> tuple:
@@ -61,43 +139,29 @@ def _validated_record(record: Any) -> tuple:
     title = record.get("title")
     language = record.get("language")
     method = record.get("method")
-    if (not isinstance(source, str) or len(source) > 4096 or
-            not isinstance(title, str) or not 1 <= len(title) <= 500 or
-            not isinstance(language, str) or len(language) > 32 or
-            not isinstance(method, str) or len(method) > 100):
+    if (not _text(source, 4096) or not _text(title, 500) or not title or
+            not _text(language, 32) or not _text(method, 100)):
         raise BackupError("Backup record metadata is invalid.")
     segments = record.get("segments")
-    if not isinstance(segments, list) or not 1 <= len(segments) <= 30000:
-        raise BackupError("Backup contains invalid transcript segments.")
-    for segment in segments:
-        if not isinstance(segment, dict):
-            raise BackupError("Backup contains an invalid segment.")
-        start, end, text = segment.get("start"), segment.get("end"), segment.get("text")
-        if (isinstance(start, bool) or not isinstance(start, (int, float)) or
-                isinstance(end, bool) or not isinstance(end, (int, float)) or
-                not math.isfinite(start) or not math.isfinite(end) or
-                start < 0 or end < start or end > 7 * 24 * 3600 or
-                not isinstance(text, str) or len(text) > 25000):
-            raise BackupError("Backup contains invalid segment timestamps or text.")
-        if "speaker" in segment and (not isinstance(segment["speaker"], str) or len(segment["speaker"]) > 120):
-            raise BackupError("Backup contains an invalid speaker label.")
+    _validate_segments(segments)
     translations = record.get("translations", {})
     summary = record.get("summary")
-    if not isinstance(translations, dict) or summary is not None and not isinstance(summary, dict):
+    if not isinstance(translations, dict):
         raise BackupError("Backup contains invalid enhancements.")
     for lang, items in translations.items():
-        if not isinstance(lang, str) or len(lang) > 24 or not isinstance(items, list):
+        if lang not in {"en", "el"}:
             raise BackupError("Backup contains invalid translations.")
+        _validate_segments(items)
+    _validate_summary(summary)
     created_at = record.get("created_at")
     updated_at = record.get("updated_at")
-    if any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0
-           for v in (created_at, updated_at)):
+    if any(not _finite_number(v) or v < 0 for v in (created_at, updated_at)):
         raise BackupError("Backup contains an invalid timestamp.")
     return (identifier, source, title, language, method,
-            json.dumps(segments, ensure_ascii=False), library._plain(segments),
-            json.dumps(translations, ensure_ascii=False),
-            json.dumps(summary, ensure_ascii=False) if summary is not None else None,
-            created_at, updated_at)
+            _json_text(segments), library._plain(segments),
+            _json_text(translations),
+            _json_text(summary) if summary is not None else None,
+            float(created_at), float(updated_at))
 
 
 def restore_backup(archive_bytes: bytes) -> dict[str, int]:
@@ -114,19 +178,18 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
                 raise BackupError("Backup manifest is too large.")
             if next(x for x in files if x.filename == "transcripts.json").file_size > MAX_JSON_BYTES:
                 raise BackupError("Backup transcript data exceeds 100 MB.")
-            manifest = json.loads(archive.read("manifest.json"))
+            manifest = _load_json(archive.read("manifest.json"))
             payload = archive.read("transcripts.json")
-    except (zipfile.BadZipFile, EOFError, OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (zipfile.BadZipFile, EOFError, OSError, RuntimeError, NotImplementedError, zlib.error) as exc:
         raise BackupError("Invalid or damaged LinkScribe backup ZIP.") from exc
     if (not isinstance(manifest, dict) or manifest.get("format") != FORMAT or
-            manifest.get("version") != VERSION or
+            type(manifest.get("version")) is not int or manifest["version"] != VERSION or
+            type(manifest.get("records")) is not int or
             hashlib.sha256(payload).hexdigest() != manifest.get("sha256")):
         raise BackupError("Backup format or checksum is invalid.")
-    try:
-        data = json.loads(payload)
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise BackupError("Backup transcript JSON is invalid.") from exc
-    if (not isinstance(data, dict) or data.get("format") != FORMAT or data.get("version") != VERSION or
+    data = _load_json(payload)
+    if (not isinstance(data, dict) or data.get("format") != FORMAT or
+            type(data.get("version")) is not int or data["version"] != VERSION or
             not isinstance(data.get("records"), list) or
             len(data["records"]) != manifest.get("records")):
         raise BackupError("Backup manifest does not match its records.")

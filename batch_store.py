@@ -1,8 +1,8 @@
 """Crash-recoverable local batch journal.
 
 Only public, canonical video URLs and validated transcription settings are stored.
-The journal lives in the same SQLite database as the transcript library, making
-backup/restore cover both. No original media is persisted here.
+The journal lives in the same SQLite database as the transcript library.
+Browser backups export transcripts only, not batch work. No media is stored here.
 """
 from __future__ import annotations
 
@@ -77,6 +77,23 @@ def mark_item(job_id: str, status: str, title: str = "", error: str = "", librar
                 (status, title, title, error, library_id, time.time(), job_id))
         if cursor.rowcount != 1:
             raise KeyError(f"Missing batch job: {job_id}")
+
+
+def delete_library_record(identifier: str) -> bool:
+    """Delete a transcript and record its removal in the same transaction.
+
+    The journal may still say 'working' if deletion happens just after the
+    transcript is saved. A durable terminal status closes that recovery gap.
+    """
+    with _db() as conn:
+        deleted = conn.execute("DELETE FROM transcripts WHERE id=?", (identifier,))
+        if not deleted.rowcount:
+            return False
+        conn.execute("""UPDATE batch_queue_items SET status='error', error=?,
+                     library_id='', updated_at=? WHERE job_id=?""",
+                     ("Transcript was removed from the library after processing.",
+                      time.time(), identifier))
+        return True
 
 
 def get(batch_id: str) -> dict[str, Any] | None:

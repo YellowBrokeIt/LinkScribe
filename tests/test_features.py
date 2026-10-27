@@ -248,7 +248,7 @@ def test_runtime_prefers_supported_deno_and_falls_back_to_supported_node(monkeyp
     assert runtime_check.yt_dlp_js_options() == {"js_runtimes":{"node":{}}}
     installed(deno="deno 2.1.0\n",node="v20.0.0\n")
     assert runtime_check.runtime_details()["supported"] is False
-    assert runtime_check.yt_dlp_js_options() == {}
+    assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {}}
     installed(node="v26.12.1\n")
     assert runtime_check.runtime_details()["runtime"] == "node"
     installed(deno="deno 2.3.0\n")
@@ -275,7 +275,7 @@ def test_node_october_2026_patched_release_floors(monkeypatch):
     monkeypatch.setattr(runtime_check.shutil, "which", lambda name: f"/usr/bin/{name}")
     monkeypatch.setattr(runtime_check.subprocess, "run", lambda args, **kwargs: Result(versions[Path(args[0]).name]))
     assert runtime_check.runtime_details()["runtime"] is None
-    assert runtime_check.yt_dlp_js_options() == {}
+    assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {}}
     versions["node"] = "v24.22.1\n"
     assert runtime_check.runtime_details()["runtime"] == "node"
     assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {"node": {}}}

@@ -225,6 +225,14 @@ def _start_job(job: Job, worker, *args: Any) -> dict[str, str]:
     return {"id": job.id}
 
 
+def _cleanup_job_inputs(job: Job) -> None:
+    """Discard uploaded/downloaded media, including interrupted download parts."""
+    for pattern in ("input.*", "audio.*"):
+        for path in job.workdir.glob(pattern):
+            if path.is_file() or path.is_symlink():
+                path.unlink(missing_ok=True)
+
+
 def _guarded_worker(job_id: str, worker, *args: Any) -> None:
     try:
         _set(job_id, status="working")
@@ -237,10 +245,7 @@ def _guarded_worker(job_id: str, worker, *args: Any) -> None:
         _set(job_id, status="error", stage="Unable to transcribe", error="Processing failed. Check the terminal for details, or try an uploaded file.", finished_at=time.time())
     finally:
         # Delete inputs once output files exist (or the job has failed).
-        for path in jobs[job_id].workdir.glob("input.*"):
-            path.unlink(missing_ok=True)
-        for path in jobs[job_id].workdir.glob("audio.*"):
-            path.unlink(missing_ok=True)
+        _cleanup_job_inputs(jobs[job_id])
 
 
 def _captions(video_id: str, language: str) -> tuple[list[dict[str, Any]], str]:
@@ -436,6 +441,18 @@ def _export_key(file_type: str, record: dict[str, Any]) -> str | None:
     return None
 
 
+def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to download") -> None:
+    """Use the same complete job details for fresh and recovered library records."""
+    segments = record["segments"]
+    translations = record.get("translations", {})
+    _set(job_id, status="done", stage=stage, title=record["title"], error="",
+         language=record["language"], method=record["method"], segment_count=len(segments),
+         preview="\n".join(_shown_text(s) for s in segments)[:11000],
+         extras={"translation_language": next(iter(translations), ""), "summary": bool(record.get("summary")),
+                 "speakers": any(s.get("speaker") for s in segments)},
+         library_id=job_id, finished_at=time.time())
+
+
 def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, method: str,
                    translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None) -> None:
     job = jobs[job_id]
@@ -444,12 +461,7 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
     for filename, payload in _exports(record).items():
         (job.workdir / filename).write_bytes(payload)
     library.save(job.id, job.source, job.title, lang, method, segments, translations, summary)
-    _set(job_id, status="done", stage="Ready to download", language=lang,
-         method=method, segment_count=len(segments),
-         preview="\n".join(_shown_text(s) for s in segments)[:11000],
-         extras={"translation_language": next(iter(translations or {}), ""), "summary": bool(summary),
-                 "speakers": any(s.get("speaker") for s in segments)},
-         library_id=job.id, finished_at=time.time())
+    _complete_job(job_id, record)
 
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
@@ -572,19 +584,25 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
         # journal acknowledged it, skip costly retranscription on recovery.
         saved = library.get(job_id)
         if saved is not None:
-            job.status, job.title, job.library_id = "done", saved["title"], job_id
-            job.stage = "Restored completed transcript from library"
-            batch_store.mark_item(job_id, "done", title=job.title, library_id=job_id)
+            _complete_job(job_id, saved, "Restored completed transcript from library")
+        elif old["status"] == "done":
+            # A completed journal entry whose record is missing was deleted by
+            # the user. Recovery must never download and recreate that record.
+            _set(job_id, status="error", stage="Transcript removed from library",
+                 error="Transcript was removed from the library after processing.",
+                 finished_at=time.time())
         elif old["status"] == "error":
             # A definite per-video failure stays recorded; recovery does not
             # silently retry blocked or unauthorized sources forever.
-            job.status, job.error, job.stage = "error", old["error"], "Previous attempt failed"
+            _set(job_id, status="error", error=old["error"], stage="Previous attempt failed",
+                 finished_at=time.time())
         else:
             batch_store.mark_item(job_id, "working")
             _guarded_worker(job_id, _process_link, source, mode, language, model,
                             speakers, target, summary_enabled)
-            batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
-                                  library_id=job.library_id)
+        _cleanup_job_inputs(job)
+        batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
+                              library_id=job.library_id)
         batch.completed += 1
         if job.status == "error":
             batch.failed += 1
@@ -640,6 +658,9 @@ def _restore_pending_batches() -> None:
                     jobs[identifier] = Job(id=identifier, workdir=workdir,
                         source=item["source"], title=item["title"], batch_id=batch_id,
                         stage="Resuming interrupted batch...", status="queued")
+                    # Interrupted downloads must not survive skipped items or
+                    # interfere with yt-dlp's non-overwriting retry behavior.
+                    _cleanup_job_inputs(jobs[identifier])
             pool.submit(_guarded_batch, batch_id, links, mode, language, model,
                         speakers, target, summary)
         except Exception as exc:
@@ -920,7 +941,7 @@ async def edit_library_item(item_id: str, request: Request):
 @app.delete("/api/library/{item_id}")
 def delete_library_item(item_id: str, request: Request):
     _check_browser_origin(request)
-    if not JOB_ID_RE.fullmatch(item_id) or not library.delete(item_id):
+    if not JOB_ID_RE.fullmatch(item_id) or not batch_store.delete_library_record(item_id):
         raise HTTPException(404,"Transcript not found.")
     return {"ok":True}
 

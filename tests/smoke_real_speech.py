@@ -6,6 +6,7 @@ recordings, model credentials, or external local hardware are required.
 from __future__ import annotations
 
 import os
+import re
 import tempfile
 import time
 from pathlib import Path
@@ -41,6 +42,10 @@ def main() -> None:
             assert len(segments)>=1 and all(item.get('text') for item in segments)
             text=client.get(f'/api/library/{job_id}/download/txt').text
             assert len(text.strip())>=8, text
+            # Require recognizable words from the generated sample, not merely
+            # nonempty output (which could be an unrelated hallucination).
+            words = set(re.findall(r"[a-z]+", text.lower()))
+            assert len(words & {"hello", "recognition", "test", "speaking", "words"}) >= 4, text
             assert client.get(f'/api/library/{job_id}/download/srt').status_code==200
             assert client.get(f'/api/library/{job_id}/download/vtt').status_code==200
             assert client.get(f'/api/library/{job_id}/download/zip').status_code==200

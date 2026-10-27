@@ -77,7 +77,7 @@ def test_qa_runtime_older_node_rejected(monkeypatch):
     monkeypatch.setattr(runtime_check.shutil,"which",lambda name:"/usr/bin/node" if name=="node" else None)
     monkeypatch.setattr(runtime_check,"_version_output",lambda name,exe:(22,16,0))
     assert runtime_check.runtime_details()["supported"] is False
-    assert runtime_check.yt_dlp_js_options() == {}
+    assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {}}
 
 
 def test_qa_api_rejects_host_origin_and_missing_permission(qa):
