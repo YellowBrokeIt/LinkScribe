@@ -58,7 +58,12 @@ def test_batch_journal_created_and_archive_survives_restart(site,monkeypatch):
     archive1=site.get(f"/api/batches/{bid}/download").content
     app.jobs.clear();app.batches.clear()
     assert site.get(f"/api/batches/{bid}").json()["status"]=="done"
-    assert site.get(f"/api/batches/{bid}/download").content==archive1
+    archive2=site.get(f"/api/batches/{bid}/download").content
+    # Rebuilt ZIPs have new creation timestamps. Verify every payload rather
+    # than requiring byte-identical container metadata across a restart.
+    with zipfile.ZipFile(io.BytesIO(archive1)) as before, zipfile.ZipFile(io.BytesIO(archive2)) as after:
+        assert before.namelist()==after.namelist()
+        assert all(before.read(name)==after.read(name) for name in before.namelist())
     assert site.get("/api/batches").json()["items"][0]["total"]==2
     with zipfile.ZipFile(io.BytesIO(archive1)) as z:
         assert len([x for x in z.namelist() if x.endswith("/transcript.txt")])==2
