@@ -1,0 +1,50 @@
+name: LinkScribe candidate artifacts
+
+on:
+  push:
+    branches: ['feature/linkscribe-v03-reliability']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-snapshot:
+    name: Archive exact candidate source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build source archive and provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/linkscribe-candidate"
+          git archive --format=zip --prefix=LinkScribe/ HEAD \
+            -o "$RUNNER_TEMP/linkscribe-candidate/LinkScribe-candidate-source.zip"
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import subprocess
+          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'linkscribe-candidate'
+          archive = root / 'LinkScribe-candidate-source.zip'
+          manifest = {
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'ref': os.environ['GITHUB_REF'],
+              'artifact': archive.name,
+              'sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
+              'status': 'Unreleased candidate source, not a packaged installer.',
+              'validation': 'Consult tests and Independent LinkScribe QA for this exact commit.',
+          }
+          (root / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(manifest, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-candidate-${{ github.sha }}
+          path: ${{ runner.temp }}/linkscribe-candidate/
+          if-no-files-found: error
+          retention-days: 30
