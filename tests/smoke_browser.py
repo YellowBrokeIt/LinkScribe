@@ -335,7 +335,7 @@ def run(args) -> int:
                     target = download(f'#downloads a[href$="/download/{code}"]', "upload." + code)
                     exports[code] = {"bytes": target.stat().st_size,
                                      "sha256": hashlib.sha256(target.read_bytes()).hexdigest()}
-                assert text.strip() in (output / "downloads/upload.txt").read_text()
+                assert text.strip() in (output / "downloads/upload.txt").read_text(encoding="utf-8")
                 with zipfile.ZipFile(output / "downloads/upload.zip") as archive:
                     assert {"transcript.txt", "transcript.srt", "transcript.vtt", "transcript.json"} <= set(archive.namelist())
                 shot("upload-result")
@@ -353,7 +353,7 @@ def run(args) -> int:
                 expect(page.locator("#editor-message")).to_contain_text("Saved.")
                 page.locator("#editor-close").click()
                 current = download('#downloads a[href$="/download/txt"]', "edited-upload.txt")
-                assert edited in current.read_text()
+                assert edited in current.read_text(encoding="utf-8")
                 expect(page.locator("#preview")).to_contain_text(edited)
                 shot("saved-result-refreshed")
                 return {"visible_preview_and_download_match_saved_edit": True}
@@ -440,7 +440,7 @@ def run(args) -> int:
                 assert record["segments"][-1]["text"] == "Edited final segment remains saved."
                 assert record["translations"] == {} and record["summary"] is None
                 text_path = download('#editor-downloads a[href$="/download/txt"]', "edited-library.txt")
-                assert "Edited first segment" in text_path.read_text() and "Edited final segment" in text_path.read_text()
+                assert "Edited first segment" in text_path.read_text(encoding="utf-8") and "Edited final segment" in text_path.read_text(encoding="utf-8")
                 shot("library-edited-desktop")
                 page.set_viewport_size({"width": 390, "height": 844})
                 shot("library-edited-mobile")

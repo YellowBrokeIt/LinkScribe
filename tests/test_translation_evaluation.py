@@ -41,7 +41,7 @@ def corpus(tmp_path):
 
 
 def change_corpus(path, cases):
-    value = json.loads(path.read_text())
+    value = json.loads(path.read_text(encoding="utf-8"))
     value["cases"] = cases
     path.write_text(json.dumps(value, ensure_ascii=True), encoding="utf-8")
 
@@ -241,7 +241,7 @@ def test_rejected_model_responses_are_saved_losslessly(monkeypatch, corpus, tmp_
     original, _ = install_model(monkeypatch, lambda _: outer)
     report, code = run(corpus, tmp_path)
     assert code == 1 and report["cases"][0]["automatic_status"] == "error"
-    saved = json.loads((tmp_path / "report.json").read_text())
+    saved = json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))
     assert json.loads(saved["cases"][0]["requests"][0]["response_json"]) == outer
     assert enhancements.local_ollama_json is original
 
@@ -258,7 +258,7 @@ def test_malformed_outer_json_is_retained_before_production_wraps_error(monkeypa
     request = report["cases"][0]["requests"][0]
     assert request["invalid_response_text"] == document
     assert request["raw_evidence_available"] is True
-    assert "\\ud800" in (tmp_path / "report.json").read_text()
+    assert "\\ud800" in (tmp_path / "report.json").read_text(encoding="utf-8")
 
 
 def test_response_metadata_nan_does_not_destroy_valid_report(monkeypatch, corpus, tmp_path):
@@ -268,7 +268,7 @@ def test_response_metadata_nan_does_not_destroy_valid_report(monkeypatch, corpus
     report, code = run(corpus, tmp_path)
     assert code == 0
     assert "NaN" in report["cases"][0]["requests"][0]["response_json"]
-    json.loads((tmp_path / "report.json").read_text())
+    json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))
 
 
 def test_transport_failure_identifies_absent_raw_evidence(monkeypatch, corpus, tmp_path):
@@ -294,7 +294,7 @@ def test_bad_model_setup_leaves_incomplete_report_without_inference(monkeypatch,
     assert report["automatic_status"] == "incomplete"
     assert report["completed_cases"] == 0 and report["requested_cases"] == 1
     assert report["error"] and calls == []
-    assert json.loads((tmp_path / "report.json").read_text())["error"] == report["error"]
+    assert json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))["error"] == report["error"]
 
 
 def test_interrupt_keeps_completed_case_and_inflight_request(monkeypatch, corpus, tmp_path):
@@ -303,7 +303,7 @@ def test_interrupt_keeps_completed_case_and_inflight_request(monkeypatch, corpus
 
     def chat(_):
         if completed:
-            pending = json.loads((tmp_path / "report.json").read_text())
+            pending = json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))
             assert pending["completed_cases"] == 1 and pending["complete"] is False
             assert pending["cases"][1]["requests"][0]["request"]["model"] == "qwen3:4b"
             raise KeyboardInterrupt()
@@ -330,7 +330,7 @@ def test_checkpoint_replace_failure_keeps_previous_report_and_removes_tempfile(m
     monkeypatch.setattr(quality.os, "replace", fail_replace)
     with pytest.raises(OSError, match="disk failure"):
         quality.atomic_checkpoint(path, {"complete": True})
-    assert json.loads(path.read_text()) == {"complete": False}
+    assert json.loads(path.read_text(encoding="utf-8")) == {"complete": False}
     assert list(tmp_path.iterdir()) == [path]
 
 
@@ -376,8 +376,8 @@ def test_cli_exit_code_and_summary_preserve_review_status(monkeypatch, corpus, t
     lambda data: data["cases"][0].update(reference_translations=[]),
 ])
 def test_invalid_corpus_is_rejected(corpus, change):
-    data = json.loads(corpus.read_text())
+    data = json.loads(corpus.read_text(encoding="utf-8"))
     change(data)
-    corpus.write_text(json.dumps(data))
+    corpus.write_text(json.dumps(data), encoding="utf-8")
     with pytest.raises((ValueError, UnicodeError)):
         quality.read_corpus(corpus)
