@@ -73,3 +73,103 @@ Assistant classifications were two acceptable, one minor issue, one major error 
 The English long pipeline completed all three maps. Its reducer shortened approximately 2,747 input bytes to 1,738 bytes, then the 1,200-byte guard rejected that useful contraction. The Greek long pipeline completed two smaller maps within the unchanged time limit (130.646 and 163.092 seconds); its second 2,531-byte note was rejected by the 2,400-byte map-note guard before later chunks were sent. Neither failure is a claim about an accepted final long summary, because none was produced.
 
 The next candidate therefore changes the note guards without increasing outgoing input size or timeout, and makes the grounding instruction explicit about the action governed by permission/prohibition and the avoidance of unstated recipients, ownership, responsibilities or causes. Targeted regression and the unchanged fresh validation remain pending. No fixture-specific names, quantities or expected answers are encoded in the production prompt.
+
+## Bounded-note and grounding regression — preserved full run
+
+`qwen3-bounded-regression.json` is an exact copy of the next six-case actual
+run on detached commit `e2895f5`. Its SHA-256 is
+`9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324`.
+All measured source hashes, the corpus and the selected model/runtime stayed
+unchanged. This run predates the subsequent eight-point schema contract.
+
+Four short cases pass the integration checks. Assistant review rates two
+acceptable and two minor issues, with no material error observed in those four
+complete outputs. The publication action and invented borrower errors are
+repaired; the Greek bicycle result retains minor grammar and quote-status
+compression concerns. This is case-specific evidence, not a general accuracy
+approval.
+
+Both long cases remain **not evaluable as delivered summaries**:
+
+- English completed three maps, two reductions and synthesis, but returned
+  **36 key points**, exceeding the then-accepted maximum of 30. The final raw
+  response includes West Hall, 21 September and 28 visitors, but was correctly
+  rejected and is not an accepted user result.
+- Greek completed six maps and four reductions, then the fifth reduction
+  returned **HTTP 500** after 0.585 seconds. No synthesis was attempted. Two
+  completed reductions copied their input notes exactly. The server log ends
+  with a runner-connection EOF while saving another prompt-cache state.
+
+The full run took 1,628.348 seconds; the Greek case alone took 1,124.461 seconds.
+There were 21 inference attempts, 20 completed responses and 6 unload controls.
+Every inference user message stayed at or below 3,186 UTF-8 bytes, within the
+3,200-byte bound. Original transcript exports, SQLite records and separate
+interpreter retrieval survived both failures. These elapsed times are observed
+QA runtime, not a controlled speed benchmark.
+
+`runtime-cache-evidence.json` binds the raw server log checksum to its sanitized
+archive. The log reported nine cached prompts using 2,837.489 MiB with an 8,192 MiB
+limit, followed by another 436.114 MiB state-save attempt before the EOF. That
+supports a memory-pressure hypothesis; it does not prove an OOM kill. The
+bundled server’s help documents `LLAMA_ARG_CACHE_RAM` and `--cache-ram 0` to
+disable that cache. Its inheritance and practical effect still require an
+actual runtime check.
+
+The next source revision explicitly requests and constrains at most eight
+key points in direct/final responses, with a matching local guard. It retains
+the source/note byte limits and does not clip generated points. This change
+was first covered by engineering tests and then the mixed run below. Exact
+completed English map/reduce responses can support clearly labeled mixed
+replay/live regression; the failed Greek trace cannot be presented as a
+complete pre-final replay. The three fresh summary cases remain unexposed
+until these issues are resolved.
+
+## Eight-point contract: mixed replay and live inference
+
+`qwen3-eight-point-mixed-regression.json` preserves the complete two-case run
+on unchanged detached commit `2760679`. Its SHA-256 is
+`85a12389244825f2394e42c4f0459bdb4aabeac3d040326dd3727925499caea3`.
+The process exited 0 and both cases passed the application, SQLite, export,
+chapter-time and fresh-interpreter checks. Each accepted result has eight key
+points, within the explicit request schema and matching local guard.
+
+The consent case used one entirely new direct inference. The English long case
+reused three completed map responses and two completed reductions from the
+prior report, then made one new final inference. The replay helper required
+exact ordered request and timeout matches and failed closed without a live
+fallback. All five replayed stages, both live requests and two unload controls
+are identified separately in the report. The 66.8-second elapsed time includes
+replay and **is not fully live long-summary latency**. Replay source coverage
+means the current code constructed the identical original requests; it does
+not mean the model read that long source again.
+
+Assistant review rates the English long final **acceptable**: it preserves
+West Hall / 21 September / 28 visitors, the spending cap and unaccepted estimate,
+volunteer uncertainty, no entry fee and the publication constraints. The
+consent result has a **major error**: one key point says
+`Equipment budget corrected to €8:84.75 from €847.50`. Its main prose correctly
+says €84.75, but does not repair the contradictory malformed amount in the
+separately displayed point. The other central roles, permission limits and
+pending booking are retained. Valid JSON and a valid point count therefore do
+not establish factual accuracy.
+
+`qwen3-eight-point-mixed-manifest.json` records source/model/helper hashes,
+the observed exit code, reproduction arguments and the exact evidence boundary.
+`contract_replay_runner.py` and `contract_replay_runner_checks.py` preserve the
+helper and historical checks without changing their bytes. Their **14-check
+passing result belongs to frozen commit `2760679`**, not later summary contracts.
+The archived checks intentionally have no `test_` filename prefix, so normal
+current-suite collection does not run historical fixtures against new code.
+The manifest also binds the raw server-log hash to its sanitized copy. A first launcher
+attempt omitted the Python interpreter before the helper and failed before
+client or model inference; the corrected invocation is the measured run.
+
+The next candidate adds one general numerical-fidelity instruction and explicit
+map/reduction note schemas. Map notes may contain at most 700 characters;
+reduced notes at most 399. Two worst-case four-byte UTF-8 notes plus the
+two-byte separator occupy 3,194 bytes, within the unchanged 3,200-byte request
+limit. Matching local guards reject oversized output without clipping, and
+reduction must still make strict total-byte progress. A separately coordinated
+model-residency change addresses accumulated cache state. Consent and both
+long cases must be run fully live with memory evidence before considering the
+still-unexposed fresh validation. No broader summary-quality approval is given.

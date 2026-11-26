@@ -57,6 +57,8 @@ def install_model(monkeypatch, chat=None, tags=None):
                                 "details": {"quantization_level": "Q4_K_M"}}]} if tags is None else tags
         assert path == "/api/chat"
         calls.append(copy.deepcopy(payload))
+        if enhancements.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         return chat(payload) if chat else {
             "done": True,
             "message": {"content": json.dumps({"translations": ["Η Μαρία αποθήκευσε 12 απομαγνητοφωνήσεις."]})},

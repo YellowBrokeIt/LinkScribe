@@ -29,6 +29,9 @@ MAX_TRANSLATION_INPUT_BYTES = 1600
 MAX_JSON_TRANSLATION_INPUT_BYTES = 1000
 MAX_TRANSLATION_BATCH_ITEMS = 12
 MAX_TRANSLATION_OUTPUT_BYTES = 16384
+# Bound LinkScribe requests between unload acknowledgements. This is not a
+# universal memory bound: the daemon/model allocator and other clients vary.
+MAX_OLLAMA_RESIDENT_RESPONSES = 2
 _OLLAMA_PHASE: ContextVar[dict[str, Any] | None] = ContextVar("linkscribe_ollama_phase", default=None)
 
 
@@ -47,24 +50,32 @@ def _phase_model(task: str) -> str:
     return ollama_settings(task)[1]
 
 
+def _unload_phase_model(phase: dict[str, Any]) -> bool:
+    """Require an explicit acknowledgement; cleanup never changes model text."""
+    try:
+        response = local_ollama_json("/api/chat", {"model": phase["model"], "messages": [],
+                                                 "stream": False, "keep_alive": 0}, timeout=5)
+        return (isinstance(response, dict) and response.get("done") is True
+                and response.get("done_reason") == "unload")
+    except Exception:
+        return False
+
+
 @contextmanager
 def _ollama_phase(task: str):
     # Lazy selection preserves no-op and native-translation paths. Once chosen,
     # the same exact model is used throughout the phase and for its cleanup.
-    phase = {"task": task, "model": None, "attempted": False}
+    phase = {"task": task, "model": None, "attempted": False, "responses": 0,
+             "retain": os.getenv("LINKSCRIBE_OLLAMA_RETAIN_MODELS") == "1"}
     token = _OLLAMA_PHASE.set(phase)
     try:
         yield
     finally:
         _OLLAMA_PHASE.reset(token)
-        if phase["attempted"] and os.getenv("LINKSCRIBE_OLLAMA_RETAIN_MODELS") != "1":
-            try:
-                local_ollama_json("/api/chat", {"model": phase["model"], "messages": [],
-                                                "stream": False, "keep_alive": 0}, timeout=5)
-            except Exception:
-                # Cleanup failure must not replace an inference error or discard
-                # completed text. The server may retain the model until idle expiry.
-                print("[LinkScribe] Local model cleanup did not complete; the model may remain loaded.")
+        if phase["attempted"] and not phase["retain"] and not _unload_phase_model(phase):
+            # Final cleanup cannot replace an inference error or discard a
+            # completed result. No further inference follows in this phase.
+            print("[LinkScribe] Local model cleanup did not complete; the model may remain loaded.")
 
 
 class _NoOllamaRedirects(urllib.request.HTTPRedirectHandler):
@@ -187,8 +198,18 @@ def _ollama(payload: dict[str, Any]) -> Any:
     try:
         phase = _OLLAMA_PHASE.get()
         if phase is not None and phase["task"] == task:
+            if not phase["retain"] and phase["responses"] >= MAX_OLLAMA_RESIDENT_RESPONSES:
+                if not _unload_phase_model(phase):
+                    raise EnhancementError(
+                        "Local model cleanup could not be confirmed before the next request. "
+                        "The enhancement was stopped to limit cached model state; the original "
+                        "transcript remains available. Restart the local Ollama server and try again."
+                    )
+                phase["responses"] = 0
             phase["attempted"] = True
         response = local_ollama_json("/api/chat", body, timeout=240)
+        if phase is not None and phase["task"] == task:
+            phase["responses"] += 1
         if response.get("done_reason") == "length":
             raise EnhancementError("Ollama reached its response limit. Try a smaller task or a different model.")
         if "done" in response and response["done"] is not True:

@@ -35,6 +35,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import socket
 import sqlite3
 import subprocess
@@ -265,6 +266,70 @@ def observe_segment_creation(module, event, current_job):
     module.Segment.__init__ = observed
 
 
+def observe_whole_recording_speech(module, event, current_job):
+    """Retain the app's corroboration result, separately from ASR prefilter VAD."""
+    original = module.get_speech_timestamps
+    signature = inspect.signature(original)
+
+    def observed(audio, *args, **kwargs):
+        arguments = signature.bind(audio, *args, **kwargs)
+        arguments.apply_defaults()
+        before = array_evidence(audio)
+        try:
+            result = original(audio, *args, **kwargs)
+        except Exception as error:
+            event("whole_recording_speech_check_failed", job_id=current_job(),
+                  input_array_before=before, input_array_after=array_evidence(audio),
+                  errors=exception_chain(error))
+            raise
+        options = arguments.arguments.get("vad_options")
+        if options is None:
+            options = module.VadOptions(**arguments.arguments.get("kwargs", {}))
+        event("whole_recording_speech_check", job_id=current_job(),
+              input_array_before=before, input_array_after=array_evidence(audio),
+              sampling_rate_hz=arguments.arguments["sampling_rate"],
+              explicit_kwargs=evidence_value(kwargs), vad_options=evidence_value(options),
+              intervals=evidence_value(result))
+        return result
+
+    module.get_speech_timestamps = observed
+
+
+def observe_model_resolution(module, event, current_job):
+    """Hash the actual resolver-returned files without substituting model paths."""
+    original = module.download_model
+    signature = inspect.signature(original)
+
+    def observed(*args, **kwargs):
+        arguments = signature.bind(*args, **kwargs)
+        arguments.apply_defaults()
+        requested = arguments.arguments
+        result = original(*args, **kwargs)
+        path = Path(result)
+        names = {"model.bin", "config.json", "tokenizer.json", "preprocessor_config.json"}
+        names.update(item.name for item in path.glob("vocabulary.*") if item.is_file())
+        files, errors = {}, []
+        for name in sorted(names):
+            candidate = path / name
+            if not candidate.is_file():
+                continue
+            try:
+                files[name] = {"bytes": candidate.stat().st_size, "sha256": digest(candidate)}
+            except Exception as error:
+                errors.append({"file": name, "errors": exception_chain(error)})
+        revision = path.name if path.parent.name == "snapshots" and re.fullmatch(r"[0-9a-f]{40}", path.name) else None
+        complete = ({"model.bin", "config.json", "tokenizer.json"} <= files.keys()
+                    and any(name.startswith("vocabulary.") for name in files) and not errors)
+        event("asr_model_resolved", job_id=current_job(),
+              requested_model=str(requested["size_or_id"]), requested_revision=requested.get("revision"),
+              local_files_only=bool(requested.get("local_files_only")),
+              resolved_directory=str(path), resolved_revision=revision,
+              files=files, identity_complete=complete, evidence_errors=errors)
+        return result
+
+    module.download_model = observed
+
+
 def transcription_evidence(events):
     """Require observations consistent with what normal ASR actually requested."""
     decoded = [item for item in events if item["kind"] == "audio_decoded"]
@@ -272,6 +337,8 @@ def transcription_evidence(events):
     infos = [item for item in events if item["kind"] == "transcribe_info"]
     vad = [item for item in events if item["kind"] == "vad_speech_intervals"]
     collected = [item for item in events if item["kind"] == "post_vad_audio"]
+    corroboration = [item for item in events if item["kind"] == "whole_recording_speech_check"]
+    corroboration_failed = [item for item in events if item["kind"] == "whole_recording_speech_check_failed"]
     assert len(decoded) == len(requests) == len(infos) == 1, "Missing or repeated normal ASR observation."
     duration, rate = decoded[0]["decoded_duration_seconds"], decoded[0]["sampling_rate_hz"]
     arrays = decoded[0]["decoded_arrays"]
@@ -280,6 +347,17 @@ def transcription_evidence(events):
     assert arrays[0]["shape"] == [arrays[0]["sample_count"]]
     assert arrays[0]["sample_count"] == decoded[0]["channel_sample_counts"][0]
     options, info = requests[0]["resolved_options"], infos[0]["info"]
+    assert len(corroboration) + len(corroboration_failed) <= 1, "Repeated whole-recording corroboration."
+    for item in corroboration + corroboration_failed:
+        assert item["input_array_before"] == item["input_array_after"] == arrays[0], "Corroboration did not use the unchanged full ASR array."
+    if corroboration:
+        raw = [item["segment"] for item in events if item["kind"] == "asr_segment_created" and item["segment"]["text"].strip()]
+        assert raw and all(isinstance(s.get("no_speech_prob"), (int, float))
+            and math.isfinite(s["no_speech_prob"]) and s["no_speech_prob"] > options["no_speech_threshold"]
+            for s in raw), "Whole-recording check ran without the agreed ASR predicate."
+        assert corroboration[0]["sampling_rate_hz"] == rate
+        assert all(0 <= interval["start"] < interval["end"] <= arrays[0]["sample_count"]
+                   for interval in corroboration[0]["intervals"])
     assert duration > 0 and abs(info["duration"] - duration) <= 1 / rate
     assert options["clip_timestamps"] == "0", "The normal full recording must not be clipped."
     requested_vad = options["vad_filter"]
@@ -295,6 +373,8 @@ def transcription_evidence(events):
             "decoded_array": arrays[0], "same_decoded_array_passed_to_asr": True,
             "normal_explicit_transcribe_kwargs": requests[0]["explicit_kwargs"],
             "normal_transcribe_info": info,
+            "whole_recording_speech_checks": corroboration,
+            "whole_recording_speech_check_failures": corroboration_failed,
             "raw_segment_constructions": [item["segment"] for item in events if item["kind"] == "asr_segment_created"],
             "last_vad_kept_end_seconds": vad[0]["last_kept_end_seconds"] if vad else None,
             "post_vad_duration_seconds": info["duration_after_vad"]}
@@ -317,7 +397,9 @@ def nonspeech_evidence(events, kind):
     assert arrays[0]["shape"] == [arrays[0]["sample_count"]]
     assert arrays[0]["sample_count"] == item["channel_sample_counts"][0]
     assert not any(event["kind"] in {"transcribe_request", "transcribe_info", "vad_speech_intervals",
-                                   "post_vad_audio", "asr_segment_created", "recognition_done"}
+                                   "post_vad_audio", "asr_segment_created", "recognition_done",
+                                   "whole_recording_speech_check", "whole_recording_speech_check_failed",
+                                   "asr_model_resolved"}
                    for event in events), "Digital silence unexpectedly reached model inference."
     return {"processing_path": "exact_digital_silence_rejected_before_inference",
             "decoded_duration_seconds": item["decoded_duration_seconds"],
@@ -427,7 +509,8 @@ def serve(data_root, events_path, diagnose_tail=False):
                                     ensure_ascii=True, allow_nan=False) + "\n")
 
     versions = {}
-    for package in ("yt-dlp", "curl-cffi", "faster-whisper", "ctranslate2", "av", "certifi"):
+    for package in ("yt-dlp", "curl-cffi", "faster-whisper", "ctranslate2", "av", "certifi",
+                    "onnxruntime", "huggingface-hub"):
         try:
             versions[package] = importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:
@@ -456,11 +539,14 @@ def serve(data_root, events_path, diagnose_tail=False):
     onnxruntime.disable_telemetry_events()
     whisper_module = importlib.import_module("faster_whisper.transcribe")
     audio_module = importlib.import_module("faster_whisper.audio")
+    vad_module = importlib.import_module("faster_whisper.vad")
     observe_audio_decode(audio_module, event, retain_tail)
     observe_audio_decode(whisper_module, event, retain_tail)
     observe_speech_selection(whisper_module, event, lambda: getattr(context, "job_id", None))
     observe_transcribe(whisper_module, event, lambda: getattr(context, "job_id", None))
     observe_segment_creation(whisper_module, event, lambda: getattr(context, "job_id", None))
+    observe_whole_recording_speech(vad_module, event, lambda: getattr(context, "job_id", None))
+    observe_model_resolution(whisper_module, event, lambda: getattr(context, "job_id", None))
 
     download = app._download_source_audio
     recognize = app._recognize
@@ -938,9 +1024,16 @@ def run(args):
         scratch.cleanup()
         report["source_sha256_after"] = source_hashes()
         report["source_files_unchanged"] = report["source_sha256_before"] == report["source_sha256_after"]
+        all_events = ([json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+                      if events_path.exists() else [])
+        report["asr_model_resolutions"] = [item for item in all_events if item["kind"] == "asr_model_resolved"]
+        report["asr_model_identity_complete"] = (bool(report["asr_model_resolutions"])
+            and all(item["identity_complete"] and item["resolved_revision"] for item in report["asr_model_resolutions"]))
+        inference_observed = any(item["kind"] == "transcribe_request" for item in all_events)
         report["finished_at"] = now()
         report["all_selected_providers_passed"] = all(item["status"] == "pass" for item in report["fixtures"])
         passed = (report["complete"] and report["all_selected_providers_passed"] and report["source_files_unchanged"]
+                  and (not inference_observed or report["asr_model_identity_complete"])
                   and report["restart"]["status"] == "pass" and report["mixed_batch"]["status"] != "fail"
                   and report["tail_diagnostic"]["status"] in {"not_requested", "not_exercised", "completed"}
                   and report["nonspeech"]["status"] in {"not_requested", "pass"})

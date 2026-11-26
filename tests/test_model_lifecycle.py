@@ -122,7 +122,7 @@ def test_translation_unloads_once_after_all_fragments_and_pins_exact_model(monke
     assert ai._OLLAMA_PHASE.get() is None
 
 
-def test_summary_unloads_once_after_the_entire_operation(monkeypatch):
+def test_long_summary_unloads_between_pairs_and_at_the_end(monkeypatch):
     events = []
 
     def transport(path, payload, timeout):
@@ -141,7 +141,16 @@ def test_summary_unloads_once_after_the_entire_operation(monkeypatch):
     source = [{"start": i, "end": i + 1, "text": "An ordinary source sentence. " * 140} for i in range(3)]
     result = ai.summarize_segments(source)
     assert result["summary"] and len(events) > 2
-    assert events[-1] is True and not any(events[:-1])
+    assert events[-1] is True
+    pending = 0
+    for control in events:
+        if control:
+            assert 1 <= pending <= 2
+            pending = 0
+        else:
+            pending += 1
+            assert pending <= 2
+    assert sum(events) == (events.count(False) + 1) // 2
 
 
 @pytest.mark.parametrize("failure", [TimeoutError("inference timed out"), ValueError("malformed response"), KeyboardInterrupt()])
@@ -185,11 +194,112 @@ def test_shared_daemon_retention_opt_out_preserves_inference(monkeypatch):
 
     def transport(path, payload, timeout):
         calls.append(payload)
+        monkeypatch.setenv("LINKSCRIBE_OLLAMA_RETAIN_MODELS", "0")
         return {"done": True, "message": {"content": "Μετάφραση."}}
 
     monkeypatch.setattr(ai, "local_ollama_json", transport)
-    assert ai.translate_segments(segments(), "el", "en")
-    assert len(calls) == 2 and not any(ai.is_ollama_control_request(item) for item in calls)
+    source = [{"start": i, "end": i + 1, "text": "A source sentence."} for i in range(5)]
+    assert ai.translate_segments(source, "el", "en")
+    assert len(calls) == 5 and not any(ai.is_ollama_control_request(item) for item in calls)
+
+
+@pytest.mark.parametrize("model", ["qwen3:4b", "translategemma:4b"])
+def test_long_translation_pins_model_across_confirmed_residency_resets(monkeypatch, model):
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", model)
+    events = []
+
+    def transport(path, payload, timeout):
+        events.append(deepcopy(payload))
+        if ai.is_ollama_control_request(payload):
+            assert timeout == 5
+            return {"done": True, "done_reason": "unload"}
+        assert timeout == 240
+        monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "changed-during-operation:later")
+        monkeypatch.setenv("LINKSCRIBE_OLLAMA_RETAIN_MODELS", "1")
+        text = "Μεταφρασμένο κείμενο."
+        content = text if model.startswith("translategemma") else json.dumps({"translations": [text]})
+        return {"done": True, "message": {"content": content}}
+
+    source = [{"start": i, "end": i + 1, "text": "A" * 800, "speaker": f"Speaker {i}"}
+              for i in range(5)]
+    before = deepcopy(source)
+    monkeypatch.setattr(ai, "local_ollama_json", transport)
+    result = ai.translate_segments(source, "el", "en")
+    assert [ai.is_ollama_control_request(item) for item in events] == [False, False, True, False, False, True, False, True]
+    assert {item["model"] for item in events} == {model}
+    assert source == before and len(result) == 5
+    assert all({k: v for k, v in out.items() if k != "text"} ==
+               {k: v for k, v in original.items() if k != "text"}
+               for out, original in zip(result, before))
+    assert ai._OLLAMA_PHASE.get() is None
+
+
+@pytest.mark.parametrize("cleanup_reply", [None, [], {}, {"done": False, "done_reason": "unload"},
+    {"done": 1, "done_reason": "unload"}, {"done": True, "done_reason": "stop"},
+    {"done": True}, TimeoutError("cleanup timeout")])
+def test_unconfirmed_intermediate_cleanup_prevents_a_third_inference(monkeypatch, cleanup_reply):
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    events = []
+
+    def transport(path, payload, timeout):
+        control = ai.is_ollama_control_request(payload)
+        events.append(control)
+        if control:
+            assert timeout == 5
+            if isinstance(cleanup_reply, Exception):
+                raise cleanup_reply
+            return cleanup_reply
+        assert events.count(False) <= 2, "The third inference must never be attempted."
+        return {"done": True, "message": {"content": "Μεταφρασμένο κείμενο."}}
+
+    source = segments() + [{"start": 6, "end": 7, "text": "A third source."}]
+    before = deepcopy(source)
+    monkeypatch.setattr(ai, "local_ollama_json", transport)
+    with pytest.raises(ai.EnhancementError, match="cleanup could not be confirmed"):
+        ai.translate_segments(source, "el", "en")
+    # The boundary fails closed; the outer finalizer still makes its one final
+    # best-effort attempt and cannot replace that failure.
+    assert events == [False, False, True, True]
+    assert source == before and ai._OLLAMA_PHASE.get() is None
+
+
+def test_inference_failure_after_reload_survives_final_cleanup_failure(monkeypatch):
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    events = []
+    primary = OSError("primary inference failure")
+
+    def transport(path, payload, timeout):
+        control = ai.is_ollama_control_request(payload)
+        events.append(control)
+        if control:
+            if events.count(True) == 1:
+                return {"done": True, "done_reason": "unload"}
+            raise ValueError("secondary cleanup failure")
+        if events.count(False) == 3:
+            raise primary
+        return {"done": True, "message": {"content": "Μεταφρασμένο κείμενο."}}
+
+    source = segments() + [{"start": 6, "end": 7, "text": "A third source."}]
+    before = deepcopy(source)
+    monkeypatch.setattr(ai, "local_ollama_json", transport)
+    with pytest.raises(ai.EnhancementError) as caught:
+        ai.translate_segments(source, "el", "en")
+    assert caught.value.__cause__ is primary
+    assert events == [False, False, True, False, True]
+    assert source == before and ai._OLLAMA_PHASE.get() is None
+
+
+@pytest.mark.parametrize("cleanup_reply", [None, {"done": True, "done_reason": "stop"}])
+def test_unconfirmed_final_cleanup_keeps_a_complete_result(monkeypatch, cleanup_reply):
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+
+    def transport(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return cleanup_reply
+        return {"done": True, "message": {"content": "Μεταφρασμένο κείμενο."}}
+
+    monkeypatch.setattr(ai, "local_ollama_json", transport)
+    assert len(ai.translate_segments(segments(), "el", "en")) == 2
 
 
 def test_no_op_and_native_translation_do_not_unload_unrelated_models(monkeypatch):

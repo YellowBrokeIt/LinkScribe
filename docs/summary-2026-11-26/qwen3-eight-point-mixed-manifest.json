@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "report_file": "qwen3-eight-point-mixed-regression.json",
+  "report_sha256": "85a12389244825f2394e42c4f0459bdb4aabeac3d040326dd3727925499caea3",
+  "report_is_exact_raw_copy": true,
+  "run_exit_code": 0,
+  "complete": true,
+  "structural_pass_count": 2,
+  "failed_case_count": 0,
+  "execution_mode": "captured_map_reduction_replay_with_live_direct_and_final",
+  "elapsed_seconds": 66.8,
+  "elapsed_interpretation": "Elapsed time includes fast recorded-response replay plus new direct/final inference. It must not be reported as fully live long-summary latency.",
+  "actual_live_inference_attempt_count": 2,
+  "replayed_inference_request_count": 5,
+  "actual_unload_control_count": 2,
+  "baseline_report_sha256": "9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324",
+  "fixture_sha256": "0b241fc12d8a86e4fab50ecb8a3371588c6e8bc67754c782fcc5ef996001c830",
+  "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+  "source_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "source_hashes_unchanged": true,
+  "runtime_identity_unchanged": true,
+  "helpers": {
+    "contract_replay_runner.py": "95bfc14195fee8b08f359dfb08f1f74d104882ee63f945bb88b8341b91cd1274",
+    "contract_replay_runner_checks.py": "76f5254c578727f45dd7bf67bb7cb198a1bb5daaa2cc143248a6c1b2f246bfc4"
+  },
+  "helper_validation": {
+    "tests_passed": 14,
+    "contains_model_inference": false,
+    "scope": "Fourteen synthetic-transport checks against frozen 2760679, including actual application SQLite/export and fresh-interpreter checks; separate read-only assistant audit found no concrete blocker. The preserved historical file is intentionally named without the test_ prefix so current production pytest collection does not rerun its frozen fixtures against later contracts.",
+    "source_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+    "archive_rename": {
+      "original_name": "test_contract_replay_runner.py",
+      "archived_name": "contract_replay_runner_checks.py",
+      "bytes_unchanged": true,
+      "sha256": "76f5254c578727f45dd7bf67bb7cb198a1bb5daaa2cc143248a6c1b2f246bfc4"
+    }
+  },
+  "reproduction_command_arguments": [
+    "/workspace/scratch/88e3e0e8fa8f/LinkScribe/.venv/bin/python",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/run_with_ollama.py",
+    "/workspace/scratch/88e3e0e8fa8f/LinkScribe/.venv/bin/python",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/summary-qa/contract_replay_runner.py",
+    "--repo",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/summary-qa/frozen-2760679",
+    "--baseline",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/summary-qa/qwen3-bounded-regression.json",
+    "--baseline-sha256",
+    "9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324",
+    "--replay-case",
+    "summary-long-en-board-game-day",
+    "--output",
+    "NEW_REPORT.json"
+  ],
+  "setup_attempt": {
+    "status": "failed_before_client_or_model_inference",
+    "reason": "The initial launcher command omitted the second Python interpreter, so the wrapper tried to execute the non-executable helper directly and raised PermissionError. The corrected invocation explicitly passed Python before the helper. No source, prompt or model changed; no report existed from that launch."
+  },
+  "log": {
+    "raw_file": "qa-runtime/summary-qa/qwen3-eight-point-mixed-ollama-session.log",
+    "raw_sha256": "309fb3263e7f60d2ff4972cf1946e44acebe9288a16a190ea3396e12a8a34f3d",
+    "sanitized_file": "qwen3-eight-point-mixed-ollama-session.sanitized.log",
+    "sanitized_sha256": "cfb3e0a6ca1e5ae38afbc4171b5148cc6b29f833726c62932ad7db3c9873ac5b",
+    "redactions": [
+      "Omitted the server startup environment-map line.",
+      "Replaced the absolute QA workspace prefix with <qa_workspace>."
+    ],
+    "omitted_environment_lines": 1
+  },
+  "interpretation": "Mixed replay/live regression on exposed cases. Long map/reduction responses are reused only after exact ordered request and timeout matches. Direct/final outputs are new local model inference. Application persistence, exports and fresh-interpreter retrieval are actual. Source coverage for replayed stages means constructed-request/code coverage, not fresh model processing of that source. Structure does not approve semantic quality.",
+  "semantic_quality_approved": false,
+  "fresh_validation_exposed": false
+}

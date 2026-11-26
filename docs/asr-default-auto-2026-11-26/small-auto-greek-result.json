@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T20:28:00.800961+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "d7a54c7ec92d5bdd081a6b8fabe31c693b5d298b9ec0e75688d545a7796a8918",
+  "manifest_path": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/fixtures.json",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "First two Greek cases in the existing development manifest order, fixed by the review task before this new Auto/Small run. Prior development outputs are already exposed; no new inference informed this subset.",
+    "purpose": "Regression/default-route coverage of omitted model and omitted language form fields through actual upload, automatic Greek detection, SQLite, exports, cleanup and separate-interpreter retrieval.",
+    "representativeness": "Two previously exposed read-speech clips; not fresh semantic validation, an accuracy estimate or a broad retest.",
+    "source_manifest": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/fixtures.json",
+    "source_manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+    "frozen_case_ids": [
+      "fleurs-el_gr-validation-2-1528",
+      "fleurs-el_gr-validation-5-1515"
+    ]
+  },
+  "source_sha256": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0",
+      "onnxruntime": "1.32.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": null,
+    "effective_model": "small",
+    "language_mode": "auto",
+    "default_upload_language": "auto",
+    "language_form_field_omitted": true,
+    "model_form_field_omitted": true,
+    "model_provenance": {
+      "model": "small",
+      "repository": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "snapshot_directory": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+      "downloaded_at": "2026-11-26T17:50:45.132099+00:00",
+      "files": {
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      }
+    },
+    "HF_HOME": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache",
+    "offline": true,
+    "telemetry_opt_out": {
+      "ORT_DISABLE_TELEMETRY": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "onnxruntime_disable_telemetry_events_called": true
+    },
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:\n    try:\n        from faster_whisper.audio import decode_audio\n        audio = decode_audio(str(path), sampling_rate=16000)\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if len(audio) > 16000 * MAX_SECONDS:\n        raise ReadableError(\"The recording exceeds the 2-hour limit.\")\n    # Digital silence has no speech to recognize. This exact-zero check keeps\n    # every nonzero sample, including arbitrarily quiet speech; it is not VAD.\n    if not audio.any():\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            audio,\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            # Quiet speech mixed with effects can be lost before recognition if\n            # VAD removes it. Preserve the complete recording for ASR.\n            vad_filter=False,\n            condition_on_previous_text=False,\n            **({\"word_timestamps\": True} if word_timestamps else {}),\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = []\n        for segment in segments:\n            if not segment.text.strip():\n                continue\n            item = {\"start\": round(float(segment.start), 3), \"end\": round(float(segment.end), 3),\n                    \"text\": segment.text.strip()}\n            if word_timestamps:\n                item[\"_words\"] = [{\"start\": float(word.start), \"end\": float(word.end), \"word\": word.word}\n                                  for word in (getattr(segment, \"words\", None) or [])]\n            output.append(item)\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "model_factory_source": "@lru_cache(maxsize=1)\ndef _whisper_model(size: str):\n    import onnxruntime\n    onnxruntime.disable_telemetry_events()\n    from faster_whisper import WhisperModel\n    device = os.getenv(\"LINKSCRIBE_DEVICE\", \"cpu\").lower()\n    if device not in {\"cpu\", \"cuda\"}:\n        device = \"cpu\"\n    return WhisperModel(size, device=device, compute_type=\"int8\" if device == \"cpu\" else \"float16\")\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Peak RSS is the maximum resident set of this QA process, including loaded model and application. It excludes other processes and is not a whole-machine or combined ASR/translation memory measurement.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "artifacts_directory": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/small-auto-greek-result-artifacts-89b9918c",
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "media": {
+        "duration_seconds": 6.66,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "d0ab594de3614e50a9936f1532dca077",
+      "job_result": {
+        "id": "d0ab594de3614e50a9936f1532dca077",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "d0ab594de3614e50a9936f1532dca077"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.0,
+          "text": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά."
+        }
+      ],
+      "hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+      "word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 3,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 3,
+        "word_error_rate": 0.2727272727272727,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "ειδικούσ",
+            "hypothesis": "ιδικούσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικούσ",
+            "hypothesis": "κατασκοινωτικούσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "οικογένειεσ",
+            "hypothesis": "οικογένεισ"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 3,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 3,
+        "word_error_rate": 0.2727272727272727,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "ειδικουσ",
+            "hypothesis": "ιδικουσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικουσ",
+            "hypothesis": "κατασκοινωτικουσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "οικογενειεσ",
+            "hypothesis": "οικογενεισ"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 166,
+          "sha256": "6c12bcdf30a94b996ff50c25576ae55fcb5704048b68e0d69a96c3570eea2cd3"
+        },
+        "srt": {
+          "bytes": 198,
+          "sha256": "892c283fd000fbbd85e2265ea9daf3e152b65392ea7fea61ec03636cd206171c"
+        },
+        "vtt": {
+          "bytes": 204,
+          "sha256": "80d4b187d1868c2d100a948d8b0093c20a3e47ce35a10bba2f53fa536a480d82"
+        },
+        "json": {
+          "bytes": 553,
+          "sha256": "1b7497c0aca94cee12338808542d8f460c1a74b07c89c414744b1b6536249d08"
+        },
+        "zip": {
+          "bytes": 1172,
+          "sha256": "a8a5a42b68008c54532f0736ef2f3b120b38bc4728e1a1bf6643df7850e6cd0a"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 5.674,
+      "process_peak_rss_bytes_so_far": 689950720
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "language": "el",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "media": {
+        "duration_seconds": 6.0,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "b8cbe36fb4924026a7c3e8ed2a070538",
+      "job_result": {
+        "id": "b8cbe36fb4924026a7c3e8ed2a070538",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-5-1515.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "b8cbe36fb4924026a7c3e8ed2a070538"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.0,
+          "text": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια."
+        }
+      ],
+      "hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια.",
+      "word_metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 2,
+        "word_error_rate": 0.16666666666666666,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "μαρτελί",
+            "hypothesis": "μαρτεή"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τέσσερα",
+            "hypothesis": "4"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 2,
+        "word_error_rate": 0.16666666666666666,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "μαρτελι",
+            "hypothesis": "μαρτεη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τεσσερα",
+            "hypothesis": "4"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 134,
+          "sha256": "c4db20633255a332ed4f375f4c34801a2a2e0ea0d2524fef26020b50b6a05ef4"
+        },
+        "srt": {
+          "bytes": 166,
+          "sha256": "da4d977a2a8445c3763f28cc013e941138637a94f4677a48c1a67ce09b707b3c"
+        },
+        "vtt": {
+          "bytes": 172,
+          "sha256": "42977fe4ec3421691731e0ac48c3af29d6f0d1784b5136e2837ddf146cc9623d"
+        },
+        "json": {
+          "bytes": 521,
+          "sha256": "3324383cbcf19f446e9c99a6a70a3a0789961d3f84e368e375724e2558973a7f"
+        },
+        "zip": {
+          "bytes": 1137,
+          "sha256": "f2429da84fdea30ed1df704378b0a3d01936b82a11b47e4c5a7c728dfae8f5e2"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 2.82,
+      "process_peak_rss_bytes_so_far": 689950720
+    }
+  ],
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "pass": 2
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 2,
+      "reference_words": 23,
+      "word_errors": 5,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": 0.21739130434782608
+    },
+    "en": {
+      "cases": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": null
+    }
+  },
+  "finished_at": "2026-11-26T20:28:09.513987+00:00",
+  "elapsed_seconds": 8.712,
+  "process_peak_rss_bytes": 689950720
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T20:32:39.440679+00:00",
+  "reviewer": "assistant",
+  "report_file": "qwen3-bounded-regression.json",
+  "report_sha256": "9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324",
+  "raw_log_file": "qwen3-bounded-ollama-session.log",
+  "raw_log_sha256": "54192fea4db68a2c03b5b9705383c2ad168e5cd08894a78d0d43ae2273405013",
+  "raw_log_bytes": 193091,
+  "archived_log_file": "qwen3-bounded-ollama-session.sanitized.log",
+  "archived_log_sha256": "4f8f8da540933ed684877f83d74e6c3269cb0eab1ad83393a8295c7976f24406",
+  "archive_transformations": [
+    "Replaced the machine-local workspace prefix with <qa_workspace>.",
+    "Omitted 0 startup environment-map line(s); model request/response evidence remains in the separate exact JSON report."
+  ],
+  "observed_failure": {
+    "phase": "fifth Greek reduction after six maps and four successful reductions",
+    "http_status": 500,
+    "elapsed_seconds": 0.585,
+    "server_error": "llama-server completion error: Post http://127.0.0.1:46077/completion: EOF",
+    "last_reported_cache_before_final_save": {
+      "prompts": 9,
+      "mib": 2837.489,
+      "limit_mib": 8192.0
+    },
+    "next_prompt_state_save_mib": 436.114,
+    "synthesis_attempted": false
+  },
+  "interpretation": "The runner connection ended while another prompt state was being saved. The accumulated cache creates a plausible memory-pressure mechanism, but no process RSS trace or before/after OOM counter was captured for this run; do not claim a proven OOM kill.",
+  "local_help_provenance": {
+    "binary": "bundled ollama/lib/ollama/llama-server",
+    "binary_sha256": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b",
+    "help_text_sha256": "9d9183e1259583c80e1e12ee2539be9f22c0822c51610213287a75e45208eab8",
+    "excerpt": [
+      "-cram, --cache-ram N                    set the maximum cache size in MiB (default: 8192, 0 for decision",
+      "                                        models, -1 - no limit, 0 - disable)[(more",
+      "                                        info)](https://github.com/ggml-org/llama.cpp/pull/16391)",
+      "                                        (env: LLAMA_ARG_CACHE_RAM)"
+    ],
+    "documented_environment_variable": "LLAMA_ARG_CACHE_RAM",
+    "primary_upstream_link": "https://github.com/ggml-org/llama.cpp/pull/16391"
+  },
+  "next_experiment_status": "No cache setting has been changed by this review. Verify the documented setting is inherited by Ollama’s child and measure memory separately before claiming a fix.",
+  "compression_observations": [
+    {
+      "input_bytes": 1184,
+      "output_bytes": 963,
+      "exact_echo": false
+    },
+    {
+      "input_bytes": 2634,
+      "output_bytes": 2634,
+      "exact_echo": true
+    },
+    {
+      "input_bytes": 2479,
+      "output_bytes": 2479,
+      "exact_echo": true
+    },
+    {
+      "input_bytes": 3093,
+      "output_bytes": 2917,
+      "exact_echo": false
+    }
+  ],
+  "compression_scope": "These four completed reductions do not constitute a complete round. The existing total-shrinkage guard was not reached before the server failure."
+}

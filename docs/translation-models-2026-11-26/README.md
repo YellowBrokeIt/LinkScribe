@@ -29,6 +29,7 @@ of practical configured paths, not a controlled model-only benchmark.
 | Hy-MT3 7B, explicit native template, greedy | 3 | 2 | 1 | Elena's subtitle-review role becomes Eleni's. |
 | Hy-MT3 7B, bounded neighboring-source context prototype | 4 | 1 | 1 | One pronoun improves; the name distinction becomes worse. Not adopted. |
 | Hy-MT3 7B, publisher sampling settings with fixed seed | 2 | 2 | 2 | Actor errors remain and wording becomes less stable. Not adopted. |
+| Hy-MT3 7B, generic personal-name preservation instruction | 3 | 0 | 3 | Elena's role still changes to Eleni's; transcription becomes copying and Anna becomes he. Not adopted. |
 
 The first four paths and their exact examples are reviewed in
 [assistant-review.json](assistant-review.json). The three larger-model trials
@@ -129,6 +130,19 @@ output bound remained in place. This tests the publisher's sampling advice
 with a reproducibility constraint; it is not a random-seed search. The
 [sampling patch](hy-mt3-author-sampling-development.patch) and raw report retain
 the exact settings. Actor errors remained, so these settings were not adopted.
+
+A final bounded prompt experiment added only “Preserve personal names exactly
+as written in the source.” to the existing native 7B prompt. All six exposed
+development cases completed in 138.097 seconds, with 12 actual inference calls
+and six unload controls. The first name-disambiguation sentence improved, but
+the following sentence still assigned Elena's subtitle-review role to Eleni.
+The actual outputs also changed transcription to copying and Anna's later
+implicit action to “he.” The experiment was rejected; its instruction is not
+in the production adapter. The [complete raw report](hy-mt3-7b-name-preservation-development.json),
+[source/output review](hy-mt3-7b-name-preservation-review.json),
+[pre-inference plan](hy-mt3-7b-name-preservation-plan.json), and
+[exact patch](hy-mt3-7b-name-preservation.patch) preserve the failed attempt.
+The fresh v3 corpus remains unused.
 
 ## Model identity and resource limits
 

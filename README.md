@@ -63,10 +63,22 @@ no samples after 423.184 seconds. Separate VAD-off excerpts recovered later
 dialogue without replacing the normal saved transcript. The
 [ordinary full-recording follow-up](docs/asr-vad-off-2026-11-26/README.md) now
 retains that later dialogue. It also exposed two invented words from exact
-digital silence. The current candidate decodes once, rejects empty/all-zero
-audio before inference, and checks the decoded two-hour limit; its hosted
-follow-up is pending. Nonzero audio remains intact, and these checks do not
-establish accuracy on music, noise or quiet speech. The
+digital silence. The exact-zero correction is now verified in the
+[hosted follow-up](docs/asr-zero-noise-2026-11-26/README.md): no model inference,
+library record or export was created. That same run exposed a separate saved
+hallucination from nonzero white noise.
+
+The current candidate keeps complete nonzero audio intact. If every returned
+nonblank ASR segment exceeds Faster Whisper's existing no-speech threshold, a
+separate whole-recording speech check must find some speech before the result
+is saved. It never crops audio or removes individual segments. In the
+[paired actual comparison](docs/asr-speech-evidence-2026-11-26/README.md), the
+candidate rejected the same noise output that the baseline saved, while
+preserving identical text and timings for ordinary and 20 dB quieter Greek
+and English recordings. The quiet English clip required the second detector
+and was correctly retained. These seven fixtures do not establish general
+accuracy on music, noise or very faint speech; the updated unseeded hosted
+full-film check remains pending. The
 [public-caption probe](docs/public-captions-2026-11-26/README.md) preserves the
 separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
@@ -116,8 +128,12 @@ records the real model failure that prompted it.
 improvements and failed outputs. Source text is processed completely in bounded
 requests, and short sources use a direct summary. The current candidate requests
 one to eight key points with a matching model schema and local validation, after
-a real long-summary response exceeded the old unstated point limit. Factual
-accuracy, permission limits and final decisions still need review against the
+a real long-summary response exceeded the old unstated point limit. Input
+excerpts and intermediate notes are bounded by serialized UTF-8 size. Actual
+evaluation still finds numerical errors and changes from planned to completed
+actions. A faster experiment with stricter generated-note lengths was rejected
+after factual regressions and unfinished sentences; it is not the production
+summary path. Factual accuracy, permission limits and final decisions need review against the
 original; failed enhancements retain that original with a visible warning.
 
 For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
@@ -131,16 +147,19 @@ with only transcription or speaker labeling retain those caches for reuse;
 the next audio job after text enhancement reloads its models, adding some
 loading time.
 
-Each Ollama translation or summary operation reuses its selected model across
-all fragments or summary steps, then makes one best-effort unload request for
-that model. Cleanup is also attempted after inference failure, and a cleanup
-error does not discard completed text or replace the original error. The app
-does not change global daemon settings or unload unrelated model tags.
+Each Ollama translation or summary operation keeps its selected model fixed.
+After two returned inference responses, the app requires an explicit unload
+acknowledgment before sending another request. This limits accumulation of
+prompt state across a long operation, at the cost of reloading the model. If
+that acknowledgment fails, the enhancement stops and the original transcript
+remains available. Final cleanup is best effort, including after inference
+failure; it cannot discard a completed result or replace the original error.
+The app does not change global daemon settings or unload unrelated model tags.
 
 Model residency is shared by all clients of an Ollama daemon. Unloading a model
 can require another application using the same model to reload it. Set
 `LINKSCRIBE_OLLAMA_RETAIN_MODELS=1` before starting LinkScribe to disable its
-phase-end unload requests when that tradeoff is undesirable. The
+intermediate and final unload requests when that tradeoff is undesirable. The
 [model-lifetime notes](docs/model-memory-lifecycle.md) explain the scope and
 failure behavior. The [actual 34.635-second combined workflow](docs/full-workflow-2026-11-26/README.md)
 completed in 59.202 seconds and peaked at 4584.3 MiB concurrent RSS / 4576.3 MiB

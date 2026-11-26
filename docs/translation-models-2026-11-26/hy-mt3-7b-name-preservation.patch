@@ -1,0 +1,15 @@
+diff --git a/enhancements.py b/enhancements.py
+index e3e05ea..7940846 100644
+--- a/enhancements.py
++++ b/enhancements.py
+@@ -273,7 +273,9 @@ def _translate_plain_fragment(text: str, source: str, target: str, profile: str)
+         )
+     else:
+         prompt = (
+-            f"Translate the following text into {target_name}. Note that you should only output "
++            f"Translate the following text into {target_name}. "
++            "Preserve personal names exactly as written in the source. "
++            "Note that you should only output "
+             f"the translated result without any additional explanation:\n{text}"
+         )
+     translated = _ollama({"task": "translation", "plain_text": True,

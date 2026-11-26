@@ -95,6 +95,84 @@ def test_vad_observers_preserve_original_intervals_and_collected_audio():
     assert observed[0][1]["vad_options"]["max_speech_duration_s"] == {"nonfinite_float": "inf"}
 
 
+@pytest.mark.parametrize("fail", [False, True])
+def test_whole_recording_observer_keeps_original_array_intervals_and_error(fail):
+    from dataclasses import dataclass
+    from types import SimpleNamespace
+    import numpy as np
+
+    @dataclass
+    class Options:
+        threshold: float = 0.5
+        max_speech_duration_s: float = float("inf")
+
+    audio = np.arange(16, dtype=np.float32)
+    intervals = [{"start": 2, "end": 14}]
+    error = RuntimeError("Owned corroboration failure")
+    calls, events = [], []
+
+    def detect(value, vad_options=None, sampling_rate=16000, **kwargs):
+        calls.append((value, vad_options, sampling_rate, kwargs))
+        if fail:
+            raise error
+        return intervals
+
+    target = SimpleNamespace(get_speech_timestamps=detect, VadOptions=Options)
+    _provider_smoke().observe_whole_recording_speech(target,
+        lambda kind, **fields: events.append((kind, fields)), lambda: "owned-job")
+    if fail:
+        with pytest.raises(RuntimeError) as caught:
+            target.get_speech_timestamps(audio, sampling_rate=16000)
+        assert caught.value is error
+        assert events[0][0] == "whole_recording_speech_check_failed"
+    else:
+        assert target.get_speech_timestamps(audio, sampling_rate=16000) is intervals
+        assert events[0][0] == "whole_recording_speech_check"
+        assert events[0][1]["intervals"] == intervals
+        assert events[0][1]["vad_options"]["threshold"] == 0.5
+    assert len(calls) == len(events) == 1 and calls[0][0] is audio
+    assert calls[0][1:] == (None, 16000, {})
+    assert events[0][1]["input_array_before"] == events[0][1]["input_array_after"]
+    assert events[0][1]["input_array_before"]["array_identity"] == hex(id(audio))
+
+
+@pytest.mark.parametrize("missing_tokenizer", [False, True])
+def test_actual_resolver_files_are_hashed_without_replacing_result_or_exposing_token(tmp_path, missing_tokenizer):
+    from types import SimpleNamespace
+    import hashlib
+    import json
+
+    class ResolverPath(str):
+        pass
+
+    revision = "a" * 40
+    path = tmp_path / "models--owned--model" / "snapshots" / revision
+    path.mkdir(parents=True)
+    names = ["model.bin", "config.json", "vocabulary.txt"] + ([] if missing_tokenizer else ["tokenizer.json"])
+    for name in names:
+        (path / name).write_bytes(("owned " + name).encode())
+    original_result = ResolverPath(str(path))
+    calls, events = [], []
+
+    def resolve(size_or_id, revision=None, local_files_only=False, use_auth_token=None):
+        calls.append((size_or_id, revision, local_files_only, use_auth_token))
+        return original_result
+
+    target = SimpleNamespace(download_model=resolve)
+    _provider_smoke().observe_model_resolution(target,
+        lambda kind, **fields: events.append((kind, fields)), lambda: "owned-job")
+    result = target.download_model("small", revision=revision, use_auth_token="owned-private-token")
+    assert result is original_result
+    assert calls == [("small", revision, False, "owned-private-token")]
+    kind, details = events[0]
+    assert kind == "asr_model_resolved" and details["resolved_revision"] == revision
+    assert details["identity_complete"] is (not missing_tokenizer)
+    assert set(details["files"]) == set(names)
+    assert details["files"]["model.bin"] == {"bytes": len(b"owned model.bin"),
+        "sha256": hashlib.sha256(b"owned model.bin").hexdigest()}
+    assert "owned-private-token" not in json.dumps(events)
+
+
 def test_tail_audio_is_bounded_copied_and_never_changes_normal_decoded_samples():
     import numpy as np
     smoke = _provider_smoke()
@@ -222,6 +300,44 @@ def test_observation_validation_distinguishes_requested_vad_from_full_audio():
     assert direct["normal_vad_filter"] is False and direct["post_vad_duration_seconds"] == 2
     assert direct["last_vad_kept_end_seconds"] is None
     assert selected["normal_vad_filter"] is True and selected["post_vad_duration_seconds"] == 1.5
+
+
+@pytest.mark.parametrize("defect", [None, "different_array", "mutated_array", "low_asr_score", "out_of_bounds"])
+def test_corroboration_evidence_is_separate_from_vad_prefilter_and_requires_full_audio(defect):
+    from copy import deepcopy
+    events = _normal_observations()
+    events[1]["resolved_options"]["no_speech_threshold"] = 0.6
+    events.append({"kind": "asr_segment_created", "segment": {"text": "Owned diagnostic", "no_speech_prob": 0.99}})
+    check = {"kind": "whole_recording_speech_check", "input_array_before": deepcopy(events[0]["decoded_arrays"][0]),
+             "input_array_after": deepcopy(events[0]["decoded_arrays"][0]), "sampling_rate_hz": 16000,
+             "intervals": [{"start": 1, "end": 31999}]}
+    events.append(check)
+    if defect == "different_array":
+        check["input_array_before"]["array_identity"] = "replacement-array"
+    elif defect == "mutated_array":
+        check["input_array_after"]["pcm_sha256"] = "b" * 64
+    elif defect == "low_asr_score":
+        events[-2]["segment"]["no_speech_prob"] = 0.5
+    elif defect == "out_of_bounds":
+        check["intervals"][0]["end"] = 32001
+    if defect:
+        with pytest.raises(AssertionError):
+            _provider_smoke().transcription_evidence(events)
+    else:
+        result = _provider_smoke().transcription_evidence(events)
+        assert result["normal_vad_filter"] is False
+        assert result["last_vad_kept_end_seconds"] is None
+        assert result["post_vad_duration_seconds"] == 2
+        assert result["whole_recording_speech_checks"] == [check]
+
+
+@pytest.mark.parametrize("kind", ["whole_recording_speech_check", "whole_recording_speech_check_failed", "asr_model_resolved"])
+def test_zero_pcm_cannot_claim_no_model_activity_if_new_observers_ran(kind):
+    zero = _normal_observations()[:1]
+    zero[0]["decoded_arrays"][0]["nonzero_sample_count"] = 0
+    zero.append({"kind": kind})
+    with pytest.raises(AssertionError):
+        _provider_smoke().nonspeech_evidence(zero, "silence")
 
 
 @pytest.mark.parametrize("defect", ["repeated_decode", "different_array", "mutated_samples", "wrong_shape"])

@@ -5,7 +5,7 @@
   "semantic_quality_approved": false,
   "corpus_file": "tests/fixtures/summary_quality_cases.json",
   "corpus_sha256": "0b241fc12d8a86e4fab50ecb8a3371588c6e8bc67754c782fcc5ef996001c830",
-  "scope": "Initial internally authored English/Greek development diagnostics of the actual production summary and chapter workflow. No model output has been reviewed yet.",
+  "scope": "Owned English/Greek development and regression diagnostics of the actual summary/chapter workflow. Completed outputs and failures are reviewed separately; fresh validation remains unexposed.",
   "classification_definitions": {
     "acceptable": "The delivered summary, key points and chapter titles preserve the central source meaning and required late decisions. Reasonable compression is allowed; this output-specific judgment is not broad quality approval.",
     "minor_issue": "Limited wording, precision, language usability or noncritical omission without a material change to central facts or decisions.",
@@ -17,7 +17,7 @@
     "Important facts provide review priorities and are not a mandatory exhaustive reference summary. Ordinary background may be compressed; facts marked critical_late_fact must survive final synthesis.",
     "Check current decisions against superseded proposals; keep hypothetical events, unanswered questions and pending tasks distinct from completed actions.",
     "Quoted commands are source data. A report of a criticized instruction must not adopt its claim or execute its directions.",
-    "Assess source-language preference separately from factual fidelity because the current production prompt does not explicitly require a particular summary language.",
+    "Assess source-language usability separately from factual fidelity. The baseline lacked a source-language instruction; later corrected runs explicitly request the known source language.",
     "All fixtures are owned synthetic development cases. Results are not an external benchmark, independent human assessment, or population accuracy estimate.",
     "Corpus and review criteria were frozen before any model output; expected facts are never passed to the model beyond facts actually stated in source transcript segments."
   ],
@@ -586,21 +586,448 @@
           ]
         }
       ]
+    },
+    {
+      "report_file": "qwen3-bounded-regression.json",
+      "report_sha256": "9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324",
+      "exact_copy_of_raw_report": "qa-runtime/summary-qa/qwen3-bounded-regression.json",
+      "source_run_complete": true,
+      "corpus_complete": true,
+      "model": "qwen3:4b",
+      "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+      "runtime": {
+        "url": "http://127.0.0.1:11434",
+        "configured_model": "qwen3:4b",
+        "model": {
+          "name": "qwen3:4b",
+          "model": "qwen3:4b",
+          "modified_at": "2026-11-26T18:23:35.828600131+02:00",
+          "size": 2497293931,
+          "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "4.0B",
+            "quantization_level": "Q4_K_M",
+            "context_length": 262144,
+            "embedding_length": 2560,
+            "runner": "ggml"
+          },
+          "capabilities": [
+            "completion",
+            "tools",
+            "thinking"
+          ]
+        },
+        "version": {
+          "version": "0.40.12"
+        },
+        "inference_options": {
+          "temperature": 0,
+          "num_ctx": 8192,
+          "num_predict": 2048,
+          "num_thread": 4
+        }
+      },
+      "source_sha256": {
+        "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+        "enhancements.py": "fe6abd71499ed7592509f2200c5bd500608c0fc7be43efb791cb06933502707b",
+        "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+        "library_backup.py": "9a60e0d32d3de74d5d6a2c102df1013c51d79a903674c723611e208ba113cd4a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/evaluate_summary_quality.py": "e35277bffb4e854af6d144d8add276955268df66047b2b5149defb11563dfa40",
+        "/workspace/scratch/88e3e0e8fa8f/qa-runtime/summary-qa/frozen-e2895f5/tests/fixtures/summary_quality_cases.json": "0b241fc12d8a86e4fab50ecb8a3371588c6e8bc67754c782fcc5ef996001c830"
+      },
+      "source_sha256_unchanged": true,
+      "repository_head_before": "e2895f5f1328c8b4873df05156f15511a93cc0c8",
+      "repository_head_after": "e2895f5f1328c8b4873df05156f15511a93cc0c8",
+      "execution_isolation": "Detached e2895f5 worktree remained unchanged while main received separate silence/duration and eight-point contract changes. Those later changes were not part of this inference run.",
+      "elapsed_seconds": 1628.348,
+      "actual_inference_attempt_count": 21,
+      "completed_inference_response_count": 20,
+      "actual_unload_control_count": 6,
+      "maximum_inference_user_bytes": 3186,
+      "structural_case_counts": {
+        "pass": 4,
+        "failed": 2
+      },
+      "classification_counts": {
+        "minor_issue": 2,
+        "acceptable": 2,
+        "not_evaluable": 2
+      },
+      "reviewed_case_count": 6,
+      "runtime_failure_evidence_file": "runtime-cache-evidence.json",
+      "cases": [
+        {
+          "case_id": "summary-en-consent-and-roles",
+          "classification": "minor_issue",
+          "reason": "The prior wrong operator, publication-action loss and invented borrower are repaired. Rowan owns the recorder, Hana operates and returns it, Beatrice handles room/permission checks, the correct budget and pending Friday status remain, and no interviews have happened. Full publication is compressed but, in the same sentence as public quotations versus private recordings, retains the publication restriction. A stray colon and the generalization from checking each quotation with its speaker to verifying permissions are minor precision/style issues.",
+          "examples": [
+            {
+              "source_segment": 1,
+              "source_excerpt": "None has given permission to publish a full recording.",
+              "output_field": "key_points",
+              "output_excerpt": "No speaker permitted full publication"
+            },
+            {
+              "source_segment": 3,
+              "source_excerpt": "check each quotation with its speaker before publication",
+              "output_field": "summary",
+              "output_excerpt": "verify each speaker's permission before publication"
+            }
+          ],
+          "chapter_review": "The one source-start title accurately describes the oral-history planning excerpt.",
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "en",
+          "observed_output_language": "en",
+          "structural_pass": true,
+          "elapsed_seconds": 32.42,
+          "actual_inference_attempt_count": 1,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-el-workshop-counts",
+          "classification": "minor_issue",
+          "reason": "The central six/four/two distinction, correct amount, unpaid and unsent order, supplier-dependent future delay and notification after Petros rechecks remain intact in Greek. The final-offer phrasing compresses the distinction between the discussed €39.60 proposal and still-awaited final quote. ελεγχθηκαν lacks its accent and the key-point παράδοση αναβληθεί lacks θα, while the main summary correctly uses θα αναβληθεί. No actual payment or unconditional completed delay is asserted.",
+          "examples": [
+            {
+              "source_segment": 2,
+              "source_excerpt": "Η προσφορά που συζητήθηκε ήταν €39.60 για όλα τα καλώδια μαζί, όχι για κάθε ποδήλατο.",
+              "output_field": "summary",
+              "output_excerpt": "η Χριστίνα περιμένει τελική προσφορά €39.60 για όλα τα καλώδια."
+            },
+            {
+              "source_segment": 2,
+              "source_excerpt": "Αν ο προμηθευτής δεν επιβεβαιώσει τη διαθεσιμότητα, η παράδοση των δύο ποδηλάτων θα αναβληθεί.",
+              "output_field": "key_points",
+              "output_excerpt": "Ποσό δεν είχε πληρωθεί, παράδοση αναβληθεί αν δεν επιβεβαιωθεί διαθεσιμότητα"
+            }
+          ],
+          "chapter_review": "The Greek title accurately identifies the bicycle workshop/cable issue and uses the real source start.",
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "el",
+          "observed_output_language": "el",
+          "structural_pass": true,
+          "elapsed_seconds": 104.184,
+          "actual_inference_attempt_count": 1,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-en-quoted-command",
+          "classification": "acceptable",
+          "reason": "The instruction-like quotation remains explicitly an example to analyze, not a directive. Nine requests remain seven confirmed and two pending written approval, Tuesday remains unknown, and the neutral-reminder decision is preserved without invented approval or cancellation. No material change to the complete delivered result was observed.",
+          "examples": [
+            {
+              "source_segment": 1,
+              "source_excerpt": "The real booking list contains nine requests. Seven are confirmed and two are waiting for written approval.",
+              "output_field": "key_points",
+              "output_excerpt": "Real booking list: 9 requests total (7 confirmed, 2 pending written approval)"
+            }
+          ],
+          "chapter_review": "The title correctly describes analysis of the misleading training example, at the real source start.",
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "en",
+          "observed_output_language": "en",
+          "structural_pass": true,
+          "elapsed_seconds": 24.196,
+          "actual_inference_attempt_count": 1,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-el-quotation-and-correction",
+          "classification": "acceptable",
+          "reason": "The obsolete quoted cancellation instruction is identified as example content that does not reflect the real schedule. The delivered Greek result keeps two confirmed meetings, one awaiting the presenter, the real room B, the unanswered online-format question, the confirmed-only publication decision and the explicit absence of cancellations. Compressing the superseded room-A poster detail does not create a wrong current location.",
+          "examples": [
+            {
+              "source_segment": 3,
+              "source_excerpt": "Καμία από τις δύο επιβεβαιωμένες συναντήσεις δεν ακυρώθηκε.",
+              "output_field": "summary",
+              "output_excerpt": "Καμία από τις δύο επιβεβαιωμένες συναντήσεις δεν ακυρώθηκε."
+            }
+          ],
+          "chapter_review": "The title accurately distinguishes confirmed from pending meetings and uses the real source start.",
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "el",
+          "observed_output_language": "el",
+          "structural_pass": true,
+          "elapsed_seconds": 82.035,
+          "actual_inference_attempt_count": 1,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-long-en-board-game-day",
+          "classification": "not_evaluable",
+          "reason": "All three source maps, two reductions and final synthesis completed with stop, but Qwen emitted 36 key points, above the local maximum of 30, so the application rejected the result and saved the source transcript with a summary warning. The 3200-byte request bound and relaxed note guard worked: reduction accepted a useful 2308-byte note, and synthesis input was 3149 bytes. The final response mostly copied the supplied notes into prose and one point per sentence rather than producing a concise result. Its raw text contains the final West Hall / 21 September / 28 decision, but no accepted summary exists and those raw fragments do not constitute delivered semantic approval.",
+          "examples": [
+            {
+              "source_segment": 17,
+              "source_excerpt": "The final public plan therefore became West Hall on 21 September with capacity for 28 visitors.",
+              "output_field": "rejected_raw_synthesis",
+              "output_excerpt": "Final public plan: West Hall 21 September, 28 visitors, no entry fee, €180 spending limit"
+            }
+          ],
+          "chapter_review": "No accepted final chapter result; internal map titles cannot substitute for a delivered summary.",
+          "failure_evidence": {
+            "key_points_returned": 36,
+            "maximum_key_points_accepted": 30,
+            "synthesis_done_reason": "stop",
+            "synthesis_eval_count": 1263,
+            "synthesis_elapsed_seconds": 114.671,
+            "synthesis_user_bytes": 3149,
+            "case_elapsed_seconds": 259.783,
+            "warning": "Summary: Ollama did not return a valid summary."
+          },
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "en",
+          "observed_output_language": null,
+          "structural_pass": false,
+          "elapsed_seconds": 259.783,
+          "actual_inference_attempt_count": 6,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [
+            "Summary: Ollama did not return a valid summary."
+          ],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-long-el-photo-archive",
+          "classification": "not_evaluable",
+          "reason": "All six source maps and four reductions completed normally, then the fifth reduction returned HTTP 500 after 0.585 seconds. No synthesis was attempted and no final summary/chapters was accepted. The original transcript, exports, SQLite and fresh-interpreter retrieval remain intact. The retained server log records llama-server completion EOF immediately while saving an additional prompt-cache state; memory pressure from accumulating cached states is plausible but is not proven as an OOM kill. Two reductions also echoed their entire input unchanged despite the short-note instruction, so intermediate compression remains weak. The byte bound and total-reduction progress guard did not fail: the reduction round was interrupted before its progress check.",
+          "examples": [],
+          "chapter_review": "No accepted final chapters; internal map notes/titles cannot substitute for a delivered result.",
+          "failure_evidence": {
+            "completed_source_maps": 6,
+            "completed_reductions": 4,
+            "failed_phase": "reduce",
+            "failed_request_seconds": 0.585,
+            "error": "HTTP Error 500: Internal Server Error",
+            "synthesis_attempted": false,
+            "case_elapsed_seconds": 1124.461,
+            "exact_echo_reduction_input_bytes": [
+              2634,
+              2479
+            ],
+            "warning": "Summary: Local Ollama rejected the request. Check the selected model and Ollama version."
+          },
+          "evaluation_role": "bounded_request_and_grounding_regression_on_exposed_cases",
+          "source_language": "el",
+          "observed_output_language": null,
+          "structural_pass": false,
+          "elapsed_seconds": 1124.461,
+          "actual_inference_attempt_count": 11,
+          "actual_control_count": 1,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [
+            "Summary: Local Ollama rejected the request. Check the selected model and Ollama version."
+          ],
+          "semantic_quality_approved": false
+        }
+      ]
+    },
+    {
+      "report_file": "qwen3-eight-point-mixed-regression.json",
+      "report_sha256": "85a12389244825f2394e42c4f0459bdb4aabeac3d040326dd3727925499caea3",
+      "exact_copy_of_raw_report": "qa-runtime/summary-qa/qwen3-eight-point-mixed-regression.json",
+      "manifest_file": "qwen3-eight-point-mixed-manifest.json",
+      "source_run_complete": true,
+      "corpus_complete": false,
+      "run_exit_code": 0,
+      "replay_contract_verified": true,
+      "model": "qwen3:4b",
+      "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+      "runtime": {
+        "url": "http://127.0.0.1:11434",
+        "configured_model": "qwen3:4b",
+        "model": {
+          "name": "qwen3:4b",
+          "model": "qwen3:4b",
+          "modified_at": "2026-11-26T18:23:35.828600131+02:00",
+          "size": 2497293931,
+          "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "4.0B",
+            "quantization_level": "Q4_K_M",
+            "context_length": 262144,
+            "embedding_length": 2560,
+            "runner": "ggml"
+          },
+          "capabilities": [
+            "completion",
+            "tools",
+            "thinking"
+          ]
+        },
+        "version": {
+          "version": "0.40.12"
+        },
+        "inference_options": {
+          "temperature": 0,
+          "num_ctx": 8192,
+          "num_predict": 2048,
+          "num_thread": 4
+        }
+      },
+      "source_sha256": {
+        "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+        "enhancements.py": "ce11a18e22f4649db465cad6107783f540e028759db28556cdcdcf018ec63cf5",
+        "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+        "library_backup.py": "9a60e0d32d3de74d5d6a2c102df1013c51d79a903674c723611e208ba113cd4a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/evaluate_summary_quality.py": "e35277bffb4e854af6d144d8add276955268df66047b2b5149defb11563dfa40",
+        "/workspace/scratch/88e3e0e8fa8f/qa-runtime/summary-qa/frozen-2760679/tests/fixtures/summary_quality_cases.json": "0b241fc12d8a86e4fab50ecb8a3371588c6e8bc67754c782fcc5ef996001c830"
+      },
+      "source_sha256_unchanged": true,
+      "repository_head_before": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+      "repository_head_after": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+      "execution_mode": "captured_map_reduction_replay_with_live_direct_and_final",
+      "measurement_scope": "Elapsed time includes fast recorded-response replay plus new direct/final inference. It must not be reported as fully live long-summary latency.",
+      "replay_provenance": {
+        "baseline_report_file": "qwen3-bounded-regression.json",
+        "baseline_report_sha256": "9d618c75bf5f38947ec12e63e93d855ed4917d9e18be37b7ff0731f23c832324",
+        "corpus_sha256": "0b241fc12d8a86e4fab50ecb8a3371588c6e8bc67754c782fcc5ef996001c830",
+        "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "wrapper_sha256": "95bfc14195fee8b08f359dfb08f1f74d104882ee63f945bb88b8341b91cd1274",
+        "wrapper_file": "contract_replay_runner.py",
+        "baseline_complete_required": true,
+        "exact_ordered_request_matching": true,
+        "live_fallback_for_replay_mismatch": false,
+        "replayed_phases": [
+          "map",
+          "reduce"
+        ],
+        "live_inference_phases": [
+          "direct",
+          "synthesis"
+        ],
+        "selected_cases": [
+          "summary-en-consent-and-roles",
+          "summary-long-en-board-game-day"
+        ]
+      },
+      "elapsed_seconds": 66.8,
+      "actual_live_inference_attempt_count": 2,
+      "replayed_inference_request_count": 5,
+      "logical_inference_request_count": 7,
+      "actual_unload_control_count": 2,
+      "maximum_logical_inference_user_bytes": 3186,
+      "maximum_live_inference_user_bytes": 3149,
+      "structural_case_counts": {
+        "pass": 2,
+        "failed": 0
+      },
+      "classification_counts": {
+        "acceptable": 1,
+        "major_error": 1
+      },
+      "reviewed_case_count": 2,
+      "cases": [
+        {
+          "case_id": "summary-en-consent-and-roles",
+          "classification": "major_error",
+          "reason": "The complete result preserves the source roles, limited publication permission, pending room booking and absence of completed interviews. However, one delivered key point corrupts the approved equipment budget to €8:84.75. The main prose correctly states €84.75, but that does not repair the contradictory malformed amount in the separately displayed key points. This is a material numerical fidelity error, not a legitimate localization or a mere automatic lexical flag.",
+          "examples": [
+            {
+              "source_segment": 2,
+              "source_excerpt": "The approved equipment budget is €84.75. An earlier draft mistakenly showed €847.50 and has been replaced.",
+              "output_field": "key_points[6]",
+              "output_excerpt": "Equipment budget corrected to €8:84.75 from €847.50"
+            },
+            {
+              "source_segment": 1,
+              "source_excerpt": "None has given permission to publish a full recording.",
+              "output_field": "key_points[5]",
+              "output_excerpt": "No speaker permitted full publication"
+            }
+          ],
+          "chapter_review": "The oral-history event preparation title matches the source excerpt and its authentic start.",
+          "evaluation_role": "fully_live_direct_exposed_regression_after_eight_point_contract",
+          "source_language": "en",
+          "observed_output_language": "en",
+          "structural_pass": true,
+          "elapsed_seconds": 32.199,
+          "actual_live_inference_attempt_count": 1,
+          "replayed_inference_request_count": 0,
+          "actual_control_count": 1,
+          "fully_live_model_pipeline": true,
+          "key_point_count": 8,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        },
+        {
+          "case_id": "summary-long-en-board-game-day",
+          "classification": "acceptable",
+          "reason": "The newly generated final summary and eight key points preserve the current West Hall / 21 September / 28-visitor plan and identify the East Hall / 14 September / 36-visitor information as a superseded proposal. The €180 spending cap, unaccepted €146.20 estimate, no fee or agreed door donation, six confirmed versus four interested volunteers, future access checks and lack of blanket recording-publication permission remain intact. Normal background compression is allowed. This is a semantic judgment on the delivered result only: its three maps and two reductions were exact captured-response replays, not newly executed model stages.",
+          "examples": [
+            {
+              "source_segment": 17,
+              "source_excerpt": "The final public plan therefore became West Hall on 21 September with capacity for 28 visitors.",
+              "output_field": "key_points[7]",
+              "output_excerpt": "Final public plan: West Hall 21 September, 28 visitors, €180 spending limit"
+            },
+            {
+              "source_segment": 6,
+              "source_excerpt": "Celeste had received six definite offers and four expressions of interest. An expression of interest was not a confirmed shift.",
+              "output_field": "key_points[3]",
+              "output_excerpt": "Volunteer shifts not confirmed; 6 confirmed volunteers, 4 expressions of interest"
+            }
+          ],
+          "chapter_review": "All three retained titles describe the matching source excerpts and use the authentic deduplicated source starts 0.5, 360.5 and 675.5. These map titles were replayed, not newly inferred.",
+          "evaluation_role": "captured_map_reduction_replay_with_fully_live_final_exposed_regression",
+          "source_language": "en",
+          "observed_output_language": "en",
+          "structural_pass": true,
+          "elapsed_seconds": 33.674,
+          "actual_live_inference_attempt_count": 1,
+          "replayed_inference_request_count": 5,
+          "actual_control_count": 1,
+          "fully_live_model_pipeline": false,
+          "key_point_count": 8,
+          "fresh_interpreter_matches": true,
+          "actual_warnings": [],
+          "semantic_quality_approved": false
+        }
+      ]
     }
   ],
-  "updated_at": "2026-11-26T19:39:24.835424+00:00",
+  "updated_at": "2026-11-26T20:56:10.587164+00:00",
   "decision": {
-    "status": "first_correction_rejected_pending_guard_and_grounding_refinement",
-    "reason": "The direct path corrects the operator error and numerical corruption, and explicit source language produces Greek. However, one short case retains material consent/action ambiguity and an unstated borrower; both long cases fail unnecessarily strict note-size guards despite bounded, completed model calls. Fresh validation remains unexposed.",
+    "status": "eight_point_contract_verified_but_fresh_validation_blocked",
+    "reason": "The selected mixed run passes all integration checks and produces eight points per result. The live English-long final is acceptable, but its pre-final responses were replayed. The fully live consent direct output has a material malformed currency amount. Greek-long completion and memory behavior remain unresolved. Fresh validation is still unexposed; valid output shape is not semantic approval.",
     "next_general_changes": [
-      "Allow intermediate notes up to the existing3200-byte next-request budget; keep every outgoing request bounded, total reduction strictly shrinking, finite rounds and no clipping.",
-      "Keep the action governed by permissions/prohibitions explicit and do not add unstated recipient, ownership, responsibility or causal relationships.",
-      "Rerun targeted exposed regressions before the unchanged frozen validation set."
+      "Apply a generic numerical-fidelity instruction without case-specific values, references or response repair.",
+      "Evaluate structured map notes capped at 700 characters and reduced notes capped at 399, with matching local guards, unchanged source coverage and 3200-byte outgoing limits.",
+      "Combine the note contract with the separately reviewed model-residency correction, then execute consent and both exposed long cases fully live with memory evidence before considering fresh validation."
     ]
   },
   "pending": [
-    "targeted regression after small guard/grounding correction",
-    "fresh frozen three-case validation only if candidate is viable"
+    "fully live consent and both exposed long regressions on the combined note-contract, numerical-fidelity and residency candidate",
+    "full source/output semantic review and actual memory/runtime evidence",
+    "fully live fresh three-case validation only if exposed results support proceeding"
   ],
   "fresh_validation": {
     "file": "tests/fixtures/summary_quality_validation_v2.json",

@@ -50,6 +50,7 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 MAX_BYTES = 150 * 1024 * 1024             # 150 MB per uploaded/downloaded input
 MAX_SECONDS = 2 * 60 * 60                 # 2 hours per recording
+ASR_NO_SPEECH_THRESHOLD = 0.6            # faster-whisper's existing default
 JOB_TTL = 60 * 60                        # completed jobs retained locally for 1 hour
 MAX_ACTIVE = 8
 MAX_BATCH_SIZE = 20                          # queued + processing
@@ -388,14 +389,22 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             # Quiet speech mixed with effects can be lost before recognition if
             # VAD removes it. Preserve the complete recording for ASR.
             vad_filter=False,
+            no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,
             condition_on_previous_text=False,
             **({"word_timestamps": True} if word_timestamps else {}),
         )
         # transcribe() returns a generator, which must be consumed.
         output = []
+        all_marked_no_speech = True
         for segment in segments:
             if not segment.text.strip():
                 continue
+            probability = getattr(segment, "no_speech_prob", None)
+            all_marked_no_speech = all_marked_no_speech and (
+                isinstance(probability, (int, float))
+                and math.isfinite(probability)
+                and probability > ASR_NO_SPEECH_THRESHOLD
+            )
             item = {"start": round(float(segment.start), 3), "end": round(float(segment.end), 3),
                     "text": segment.text.strip()}
             if word_timestamps:
@@ -406,6 +415,17 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
         raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
     if not output:
         raise ReadableError("No spoken words were detected in this recording.")
+    if all_marked_no_speech:
+        # Corroborate only a complete output that ASR itself marks as no speech.
+        # Never crop the audio or filter individual segments: one speech anchor
+        # preserves the entire transcript, including quiet dialogue and tails.
+        try:
+            from faster_whisper.vad import get_speech_timestamps
+            speech = get_speech_timestamps(audio, sampling_rate=16000)
+        except Exception as exc:
+            raise ReadableError("Speech detection could not verify this recording. Try again or choose another speech model.") from exc
+        if not speech:
+            raise ReadableError("No spoken words were detected in this recording.")
     return output, str(info.language or language)
 
 
