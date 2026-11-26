@@ -53,6 +53,109 @@ def test_real_decode_observer_does_not_turn_a_decoder_error_into_success():
     assert observed == []
 
 
+def test_vad_observers_preserve_original_intervals_and_collected_audio():
+    from dataclasses import dataclass
+    from types import SimpleNamespace
+
+    @dataclass
+    class Options:
+        threshold: float = 0.5
+        max_speech_duration_s: float = float("inf")
+
+    audio = list(range(12))
+    chunks = [{"start": 1, "end": 3}, {"start": 8, "end": 10}]
+    collected = ([audio[1:3], audio[8:10]], [{"offset": 0, "duration": 0.4}])
+    options, calls, observed = Options(), [], []
+
+    def get_speech_timestamps(value, vad_options=None, sampling_rate=10, **kwargs):
+        calls.append(("vad", value, vad_options))
+        return chunks
+
+    def collect_chunks(value, selected, sampling_rate=10, max_duration=float("inf")):
+        calls.append(("collect", value, selected))
+        return collected
+
+    target = SimpleNamespace(get_speech_timestamps=get_speech_timestamps, collect_chunks=collect_chunks)
+    _provider_smoke().observe_speech_selection(target, lambda kind, **data: observed.append((kind, data)),
+                                               lambda: "owned-job")
+    assert target.get_speech_timestamps(audio, options) is chunks
+    assert target.collect_chunks(audio, chunks) is collected
+    assert calls[0][1] is calls[1][1] is audio
+    assert calls[0][2] is options and calls[1][2] is chunks
+    assert observed[0][1]["intervals"] == [{"start_sample": 1, "end_sample": 3},
+                                          {"start_sample": 8, "end_sample": 10}]
+    assert observed[0][1]["kept_sample_count"] == observed[1][1]["sample_count"] == 4
+    assert observed[0][1]["last_kept_end_seconds"] == 1
+    assert observed[1][1]["duration_seconds"] == 0.4
+    assert observed[0][1]["vad_options"]["max_speech_duration_s"] == {"nonfinite_float": "inf"}
+
+
+def test_tail_audio_is_bounded_copied_and_never_changes_normal_decoded_samples():
+    import numpy as np
+    smoke = _provider_smoke()
+    audio = np.arange(6000, dtype=np.float32)
+    windows = smoke.prepare_tail_windows(audio, 10)
+    assert sum(item["duration_seconds"] for item in windows) == 48
+    assert [(item["start_sample"], item["end_sample"]) for item in windows] == [
+        (4240, 4340), (5020, 5220), (5530, 5710)]
+    assert all(not np.shares_memory(audio, item["audio"]) for item in windows)
+    windows[0]["audio"][0] = -100
+    assert audio[4240] == 4240
+    clipped = smoke.prepare_tail_windows(audio[:5050], 10)
+    assert clipped[-1]["sample_count"] == 0
+    assert clipped[-1]["start_sample"] == clipped[-1]["end_sample"] == 5050
+
+
+@pytest.mark.parametrize("failure", [None, "before_output", "after_partial_output"])
+def test_tail_diagnostic_is_separate_and_retains_partial_failure(tmp_path, failure):
+    from dataclasses import dataclass
+    import json
+    import numpy as np
+
+    @dataclass
+    class Segment:
+        start: float
+        end: float
+        text: str
+
+    @dataclass
+    class Info:
+        language: str
+        duration: float
+
+    class Engine:
+        def __init__(self):
+            self.calls = []
+
+        def transcribe(self, samples, **settings):
+            self.calls.append((samples, settings))
+            if failure == "before_output" and len(self.calls) == 2:
+                raise ValueError("Owned diagnostic error")
+            if failure == "after_partial_output" and len(self.calls) == 2:
+                def partial():
+                    yield Segment(0, 1, "Owned partial diagnostic text")
+                    raise ValueError("Owned diagnostic generator error")
+                return partial(), Info("en", len(samples) / 10)
+            return iter([Segment(0, 1, "Owned diagnostic text only")]), Info("en", len(samples) / 10)
+
+    smoke, engine = _provider_smoke(), Engine()
+    windows = smoke.prepare_tail_windows(np.zeros(6000, dtype=np.float32), 10)
+    path = tmp_path / "diagnostic.json"
+    report = smoke.run_tail_diagnostic(engine, windows, path, {"model": "small"},
+                                      lambda: "unchanged-owned-saved-record")
+    assert len(engine.calls) == 3
+    assert all(settings == {"language": "en", "beam_size": 5, "vad_filter": False,
+        "condition_on_previous_text": False, "word_timestamps": False} for _, settings in engine.calls)
+    assert report["complete"] and report["normal_record_unchanged"]
+    assert report["semantic_quality"] == "unreviewed"
+    assert report["execution_status"] == ("error" if failure else "completed")
+    assert report["cases"][1]["status"] == ("error" if failure else "completed")
+    assert report["cases"][0]["raw_segments"][0]["text"] == "Owned diagnostic text only"
+    if failure == "after_partial_output":
+        assert report["cases"][1]["raw_segments"][0]["text"] == "Owned partial diagnostic text"
+    assert json.loads(path.read_text()) == report
+
+
 @pytest.mark.parametrize("detected", [
     {"deno": "2.2.9", "node": "24.22.0"},
     {"deno": "unreadable version"},

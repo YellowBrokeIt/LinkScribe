@@ -22,6 +22,7 @@ the original licence pages. Transcripts are machine-generated derivatives.
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
 import hashlib
 import importlib
@@ -37,6 +38,7 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import traceback
 import urllib.error
@@ -47,6 +49,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = "http://127.0.0.1:8765"
+TAIL_WINDOWS_SECONDS = ((424, 434), (502, 522), (553, 571))
 SOURCE_FILES = ("app.py", "sources.py", "runtime_check.py", "library.py", "batch_store.py",
                 "enhancements.py", "tests/smoke_real_links.py")
 FIXTURES = {
@@ -135,7 +138,20 @@ def exception_chain(error):
     return chain
 
 
-def observe_audio_decode(module, event):
+def evidence_value(value):
+    """Represent Python metadata, including explicit non-finite option values."""
+    if is_dataclass(value):
+        value = asdict(value)
+    if isinstance(value, dict):
+        return {str(key): evidence_value(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [evidence_value(item) for item in value]
+    if isinstance(value, float) and not math.isfinite(value):
+        return {"nonfinite_float": repr(value)}
+    return value
+
+
+def observe_audio_decode(module, event, on_decoded=None):
     """Measure the actual production decoder's return value without replacing it."""
     original = module.decode_audio
     signature = inspect.signature(original)
@@ -151,13 +167,105 @@ def observe_audio_decode(module, event):
               job_id=Path(input_file).parent.name if isinstance(input_file, (str, os.PathLike)) else None,
               sampling_rate_hz=rate, channel_sample_counts=counts,
               decoded_duration_seconds=max(counts, default=0) / rate)
+        if on_decoded is not None:
+            on_decoded(input_file, audio, rate)
         return audio
 
     module.decode_audio = observed_decode
 
 
-def serve(data_root, events_path):
-    """Only data locations and evidence observers differ from normal app startup."""
+def observe_speech_selection(module, event, current_job):
+    """Observe the actual VAD and collected arrays without changing either."""
+    original_vad, original_collect = module.get_speech_timestamps, module.collect_chunks
+    vad_signature, collect_signature = inspect.signature(original_vad), inspect.signature(original_collect)
+
+    def observed_vad(audio, *args, **kwargs):
+        arguments = vad_signature.bind(audio, *args, **kwargs)
+        arguments.apply_defaults()
+        result = original_vad(audio, *args, **kwargs)
+        rate = arguments.arguments["sampling_rate"]
+        intervals = [{"start_sample": int(chunk["start"]), "end_sample": int(chunk["end"])}
+                     for chunk in result]
+        event("vad_speech_intervals", job_id=current_job(), sampling_rate_hz=rate,
+              input_sample_count=len(audio), intervals=intervals,
+              kept_sample_count=sum(item["end_sample"] - item["start_sample"] for item in intervals),
+              last_kept_end_seconds=max((item["end_sample"] for item in intervals), default=0) / rate,
+              vad_options=evidence_value(arguments.arguments.get("vad_options")),
+              additional_options=evidence_value(arguments.arguments.get("kwargs", {})))
+        return result
+
+    def observed_collect(audio, chunks, *args, **kwargs):
+        arguments = collect_signature.bind(audio, chunks, *args, **kwargs)
+        arguments.apply_defaults()
+        result = original_collect(audio, chunks, *args, **kwargs)
+        counts = [len(chunk) for chunk in result[0]]
+        rate = arguments.arguments["sampling_rate"]
+        event("post_vad_audio", job_id=current_job(), sampling_rate_hz=rate,
+              collected_chunk_sample_counts=counts, sample_count=sum(counts),
+              duration_seconds=sum(counts) / rate,
+              maximum_chunk_duration=evidence_value(arguments.arguments.get("max_duration")))
+        return result
+
+    module.get_speech_timestamps, module.collect_chunks = observed_vad, observed_collect
+
+
+def prepare_tail_windows(audio, rate):
+    """Copy only 48 seconds of predetermined licensed-fixture diagnostic audio."""
+    windows = []
+    for start, end in TAIL_WINDOWS_SECONDS:
+        first, last = min(len(audio), int(start * rate)), min(len(audio), int(end * rate))
+        samples = audio[first:last].copy()
+        windows.append({"requested_start_seconds": start, "requested_end_seconds": end,
+            "start_sample": first, "end_sample": last, "sampling_rate_hz": rate,
+            "sample_count": len(samples), "duration_seconds": len(samples) / rate,
+            "pcm_dtype": samples.dtype.str,
+            "pcm_sha256": hashlib.sha256(memoryview(samples).cast("B")).hexdigest(), "audio": samples})
+    return windows
+
+
+def run_tail_diagnostic(engine, windows, report_path, metadata, saved_fingerprint):
+    """Separate VAD-off inference after cleanup; never replace the saved transcript."""
+    settings = {"language": "en", "beam_size": 5, "vad_filter": False,
+                "condition_on_previous_text": False, "word_timestamps": False}
+    before = saved_fingerprint()
+    report = {"schema_version": 1, "started_at": now(), "complete": False,
+        "execution_status": "running", "semantic_quality": "unreviewed", **metadata,
+        "purpose": "Post-hoc bounded tail diagnosis, not a replacement app transcript or benchmark.",
+        "comparison_limits": "Cropping, explicit English, and VAD off differ from the normal auto-language full recording; this is not a controlled model-quality comparison.",
+        "audio_storage": "Only bounded PCM copies in memory; no audio file persisted by the diagnostic.",
+        "request_settings": settings, "normal_record_sha256_before": before,
+        "cases": [{key: value for key, value in window.items() if key != "audio"} | {"status": "pending"}
+                  for window in windows]}
+    write_json(report_path, report)
+    for window, item in zip(windows, report["cases"]):
+        item["status"] = "running"
+        write_json(report_path, report)
+        started = time.monotonic()
+        try:
+            if window["sample_count"] <= 0:
+                raise ValueError("The normal decoder did not return samples for this fixed diagnostic window.")
+            segments, info = engine.transcribe(window["audio"], **settings)
+            item["raw_info"] = evidence_value(info)
+            item["raw_segments"] = []
+            for segment in segments:
+                item["raw_segments"].append(evidence_value(segment))
+                write_json(report_path, report)
+            item["status"] = "completed"
+        except Exception as error:
+            item.update(status="error", errors=exception_chain(error), traceback=traceback.format_exc())
+        item["elapsed_seconds"] = round(time.monotonic() - started, 3)
+        write_json(report_path, report)
+    after = saved_fingerprint()
+    report.update(complete=True, finished_at=now(), normal_record_sha256_after=after,
+                  normal_record_unchanged=before == after,
+                  execution_status="completed" if before == after and all(
+                      item["status"] == "completed" for item in report["cases"]) else "error")
+    write_json(report_path, report)
+    return report
+
+
+def serve(data_root, events_path, diagnose_tail=False):
+    """Isolated app; optional diagnosis runs after the normal worker has finished."""
     sys.path.insert(0, str(ROOT))
     import app
     import av
@@ -181,16 +289,34 @@ def serve(data_root, events_path):
         except importlib.metadata.PackageNotFoundError:
             versions[package] = None
     event("server_start", versions=versions, system_certificates=os.getenv("LINKSCRIBE_USE_SYSTEM_CERTS") == "1",
-          device="cpu", source_sha256=source_hashes())
+          device="cpu", source_sha256=source_hashes(), tail_diagnostic_requested=diagnose_tail)
+
+    context = threading.local()
+    retained_tails = {}
+
+    def retain_tail(input_file, audio, rate):
+        if not diagnose_tail or not isinstance(input_file, (str, os.PathLike)):
+            return
+        job_id = Path(input_file).parent.name
+        job = app.jobs.get(job_id)
+        if (job is None or job.batch_id
+                or job.source != FIXTURES["dailymotion_tears_of_steel"]["url"]):
+            return
+        retained_tails[job_id] = {"windows": prepare_tail_windows(audio, rate),
+            "audio_sha256": digest(input_file), "decoded_duration_seconds": len(audio) / rate,
+            "model": getattr(context, "model", None), "requested_language": getattr(context, "language", None)}
 
     # Observe the decoder that WhisperModel.transcribe actually calls. Its
     # returned array is passed through unchanged; no second decode is run.
     import onnxruntime
     onnxruntime.disable_telemetry_events()
-    observe_audio_decode(importlib.import_module("faster_whisper.transcribe"), event)
+    whisper_module = importlib.import_module("faster_whisper.transcribe")
+    observe_audio_decode(whisper_module, event, retain_tail)
+    observe_speech_selection(whisper_module, event, lambda: getattr(context, "job_id", None))
 
     download = app._download_source_audio
     recognize = app._recognize
+    guarded_worker = app._guarded_worker
 
     def observed_download(job_id, source):
         started = time.monotonic()
@@ -219,6 +345,7 @@ def serve(data_root, events_path):
         job_id = Path(path).parent.name
         event("recognition_start", job_id=job_id, model=model, requested_language=language,
               audio_sha256=digest(path))
+        context.job_id, context.model, context.language = job_id, model, language
         try:
             segments, detected_language = recognize(path, language, model)
             event("recognition_done", job_id=job_id, model=model, language=detected_language,
@@ -228,9 +355,55 @@ def serve(data_root, events_path):
             event("recognition_failed", job_id=job_id, errors=exception_chain(error),
                   elapsed_seconds=round(time.monotonic() - started, 3))
             raise
+        finally:
+            context.job_id = None
+
+    def observed_worker(job_id, worker, *args):
+        try:
+            # This original call saves the normal result and removes its media.
+            guarded_worker(job_id, worker, *args)
+            pending = retained_tails.pop(job_id, None)
+            if pending is None or app.jobs[job_id].status != "done":
+                return
+            report_path = events_path.parent / ("tail-diagnostic-" + job_id + ".json")
+            try:
+                clean = not list(app.jobs[job_id].workdir.glob("audio.*"))
+                if not clean:
+                    raise AssertionError("Normal media cleanup must complete before tail diagnosis.")
+
+                def saved_fingerprint():
+                    record = library.get(job_id)
+                    if record is None:
+                        raise AssertionError("Normal saved result must exist before tail diagnosis.")
+                    return hashlib.sha256(json.dumps(record, sort_keys=True, ensure_ascii=True,
+                                                    allow_nan=False).encode("utf-8")).hexdigest()
+
+                metadata = {"job_id": job_id, "fixture": "dailymotion_tears_of_steel",
+                    "license_provenance": FIXTURES["dailymotion_tears_of_steel"],
+                    "model": pending["model"], "normal_requested_language": pending["requested_language"],
+                    "input_audio_sha256": pending["audio_sha256"],
+                    "normal_decoded_duration_seconds": pending["decoded_duration_seconds"],
+                    "normal_input_cleaned_before_diagnostic": clean, "source_sha256": source_hashes()}
+                result = run_tail_diagnostic(app._whisper_model(pending["model"]), pending["windows"],
+                                             report_path, metadata, saved_fingerprint)
+                event("tail_diagnostic_finished", job_id=job_id, report=report_path.name,
+                      execution_status=result["execution_status"], normal_record_unchanged=result["normal_record_unchanged"])
+            except Exception as error:
+                # Diagnostics must never replace a saved result or its status.
+                partial = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {}
+                partial.update(complete=False, execution_status="error", job_id=job_id,
+                               errors=exception_chain(error), traceback=traceback.format_exc())
+                for item in partial.get("cases", []):
+                    if item["status"] in {"pending", "running"}:
+                        item["status"] = "incomplete"
+                write_json(report_path, partial)
+                event("tail_diagnostic_failed", job_id=job_id, report=report_path.name, errors=exception_chain(error))
+        finally:
+            retained_tails.pop(job_id, None)
 
     app._download_source_audio = observed_download
     app._recognize = observed_recognize
+    app._guarded_worker = observed_worker
     uvicorn.run(app.app, host="127.0.0.1", port=8765, log_level="warning")
 
 
@@ -252,6 +425,8 @@ def run(args):
     selected = args.fixture or ["youtube_sintel_trailer"]
     if len(selected) != len(set(selected)):
         raise ValueError("Do not repeat a fixture.")
+    if args.diagnose_dailymotion_tail and "dailymotion_tears_of_steel" not in selected:
+        raise ValueError("Tail diagnosis requires the explicitly licensed Dailymotion fixture.")
     report = {
         "schema_version": 1, "started_at": now(), "complete": False, "result": "running",
         "mode": "audio", "requested_model": args.model, "requested_language": args.language,
@@ -262,6 +437,8 @@ def run(args):
         "system_certificates": os.getenv("LINKSCRIBE_USE_SYSTEM_CERTS") == "1",
         "fixtures": [{"fixture": key, "status": "pending"} for key in selected],
         "mixed_batch": {"status": "pending"}, "restart": {"status": "pending"},
+        "tail_diagnostic": {"status": "pending" if args.diagnose_dailymotion_tail else "not_requested",
+                            "included_in_normal_pipeline_output": False},
     }
     checkpoint = lambda: write_json(output / "provider-report.json", report)
     checkpoint()
@@ -292,6 +469,8 @@ def run(args):
             probe.bind(("127.0.0.1", 8765))
         command = [args.server_python or sys.executable, str(Path(__file__).resolve()),
                    "--serve", str(data_root), "--events", str(events_path)]
+        if args.diagnose_dailymotion_tail:
+            command.append("--diagnose-dailymotion-tail")
         server = subprocess.Popen(command, cwd=data_root, stdout=log, stderr=subprocess.STDOUT,
                                   env={**os.environ, "PYTHONPATH": os.pathsep.join(
                                       [str(ROOT), os.environ.get("PYTHONPATH", "")])})
@@ -391,6 +570,10 @@ def run(args):
         assert any(e["kind"] == "acquisition_done" and e["audio_streams"] > 0 for e in evidence), evidence
         decoded = [e for e in evidence if e["kind"] == "audio_decoded"]
         assert len(decoded) == 1 and decoded[0]["decoded_duration_seconds"] > 0, evidence
+        vad = [e for e in evidence if e["kind"] == "vad_speech_intervals"]
+        collected = [e for e in evidence if e["kind"] == "post_vad_audio"]
+        assert len(vad) == len(collected) == 1, evidence
+        assert vad[0]["kept_sample_count"] == collected[0]["sample_count"], evidence
         assert any(e["kind"] == "recognition_done" and e["segment_count"] == len(segments) for e in evidence), evidence
         successful_records[identifier] = record
         export_payloads[identifier] = payloads
@@ -399,6 +582,8 @@ def run(args):
                 "decoded_duration_seconds": decoded[0]["decoded_duration_seconds"],
                 "last_segment_end_seconds": max(s["end"] for s in segments),
                 "maximum_segment_duration_seconds": max(s["end"] - s["start"] for s in segments),
+                "last_vad_kept_end_seconds": vad[0]["last_kept_end_seconds"],
+                "post_vad_duration_seconds": collected[0]["duration_seconds"],
                 "exports": {code: {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
                             for code, data in payloads.items()},
                 "sqlite_matches_saved_segments": True, "input_audio_cleaned": True,
@@ -432,6 +617,26 @@ def run(args):
                 item["elapsed_seconds"] = round(time.monotonic() - started, 3)
                 checkpoint()
                 print(item["fixture"] + ": " + item["status"].upper(), flush=True)
+
+        if args.diagnose_dailymotion_tail:
+            item = next(item for item in report["fixtures"] if item["fixture"] == "dailymotion_tears_of_steel")
+            if item["status"] != "pass":
+                report["tail_diagnostic"].update(status="not_exercised", reason="The normal licensed fixture did not complete.")
+            else:
+                path = output / ("tail-diagnostic-" + item["job_id"] + ".json")
+                deadline = time.monotonic() + 300
+                while True:
+                    diagnostic = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+                    if diagnostic.get("complete") or diagnostic.get("execution_status") == "error":
+                        break
+                    if server.poll() is not None or time.monotonic() >= deadline:
+                        report["tail_diagnostic"]["status"] = "incomplete"
+                        raise TimeoutError("Bounded tail diagnostic did not finish; normal saved result was not replaced.")
+                    time.sleep(0.25)
+                report["tail_diagnostic"].update(status=diagnostic["execution_status"], report=path.name,
+                    normal_record_unchanged=diagnostic.get("normal_record_unchanged"),
+                    semantic_quality="unreviewed")
+            checkpoint()
 
         passed = next((item for item in report["fixtures"] if item["status"] == "pass"), None)
         failed = next((item for item in report["fixtures"] if item["status"] == "fail" and item.get("final_job", {}).get("status") == "error"), None)
@@ -489,11 +694,19 @@ def run(args):
         for item in report["fixtures"]:
             if item["status"] in {"pending", "running"}:
                 item["status"] = "incomplete"
-        for key in ("mixed_batch", "restart"):
+        for key in ("mixed_batch", "restart", "tail_diagnostic"):
             if report[key]["status"] in {"pending", "running"}:
                 report[key]["status"] = "incomplete"
     finally:
         stop_server()
+        for path in output.glob("tail-diagnostic-*.json"):
+            partial = json.loads(path.read_text(encoding="utf-8"))
+            if not partial.get("complete") and partial.get("execution_status") == "running":
+                partial.update(execution_status="incomplete", interrupted_at=now())
+                for item in partial.get("cases", []):
+                    if item["status"] in {"pending", "running"}:
+                        item["status"] = "incomplete"
+                write_json(path, partial)
         log.close()
         if (data_root / "library.sqlite3").exists():
             with sqlite3.connect(data_root / "library.sqlite3") as source, sqlite3.connect(output / "library.sqlite3") as target:
@@ -504,7 +717,8 @@ def run(args):
         report["finished_at"] = now()
         report["all_selected_providers_passed"] = all(item["status"] == "pass" for item in report["fixtures"])
         passed = (report["complete"] and report["all_selected_providers_passed"] and report["source_files_unchanged"]
-                  and report["restart"]["status"] == "pass" and report["mixed_batch"]["status"] != "fail")
+                  and report["restart"]["status"] == "pass" and report["mixed_batch"]["status"] != "fail"
+                  and report["tail_diagnostic"]["status"] in {"not_requested", "not_exercised", "completed"})
         if args.require_mixed_batch:
             passed = passed and report["mixed_batch"]["status"] == "pass"
         report["result"] = "pass" if passed else "fail"
@@ -523,13 +737,15 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("qa-real-links"))
     parser.add_argument("--server-python", help="Python executable containing the app's installed dependencies")
     parser.add_argument("--require-mixed-batch", action="store_true")
+    parser.add_argument("--diagnose-dailymotion-tail", action="store_true",
+                        help="Separately diagnose three bounded licensed tail excerpts after normal saving/cleanup")
     parser.add_argument("--serve", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--events", type=Path, help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.serve:
         if not args.events:
             parser.error("Private --serve entry requires --events")
-        serve(args.serve, args.events)
+        serve(args.serve, args.events, args.diagnose_dailymotion_tail)
         return 0
     if not 30 <= args.timeout <= 3600:
         parser.error("--timeout must be between 30 and 3600 seconds per source")

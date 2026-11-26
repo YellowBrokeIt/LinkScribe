@@ -43,7 +43,7 @@ jobs:
           --fixture youtube_tears_of_steel_teaser
           --fixture vimeo_sintel_trailer
           --fixture dailymotion_tears_of_steel
-          --model small --timeout 600 --output qa-real-links
+          --model small --timeout 600 --diagnose-dailymotion-tail --output qa-real-links
       - name: Preserve successful and failed provider evidence
         if: always()
         uses: actions/upload-artifact@v4
