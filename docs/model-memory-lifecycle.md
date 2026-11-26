@@ -59,6 +59,16 @@ its sampling limits. It excludes unrelated processes and OS/browser headroom.
 A run on a larger host against a process budget is not a whole-machine test on
 a smaller RAM configuration.
 
+The [actual combined run](full-workflow-2026-11-26/README.md) on source
+`a3b8652f9bbef4f065c9b90dd6ac6c3df3434100` processed a 34.635-second recording
+through Small, public speakers, default Qwen translation and summary, SQLite and
+exports in 59.202 seconds. Its 266 complete samples peaked at 4584.3 MiB
+concurrent RSS and 4576.3 MiB PSS, below the selected 6144 MiB process budget.
+The host had 9967.3 MiB RAM. Both phase-end unload replies completed, but this
+does not establish an exact amount saved relative to a no-cleanup baseline.
+The same run failed translation/summary quality; resource success does not
+approve those features or a v1.0 release.
+
 Primary API references:
 
 - [Python cache reference retention](https://docs.python.org/3/library/functools.html#functools.lru_cache)

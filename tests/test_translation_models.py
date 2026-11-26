@@ -125,13 +125,15 @@ def test_dedicated_long_input_preserves_all_source_and_segment_metadata(monkeypa
         text = payload["messages"][0]["content"].split("\n\n\n", 1)[1]
         assert len(ai._translation_json([text]).encode("utf-8")) <= ai.MAX_TRANSLATION_INPUT_BYTES
         sent.append(text)
-        return {"done": True, "message": {"content": text}}
+        return {"done": True, "message": {"content": "Synthetic output: " + text}}
 
     monkeypatch.setattr(ai, "local_ollama_json", respond)
     result = ai.translate_segments(source, "el", "en")
     assert len(sent) > len(source)
     assert "".join(sent) == source[0]["text"] + source[2]["text"]
     assert len(result) == len(source) and result[1] == source[1]
+    assert result[0]["text"].count("Synthetic output: ") == len(sent) - 1
+    assert result[2]["text"] == "Synthetic output: A final remark."
     for original, translated in zip(source, result):
         assert {k: v for k, v in original.items() if k != "text"} == {
             k: v for k, v in translated.items() if k != "text"}

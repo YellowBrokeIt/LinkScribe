@@ -1,0 +1,50 @@
+{
+  "started_utc": "2026-11-26T19:46:00.789379+00:00",
+  "command": [
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/bin/python",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/run_with_ollama.py",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/bin/python",
+    "tests/smoke_full_local_workflow.py",
+    "--audio",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/fixtures-fresh-holdout/two_speakers_returning.wav",
+    "--translation",
+    "el",
+    "--asr-provenance",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/model-provenance.json",
+    "--memory-budget-mib",
+    "6144",
+    "--output",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/full-workflow-2026-11-26/combined-qwen-vad-off.json"
+  ],
+  "cwd": "/workspace/scratch/88e3e0e8fa8f/LinkScribe",
+  "explicit_environment": {
+    "ORT_DISABLE_TELEMETRY": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HOME": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache",
+    "LINKSCRIBE_DEVICE": "cpu",
+    "LINKSCRIBE_SPEAKER_BACKEND": "speechbrain",
+    "LINKSCRIBE_SPEAKER_CACHE": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/model",
+    "LINKSCRIBE_OLLAMA_URL": "http://127.0.0.1:11434",
+    "LINKSCRIBE_OLLAMA_MODEL": "qwen3:4b",
+    "LINKSCRIBE_OLLAMA_THREADS": "4",
+    "LINKSCRIBE_TRANSLATION_BACKEND": "ollama",
+    "LINKSCRIBE_TRANSLATION_MODEL": "qwen3:4b",
+    "LINKSCRIBE_QA_MODEL_CACHE": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/models"
+  },
+  "explicitly_unset_environment": [
+    "LINKSCRIBE_OLLAMA_RETAIN_MODELS"
+  ],
+  "production_sha256": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "enhancements.py": "a61f73c8c3dba80405fff25163a1a4c74d02824fcc66c09fa41db8ed891be575"
+  },
+  "wrapper_sha256": "fb024b8490486354dba3305604e7fe4ea4efa29944a1218c78ae2ca728d52d4d",
+  "audio_sha256": "dc977c1cb0af1a30946eeb0c59218039987412462d2e8c5a2d23990b559f087f",
+  "host_memory_mib": 9967.3,
+  "budget_interpretation": "6144 MiB engineering budget for concurrent measured process RSS; this host is larger than7.3 GiB, so this is not a physical7.3 GiB whole-machine acceptance test.",
+  "no_prior_ollama_processes": true,
+  "complete": true,
+  "exit_code": 0,
+  "finished_utc": "2026-11-26T19:47:01.439559+00:00"
+}

@@ -282,6 +282,29 @@ def _translate_plain_fragment(text: str, source: str, target: str, profile: str)
     return translated.strip()
 
 
+def _translation_result(segments: list[dict[str, Any]], results: list[dict[str, Any]],
+                        source: str | None, target: str) -> list[dict[str, Any]]:
+    """Do not advertise a copied transcript as a separate language result.
+
+    This only detects whole-result identity for a known English/Greek language
+    change. Names can legitimately stay unchanged; the neutral warning leaves
+    the original available without claiming that an identical name is wrong.
+    Numeric/punctuation-only input needs no lexical translation. A changed
+    response still needs review for language and meaning.
+    """
+    if (source in {"en", "el"} and source != target
+            and any(char.isalpha() for segment in segments for char in segment["text"])
+            and len(segments) == len(results)
+            and all(" ".join(before["text"].split()) == " ".join(after["text"].split())
+                    for before, after in zip(segments, results))):
+        target_name = "Greek" if target == "el" else "English"
+        raise EnhancementError(
+            f"No separate {target_name} translation was generated because the model returned "
+            "the original text unchanged. The original transcript remains available."
+        )
+    return results
+
+
 @_ollama_phase("translation")
 def translate_segments(segments: list[dict[str, Any]], target: str,
                        source_language: str | None = None) -> list[dict[str, Any]]:
@@ -310,7 +333,8 @@ def translate_segments(segments: list[dict[str, Any]], target: str,
     if translation_backend() == "marian":
         from marian_translation import TranslationError, translate_segments as translate_locally
         try:
-            return translate_locally(segments, source, target)
+            return _translation_result(segments, translate_locally(segments, source, target),
+                                       source, target)
         except TranslationError as exc:
             raise EnhancementError(str(exc)) from exc
     profile = translation_profile()
@@ -325,7 +349,7 @@ def translate_segments(segments: list[dict[str, Any]], target: str,
             parts = [_translate_plain_fragment(text, source, target, profile)
                      for text in _translation_fragments(segment["text"]) if text.strip()]
             results.append({**segment, "text": " ".join(parts) if parts else segment["text"]})
-        return results
+        return _translation_result(segments, results, source, target)
     translations: list[list[str]] = [[] for _segment in segments]
     batch: list[tuple[int, str]] = []
 
@@ -368,8 +392,9 @@ def translate_segments(segments: list[dict[str, Any]], target: str,
                 finish_batch()
             batch.append((index, text))
     finish_batch()
-    return [{**segment, "text": " ".join(parts) if parts else segment["text"]}
-            for segment, parts in zip(segments, translations)]
+    results = [{**segment, "text": " ".join(parts) if parts else segment["text"]}
+               for segment, parts in zip(segments, translations)]
+    return _translation_result(segments, results, source, target)
 
 
 @_ollama_phase("summary")

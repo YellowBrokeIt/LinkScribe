@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "reviewer": "OpenAI assistant; post-run source/output text and trace inspection, not blinded human review or audio listening",
+  "published_source_commit": "a3b8652f9bbef4f065c9b90dd6ac6c3df3434100",
+  "published_source_hashes_match_report": true,
+  "overall_feature_acceptance": "not_passed",
+  "structural_and_resource_gate": "passed",
+  "translation": {
+    "rating": "failed_to_translate",
+    "requested_target": "el",
+    "source_language": "en",
+    "segment_count": 21,
+    "verbatim_unchanged_segment_count": 21,
+    "greek_alphabetic_characters": 0,
+    "finding": "Both actual requests explicitly requested Greek. Both raw model responses echoed their English source strings. The adapter accepted them and exported them as el without a translation warning.",
+    "inference_request_source_json_utf8_bytes": [
+      566,
+      336
+    ],
+    "unchanged_output_was_not_substituted_by_observer": true
+  },
+  "summary": {
+    "rating": "material_fidelity_concern",
+    "source_language_passed": "en",
+    "examples": [
+      {
+        "source": "Jack would become Eva's happy husband",
+        "actual_key_point": "Jack becomes Eva's happy husband and remains in the world's duties",
+        "finding": "The key point loses the source conditional would; the prose summary itself retains it."
+      },
+      {
+        "source": "Mr. Neverbend began the captain, and I observed that up to that moment he had generally addressed me as President.",
+        "actual_key_point": "Mr. Neverbend, the captain, had previously addressed the speaker as President",
+        "finding": "The output makes Neverbend the captain. The source ASR wording is ambiguous and lacks quotation punctuation; that relationship is not safely established. This is an unsupported-interpretation concern, not an independent audio-ground-truth determination."
+      }
+    ]
+  },
+  "source_and_persistence": {
+    "normalized_recognized_words_preserved": true,
+    "translation_and_summary_used_original_english_segments": true,
+    "source_unmutated_by_enhancements": true,
+    "durable_download_after_job_eviction": true,
+    "zip_translation_matches_saved_output": true,
+    "zip_summary_matches_saved_output": true,
+    "backup_created": true,
+    "asr_segment_count": 7,
+    "final_segment_count": 21,
+    "unknown_speaker_segments": 9
+  },
+  "limits": [
+    "The automatic raw reports retain semantic_quality=unreviewed; this separate assessment records assistant findings.",
+    "No general ASR accuracy, full-recording WER, exact speaker boundary accuracy, noisy/Greek/overlap performance or new holdout success is claimed.",
+    "The same controlled speaker fixture was reused for a combined workflow regression.",
+    "The 34.635-second recording does not establish two-hour or long-translation resource and timeout behavior.",
+    "The 6144 MiB budget is for measured app/Ollama processes on a9967.3 MiB host, not a whole-machine test on7.3 GiB."
+  ]
+}

@@ -128,6 +128,38 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     assert client.get(f"/api/library/{job_id}").status_code==404
 
 
+def test_unchanged_translation_keeps_original_library_and_exports_with_warning(client, monkeypatch):
+    monkeypatch.setattr(module, "_download_source_audio", fake_audio)
+    monkeypatch.setattr(module, "_recognize", fake_recognize)
+    monkeypatch.setattr(module, "translate_segments", enhancements.translate_segments)
+    for name in ("LINKSCRIBE_TRANSLATION_MODEL", "LINKSCRIBE_TRANSLATION_BACKEND", "LINKSCRIBE_OLLAMA_MODEL"):
+        monkeypatch.delenv(name, raising=False)
+
+    def unchanged_reply(payload):
+        encoded = payload["messages"][1]["content"].split("JSON input: ", 1)[1]
+        return {"translations": [item["text"] for item in json.loads(encoded)]}
+
+    monkeypatch.setattr(enhancements, "_ollama", unchanged_reply)
+    response = client.post("/api/link", data={"url": VALID_VIMEO, "mode": "audio",
+        "consent": "true", "target_language": "el"})
+    assert response.status_code == 200
+    job_id = response.json()["id"]
+    job = client.get(f"/api/jobs/{job_id}").json()
+    assert job["status"] == "done" and not job["extras"]["translation_language"]
+    assert any("No separate Greek translation" in warning for warning in job["warnings"])
+    record = client.get(f"/api/library/{job_id}").json()
+    assert record["translations"] == {} and record["segments"] == fake_recognize(None, None, None)[0]
+    assert any("unchanged" in warning for warning in record["processing_metadata"]["warnings"])
+    assert client.get(f"/api/jobs/{job_id}/download/translation_txt").status_code == 404
+    archive = zipfile.ZipFile(io.BytesIO(client.get(f"/api/library/{job_id}/download/zip").content))
+    assert not any(name.startswith("translation_") for name in archive.namelist())
+    assert "Hello world" in archive.read("transcript.txt").decode()
+    assert not (module.jobs[job_id].workdir / "audio.mp3").exists()
+    module.jobs.clear()
+    assert client.get(f"/api/library/{job_id}").json()["translations"] == {}
+    assert "Hello world" in client.get(f"/api/library/{job_id}/download/txt").text
+
+
 def test_batch_is_one_queue_slot_and_continues_after_failure(client,monkeypatch):
     install_fake_models(monkeypatch)
     monkeypatch.setattr(module,"_captions",lambda ident,lang:([{"start":0,"end":1,"text":"Caption content"}],"en"))

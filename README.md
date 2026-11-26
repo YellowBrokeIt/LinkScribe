@@ -97,6 +97,14 @@ conditions, even when every request completed successfully. No replacement
 translation default has been approved. The original transcript is retained for
 comparison; timing, storage and export checks do not certify meaning.
 
+When a known English-to-Greek or Greek-to-English request returns the entire
+transcript unchanged, the app reports that no separate translation was generated
+and keeps the original without a misleading translated download. Unchanged
+names alone receive the same neutral notice; numbers and punctuation can remain
+identical. This check catches a copied response, not other language or meaning
+errors. The [complete-workflow evidence](docs/full-workflow-2026-11-26/README.md)
+records the real model failure that prompted it.
+
 For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
 
 ### Model lifetime and memory
@@ -119,9 +127,12 @@ can require another application using the same model to reload it. Set
 `LINKSCRIBE_OLLAMA_RETAIN_MODELS=1` before starting LinkScribe to disable its
 phase-end unload requests when that tradeoff is undesirable. The
 [model-lifetime notes](docs/model-memory-lifecycle.md) explain the scope and
-failure behavior. Clearing caches does not guarantee an immediate return of
-all native memory; a complete app-plus-Ollama memory measurement is still
-pending, and no fit claim for a 7.3 GiB machine is made.
+failure behavior. The [actual 34.635-second combined workflow](docs/full-workflow-2026-11-26/README.md)
+completed in 59.202 seconds and peaked at 4584.3 MiB concurrent RSS / 4576.3 MiB
+PSS across the app and Ollama. It passed a 6144 MiB process budget on a 9967.3 MiB
+host; OS/browser headroom was outside that measurement. Translation and summary
+quality failed in the same run. This is neither a whole-machine fit claim for
+7.3 GiB nor evidence for long recordings or larger models.
 
 The [v1.0 acceptance record](docs/V1-RELEASE-GATES.md) lists the workflows being
 verified before a release. The version remains a draft candidate while those

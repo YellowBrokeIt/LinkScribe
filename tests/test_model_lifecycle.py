@@ -199,8 +199,9 @@ def test_no_op_and_native_translation_do_not_unload_unrelated_models(monkeypatch
         ai.summarize_segments([])
     import marian_translation
     monkeypatch.setenv("LINKSCRIBE_TRANSLATION_BACKEND", "marian")
-    monkeypatch.setattr(marian_translation, "translate_segments", lambda source, *_: source)
-    assert ai.translate_segments(segments(), "el", "en") == segments()
+    native_result = [{**item, "text": "Μια συνθετική μετάφραση."} for item in segments()]
+    monkeypatch.setattr(marian_translation, "translate_segments", lambda source, *_: native_result)
+    assert ai.translate_segments(segments(), "el", "en") == native_result
 
 
 def load_helper(filename):

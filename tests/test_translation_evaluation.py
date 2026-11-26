@@ -150,8 +150,7 @@ def test_evaluator_identifies_translation_override_and_passes_source_language(mo
 
 
 @pytest.mark.parametrize("text,kind", [
-    ("Maria saved 12 transcripts.", "unchanged_source"),
-    ("Maria saved 12 transcripts.", "target_script_missing"),
+    ("Maria has saved 12 transcripts.", "target_script_missing"),
     ("Η Μαρία saved twelve transcripts in the local directory.", "substantial_latin_text"),
     ("Η Μαρία αποθήκευσε 12 αρχεία.", "term_not_observed"),
     ("Η Μαρία αποθήκευσε 112 απομαγνητοφωνήσεις.", "number_not_observed"),
@@ -164,6 +163,18 @@ def test_lexical_misses_request_review_without_claiming_execution_failed(monkeyp
     assert report["semantic_quality"] == "unreviewed"
     strict, code = run(corpus, tmp_path, fail_on_review=True)
     assert code == 1 and strict["counts"]["review"] == 1
+
+
+def test_whole_source_copy_is_a_recorded_adapter_error(monkeypatch, corpus, tmp_path):
+    install_model(monkeypatch, lambda _: reply("Maria saved 12 transcripts."))
+    report, code = run(corpus, tmp_path)
+    assert code == 1 and report["automatic_status"] == "error"
+    case = report["cases"][0]
+    assert "No separate Greek translation" in case["error"]["message"]
+    assert case["segments"] == make_case()["segments"]
+    captured = json.loads(case["requests"][0]["response_json"])
+    assert json.loads(captured["message"]["content"])["translations"] == ["Maria saved 12 transcripts."]
+    assert case["semantic_quality"] == "unreviewed"
 
 
 @pytest.mark.parametrize("number", ["5,00:00", "5.000", "50000"])
@@ -361,7 +372,7 @@ def test_report_cannot_overwrite_its_corpus(monkeypatch, corpus):
 
 
 def test_cli_exit_code_and_summary_preserve_review_status(monkeypatch, corpus, tmp_path, capsys):
-    install_model(monkeypatch, lambda _: reply("Maria saved 12 transcripts."))
+    install_model(monkeypatch, lambda _: reply("Maria has saved 12 transcripts."))
     code = quality.main(["--corpus", str(corpus), "--output", str(tmp_path / "report.json"),
                          "--case", "example", "--fail-on-review-flags"])
     summary = json.loads(capsys.readouterr().out)
