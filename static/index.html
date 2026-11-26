@@ -184,7 +184,7 @@
           </div>
           <div class="enhancements" id="enhancements">
             <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Optional public CPU model setup; no access token needed. Uses audio mode.</small></span></label>
-            <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters</strong><small>Uses locally installed Ollama model</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters · draft</strong><small>Local Ollama; check facts and conditions against the source</small></span></label>
             <div class="setting"><label for="target-language">Translate transcript · experimental</label>
               <select id="target-language"><option value="none">No translation</option><option value="el">To Greek 🇬🇷</option><option value="en">To English 🇬🇧</option></select>
             </div>
@@ -330,7 +330,7 @@
      try {
        const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
        if(record.summary){const summary=record.summary;
-         $("summary-result").textContent="SUMMARY\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
+         $("summary-result").textContent="SUMMARY DRAFT\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
          $("summary-result").hidden=false;
        }
      }catch(_){}

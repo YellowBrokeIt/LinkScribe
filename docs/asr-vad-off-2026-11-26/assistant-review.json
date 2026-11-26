@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-26T19:59:14.618771+00:00",
+  "reviewer": "assistant",
+  "source_commit": "a3b8652f9bbef4f065c9b90dd6ac6c3df3434100",
+  "semantic_quality_approved": false,
+  "run_url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/45886466964",
+  "job_id": 140138289537,
+  "artifact_id": 15149328436,
+  "artifact_zip_sha256": "6127f905751d7bb3b5d74c49417a97b41b370719161628a980a35a018a9834d4",
+  "raw_report_sha256": "35b71e15227f35c7f9d742a1ca875ed7bf8f5f21eb74526533cd7ecc4eaae555",
+  "source_hashes_verified_against_published_git": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "a61f73c8c3dba80405fff25163a1a4c74d02824fcc66c09fa41db8ed891be575",
+    "tests/smoke_real_links.py": "80f7f186153eb170d131926cffc32248b290ed94e36741f45be7f69b74a65d30"
+  },
+  "source_files_unchanged": true,
+  "pipeline_report_complete": true,
+  "pipeline_report_result": "fail",
+  "decisive_failure": {
+    "kind": "words_saved_from_exact_digital_silence",
+    "input": {
+      "kind": "silence",
+      "expected_speech": "none_by_construction",
+      "recipe": "Signed 16-bit PCM zeros",
+      "duration_seconds": 32,
+      "sampling_rate_hz": 16000,
+      "channels": 1,
+      "sample_count": 512000,
+      "pcm_format": "signed_16_bit_little_endian",
+      "pcm_sha256": "7b331c02e313c7599d5a90212e17e6d3cb729bd2e1c9b873c302a63c95a2f9bf",
+      "wav_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+      "wav_bytes": 1024044,
+      "attribution": "Owned generated QA data; no external recording or reference text."
+    },
+    "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+    "elapsed_seconds": 6.076,
+    "normal_settings": {
+      "language": null,
+      "beam_size": 5,
+      "vad_filter": false,
+      "condition_on_previous_text": false
+    },
+    "decoded_duration_seconds": 32.0,
+    "post_vad_duration_seconds": 32.0,
+    "saved_segments": [
+      {
+        "start": 0.0,
+        "end": 2.06,
+        "text": "you"
+      },
+      {
+        "start": 30.0,
+        "end": 32.0,
+        "text": "You"
+      }
+    ],
+    "raw_record": "records/nonspeech-f0ce42c84da34b39905b08136dfb8da5.json",
+    "interpretation": "The fixture contains only zero PCM samples by construction, so these saved words have no acoustic speech source. This is an actual false-success failure, not an expected no-speech error or a timeout."
+  },
+  "noise_case": {
+    "status": "pass",
+    "input": {
+      "kind": "white_noise",
+      "expected_speech": "none_by_construction",
+      "recipe": "Python random.Random(20261126); one randint(-3276,3276) per signed 16-bit PCM sample",
+      "duration_seconds": 32,
+      "sampling_rate_hz": 16000,
+      "channels": 1,
+      "sample_count": 512000,
+      "pcm_format": "signed_16_bit_little_endian",
+      "pcm_sha256": "3ca60d7681e809cee6c5127685f2c837ab010d11694f1f0b46f85e2f7468c094",
+      "wav_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+      "wav_bytes": 1024044,
+      "attribution": "Owned generated QA data; no external recording or reference text."
+    },
+    "elapsed_seconds": 92.211,
+    "final_status": "error",
+    "final_error": "No spoken words were detected in this recording.",
+    "no_record_or_exports_checks_passed": true,
+    "interpretation": "One deterministic noise fixture passed. This does not establish behavior on all non-speech audio or a controlled latency comparison."
+  },
+  "film": {
+    "input_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+    "input_bytes": 11919385,
+    "decoded_duration_seconds": 734.1453125,
+    "normal_settings": {
+      "language": null,
+      "beam_size": 5,
+      "vad_filter": false,
+      "condition_on_previous_text": false
+    },
+    "post_vad_duration_seconds": 734.1453125,
+    "segment_count": 97,
+    "last_segment_end_seconds": 713.96,
+    "maximum_segment_seconds": 11.0,
+    "later_dialogue_examples": [
+      {
+        "start": 518.96,
+        "end": 520.96,
+        "text": "The world's changed Celia."
+      },
+      {
+        "start": 534.96,
+        "end": 536.96,
+        "text": "Maybe we can too."
+      },
+      {
+        "start": 561.6,
+        "end": 566.64,
+        "text": "There's a lesson to be learned from this could have gone worse"
+      }
+    ],
+    "credit_tail_output_needs_audio_review": [
+      {
+        "start": 712.96,
+        "end": 713.96,
+        "text": "Let's go."
+      }
+    ],
+    "batch_credit_tail_output_needs_audio_review": [
+      {
+        "start": 725.2,
+        "end": 727.2,
+        "text": "I'll see you in a minute."
+      }
+    ],
+    "batch_segment_count": 77,
+    "interpretation": "The exact same downloaded film bytes were fully decoded and passed to Small without VAD. Later recognizable dialogue omitted by the previous VAD path is now in the normal saved transcript. Both runs still contain semantic errors, repeated fragments and ellipsis output; late short utterances require direct source-audio review before classifying them as hallucinations. Neither nonempty output nor later timestamps certify complete accurate transcription or subtitle alignment. Repeat runs differ, so segment counts and wording are not bit-reproducible."
+  },
+  "workflow_preservation": {
+    "mixed_batch_status": "pass",
+    "completed": 2,
+    "failed": 1,
+    "restart": {
+      "status": "pass",
+      "completed_batch_history_and_exports_preserved": true,
+      "verified_record_ids": [
+        "9345650a9103479098794e086c8fd19a",
+        "efd270055571443aabd50c52cb24abaf"
+      ]
+    },
+    "normal_source_cleaned": true,
+    "sqlite_matches_saved_segments": true,
+    "export_text_order_preserved": true
+  },
+  "provider_access": {
+    "youtube_sintel_trailer": "fail",
+    "youtube_tears_of_steel_teaser": "fail",
+    "vimeo_sintel_trailer": "fail",
+    "dailymotion_tears_of_steel": "pass"
+  },
+  "next_bounded_correction": "Reject entirely zero decoded PCM before speech-model inference with the existing no-spoken-words error; retain all nonzero input and keep speaker VAD separate. This would fix only digital silence; no claim of broader hallucination prevention. Production edits require coordination with the source owner."
+}

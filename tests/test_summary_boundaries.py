@@ -1,5 +1,6 @@
 """Source-coverage and bounded-request regressions; no semantic model claims."""
 from copy import deepcopy
+import json
 import re
 
 import pytest
@@ -179,3 +180,57 @@ def test_nonshrinking_reducer_stops_without_unbounded_retry(monkeypatch):
     with pytest.raises(enhancements.EnhancementError, match="fit all transcript notes"):
         enhancements.summarize_segments(source, "el")
     assert phases == ["map"] * 4 + ["reduce"] * 4
+
+
+@pytest.mark.parametrize("long_source", [False, True])
+def test_actual_direct_and_final_requests_bound_key_points_in_schema(monkeypatch, long_source):
+    requests = []
+
+    def local_response(path, payload, *, timeout):
+        requests.append(deepcopy(payload))
+        assert path == "/api/chat"
+        if not payload["messages"]:
+            assert payload["keep_alive"] == 0
+            return {"done": True, "done_reason": "unload", "message": {"content": ""}}
+        assert timeout == 240
+        assert payload["options"]["num_predict"] == 2048
+        system = payload["messages"][0]["content"]
+        if "chapter_title" in system and "key_points" not in system:
+            result = {"notes": "The stated task remains pending.", "chapter_title": "Pending task"}
+        else:
+            result = {"summary": "The task remains pending.", "key_points": ["It is not completed."]}
+            if not long_source:
+                result["chapter_title"] = "Pending task"
+        return {"done": True, "done_reason": "stop", "message": {"content": json.dumps(result)}}
+
+    monkeypatch.setattr(enhancements, "local_ollama_json", local_response)
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "unit-summary")
+    source = ([{"start": index * 10, "end": index * 10 + 5, "text": "Source words. " * 160}
+               for index in range(2)] if long_source else [{"start": 0, "text": "The task is still pending."}])
+    result = enhancements.summarize_segments(source, "en")
+    inference = [payload for payload in requests if payload["messages"]]
+    final = inference[-1]
+    schema = final["format"]
+    assert schema["type"] == "object" and schema["additionalProperties"] is False
+    assert schema["properties"]["key_points"] == {
+        "type": "array", "minItems": 1, "maxItems": 8,
+        "items": {"type": "string", "minLength": 1}}
+    expected_fields = {"summary", "key_points"} | ({"chapter_title"} if not long_source else set())
+    assert set(schema["required"]) == set(schema["properties"]) == expected_fields
+    assert "at most 8 concise key points" in final["messages"][0]["content"]
+    assert all(payload["format"] == "json" for payload in inference[:-1])
+    assert result["key_points"] == ["It is not completed."]
+
+
+@pytest.mark.parametrize("count", [0, 8, 9])
+def test_final_key_point_count_matches_contract_without_clipping(count):
+    response = {"summary": "The original facts remain available.",
+                "key_points": [f"Complete point {index}." for index in range(count)]}
+    original = deepcopy(response)
+    if count == 8:
+        result = enhancements._summary_result(response, [{"start": 0, "title": "Section"}])
+        assert result["key_points"] == response["key_points"]
+    else:
+        with pytest.raises(enhancements.EnhancementError, match="valid summary"):
+            enhancements._summary_result(response, [{"start": 0, "title": "Section"}])
+    assert response == original

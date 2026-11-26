@@ -1,0 +1,6249 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-26T19:49:59.895430+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "small",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "a61f73c8c3dba80405fff25163a1a4c74d02824fcc66c09fa41db8ed891be575",
+    "tests/smoke_real_links.py": "80f7f186153eb170d131926cffc32248b290ed94e36741f45be7f69b74a65d30"
+  },
+  "fixture_licenses": {
+    "youtube_sintel_trailer": {
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "provider": "youtube",
+      "title_contains": "Sintel",
+      "public_title": "\"Sintel\" Trailer, Durian Open Movie Project",
+      "uploader": "Blender",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://durian.blender.org/news/sintel-teaser/",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org"
+    },
+    "youtube_tears_of_steel_teaser": {
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "provider": "youtube",
+      "title_contains": "Tears of Steel",
+      "public_title": "Tears of Steel - Teaser",
+      "uploader": "MangoOpenMovie",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://mango.blender.org/production/tears-of-steel-teaser/",
+      "attribution": "(CC) Blender Foundation | mango.blender.org"
+    },
+    "vimeo_sintel_trailer": {
+      "url": "https://vimeo.com/11721242",
+      "provider": "vimeo",
+      "title_contains": "Sintel",
+      "public_title": "Sintel trailer!",
+      "uploader": "Dykam",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://vimeo.com/11721242",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org",
+      "note": "Uploader identifies this as a reupload of the licensed original trailer."
+    },
+    "dailymotion_tears_of_steel": {
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "provider": "dailymotion",
+      "title_contains": "Tears of Steel",
+      "public_title": "\u0641\u064a\u0644\u0645 \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "uploader": "MixTube",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://www.dailymotion.com/video/xbvubxi",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Repost with an Arabic title; the public description names the film and licence."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": false,
+  "fixtures": [
+    {
+      "fixture": "youtube_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T19:50:00.719278+00:00",
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "job_id": "2105bea5c0424aa0987e61b7c05a564b",
+      "poll_count": 4,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:50:00.725349+00:00",
+          "id": "2105bea5c0424aa0987e61b7c05a564b",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:50:02.231306+00:00",
+          "id": "2105bea5c0424aa0987e61b7c05a564b",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "2105bea5c0424aa0987e61b7c05a564b",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube HOfdboHvshg",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 700, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:50:00.722049+00:00",
+          "pid": 3828,
+          "kind": "acquisition_start",
+          "job_id": "2105bea5c0424aa0987e61b7c05a564b",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=HOfdboHvshg"
+        },
+        {
+          "at": "2026-11-26T19:50:02.010016+00:00",
+          "pid": 3828,
+          "kind": "acquisition_failed",
+          "job_id": "2105bea5c0424aa0987e61b7c05a564b",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [youtube] HOfdboHvshg: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[youtube] HOfdboHvshg: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            }
+          ],
+          "elapsed_seconds": 1.288
+        }
+      ],
+      "elapsed_seconds": 1.513
+    },
+    {
+      "fixture": "youtube_tears_of_steel_teaser",
+      "status": "fail",
+      "started_at": "2026-11-26T19:50:02.233055+00:00",
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "job_id": "848129609bbf4744810ea4cdb66cd10e",
+      "poll_count": 3,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:50:02.237032+00:00",
+          "id": "848129609bbf4744810ea4cdb66cd10e",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:50:03.240913+00:00",
+          "id": "848129609bbf4744810ea4cdb66cd10e",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "848129609bbf4744810ea4cdb66cd10e",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube WwHux5QZfC8",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 700, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:50:02.234954+00:00",
+          "pid": 3828,
+          "kind": "acquisition_start",
+          "job_id": "848129609bbf4744810ea4cdb66cd10e",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=WwHux5QZfC8"
+        },
+        {
+          "at": "2026-11-26T19:50:03.069290+00:00",
+          "pid": 3828,
+          "kind": "acquisition_failed",
+          "job_id": "848129609bbf4744810ea4cdb66cd10e",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [youtube] WwHux5QZfC8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[youtube] WwHux5QZfC8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            }
+          ],
+          "elapsed_seconds": 0.834
+        }
+      ],
+      "elapsed_seconds": 1.008
+    },
+    {
+      "fixture": "vimeo_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T19:50:03.242603+00:00",
+      "url": "https://vimeo.com/11721242",
+      "job_id": "56a347f517494a4992d1e3066a7bbbfd",
+      "poll_count": 3,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:50:03.276602+00:00",
+          "id": "56a347f517494a4992d1e3066a7bbbfd",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:50:04.280758+00:00",
+          "id": "56a347f517494a4992d1e3066a7bbbfd",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "56a347f517494a4992d1e3066a7bbbfd",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Vimeo 11721242",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 700, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:50:03.244586+00:00",
+          "pid": 3828,
+          "kind": "acquisition_start",
+          "job_id": "56a347f517494a4992d1e3066a7bbbfd",
+          "provider": "vimeo",
+          "url": "https://vimeo.com/11721242"
+        },
+        {
+          "at": "2026-11-26T19:50:04.009089+00:00",
+          "pid": 3828,
+          "kind": "acquisition_failed",
+          "job_id": "56a347f517494a4992d1e3066a7bbbfd",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            }
+          ],
+          "elapsed_seconds": 0.765
+        }
+      ],
+      "elapsed_seconds": 1.039
+    },
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "pass",
+      "started_at": "2026-11-26T19:50:04.282523+00:00",
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "job_id": "9345650a9103479098794e086c8fd19a",
+      "poll_count": 319,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:50:04.327887+00:00",
+          "id": "9345650a9103479098794e086c8fd19a",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:50:08.849510+00:00",
+          "id": "9345650a9103479098794e086c8fd19a",
+          "status": "working",
+          "stage": "Recognizing speech locally...",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:52:44.308054+00:00",
+          "id": "9345650a9103479098794e086c8fd19a",
+          "status": "done",
+          "stage": "Ready to download",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "language": "en",
+          "method": "local_audio_ai",
+          "preview": "We have main engine start, 4, 3, 2, 1, go!\nYou're a jerk, Tom!\nLook, Celia, we have to follow our passions.\nYou have your robotics and I just want to be awesome in space.\nWhy don't you just admit that you're freaked out by my robot hand?\nI'm not freaked out, but it's...\nAlright, fine. I'm freaked out.\nI'm having nightmares that I'm being chased by these giant robotic claws.\nOh, what have we done? We're done.\nRobot's memory synced and locked.\nThis is pretty freaky.\nSsssss...\nSsssss...\nSsssss...\nSsss...\nSsss...\nShouldn't you be down there?\nI heard you guys talking last night.\nIt's not my fault, you know?\nOh\nAre you ready? Of course you're ready. You're a rock star.\nHow's it looking, Barley?\nWe should have about ten minutes.\nWell, that's perfect.\nWe're only one. All systems go.\nYeah, you.\nWe're only one.\nWe're only one.\nWe're only one.\nLet's go! Yeah, you, go! Go!\nMove your asses! Go, go, go!\nI love it! Come on! Go!\nThat's nice. Nothing to worry about. Tom...\nTom, there she is.\nYou love her.\nShe's your passion.\nBe tender to her.\nBe honest.\nBe tender.\nRemind her what love is.\nCome on.\nAnd...\n...\n...\n...\n...\n...\nAnd... action!\nMemory override in progress!\nYou're a jerk, Tom!\nOh, I'm sorry!\nSorry.\nSorry.\nLook, Celia.\nWe have to follow our passions, you have your robotics\nAnd I just want to be awesome in space\nGet her coming two minutes left\nTwo minutes.\nSpeed up, Thorne.\nGive it to Celia!\nWhy don't you just admit that you're freaked out\nby my robot hand?\nThis is Celia. I was young.\nAnd a dick.\nBut there's no reason to destroy the world.\nWhy does she do this?\nWe already tried that one.\nAbort!\nBack wall!\nNo!\nNo!\nYou broke my heart.\nI know.\nYou forgot me on earth.\nI know.\nI should just crush you.\nI'm...\nI\nI'm sorry who that lip\nNow my ball this time\nIt's time!\nI\nVery good.\nEmery overrated 90%.\nCaptain, we have to abort!\nLord!\nThe world's changed Celia.\nMaybe we can too.\nMemory overwrite complete\nYou know\nThere's a lesson to be learned from this could have gone worse\n...\n...\n...\n...\n...\nLet's go.",
+          "error": "",
+          "segments": 97,
+          "warnings": [],
+          "extras": {
+            "translation_language": "",
+            "summary": false,
+            "speakers": false
+          },
+          "library_id": "9345650a9103479098794e086c8fd19a"
+        }
+      ],
+      "final_job": {
+        "id": "9345650a9103479098794e086c8fd19a",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "We have main engine start, 4, 3, 2, 1, go!\nYou're a jerk, Tom!\nLook, Celia, we have to follow our passions.\nYou have your robotics and I just want to be awesome in space.\nWhy don't you just admit that you're freaked out by my robot hand?\nI'm not freaked out, but it's...\nAlright, fine. I'm freaked out.\nI'm having nightmares that I'm being chased by these giant robotic claws.\nOh, what have we done? We're done.\nRobot's memory synced and locked.\nThis is pretty freaky.\nSsssss...\nSsssss...\nSsssss...\nSsss...\nSsss...\nShouldn't you be down there?\nI heard you guys talking last night.\nIt's not my fault, you know?\nOh\nAre you ready? Of course you're ready. You're a rock star.\nHow's it looking, Barley?\nWe should have about ten minutes.\nWell, that's perfect.\nWe're only one. All systems go.\nYeah, you.\nWe're only one.\nWe're only one.\nWe're only one.\nLet's go! Yeah, you, go! Go!\nMove your asses! Go, go, go!\nI love it! Come on! Go!\nThat's nice. Nothing to worry about. Tom...\nTom, there she is.\nYou love her.\nShe's your passion.\nBe tender to her.\nBe honest.\nBe tender.\nRemind her what love is.\nCome on.\nAnd...\n...\n...\n...\n...\n...\nAnd... action!\nMemory override in progress!\nYou're a jerk, Tom!\nOh, I'm sorry!\nSorry.\nSorry.\nLook, Celia.\nWe have to follow our passions, you have your robotics\nAnd I just want to be awesome in space\nGet her coming two minutes left\nTwo minutes.\nSpeed up, Thorne.\nGive it to Celia!\nWhy don't you just admit that you're freaked out\nby my robot hand?\nThis is Celia. I was young.\nAnd a dick.\nBut there's no reason to destroy the world.\nWhy does she do this?\nWe already tried that one.\nAbort!\nBack wall!\nNo!\nNo!\nYou broke my heart.\nI know.\nYou forgot me on earth.\nI know.\nI should just crush you.\nI'm...\nI\nI'm sorry who that lip\nNow my ball this time\nIt's time!\nI\nVery good.\nEmery overrated 90%.\nCaptain, we have to abort!\nLord!\nThe world's changed Celia.\nMaybe we can too.\nMemory overwrite complete\nYou know\nThere's a lesson to be learned from this could have gone worse\n...\n...\n...\n...\n...\nLet's go.",
+        "error": "",
+        "segments": 97,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "9345650a9103479098794e086c8fd19a"
+      },
+      "verification": {
+        "id": "9345650a9103479098794e086c8fd19a",
+        "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+        "language": "en",
+        "segment_count": 97,
+        "events": [
+          {
+            "at": "2026-11-26T19:50:04.284421+00:00",
+            "pid": 3828,
+            "kind": "acquisition_start",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "provider": "dailymotion",
+            "url": "https://www.dailymotion.com/video/xbvubxi"
+          },
+          {
+            "at": "2026-11-26T19:50:08.667356+00:00",
+            "pid": 3828,
+            "kind": "acquisition_done",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "bytes": 11919385,
+            "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+            "duration_seconds": 734.191746,
+            "audio_streams": 1,
+            "elapsed_seconds": 4.383
+          },
+          {
+            "at": "2026-11-26T19:50:08.675864+00:00",
+            "pid": 3828,
+            "kind": "recognition_start",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+          },
+          {
+            "at": "2026-11-26T19:50:11.352553+00:00",
+            "pid": 3828,
+            "kind": "transcribe_request",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "explicit_kwargs": {
+              "language": null,
+              "beam_size": 5,
+              "vad_filter": false,
+              "condition_on_previous_text": false
+            },
+            "resolved_options": {
+              "language": null,
+              "task": "transcribe",
+              "log_progress": false,
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "temperature": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "compression_ratio_threshold": 2.4,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                -1
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "vad_filter": false,
+              "vad_parameters": null,
+              "max_new_tokens": null,
+              "chunk_length": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null,
+              "language_detection_threshold": 0.5,
+              "language_detection_segments": 1
+            }
+          },
+          {
+            "at": "2026-11-26T19:50:12.091791+00:00",
+            "pid": 3828,
+            "kind": "audio_decoded",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              11746325
+            ],
+            "decoded_duration_seconds": 734.1453125
+          },
+          {
+            "at": "2026-11-26T19:50:14.415682+00:00",
+            "pid": 3828,
+            "kind": "transcribe_info",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "info": {
+              "language": "en",
+              "language_probability": 0.9784236550331116,
+              "duration": 734.1453125,
+              "duration_after_vad": 734.1453125,
+              "all_language_probs": [
+                [
+                  "en",
+                  0.9784236550331116
+                ],
+                [
+                  "nn",
+                  0.0029035592451691628
+                ],
+                [
+                  "pt",
+                  0.0017260636668652296
+                ],
+                [
+                  "la",
+                  0.0016220464603975415
+                ],
+                [
+                  "ja",
+                  0.0014059763634577394
+                ],
+                [
+                  "es",
+                  0.0013786100316792727
+                ],
+                [
+                  "ru",
+                  0.0013708433834835887
+                ],
+                [
+                  "ko",
+                  0.0011539860861375928
+                ],
+                [
+                  "zh",
+                  0.0010817191796377301
+                ],
+                [
+                  "tr",
+                  0.0009977826848626137
+                ],
+                [
+                  "de",
+                  0.0008480314863845706
+                ],
+                [
+                  "fr",
+                  0.0007807717192918062
+                ],
+                [
+                  "vi",
+                  0.0006893546087667346
+                ],
+                [
+                  "id",
+                  0.00066332274582237
+                ],
+                [
+                  "ar",
+                  0.0006399959092959762
+                ],
+                [
+                  "pl",
+                  0.00044865417294204235
+                ],
+                [
+                  "th",
+                  0.0004344911430962384
+                ],
+                [
+                  "haw",
+                  0.00042370223673060536
+                ],
+                [
+                  "nl",
+                  0.0003630492719821632
+                ],
+                [
+                  "hi",
+                  0.0003576703311409801
+                ],
+                [
+                  "it",
+                  0.00028470909455791116
+                ],
+                [
+                  "ms",
+                  0.0002258135937154293
+                ],
+                [
+                  "cy",
+                  0.000223858529352583
+                ],
+                [
+                  "tl",
+                  0.00022379448637366295
+                ],
+                [
+                  "hu",
+                  0.00019108905689790845
+                ],
+                [
+                  "jw",
+                  0.00018530739180278033
+                ],
+                [
+                  "km",
+                  0.000108473512227647
+                ],
+                [
+                  "ml",
+                  9.799652616493404e-05
+                ],
+                [
+                  "ta",
+                  9.782714187167585e-05
+                ],
+                [
+                  "fi",
+                  7.669509795960039e-05
+                ],
+                [
+                  "el",
+                  7.408228702843189e-05
+                ],
+                [
+                  "sv",
+                  5.546570537262596e-05
+                ],
+                [
+                  "ur",
+                  4.903114677290432e-05
+                ],
+                [
+                  "ro",
+                  4.271534999134019e-05
+                ],
+                [
+                  "cs",
+                  3.324169301777147e-05
+                ],
+                [
+                  "mi",
+                  3.220832149963826e-05
+                ],
+                [
+                  "br",
+                  2.818864959408529e-05
+                ],
+                [
+                  "sn",
+                  2.7503352612257004e-05
+                ],
+                [
+                  "te",
+                  2.4726343326619826e-05
+                ],
+                [
+                  "he",
+                  1.8259086573380046e-05
+                ],
+                [
+                  "si",
+                  1.713158781058155e-05
+                ],
+                [
+                  "no",
+                  1.5394867659779266e-05
+                ],
+                [
+                  "sa",
+                  1.402785892423708e-05
+                ],
+                [
+                  "uk",
+                  1.3446276170725469e-05
+                ],
+                [
+                  "gl",
+                  1.152790446212748e-05
+                ],
+                [
+                  "da",
+                  1.0718035809986759e-05
+                ],
+                [
+                  "yo",
+                  1.0434377145429607e-05
+                ],
+                [
+                  "hr",
+                  1.0232977729174308e-05
+                ],
+                [
+                  "bn",
+                  8.712222552276216e-06
+                ],
+                [
+                  "fa",
+                  7.596139312227024e-06
+                ],
+                [
+                  "sw",
+                  5.565563697018661e-06
+                ],
+                [
+                  "ca",
+                  5.400737791205756e-06
+                ],
+                [
+                  "my",
+                  5.211209099797998e-06
+                ],
+                [
+                  "ht",
+                  5.191823220229708e-06
+                ],
+                [
+                  "bs",
+                  4.860494755121181e-06
+                ],
+                [
+                  "sl",
+                  4.777178673975868e-06
+                ],
+                [
+                  "af",
+                  4.3449235818115994e-06
+                ],
+                [
+                  "bg",
+                  4.199505838187179e-06
+                ],
+                [
+                  "yi",
+                  3.667148575914325e-06
+                ],
+                [
+                  "mn",
+                  3.437402710915194e-06
+                ],
+                [
+                  "sk",
+                  2.8267779725865694e-06
+                ],
+                [
+                  "is",
+                  2.0006757495139027e-06
+                ],
+                [
+                  "lv",
+                  1.880972490653221e-06
+                ],
+                [
+                  "fo",
+                  1.2440060572771472e-06
+                ],
+                [
+                  "ne",
+                  1.0588989880488953e-06
+                ],
+                [
+                  "bo",
+                  1.0447524800838437e-06
+                ],
+                [
+                  "eu",
+                  1.0312315907867742e-06
+                ],
+                [
+                  "sd",
+                  9.85247538665135e-07
+                ],
+                [
+                  "sr",
+                  8.935466553339211e-07
+                ],
+                [
+                  "lo",
+                  8.441498380307166e-07
+                ],
+                [
+                  "lt",
+                  7.999707918315835e-07
+                ],
+                [
+                  "oc",
+                  6.514305823657196e-07
+                ],
+                [
+                  "sq",
+                  5.236978495304356e-07
+                ],
+                [
+                  "be",
+                  4.97196595006244e-07
+                ],
+                [
+                  "az",
+                  4.4934162701792957e-07
+                ],
+                [
+                  "et",
+                  4.1164750541611284e-07
+                ],
+                [
+                  "as",
+                  4.003401272711926e-07
+                ],
+                [
+                  "hy",
+                  3.616233357206511e-07
+                ],
+                [
+                  "mr",
+                  3.028434321095119e-07
+                ],
+                [
+                  "kn",
+                  2.597598154352454e-07
+                ],
+                [
+                  "mk",
+                  2.0794541910618136e-07
+                ],
+                [
+                  "mt",
+                  2.031330126328612e-07
+                ],
+                [
+                  "pa",
+                  1.9042514054490312e-07
+                ],
+                [
+                  "ps",
+                  1.8088714170971798e-07
+                ],
+                [
+                  "kk",
+                  1.6613485342986678e-07
+                ],
+                [
+                  "ka",
+                  8.5631505442052e-08
+                ],
+                [
+                  "ln",
+                  4.3746641864572666e-08
+                ],
+                [
+                  "gu",
+                  3.8236635191424284e-08
+                ],
+                [
+                  "so",
+                  2.117039521465358e-08
+                ],
+                [
+                  "am",
+                  1.162006224575407e-08
+                ],
+                [
+                  "su",
+                  2.2435358015826523e-09
+                ],
+                [
+                  "tg",
+                  7.676639324216694e-10
+                ],
+                [
+                  "lb",
+                  6.406870589614755e-10
+                ],
+                [
+                  "tt",
+                  4.5145506777366506e-10
+                ],
+                [
+                  "tk",
+                  2.9831903614052635e-10
+                ],
+                [
+                  "ha",
+                  2.5984339679929747e-10
+                ],
+                [
+                  "ba",
+                  2.5902346934003617e-10
+                ],
+                [
+                  "mg",
+                  5.099764360805281e-11
+                ],
+                [
+                  "uz",
+                  2.4100105591728926e-11
+                ]
+              ],
+              "transcription_options": {
+                "beam_size": 5,
+                "best_of": 5,
+                "patience": 1,
+                "length_penalty": 1,
+                "repetition_penalty": 1,
+                "no_repeat_ngram_size": 0,
+                "log_prob_threshold": -1.0,
+                "no_speech_threshold": 0.6,
+                "compression_ratio_threshold": 2.4,
+                "condition_on_previous_text": false,
+                "prompt_reset_on_temperature": 0.5,
+                "temperatures": [
+                  0.0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  1.0
+                ],
+                "initial_prompt": null,
+                "prefix": null,
+                "suppress_blank": true,
+                "suppress_tokens": [
+                  1,
+                  2,
+                  7,
+                  8,
+                  9,
+                  10,
+                  14,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  31,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63,
+                  90,
+                  91,
+                  92,
+                  93,
+                  359,
+                  503,
+                  522,
+                  542,
+                  873,
+                  893,
+                  902,
+                  918,
+                  922,
+                  931,
+                  1350,
+                  1853,
+                  1982,
+                  2460,
+                  2627,
+                  3246,
+                  3253,
+                  3268,
+                  3536,
+                  3846,
+                  3961,
+                  4183,
+                  4667,
+                  6585,
+                  6647,
+                  7273,
+                  9061,
+                  9383,
+                  10428,
+                  10929,
+                  11938,
+                  12033,
+                  12331,
+                  12562,
+                  13793,
+                  14157,
+                  14635,
+                  15265,
+                  15618,
+                  16553,
+                  16604,
+                  18362,
+                  18956,
+                  20075,
+                  21675,
+                  22520,
+                  26130,
+                  26161,
+                  26435,
+                  28279,
+                  29464,
+                  31650,
+                  32302,
+                  32470,
+                  36865,
+                  42863,
+                  47425,
+                  49870,
+                  50254,
+                  50258,
+                  50358,
+                  50359,
+                  50360,
+                  50361,
+                  50362
+                ],
+                "without_timestamps": false,
+                "max_initial_timestamp": 1.0,
+                "word_timestamps": false,
+                "prepend_punctuations": "\"'\u201c\u00bf([{-",
+                "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+                "multilingual": false,
+                "max_new_tokens": null,
+                "clip_timestamps": "0",
+                "hallucination_silence_threshold": null,
+                "hotwords": null
+              },
+              "vad_options": null
+            }
+          },
+          {
+            "at": "2026-11-26T19:52:44.095508+00:00",
+            "pid": 3828,
+            "kind": "recognition_done",
+            "job_id": "9345650a9103479098794e086c8fd19a",
+            "model": "small",
+            "language": "en",
+            "segment_count": 97,
+            "elapsed_seconds": 155.428
+          }
+        ],
+        "decoded_duration_seconds": 734.1453125,
+        "normal_vad_filter": false,
+        "normal_explicit_transcribe_kwargs": {
+          "language": null,
+          "beam_size": 5,
+          "vad_filter": false,
+          "condition_on_previous_text": false
+        },
+        "normal_transcribe_info": {
+          "language": "en",
+          "language_probability": 0.9784236550331116,
+          "duration": 734.1453125,
+          "duration_after_vad": 734.1453125,
+          "all_language_probs": [
+            [
+              "en",
+              0.9784236550331116
+            ],
+            [
+              "nn",
+              0.0029035592451691628
+            ],
+            [
+              "pt",
+              0.0017260636668652296
+            ],
+            [
+              "la",
+              0.0016220464603975415
+            ],
+            [
+              "ja",
+              0.0014059763634577394
+            ],
+            [
+              "es",
+              0.0013786100316792727
+            ],
+            [
+              "ru",
+              0.0013708433834835887
+            ],
+            [
+              "ko",
+              0.0011539860861375928
+            ],
+            [
+              "zh",
+              0.0010817191796377301
+            ],
+            [
+              "tr",
+              0.0009977826848626137
+            ],
+            [
+              "de",
+              0.0008480314863845706
+            ],
+            [
+              "fr",
+              0.0007807717192918062
+            ],
+            [
+              "vi",
+              0.0006893546087667346
+            ],
+            [
+              "id",
+              0.00066332274582237
+            ],
+            [
+              "ar",
+              0.0006399959092959762
+            ],
+            [
+              "pl",
+              0.00044865417294204235
+            ],
+            [
+              "th",
+              0.0004344911430962384
+            ],
+            [
+              "haw",
+              0.00042370223673060536
+            ],
+            [
+              "nl",
+              0.0003630492719821632
+            ],
+            [
+              "hi",
+              0.0003576703311409801
+            ],
+            [
+              "it",
+              0.00028470909455791116
+            ],
+            [
+              "ms",
+              0.0002258135937154293
+            ],
+            [
+              "cy",
+              0.000223858529352583
+            ],
+            [
+              "tl",
+              0.00022379448637366295
+            ],
+            [
+              "hu",
+              0.00019108905689790845
+            ],
+            [
+              "jw",
+              0.00018530739180278033
+            ],
+            [
+              "km",
+              0.000108473512227647
+            ],
+            [
+              "ml",
+              9.799652616493404e-05
+            ],
+            [
+              "ta",
+              9.782714187167585e-05
+            ],
+            [
+              "fi",
+              7.669509795960039e-05
+            ],
+            [
+              "el",
+              7.408228702843189e-05
+            ],
+            [
+              "sv",
+              5.546570537262596e-05
+            ],
+            [
+              "ur",
+              4.903114677290432e-05
+            ],
+            [
+              "ro",
+              4.271534999134019e-05
+            ],
+            [
+              "cs",
+              3.324169301777147e-05
+            ],
+            [
+              "mi",
+              3.220832149963826e-05
+            ],
+            [
+              "br",
+              2.818864959408529e-05
+            ],
+            [
+              "sn",
+              2.7503352612257004e-05
+            ],
+            [
+              "te",
+              2.4726343326619826e-05
+            ],
+            [
+              "he",
+              1.8259086573380046e-05
+            ],
+            [
+              "si",
+              1.713158781058155e-05
+            ],
+            [
+              "no",
+              1.5394867659779266e-05
+            ],
+            [
+              "sa",
+              1.402785892423708e-05
+            ],
+            [
+              "uk",
+              1.3446276170725469e-05
+            ],
+            [
+              "gl",
+              1.152790446212748e-05
+            ],
+            [
+              "da",
+              1.0718035809986759e-05
+            ],
+            [
+              "yo",
+              1.0434377145429607e-05
+            ],
+            [
+              "hr",
+              1.0232977729174308e-05
+            ],
+            [
+              "bn",
+              8.712222552276216e-06
+            ],
+            [
+              "fa",
+              7.596139312227024e-06
+            ],
+            [
+              "sw",
+              5.565563697018661e-06
+            ],
+            [
+              "ca",
+              5.400737791205756e-06
+            ],
+            [
+              "my",
+              5.211209099797998e-06
+            ],
+            [
+              "ht",
+              5.191823220229708e-06
+            ],
+            [
+              "bs",
+              4.860494755121181e-06
+            ],
+            [
+              "sl",
+              4.777178673975868e-06
+            ],
+            [
+              "af",
+              4.3449235818115994e-06
+            ],
+            [
+              "bg",
+              4.199505838187179e-06
+            ],
+            [
+              "yi",
+              3.667148575914325e-06
+            ],
+            [
+              "mn",
+              3.437402710915194e-06
+            ],
+            [
+              "sk",
+              2.8267779725865694e-06
+            ],
+            [
+              "is",
+              2.0006757495139027e-06
+            ],
+            [
+              "lv",
+              1.880972490653221e-06
+            ],
+            [
+              "fo",
+              1.2440060572771472e-06
+            ],
+            [
+              "ne",
+              1.0588989880488953e-06
+            ],
+            [
+              "bo",
+              1.0447524800838437e-06
+            ],
+            [
+              "eu",
+              1.0312315907867742e-06
+            ],
+            [
+              "sd",
+              9.85247538665135e-07
+            ],
+            [
+              "sr",
+              8.935466553339211e-07
+            ],
+            [
+              "lo",
+              8.441498380307166e-07
+            ],
+            [
+              "lt",
+              7.999707918315835e-07
+            ],
+            [
+              "oc",
+              6.514305823657196e-07
+            ],
+            [
+              "sq",
+              5.236978495304356e-07
+            ],
+            [
+              "be",
+              4.97196595006244e-07
+            ],
+            [
+              "az",
+              4.4934162701792957e-07
+            ],
+            [
+              "et",
+              4.1164750541611284e-07
+            ],
+            [
+              "as",
+              4.003401272711926e-07
+            ],
+            [
+              "hy",
+              3.616233357206511e-07
+            ],
+            [
+              "mr",
+              3.028434321095119e-07
+            ],
+            [
+              "kn",
+              2.597598154352454e-07
+            ],
+            [
+              "mk",
+              2.0794541910618136e-07
+            ],
+            [
+              "mt",
+              2.031330126328612e-07
+            ],
+            [
+              "pa",
+              1.9042514054490312e-07
+            ],
+            [
+              "ps",
+              1.8088714170971798e-07
+            ],
+            [
+              "kk",
+              1.6613485342986678e-07
+            ],
+            [
+              "ka",
+              8.5631505442052e-08
+            ],
+            [
+              "ln",
+              4.3746641864572666e-08
+            ],
+            [
+              "gu",
+              3.8236635191424284e-08
+            ],
+            [
+              "so",
+              2.117039521465358e-08
+            ],
+            [
+              "am",
+              1.162006224575407e-08
+            ],
+            [
+              "su",
+              2.2435358015826523e-09
+            ],
+            [
+              "tg",
+              7.676639324216694e-10
+            ],
+            [
+              "lb",
+              6.406870589614755e-10
+            ],
+            [
+              "tt",
+              4.5145506777366506e-10
+            ],
+            [
+              "tk",
+              2.9831903614052635e-10
+            ],
+            [
+              "ha",
+              2.5984339679929747e-10
+            ],
+            [
+              "ba",
+              2.5902346934003617e-10
+            ],
+            [
+              "mg",
+              5.099764360805281e-11
+            ],
+            [
+              "uz",
+              2.4100105591728926e-11
+            ]
+          ],
+          "transcription_options": {
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "compression_ratio_threshold": 2.4,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "temperatures": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              1,
+              2,
+              7,
+              8,
+              9,
+              10,
+              14,
+              25,
+              26,
+              27,
+              28,
+              29,
+              31,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              90,
+              91,
+              92,
+              93,
+              359,
+              503,
+              522,
+              542,
+              873,
+              893,
+              902,
+              918,
+              922,
+              931,
+              1350,
+              1853,
+              1982,
+              2460,
+              2627,
+              3246,
+              3253,
+              3268,
+              3536,
+              3846,
+              3961,
+              4183,
+              4667,
+              6585,
+              6647,
+              7273,
+              9061,
+              9383,
+              10428,
+              10929,
+              11938,
+              12033,
+              12331,
+              12562,
+              13793,
+              14157,
+              14635,
+              15265,
+              15618,
+              16553,
+              16604,
+              18362,
+              18956,
+              20075,
+              21675,
+              22520,
+              26130,
+              26161,
+              26435,
+              28279,
+              29464,
+              31650,
+              32302,
+              32470,
+              36865,
+              42863,
+              47425,
+              49870,
+              50254,
+              50258,
+              50358,
+              50359,
+              50360,
+              50361,
+              50362
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "max_new_tokens": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null
+          },
+          "vad_options": null
+        },
+        "last_vad_kept_end_seconds": null,
+        "post_vad_duration_seconds": 734.1453125,
+        "last_segment_end_seconds": 713.96,
+        "maximum_segment_duration_seconds": 11.0,
+        "exports": {
+          "txt": {
+            "bytes": 2022,
+            "sha256": "e297fb47eafb4d53c6515d9b92f1412513aa444c38b821aa6e6f0a5bca0706b2"
+          },
+          "srt": {
+            "bytes": 5310,
+            "sha256": "f35f693d9b200ca31c505d239b39d4857fe875b9371b2d6fb6c5d8bd3a6fae9c"
+          },
+          "vtt": {
+            "bytes": 5036,
+            "sha256": "9549ba9ed3b62c29958d9d8d07fb64ebf915a5f79035863ebe723751866efedf"
+          },
+          "json": {
+            "bytes": 9311,
+            "sha256": "1120476e93a5cfbebb602b2aefe128491727ae8758381ae77d80686e365b1fc9"
+          },
+          "zip": {
+            "bytes": 6916,
+            "sha256": "ace5fffc6e8bf0ee1aa9854ac970f3d7194de1527ce296106666bb705d9bc12a"
+          }
+        },
+        "sqlite_matches_saved_segments": true,
+        "input_audio_cleaned": true,
+        "export_text_order_preserved": true,
+        "subtitle_time_accuracy": "not_evaluated"
+      },
+      "events": [
+        {
+          "at": "2026-11-26T19:50:04.284421+00:00",
+          "pid": 3828,
+          "kind": "acquisition_start",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-26T19:50:08.667356+00:00",
+          "pid": 3828,
+          "kind": "acquisition_done",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "bytes": 11919385,
+          "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+          "duration_seconds": 734.191746,
+          "audio_streams": 1,
+          "elapsed_seconds": 4.383
+        },
+        {
+          "at": "2026-11-26T19:50:08.675864+00:00",
+          "pid": 3828,
+          "kind": "recognition_start",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "model": "small",
+          "requested_language": "auto",
+          "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+        },
+        {
+          "at": "2026-11-26T19:50:11.352553+00:00",
+          "pid": 3828,
+          "kind": "transcribe_request",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          }
+        },
+        {
+          "at": "2026-11-26T19:50:12.091791+00:00",
+          "pid": 3828,
+          "kind": "audio_decoded",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            11746325
+          ],
+          "decoded_duration_seconds": 734.1453125
+        },
+        {
+          "at": "2026-11-26T19:50:14.415682+00:00",
+          "pid": 3828,
+          "kind": "transcribe_info",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "info": {
+            "language": "en",
+            "language_probability": 0.9784236550331116,
+            "duration": 734.1453125,
+            "duration_after_vad": 734.1453125,
+            "all_language_probs": [
+              [
+                "en",
+                0.9784236550331116
+              ],
+              [
+                "nn",
+                0.0029035592451691628
+              ],
+              [
+                "pt",
+                0.0017260636668652296
+              ],
+              [
+                "la",
+                0.0016220464603975415
+              ],
+              [
+                "ja",
+                0.0014059763634577394
+              ],
+              [
+                "es",
+                0.0013786100316792727
+              ],
+              [
+                "ru",
+                0.0013708433834835887
+              ],
+              [
+                "ko",
+                0.0011539860861375928
+              ],
+              [
+                "zh",
+                0.0010817191796377301
+              ],
+              [
+                "tr",
+                0.0009977826848626137
+              ],
+              [
+                "de",
+                0.0008480314863845706
+              ],
+              [
+                "fr",
+                0.0007807717192918062
+              ],
+              [
+                "vi",
+                0.0006893546087667346
+              ],
+              [
+                "id",
+                0.00066332274582237
+              ],
+              [
+                "ar",
+                0.0006399959092959762
+              ],
+              [
+                "pl",
+                0.00044865417294204235
+              ],
+              [
+                "th",
+                0.0004344911430962384
+              ],
+              [
+                "haw",
+                0.00042370223673060536
+              ],
+              [
+                "nl",
+                0.0003630492719821632
+              ],
+              [
+                "hi",
+                0.0003576703311409801
+              ],
+              [
+                "it",
+                0.00028470909455791116
+              ],
+              [
+                "ms",
+                0.0002258135937154293
+              ],
+              [
+                "cy",
+                0.000223858529352583
+              ],
+              [
+                "tl",
+                0.00022379448637366295
+              ],
+              [
+                "hu",
+                0.00019108905689790845
+              ],
+              [
+                "jw",
+                0.00018530739180278033
+              ],
+              [
+                "km",
+                0.000108473512227647
+              ],
+              [
+                "ml",
+                9.799652616493404e-05
+              ],
+              [
+                "ta",
+                9.782714187167585e-05
+              ],
+              [
+                "fi",
+                7.669509795960039e-05
+              ],
+              [
+                "el",
+                7.408228702843189e-05
+              ],
+              [
+                "sv",
+                5.546570537262596e-05
+              ],
+              [
+                "ur",
+                4.903114677290432e-05
+              ],
+              [
+                "ro",
+                4.271534999134019e-05
+              ],
+              [
+                "cs",
+                3.324169301777147e-05
+              ],
+              [
+                "mi",
+                3.220832149963826e-05
+              ],
+              [
+                "br",
+                2.818864959408529e-05
+              ],
+              [
+                "sn",
+                2.7503352612257004e-05
+              ],
+              [
+                "te",
+                2.4726343326619826e-05
+              ],
+              [
+                "he",
+                1.8259086573380046e-05
+              ],
+              [
+                "si",
+                1.713158781058155e-05
+              ],
+              [
+                "no",
+                1.5394867659779266e-05
+              ],
+              [
+                "sa",
+                1.402785892423708e-05
+              ],
+              [
+                "uk",
+                1.3446276170725469e-05
+              ],
+              [
+                "gl",
+                1.152790446212748e-05
+              ],
+              [
+                "da",
+                1.0718035809986759e-05
+              ],
+              [
+                "yo",
+                1.0434377145429607e-05
+              ],
+              [
+                "hr",
+                1.0232977729174308e-05
+              ],
+              [
+                "bn",
+                8.712222552276216e-06
+              ],
+              [
+                "fa",
+                7.596139312227024e-06
+              ],
+              [
+                "sw",
+                5.565563697018661e-06
+              ],
+              [
+                "ca",
+                5.400737791205756e-06
+              ],
+              [
+                "my",
+                5.211209099797998e-06
+              ],
+              [
+                "ht",
+                5.191823220229708e-06
+              ],
+              [
+                "bs",
+                4.860494755121181e-06
+              ],
+              [
+                "sl",
+                4.777178673975868e-06
+              ],
+              [
+                "af",
+                4.3449235818115994e-06
+              ],
+              [
+                "bg",
+                4.199505838187179e-06
+              ],
+              [
+                "yi",
+                3.667148575914325e-06
+              ],
+              [
+                "mn",
+                3.437402710915194e-06
+              ],
+              [
+                "sk",
+                2.8267779725865694e-06
+              ],
+              [
+                "is",
+                2.0006757495139027e-06
+              ],
+              [
+                "lv",
+                1.880972490653221e-06
+              ],
+              [
+                "fo",
+                1.2440060572771472e-06
+              ],
+              [
+                "ne",
+                1.0588989880488953e-06
+              ],
+              [
+                "bo",
+                1.0447524800838437e-06
+              ],
+              [
+                "eu",
+                1.0312315907867742e-06
+              ],
+              [
+                "sd",
+                9.85247538665135e-07
+              ],
+              [
+                "sr",
+                8.935466553339211e-07
+              ],
+              [
+                "lo",
+                8.441498380307166e-07
+              ],
+              [
+                "lt",
+                7.999707918315835e-07
+              ],
+              [
+                "oc",
+                6.514305823657196e-07
+              ],
+              [
+                "sq",
+                5.236978495304356e-07
+              ],
+              [
+                "be",
+                4.97196595006244e-07
+              ],
+              [
+                "az",
+                4.4934162701792957e-07
+              ],
+              [
+                "et",
+                4.1164750541611284e-07
+              ],
+              [
+                "as",
+                4.003401272711926e-07
+              ],
+              [
+                "hy",
+                3.616233357206511e-07
+              ],
+              [
+                "mr",
+                3.028434321095119e-07
+              ],
+              [
+                "kn",
+                2.597598154352454e-07
+              ],
+              [
+                "mk",
+                2.0794541910618136e-07
+              ],
+              [
+                "mt",
+                2.031330126328612e-07
+              ],
+              [
+                "pa",
+                1.9042514054490312e-07
+              ],
+              [
+                "ps",
+                1.8088714170971798e-07
+              ],
+              [
+                "kk",
+                1.6613485342986678e-07
+              ],
+              [
+                "ka",
+                8.5631505442052e-08
+              ],
+              [
+                "ln",
+                4.3746641864572666e-08
+              ],
+              [
+                "gu",
+                3.8236635191424284e-08
+              ],
+              [
+                "so",
+                2.117039521465358e-08
+              ],
+              [
+                "am",
+                1.162006224575407e-08
+              ],
+              [
+                "su",
+                2.2435358015826523e-09
+              ],
+              [
+                "tg",
+                7.676639324216694e-10
+              ],
+              [
+                "lb",
+                6.406870589614755e-10
+              ],
+              [
+                "tt",
+                4.5145506777366506e-10
+              ],
+              [
+                "tk",
+                2.9831903614052635e-10
+              ],
+              [
+                "ha",
+                2.5984339679929747e-10
+              ],
+              [
+                "ba",
+                2.5902346934003617e-10
+              ],
+              [
+                "mg",
+                5.099764360805281e-11
+              ],
+              [
+                "uz",
+                2.4100105591728926e-11
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T19:52:44.095508+00:00",
+          "pid": 3828,
+          "kind": "recognition_done",
+          "job_id": "9345650a9103479098794e086c8fd19a",
+          "model": "small",
+          "language": "en",
+          "segment_count": 97,
+          "elapsed_seconds": 155.428
+        }
+      ],
+      "elapsed_seconds": 160.495
+    }
+  ],
+  "mixed_batch": {
+    "status": "pass",
+    "fixtures": [
+      "dailymotion_tears_of_steel",
+      "youtube_sintel_trailer"
+    ],
+    "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+    "poll_count": 242,
+    "transitions": [
+      {
+        "at": "2026-11-26T19:52:44.789283+00:00",
+        "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+        "status": "working",
+        "stage": "Waiting for processing...",
+        "total": 2,
+        "completed": 0,
+        "failed": 0,
+        "jobs": [
+          {
+            "id": "efd270055571443aabd50c52cb24abaf",
+            "title": "Dailymotion xbvubxi",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "queued",
+            "stage": "Waiting for batch...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          },
+          {
+            "id": "1b968916338146878795e40eff393d4f",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "queued",
+            "stage": "Waiting for batch...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      },
+      {
+        "at": "2026-11-26T19:52:45.294008+00:00",
+        "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+        "status": "working",
+        "stage": "Processing 1 of 2: dailymotion",
+        "total": 2,
+        "completed": 0,
+        "failed": 0,
+        "jobs": [
+          {
+            "id": "efd270055571443aabd50c52cb24abaf",
+            "title": "Dailymotion xbvubxi",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "working",
+            "stage": "Fetching the video's audio...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          },
+          {
+            "id": "1b968916338146878795e40eff393d4f",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "queued",
+            "stage": "Waiting for batch...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      },
+      {
+        "at": "2026-11-26T19:54:45.447756+00:00",
+        "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+        "status": "working",
+        "stage": "Processing 2 of 2: youtube",
+        "total": 2,
+        "completed": 1,
+        "failed": 0,
+        "jobs": [
+          {
+            "id": "efd270055571443aabd50c52cb24abaf",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "done",
+            "stage": "Ready to download",
+            "error": "",
+            "warnings": [],
+            "library_id": "efd270055571443aabd50c52cb24abaf"
+          },
+          {
+            "id": "1b968916338146878795e40eff393d4f",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "working",
+            "stage": "Fetching the video's audio...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      },
+      {
+        "at": "2026-11-26T19:54:46.455273+00:00",
+        "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+        "status": "done",
+        "stage": "Batch complete",
+        "total": 2,
+        "completed": 2,
+        "failed": 1,
+        "jobs": [
+          {
+            "id": "efd270055571443aabd50c52cb24abaf",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "done",
+            "stage": "Ready to download",
+            "error": "",
+            "warnings": [],
+            "library_id": "efd270055571443aabd50c52cb24abaf"
+          },
+          {
+            "id": "1b968916338146878795e40eff393d4f",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "error",
+            "stage": "Unable to transcribe",
+            "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      }
+    ],
+    "final_batch": {
+      "id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+      "status": "done",
+      "stage": "Batch complete",
+      "total": 2,
+      "completed": 2,
+      "failed": 1,
+      "jobs": [
+        {
+          "id": "efd270055571443aabd50c52cb24abaf",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "source": "https://www.dailymotion.com/video/xbvubxi",
+          "status": "done",
+          "stage": "Ready to download",
+          "error": "",
+          "warnings": [],
+          "library_id": "efd270055571443aabd50c52cb24abaf"
+        },
+        {
+          "id": "1b968916338146878795e40eff393d4f",
+          "title": "Youtube HOfdboHvshg",
+          "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "warnings": [],
+          "library_id": ""
+        }
+      ]
+    },
+    "successful_job": {
+      "id": "efd270055571443aabd50c52cb24abaf",
+      "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "language": "en",
+      "segment_count": 77,
+      "events": [
+        {
+          "at": "2026-11-26T19:52:44.790405+00:00",
+          "pid": 3828,
+          "kind": "acquisition_start",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-26T19:52:48.444656+00:00",
+          "pid": 3828,
+          "kind": "acquisition_done",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "bytes": 11919385,
+          "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+          "duration_seconds": 734.191746,
+          "audio_streams": 1,
+          "elapsed_seconds": 3.654
+        },
+        {
+          "at": "2026-11-26T19:52:48.453072+00:00",
+          "pid": 3828,
+          "kind": "recognition_start",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "model": "small",
+          "requested_language": "auto",
+          "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+        },
+        {
+          "at": "2026-11-26T19:52:48.453245+00:00",
+          "pid": 3828,
+          "kind": "transcribe_request",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          }
+        },
+        {
+          "at": "2026-11-26T19:52:49.183203+00:00",
+          "pid": 3828,
+          "kind": "audio_decoded",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            11746325
+          ],
+          "decoded_duration_seconds": 734.1453125
+        },
+        {
+          "at": "2026-11-26T19:52:51.327151+00:00",
+          "pid": 3828,
+          "kind": "transcribe_info",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "info": {
+            "language": "en",
+            "language_probability": 0.9784236550331116,
+            "duration": 734.1453125,
+            "duration_after_vad": 734.1453125,
+            "all_language_probs": [
+              [
+                "en",
+                0.9784236550331116
+              ],
+              [
+                "nn",
+                0.0029035592451691628
+              ],
+              [
+                "pt",
+                0.0017260636668652296
+              ],
+              [
+                "la",
+                0.0016220464603975415
+              ],
+              [
+                "ja",
+                0.0014059763634577394
+              ],
+              [
+                "es",
+                0.0013786100316792727
+              ],
+              [
+                "ru",
+                0.0013708433834835887
+              ],
+              [
+                "ko",
+                0.0011539860861375928
+              ],
+              [
+                "zh",
+                0.0010817191796377301
+              ],
+              [
+                "tr",
+                0.0009977826848626137
+              ],
+              [
+                "de",
+                0.0008480314863845706
+              ],
+              [
+                "fr",
+                0.0007807717192918062
+              ],
+              [
+                "vi",
+                0.0006893546087667346
+              ],
+              [
+                "id",
+                0.00066332274582237
+              ],
+              [
+                "ar",
+                0.0006399959092959762
+              ],
+              [
+                "pl",
+                0.00044865417294204235
+              ],
+              [
+                "th",
+                0.0004344911430962384
+              ],
+              [
+                "haw",
+                0.00042370223673060536
+              ],
+              [
+                "nl",
+                0.0003630492719821632
+              ],
+              [
+                "hi",
+                0.0003576703311409801
+              ],
+              [
+                "it",
+                0.00028470909455791116
+              ],
+              [
+                "ms",
+                0.0002258135937154293
+              ],
+              [
+                "cy",
+                0.000223858529352583
+              ],
+              [
+                "tl",
+                0.00022379448637366295
+              ],
+              [
+                "hu",
+                0.00019108905689790845
+              ],
+              [
+                "jw",
+                0.00018530739180278033
+              ],
+              [
+                "km",
+                0.000108473512227647
+              ],
+              [
+                "ml",
+                9.799652616493404e-05
+              ],
+              [
+                "ta",
+                9.782714187167585e-05
+              ],
+              [
+                "fi",
+                7.669509795960039e-05
+              ],
+              [
+                "el",
+                7.408228702843189e-05
+              ],
+              [
+                "sv",
+                5.546570537262596e-05
+              ],
+              [
+                "ur",
+                4.903114677290432e-05
+              ],
+              [
+                "ro",
+                4.271534999134019e-05
+              ],
+              [
+                "cs",
+                3.324169301777147e-05
+              ],
+              [
+                "mi",
+                3.220832149963826e-05
+              ],
+              [
+                "br",
+                2.818864959408529e-05
+              ],
+              [
+                "sn",
+                2.7503352612257004e-05
+              ],
+              [
+                "te",
+                2.4726343326619826e-05
+              ],
+              [
+                "he",
+                1.8259086573380046e-05
+              ],
+              [
+                "si",
+                1.713158781058155e-05
+              ],
+              [
+                "no",
+                1.5394867659779266e-05
+              ],
+              [
+                "sa",
+                1.402785892423708e-05
+              ],
+              [
+                "uk",
+                1.3446276170725469e-05
+              ],
+              [
+                "gl",
+                1.152790446212748e-05
+              ],
+              [
+                "da",
+                1.0718035809986759e-05
+              ],
+              [
+                "yo",
+                1.0434377145429607e-05
+              ],
+              [
+                "hr",
+                1.0232977729174308e-05
+              ],
+              [
+                "bn",
+                8.712222552276216e-06
+              ],
+              [
+                "fa",
+                7.596139312227024e-06
+              ],
+              [
+                "sw",
+                5.565563697018661e-06
+              ],
+              [
+                "ca",
+                5.400737791205756e-06
+              ],
+              [
+                "my",
+                5.211209099797998e-06
+              ],
+              [
+                "ht",
+                5.191823220229708e-06
+              ],
+              [
+                "bs",
+                4.860494755121181e-06
+              ],
+              [
+                "sl",
+                4.777178673975868e-06
+              ],
+              [
+                "af",
+                4.3449235818115994e-06
+              ],
+              [
+                "bg",
+                4.199505838187179e-06
+              ],
+              [
+                "yi",
+                3.667148575914325e-06
+              ],
+              [
+                "mn",
+                3.437402710915194e-06
+              ],
+              [
+                "sk",
+                2.8267779725865694e-06
+              ],
+              [
+                "is",
+                2.0006757495139027e-06
+              ],
+              [
+                "lv",
+                1.880972490653221e-06
+              ],
+              [
+                "fo",
+                1.2440060572771472e-06
+              ],
+              [
+                "ne",
+                1.0588989880488953e-06
+              ],
+              [
+                "bo",
+                1.0447524800838437e-06
+              ],
+              [
+                "eu",
+                1.0312315907867742e-06
+              ],
+              [
+                "sd",
+                9.85247538665135e-07
+              ],
+              [
+                "sr",
+                8.935466553339211e-07
+              ],
+              [
+                "lo",
+                8.441498380307166e-07
+              ],
+              [
+                "lt",
+                7.999707918315835e-07
+              ],
+              [
+                "oc",
+                6.514305823657196e-07
+              ],
+              [
+                "sq",
+                5.236978495304356e-07
+              ],
+              [
+                "be",
+                4.97196595006244e-07
+              ],
+              [
+                "az",
+                4.4934162701792957e-07
+              ],
+              [
+                "et",
+                4.1164750541611284e-07
+              ],
+              [
+                "as",
+                4.003401272711926e-07
+              ],
+              [
+                "hy",
+                3.616233357206511e-07
+              ],
+              [
+                "mr",
+                3.028434321095119e-07
+              ],
+              [
+                "kn",
+                2.597598154352454e-07
+              ],
+              [
+                "mk",
+                2.0794541910618136e-07
+              ],
+              [
+                "mt",
+                2.031330126328612e-07
+              ],
+              [
+                "pa",
+                1.9042514054490312e-07
+              ],
+              [
+                "ps",
+                1.8088714170971798e-07
+              ],
+              [
+                "kk",
+                1.6613485342986678e-07
+              ],
+              [
+                "ka",
+                8.5631505442052e-08
+              ],
+              [
+                "ln",
+                4.3746641864572666e-08
+              ],
+              [
+                "gu",
+                3.8236635191424284e-08
+              ],
+              [
+                "so",
+                2.117039521465358e-08
+              ],
+              [
+                "am",
+                1.162006224575407e-08
+              ],
+              [
+                "su",
+                2.2435358015826523e-09
+              ],
+              [
+                "tg",
+                7.676639324216694e-10
+              ],
+              [
+                "lb",
+                6.406870589614755e-10
+              ],
+              [
+                "tt",
+                4.5145506777366506e-10
+              ],
+              [
+                "tk",
+                2.9831903614052635e-10
+              ],
+              [
+                "ha",
+                2.5984339679929747e-10
+              ],
+              [
+                "ba",
+                2.5902346934003617e-10
+              ],
+              [
+                "mg",
+                5.099764360805281e-11
+              ],
+              [
+                "uz",
+                2.4100105591728926e-11
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T19:54:45.282970+00:00",
+          "pid": 3828,
+          "kind": "recognition_done",
+          "job_id": "efd270055571443aabd50c52cb24abaf",
+          "model": "small",
+          "language": "en",
+          "segment_count": 77,
+          "elapsed_seconds": 116.838
+        }
+      ],
+      "decoded_duration_seconds": 734.1453125,
+      "normal_vad_filter": false,
+      "normal_explicit_transcribe_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "condition_on_previous_text": false
+      },
+      "normal_transcribe_info": {
+        "language": "en",
+        "language_probability": 0.9784236550331116,
+        "duration": 734.1453125,
+        "duration_after_vad": 734.1453125,
+        "all_language_probs": [
+          [
+            "en",
+            0.9784236550331116
+          ],
+          [
+            "nn",
+            0.0029035592451691628
+          ],
+          [
+            "pt",
+            0.0017260636668652296
+          ],
+          [
+            "la",
+            0.0016220464603975415
+          ],
+          [
+            "ja",
+            0.0014059763634577394
+          ],
+          [
+            "es",
+            0.0013786100316792727
+          ],
+          [
+            "ru",
+            0.0013708433834835887
+          ],
+          [
+            "ko",
+            0.0011539860861375928
+          ],
+          [
+            "zh",
+            0.0010817191796377301
+          ],
+          [
+            "tr",
+            0.0009977826848626137
+          ],
+          [
+            "de",
+            0.0008480314863845706
+          ],
+          [
+            "fr",
+            0.0007807717192918062
+          ],
+          [
+            "vi",
+            0.0006893546087667346
+          ],
+          [
+            "id",
+            0.00066332274582237
+          ],
+          [
+            "ar",
+            0.0006399959092959762
+          ],
+          [
+            "pl",
+            0.00044865417294204235
+          ],
+          [
+            "th",
+            0.0004344911430962384
+          ],
+          [
+            "haw",
+            0.00042370223673060536
+          ],
+          [
+            "nl",
+            0.0003630492719821632
+          ],
+          [
+            "hi",
+            0.0003576703311409801
+          ],
+          [
+            "it",
+            0.00028470909455791116
+          ],
+          [
+            "ms",
+            0.0002258135937154293
+          ],
+          [
+            "cy",
+            0.000223858529352583
+          ],
+          [
+            "tl",
+            0.00022379448637366295
+          ],
+          [
+            "hu",
+            0.00019108905689790845
+          ],
+          [
+            "jw",
+            0.00018530739180278033
+          ],
+          [
+            "km",
+            0.000108473512227647
+          ],
+          [
+            "ml",
+            9.799652616493404e-05
+          ],
+          [
+            "ta",
+            9.782714187167585e-05
+          ],
+          [
+            "fi",
+            7.669509795960039e-05
+          ],
+          [
+            "el",
+            7.408228702843189e-05
+          ],
+          [
+            "sv",
+            5.546570537262596e-05
+          ],
+          [
+            "ur",
+            4.903114677290432e-05
+          ],
+          [
+            "ro",
+            4.271534999134019e-05
+          ],
+          [
+            "cs",
+            3.324169301777147e-05
+          ],
+          [
+            "mi",
+            3.220832149963826e-05
+          ],
+          [
+            "br",
+            2.818864959408529e-05
+          ],
+          [
+            "sn",
+            2.7503352612257004e-05
+          ],
+          [
+            "te",
+            2.4726343326619826e-05
+          ],
+          [
+            "he",
+            1.8259086573380046e-05
+          ],
+          [
+            "si",
+            1.713158781058155e-05
+          ],
+          [
+            "no",
+            1.5394867659779266e-05
+          ],
+          [
+            "sa",
+            1.402785892423708e-05
+          ],
+          [
+            "uk",
+            1.3446276170725469e-05
+          ],
+          [
+            "gl",
+            1.152790446212748e-05
+          ],
+          [
+            "da",
+            1.0718035809986759e-05
+          ],
+          [
+            "yo",
+            1.0434377145429607e-05
+          ],
+          [
+            "hr",
+            1.0232977729174308e-05
+          ],
+          [
+            "bn",
+            8.712222552276216e-06
+          ],
+          [
+            "fa",
+            7.596139312227024e-06
+          ],
+          [
+            "sw",
+            5.565563697018661e-06
+          ],
+          [
+            "ca",
+            5.400737791205756e-06
+          ],
+          [
+            "my",
+            5.211209099797998e-06
+          ],
+          [
+            "ht",
+            5.191823220229708e-06
+          ],
+          [
+            "bs",
+            4.860494755121181e-06
+          ],
+          [
+            "sl",
+            4.777178673975868e-06
+          ],
+          [
+            "af",
+            4.3449235818115994e-06
+          ],
+          [
+            "bg",
+            4.199505838187179e-06
+          ],
+          [
+            "yi",
+            3.667148575914325e-06
+          ],
+          [
+            "mn",
+            3.437402710915194e-06
+          ],
+          [
+            "sk",
+            2.8267779725865694e-06
+          ],
+          [
+            "is",
+            2.0006757495139027e-06
+          ],
+          [
+            "lv",
+            1.880972490653221e-06
+          ],
+          [
+            "fo",
+            1.2440060572771472e-06
+          ],
+          [
+            "ne",
+            1.0588989880488953e-06
+          ],
+          [
+            "bo",
+            1.0447524800838437e-06
+          ],
+          [
+            "eu",
+            1.0312315907867742e-06
+          ],
+          [
+            "sd",
+            9.85247538665135e-07
+          ],
+          [
+            "sr",
+            8.935466553339211e-07
+          ],
+          [
+            "lo",
+            8.441498380307166e-07
+          ],
+          [
+            "lt",
+            7.999707918315835e-07
+          ],
+          [
+            "oc",
+            6.514305823657196e-07
+          ],
+          [
+            "sq",
+            5.236978495304356e-07
+          ],
+          [
+            "be",
+            4.97196595006244e-07
+          ],
+          [
+            "az",
+            4.4934162701792957e-07
+          ],
+          [
+            "et",
+            4.1164750541611284e-07
+          ],
+          [
+            "as",
+            4.003401272711926e-07
+          ],
+          [
+            "hy",
+            3.616233357206511e-07
+          ],
+          [
+            "mr",
+            3.028434321095119e-07
+          ],
+          [
+            "kn",
+            2.597598154352454e-07
+          ],
+          [
+            "mk",
+            2.0794541910618136e-07
+          ],
+          [
+            "mt",
+            2.031330126328612e-07
+          ],
+          [
+            "pa",
+            1.9042514054490312e-07
+          ],
+          [
+            "ps",
+            1.8088714170971798e-07
+          ],
+          [
+            "kk",
+            1.6613485342986678e-07
+          ],
+          [
+            "ka",
+            8.5631505442052e-08
+          ],
+          [
+            "ln",
+            4.3746641864572666e-08
+          ],
+          [
+            "gu",
+            3.8236635191424284e-08
+          ],
+          [
+            "so",
+            2.117039521465358e-08
+          ],
+          [
+            "am",
+            1.162006224575407e-08
+          ],
+          [
+            "su",
+            2.2435358015826523e-09
+          ],
+          [
+            "tg",
+            7.676639324216694e-10
+          ],
+          [
+            "lb",
+            6.406870589614755e-10
+          ],
+          [
+            "tt",
+            4.5145506777366506e-10
+          ],
+          [
+            "tk",
+            2.9831903614052635e-10
+          ],
+          [
+            "ha",
+            2.5984339679929747e-10
+          ],
+          [
+            "ba",
+            2.5902346934003617e-10
+          ],
+          [
+            "mg",
+            5.099764360805281e-11
+          ],
+          [
+            "uz",
+            2.4100105591728926e-11
+          ]
+        ],
+        "transcription_options": {
+          "beam_size": 5,
+          "best_of": 5,
+          "patience": 1,
+          "length_penalty": 1,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "log_prob_threshold": -1.0,
+          "no_speech_threshold": 0.6,
+          "compression_ratio_threshold": 2.4,
+          "condition_on_previous_text": false,
+          "prompt_reset_on_temperature": 0.5,
+          "temperatures": [
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ],
+          "initial_prompt": null,
+          "prefix": null,
+          "suppress_blank": true,
+          "suppress_tokens": [
+            1,
+            2,
+            7,
+            8,
+            9,
+            10,
+            14,
+            25,
+            26,
+            27,
+            28,
+            29,
+            31,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            90,
+            91,
+            92,
+            93,
+            359,
+            503,
+            522,
+            542,
+            873,
+            893,
+            902,
+            918,
+            922,
+            931,
+            1350,
+            1853,
+            1982,
+            2460,
+            2627,
+            3246,
+            3253,
+            3268,
+            3536,
+            3846,
+            3961,
+            4183,
+            4667,
+            6585,
+            6647,
+            7273,
+            9061,
+            9383,
+            10428,
+            10929,
+            11938,
+            12033,
+            12331,
+            12562,
+            13793,
+            14157,
+            14635,
+            15265,
+            15618,
+            16553,
+            16604,
+            18362,
+            18956,
+            20075,
+            21675,
+            22520,
+            26130,
+            26161,
+            26435,
+            28279,
+            29464,
+            31650,
+            32302,
+            32470,
+            36865,
+            42863,
+            47425,
+            49870,
+            50254,
+            50258,
+            50358,
+            50359,
+            50360,
+            50361,
+            50362
+          ],
+          "without_timestamps": false,
+          "max_initial_timestamp": 1.0,
+          "word_timestamps": false,
+          "prepend_punctuations": "\"'\u201c\u00bf([{-",
+          "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+          "multilingual": false,
+          "max_new_tokens": null,
+          "clip_timestamps": "0",
+          "hallucination_silence_threshold": null,
+          "hotwords": null
+        },
+        "vad_options": null
+      },
+      "last_vad_kept_end_seconds": null,
+      "post_vad_duration_seconds": 734.1453125,
+      "last_segment_end_seconds": 727.2,
+      "maximum_segment_duration_seconds": 29.120000000000005,
+      "exports": {
+        "txt": {
+          "bytes": 1906,
+          "sha256": "7b6d8f60b1fcf26bdb45099df7148e18fb5646900cb5d5b5c6eb7e4184d00879"
+        },
+        "srt": {
+          "bytes": 4514,
+          "sha256": "c3da77da235a1978fe007e1dd3de52769c110841742ad98ef1597c9ffe3ff775"
+        },
+        "vtt": {
+          "bytes": 4300,
+          "sha256": "4a846483abdd837c188b82a93c8cdca618ef19cfc3110195dd3531882a496f45"
+        },
+        "json": {
+          "bytes": 7747,
+          "sha256": "4d16b42df682f9c628668896a8fbd450ed6d755d7068d6becb9b4a180d41f88b"
+        },
+        "zip": {
+          "bytes": 6305,
+          "sha256": "f6a99b354add7e48e26bac19b15ad8f19641ed2ca533754bd2cdaf11f34119f0"
+        }
+      },
+      "sqlite_matches_saved_segments": true,
+      "input_audio_cleaned": true,
+      "export_text_order_preserved": true,
+      "subtitle_time_accuracy": "not_evaluated"
+    },
+    "manifest": {
+      "batch_id": "0f1f7132d93f4f9ea5e60174c2fccc33",
+      "total": 2,
+      "completed": 2,
+      "failed": 1,
+      "items": [
+        {
+          "number": 1,
+          "source": "https://www.dailymotion.com/video/xbvubxi",
+          "status": "done",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "error": "",
+          "warnings": [],
+          "library_id": "efd270055571443aabd50c52cb24abaf"
+        },
+        {
+          "number": 2,
+          "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+          "status": "error",
+          "title": "Youtube HOfdboHvshg",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "warnings": [],
+          "library_id": null
+        }
+      ]
+    }
+  },
+  "restart": {
+    "status": "pass",
+    "completed_batch_history_and_exports_preserved": true,
+    "verified_record_ids": [
+      "9345650a9103479098794e086c8fd19a",
+      "efd270055571443aabd50c52cb24abaf"
+    ]
+  },
+  "tail_diagnostic": {
+    "status": "not_requested",
+    "included_in_normal_pipeline_output": false
+  },
+  "nonspeech": {
+    "status": "fail",
+    "scope": "Two owned generated 32-second fixtures; no general silence/music/noise guarantee.",
+    "cases": [
+      {
+        "kind": "silence",
+        "status": "fail",
+        "started_at": "2026-11-26T19:54:46.814579+00:00",
+        "input": {
+          "kind": "silence",
+          "expected_speech": "none_by_construction",
+          "recipe": "Signed 16-bit PCM zeros",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "7b331c02e313c7599d5a90212e17e6d3cb729bd2e1c9b873c302a63c95a2f9bf",
+          "wav_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+        "poll_count": 13,
+        "transitions": [
+          {
+            "at": "2026-11-26T19:54:46.828521+00:00",
+            "id": "f0ce42c84da34b39905b08136dfb8da5",
+            "status": "working",
+            "stage": "Checking media file...",
+            "title": "owned-silence.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-26T19:54:47.335519+00:00",
+            "id": "f0ce42c84da34b39905b08136dfb8da5",
+            "status": "working",
+            "stage": "Recognizing speech locally...",
+            "title": "owned-silence.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-26T19:54:52.887628+00:00",
+            "id": "f0ce42c84da34b39905b08136dfb8da5",
+            "status": "done",
+            "stage": "Ready to download",
+            "title": "owned-silence.wav",
+            "language": "en",
+            "method": "local_audio_ai",
+            "preview": "you\nYou",
+            "error": "",
+            "segments": 2,
+            "warnings": [],
+            "extras": {
+              "translation_language": "",
+              "summary": false,
+              "speakers": false
+            },
+            "library_id": "f0ce42c84da34b39905b08136dfb8da5"
+          }
+        ],
+        "final_job": {
+          "id": "f0ce42c84da34b39905b08136dfb8da5",
+          "status": "done",
+          "stage": "Ready to download",
+          "title": "owned-silence.wav",
+          "language": "en",
+          "method": "local_audio_ai",
+          "preview": "you\nYou",
+          "error": "",
+          "segments": 2,
+          "warnings": [],
+          "extras": {
+            "translation_language": "",
+            "summary": false,
+            "speakers": false
+          },
+          "library_id": "f0ce42c84da34b39905b08136dfb8da5"
+        },
+        "recognition_evidence": {
+          "decoded_duration_seconds": 32.0,
+          "normal_vad_filter": false,
+          "normal_explicit_transcribe_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "normal_transcribe_info": {
+            "language": "en",
+            "language_probability": 0.30531370639801025,
+            "duration": 32.0,
+            "duration_after_vad": 32.0,
+            "all_language_probs": [
+              [
+                "en",
+                0.30531370639801025
+              ],
+              [
+                "cy",
+                0.2837868630886078
+              ],
+              [
+                "zh",
+                0.08564314991235733
+              ],
+              [
+                "nn",
+                0.061609894037246704
+              ],
+              [
+                "ja",
+                0.03918217867612839
+              ],
+              [
+                "ko",
+                0.03277267515659332
+              ],
+              [
+                "ru",
+                0.030916476622223854
+              ],
+              [
+                "es",
+                0.020620401948690414
+              ],
+              [
+                "fr",
+                0.01606128364801407
+              ],
+              [
+                "tr",
+                0.013666270300745964
+              ],
+              [
+                "vi",
+                0.008464161306619644
+              ],
+              [
+                "ar",
+                0.006920947693288326
+              ],
+              [
+                "de",
+                0.00683300755918026
+              ],
+              [
+                "pt",
+                0.00676634581759572
+              ],
+              [
+                "la",
+                0.0060583180747926235
+              ],
+              [
+                "jw",
+                0.0059529757127165794
+              ],
+              [
+                "hi",
+                0.0058075496926903725
+              ],
+              [
+                "km",
+                0.0055463663302361965
+              ],
+              [
+                "id",
+                0.005226886365562677
+              ],
+              [
+                "it",
+                0.005095775239169598
+              ],
+              [
+                "ml",
+                0.004621610511094332
+              ],
+              [
+                "pl",
+                0.0040997909381985664
+              ],
+              [
+                "nl",
+                0.0030480341520160437
+              ],
+              [
+                "sn",
+                0.002860677195712924
+              ],
+              [
+                "th",
+                0.0028131187427788973
+              ],
+              [
+                "ms",
+                0.0025537784676998854
+              ],
+              [
+                "sv",
+                0.0024485429748892784
+              ],
+              [
+                "el",
+                0.0024043438024818897
+              ],
+              [
+                "ta",
+                0.0020531422924250364
+              ],
+              [
+                "haw",
+                0.0019208480371162295
+              ],
+              [
+                "tl",
+                0.0017633888637647033
+              ],
+              [
+                "hu",
+                0.0016474867006763816
+              ],
+              [
+                "fi",
+                0.0016127597773447633
+              ],
+              [
+                "mi",
+                0.0015289760194718838
+              ],
+              [
+                "ur",
+                0.0014584807213395834
+              ],
+              [
+                "cs",
+                0.0014527114108204842
+              ],
+              [
+                "te",
+                0.001314958673901856
+              ],
+              [
+                "br",
+                0.000822786707431078
+              ],
+              [
+                "ro",
+                0.0007752125384286046
+              ],
+              [
+                "fa",
+                0.000767656893003732
+              ],
+              [
+                "si",
+                0.0007670846534892917
+              ],
+              [
+                "he",
+                0.0005280922050587833
+              ],
+              [
+                "ca",
+                0.0004465443198569119
+              ],
+              [
+                "uk",
+                0.0004389112291391939
+              ],
+              [
+                "gl",
+                0.0004351767129264772
+              ],
+              [
+                "bn",
+                0.0003249249130021781
+              ],
+              [
+                "da",
+                0.0002957380493171513
+              ],
+              [
+                "sa",
+                0.0002897100057452917
+              ],
+              [
+                "yo",
+                0.00027526833582669497
+              ],
+              [
+                "no",
+                0.00024715071776881814
+              ],
+              [
+                "eu",
+                0.00024357601068913937
+              ],
+              [
+                "sw",
+                0.00016758832498453557
+              ],
+              [
+                "bg",
+                0.00016722240252420306
+              ],
+              [
+                "my",
+                0.0001644462754484266
+              ],
+              [
+                "hr",
+                0.00012144371430622414
+              ],
+              [
+                "mn",
+                9.86502127489075e-05
+              ],
+              [
+                "bs",
+                7.85031879786402e-05
+              ],
+              [
+                "ne",
+                7.40936811780557e-05
+              ],
+              [
+                "be",
+                7.257034303620458e-05
+              ],
+              [
+                "sl",
+                6.0691665566992015e-05
+              ],
+              [
+                "bo",
+                5.7553243095753714e-05
+              ],
+              [
+                "sk",
+                4.27950726589188e-05
+              ],
+              [
+                "ht",
+                4.2276213207514957e-05
+              ],
+              [
+                "oc",
+                3.840858698822558e-05
+              ],
+              [
+                "af",
+                3.562540587154217e-05
+              ],
+              [
+                "fo",
+                3.362257848493755e-05
+              ],
+              [
+                "ps",
+                2.5897899831761606e-05
+              ],
+              [
+                "az",
+                2.1854353690287098e-05
+              ],
+              [
+                "yi",
+                1.8984132111654617e-05
+              ],
+              [
+                "is",
+                1.8464723325450905e-05
+              ],
+              [
+                "lo",
+                1.8188165995525196e-05
+              ],
+              [
+                "hy",
+                1.5462203009519726e-05
+              ],
+              [
+                "sd",
+                1.5235163118632045e-05
+              ],
+              [
+                "mr",
+                1.3313993804331403e-05
+              ],
+              [
+                "lv",
+                1.3025883163209073e-05
+              ],
+              [
+                "et",
+                1.2811064152629115e-05
+              ],
+              [
+                "sr",
+                1.0936325452348683e-05
+              ],
+              [
+                "lt",
+                9.515654710412491e-06
+              ],
+              [
+                "sq",
+                7.454455499100732e-06
+              ],
+              [
+                "as",
+                7.254228421516018e-06
+              ],
+              [
+                "kk",
+                6.391348051693058e-06
+              ],
+              [
+                "kn",
+                6.329966709017754e-06
+              ],
+              [
+                "pa",
+                6.101266990299337e-06
+              ],
+              [
+                "mk",
+                3.7400445762614254e-06
+              ],
+              [
+                "ka",
+                2.0946661152265733e-06
+              ],
+              [
+                "mt",
+                1.6153494470927399e-06
+              ],
+              [
+                "ln",
+                1.374385192320915e-06
+              ],
+              [
+                "am",
+                1.1352468618497369e-06
+              ],
+              [
+                "gu",
+                9.632041155782645e-07
+              ],
+              [
+                "so",
+                3.0308649456856074e-07
+              ],
+              [
+                "su",
+                1.310584138991544e-07
+              ],
+              [
+                "tg",
+                4.666752317916689e-08
+              ],
+              [
+                "lb",
+                2.2054985393538118e-08
+              ],
+              [
+                "tt",
+                1.3878712401549365e-08
+              ],
+              [
+                "tk",
+                9.710864112832951e-09
+              ],
+              [
+                "ha",
+                9.658752908592305e-09
+              ],
+              [
+                "ba",
+                7.771573606873972e-09
+              ],
+              [
+                "mg",
+                2.3661759218640555e-09
+              ],
+              [
+                "uz",
+                1.6620554932345044e-09
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          },
+          "last_vad_kept_end_seconds": null,
+          "post_vad_duration_seconds": 32.0
+        },
+        "hallucinated_saved_record": "records/nonspeech-f0ce42c84da34b39905b08136dfb8da5.json",
+        "errors": [
+          {
+            "type": "AssertionError",
+            "message": "Actual ASR saved words from owned audio with no speech; raw normal output retained."
+          }
+        ],
+        "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 791, in run\n    raise AssertionError(\"Actual ASR saved words from owned audio with no speech; raw normal output retained.\")\nAssertionError: Actual ASR saved words from owned audio with no speech; raw normal output retained.\n",
+        "events": [
+          {
+            "at": "2026-11-26T19:54:46.834029+00:00",
+            "pid": 3828,
+            "kind": "recognition_start",
+            "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142"
+          },
+          {
+            "at": "2026-11-26T19:54:46.834198+00:00",
+            "pid": 3828,
+            "kind": "transcribe_request",
+            "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+            "explicit_kwargs": {
+              "language": null,
+              "beam_size": 5,
+              "vad_filter": false,
+              "condition_on_previous_text": false
+            },
+            "resolved_options": {
+              "language": null,
+              "task": "transcribe",
+              "log_progress": false,
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "temperature": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "compression_ratio_threshold": 2.4,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                -1
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "vad_filter": false,
+              "vad_parameters": null,
+              "max_new_tokens": null,
+              "chunk_length": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null,
+              "language_detection_threshold": 0.5,
+              "language_detection_segments": 1
+            }
+          },
+          {
+            "at": "2026-11-26T19:54:46.874007+00:00",
+            "pid": 3828,
+            "kind": "audio_decoded",
+            "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              512000
+            ],
+            "decoded_duration_seconds": 32.0
+          },
+          {
+            "at": "2026-11-26T19:54:48.773558+00:00",
+            "pid": 3828,
+            "kind": "transcribe_info",
+            "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+            "info": {
+              "language": "en",
+              "language_probability": 0.30531370639801025,
+              "duration": 32.0,
+              "duration_after_vad": 32.0,
+              "all_language_probs": [
+                [
+                  "en",
+                  0.30531370639801025
+                ],
+                [
+                  "cy",
+                  0.2837868630886078
+                ],
+                [
+                  "zh",
+                  0.08564314991235733
+                ],
+                [
+                  "nn",
+                  0.061609894037246704
+                ],
+                [
+                  "ja",
+                  0.03918217867612839
+                ],
+                [
+                  "ko",
+                  0.03277267515659332
+                ],
+                [
+                  "ru",
+                  0.030916476622223854
+                ],
+                [
+                  "es",
+                  0.020620401948690414
+                ],
+                [
+                  "fr",
+                  0.01606128364801407
+                ],
+                [
+                  "tr",
+                  0.013666270300745964
+                ],
+                [
+                  "vi",
+                  0.008464161306619644
+                ],
+                [
+                  "ar",
+                  0.006920947693288326
+                ],
+                [
+                  "de",
+                  0.00683300755918026
+                ],
+                [
+                  "pt",
+                  0.00676634581759572
+                ],
+                [
+                  "la",
+                  0.0060583180747926235
+                ],
+                [
+                  "jw",
+                  0.0059529757127165794
+                ],
+                [
+                  "hi",
+                  0.0058075496926903725
+                ],
+                [
+                  "km",
+                  0.0055463663302361965
+                ],
+                [
+                  "id",
+                  0.005226886365562677
+                ],
+                [
+                  "it",
+                  0.005095775239169598
+                ],
+                [
+                  "ml",
+                  0.004621610511094332
+                ],
+                [
+                  "pl",
+                  0.0040997909381985664
+                ],
+                [
+                  "nl",
+                  0.0030480341520160437
+                ],
+                [
+                  "sn",
+                  0.002860677195712924
+                ],
+                [
+                  "th",
+                  0.0028131187427788973
+                ],
+                [
+                  "ms",
+                  0.0025537784676998854
+                ],
+                [
+                  "sv",
+                  0.0024485429748892784
+                ],
+                [
+                  "el",
+                  0.0024043438024818897
+                ],
+                [
+                  "ta",
+                  0.0020531422924250364
+                ],
+                [
+                  "haw",
+                  0.0019208480371162295
+                ],
+                [
+                  "tl",
+                  0.0017633888637647033
+                ],
+                [
+                  "hu",
+                  0.0016474867006763816
+                ],
+                [
+                  "fi",
+                  0.0016127597773447633
+                ],
+                [
+                  "mi",
+                  0.0015289760194718838
+                ],
+                [
+                  "ur",
+                  0.0014584807213395834
+                ],
+                [
+                  "cs",
+                  0.0014527114108204842
+                ],
+                [
+                  "te",
+                  0.001314958673901856
+                ],
+                [
+                  "br",
+                  0.000822786707431078
+                ],
+                [
+                  "ro",
+                  0.0007752125384286046
+                ],
+                [
+                  "fa",
+                  0.000767656893003732
+                ],
+                [
+                  "si",
+                  0.0007670846534892917
+                ],
+                [
+                  "he",
+                  0.0005280922050587833
+                ],
+                [
+                  "ca",
+                  0.0004465443198569119
+                ],
+                [
+                  "uk",
+                  0.0004389112291391939
+                ],
+                [
+                  "gl",
+                  0.0004351767129264772
+                ],
+                [
+                  "bn",
+                  0.0003249249130021781
+                ],
+                [
+                  "da",
+                  0.0002957380493171513
+                ],
+                [
+                  "sa",
+                  0.0002897100057452917
+                ],
+                [
+                  "yo",
+                  0.00027526833582669497
+                ],
+                [
+                  "no",
+                  0.00024715071776881814
+                ],
+                [
+                  "eu",
+                  0.00024357601068913937
+                ],
+                [
+                  "sw",
+                  0.00016758832498453557
+                ],
+                [
+                  "bg",
+                  0.00016722240252420306
+                ],
+                [
+                  "my",
+                  0.0001644462754484266
+                ],
+                [
+                  "hr",
+                  0.00012144371430622414
+                ],
+                [
+                  "mn",
+                  9.86502127489075e-05
+                ],
+                [
+                  "bs",
+                  7.85031879786402e-05
+                ],
+                [
+                  "ne",
+                  7.40936811780557e-05
+                ],
+                [
+                  "be",
+                  7.257034303620458e-05
+                ],
+                [
+                  "sl",
+                  6.0691665566992015e-05
+                ],
+                [
+                  "bo",
+                  5.7553243095753714e-05
+                ],
+                [
+                  "sk",
+                  4.27950726589188e-05
+                ],
+                [
+                  "ht",
+                  4.2276213207514957e-05
+                ],
+                [
+                  "oc",
+                  3.840858698822558e-05
+                ],
+                [
+                  "af",
+                  3.562540587154217e-05
+                ],
+                [
+                  "fo",
+                  3.362257848493755e-05
+                ],
+                [
+                  "ps",
+                  2.5897899831761606e-05
+                ],
+                [
+                  "az",
+                  2.1854353690287098e-05
+                ],
+                [
+                  "yi",
+                  1.8984132111654617e-05
+                ],
+                [
+                  "is",
+                  1.8464723325450905e-05
+                ],
+                [
+                  "lo",
+                  1.8188165995525196e-05
+                ],
+                [
+                  "hy",
+                  1.5462203009519726e-05
+                ],
+                [
+                  "sd",
+                  1.5235163118632045e-05
+                ],
+                [
+                  "mr",
+                  1.3313993804331403e-05
+                ],
+                [
+                  "lv",
+                  1.3025883163209073e-05
+                ],
+                [
+                  "et",
+                  1.2811064152629115e-05
+                ],
+                [
+                  "sr",
+                  1.0936325452348683e-05
+                ],
+                [
+                  "lt",
+                  9.515654710412491e-06
+                ],
+                [
+                  "sq",
+                  7.454455499100732e-06
+                ],
+                [
+                  "as",
+                  7.254228421516018e-06
+                ],
+                [
+                  "kk",
+                  6.391348051693058e-06
+                ],
+                [
+                  "kn",
+                  6.329966709017754e-06
+                ],
+                [
+                  "pa",
+                  6.101266990299337e-06
+                ],
+                [
+                  "mk",
+                  3.7400445762614254e-06
+                ],
+                [
+                  "ka",
+                  2.0946661152265733e-06
+                ],
+                [
+                  "mt",
+                  1.6153494470927399e-06
+                ],
+                [
+                  "ln",
+                  1.374385192320915e-06
+                ],
+                [
+                  "am",
+                  1.1352468618497369e-06
+                ],
+                [
+                  "gu",
+                  9.632041155782645e-07
+                ],
+                [
+                  "so",
+                  3.0308649456856074e-07
+                ],
+                [
+                  "su",
+                  1.310584138991544e-07
+                ],
+                [
+                  "tg",
+                  4.666752317916689e-08
+                ],
+                [
+                  "lb",
+                  2.2054985393538118e-08
+                ],
+                [
+                  "tt",
+                  1.3878712401549365e-08
+                ],
+                [
+                  "tk",
+                  9.710864112832951e-09
+                ],
+                [
+                  "ha",
+                  9.658752908592305e-09
+                ],
+                [
+                  "ba",
+                  7.771573606873972e-09
+                ],
+                [
+                  "mg",
+                  2.3661759218640555e-09
+                ],
+                [
+                  "uz",
+                  1.6620554932345044e-09
+                ]
+              ],
+              "transcription_options": {
+                "beam_size": 5,
+                "best_of": 5,
+                "patience": 1,
+                "length_penalty": 1,
+                "repetition_penalty": 1,
+                "no_repeat_ngram_size": 0,
+                "log_prob_threshold": -1.0,
+                "no_speech_threshold": 0.6,
+                "compression_ratio_threshold": 2.4,
+                "condition_on_previous_text": false,
+                "prompt_reset_on_temperature": 0.5,
+                "temperatures": [
+                  0.0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  1.0
+                ],
+                "initial_prompt": null,
+                "prefix": null,
+                "suppress_blank": true,
+                "suppress_tokens": [
+                  1,
+                  2,
+                  7,
+                  8,
+                  9,
+                  10,
+                  14,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  31,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63,
+                  90,
+                  91,
+                  92,
+                  93,
+                  359,
+                  503,
+                  522,
+                  542,
+                  873,
+                  893,
+                  902,
+                  918,
+                  922,
+                  931,
+                  1350,
+                  1853,
+                  1982,
+                  2460,
+                  2627,
+                  3246,
+                  3253,
+                  3268,
+                  3536,
+                  3846,
+                  3961,
+                  4183,
+                  4667,
+                  6585,
+                  6647,
+                  7273,
+                  9061,
+                  9383,
+                  10428,
+                  10929,
+                  11938,
+                  12033,
+                  12331,
+                  12562,
+                  13793,
+                  14157,
+                  14635,
+                  15265,
+                  15618,
+                  16553,
+                  16604,
+                  18362,
+                  18956,
+                  20075,
+                  21675,
+                  22520,
+                  26130,
+                  26161,
+                  26435,
+                  28279,
+                  29464,
+                  31650,
+                  32302,
+                  32470,
+                  36865,
+                  42863,
+                  47425,
+                  49870,
+                  50254,
+                  50258,
+                  50358,
+                  50359,
+                  50360,
+                  50361,
+                  50362
+                ],
+                "without_timestamps": false,
+                "max_initial_timestamp": 1.0,
+                "word_timestamps": false,
+                "prepend_punctuations": "\"'\u201c\u00bf([{-",
+                "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+                "multilingual": false,
+                "max_new_tokens": null,
+                "clip_timestamps": "0",
+                "hallucination_silence_threshold": null,
+                "hotwords": null
+              },
+              "vad_options": null
+            }
+          },
+          {
+            "at": "2026-11-26T19:54:52.762986+00:00",
+            "pid": 3828,
+            "kind": "recognition_done",
+            "job_id": "f0ce42c84da34b39905b08136dfb8da5",
+            "model": "small",
+            "language": "en",
+            "segment_count": 2,
+            "elapsed_seconds": 5.93
+          }
+        ],
+        "elapsed_seconds": 6.076
+      },
+      {
+        "kind": "white_noise",
+        "status": "pass",
+        "started_at": "2026-11-26T19:54:52.898550+00:00",
+        "input": {
+          "kind": "white_noise",
+          "expected_speech": "none_by_construction",
+          "recipe": "Python random.Random(20261126); one randint(-3276,3276) per signed 16-bit PCM sample",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "3ca60d7681e809cee6c5127685f2c837ab010d11694f1f0b46f85e2f7468c094",
+          "wav_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "job_id": "ebc70a934949441da327dcb1800ef5e7",
+        "poll_count": 184,
+        "transitions": [
+          {
+            "at": "2026-11-26T19:54:53.121815+00:00",
+            "id": "ebc70a934949441da327dcb1800ef5e7",
+            "status": "working",
+            "stage": "Checking media file...",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-26T19:54:53.632066+00:00",
+            "id": "ebc70a934949441da327dcb1800ef5e7",
+            "status": "working",
+            "stage": "Recognizing speech locally...",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-26T19:56:25.106003+00:00",
+            "id": "ebc70a934949441da327dcb1800ef5e7",
+            "status": "error",
+            "stage": "Unable to transcribe",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "No spoken words were detected in this recording.",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          }
+        ],
+        "final_job": {
+          "id": "ebc70a934949441da327dcb1800ef5e7",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "owned-white_noise.wav",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "No spoken words were detected in this recording.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        "recognition_evidence": {
+          "decoded_duration_seconds": 32.0,
+          "normal_vad_filter": false,
+          "normal_explicit_transcribe_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "normal_transcribe_info": {
+            "language": "nn",
+            "language_probability": 0.5599250793457031,
+            "duration": 32.0,
+            "duration_after_vad": 32.0,
+            "all_language_probs": [
+              [
+                "nn",
+                0.5599250793457031
+              ],
+              [
+                "en",
+                0.10951530933380127
+              ],
+              [
+                "cy",
+                0.10472490638494492
+              ],
+              [
+                "ja",
+                0.047111112624406815
+              ],
+              [
+                "zh",
+                0.035868141800165176
+              ],
+              [
+                "fr",
+                0.03393104672431946
+              ],
+              [
+                "ko",
+                0.013124345801770687
+              ],
+              [
+                "de",
+                0.00912841223180294
+              ],
+              [
+                "es",
+                0.008672553114593029
+              ],
+              [
+                "ru",
+                0.008058554492890835
+              ],
+              [
+                "tr",
+                0.007608374115079641
+              ],
+              [
+                "pl",
+                0.007206769194453955
+              ],
+              [
+                "la",
+                0.007130575831979513
+              ],
+              [
+                "pt",
+                0.006666399072855711
+              ],
+              [
+                "ml",
+                0.003895602421835065
+              ],
+              [
+                "jw",
+                0.0037672375328838825
+              ],
+              [
+                "it",
+                0.0036595589481294155
+              ],
+              [
+                "vi",
+                0.003635997185483575
+              ],
+              [
+                "ar",
+                0.003390955040231347
+              ],
+              [
+                "hi",
+                0.0032670884393155575
+              ],
+              [
+                "km",
+                0.0017072890186682343
+              ],
+              [
+                "haw",
+                0.0016925283707678318
+              ],
+              [
+                "hu",
+                0.0013969333376735449
+              ],
+              [
+                "ms",
+                0.0013812026008963585
+              ],
+              [
+                "el",
+                0.0013489187695086002
+              ],
+              [
+                "id",
+                0.0011094094952568412
+              ],
+              [
+                "sn",
+                0.0010807715589180589
+              ],
+              [
+                "sv",
+                0.0010806252248585224
+              ],
+              [
+                "nl",
+                0.0009426836622878909
+              ],
+              [
+                "ta",
+                0.0008230761159211397
+              ],
+              [
+                "th",
+                0.0008176731062121689
+              ],
+              [
+                "br",
+                0.0007747829076834023
+              ],
+              [
+                "cs",
+                0.0007238215184770525
+              ],
+              [
+                "ur",
+                0.000694722926709801
+              ],
+              [
+                "tl",
+                0.0005032923072576523
+              ],
+              [
+                "mi",
+                0.00046240317169576883
+              ],
+              [
+                "te",
+                0.00044470318243838847
+              ],
+              [
+                "fa",
+                0.000432788539910689
+              ],
+              [
+                "fi",
+                0.00032980507239699364
+              ],
+              [
+                "ro",
+                0.0003192226868122816
+              ],
+              [
+                "si",
+                0.0001958130596904084
+              ],
+              [
+                "he",
+                0.0001934323227033019
+              ],
+              [
+                "yo",
+                0.00015753976185806096
+              ],
+              [
+                "uk",
+                0.00014510708570014685
+              ],
+              [
+                "gl",
+                0.0001373449485981837
+              ],
+              [
+                "sa",
+                0.00011777226609410718
+              ],
+              [
+                "bn",
+                8.459534728899598e-05
+              ],
+              [
+                "no",
+                7.12619730620645e-05
+              ],
+              [
+                "da",
+                7.077528425725177e-05
+              ],
+              [
+                "bg",
+                5.2825751481577754e-05
+              ],
+              [
+                "sw",
+                4.5092179789207876e-05
+              ],
+              [
+                "my",
+                4.497557893046178e-05
+              ],
+              [
+                "mn",
+                4.3384501623222604e-05
+              ],
+              [
+                "eu",
+                3.9008849853416905e-05
+              ],
+              [
+                "ca",
+                3.638296402641572e-05
+              ],
+              [
+                "fo",
+                3.147824827465229e-05
+              ],
+              [
+                "hr",
+                1.957630956894718e-05
+              ],
+              [
+                "oc",
+                1.840180266299285e-05
+              ],
+              [
+                "bs",
+                1.7441760064684786e-05
+              ],
+              [
+                "ht",
+                1.6505875464645214e-05
+              ],
+              [
+                "sl",
+                1.3664186553796753e-05
+              ],
+              [
+                "ne",
+                1.072420218406478e-05
+              ],
+              [
+                "sk",
+                9.609510016161948e-06
+              ],
+              [
+                "bo",
+                9.323081030743197e-06
+              ],
+              [
+                "be",
+                8.814306056592613e-06
+              ],
+              [
+                "yi",
+                7.0797186708659865e-06
+              ],
+              [
+                "af",
+                6.716200914524961e-06
+              ],
+              [
+                "hy",
+                5.182043878448894e-06
+              ],
+              [
+                "sd",
+                4.954317773808725e-06
+              ],
+              [
+                "az",
+                4.667859684559517e-06
+              ],
+              [
+                "ps",
+                4.528881163423648e-06
+              ],
+              [
+                "lo",
+                3.7254555991239613e-06
+              ],
+              [
+                "mr",
+                3.1732470233691856e-06
+              ],
+              [
+                "is",
+                2.6459540549694793e-06
+              ],
+              [
+                "lt",
+                1.995352022277075e-06
+              ],
+              [
+                "et",
+                1.2702330423053354e-06
+              ],
+              [
+                "lv",
+                1.2156871207480435e-06
+              ],
+              [
+                "sq",
+                1.1375950634828769e-06
+              ],
+              [
+                "as",
+                1.1150059435749426e-06
+              ],
+              [
+                "kn",
+                1.0579209401839762e-06
+              ],
+              [
+                "sr",
+                1.0410407185190707e-06
+              ],
+              [
+                "pa",
+                8.563890787627315e-07
+              ],
+              [
+                "mk",
+                4.774976218868687e-07
+              ],
+              [
+                "kk",
+                3.87624595532543e-07
+              ],
+              [
+                "ka",
+                3.7650460171789746e-07
+              ],
+              [
+                "ln",
+                3.6398162706063886e-07
+              ],
+              [
+                "mt",
+                2.5206838927260833e-07
+              ],
+              [
+                "gu",
+                1.5900330652129924e-07
+              ],
+              [
+                "am",
+                1.2388836978516338e-07
+              ],
+              [
+                "so",
+                2.5967519690084373e-08
+              ],
+              [
+                "su",
+                1.5818891085928044e-08
+              ],
+              [
+                "tg",
+                9.591166083566804e-09
+              ],
+              [
+                "lb",
+                4.935038155906568e-09
+              ],
+              [
+                "ha",
+                1.9182075927659525e-09
+              ],
+              [
+                "tk",
+                1.0537829497891948e-09
+              ],
+              [
+                "tt",
+                9.84420545080411e-10
+              ],
+              [
+                "ba",
+                7.227591303227143e-10
+              ],
+              [
+                "mg",
+                2.690178080300143e-10
+              ],
+              [
+                "uz",
+                2.1399425287338403e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          },
+          "last_vad_kept_end_seconds": null,
+          "post_vad_duration_seconds": 32.0
+        },
+        "library_record_absent": true,
+        "input_audio_cleaned": true,
+        "events": [
+          {
+            "at": "2026-11-26T19:54:53.125079+00:00",
+            "pid": 3828,
+            "kind": "recognition_start",
+            "job_id": "ebc70a934949441da327dcb1800ef5e7",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b"
+          },
+          {
+            "at": "2026-11-26T19:54:53.125250+00:00",
+            "pid": 3828,
+            "kind": "transcribe_request",
+            "job_id": "ebc70a934949441da327dcb1800ef5e7",
+            "explicit_kwargs": {
+              "language": null,
+              "beam_size": 5,
+              "vad_filter": false,
+              "condition_on_previous_text": false
+            },
+            "resolved_options": {
+              "language": null,
+              "task": "transcribe",
+              "log_progress": false,
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "temperature": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "compression_ratio_threshold": 2.4,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                -1
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "vad_filter": false,
+              "vad_parameters": null,
+              "max_new_tokens": null,
+              "chunk_length": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null,
+              "language_detection_threshold": 0.5,
+              "language_detection_segments": 1
+            }
+          },
+          {
+            "at": "2026-11-26T19:54:53.163981+00:00",
+            "pid": 3828,
+            "kind": "audio_decoded",
+            "job_id": "ebc70a934949441da327dcb1800ef5e7",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              512000
+            ],
+            "decoded_duration_seconds": 32.0
+          },
+          {
+            "at": "2026-11-26T19:54:55.081435+00:00",
+            "pid": 3828,
+            "kind": "transcribe_info",
+            "job_id": "ebc70a934949441da327dcb1800ef5e7",
+            "info": {
+              "language": "nn",
+              "language_probability": 0.5599250793457031,
+              "duration": 32.0,
+              "duration_after_vad": 32.0,
+              "all_language_probs": [
+                [
+                  "nn",
+                  0.5599250793457031
+                ],
+                [
+                  "en",
+                  0.10951530933380127
+                ],
+                [
+                  "cy",
+                  0.10472490638494492
+                ],
+                [
+                  "ja",
+                  0.047111112624406815
+                ],
+                [
+                  "zh",
+                  0.035868141800165176
+                ],
+                [
+                  "fr",
+                  0.03393104672431946
+                ],
+                [
+                  "ko",
+                  0.013124345801770687
+                ],
+                [
+                  "de",
+                  0.00912841223180294
+                ],
+                [
+                  "es",
+                  0.008672553114593029
+                ],
+                [
+                  "ru",
+                  0.008058554492890835
+                ],
+                [
+                  "tr",
+                  0.007608374115079641
+                ],
+                [
+                  "pl",
+                  0.007206769194453955
+                ],
+                [
+                  "la",
+                  0.007130575831979513
+                ],
+                [
+                  "pt",
+                  0.006666399072855711
+                ],
+                [
+                  "ml",
+                  0.003895602421835065
+                ],
+                [
+                  "jw",
+                  0.0037672375328838825
+                ],
+                [
+                  "it",
+                  0.0036595589481294155
+                ],
+                [
+                  "vi",
+                  0.003635997185483575
+                ],
+                [
+                  "ar",
+                  0.003390955040231347
+                ],
+                [
+                  "hi",
+                  0.0032670884393155575
+                ],
+                [
+                  "km",
+                  0.0017072890186682343
+                ],
+                [
+                  "haw",
+                  0.0016925283707678318
+                ],
+                [
+                  "hu",
+                  0.0013969333376735449
+                ],
+                [
+                  "ms",
+                  0.0013812026008963585
+                ],
+                [
+                  "el",
+                  0.0013489187695086002
+                ],
+                [
+                  "id",
+                  0.0011094094952568412
+                ],
+                [
+                  "sn",
+                  0.0010807715589180589
+                ],
+                [
+                  "sv",
+                  0.0010806252248585224
+                ],
+                [
+                  "nl",
+                  0.0009426836622878909
+                ],
+                [
+                  "ta",
+                  0.0008230761159211397
+                ],
+                [
+                  "th",
+                  0.0008176731062121689
+                ],
+                [
+                  "br",
+                  0.0007747829076834023
+                ],
+                [
+                  "cs",
+                  0.0007238215184770525
+                ],
+                [
+                  "ur",
+                  0.000694722926709801
+                ],
+                [
+                  "tl",
+                  0.0005032923072576523
+                ],
+                [
+                  "mi",
+                  0.00046240317169576883
+                ],
+                [
+                  "te",
+                  0.00044470318243838847
+                ],
+                [
+                  "fa",
+                  0.000432788539910689
+                ],
+                [
+                  "fi",
+                  0.00032980507239699364
+                ],
+                [
+                  "ro",
+                  0.0003192226868122816
+                ],
+                [
+                  "si",
+                  0.0001958130596904084
+                ],
+                [
+                  "he",
+                  0.0001934323227033019
+                ],
+                [
+                  "yo",
+                  0.00015753976185806096
+                ],
+                [
+                  "uk",
+                  0.00014510708570014685
+                ],
+                [
+                  "gl",
+                  0.0001373449485981837
+                ],
+                [
+                  "sa",
+                  0.00011777226609410718
+                ],
+                [
+                  "bn",
+                  8.459534728899598e-05
+                ],
+                [
+                  "no",
+                  7.12619730620645e-05
+                ],
+                [
+                  "da",
+                  7.077528425725177e-05
+                ],
+                [
+                  "bg",
+                  5.2825751481577754e-05
+                ],
+                [
+                  "sw",
+                  4.5092179789207876e-05
+                ],
+                [
+                  "my",
+                  4.497557893046178e-05
+                ],
+                [
+                  "mn",
+                  4.3384501623222604e-05
+                ],
+                [
+                  "eu",
+                  3.9008849853416905e-05
+                ],
+                [
+                  "ca",
+                  3.638296402641572e-05
+                ],
+                [
+                  "fo",
+                  3.147824827465229e-05
+                ],
+                [
+                  "hr",
+                  1.957630956894718e-05
+                ],
+                [
+                  "oc",
+                  1.840180266299285e-05
+                ],
+                [
+                  "bs",
+                  1.7441760064684786e-05
+                ],
+                [
+                  "ht",
+                  1.6505875464645214e-05
+                ],
+                [
+                  "sl",
+                  1.3664186553796753e-05
+                ],
+                [
+                  "ne",
+                  1.072420218406478e-05
+                ],
+                [
+                  "sk",
+                  9.609510016161948e-06
+                ],
+                [
+                  "bo",
+                  9.323081030743197e-06
+                ],
+                [
+                  "be",
+                  8.814306056592613e-06
+                ],
+                [
+                  "yi",
+                  7.0797186708659865e-06
+                ],
+                [
+                  "af",
+                  6.716200914524961e-06
+                ],
+                [
+                  "hy",
+                  5.182043878448894e-06
+                ],
+                [
+                  "sd",
+                  4.954317773808725e-06
+                ],
+                [
+                  "az",
+                  4.667859684559517e-06
+                ],
+                [
+                  "ps",
+                  4.528881163423648e-06
+                ],
+                [
+                  "lo",
+                  3.7254555991239613e-06
+                ],
+                [
+                  "mr",
+                  3.1732470233691856e-06
+                ],
+                [
+                  "is",
+                  2.6459540549694793e-06
+                ],
+                [
+                  "lt",
+                  1.995352022277075e-06
+                ],
+                [
+                  "et",
+                  1.2702330423053354e-06
+                ],
+                [
+                  "lv",
+                  1.2156871207480435e-06
+                ],
+                [
+                  "sq",
+                  1.1375950634828769e-06
+                ],
+                [
+                  "as",
+                  1.1150059435749426e-06
+                ],
+                [
+                  "kn",
+                  1.0579209401839762e-06
+                ],
+                [
+                  "sr",
+                  1.0410407185190707e-06
+                ],
+                [
+                  "pa",
+                  8.563890787627315e-07
+                ],
+                [
+                  "mk",
+                  4.774976218868687e-07
+                ],
+                [
+                  "kk",
+                  3.87624595532543e-07
+                ],
+                [
+                  "ka",
+                  3.7650460171789746e-07
+                ],
+                [
+                  "ln",
+                  3.6398162706063886e-07
+                ],
+                [
+                  "mt",
+                  2.5206838927260833e-07
+                ],
+                [
+                  "gu",
+                  1.5900330652129924e-07
+                ],
+                [
+                  "am",
+                  1.2388836978516338e-07
+                ],
+                [
+                  "so",
+                  2.5967519690084373e-08
+                ],
+                [
+                  "su",
+                  1.5818891085928044e-08
+                ],
+                [
+                  "tg",
+                  9.591166083566804e-09
+                ],
+                [
+                  "lb",
+                  4.935038155906568e-09
+                ],
+                [
+                  "ha",
+                  1.9182075927659525e-09
+                ],
+                [
+                  "tk",
+                  1.0537829497891948e-09
+                ],
+                [
+                  "tt",
+                  9.84420545080411e-10
+                ],
+                [
+                  "ba",
+                  7.227591303227143e-10
+                ],
+                [
+                  "mg",
+                  2.690178080300143e-10
+                ],
+                [
+                  "uz",
+                  2.1399425287338403e-10
+                ]
+              ],
+              "transcription_options": {
+                "beam_size": 5,
+                "best_of": 5,
+                "patience": 1,
+                "length_penalty": 1,
+                "repetition_penalty": 1,
+                "no_repeat_ngram_size": 0,
+                "log_prob_threshold": -1.0,
+                "no_speech_threshold": 0.6,
+                "compression_ratio_threshold": 2.4,
+                "condition_on_previous_text": false,
+                "prompt_reset_on_temperature": 0.5,
+                "temperatures": [
+                  0.0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  1.0
+                ],
+                "initial_prompt": null,
+                "prefix": null,
+                "suppress_blank": true,
+                "suppress_tokens": [
+                  1,
+                  2,
+                  7,
+                  8,
+                  9,
+                  10,
+                  14,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  31,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63,
+                  90,
+                  91,
+                  92,
+                  93,
+                  359,
+                  503,
+                  522,
+                  542,
+                  873,
+                  893,
+                  902,
+                  918,
+                  922,
+                  931,
+                  1350,
+                  1853,
+                  1982,
+                  2460,
+                  2627,
+                  3246,
+                  3253,
+                  3268,
+                  3536,
+                  3846,
+                  3961,
+                  4183,
+                  4667,
+                  6585,
+                  6647,
+                  7273,
+                  9061,
+                  9383,
+                  10428,
+                  10929,
+                  11938,
+                  12033,
+                  12331,
+                  12562,
+                  13793,
+                  14157,
+                  14635,
+                  15265,
+                  15618,
+                  16553,
+                  16604,
+                  18362,
+                  18956,
+                  20075,
+                  21675,
+                  22520,
+                  26130,
+                  26161,
+                  26435,
+                  28279,
+                  29464,
+                  31650,
+                  32302,
+                  32470,
+                  36865,
+                  42863,
+                  47425,
+                  49870,
+                  50254,
+                  50258,
+                  50358,
+                  50359,
+                  50360,
+                  50361,
+                  50362
+                ],
+                "without_timestamps": false,
+                "max_initial_timestamp": 1.0,
+                "word_timestamps": false,
+                "prepend_punctuations": "\"'\u201c\u00bf([{-",
+                "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+                "multilingual": false,
+                "max_new_tokens": null,
+                "clip_timestamps": "0",
+                "hallucination_silence_threshold": null,
+                "hotwords": null
+              },
+              "vad_options": null
+            }
+          },
+          {
+            "at": "2026-11-26T19:56:24.915655+00:00",
+            "pid": 3828,
+            "kind": "recognition_failed",
+            "job_id": "ebc70a934949441da327dcb1800ef5e7",
+            "errors": [
+              {
+                "type": "ReadableError",
+                "message": "No spoken words were detected in this recording."
+              }
+            ],
+            "elapsed_seconds": 91.791
+          }
+        ],
+        "elapsed_seconds": 92.211
+      }
+    ]
+  },
+  "initial_server_pid": 3828,
+  "restarted_server_pid": 4007,
+  "source_sha256_after": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "a61f73c8c3dba80405fff25163a1a4c74d02824fcc66c09fa41db8ed891be575",
+    "tests/smoke_real_links.py": "80f7f186153eb170d131926cffc32248b290ed94e36741f45be7f69b74a65d30"
+  },
+  "source_files_unchanged": true,
+  "finished_at": "2026-11-26T19:56:26.662125+00:00",
+  "all_selected_providers_passed": false
+}

@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T19:50:32.457933+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+  "manifest_path": "fixtures.json",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "Fixed before recognition: five Greek and three English validation rows selected for ordinary vocabulary, names, numbers and negation from the first twelve Greek and first six English rows. No recognition outputs were used for selection.",
+    "representativeness": "Small diagnostic sample of read speech, not a representative population benchmark or conversational/noisy-speech acceptance."
+  },
+  "source_sha256": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0",
+      "onnxruntime": "1.32.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": null,
+    "effective_model": "small",
+    "language_mode": "explicit",
+    "default_upload_language": "auto",
+    "language_form_field_omitted": false,
+    "model_form_field_omitted": true,
+    "model_provenance": {
+      "model": "small",
+      "repository": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "downloaded_at": "2026-11-26T17:50:45.132099+00:00",
+      "files": {
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      }
+    },
+    "offline": true,
+    "telemetry_opt_out": {
+      "ORT_DISABLE_TELEMETRY": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "onnxruntime_disable_telemetry_events_called": true
+    },
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            str(path),\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            # Quiet speech mixed with effects can be lost before recognition if\n            # VAD removes it. Preserve the complete recording for ASR.\n            vad_filter=False,\n            condition_on_previous_text=False,\n            **({\"word_timestamps\": True} if word_timestamps else {}),\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = []\n        for segment in segments:\n            if not segment.text.strip():\n                continue\n            item = {\"start\": round(float(segment.start), 3), \"end\": round(float(segment.end), 3),\n                    \"text\": segment.text.strip()}\n            if word_timestamps:\n                item[\"_words\"] = [{\"start\": float(word.start), \"end\": float(word.end), \"word\": word.word}\n                                  for word in (getattr(segment, \"words\", None) or [])]\n            output.append(item)\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "model_factory_source": "@lru_cache(maxsize=1)\ndef _whisper_model(size: str):\n    import onnxruntime\n    onnxruntime.disable_telemetry_events()\n    from faster_whisper import WhisperModel\n    device = os.getenv(\"LINKSCRIBE_DEVICE\", \"cpu\").lower()\n    if device not in {\"cpu\", \"cuda\"}:\n        device = \"cpu\"\n    return WhisperModel(size, device=device, compute_type=\"int8\" if device == \"cpu\" else \"float16\")\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Peak RSS is the maximum resident set of this QA process, including loaded model and application. It excludes other processes and is not a whole-machine or combined ASR/translation memory measurement.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "media": {
+        "duration_seconds": 6.66,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ],
+      "requested_language": "el",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "ef6025b89b2244bfbc1ef414c094a866",
+      "job_result": {
+        "id": "ef6025b89b2244bfbc1ef414c094a866",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.521,
+      "process_peak_rss_bytes_so_far": 116678656
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "language": "el",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "media": {
+        "duration_seconds": 6.0,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ],
+      "requested_language": "el",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "451021b1aa53414899d0f3f0613598a0",
+      "job_result": {
+        "id": "451021b1aa53414899d0f3f0613598a0",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-5-1515.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.259,
+      "process_peak_rss_bytes_so_far": 117334016
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "language": "el",
+      "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "media": {
+        "duration_seconds": 4.2,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "review_criteria": [
+        "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+      ],
+      "requested_language": "el",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "e040fab0cb0d4c11959774279418bdf2",
+      "job_result": {
+        "id": "e040fab0cb0d4c11959774279418bdf2",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-6-1577.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.26,
+      "process_peak_rss_bytes_so_far": 117334016
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "language": "el",
+      "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "media": {
+        "duration_seconds": 6.96,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+      "review_criteria": [
+        "Preserve the count of three people and the claim that nobody was injured despite the collision."
+      ],
+      "requested_language": "el",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "6aaab9a832254d9caf1b5f58eed60b76",
+      "job_result": {
+        "id": "6aaab9a832254d9caf1b5f58eed60b76",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-7-1598.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.262,
+      "process_peak_rss_bytes_so_far": 117465088
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "language": "el",
+      "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "media": {
+        "duration_seconds": 10.02,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "review_criteria": [
+        "Preserve the two product names Number One and Manta and the negated description of the first beer."
+      ],
+      "requested_language": "el",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "ad5bb3b18aff471dbacded5aec69f8a8",
+      "job_result": {
+        "id": "ad5bb3b18aff471dbacded5aec69f8a8",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-11-1590.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.265,
+      "process_peak_rss_bytes_so_far": 119037952
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "en",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "media": {
+        "duration_seconds": 6.54,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "review_criteria": [
+        "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+      ],
+      "requested_language": "en",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "7f1a7e81a95f44f7828ceb1313ac0f91",
+      "job_result": {
+        "id": "7f1a7e81a95f44f7828ceb1313ac0f91",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-en_us-validation-0-1548.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.261,
+      "process_peak_rss_bytes_so_far": 119037952
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "language": "en",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "media": {
+        "duration_seconds": 7.92,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "review_criteria": [
+        "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+      ],
+      "requested_language": "en",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "8deffda2a7b745e1be247fce16839f90",
+      "job_result": {
+        "id": "8deffda2a7b745e1be247fce16839f90",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-en_us-validation-2-1510.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.259,
+      "process_peak_rss_bytes_so_far": 119037952
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "language": "en",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "media": {
+        "duration_seconds": 4.14,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+      "review_criteria": [
+        "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+      ],
+      "requested_language": "en",
+      "language_form_field_omitted": false,
+      "semantic_quality": "unreviewed",
+      "structural_status": "error",
+      "job_id": "408de4ea93904be7b2e82b36f8345790",
+      "job_result": {
+        "id": "408de4ea93904be7b2e82b36f8345790",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-en_us-validation-3-1578.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "error": {
+        "type": "AssertionError",
+        "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+      },
+      "elapsed_seconds": 0.261,
+      "process_peak_rss_bytes_so_far": 119037952
+    }
+  ],
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "error": 8
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": null
+    },
+    "en": {
+      "cases": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": null
+    }
+  },
+  "finished_at": "2026-11-26T19:50:35.053536+00:00",
+  "elapsed_seconds": 2.594,
+  "process_peak_rss_bytes": 119037952,
+  "archive_provenance": {
+    "raw_file": "small-vad-off-regression.json",
+    "raw_sha256": "b39fe8cc5d2009810f2a4d23bf7a5108896bbfe593b2b61fc26af16990e392c9",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local model-cache and generated-artifact paths and made manifest paths relative. Source references, hypotheses, judgments, measured results and all source/model hashes are unchanged."
+  }
+}

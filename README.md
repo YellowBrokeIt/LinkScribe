@@ -53,16 +53,22 @@ describe the tested clips and environment, not universal availability:
 
 | Provider | Observed end-to-end status |
 | --- | --- |
-| Dailymotion | A licensed film completed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Transcript quality remains unresolved: the normal VAD discarded later dialogue despite a complete audio decode. |
-| YouTube | Both hosted test clips stopped at a bot sign-in requirement. No successful transcript is claimed for those attempts. |
+| Dailymotion | A licensed film completed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Disabling ASR VAD recovered later dialogue; output still needs review. |
+| YouTube | Both hosted audio tests stopped at a bot sign-in requirement. A separate local public-caption request returned `IpBlocked`. No successful transcript is claimed for these attempts. |
 | Vimeo | The selected clip stopped at an extractor login fallback. No successful transcript is claimed for that attempt. |
 
 The [VAD diagnosis](docs/browser-provider-2026-11-26/assistant-vad-diagnosis.json)
 records that Small decoded the full 734.15-second Dailymotion input, but VAD kept
 no samples after 423.184 seconds. Separate VAD-off excerpts recovered later
-dialogue without replacing the normal saved transcript. The current production
-candidate disables this ASR filter; complete-recording and no-speech checks
-remain pending. The overall three-provider
+dialogue without replacing the normal saved transcript. The
+[ordinary full-recording follow-up](docs/asr-vad-off-2026-11-26/README.md) now
+retains that later dialogue. It also exposed two invented words from exact
+digital silence. The current candidate decodes once, rejects empty/all-zero
+audio before inference, and checks the decoded two-hour limit; its hosted
+follow-up is pending. Nonzero audio remains intact, and these checks do not
+establish accuracy on music, noise or quiet speech. The
+[public-caption probe](docs/public-captions-2026-11-26/README.md) preserves the
+separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
 transcription accuracy or subtitle synchronization.
 
@@ -104,6 +110,15 @@ names alone receive the same neutral notice; numbers and punctuation can remain
 identical. This check catches a copied response, not other language or meaning
 errors. The [complete-workflow evidence](docs/full-workflow-2026-11-26/README.md)
 records the real model failure that prompted it.
+
+**Summaries and chapters are drafts.** The
+[actual summary evaluation](docs/summary-2026-11-26/README.md) preserves both
+improvements and failed outputs. Source text is processed completely in bounded
+requests, and short sources use a direct summary. The current candidate requests
+one to eight key points with a matching model schema and local validation, after
+a real long-summary response exceeded the old unstated point limit. Factual
+accuracy, permission limits and final decisions still need review against the
+original; failed enhancements retain that original with a visible warning.
 
 For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
 

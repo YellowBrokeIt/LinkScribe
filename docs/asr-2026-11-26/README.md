@@ -89,6 +89,8 @@ the sanitized provenance URLs in the manifests, which omit signed asset queries.
 | `turbo-development-result.json` | 8/8 pass; explicit `large-v3-turbo` | 3 acceptable, 3 minor issues, 2 major errors |
 | `turbo-fresh-auto-result.json` | 8/8 pass; explicit Turbo, language field omitted (Auto) | 5 acceptable, 2 minor issues, 1 major error |
 | `small-development-rss-replay.json` | 8/8 pass; default Small, explicit language | Same hypotheses as original Small run; RSS now measured |
+| `small-vad-off-regression.json` | 8/8 setup errors before a completed transcript | Not evaluable; missing SOCKS client dependency |
+| `small-vad-off-regression-replay.json` | 8/8 pass; default Small, explicit language, VAD disabled | 2 acceptable, 3 minor issues, 3 major errors |
 
 The initial small and Turbo runs both supplied the fixture language (`el` or
 `en`). They do not demonstrate the app's default automatic language detection.
@@ -120,6 +122,41 @@ are not whole-process privacy validation. The current harness sets
 `ORT_DISABLE_TELEMETRY=1` and `HF_HUB_DISABLE_TELEMETRY=1` before ML imports and
 calls `onnxruntime.disable_telemetry_events()` before the VAD session can start.
 The fresh run and the Small memory replay record all three controls explicitly.
+
+### Default Small after disabling VAD
+
+`small-vad-off-review.json` separately reviews the eight-clip replay after the
+production recognizer changed to `vad_filter=False`. The same native clips,
+model snapshot and explicit source languages were used; the model form field
+was omitted to exercise default Small. The measured application source was
+`dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d`
+and all measured source hashes stayed unchanged during the replay.
+
+All uploads, exact SQLite records, five exports, eviction reads and separate
+interpreter reads passed. Elapsed time was 18.583 seconds for 52.44 seconds of
+audio, with peak process RSS 689,057,792 bytes (657.1 MiB). The previous Small
+replay took 19.956 seconds and used 694,067,200 bytes. These are observations,
+not a controlled speed comparison.
+
+Two hypotheses are identical and six differ, but the reviewed counts remain
+two acceptable, three minor and three major. The proper name Μαρτελί and the
+Lakkha Singh/bhajans sentence remain damaged. In the already-major collision
+case, πρόσκρουση (collision) now becomes πρόσκληση (invitation), while the car
+word is repaired. Three people and the negative nobody expression remain;
+the injury verb is malformed, so the token-level negation check is not a
+semantic approval. Both complete negations in the separate not-fair case
+remain intact. Greek normalized word edits stay 18/73. English is 5/45 rather
+than 7/45, largely from matching `you are` instead of a harmless contraction.
+
+The first attempt in the base QA environment failed before recognition because
+its inherited SOCKS-proxy path required the missing optional `socksio` package.
+That failed report is retained. The replay used the existing speaker-QA virtual
+environment with SOCKS support, preserving proxy/TLS settings, offline mode,
+model cache and all telemetry opt-outs. Its recorded core runtime versions
+match the prior Small run, but the complete environments were not lockfile
+compared. These short read-speech cases do not validate long-film coverage,
+exact-zero input handling or default Auto language detection. The replay
+predates the subsequent exact-zero guard; that guard requires its own evidence.
 
 ### Confidence probe
 

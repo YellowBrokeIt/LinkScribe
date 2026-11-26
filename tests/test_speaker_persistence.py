@@ -127,6 +127,10 @@ def test_batch_title_and_transcript_edit_rollback_together(local):
 
 
 def test_app_requests_real_words_and_persists_speaker_report(local, monkeypatch):
+    import importlib
+    import numpy as np
+    monkeypatch.setattr(importlib.import_module("faster_whisper.audio"), "decode_audio",
+                        lambda *_args, **_kwargs: np.ones(16000, dtype=np.float32))
     requests = []
     class Engine:
         def transcribe(self, path, **kwargs):

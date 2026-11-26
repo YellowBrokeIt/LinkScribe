@@ -155,6 +155,17 @@ def evidence_value(value):
     return value
 
 
+def array_evidence(audio):
+    """Describe actual decoded samples without changing or retaining the array."""
+    import numpy as np
+    if not isinstance(audio, np.ndarray):
+        return None
+    raw = memoryview(audio).cast("B") if audio.flags.c_contiguous else audio.tobytes()
+    return {"array_identity": hex(id(audio)), "shape": list(audio.shape), "dtype": audio.dtype.str,
+            "sample_count": int(audio.size), "nonzero_sample_count": int(np.count_nonzero(audio)),
+            "pcm_sha256": hashlib.sha256(raw).hexdigest()}
+
+
 def observe_audio_decode(module, event, on_decoded=None):
     """Measure the actual production decoder's return value without replacing it."""
     original = module.decode_audio
@@ -170,6 +181,7 @@ def observe_audio_decode(module, event, on_decoded=None):
         event("audio_decoded",
               job_id=Path(input_file).parent.name if isinstance(input_file, (str, os.PathLike)) else None,
               sampling_rate_hz=rate, channel_sample_counts=counts,
+              decoded_arrays=[array_evidence(channel) for channel in channels],
               decoded_duration_seconds=max(counts, default=0) / rate)
         if on_decoded is not None:
             on_decoded(input_file, audio, rate)
@@ -226,12 +238,31 @@ def observe_transcribe(module, event, current_job):
         arguments.apply_defaults()
         options = {key: value for key, value in arguments.arguments.items() if key not in {"self", "audio"}}
         event("transcribe_request", job_id=job_id, explicit_kwargs=evidence_value(kwargs),
-              resolved_options=evidence_value(options))
+              resolved_options=evidence_value(options), audio_array=array_evidence(audio))
         result = original(self, audio, *args, **kwargs)
         event("transcribe_info", job_id=job_id, info=evidence_value(result[1]))
         return result
 
     module.WhisperModel.transcribe = observed
+
+
+def observe_segment_creation(module, event, current_job):
+    """Observe real Segment construction without wrapping its yielding generator.
+
+    Faster Whisper constructs these dataclasses at its normal generator yield.
+    With VAD disabled, their text/times must match the normal saved segments.
+    Scores remain raw diagnostic evidence and never change acceptance or text.
+    """
+    original = module.Segment.__init__
+
+    def observed(self, *args, **kwargs):
+        result = original(self, *args, **kwargs)
+        job_id = current_job()
+        if job_id is not None:
+            event("asr_segment_created", job_id=job_id, segment=evidence_value(self))
+        return result
+
+    module.Segment.__init__ = observed
 
 
 def transcription_evidence(events):
@@ -243,6 +274,11 @@ def transcription_evidence(events):
     collected = [item for item in events if item["kind"] == "post_vad_audio"]
     assert len(decoded) == len(requests) == len(infos) == 1, "Missing or repeated normal ASR observation."
     duration, rate = decoded[0]["decoded_duration_seconds"], decoded[0]["sampling_rate_hz"]
+    arrays = decoded[0]["decoded_arrays"]
+    assert len(arrays) == 1 and arrays[0] is not None, "Normal ASR must use its decoded mono array."
+    assert arrays[0] == requests[0]["audio_array"], "Normal ASR did not receive the identical complete decoded array."
+    assert arrays[0]["shape"] == [arrays[0]["sample_count"]]
+    assert arrays[0]["sample_count"] == decoded[0]["channel_sample_counts"][0]
     options, info = requests[0]["resolved_options"], infos[0]["info"]
     assert duration > 0 and abs(info["duration"] - duration) <= 1 / rate
     assert options["clip_timestamps"] == "0", "The normal full recording must not be clipped."
@@ -256,10 +292,36 @@ def transcription_evidence(events):
         assert vad[0]["kept_sample_count"] == collected[0]["sample_count"]
         assert abs(info["duration_after_vad"] - collected[0]["duration_seconds"]) <= 1 / rate
     return {"decoded_duration_seconds": duration, "normal_vad_filter": requested_vad,
+            "decoded_array": arrays[0], "same_decoded_array_passed_to_asr": True,
             "normal_explicit_transcribe_kwargs": requests[0]["explicit_kwargs"],
             "normal_transcribe_info": info,
+            "raw_segment_constructions": [item["segment"] for item in events if item["kind"] == "asr_segment_created"],
             "last_vad_kept_end_seconds": vad[0]["last_kept_end_seconds"] if vad else None,
             "post_vad_duration_seconds": info["duration_after_vad"]}
+
+
+def nonspeech_evidence(events, kind):
+    """Separate proven zero-PCM rejection from actual nonzero-noise inference."""
+    if kind == "white_noise":
+        evidence = transcription_evidence(events)
+        assert evidence["normal_vad_filter"] is False
+        assert evidence["decoded_array"]["nonzero_sample_count"] > 0
+        return {"processing_path": "actual_nonzero_audio_inference", **evidence}
+    assert kind == "silence"
+    decoded = [item for item in events if item["kind"] == "audio_decoded"]
+    assert len(decoded) == 1, "Digital silence must be decoded exactly once."
+    item = decoded[0]
+    arrays = item["decoded_arrays"]
+    assert len(arrays) == 1 and arrays[0] is not None
+    assert arrays[0]["nonzero_sample_count"] == 0
+    assert arrays[0]["shape"] == [arrays[0]["sample_count"]]
+    assert arrays[0]["sample_count"] == item["channel_sample_counts"][0]
+    assert not any(event["kind"] in {"transcribe_request", "transcribe_info", "vad_speech_intervals",
+                                   "post_vad_audio", "asr_segment_created", "recognition_done"}
+                   for event in events), "Digital silence unexpectedly reached model inference."
+    return {"processing_path": "exact_digital_silence_rejected_before_inference",
+            "decoded_duration_seconds": item["decoded_duration_seconds"],
+            "decoded_array": arrays[0], "inference_attempted": False}
 
 
 def generated_nonspeech(kind):
@@ -388,14 +450,17 @@ def serve(data_root, events_path, diagnose_tail=False):
             "audio_sha256": digest(input_file), "decoded_duration_seconds": len(audio) / rate,
             "model": getattr(context, "model", None), "requested_language": getattr(context, "language", None)}
 
-    # Observe the decoder that WhisperModel.transcribe actually calls. Its
-    # returned array is passed through unchanged; no second decode is run.
+    # Observe the app's explicit decode and the model's fallback decode alias.
+    # The normal app passes the identical array; no second decode is allowed.
     import onnxruntime
     onnxruntime.disable_telemetry_events()
     whisper_module = importlib.import_module("faster_whisper.transcribe")
+    audio_module = importlib.import_module("faster_whisper.audio")
+    observe_audio_decode(audio_module, event, retain_tail)
     observe_audio_decode(whisper_module, event, retain_tail)
     observe_speech_selection(whisper_module, event, lambda: getattr(context, "job_id", None))
     observe_transcribe(whisper_module, event, lambda: getattr(context, "job_id", None))
+    observe_segment_creation(whisper_module, event, lambda: getattr(context, "job_id", None))
 
     download = app._download_source_audio
     recognize = app._recognize
@@ -523,7 +588,7 @@ def run(args):
         "tail_diagnostic": {"status": "pending" if args.diagnose_dailymotion_tail else "not_requested",
                             "included_in_normal_pipeline_output": False},
         "nonspeech": {"status": "pending" if args.check_nonspeech else "not_requested",
-            "scope": "Two owned generated 32-second fixtures; no general silence/music/noise guarantee.",
+            "scope": "Two owned generated 32-second fixtures: exact-zero rejection before inference and actual nonzero-noise ASR; no general silence/music/noise guarantee.",
             "cases": [{"kind": kind, "status": "pending"} for kind in ("silence", "white_noise")]
                      if args.check_nonspeech else []},
     }
@@ -671,6 +736,11 @@ def run(args):
         assert any(e["kind"] == "acquisition_done" and e["audio_streams"] > 0 for e in evidence), evidence
         observations = transcription_evidence(evidence)
         assert any(e["kind"] == "recognition_done" and e["segment_count"] == len(segments) for e in evidence), evidence
+        constructed = [{"start": round(float(segment["start"]), 3),
+                        "end": round(float(segment["end"]), 3), "text": segment["text"].strip()}
+                       for segment in observations["raw_segment_constructions"] if segment["text"].strip()]
+        assert constructed == [{key: segment[key] for key in ("start", "end", "text")} for segment in segments], \
+            "Raw model segment constructions do not match the normal saved text/times."
         successful_records[identifier] = record
         export_payloads[identifier] = payloads
         return {"id": identifier, "title": record["title"], "language": record["language"],
@@ -681,6 +751,7 @@ def run(args):
                 "exports": {code: {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
                             for code, data in payloads.items()},
                 "sqlite_matches_saved_segments": True, "input_audio_cleaned": True,
+                "raw_segment_constructions_match_saved_text_and_times": True,
                 "export_text_order_preserved": True, "subtitle_time_accuracy": "not_evaluated"}
 
     try:
@@ -781,13 +852,13 @@ def run(args):
                     starts = [event for event in evidence if event["kind"] == "recognition_start"]
                     assert len(starts) == 1 and starts[0]["audio_sha256"] == provenance["wav_sha256"], "Recognizer did not receive the exact owned no-speech WAV."
                     assert starts[0]["model"] == args.model
-                    item["recognition_evidence"] = transcription_evidence(evidence)
-                    assert item["recognition_evidence"]["normal_vad_filter"] is False, "No-speech gate must exercise the corrected VAD-off default."
-                    assert abs(item["recognition_evidence"]["decoded_duration_seconds"] - NONSPEECH_SECONDS) <= 1 / 16000
                     if final["status"] == "done":
                         record = request("/api/library/" + posted["id"])
                         write_json(output / "records" / ("nonspeech-" + posted["id"] + ".json"), record)
                         item["hallucinated_saved_record"] = "records/nonspeech-" + posted["id"] + ".json"
+                    item["recognition_evidence"] = nonspeech_evidence(evidence, item["kind"])
+                    assert abs(item["recognition_evidence"]["decoded_duration_seconds"] - NONSPEECH_SECONDS) <= 1 / 16000
+                    if final["status"] == "done":
                         raise AssertionError("Actual ASR saved words from owned audio with no speech; raw normal output retained.")
                     assert final["error"] == "No spoken words were detected in this recording.", final
                     try:

@@ -423,11 +423,13 @@ def summarize_segments(segments: list[dict[str, Any]],
     )
     if len(chunks) == 1:
         response = _summary_call(
-            "Write a concise factual summary, key takeaways and a short chapter title "
+            f"Write a concise factual summary, at most {MAX_SUMMARY_KEY_POINTS} concise key points "
+            "and a short chapter title "
             "directly from this transcript. " + grounding +
             'JSON only: {"summary":"concise factual summary","key_points":["point"],'
             '"chapter_title":"short topical title"}.',
             _summary_excerpt(chunks[0]),
+            response_schema=_summary_result_schema(include_chapter=True),
         )
         chapter = {"start": chunks[0][0]["start"],
                    "title": _summary_title(response, source)}
@@ -471,10 +473,12 @@ def summarize_segments(segments: list[dict[str, Any]],
             raise EnhancementError("Ollama could not fit all transcript notes into a bounded summary request.")
         notes = compressed
     response = _summary_call(
-        "Write an accurate summary and key takeaways strictly based on all supplied "
+        f"Write a concise factual summary and at most {MAX_SUMMARY_KEY_POINTS} concise key points "
+        "strictly based on all supplied "
         "chronological notes. Reflect final decisions when later notes correct earlier proposals. "
         + grounding + 'JSON only: {"summary":"concise factual summary","key_points":["point"]}.',
         "\n\n".join(notes),
+        response_schema=_summary_result_schema(),
     )
     return _summary_result(response, chapters[:100])
 
@@ -487,6 +491,7 @@ MAX_SUMMARY_INPUT_BYTES = 3200
 # shorter note at a lower arbitrary limit can discard a valid contraction.
 MAX_SUMMARY_NOTE_BYTES = MAX_SUMMARY_INPUT_BYTES
 MAX_SUMMARY_REDUCED_NOTE_BYTES = MAX_SUMMARY_INPUT_BYTES
+MAX_SUMMARY_KEY_POINTS = 8
 
 
 def _summary_fragments(text: str, maximum: int):
@@ -563,11 +568,27 @@ def _summary_source_chunks(segments: list[dict[str, Any]]) -> list[list[dict[str
     return chunks
 
 
-def _summary_call(system: str, text: str) -> Any:
+def _summary_result_schema(*, include_chapter: bool = False) -> dict[str, Any]:
+    properties: dict[str, Any] = {
+        "summary": {"type": "string", "minLength": 1},
+        "key_points": {"type": "array", "minItems": 1, "maxItems": MAX_SUMMARY_KEY_POINTS,
+                       "items": {"type": "string", "minLength": 1}},
+    }
+    if include_chapter:
+        properties["chapter_title"] = {"type": "string", "minLength": 1}
+    return {"type": "object", "properties": properties,
+            "required": list(properties), "additionalProperties": False}
+
+
+def _summary_call(system: str, text: str,
+                  *, response_schema: dict[str, Any] | None = None) -> Any:
     if not text.strip() or len(text.encode("utf-8")) > MAX_SUMMARY_INPUT_BYTES:
         raise EnhancementError("The summary input exceeds its bounded request size.")
-    return _ollama({"messages": [{"role": "system", "content": system},
-                                  {"role": "user", "content": text}]})
+    payload = {"messages": [{"role": "system", "content": system},
+                            {"role": "user", "content": text}]}
+    if response_schema is not None:
+        payload["response_schema"] = response_schema
+    return _ollama(payload)
 
 
 def _summary_note(response: Any, maximum: int) -> str:
@@ -619,7 +640,7 @@ def _summary_result(response: Any, chapters: list[dict[str, Any]]) -> dict[str, 
     if (not isinstance(response, dict) or not isinstance(response.get("summary"), str)
             or not response["summary"].strip() or len(response["summary"]) > 12000
             or not isinstance(response.get("key_points"), list) or not response["key_points"]
-            or len(response["key_points"]) > 30
+            or len(response["key_points"]) > MAX_SUMMARY_KEY_POINTS
             or any(not isinstance(point, str) or not point.strip() or len(point) > 900
                    for point in response["key_points"])):
         raise EnhancementError("Ollama did not return a valid summary.")

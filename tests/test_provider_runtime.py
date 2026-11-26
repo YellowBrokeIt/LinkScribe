@@ -19,9 +19,11 @@ def _provider_smoke():
 
 @pytest.mark.parametrize("explicit_rate", [False, True])
 def test_real_decode_observer_preserves_audio_identity_and_measures_actual_samples(explicit_rate):
+    import hashlib
+    import numpy as np
     from types import SimpleNamespace
     observed, calls = [], []
-    audio = [0.1] * 480
+    audio = np.full(480, 0.1, dtype=np.float32)
 
     def decode_audio(input_file, sampling_rate=16000, split_stereo=False):
         calls.append((input_file, sampling_rate, split_stereo))
@@ -34,6 +36,9 @@ def test_real_decode_observer_preserves_audio_identity_and_measures_actual_sampl
     assert result is audio
     assert calls == [("owned-job/audio.wav", rate, False)]
     assert observed == [("audio_decoded", {"job_id": "owned-job", "sampling_rate_hz": rate,
+        "decoded_arrays": [{"array_identity": hex(id(audio)), "shape": [480], "dtype": audio.dtype.str,
+                            "sample_count": 480, "nonzero_sample_count": 480,
+                            "pcm_sha256": hashlib.sha256(audio.tobytes()).hexdigest()}],
         "channel_sample_counts": [480], "decoded_duration_seconds": 480 / rate})]
 
 
@@ -192,9 +197,13 @@ def test_normal_transcribe_observer_preserves_return_identity_and_real_failure(r
 
 
 def _normal_observations(vad=False, retained=2.0):
+    metadata = {"array_identity": "owned-array", "shape": [32000], "dtype": "<f4",
+                "sample_count": 32000, "nonzero_sample_count": 1, "pcm_sha256": "a" * 64}
     events = [
-        {"kind": "audio_decoded", "decoded_duration_seconds": 2.0, "sampling_rate_hz": 16000},
+        {"kind": "audio_decoded", "decoded_duration_seconds": 2.0, "sampling_rate_hz": 16000,
+         "channel_sample_counts": [32000], "decoded_arrays": [metadata]},
         {"kind": "transcribe_request", "explicit_kwargs": {"vad_filter": vad},
+         "audio_array": dict(metadata),
          "resolved_options": {"vad_filter": vad, "clip_timestamps": "0"}},
         {"kind": "transcribe_info", "info": {"duration": 2.0, "duration_after_vad": retained,
                                                 "vad_options": {"threshold": 0.5} if vad else None}},
@@ -213,6 +222,110 @@ def test_observation_validation_distinguishes_requested_vad_from_full_audio():
     assert direct["normal_vad_filter"] is False and direct["post_vad_duration_seconds"] == 2
     assert direct["last_vad_kept_end_seconds"] is None
     assert selected["normal_vad_filter"] is True and selected["post_vad_duration_seconds"] == 1.5
+
+
+@pytest.mark.parametrize("defect", ["repeated_decode", "different_array", "mutated_samples", "wrong_shape"])
+def test_normal_asr_requires_the_single_unchanged_decoded_array(defect):
+    events = _normal_observations()
+    if defect == "repeated_decode":
+        events.append(events[0])
+    elif defect == "different_array":
+        events[1]["audio_array"]["array_identity"] = "replacement-array"
+    elif defect == "mutated_samples":
+        events[1]["audio_array"]["pcm_sha256"] = "b" * 64
+    else:
+        events[0]["decoded_arrays"][0]["shape"] = [2, 16000]
+        events[1]["audio_array"]["shape"] = [2, 16000]
+    with pytest.raises(AssertionError):
+        _provider_smoke().transcription_evidence(events)
+
+
+def test_digital_silence_evidence_requires_zero_samples_and_no_inference():
+    from copy import deepcopy
+    smoke = _provider_smoke()
+    zero = _normal_observations()[:1]
+    zero[0]["decoded_arrays"][0]["nonzero_sample_count"] = 0
+    result = smoke.nonspeech_evidence(zero, "silence")
+    assert result["inference_attempted"] is False
+    assert result["processing_path"] == "exact_digital_silence_rejected_before_inference"
+    for bad in (zero + _normal_observations()[1:], _normal_observations()[:1]):
+        with pytest.raises(AssertionError):
+            smoke.nonspeech_evidence(bad, "silence")
+    noise = _normal_observations()
+    assert smoke.nonspeech_evidence(noise, "white_noise")["normal_vad_filter"] is False
+    bad_noise = deepcopy(noise)
+    bad_noise[0]["decoded_arrays"][0]["nonzero_sample_count"] = 0
+    bad_noise[1]["audio_array"]["nonzero_sample_count"] = 0
+    with pytest.raises(AssertionError):
+        smoke.nonspeech_evidence(bad_noise, "white_noise")
+
+
+@pytest.mark.parametrize("generator_error", [False, True])
+def test_segment_scores_are_observed_without_replacing_tuple_generator_or_objects(generator_error):
+    from dataclasses import dataclass
+    from types import SimpleNamespace
+    import numpy as np
+
+    @dataclass
+    class Word:
+        start: float
+        end: float
+        word: str
+        probability: float
+
+    @dataclass
+    class Segment:
+        start: float
+        end: float
+        text: str
+        avg_logprob: float
+        no_speech_prob: float
+        compression_ratio: float
+        temperature: float
+        words: list
+
+    @dataclass
+    class Info:
+        language: str = "en"
+
+    constructed, events = [], []
+    failure = ValueError("Owned late generator failure")
+
+    def generate():
+        segment = Segment(0, 1, " Low-score text retained ", -99.0, 1.0, 12.0, 1.0,
+                          [Word(0.1, 0.9, " retained", 0.0)])
+        constructed.append(segment)
+        yield segment
+        if generator_error:
+            raise failure
+
+    generator = generate()
+    result = (generator, Info())
+
+    class Model:
+        def transcribe(self, audio, vad_filter=False, clip_timestamps="0"):
+            return result
+
+    target, smoke = SimpleNamespace(WhisperModel=Model, Segment=Segment), _provider_smoke()
+    event = lambda kind, **details: events.append((kind, details))
+    smoke.observe_segment_creation(target, event, lambda: "owned-job")
+    smoke.observe_transcribe(target, event, lambda: "owned-job")
+    actual = Model().transcribe(np.ones(16, dtype=np.float32))
+    assert actual is result and actual[0] is generator
+    assert not any(kind == "asr_segment_created" for kind, _ in events)
+    segment = next(actual[0])
+    assert segment is constructed[0] and type(segment) is Segment
+    scores = next(details["segment"] for kind, details in events if kind == "asr_segment_created")
+    assert scores["avg_logprob"] == -99.0 and scores["no_speech_prob"] == 1.0
+    assert scores["words"][0]["probability"] == 0.0 and scores["text"] == segment.text
+    assert segment.words[0].probability == 0.0
+    if generator_error:
+        with pytest.raises(ValueError) as caught:
+            next(actual[0])
+        assert caught.value is failure
+    else:
+        with pytest.raises(StopIteration):
+            next(actual[0])
 
 
 @pytest.mark.parametrize("defect", ["requested_vad_missing", "unrequested_vad_present", "audio_lost_without_vad"])

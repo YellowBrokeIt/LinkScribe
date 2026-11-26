@@ -368,10 +368,21 @@ def _whisper_model(size: str):
 
 
 def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:
+    try:
+        from faster_whisper.audio import decode_audio
+        audio = decode_audio(str(path), sampling_rate=16000)
+    except Exception as exc:
+        raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
+    if len(audio) > 16000 * MAX_SECONDS:
+        raise ReadableError("The recording exceeds the 2-hour limit.")
+    # Digital silence has no speech to recognize. This exact-zero check keeps
+    # every nonzero sample, including arbitrarily quiet speech; it is not VAD.
+    if not audio.any():
+        raise ReadableError("No spoken words were detected in this recording.")
     engine = _whisper_model(model)
     try:
         segments, info = engine.transcribe(
-            str(path),
+            audio,
             language=None if language == "auto" else language,
             beam_size=5,
             # Quiet speech mixed with effects can be lost before recognition if

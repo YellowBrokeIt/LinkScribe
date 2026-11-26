@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "scope": "Bounded investigation of actual default YouTube caption acquisition separately from the failed hosted Audio-mode checks.",
+  "existing_harness_scope": {
+    "tests/smoke_real_links.py": "Actual provider checks force Audio mode.",
+    "tests/smoke_browser.py": "Caption provider replaced with explicitly controlled fixtures; not live caption evidence.",
+    "tests/smoke_live_providers.py": "Has a --captions option; no prior completed genuine caption result was located in the inspected project QA artifacts."
+  },
+  "attempted": [
+    {
+      "video_id": "HOfdboHvshg",
+      "fixture": "youtube_sintel_trailer",
+      "path": "app._captions(video_id, auto)",
+      "report": "sintel-trailer.json",
+      "sha256": "ef4541468652878bca7079dadecc78478e75a4ee99561a911ac04893a0a42512",
+      "status": "failed",
+      "error_type": "IpBlocked",
+      "elapsed_seconds": 6.366
+    }
+  ],
+  "not_attempted": [
+    {
+      "video_id": "WwHux5QZfC8",
+      "fixture": "youtube_tears_of_steel_teaser",
+      "reason": "Stopped after the first ordinary IpBlocked denial; no repeated source retries or alternate routes."
+    },
+    {
+      "fixture": "official_full_tears_of_steel_youtube",
+      "reason": "No no-captions finding occurred; the first source was access-blocked, so no substitute full-film attempt was made."
+    }
+  ],
+  "interpretation": "The real app caption path returned IpBlocked in this local environment. This is not evidence that the source lacks captions, that every YouTube source is universally inaccessible, or that hosted captions have been tested.",
+  "restrictions_observed": [
+    "No credentials or cookies supplied.",
+    "No new proxy, credential flow or alternate service.",
+    "No TLS-verification override.",
+    "No ASR or other model inference.",
+    "One attempt on the selected ID; stopped at the access denial."
+  ]
+}
