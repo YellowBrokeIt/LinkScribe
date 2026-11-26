@@ -9,6 +9,13 @@ import json
 import io
 import math
 import os
+
+# Keep optional model-runtime telemetry off before any ML dependency is imported.
+# ONNX Runtime reads this during native initialization; the later API opt-out also
+# covers builds using the older event provider.
+os.environ["ORT_DISABLE_TELEMETRY"] = "1"
+os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+
 import re
 import shutil
 import threading
@@ -46,7 +53,7 @@ MAX_ACTIVE = 8
 MAX_BATCH_SIZE = 20                          # queued + processing
 ACCEPTED_SUFFIXES = {".mp3", ".wav", ".m4a", ".mp4", ".webm", ".ogg", ".flac", ".mov", ".mkv", ".aac", ".opus"}
 LANGUAGES = {"auto", "en", "el", "es", "fr", "de", "it", "pt", "ja", "ko", "zh", "ar"}
-MODELS = {"tiny", "base", "small"}
+MODELS = {"tiny", "base", "small", "large-v3-turbo"}
 MODES = {"smart", "audio", "captions"}
 FORMATS = {"txt", "srt", "vtt", "json", "zip", "summary_md", "summary_json",
            "translation_txt", "translation_srt", "translation_vtt", "translation_json"}
@@ -290,6 +297,10 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
         "max_filesize": MAX_BYTES,
         "overwrites": False,
     }
+    if os.getenv("LINKSCRIBE_USE_SYSTEM_CERTS") == "1":
+        # Explicitly use the OS trust store (for managed local CA roots), while
+        # retaining normal certificate and hostname verification.
+        options["compat_opts"] = ["no-certifi"]
     # Prefer a supported Deno runtime (yt-dlp default); use supported Node as fallback.
     if source.provider == "youtube":
         options.update(yt_dlp_js_options())
@@ -343,8 +354,10 @@ def _check_uploaded_duration(path: Path) -> None:
         raise ReadableError("Cannot open this media file. Try MP3, MP4, WAV or WebM.") from exc
 
 
-@lru_cache(maxsize=3)
+@lru_cache(maxsize=1)
 def _whisper_model(size: str):
+    import onnxruntime
+    onnxruntime.disable_telemetry_events()
     from faster_whisper import WhisperModel
     device = os.getenv("LINKSCRIBE_DEVICE", "cpu").lower()
     if device not in {"cpu", "cuda"}:
@@ -352,7 +365,7 @@ def _whisper_model(size: str):
     return WhisperModel(size, device=device, compute_type="int8" if device == "cpu" else "float16")
 
 
-def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, Any]], str]:
+def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:
     engine = _whisper_model(model)
     try:
         segments, info = engine.transcribe(
@@ -361,12 +374,19 @@ def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, An
             beam_size=5,
             vad_filter=True,
             condition_on_previous_text=False,
+            **({"word_timestamps": True} if word_timestamps else {}),
         )
         # transcribe() returns a generator, which must be consumed.
-        output = [
-            {"start": round(float(s.start), 3), "end": round(float(s.end), 3), "text": s.text.strip()}
-            for s in segments if s.text.strip()
-        ]
+        output = []
+        for segment in segments:
+            if not segment.text.strip():
+                continue
+            item = {"start": round(float(segment.start), 3), "end": round(float(segment.end), 3),
+                    "text": segment.text.strip()}
+            if word_timestamps:
+                item["_words"] = [{"start": float(word.start), "end": float(word.end), "word": word.word}
+                                  for word in (getattr(segment, "words", None) or [])]
+            output.append(item)
     except Exception as exc:
         raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
     if not output:
@@ -402,11 +422,14 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
     """Single exporter for freshly completed jobs and saved/edited library items."""
     segments = record["segments"]
     text = "\n".join(_shown_text(segment) for segment in segments) + "\n"
+    json_record = {key: record[key] for key in ("source", "title", "language", "method", "segments")}
+    if record.get("processing_metadata"):
+        json_record["processing_metadata"] = record["processing_metadata"]
     contents = {
         "transcript.txt": text.encode("utf-8"),
         "transcript.srt": _render_subtitles(segments, "srt").encode("utf-8"),
         "transcript.vtt": _render_subtitles(segments, "vtt").encode("utf-8"),
-        "transcript.json": json.dumps({k: record[k] for k in ("source", "title", "language", "method", "segments")}, ensure_ascii=False, indent=2).encode("utf-8"),
+        "transcript.json": json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8"),
     }
     for lang, translated in record.get("translations", {}).items():
         if lang not in {"el", "en"}: continue
@@ -451,40 +474,55 @@ def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to do
          extras={"translation_language": next(iter(translations), ""), "summary": bool(record.get("summary")),
                  "speakers": any(s.get("speaker") for s in segments)},
          library_id=job_id, finished_at=time.time())
+    if record.get("processing_metadata", {}).get("warnings"):
+        _set(job_id, warnings=record["processing_metadata"]["warnings"])
 
 
 def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, method: str,
-                   translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None) -> None:
+                   translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None,
+                   processing_metadata: dict[str,Any] | None = None) -> None:
     job = jobs[job_id]
     record = {"source": job.source, "title": job.title, "language": lang, "method": method,
-              "segments": segments, "translations": translations or {}, "summary": summary}
+              "segments": segments, "translations": translations or {}, "summary": summary,
+              "processing_metadata": processing_metadata or {}}
     for filename, payload in _exports(record).items():
         (job.workdir / filename).write_bytes(payload)
-    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary)
+    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, processing_metadata)
     _complete_job(job_id, record)
 
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
-                      method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool) -> None:
+                      method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool,
+                      asr_model: str | None = None) -> None:
     # Feature problems must never destroy the original recognized transcript.
     warnings: list[str] = []
+    metadata: dict[str, Any] = {}
+    if asr_model and method == "local_audio_ai":
+        metadata["asr"] = {"engine": "faster-whisper", "model": asr_model, "word_timestamps": speakers}
     if speakers:
         if audio is None:
             warnings.append("Speaker labels require speech audio; use Audio AI mode.")
         else:
-            _set(job_id, stage="Identifying speaker turns with pyannote...")
-            try: segments = assign_speakers(audio, segments)
+            _set(job_id, stage="Identifying speaker turns locally...")
+            try:
+                speaker_report = assign_speakers(audio, segments, include_report=True)
+                segments = speaker_report["segments"]
+                warnings.extend(speaker_report["warnings"])
+                metadata["speakers"] = speaker_report["provenance"]
             except EnhancementError as exc: warnings.append(str(exc))
             except Exception as exc:
                 # Optional model bugs must never discard already recognized speech.
                 print(f"[LinkScribe] Speaker labeling failed ({type(exc).__name__}) for job {job_id}")
                 warnings.append("Speaker labeling failed unexpectedly; original transcript retained.")
+    # Word timings are transient alignment evidence. Persist the resulting text
+    # groups and model provenance, without raw audio or voice embeddings.
+    segments = [{key: value for key, value in segment.items() if key != "_words"} for segment in segments]
     translations: dict[str, Any] = {}
     if target != "none":
         if language == target:
             translations[target] = [dict(s) for s in segments]
         else:
-            _set(job_id, stage=f"Translating into {target} with local Ollama...")
+            _set(job_id, stage=f"Translating locally into {target}...")
             try: translations[target] = translate_segments(segments, target, source_language=language)
             except EnhancementError as exc: warnings.append("Translation: " + str(exc))
             except Exception as exc:
@@ -499,7 +537,9 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
             print(f"[LinkScribe] Summary failed ({type(exc).__name__}) for job {job_id}")
             warnings.append("Summary failed unexpectedly; original transcript retained.")
     _set(job_id, warnings=warnings, stage="Saving transcript to library...")
-    _write_exports(job_id, segments, language, method, translations, summary)
+    if warnings:
+        metadata["warnings"] = warnings
+    _write_exports(job_id, segments, language, method, translations, summary, metadata)
 
 
 def _process_link(job_id: str, source: Source, mode: str, language: str, model: str,
@@ -521,8 +561,8 @@ def _process_link(job_id: str, source: Source, mode: str, language: str, model: 
         _set(job_id, stage="Fetching the video's audio...")
         audio, title = _download_source_audio(job_id, source)
         _set(job_id, title=title, stage="Recognizing speech locally...")
-        segments, used_language = _recognize(audio, language, model)
-    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled)
+        segments, used_language = _recognize(audio, language, model, **({"word_timestamps": True} if speakers else {}))
+    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled, asr_model=model)
 
 
 def _process_upload(job_id: str, file_path: Path, language: str, model: str,
@@ -530,9 +570,9 @@ def _process_upload(job_id: str, file_path: Path, language: str, model: str,
     _set(job_id, stage="Checking media file...")
     _check_uploaded_duration(file_path)
     _set(job_id, stage="Recognizing speech locally...")
-    segments, detected_language = _recognize(file_path, language, model)
+    segments, detected_language = _recognize(file_path, language, model, **({"word_timestamps": True} if speakers else {}))
     _enhance_and_save(job_id, segments, detected_language, "local_audio_ai", file_path,
-                      speakers, target, summary_enabled)
+                      speakers, target, summary_enabled, asr_model=model)
 
 
 def _batch_archive(batch_id: str) -> bytes:
@@ -934,7 +974,14 @@ async def edit_library_item(item_id: str, request: Request):
         updated.append({**original,"text":text.strip().replace("\r"," ").replace("\n"," "),
                         **({"speaker":speaker.strip()} if speaker.strip() else {})})
         if not speaker.strip(): updated[-1].pop("speaker",None)
-    library.update(item_id,title.strip(),updated)
+    if not library.update(item_id,title.strip(),updated):
+        raise HTTPException(404,"Transcript not found.")
+    # Job polling and its result card must describe the same saved version as
+    # library downloads after an edit, including invalidated AI exports.
+    saved = library.get(item_id)
+    with lock:
+        if saved is not None and item_id in jobs and jobs[item_id].status == "done":
+            _complete_job(item_id, saved, stage="Edits saved")
     return {"ok":True,"id":item_id,"message":"Edits saved. Previous translations and summaries were cleared because the transcript changed."}
 
 

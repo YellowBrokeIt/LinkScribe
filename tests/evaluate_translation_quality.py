@@ -127,7 +127,7 @@ def select_cases(corpus, case_ids=None, splits=None):
 
 
 def source_identity(corpus_path):
-    paths = [ROOT / "enhancements.py", Path(__file__), Path(corpus_path)]
+    paths = [ROOT / "enhancements.py", ROOT / "marian_translation.py", Path(__file__), Path(corpus_path)]
     fingerprints = {str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else p.name:
                     hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
     identity = {"sha256": fingerprints, "git_commit": None, "git_dirty": None}
@@ -142,6 +142,13 @@ def source_identity(corpus_path):
 
 
 def runtime_identity():
+    if enhancements.translation_backend() == "marian":
+        import marian_translation
+        if not all(marian_translation.cache_status()["pairs_cached"].values()):
+            raise ValueError("Prepare both local models first: python -m marian_translation --pair both")
+        return {"backend": "marian-ctranslate2", "task": "translation",
+                "models": {pair: marian_translation.model_details(*pair.split("-"))
+                           for pair in ("en-el", "el-en")}}
     url, model = enhancements.ollama_settings(task="translation")
     version = enhancements.local_ollama_json("/api/version")
     tags = enhancements.local_ollama_json("/api/tags")
@@ -162,6 +169,10 @@ def runtime_identity():
 @contextmanager
 def observe_requests(records, checkpoint):
     """Observe the production boundary without replacing its transport policy."""
+    if enhancements.translation_backend() == "marian":
+        with observe_native_requests(records, checkpoint):
+            yield
+        return
     original = enhancements.local_ollama_json
 
     def observed(path, payload=None, timeout=1.5):
@@ -197,6 +208,44 @@ def observe_requests(records, checkpoint):
         yield
     finally:
         enhancements.local_ollama_json = original
+
+
+@contextmanager
+def observe_native_requests(records, checkpoint):
+    """Record actual native arguments/results while delegating all inference."""
+    import marian_translation
+    original = marian_translation._translate_batch
+
+    def observed(engine, source_tokenizer, target_tokenizer, texts):
+        class ObservedEngine:
+            def translate_batch(self, tokens, **options):
+                entry = {"request": {"backend": "marian-ctranslate2",
+                                     "source_texts": copy.deepcopy(texts),
+                                     "source_tokens": copy.deepcopy(tokens),
+                                     "options": copy.deepcopy(options)},
+                         "started_at": utc_now(), "raw_evidence_available": False}
+                records.append(entry)
+                checkpoint()
+                started = time.monotonic()
+                try:
+                    results = engine.translate_batch(tokens, **options)
+                    entry["response_tokens"] = [copy.deepcopy(result.hypotheses) for result in results]
+                    entry["raw_evidence_available"] = True
+                    return results
+                except BaseException as exc:
+                    entry["error"] = {"type": type(exc).__name__, "message": str(exc)}
+                    raise
+                finally:
+                    entry["elapsed_seconds"] = round(time.monotonic() - started, 3)
+                    checkpoint()
+
+        return original(ObservedEngine(), source_tokenizer, target_tokenizer, texts)
+
+    marian_translation._translate_batch = observed
+    try:
+        yield
+    finally:
+        marian_translation._translate_batch = original
 
 
 def folded(value):
@@ -255,7 +304,7 @@ def structural_checks(before, after, translated):
 
 def evaluate(corpus_path, output, case_ids=None, splits=None, fail_on_review=False):
     corpus_path, output = Path(corpus_path).resolve(), Path(output).resolve()
-    if output in {corpus_path, Path(__file__).resolve(), ROOT / "enhancements.py"}:
+    if output in {corpus_path, Path(__file__).resolve(), ROOT / "enhancements.py", ROOT / "marian_translation.py"}:
         raise ValueError("Report output must not replace corpus or implementation source.")
     corpus = read_corpus(corpus_path)
     selected = select_cases(corpus, case_ids, splits)

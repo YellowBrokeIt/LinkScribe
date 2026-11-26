@@ -71,6 +71,10 @@ def mark_batch(batch_id: str, status: str) -> None:
 def mark_item(job_id: str, status: str, title: str = "", error: str = "", library_id: str = "") -> None:
     assert status in {"queued", "working", "done", "error"}
     with _db() as conn:
+        if status == "done" and library_id:
+            saved = conn.execute("SELECT title FROM transcripts WHERE id=?", (library_id,)).fetchone()
+            if saved is not None:
+                title = saved["title"]  # Preserve an edit made just after transcript commit.
         cursor = conn.execute("""UPDATE batch_queue_items
             SET status=?,title=CASE WHEN ?!='' THEN ? ELSE title END,
                 error=?,library_id=?,updated_at=? WHERE job_id=?""",

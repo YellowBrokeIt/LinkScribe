@@ -165,7 +165,7 @@ def test_later_plain_request_failure_keeps_original_transcript(monkeypatch):
         return {"done": True, "message": {"content": "Πρώτη παρατήρηση"}}
 
     monkeypatch.setattr(ai, "local_ollama_json", respond)
-    with pytest.raises(ai.EnhancementError, match="unavailable"):
+    with pytest.raises(ai.EnhancementError, match="did not finish within 240 seconds"):
         ai.translate_segments(source, "el", "en")
     assert len(calls) == 2 and source == before
 

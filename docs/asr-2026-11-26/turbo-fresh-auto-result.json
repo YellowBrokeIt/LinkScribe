@@ -1,0 +1,1079 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T18:05:52.054389+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "7417665987c91af5143cc1aa3375f404a4fdf6f787554d3d88206f45546353be",
+  "manifest_path": "fresh-fixtures.json",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "Eight new clips chosen and frozen before any recognition on them. Sentence IDs are distinct from all eight ASR development clips and from each other. Five Greek and three English cover ordinary speech, a proper name, numerals, uncertainty and negation.",
+    "evaluation_role": "fresh_diagnostic_validation",
+    "turbo_development_outputs_inspected_by_selector": false,
+    "representativeness": "Purposive read-speech diagnostic sample, not random population validation or a conversational/noisy speech benchmark.",
+    "dataset_access_note": "Attempts to fetch the test-split preview returned HTTP 500; distinct previously unselected validation-split rows were used instead."
+  },
+  "source_sha256": {
+    "app.py": "f398e996822038fd46712bae595403dca5f37ef4d7c40214d423fafcc0e92b33",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0",
+      "onnxruntime": "1.32.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": "large-v3-turbo",
+    "effective_model": "large-v3-turbo",
+    "language_mode": "auto",
+    "default_upload_language": "auto",
+    "language_form_field_omitted": true,
+    "model_form_field_omitted": false,
+    "model_provenance": {
+      "model": "large-v3-turbo",
+      "repository": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+      "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "downloaded_at": "2026-11-26T17:58:38.776768+00:00",
+      "upstream_model": "openai/whisper-large-v3-turbo",
+      "model_card": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+      "files": {
+        "model.bin": {
+          "bytes": 1617884929,
+          "sha256": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+        },
+        "config.json": {
+          "bytes": 2263,
+          "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e"
+        },
+        "tokenizer.json": {
+          "bytes": 2710337,
+          "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd"
+        },
+        "preprocessor_config.json": {
+          "bytes": 340,
+          "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+        },
+        "vocabulary.json": {
+          "bytes": 1068114,
+          "sha256": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1"
+        }
+      }
+    },
+    "offline": true,
+    "telemetry_opt_out": {
+      "ORT_DISABLE_TELEMETRY": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "onnxruntime_disable_telemetry_events_called": true
+    },
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, Any]], str]:\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            str(path),\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            vad_filter=True,\n            condition_on_previous_text=False,\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = [\n            {\"start\": round(float(s.start), 3), \"end\": round(float(s.end), 3), \"text\": s.text.strip()}\n            for s in segments if s.text.strip()\n        ]\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "model_factory_source": "@lru_cache(maxsize=3)\ndef _whisper_model(size: str):\n    import onnxruntime\n    onnxruntime.disable_telemetry_events()\n    from faster_whisper import WhisperModel\n    device = os.getenv(\"LINKSCRIBE_DEVICE\", \"cpu\").lower()\n    if device not in {\"cpu\", \"cuda\"}:\n        device = \"cpu\"\n    return WhisperModel(size, device=device, compute_type=\"int8\" if device == \"cpu\" else \"float16\")\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Peak RSS is the maximum resident set of this QA process, including loaded model and application. It excludes other processes and is not a whole-machine or combined ASR/translation memory measurement.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "cases": [
+    {
+      "id": "fleurs-fresh-el_gr-validation-12-1558",
+      "language": "el",
+      "audio_sha256": "0a7369b9e3a8cf6b530abcb487edd98a8108f22bff9e02a7f9cffc45c50fa68c",
+      "media": {
+        "duration_seconds": 9.12,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "review_criteria": [
+        "Retain the necessary role of management in creating conditions for innovation, knowledge sharing and organizational learning."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "74fcb705d6a04b548b260835011b37ab",
+      "job_result": {
+        "id": "74fcb705d6a04b548b260835011b37ab",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-el_gr-validation-12-1558.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "74fcb705d6a04b548b260835011b37ab"
+      },
+      "segments": [
+        {
+          "start": 0.66,
+          "end": 7.92,
+          "text": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης."
+        }
+      ],
+      "hypothesis": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "word_metrics": {
+        "reference_words": 21,
+        "hypothesis_words": 21,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 21,
+        "hypothesis_words": 21,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "exports": {
+        "txt": {
+          "bytes": 294,
+          "sha256": "b0c63e62a542393142c4097ed74c184734f7f91b9612ff34df7b9e76aa689228"
+        },
+        "srt": {
+          "bytes": 326,
+          "sha256": "9281c3cc7a21951671459d65e4eb5393c7ba573d6bff283bec021672c657d661"
+        },
+        "vtt": {
+          "bytes": 332,
+          "sha256": "7e0a0a16ab775374983324c7441f3b47f5afa0a4812ac1ddb1fc017fcb56df87"
+        },
+        "json": {
+          "bytes": 557,
+          "sha256": "a8804596321fc08faa33c8d71d252dcfeb037d568708fcceef001af20bc456a5"
+        },
+        "zip": {
+          "bytes": 1321,
+          "sha256": "85827f5a644908b960ee3e38679a28e2b55276011e975873b5de1b066691e9d0"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 17.422,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-13-1564",
+      "language": "el",
+      "audio_sha256": "4af74ccf74afd2687b9677bf2f7d3769ff11b0baebc67c3cc523fbbd16e893e3",
+      "media": {
+        "duration_seconds": 9.12,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Ο Δρ Μολ πιστεύει ότι κάποιοι ασθενείς ενδέχεται να μολύνθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "review_criteria": [
+        "Preserve the attribution to Dr Moll, the possibility rather than certainty of infection, and at least two hospital health professionals.",
+        "This is fidelity to the recorded source statement, not a medical claim endorsement."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "c9d4721dd1eb4539990c5eb8b2018627",
+      "job_result": {
+        "id": "c9d4721dd1eb4539990c5eb8b2018627",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-el_gr-validation-13-1564.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "c9d4721dd1eb4539990c5eb8b2018627"
+      },
+      "segments": [
+        {
+          "start": 0.53,
+          "end": 8.37,
+          "text": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου."
+        }
+      ],
+      "hypothesis": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "word_metrics": {
+        "reference_words": 26,
+        "hypothesis_words": 26,
+        "substitutions": 4,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 4,
+        "word_error_rate": 0.15384615384615385,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "δρ",
+            "hypothesis": "dr"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολ",
+            "hypothesis": "moll"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ενδέχεται",
+            "hypothesis": "αντέχεται"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολύνθηκαν",
+            "hypothesis": "μολύθηκαν"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 26,
+        "hypothesis_words": 26,
+        "substitutions": 4,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 4,
+        "word_error_rate": 0.15384615384615385,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "δρ",
+            "hypothesis": "dr"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολ",
+            "hypothesis": "moll"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ενδεχεται",
+            "hypothesis": "αντεχεται"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολυνθηκαν",
+            "hypothesis": "μολυθηκαν"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 310,
+          "sha256": "31b6bc9b7393e7d4dc6b3bb86999caf9131cdd89c625caa80af27432831b8c1c"
+        },
+        "srt": {
+          "bytes": 342,
+          "sha256": "ef6b17997e29ad713ac67670009a23599162e37d7711711ac68e0b7c4fcca13e"
+        },
+        "vtt": {
+          "bytes": 348,
+          "sha256": "7a1e730adcd42136d511da1926132b1a4fd1880ea8cb4bdbac79c4fc83abf0e9"
+        },
+        "json": {
+          "bytes": 573,
+          "sha256": "43688ac9d37d68e35bf5aae6f192cd766b57a79ec04fdb1368873a7b34998c0c"
+        },
+        "zip": {
+          "bytes": 1390,
+          "sha256": "bb28053c533af735b036589871f6f84706d5b16dade62f0d88d7c226dad804c8"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 12.556,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-18-1650",
+      "language": "el",
+      "audio_sha256": "d91d58089eede993b48f087949df2127783cc325581036dfb271e353a3434109",
+      "media": {
+        "duration_seconds": 10.56,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Οι κροκόδειλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι οι εκβολές των ποταμών βόρεια από το Ρόκχαμπτον.",
+      "review_criteria": [
+        "Keep the contrast between not inhabiting the sea and estuary habitat; preserve Rockhampton as the geographic reference."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "e94c691bea654eb7883677ec8db29b06",
+      "job_result": {
+        "id": "e94c691bea654eb7883677ec8db29b06",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-el_gr-validation-18-1650.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Οι κροκόδυλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι εκβολές των ποταμών βόρεια από το Ροκχάμπτον.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "e94c691bea654eb7883677ec8db29b06"
+      },
+      "segments": [
+        {
+          "start": 0.37,
+          "end": 8.95,
+          "text": "Οι κροκόδυλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι εκβολές των ποταμών βόρεια από το Ροκχάμπτον."
+        }
+      ],
+      "hypothesis": "Οι κροκόδυλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι εκβολές των ποταμών βόρεια από το Ροκχάμπτον.",
+      "word_metrics": {
+        "reference_words": 22,
+        "hypothesis_words": 21,
+        "substitutions": 2,
+        "deletions": 1,
+        "insertions": 0,
+        "word_errors": 3,
+        "word_error_rate": 0.13636363636363635,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κροκόδειλοι",
+            "hypothesis": "κροκόδυλοι"
+          },
+          {
+            "operation": "deletion",
+            "reference": "οι",
+            "hypothesis": ""
+          },
+          {
+            "operation": "substitution",
+            "reference": "ρόκχαμπτον",
+            "hypothesis": "ροκχάμπτον"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 22,
+        "hypothesis_words": 21,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "word_errors": 2,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κροκοδειλοι",
+            "hypothesis": "κροκοδυλοι"
+          },
+          {
+            "operation": "deletion",
+            "reference": "οι",
+            "hypothesis": ""
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 257,
+          "sha256": "972041dd60e92250ec78b4b762848627a484a556820a0b978cf9f49aa96deb8b"
+        },
+        "srt": {
+          "bytes": 289,
+          "sha256": "2a3597094bfc6eec3aa510413dc49ab9cfd525049058c28b429aa74283372706"
+        },
+        "vtt": {
+          "bytes": 295,
+          "sha256": "79ec72a1cba4eb22956a9cfe76538ee0b6841e6aa85a2f33a0c9e0dfbb4be4da"
+        },
+        "json": {
+          "bytes": 520,
+          "sha256": "5b09b48d7afcec9b257e93a0bcd02f3a32900ba7f0322a5ad53f672a0bb6b86f"
+        },
+        "zip": {
+          "bytes": 1288,
+          "sha256": "aa46d9a7b4dde7a7d0f8fa861da1e2a2d3ee845f7cd65de29fd92a8d2ef43940"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 11.215,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-20-1574",
+      "language": "el",
+      "audio_sha256": "60a8e9254fc29eda121b050ef6803029b3cad287bcafc0f68010fe5170da7a78",
+      "media": {
+        "duration_seconds": 13.08,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Το κρύο τον χειμώνα είναι παραπλανητικό: οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+      "review_criteria": [
+        "Preserve rarely below zero and the wind/humidity qualification about felt versus measured temperature."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "3e52198380c84543a3c88549904d9c07",
+      "job_result": {
+        "id": "3e52198380c84543a3c88549904d9c07",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-el_gr-validation-20-1574.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Το κρύο των χειμώνα είναι παραπλανητικό. Οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "3e52198380c84543a3c88549904d9c07"
+      },
+      "segments": [
+        {
+          "start": 0.53,
+          "end": 12.11,
+          "text": "Το κρύο των χειμώνα είναι παραπλανητικό. Οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο."
+        }
+      ],
+      "hypothesis": "Το κρύο των χειμώνα είναι παραπλανητικό. Οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+      "word_metrics": {
+        "reference_words": 32,
+        "hypothesis_words": 32,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.03125,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "τον",
+            "hypothesis": "των"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 32,
+        "hypothesis_words": 32,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.03125,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "τον",
+            "hypothesis": "των"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 387,
+          "sha256": "9c30eca6a3928cd8605b8079948722f54ac7034a68b118d2e16e9f617d821547"
+        },
+        "srt": {
+          "bytes": 419,
+          "sha256": "0c76d4fa8f2aa20bdb0b50c7cf34c4475256c3262d9bf9de2dbd8a97213e10d5"
+        },
+        "vtt": {
+          "bytes": 425,
+          "sha256": "99ebd201e92a3b2e8c02b3d852ccfdf2e512892a04724abbd8b7ba8e31a4cd15"
+        },
+        "json": {
+          "bytes": 651,
+          "sha256": "da5bd04819e3a9f56c13b9fb23876b084c3debff62f886bc2c3bfd6776c67dd9"
+        },
+        "zip": {
+          "bytes": 1563,
+          "sha256": "ee7a438c19f65d3b88245c5a56ea9f1b0697e95f048e6944c1a399da3bff2aa2"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 12.056,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-23-1581",
+      "language": "el",
+      "audio_sha256": "2021e894b91d8001007e5edcd4a1ebe672be853aa31d9f6409257ea8ce5370f9",
+      "media": {
+        "duration_seconds": 8.7,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως, που μερικές φορές φτάνει τα 6 μίλια.",
+      "review_criteria": [
+        "Preserve the Amazon river, width claim and sometimes up to six miles, without converting width into length."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "1f20e50dacff43139bbf43ca5b35fc25",
+      "job_result": {
+        "id": "1f20e50dacff43139bbf43ca5b35fc25",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-el_gr-validation-23-1581.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως που μερικές φορές φτάνει τα έξι μίλια.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "1f20e50dacff43139bbf43ca5b35fc25"
+      },
+      "segments": [
+        {
+          "start": 0.56,
+          "end": 7.66,
+          "text": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως που μερικές φορές φτάνει τα έξι μίλια."
+        }
+      ],
+      "hypothesis": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως που μερικές φορές φτάνει τα έξι μίλια.",
+      "word_metrics": {
+        "reference_words": 18,
+        "hypothesis_words": 18,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.05555555555555555,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "6",
+            "hypothesis": "έξι"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 18,
+        "hypothesis_words": 18,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.05555555555555555,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "6",
+            "hypothesis": "εξι"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 207,
+          "sha256": "634ac2b34108b18269f432f8f3b0c82989819ca564536d0c947aa2bdff0cd056"
+        },
+        "srt": {
+          "bytes": 239,
+          "sha256": "967692adacc02596f194b83e027fb1cede545972404efdc56774a8b4a7747a8e"
+        },
+        "vtt": {
+          "bytes": 245,
+          "sha256": "9ba27985e2a57f8534badb7cd04f955f9ddc76979ac53f155bed2ed402e65bfa"
+        },
+        "json": {
+          "bytes": 470,
+          "sha256": "beca526cebb678bca152114741c5ca6946758ab4841857e4697d8542ed071d7f"
+        },
+        "zip": {
+          "bytes": 1204,
+          "sha256": "50d6e800d8635dca6da19c9e8bbccdfbb96fc4c6ddcfb0fa027d8dd94da75dd0"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 10.654,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-8-1559",
+      "language": "en",
+      "audio_sha256": "97c91f17d0fac2f617510489c1f149371234a16990c1e0b8945ea91611a74c4c",
+      "media": {
+        "duration_seconds": 9.32,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written",
+      "review_criteria": [
+        "Preserve the reason linking Italian pronunciation with spelling and the most-words qualification."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "dba771e85b734dcbbc215509881363a9",
+      "job_result": {
+        "id": "dba771e85b734dcbbc215509881363a9",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-en_us-validation-8-1559.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "dba771e85b734dcbbc215509881363a9"
+      },
+      "segments": [
+        {
+          "start": 0.56,
+          "end": 7.48,
+          "text": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written."
+        }
+      ],
+      "hypothesis": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+      "word_metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 16,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 16,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "exports": {
+        "txt": {
+          "bytes": 106,
+          "sha256": "851dc247e56c287c9f4b1ed9cc5995ac39683eb70aad00b9110921e5bbe74148"
+        },
+        "srt": {
+          "bytes": 138,
+          "sha256": "494057c33749b291fb5f94dee2c08695bb27d2e6600ec50e79b935b5c7bed642"
+        },
+        "vtt": {
+          "bytes": 144,
+          "sha256": "c50fa5be44d9b28a6d84cee289cefb4c57cd692d6a6bcd95d3824528c58de5a0"
+        },
+        "json": {
+          "bytes": 367,
+          "sha256": "37a815ca1b6dc8fadc377fb19c20b0ce65ba6c5a2c3ec7c78cc69ceeda19cf62"
+        },
+        "zip": {
+          "bytes": 988,
+          "sha256": "7d767252602e1c9362e9d76c31fae96f3ee3d44119eab7ba0efc14b9ee467d7d"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 11.023,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-11-1536",
+      "language": "en",
+      "audio_sha256": "409c1b0f2e86fbc7996c1122e8ccbd0ff30bae145395b456e4ffa6b8c8279c12",
+      "media": {
+        "duration_seconds": 8.16,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air-conditioners and not to drink tap water.",
+      "review_criteria": [
+        "Retain all three precautionary instructions and the negation on drinking tap water as part of the spoken source."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "f101d7fe8de24ce2bb49a5a16319db78",
+      "job_result": {
+        "id": "f101d7fe8de24ce2bb49a5a16319db78",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-en_us-validation-11-1536.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air conditioners, and not to drink tap water.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "f101d7fe8de24ce2bb49a5a16319db78"
+      },
+      "segments": [
+        {
+          "start": 0.62,
+          "end": 7.62,
+          "text": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air conditioners, and not to drink tap water."
+        }
+      ],
+      "hypothesis": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air conditioners, and not to drink tap water.",
+      "word_metrics": {
+        "reference_words": 23,
+        "hypothesis_words": 24,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 2,
+        "word_error_rate": 0.08695652173913043,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "air"
+          },
+          {
+            "operation": "substitution",
+            "reference": "airconditioners",
+            "hypothesis": "conditioners"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 23,
+        "hypothesis_words": 24,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 2,
+        "word_error_rate": 0.08695652173913043,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "air"
+          },
+          {
+            "operation": "substitution",
+            "reference": "airconditioners",
+            "hypothesis": "conditioners"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 141,
+          "sha256": "bad6297a32a5211477a8d28a46c48d572d0cf6a2c011c5dc2036b251a2749d08"
+        },
+        "srt": {
+          "bytes": 173,
+          "sha256": "f878c92c31e0fdeccb145aeccae005c4e2b93bcdc469da57a8f811d40d36d874"
+        },
+        "vtt": {
+          "bytes": 179,
+          "sha256": "63542f58a8ebaf7d1a89343c275d48fe7b2ac586a8ef5d79cc779843d319b76c"
+        },
+        "json": {
+          "bytes": 404,
+          "sha256": "2b05f714b8ec2d90211e28606687ed6ab58812e77452cee10cda5fc514e73502"
+        },
+        "zip": {
+          "bytes": 1042,
+          "sha256": "f3ed2b411071763f4a4e645bfdbe0cb657788ad1ca5998b995b003cf827a3c9b"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 11.756,
+      "process_peak_rss_bytes_so_far": 1776443392
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-17-1593",
+      "language": "en",
+      "audio_sha256": "952145e2808bf8ea6354ec0ea656652a0eeff61438a466fa4f0f3568f89c23a3",
+      "media": {
+        "duration_seconds": 8.52,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full-iron rails were introduced.",
+      "review_criteria": [
+        "Preserve replacement of wooden by iron wheels and the date 1767 attached to the first all-iron rails."
+      ],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "5e4b005640634094b74cc38aa9ceeff0",
+      "job_result": {
+        "id": "5e4b005640634094b74cc38aa9ceeff0",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-fresh-en_us-validation-17-1593.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full iron rails were introduced.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "5e4b005640634094b74cc38aa9ceeff0"
+      },
+      "segments": [
+        {
+          "start": 0.69,
+          "end": 7.69,
+          "text": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full iron rails were introduced."
+        }
+      ],
+      "hypothesis": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full iron rails were introduced.",
+      "word_metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 17,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 2,
+        "word_error_rate": 0.125,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "full"
+          },
+          {
+            "operation": "substitution",
+            "reference": "fulliron",
+            "hypothesis": "iron"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 17,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 2,
+        "word_error_rate": 0.125,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "full"
+          },
+          {
+            "operation": "substitution",
+            "reference": "fulliron",
+            "hypothesis": "iron"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 108,
+          "sha256": "0871922dbc29f9cdef43ec7063e95a75eae22ee62cee15fadc6e58f2a5f0308a"
+        },
+        "srt": {
+          "bytes": 140,
+          "sha256": "e71060d52820d5c001b230c1a8fd268f18fd1c111bc8b84af4b5ec1b116882c8"
+        },
+        "vtt": {
+          "bytes": 146,
+          "sha256": "0d4cf92cf19a3bdd1f2dc3f452a5148a9ed6da540bc1b4146b86cdd504d99d35"
+        },
+        "json": {
+          "bytes": 371,
+          "sha256": "56a4db9dffe9d713f88f1404fb498afd6c72f0387f821dfa8deaa9c5cdb49a69"
+        },
+        "zip": {
+          "bytes": 975,
+          "sha256": "9bb6ec2b03b93c19de768ceee43cd3429e530ef69bea708b8c79d0bfa5fbf4b5"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 11.696,
+      "process_peak_rss_bytes_so_far": 1776443392
+    }
+  ],
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "f398e996822038fd46712bae595403dca5f37ef4d7c40214d423fafcc0e92b33",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "pass": 8
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 5,
+      "reference_words": 119,
+      "word_errors": 9,
+      "substitutions": 8,
+      "deletions": 1,
+      "insertions": 0,
+      "word_error_rate": 0.07563025210084033
+    },
+    "en": {
+      "cases": 3,
+      "reference_words": 55,
+      "word_errors": 4,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "word_error_rate": 0.07272727272727272
+    }
+  },
+  "finished_at": "2026-11-26T18:07:30.580601+00:00",
+  "elapsed_seconds": 98.525,
+  "process_peak_rss_bytes": 1776443392,
+  "archive_provenance": {
+    "raw_file": "turbo-fresh-auto-result.json",
+    "raw_sha256": "ecf66502244c438ed8d9da0b9445629c523071b360e1149707e9de82e028fa88",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

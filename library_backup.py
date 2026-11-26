@@ -153,6 +153,10 @@ def _validated_record(record: Any) -> tuple:
             raise BackupError("Backup contains invalid translations.")
         _validate_segments(items)
     _validate_summary(summary)
+    try:
+        processing_metadata = library._processing_metadata_json(record.get("processing_metadata", {}))
+    except ValueError as exc:
+        raise BackupError(str(exc)) from exc
     created_at = record.get("created_at")
     updated_at = record.get("updated_at")
     if any(not _finite_number(v) or v < 0 for v in (created_at, updated_at)):
@@ -161,6 +165,7 @@ def _validated_record(record: Any) -> tuple:
             _json_text(segments), library._plain(segments),
             _json_text(translations),
             _json_text(summary) if summary is not None else None,
+            processing_metadata,
             float(created_at), float(updated_at))
 
 
@@ -204,8 +209,8 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
         with conn:
             before = conn.total_changes
             conn.executemany("""INSERT OR IGNORE INTO transcripts
-              (id,source,title,language,method,segments,plain_text,translations,summary,created_at,updated_at)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?)""", parsed)
+              (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,created_at,updated_at)
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""", parsed)
             inserted = conn.total_changes - before
     finally:
         conn.close()

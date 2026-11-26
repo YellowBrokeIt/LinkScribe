@@ -273,6 +273,7 @@ def test_qa_pyannote_real_annotation_speaker_overlap(monkeypatch, tmp_path):
     annotation=Annotation(uri='qa-sound')
     annotation[Segment(0.0,1.0)]='bob'
     annotation[Segment(1.05,2.5)]='alice'
+    monkeypatch.setenv('LINKSCRIBE_SPEAKER_BACKEND','pyannote')
     monkeypatch.setenv('HF_TOKEN','qa-not-real')
     monkeypatch.setattr(enhancements,'_diarization_pipeline',lambda token:lambda path:SimpleNamespace(exclusive_speaker_diarization=annotation))
     segments=[{'start':0.0,'end':1.0,'text':'Good morning'}, {'start':1.1,'end':2.1,'text':'Hello there'}]

@@ -5,6 +5,7 @@ This is intentionally single-user: never expose the existing app publicly.
 """
 from __future__ import annotations
 import json
+import math
 import sqlite3
 import time
 from pathlib import Path
@@ -29,9 +30,18 @@ def _connect():
       plain_text TEXT NOT NULL,
       translations TEXT NOT NULL DEFAULT '{}',
       summary TEXT,
+      processing_metadata TEXT NOT NULL DEFAULT '{}',
       created_at REAL NOT NULL,
       updated_at REAL NOT NULL
     )""")
+    if "processing_metadata" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+        try:
+            connection.execute("ALTER TABLE transcripts ADD COLUMN processing_metadata TEXT NOT NULL DEFAULT '{}'")
+        except sqlite3.OperationalError:
+            # Another local connection may have completed this additive migration.
+            if "processing_metadata" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+                connection.close()
+                raise
     connection.execute("CREATE INDEX IF NOT EXISTS idx_transcripts_created ON transcripts(created_at DESC)")
     return connection
 
@@ -41,6 +51,7 @@ def _row(row: sqlite3.Row) -> dict[str, Any]:
     data["segments"] = json.loads(data["segments"])
     data["translations"] = json.loads(data["translations"])
     data["summary"] = json.loads(data["summary"]) if data["summary"] else None
+    data["processing_metadata"] = json.loads(data.get("processing_metadata") or "{}")
     return data
 
 
@@ -48,18 +59,72 @@ def _plain(segments: list[dict[str, Any]]) -> str:
     return "\n".join(str(s.get("text", "")).strip().replace("\n", " ") for s in segments)
 
 
+def _processing_metadata_json(value: Any) -> str:
+    """Bound configuration provenance; never accept audio, vectors or credentials."""
+    if value is None:
+        value = {}
+    if not isinstance(value, dict):
+        raise ValueError("Processing metadata must be an object.")
+    nodes = 0
+    forbidden = {"audio", "embeddings", "embedding", "waveform", "voiceprint", "samples",
+                 "token", "hf_token", "api_key", "authorization"}
+
+    def visit(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        if depth > 8 or nodes > 1024:
+            raise ValueError("Processing metadata is too deeply nested or complex.")
+        if item is None or isinstance(item, bool):
+            return
+        if isinstance(item, (int, float)):
+            try:
+                if not math.isfinite(item):
+                    raise ValueError("Processing metadata contains a non-finite number.")
+            except OverflowError as exc:
+                raise ValueError("Processing metadata contains an oversized number.") from exc
+        elif isinstance(item, str):
+            if len(item) > 4096:
+                raise ValueError("Processing metadata contains an oversized string.")
+            item.encode("utf-8")
+        elif isinstance(item, dict):
+            if len(item) > 64:
+                raise ValueError("Processing metadata contains too many fields.")
+            for key, entry in item.items():
+                if not isinstance(key, str) or len(key) > 80 or key.lower() in forbidden:
+                    raise ValueError("Processing metadata contains a prohibited field.")
+                key.encode("utf-8")
+                visit(entry, depth + 1)
+        elif isinstance(item, list):
+            if len(item) > 100:
+                raise ValueError("Processing metadata contains an oversized list.")
+            for entry in item:
+                visit(entry, depth + 1)
+        else:
+            raise ValueError("Processing metadata contains an unsupported value.")
+
+    try:
+        visit(value)
+        encoded = json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+        if len(encoded.encode("utf-8")) > 32768:
+            raise ValueError("Processing metadata exceeds 32 KiB.")
+    except (UnicodeError, RecursionError) as exc:
+        raise ValueError("Processing metadata is not valid bounded Unicode JSON.") from exc
+    return encoded
+
+
 def save(identifier: str, source: str, title: str, language: str, method: str,
          segments: list[dict[str, Any]], translations: dict[str, Any] | None = None,
-         summary: dict[str, Any] | None = None) -> None:
+         summary: dict[str, Any] | None = None, processing_metadata: dict[str, Any] | None = None) -> None:
     now = time.time()
+    metadata_json = _processing_metadata_json(processing_metadata)
     with _connect() as connection:
         connection.execute("""INSERT INTO transcripts
-          (id,source,title,language,method,segments,plain_text,translations,summary,created_at,updated_at)
-          VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+          (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,created_at,updated_at)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
           (identifier, source, title, language, method,
            json.dumps(segments, ensure_ascii=False), _plain(segments),
            json.dumps(translations or {}, ensure_ascii=False),
-           json.dumps(summary, ensure_ascii=False) if summary else None, now, now))
+           json.dumps(summary, ensure_ascii=False) if summary else None, metadata_json, now, now))
 
 
 def get(identifier: str) -> dict[str, Any] | None:
@@ -86,9 +151,21 @@ def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
 def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
     # Caller validates IDs, segment count, timestamps, and text constraints.
     with _connect() as connection:
+        existing = connection.execute("SELECT processing_metadata FROM transcripts WHERE id=?", (identifier,)).fetchone()
+        if existing is None:
+            return False
+        metadata = json.loads(existing["processing_metadata"] or "{}")
+        metadata.pop("translation", None)
+        metadata.pop("summary", None)
+        metadata["user_edited"] = True
+        now = time.time()
         cursor = connection.execute("""UPDATE transcripts SET title=?, segments=?, plain_text=?,
-            translations='{}', summary=NULL, updated_at=? WHERE id=?""",
-            (title, json.dumps(segments,ensure_ascii=False), _plain(segments), time.time(), identifier))
+            translations='{}', summary=NULL, processing_metadata=?, updated_at=? WHERE id=?""",
+            (title, json.dumps(segments,ensure_ascii=False), _plain(segments),
+             _processing_metadata_json(metadata), now, identifier))
+        if connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='batch_queue_items'").fetchone():
+            connection.execute("UPDATE batch_queue_items SET title=?,updated_at=? WHERE library_id=? OR job_id=?",
+                               (title, now, identifier, identifier))
         return cursor.rowcount > 0
 
 

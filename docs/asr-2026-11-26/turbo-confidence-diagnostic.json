@@ -1,0 +1,633 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T18:11:26.839788+00:00",
+  "complete": true,
+  "purpose": "postselection_confidence_diagnostic_not_calibration_or_fresh_validation",
+  "model": "large-v3-turbo",
+  "model_provenance": {
+    "model": "large-v3-turbo",
+    "repository": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+    "downloaded_at": "2026-11-26T17:58:38.776768+00:00",
+    "upstream_model": "openai/whisper-large-v3-turbo",
+    "model_card": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "files": {
+      "model.bin": {
+        "bytes": 1617884929,
+        "sha256": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+      },
+      "config.json": {
+        "bytes": 2263,
+        "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e"
+      },
+      "tokenizer.json": {
+        "bytes": 2710337,
+        "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd"
+      },
+      "preprocessor_config.json": {
+        "bytes": 340,
+        "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+      },
+      "vocabulary.json": {
+        "bytes": 1068114,
+        "sha256": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1"
+      }
+    }
+  },
+  "options": {
+    "device": "cpu",
+    "compute_type": "int8",
+    "beam_size": 5,
+    "vad_filter": true,
+    "condition_on_previous_text": false,
+    "word_timestamps": true
+  },
+  "production_difference": "word_timestamps=True is added solely to expose actual word probabilities; exact output matching is recorded.",
+  "telemetry_opt_out": {
+    "ORT_DISABLE_TELEMETRY": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "onnxruntime_disable_telemetry_events_called": true
+  },
+  "reference_supplied_to_decoder": false,
+  "cases": [
+    {
+      "id": "fleurs-fresh-el_gr-validation-12-1558",
+      "diagnostic_role": "accurate_Greek_control",
+      "source_report": "turbo-fresh-auto-result.json",
+      "source_report_sha256": "ecf66502244c438ed8d9da0b9445629c523071b360e1149707e9de82e028fa88",
+      "audio_sha256": "0a7369b9e3a8cf6b530abcb487edd98a8108f22bff9e02a7f9cffc45c50fa68c",
+      "language_argument": null,
+      "detected_language": "el",
+      "language_probability": 0.9981226325035095,
+      "production_hypothesis": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "hypothesis": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "exact_text_matches_production": true,
+      "reference": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "segments": [
+        {
+          "start": 0.66,
+          "end": 7.9,
+          "text": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+          "avg_logprob": -0.03848017837050595,
+          "no_speech_prob": 2.0304244396918136e-11,
+          "compression_ratio": 1.7544910179640718,
+          "words": [
+            {
+              "word": " Για",
+              "probability": 0.9966403245925903,
+              "start": 0.66,
+              "end": 1.2
+            },
+            {
+              "word": " να",
+              "probability": 0.9996424913406372,
+              "start": 1.2,
+              "end": 1.32
+            },
+            {
+              "word": " μπορέσει",
+              "probability": 0.9989212155342102,
+              "start": 1.32,
+              "end": 1.64
+            },
+            {
+              "word": " ένας",
+              "probability": 0.9736509621143341,
+              "start": 1.64,
+              "end": 1.84
+            },
+            {
+              "word": " οργανισμός",
+              "probability": 0.9832382500171661,
+              "start": 1.84,
+              "end": 2.28
+            },
+            {
+              "word": " να",
+              "probability": 0.9997923970222473,
+              "start": 2.28,
+              "end": 2.38
+            },
+            {
+              "word": " είναι",
+              "probability": 0.9995105266571045,
+              "start": 2.38,
+              "end": 2.52
+            },
+            {
+              "word": " καινοτόμος,",
+              "probability": 0.9970883369445801,
+              "start": 2.52,
+              "end": 3.14
+            },
+            {
+              "word": " πρέπει",
+              "probability": 0.9998841087023417,
+              "start": 3.28,
+              "end": 3.5
+            },
+            {
+              "word": " η",
+              "probability": 0.9982911944389343,
+              "start": 3.5,
+              "end": 3.6
+            },
+            {
+              "word": " διοίκηση",
+              "probability": 0.8746553758780161,
+              "start": 3.6,
+              "end": 3.94
+            },
+            {
+              "word": " να",
+              "probability": 0.9995028972625732,
+              "start": 3.94,
+              "end": 4.04
+            },
+            {
+              "word": " δημιουργήσει",
+              "probability": 0.9966155737638474,
+              "start": 4.04,
+              "end": 4.54
+            },
+            {
+              "word": " ένα",
+              "probability": 0.9995026588439941,
+              "start": 4.54,
+              "end": 4.64
+            },
+            {
+              "word": " περιβάλλον",
+              "probability": 0.9989719986915588,
+              "start": 4.64,
+              "end": 5.08
+            },
+            {
+              "word": " καινοτομίας,",
+              "probability": 0.9992602348327637,
+              "start": 5.08,
+              "end": 5.7
+            },
+            {
+              "word": " ανταλλαγής",
+              "probability": 0.9984634419282278,
+              "start": 5.88,
+              "end": 6.3
+            },
+            {
+              "word": " γνώσεων",
+              "probability": 0.9915371060371398,
+              "start": 6.3,
+              "end": 6.72
+            },
+            {
+              "word": " και",
+              "probability": 0.999592125415802,
+              "start": 6.72,
+              "end": 6.82
+            },
+            {
+              "word": " οργανωτικής",
+              "probability": 0.9988927145799001,
+              "start": 6.82,
+              "end": 7.34
+            },
+            {
+              "word": " μάθησης.",
+              "probability": 0.9993788480758667,
+              "start": 7.34,
+              "end": 7.9
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 10.51
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-13-1564",
+      "diagnostic_role": "material_uncertainty_word_error",
+      "source_report": "turbo-fresh-auto-result.json",
+      "source_report_sha256": "ecf66502244c438ed8d9da0b9445629c523071b360e1149707e9de82e028fa88",
+      "audio_sha256": "4af74ccf74afd2687b9677bf2f7d3769ff11b0baebc67c3cc523fbbd16e893e3",
+      "language_argument": null,
+      "detected_language": "el",
+      "language_probability": 0.9981942772865295,
+      "production_hypothesis": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "hypothesis": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "exact_text_matches_production": true,
+      "reference": "Ο Δρ Μολ πιστεύει ότι κάποιοι ασθενείς ενδέχεται να μολύνθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "segments": [
+        {
+          "start": 0.53,
+          "end": 8.37,
+          "text": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+          "avg_logprob": -0.06919770888102952,
+          "no_speech_prob": 2.0962610119967806e-11,
+          "compression_ratio": 1.6524064171122994,
+          "words": [
+            {
+              "word": " Ο",
+              "probability": 0.991935133934021,
+              "start": 0.53,
+              "end": 1.03
+            },
+            {
+              "word": " Dr.",
+              "probability": 0.6114058494567871,
+              "start": 1.03,
+              "end": 1.31
+            },
+            {
+              "word": " Moll",
+              "probability": 0.6706967353820801,
+              "start": 1.53,
+              "end": 1.67
+            },
+            {
+              "word": " πιστεύει",
+              "probability": 0.9902009606361389,
+              "start": 1.67,
+              "end": 2.13
+            },
+            {
+              "word": " ότι",
+              "probability": 0.9995527863502502,
+              "start": 2.13,
+              "end": 2.23
+            },
+            {
+              "word": " κάποιοι",
+              "probability": 0.8433308005332947,
+              "start": 2.23,
+              "end": 2.57
+            },
+            {
+              "word": " ασθενείς",
+              "probability": 0.9728006521860758,
+              "start": 2.57,
+              "end": 2.95
+            },
+            {
+              "word": " αντέχεται",
+              "probability": 0.7798341512680054,
+              "start": 2.95,
+              "end": 3.29
+            },
+            {
+              "word": " να",
+              "probability": 0.9984604120254517,
+              "start": 3.29,
+              "end": 3.39
+            },
+            {
+              "word": " μολύθηκαν",
+              "probability": 0.9363462428251902,
+              "start": 3.39,
+              "end": 3.85
+            },
+            {
+              "word": " από",
+              "probability": 0.9916098713874817,
+              "start": 3.85,
+              "end": 3.99
+            },
+            {
+              "word": " τον",
+              "probability": 0.9907380938529968,
+              "start": 3.99,
+              "end": 4.15
+            },
+            {
+              "word": " ιό",
+              "probability": 0.9184538722038269,
+              "start": 4.15,
+              "end": 4.37
+            },
+            {
+              "word": " στο",
+              "probability": 0.9953820109367371,
+              "start": 4.37,
+              "end": 4.51
+            },
+            {
+              "word": " νοσοκομείο",
+              "probability": 0.9992542937397957,
+              "start": 4.51,
+              "end": 5.09
+            },
+            {
+              "word": " και",
+              "probability": 0.98854660987854,
+              "start": 5.09,
+              "end": 5.25
+            },
+            {
+              "word": " τουλάχιστον",
+              "probability": 0.9972787896792094,
+              "start": 5.25,
+              "end": 5.75
+            },
+            {
+              "word": " δύο",
+              "probability": 0.9826302528381348,
+              "start": 5.75,
+              "end": 5.91
+            },
+            {
+              "word": " από",
+              "probability": 0.9940472841262817,
+              "start": 5.91,
+              "end": 6.03
+            },
+            {
+              "word": " αυτούς",
+              "probability": 0.9982736557722092,
+              "start": 6.03,
+              "end": 6.31
+            },
+            {
+              "word": " ανήκαν",
+              "probability": 0.9842747896909714,
+              "start": 6.31,
+              "end": 6.65
+            },
+            {
+              "word": " στους",
+              "probability": 0.9772787292798361,
+              "start": 6.65,
+              "end": 6.81
+            },
+            {
+              "word": " επαγγελματίες",
+              "probability": 0.9494194587071737,
+              "start": 6.81,
+              "end": 7.43
+            },
+            {
+              "word": " υγείας",
+              "probability": 0.97075454890728,
+              "start": 7.43,
+              "end": 7.71
+            },
+            {
+              "word": " του",
+              "probability": 0.9995720982551575,
+              "start": 7.71,
+              "end": 7.81
+            },
+            {
+              "word": " νοσοκομείου.",
+              "probability": 0.9998654590712653,
+              "start": 7.81,
+              "end": 8.37
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 11.104
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "diagnostic_role": "accurate_English_control",
+      "source_report": "turbo-development-result.json",
+      "source_report_sha256": "a5ce4827ae355c7760cc3c79fa6484cb95c2335666fff36430a518bd64a5f259",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "language_argument": "en",
+      "detected_language": "en",
+      "language_probability": 1,
+      "production_hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "exact_text_matches_production": true,
+      "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "segments": [
+        {
+          "start": 0.43,
+          "end": 7.15,
+          "text": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "avg_logprob": -0.15719179630279542,
+          "no_speech_prob": 7.836528192854686e-13,
+          "compression_ratio": 1.1263157894736842,
+          "words": [
+            {
+              "word": " The",
+              "probability": 0.920825183391571,
+              "start": 0.43,
+              "end": 0.89
+            },
+            {
+              "word": " UN",
+              "probability": 0.8649179339408875,
+              "start": 0.89,
+              "end": 1.13
+            },
+            {
+              "word": " also",
+              "probability": 0.8987901210784912,
+              "start": 1.13,
+              "end": 1.57
+            },
+            {
+              "word": " hopes",
+              "probability": 0.9846120476722717,
+              "start": 1.57,
+              "end": 2.15
+            },
+            {
+              "word": " to",
+              "probability": 0.9963514804840088,
+              "start": 2.15,
+              "end": 2.47
+            },
+            {
+              "word": " finalize",
+              "probability": 0.992097795009613,
+              "start": 2.47,
+              "end": 3.15
+            },
+            {
+              "word": " a",
+              "probability": 0.9942601919174194,
+              "start": 3.15,
+              "end": 3.29
+            },
+            {
+              "word": " fund",
+              "probability": 0.9731965661048889,
+              "start": 3.29,
+              "end": 3.55
+            },
+            {
+              "word": " to",
+              "probability": 0.9953717589378357,
+              "start": 3.55,
+              "end": 3.77
+            },
+            {
+              "word": " help",
+              "probability": 0.9987468719482422,
+              "start": 3.77,
+              "end": 4.01
+            },
+            {
+              "word": " countries",
+              "probability": 0.9908946752548218,
+              "start": 4.01,
+              "end": 4.49
+            },
+            {
+              "word": " affected",
+              "probability": 0.9918236136436462,
+              "start": 4.49,
+              "end": 4.99
+            },
+            {
+              "word": " by",
+              "probability": 0.9959356784820557,
+              "start": 4.99,
+              "end": 5.23
+            },
+            {
+              "word": " global",
+              "probability": 0.9930179119110107,
+              "start": 5.23,
+              "end": 5.57
+            },
+            {
+              "word": " warming",
+              "probability": 0.9979158043861389,
+              "start": 5.57,
+              "end": 5.91
+            },
+            {
+              "word": " to",
+              "probability": 0.9795933961868286,
+              "start": 5.91,
+              "end": 6.13
+            },
+            {
+              "word": " cope",
+              "probability": 0.9991286396980286,
+              "start": 6.13,
+              "end": 6.37
+            },
+            {
+              "word": " with",
+              "probability": 0.9995737671852112,
+              "start": 6.37,
+              "end": 6.59
+            },
+            {
+              "word": " the",
+              "probability": 0.9248406291007996,
+              "start": 6.59,
+              "end": 6.73
+            },
+            {
+              "word": " impacts.",
+              "probability": 0.9949713945388794,
+              "start": 6.73,
+              "end": 7.15
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 5.115
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "diagnostic_role": "material_name_and_content_errors",
+      "source_report": "turbo-development-result.json",
+      "source_report_sha256": "a5ce4827ae355c7760cc3c79fa6484cb95c2335666fff36430a518bd64a5f259",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "language_argument": "en",
+      "detected_language": "en",
+      "language_probability": 1,
+      "production_hypothesis": "Then Laka sing to the lead and singing the pashams.",
+      "hypothesis": "Then Laka sing to the lead and singing the pashams.",
+      "exact_text_matches_production": true,
+      "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+      "segments": [
+        {
+          "start": 0.05,
+          "end": 3.61,
+          "text": "Then Laka sing to the lead and singing the pashams.",
+          "avg_logprob": -0.5967552521649528,
+          "no_speech_prob": 2.3128478299216937e-11,
+          "compression_ratio": 1.0,
+          "words": [
+            {
+              "word": " Then",
+              "probability": 0.6261860132217407,
+              "start": 0.05,
+              "end": 0.61
+            },
+            {
+              "word": " Laka",
+              "probability": 0.6870459914207458,
+              "start": 0.61,
+              "end": 0.95
+            },
+            {
+              "word": " sing",
+              "probability": 0.3852215111255646,
+              "start": 0.95,
+              "end": 1.23
+            },
+            {
+              "word": " to",
+              "probability": 0.40443146228790283,
+              "start": 1.23,
+              "end": 1.45
+            },
+            {
+              "word": " the",
+              "probability": 0.585421085357666,
+              "start": 1.45,
+              "end": 1.63
+            },
+            {
+              "word": " lead",
+              "probability": 0.8817147016525269,
+              "start": 1.63,
+              "end": 1.83
+            },
+            {
+              "word": " and",
+              "probability": 0.706092894077301,
+              "start": 1.83,
+              "end": 2.03
+            },
+            {
+              "word": " singing",
+              "probability": 0.806529700756073,
+              "start": 2.03,
+              "end": 2.39
+            },
+            {
+              "word": " the",
+              "probability": 0.9268018007278442,
+              "start": 2.39,
+              "end": 2.63
+            },
+            {
+              "word": " pashams.",
+              "probability": 0.5564027428627014,
+              "start": 2.63,
+              "end": 3.61
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 4.952
+    }
+  ],
+  "elapsed_seconds": 37.717,
+  "finished_at": "2026-11-26T18:12:04.557275+00:00",
+  "archive_provenance": {
+    "raw_file": "turbo-confidence-diagnostic.json",
+    "raw_sha256": "8c09b620936b1050b7bee889980d40db9c84dfcc28c04e001ff4d0e1c5a0f7fa",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

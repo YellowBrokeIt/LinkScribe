@@ -5,14 +5,14 @@ LinkScribe is a **real, locally hosted** Python web app for downloading captions
 ## Features
 
 - **Single links or batches of 1–20 links**: YouTube, Vimeo and Dailymotion, allowlisted/canonicalized; sequential processing and batch ZIP of successful results. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions.
-- **Speaker identification (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from pyannote Community-1 diarization, aligned with Whisper segments. Requires extra dependencies and Hugging Face model access; labels are estimates and names must be assigned manually.
+- **Speaker labels (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from a public CPU model, with no account or access token. Extra dependencies are required. Actual Whisper word timestamps allow text to split at estimated speaker changes; uncertain speech remains `Unknown speaker`. Overlapping voices are not separated, and names must be assigned manually.
 - **Translation**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports.
 - **AI summary and chapters**: local Ollama creates summaries, key points and chapter titles anchored to transcript segment timestamps. Review outputs for errors.
 - **Persistent transcript library**: local SQLite store with full-text search by title/transcript, editing of segment text/speaker names, deletion and on-demand exports. Original audio is deleted after each processing job. Edit invalidates stale translation/summary so saved exports remain consistent.
 - **Uploads**: MP3, WAV, MP4 and other accepted audio/video formats.
 - **Exports**: TXT, SRT, VTT, JSON, ZIP, translated TXT/SRT/VTT/JSON, and summary MD/JSON.
 
-No paid API keys are required for base transcription. Optional speaker labeling requires HF_TOKEN to download its model. Optional translation/summaries require an Ollama model installed locally.
+No paid API keys are required for base transcription or the default public speaker backend. The optional legacy pyannote backend still requires authorized model access. Optional translation/summaries require their selected local model to be installed.
 
 ## Quick start — Linux (Ubuntu)
 
@@ -77,18 +77,81 @@ The [v1.0 acceptance record](docs/V1-RELEASE-GATES.md) lists the workflows being
 verified before a release. The version remains a draft candidate while those
 gates are open.
 
-## Optional speaker identification (pyannote)
+### Experimental compact CPU translator
+
+`LINKSCRIBE_TRANSLATION_BACKEND=marian` selects the dedicated local English↔Greek
+candidate independently of Ollama. This is an evaluation option, not the default.
+The initial paragraph-based implementation omitted text and degenerated on long
+passages. Sentence and quotation handling is being corrected and evaluated;
+semantic quality is not approved. Keep and review the original transcript.
+
+Both public [English→Greek](https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-el)
+and [Greek→English](https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-el-en) models
+are from Helsinki-NLP's OPUS-MT project, under CC BY4.0. Setup downloads the pinned
+original archive, verifies its SHA-256, converts the weights to int8 locally,
+and retains the publisher's license and attribution. No transcript leaves the
+computer. Each direction downloads about 879 MB once and needs about 2.2 GB of
+temporary free space; the installed model occupies about 250 MB. The complete
+setup path has been exercised for both directions.
+
+```bash
+./.venv/bin/python -m marian_translation --pair both
+LINKSCRIBE_TRANSLATION_BACKEND=marian ./start_linux.sh
+```
+
+`LINKSCRIBE_TRANSLATION_THREADS` defaults to 4 (allowed range 1–32).
+`LINKSCRIBE_TRANSLATION_CACHE` selects a different local cache folder.
+`python -m marian_translation --pair en-el --repair` rebuilds a damaged cache from
+the verified source without touching transcripts. Check setup inspects installed
+dependencies and cached models without downloading or running inference.
+
+## Optional speaker labels — public CPU backend
 
 ```bash
 # from the repository root, after initial start_linux.sh created .venv
-./.venv/bin/python -m pip install -r requirements-speakers.txt
+./.venv/bin/python -m pip install --no-cache-dir -r requirements-speakers-free.txt
 ```
 
-1. Accept the model conditions at https://huggingface.co/pyannote/speaker-diarization-community-1 and create a Hugging Face access token at https://huggingface.co/settings/tokens.
-2. Export it in the same shell **before** starting LinkScribe: `export HF_TOKEN=...` (replace dots with your token, and never commit it).
-3. Enable **Speaker labels** when submitting a video or upload. For links, LinkScribe uses audio AI instead of existing captions when speaker labeling is selected.
+Enable **Speaker labels** for a link or upload. Links then use audio recognition
+instead of existing captions. The default `LINKSCRIBE_SPEAKER_BACKEND=speechbrain`
+uses the public [SpeechBrain ECAPA model](https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb),
+pinned to revision `0f99f2d0ebe89ac095bcc5903c4dd8f72b367286`, plus bundled Silero
+voice activity detection. No `HF_TOKEN` or model-conditions acceptance is needed.
+Weights download on first use and are cached under
+`~/.cache/linkscribe/speaker-ecapa`; `LINKSCRIBE_SPEAKER_CACHE` selects another
+local directory. **Check setup** distinguishes installed dependencies from
+present model files; it does not run inference or certify label accuracy.
 
-Speaker identity estimates can be wrong, especially with simultaneous speech or short segments. Speaker names are anonymous labels, not real identification. pyannote and its ML dependencies are substantial; an appropriate CPU/GPU and extra disk space are needed.
+The Linux CPU requirements explicitly select CPU-only Torch wheels. In the
+isolated Linux test environment, dependencies occupied about 1.3 GiB and weights
+plus their download cache about 170 MiB; allow additional installation/cache
+space. A short real-voice validation run peaked at about 862 MiB for the speaker
+process alone. Whisper, Ollama, longer audio and other running applications add
+memory. Only one Whisper model is retained in the app cache to limit steady
+memory use; switching model sizes can temporarily require both models to load.
+
+Speaker labels are estimates, not personal identification. The
+[controlled real-voice evaluation](docs/speaker-evaluation-2026-11-26/README.md)
+passed one-, two- and three-reader checks on fresh English audiobook voices,
+including returning speakers. It does not establish Greek, noisy-meeting,
+overlap, or exact-boundary accuracy. Short and ambiguous speech can remain
+unassigned. Text is split only when actual ASR word strings/timestamps validate;
+missing or inconsistent timing never leads to proportionally invented times.
+Model/settings provenance and warnings are preserved in transcript JSON and
+library backups; raw audio and voice embeddings are not stored.
+
+For the existing **pyannote alternative**, install `requirements-speakers.txt`,
+accept the [Community-1 model conditions](https://huggingface.co/pyannote/speaker-diarization-community-1),
+set `HF_TOKEN` in the environment, and explicitly set
+`LINKSCRIBE_SPEAKER_BACKEND=pyannote` before launch. Never commit the token.
+There is no automatic fallback between backends. Gated Community-1 model
+inference remains unverified in this project's current evidence.
+
+ONNX Runtime telemetry is disabled before model-runtime initialization, with a
+second API opt-out before VAD sessions. This does not remove the initial public
+model download. If a managed machine needs its OS certificate store for permitted
+media downloads, explicitly set `LINKSCRIBE_USE_SYSTEM_CERTS=1`; yt-dlp then uses
+that trust store while certificate and hostname verification stay enabled.
 
 ## Batch jobs
 

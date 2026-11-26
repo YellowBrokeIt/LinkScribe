@@ -71,6 +71,13 @@ def translation_profile() -> str:
     return "json"
 
 
+def translation_backend() -> str:
+    backend = os.getenv("LINKSCRIBE_TRANSLATION_BACKEND", "ollama").strip().lower()
+    if backend not in {"ollama", "marian"}:
+        raise EnhancementError("Set LINKSCRIBE_TRANSLATION_BACKEND to marian or ollama.")
+    return backend
+
+
 def local_ollama_json(path: str, payload: dict[str, Any] | None = None,
                       timeout: float = 1.5) -> Any:
     """Read bounded JSON directly from loopback, without proxies or redirects."""
@@ -151,7 +158,13 @@ def _ollama(payload: dict[str, Any]) -> Any:
         if exc.code == 404:
             raise EnhancementError(f"Ollama cannot find model {model}. Run `ollama pull {model}`.") from exc
         raise EnhancementError("Local Ollama rejected the request. Check the selected model and Ollama version.") from exc
-    except (urllib.error.URLError, TimeoutError, OSError) as exc:
+    except TimeoutError as exc:
+        raise EnhancementError("Local Ollama did not finish within 240 seconds. Try a shorter task or a faster local model; the original transcript is retained.") from exc
+    except urllib.error.URLError as exc:
+        if isinstance(exc.reason, TimeoutError):
+            raise EnhancementError("Local Ollama did not finish within 240 seconds. Try a shorter task or a faster local model; the original transcript is retained.") from exc
+        raise EnhancementError("Local Ollama is unavailable. Start `ollama serve` and pull the selected model.") from exc
+    except OSError as exc:
         raise EnhancementError("Local Ollama is unavailable. Start `ollama serve` and pull the selected model.") from exc
     except (AttributeError, KeyError, ValueError, TypeError, RecursionError) as exc:
         raise EnhancementError("Ollama returned an invalid JSON response. Try a capable instruction model.") from exc
@@ -248,6 +261,12 @@ def translate_segments(segments: list[dict[str, Any]], target: str,
               if isinstance(source_language, str) else None)
     if source == target or not any(segment["text"].strip() for segment in segments):
         return [dict(segment) for segment in segments]
+    if translation_backend() == "marian":
+        from marian_translation import TranslationError, translate_segments as translate_locally
+        try:
+            return translate_locally(segments, source, target)
+        except TranslationError as exc:
+            raise EnhancementError(str(exc)) from exc
     profile = translation_profile()
     if profile != "json":
         if source not in {"en", "el"}:
@@ -391,36 +410,211 @@ def _diarization_pipeline(token: str):
     return pipeline
 
 
-def assign_speakers(audio_path: Path, segments: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Assign anonymous speaker labels using the maximum per-segment overlap."""
+def speaker_backend() -> str:
+    backend = os.getenv("LINKSCRIBE_SPEAKER_BACKEND", "speechbrain").strip().lower()
+    if backend not in {"speechbrain", "pyannote"}:
+        raise EnhancementError("Set LINKSCRIBE_SPEAKER_BACKEND to speechbrain or pyannote.")
+    return backend
+
+
+def speaker_cache_dir() -> Path:
+    configured = os.getenv("LINKSCRIBE_SPEAKER_CACHE")
+    if configured is not None and (not configured.strip() or len(configured) > 1000):
+        raise EnhancementError("Set LINKSCRIBE_SPEAKER_CACHE to a valid local cache directory.")
+    return Path(configured).expanduser() if configured else Path.home() / ".cache/linkscribe/speaker-ecapa"
+
+
+def _pyannote_speaker_analysis(audio_path: Path) -> dict[str, Any]:
+    """Retain the explicitly selected gated alternative without automatic fallback."""
     token = os.getenv("HF_TOKEN", "").strip()
     if not token:
-        raise EnhancementError("Speaker labels require HF_TOKEN and acceptance of the pyannote Community-1 model terms.")
+        raise EnhancementError("The pyannote speaker backend requires HF_TOKEN and acceptance of the Community-1 model terms. The default speechbrain backend needs no token.")
     try:
         pipeline = _diarization_pipeline(token)
         output = pipeline(str(audio_path))
-        diarization = getattr(output, "exclusive_speaker_diarization", None) or output.speaker_diarization
-        if hasattr(diarization, "itertracks"):
-            turns = [(float(segment.start), float(segment.end), str(speaker))
-                     for segment, _track, speaker in diarization.itertracks(yield_label=True)]
+        # Prefer the ordinary timeline so simultaneous voices are not hidden by
+        # the exclusive timeline before conservative transcript alignment.
+        timeline = getattr(output, "speaker_diarization", None)
+        if timeline is None:
+            timeline = output.exclusive_speaker_diarization
+        if hasattr(timeline, "itertracks"):
+            turns = [{"start": float(segment.start), "end": float(segment.end), "speaker": str(label)}
+                     for segment, _track, label in timeline.itertracks(yield_label=True)]
         else:
-            turns = [(float(segment.start), float(segment.end), str(speaker))
-                     for segment, speaker in diarization]
+            turns = [{"start": float(segment.start), "end": float(segment.end), "speaker": str(label)}
+                     for segment, label in timeline]
     except EnhancementError:
         raise
     except (ImportError, ModuleNotFoundError) as exc:
-        raise EnhancementError("Install requirements-speakers.txt and FFmpeg for speaker diarization.") from exc
+        raise EnhancementError("Install requirements-speakers.txt and FFmpeg for the optional pyannote backend.") from exc
     except Exception as exc:
-        raise EnhancementError("Speaker diarization failed. Check the model access, installed audio libraries and FFmpeg.") from exc
-    label_map: dict[str,str] = {}
+        raise EnhancementError("The pyannote speaker backend failed. Check model access, audio libraries and FFmpeg.") from exc
+    return {"turns": turns, "warnings": [], "backend": "pyannote-community-1",
+            "model": {"id": "pyannote/speaker-diarization-community-1", "revision": None,
+                      "revision_note": "Upstream default; exact gated model revision is not captured."},
+            "settings": {"timeline": "overlap-aware when provided"}}
+
+
+def _public_speaker_analysis(audio_path: Path) -> dict[str, Any]:
+    try:
+        from diarization import DiarizationError, diarize_audio
+    except (ImportError, ModuleNotFoundError) as exc:
+        raise EnhancementError("Install requirements-speakers-free.txt for optional CPU speaker labels; no token is needed.") from exc
+    try:
+        return diarize_audio(audio_path, cache_dir=speaker_cache_dir())
+    except DiarizationError as exc:
+        raise EnhancementError(str(exc)) from exc
+
+
+def _speaker_alignment(segments: list[dict[str, Any]], raw_turns: list[dict[str, Any]]):
+    """Keep whole-segment labels conservative until real word times are supplied."""
+    import bisect
+    import math
+
+    if len(segments) > 30000 or len(raw_turns) > 20000:
+        raise EnhancementError("Too many segments or turns for bounded speaker alignment.")
+
+    def times(item):
+        try:
+            start, end = float(item["start"]), float(item["end"])
+        except (KeyError, ValueError, TypeError) as exc:
+            raise EnhancementError("Speaker alignment received invalid timestamps.") from exc
+        if not math.isfinite(start) or not math.isfinite(end) or not 0 <= start < end <= 7200.1:
+            raise EnhancementError("Speaker alignment received invalid timestamps.")
+        return start, end
+
+    turns = sorted([(times(item), item.get("speaker")) for item in raw_turns], key=lambda item: item[0])
+    if any(label is not None and (not isinstance(label, str) or not label.strip() or len(label) > 80)
+           for _time, label in turns):
+        raise EnhancementError("The speaker backend returned an invalid label.")
+    starts = [item[0][0] for item in turns]
+    maximum_ends = []
+    for (start, end), _label in turns:
+        maximum_ends.append(max(end, maximum_ends[-1] if maximum_ends else 0))
+
+    def duration(intervals):
+        total = 0.0
+        previous_end = 0.0
+        for start, end in sorted(intervals):
+            total += max(0.0, end - max(start, previous_end))
+            previous_end = max(previous_end, end)
+        return total
+
+    label_map = {}
     result = []
+    unknown_count = mixed_count = comparisons = 0
     for segment in segments:
-        overlaps: dict[str,float] = {}
-        for start,end,speaker in turns:
-            overlap = max(0., min(end,float(segment["end"])) - max(start,float(segment["start"])))
-            if overlap: overlaps[speaker] = overlaps.get(speaker,0) + overlap
-        winner = max(overlaps, key=overlaps.get) if overlaps else None
+        start, end = times(segment)
+        first = bisect.bisect_right(maximum_ends, start)
+        last = bisect.bisect_left(starts, end)
+        comparisons += max(0, last - first)
+        if comparisons > 1000000:
+            raise EnhancementError("Too many overlapping ranges for bounded speaker alignment.")
+        by_label = {}
+        observed = []
+        for (turn_start, turn_end), label in turns[first:last]:
+            interval = (max(start, turn_start), min(end, turn_end))
+            if interval[1] > interval[0]:
+                observed.append(interval)
+                if label is not None:
+                    by_label.setdefault(label, []).append(interval)
+        amounts = {label: duration(intervals) for label, intervals in by_label.items()}
+        ranked = sorted(amounts, key=lambda label: (-amounts[label], label))
+        winner = ranked[0] if ranked else None
+        speech = duration(observed)
+        mixed = len(ranked) > 1 and amounts[ranked[1]] > 0.25
+        if (winner is None or mixed or speech <= 0 or
+                amounts[winner] / speech < 0.85 or amounts[winner] / (end - start) < 0.50):
+            winner = None
+            unknown_count += 1
+            mixed_count += bool(mixed)
         if winner is not None and winner not in label_map:
             label_map[winner] = f"Speaker {len(label_map) + 1}"
         result.append({**segment, "speaker": label_map.get(winner, "Unknown speaker")})
-    return result
+    warnings = []
+    if mixed_count:
+        warnings.append(f"{mixed_count} part(s) of the transcript contain material evidence of multiple voices and were left unassigned.")
+    if unknown_count > mixed_count:
+        warnings.append(f"{unknown_count - mixed_count} transcript segment(s) lacked enough consistent speaker evidence and were left unassigned.")
+    return result, warnings
+
+
+def _word_speaker_alignment(segments, turns):
+    """Split only validated, actual ASR words; retain text on incomplete timing."""
+    import math
+
+    units, origins = [], []
+    timed_segments = fallback_segments = 0
+    for index, segment in enumerate(segments):
+        words = segment.get("_words")
+        valid = isinstance(words, list) and 0 < len(words) <= 10000
+        if valid:
+            try:
+                previous_end = float(segment["start"]) - 0.05
+                for word in words:
+                    start, end = float(word["start"]), float(word["end"])
+                    if (not isinstance(word["word"], str) or not word["word"].strip() or
+                            not math.isfinite(start) or not math.isfinite(end) or
+                            start < previous_end - 0.001 or end <= start or
+                            start < float(segment["start"]) - 0.05 or end > float(segment["end"]) + 0.05):
+                        valid = False
+                        break
+                    previous_end = end
+                valid = valid and "".join(word["word"] for word in words).strip() == segment["text"].strip()
+            except (KeyError, TypeError, ValueError, AttributeError):
+                valid = False
+        if valid:
+            timed_segments += 1
+            for word in words:
+                units.append({"start": word["start"], "end": word["end"], "text": word["word"]})
+                origins.append((index, True))
+        else:
+            fallback_segments += words is not None
+            units.append({key: value for key, value in segment.items() if key != "_words"})
+            origins.append((index, False))
+    labeled, warnings = _speaker_alignment(units, turns)
+    result = []
+    timed_output = []
+    previous_origin = None
+    for unit, (origin, timed) in zip(labeled, origins):
+        if timed and result and previous_origin == origin and result[-1]["speaker"] == unit["speaker"]:
+            result[-1]["end"] = unit["end"]
+            result[-1]["text"] += unit["text"]
+        else:
+            original = {key: value for key, value in segments[origin].items() if key != "_words"}
+            result.append({**original, "start": unit["start"], "end": unit["end"],
+                           "text": unit["text"], "speaker": unit["speaker"]})
+            timed_output.append(timed)
+        previous_origin = origin if timed else None
+    for item, timed in zip(result, timed_output):
+        if timed:
+            item["text"] = item["text"].strip()
+    if fallback_segments:
+        warnings.append(f"Word timestamps were incomplete or inconsistent in {fallback_segments} segment(s); their text was retained without guessed word boundaries.")
+    if not timed_segments:
+        warnings.append("No validated word timestamps were available; mixed-speaker segments remain whole and may be unassigned.")
+    return result, warnings, timed_segments
+
+
+def assign_speakers(audio_path: Path, segments: list[dict[str, Any]], *,
+                    include_report: bool = False) -> list[dict[str, Any]] | dict[str, Any]:
+    """Return labeled copies, optionally with warnings and non-biometric provenance.
+
+    The default public CPU backend needs no access token. Text is divided only
+    at validated actual word times. The legacy list interface remains.
+    """
+    analysis = (_public_speaker_analysis(audio_path) if speaker_backend() == "speechbrain"
+                else _pyannote_speaker_analysis(audio_path))
+    labeled, alignment_warnings, timed_segments = _word_speaker_alignment(segments, analysis["turns"])
+    warnings = list(dict.fromkeys([
+        *analysis.get("warnings", []), *alignment_warnings,
+        "Speaker labels are acoustic estimates. Short or similar voices may be unassigned, and simultaneous speech is not separated in the transcript.",
+    ]))
+    provenance = {"backend": analysis["backend"], "model": analysis["model"],
+                  "settings": {"diarization": analysis.get("settings", {}),
+                               "alignment": {"minimum_segment_coverage": 0.50,
+                                             "minimum_observed_speech_share": 0.85,
+                                             "secondary_voice_tolerance_seconds": 0.25,
+                                             "segments_with_validated_word_times": timed_segments}},
+                  "warnings": warnings}
+    return {"segments": labeled, "warnings": warnings, "provenance": provenance} if include_report else labeled

@@ -4,6 +4,21 @@ import pytest
 import enhancements
 
 
+@pytest.mark.parametrize("wrapped", [False, True])
+def test_slow_inference_is_distinguished_from_an_unavailable_daemon(monkeypatch, wrapped):
+    import urllib.error
+
+    def timed_out(*args, **kwargs):
+        error = TimeoutError("inference took too long")
+        raise urllib.error.URLError(error) if wrapped else error
+
+    monkeypatch.setattr(enhancements, "local_ollama_json", timed_out)
+    with pytest.raises(enhancements.EnhancementError, match="did not finish within 240 seconds") as failure:
+        enhancements._ollama({"messages": []})
+    assert "unavailable" not in str(failure.value)
+    assert "original transcript is retained" in str(failure.value)
+
+
 @pytest.fixture
 def smoke_module():
     import importlib.util

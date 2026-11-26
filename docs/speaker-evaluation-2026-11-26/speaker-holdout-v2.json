@@ -1,0 +1,1016 @@
+{
+  "schema_version": 1,
+  "run_id": "54857ee1-eb8f-4abc-b6ea-98799f377b23",
+  "complete": true,
+  "created_utc": "2026-11-26T17:53:34.480180+00:00",
+  "results": [
+    {
+      "id": "one_speaker",
+      "kind": "clean",
+      "audio_sha256": "9749c1df356cf347e5458a17d4369221449ed72c33c9852157547708fe665c23",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 2,
+        "turns": [
+          {
+            "start": 1.09,
+            "end": 3.166,
+            "speaker": "Speaker 1",
+            "similarity": 0.7016,
+            "margin": 0.2462,
+            "reason": null
+          },
+          {
+            "start": 3.522,
+            "end": 8.574,
+            "speaker": "Speaker 1",
+            "similarity": 0.834,
+            "margin": 0.3322,
+            "reason": null
+          },
+          {
+            "start": 9.314,
+            "end": 17.182,
+            "speaker": "Speaker 2",
+            "similarity": 0.6982,
+            "margin": 0.1535,
+            "reason": null
+          },
+          {
+            "start": 17.954,
+            "end": 20.798,
+            "speaker": null,
+            "similarity": 0.574,
+            "margin": 0.0131,
+            "reason": "insufficient_speaker_evidence"
+          },
+          {
+            "start": 21.41,
+            "end": 22.622,
+            "speaker": null,
+            "similarity": 0.4812,
+            "margin": 0.018,
+            "reason": "insufficient_speaker_evidence"
+          }
+        ],
+        "warnings": [
+          "Some speech lacked sufficient evidence for a speaker label."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 23.295,
+        "speech_seconds": 19.052,
+        "window_count": 11,
+        "elapsed_seconds": 5.122
+      },
+      "assessment": {
+        "status": "failed",
+        "expected_speakers_for_scoring_only": 1,
+        "reported_speakers": 2,
+        "core_samples": 166,
+        "assigned_core_fraction": 0.7711,
+        "permutation_matched_label_purity": 0.5156,
+        "correctly_attributed_core_fraction": 0.3976,
+        "mapping_for_scoring_only": {
+          "Speaker 2": "260"
+        },
+        "per_interval": [
+          {
+            "reference": {
+              "start": 0.5,
+              "end": 8.5,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 1": 62,
+              "None": 3
+            }
+          },
+          {
+            "reference": {
+              "start": 9.1,
+              "end": 17.1,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 66,
+            "label_counts": {
+              "Speaker 2": 66
+            }
+          },
+          {
+            "reference": {
+              "start": 17.7,
+              "end": 22.695,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 35,
+            "label_counts": {
+              "None": 35
+            }
+          }
+        ]
+      },
+      "wall_seconds": 5.123,
+      "peak_process_rss_mib": 838.0
+    },
+    {
+      "id": "two_speakers_returning",
+      "kind": "clean",
+      "audio_sha256": "2a9a7538bb36f087455777f5445713d67697b435e6fdb7052bbbe1d426a0dad1",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 4,
+        "turns": [
+          {
+            "start": 1.09,
+            "end": 3.166,
+            "speaker": "Speaker 1",
+            "similarity": 0.7016,
+            "margin": 0.2467,
+            "reason": null
+          },
+          {
+            "start": 3.522,
+            "end": 8.574,
+            "speaker": "Speaker 1",
+            "similarity": 0.834,
+            "margin": 0.3424,
+            "reason": null
+          },
+          {
+            "start": 9.346,
+            "end": 10.686,
+            "speaker": "Speaker 2",
+            "similarity": 0.6358,
+            "margin": 0.0811,
+            "reason": null
+          },
+          {
+            "start": 11.074,
+            "end": 15.646,
+            "speaker": "Speaker 3",
+            "similarity": 0.7708,
+            "margin": 0.0854,
+            "reason": null
+          },
+          {
+            "start": 16.738,
+            "end": 24.542,
+            "speaker": "Speaker 4",
+            "similarity": 0.6922,
+            "margin": 0.1317,
+            "reason": null
+          },
+          {
+            "start": 25.282,
+            "end": 27.23,
+            "speaker": "Speaker 2",
+            "similarity": 0.8679,
+            "margin": 0.3567,
+            "reason": null
+          },
+          {
+            "start": 27.426,
+            "end": 29.79,
+            "speaker": "Speaker 2",
+            "similarity": 0.8842,
+            "margin": 0.4125,
+            "reason": null
+          },
+          {
+            "start": 30.114,
+            "end": 33.15,
+            "speaker": "Speaker 2",
+            "similarity": 0.8888,
+            "margin": 0.3418,
+            "reason": null
+          }
+        ],
+        "warnings": [],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 33.705,
+        "speech_seconds": 28.192,
+        "window_count": 16,
+        "elapsed_seconds": 1.621
+      },
+      "assessment": {
+        "status": "failed",
+        "expected_speakers_for_scoring_only": 2,
+        "reported_speakers": 4,
+        "core_samples": 249,
+        "assigned_core_fraction": 0.9518,
+        "permutation_matched_label_purity": 0.5654,
+        "correctly_attributed_core_fraction": 0.5382,
+        "mapping_for_scoring_only": {
+          "Speaker 4": "260",
+          "Speaker 2": "7729"
+        },
+        "per_interval": [
+          {
+            "reference": {
+              "start": 0.5,
+              "end": 8.5,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 1": 62,
+              "None": 3
+            }
+          },
+          {
+            "reference": {
+              "start": 9.1,
+              "end": 15.905,
+              "speaker": "7729",
+              "short": false
+            },
+            "core_samples": 54,
+            "label_counts": {
+              "Speaker 2": 9,
+              "None": 4,
+              "Speaker 3": 41
+            }
+          },
+          {
+            "reference": {
+              "start": 16.505,
+              "end": 24.505,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 4": 65
+            }
+          },
+          {
+            "reference": {
+              "start": 25.105,
+              "end": 33.105,
+              "speaker": "7729",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 2": 60,
+              "None": 5
+            }
+          }
+        ]
+      },
+      "wall_seconds": 1.621,
+      "peak_process_rss_mib": 840.2
+    },
+    {
+      "id": "three_speakers_returning",
+      "kind": "clean",
+      "audio_sha256": "b4391802d21f719d54a9963714080905dd9aa45b9ed0674dc46798be584eaaf5",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 5,
+        "turns": [
+          {
+            "start": 1.09,
+            "end": 3.166,
+            "speaker": "Speaker 1",
+            "similarity": 0.7016,
+            "margin": 0.2462,
+            "reason": null
+          },
+          {
+            "start": 3.522,
+            "end": 8.574,
+            "speaker": "Speaker 1",
+            "similarity": 0.834,
+            "margin": 0.3531,
+            "reason": null
+          },
+          {
+            "start": 9.346,
+            "end": 10.686,
+            "speaker": "Speaker 2",
+            "similarity": 0.6396,
+            "margin": 0.0849,
+            "reason": null
+          },
+          {
+            "start": 11.074,
+            "end": 12.949,
+            "speaker": null,
+            "similarity": 0.7708,
+            "margin": 0.0726,
+            "reason": "mixed_or_ambiguous_voice"
+          },
+          {
+            "start": 12.949,
+            "end": 15.646,
+            "speaker": "Speaker 3",
+            "similarity": 0.959,
+            "margin": 0.367,
+            "reason": null
+          },
+          {
+            "start": 16.898,
+            "end": 18.654,
+            "speaker": "Speaker 4",
+            "similarity": 0.779,
+            "margin": 0.6634,
+            "reason": null
+          },
+          {
+            "start": 19.042,
+            "end": 22.878,
+            "speaker": "Speaker 4",
+            "similarity": 0.8661,
+            "margin": 0.7118,
+            "reason": null
+          },
+          {
+            "start": 23.074,
+            "end": 24.542,
+            "speaker": "Speaker 4",
+            "similarity": 0.7546,
+            "margin": 0.5709,
+            "reason": null
+          },
+          {
+            "start": 25.346,
+            "end": 33.182,
+            "speaker": "Speaker 5",
+            "similarity": 0.6757,
+            "margin": 0.125,
+            "reason": null
+          },
+          {
+            "start": 34.242,
+            "end": 35.006,
+            "speaker": null,
+            "similarity": null,
+            "margin": null,
+            "reason": "speech_too_short"
+          },
+          {
+            "start": 35.49,
+            "end": 38.654,
+            "speaker": "Speaker 4",
+            "similarity": 0.8931,
+            "margin": 0.7533,
+            "reason": null
+          },
+          {
+            "start": 39.81,
+            "end": 41.726,
+            "speaker": "Speaker 2",
+            "similarity": 0.8603,
+            "margin": 0.3426,
+            "reason": null
+          },
+          {
+            "start": 41.922,
+            "end": 44.286,
+            "speaker": "Speaker 2",
+            "similarity": 0.8749,
+            "margin": 0.3946,
+            "reason": null
+          },
+          {
+            "start": 44.61,
+            "end": 47.646,
+            "speaker": "Speaker 2",
+            "similarity": 0.8872,
+            "margin": 0.3396,
+            "reason": null
+          }
+        ],
+        "warnings": [
+          "Short speech regions were left unassigned.",
+          "Some speech lacked sufficient evidence for a speaker label."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 48.215,
+        "speech_seconds": 39.18,
+        "window_count": 22,
+        "elapsed_seconds": 1.991
+      },
+      "assessment": {
+        "status": "failed",
+        "expected_speakers_for_scoring_only": 3,
+        "reported_speakers": 5,
+        "core_samples": 353,
+        "assigned_core_fraction": 0.8669,
+        "permutation_matched_label_purity": 0.7222,
+        "correctly_attributed_core_fraction": 0.6261,
+        "mapping_for_scoring_only": {
+          "Speaker 4": "2094",
+          "Speaker 5": "260",
+          "Speaker 2": "7729"
+        },
+        "per_interval": [
+          {
+            "reference": {
+              "start": 0.5,
+              "end": 8.5,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 1": 62,
+              "None": 3
+            }
+          },
+          {
+            "reference": {
+              "start": 9.1,
+              "end": 15.905,
+              "speaker": "7729",
+              "short": false
+            },
+            "core_samples": 54,
+            "label_counts": {
+              "Speaker 2": 9,
+              "None": 22,
+              "Speaker 3": 23
+            }
+          },
+          {
+            "reference": {
+              "start": 16.505,
+              "end": 24.505,
+              "speaker": "2094",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 4": 59,
+              "None": 6
+            }
+          },
+          {
+            "reference": {
+              "start": 25.105,
+              "end": 33.105,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 5": 65
+            }
+          },
+          {
+            "reference": {
+              "start": 33.705,
+              "end": 39.015,
+              "speaker": "2094",
+              "short": false
+            },
+            "core_samples": 39,
+            "label_counts": {
+              "None": 11,
+              "Speaker 4": 28
+            }
+          },
+          {
+            "reference": {
+              "start": 39.615,
+              "end": 47.615,
+              "speaker": "7729",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 2": 60,
+              "None": 5
+            }
+          }
+        ]
+      },
+      "wall_seconds": 1.992,
+      "peak_process_rss_mib": 840.4
+    },
+    {
+      "id": "short_only",
+      "kind": "abstention",
+      "audio_sha256": "200dfb18e9828073c127b27a540e86c762d14e4882789e36c78c22a1988ab41b",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 0,
+        "turns": [
+          {
+            "start": 0.61,
+            "end": 1.086,
+            "speaker": null,
+            "similarity": null,
+            "margin": null,
+            "reason": "speech_too_short"
+          }
+        ],
+        "warnings": [
+          "Short speech regions were left unassigned.",
+          "Some speech lacked sufficient evidence for a speaker label."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 1.65,
+        "speech_seconds": 0.476,
+        "window_count": 0,
+        "elapsed_seconds": 0.099
+      },
+      "assessment": {
+        "status": "passed",
+        "assigned_seconds": 0,
+        "meaning": "Too little evidence must not establish an identity."
+      },
+      "wall_seconds": 0.099,
+      "peak_process_rss_mib": 840.4
+    },
+    {
+      "id": "short_turn_stress",
+      "kind": "stress",
+      "audio_sha256": "145e8a20f0623347b1dd7232cff64944201888a98f4534c0d9403c5feb5933ec",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 1,
+        "turns": [
+          {
+            "start": 0.706,
+            "end": 8.574,
+            "speaker": "Speaker 1",
+            "similarity": 0.6861,
+            "margin": null,
+            "reason": null
+          },
+          {
+            "start": 9.09,
+            "end": 9.694,
+            "speaker": null,
+            "similarity": null,
+            "margin": null,
+            "reason": "speech_too_short"
+          },
+          {
+            "start": 10.53,
+            "end": 13.342,
+            "speaker": null,
+            "similarity": 0.5294,
+            "margin": null,
+            "reason": "insufficient_speaker_evidence"
+          },
+          {
+            "start": 13.954,
+            "end": 15.166,
+            "speaker": null,
+            "similarity": 0.4681,
+            "margin": null,
+            "reason": "insufficient_speaker_evidence"
+          }
+        ],
+        "warnings": [
+          "Short speech regions were left unassigned.",
+          "Some speech lacked sufficient evidence for a speaker label."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 15.845,
+        "speech_seconds": 12.496,
+        "window_count": 7,
+        "elapsed_seconds": 0.666
+      },
+      "assessment": {
+        "status": "observed_unsupported_stress",
+        "expected_speakers_for_scoring_only": 2,
+        "reported_speakers": 1,
+        "core_samples": 100,
+        "assigned_core_fraction": 0.65,
+        "permutation_matched_label_purity": 1.0,
+        "correctly_attributed_core_fraction": 0.65,
+        "mapping_for_scoring_only": {
+          "Speaker 1": "260"
+        },
+        "per_interval": [
+          {
+            "reference": {
+              "start": 0.5,
+              "end": 8.5,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 65,
+            "label_counts": {
+              "Speaker 1": 65
+            }
+          },
+          {
+            "reference": {
+              "start": 9.1,
+              "end": 9.65,
+              "speaker": "7729",
+              "short": true
+            },
+            "assigned_fraction": 0.0
+          },
+          {
+            "reference": {
+              "start": 10.25,
+              "end": 15.245,
+              "speaker": "260",
+              "short": false
+            },
+            "core_samples": 35,
+            "label_counts": {
+              "None": 35
+            }
+          }
+        ]
+      },
+      "wall_seconds": 0.667,
+      "peak_process_rss_mib": 840.4
+    },
+    {
+      "id": "silence",
+      "kind": "silence",
+      "audio_sha256": "f751fd7094be088dc785125e4a1a0222a17c2bd20469aa31728ca5e515ed5809",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 0,
+        "turns": [],
+        "warnings": [
+          "No speech was detected."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 4.0,
+        "speech_seconds": 0.0,
+        "window_count": 0,
+        "elapsed_seconds": 0.115
+      },
+      "assessment": {
+        "status": "passed",
+        "detected_turns": 0
+      },
+      "wall_seconds": 0.115,
+      "peak_process_rss_mib": 840.4
+    },
+    {
+      "id": "overlap_stress",
+      "kind": "stress",
+      "audio_sha256": "5c21b62688bc80bdbf03a852656f04588c54c44f656b54ce4f4786b0985c71e9",
+      "result": {
+        "schema_version": 1,
+        "backend": "speechbrain-ecapa-silero-cpu",
+        "speaker_count": 2,
+        "turns": [
+          {
+            "start": 0.674,
+            "end": 3.799,
+            "speaker": "Speaker 1",
+            "similarity": 0.9103,
+            "margin": 0.459,
+            "reason": null
+          },
+          {
+            "start": 3.799,
+            "end": 5.049,
+            "speaker": null,
+            "similarity": 0.5224,
+            "margin": 0.141,
+            "reason": "insufficient_speaker_evidence"
+          },
+          {
+            "start": 5.049,
+            "end": 8.574,
+            "speaker": "Speaker 2",
+            "similarity": 0.9335,
+            "margin": 0.4582,
+            "reason": null
+          }
+        ],
+        "warnings": [
+          "Some speech lacked sufficient evidence for a speaker label."
+        ],
+        "overlapping_speech_supported": false,
+        "score_interpretation": "Cosine similarity and margin are heuristics, not calibrated probabilities.",
+        "timing_interpretation": "Acoustic window boundaries; use real word timestamps for transcript splitting.",
+        "model": {
+          "id": "speechbrain/spkrec-ecapa-voxceleb",
+          "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+          "license": "Apache-2.0",
+          "sha256": {
+            "classifier.ckpt": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+            "hyperparams.yaml": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+            "mean_var_norm_emb.ckpt": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+            "label_encoder.ckpt": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+            "embedding_model.ckpt": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2"
+          }
+        },
+        "versions": {
+          "speechbrain": "1.1.2",
+          "torch": "2.11.0+cpu",
+          "torchaudio": "2.11.0+cpu",
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "scipy": "1.18.1"
+        },
+        "settings": {
+          "window_seconds": 2.5,
+          "hop_seconds": 1.25,
+          "minimum_window_seconds": 1.0,
+          "cluster_distance": 0.45,
+          "minimum_similarity": 0.6,
+          "minimum_margin": 0.08,
+          "minimum_cluster_windows": 2,
+          "max_audio_seconds": 7200.0,
+          "max_windows": 8000,
+          "max_cluster_windows": 400,
+          "max_speakers": 12,
+          "embedding_batch_size": 8,
+          "cpu_threads": 2
+        },
+        "audio_seconds": 9.0,
+        "speech_seconds": 7.9,
+        "window_count": 5,
+        "elapsed_seconds": 0.495
+      },
+      "assessment": {
+        "status": "observed_unsupported_stress",
+        "reported_speakers": 2,
+        "meaning": "Mixed audio is outside this backend's supported accuracy; no pass is inferred."
+      },
+      "wall_seconds": 0.495,
+      "peak_process_rss_mib": 840.4
+    }
+  ],
+  "evaluation": "Controlled real-voice CPU smoke, not a meeting benchmark.",
+  "acceptance": {
+    "clean_expected_count_matches": true,
+    "minimum_assigned_core_fraction": 0.8,
+    "minimum_permutation_matched_label_purity": 0.95,
+    "short_and_silence_must_not_establish_speaker": true
+  },
+  "code_sha256": {
+    "diarization.py": "2998f1fd9b458d7dd22ddc22c9e291e35e89593e1bd0705cd1ff9196bff0baa9",
+    "tests/smoke_real_speakers.py": "18676e0e99d6a725068593dfb65faed4e0daa2f1964f9a34230f601312052ae3"
+  },
+  "settings": {
+    "window_seconds": 2.5,
+    "hop_seconds": 1.25,
+    "minimum_window_seconds": 1.0,
+    "cluster_distance": 0.45,
+    "minimum_similarity": 0.6,
+    "minimum_margin": 0.08,
+    "minimum_cluster_windows": 2,
+    "max_audio_seconds": 7200.0,
+    "max_windows": 8000,
+    "max_cluster_windows": 400,
+    "max_speakers": 12,
+    "embedding_batch_size": 8,
+    "cpu_threads": 2
+  },
+  "requested_ids": [
+    "one_speaker",
+    "two_speakers_returning",
+    "three_speakers_returning",
+    "short_only",
+    "short_turn_stress",
+    "silence",
+    "overlap_stress"
+  ],
+  "requested_count": 7,
+  "completed_count": 7,
+  "corpus_complete": true,
+  "fixture_manifest": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/fixtures-holdout/fixtures.json",
+  "fixture_manifest_sha256": "8dac6c2c8f8b3a6d1c9d0d3e70cadf4d435d28f90273e0d0aaa7e9404a646100",
+  "elapsed_seconds": 10.278,
+  "peak_process_rss_mib": 840.4
+}

@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Install real app dependencies and test tools
-        run: python -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0'
+        run: python -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'
       - name: All unit/API and independent tests
         run: python -m pytest -q
       - name: Verify packaging and shell scripts

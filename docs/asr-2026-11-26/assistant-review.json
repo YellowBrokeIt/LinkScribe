@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T17:56:47.754591+00:00",
+  "reviewer": "assistant",
+  "complete": true,
+  "semantic_quality_approved": false,
+  "methodology": [
+    "Text/reference review of exact uncorrected recognition outputs against the official dataset references. This is not independent human listening validation.",
+    "The initial eight clips were fixed before recognition. No references, names, expected words or corrective hints were supplied to Whisper.",
+    "Classification separates meaningful errors from acceptable contractions, number formatting, transliteration and orthographic errors. WER is a diagnostic token-edit measure, not the semantic decision.",
+    "Small intentionally diagnostic native read-speech sample, not a random population sample, conversational/noisy speech benchmark, or accuracy guarantee.",
+    "The assembled longer Greek clip is recorded separately as technical regression coverage and is not an additional independent quality sample.",
+    "The first small, derived-small and Turbo runs predated explicit ONNX Runtime telemetry opt-outs. Installed ONNX Runtime was 1.32.0. HF_HUB_OFFLINE=1 was configured; no outbound-network capture was performed, so those reports are not proof of whole-process offline privacy. Subsequent harness versions set ORT_DISABLE_TELEMETRY=1 and HF_HUB_DISABLE_TELEMETRY=1 before ML imports and call onnxruntime.disable_telemetry_events()."
+  ],
+  "classification_definitions": {
+    "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+    "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+    "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+    "not_evaluable": "No completed aligned transcript is available."
+  },
+  "reports": [
+    {
+      "report_file": "small-result.json",
+      "report_sha256": "961c542db46321d7b01ed93f42a332c3187c1fbe505ffc57eec0b671e3ca26f4",
+      "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+      "model": "small",
+      "model_form_field_omitted": true,
+      "model_repository": "Systran/faster-whisper-small",
+      "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "classification_counts": {
+        "minor_issue": 3,
+        "major_error": 3,
+        "acceptable": 2
+      },
+      "structural_counts": {
+        "pass": 8
+      },
+      "elapsed_seconds": 18.182,
+      "cases": [
+        {
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The family camping-area proposition remains recognizable, but ειδικούς is misspelled as ιδικούς, κατασκηνωτικούς as κατασκοινωτικούς, and an extra οι makes για οι οικογένειες ungrammatical. These need correction for a clean transcript; no new actor or opposing proposition is established.",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.",
+          "example": {
+            "reference": "ειδικούς κατασκηνωτικούς χώρους για οικογένειες",
+            "hypothesis": "ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "The named person Μαρτελί becomes Μαρτέη. The fifth council and four-year interval are preserved, but the proper name is not faithfully captured, undermining identification.",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια.",
+          "example": {
+            "reference": "του Μαρτελί",
+            "hypothesis": "του Μαρτέη"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "Both negations survive. δίκαιο is recognized as δίκιο, a nearby colloquial form; the intended not-fair/not-right sense remains recoverable. This is a limited word-fidelity difference, not a negation reversal.",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+          "example": {
+            "reference": "Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+            "hypothesis": "Σε κάθε περίπτωση δεν ήταν δίκιο."
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "Μολονότι (although) becomes Μόνο ότι (only that), losing the concessive relationship. The words αυτοκινήτου and τραυματίστηκε are also damaged into αυτοκοινή του and τραμματίσκε. The output still has the correct count (τρεις equals 3) and the negative δεν ... κανείς; no numeric or negation reversal is claimed.",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς.",
+          "example": {
+            "reference": "Μολονότι 3 άνθρωποι ... του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+            "hypothesis": "Μόνο ότι τρεις άνθρωποι ... του αυτοκοινή του δεν τραμματίσκε κανείς."
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The two product names and negated description remain identifiable; μάντα is a valid Greek rendering of Manta, and case differences in number one do not change identity. Several ordinary words have spelling or ending errors: κύριε/κύρια, μπήρα/μπίρα, ευχάρις/ευχάριστη and δροσητική/δροσιστική. The intended description is recoverable but the transcript is not clean enough to publish unchanged.",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+          "example": {
+            "reference": "Η κύρια τοπική μπίρα ... είναι όμως ευχάριστη και δροσιστική ... Manta",
+            "hypothesis": "Η κύριε τοπική μπήρα ... είναι όμως ευχάρις και δροσητική ... μάντα"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The condition and statement are preserved. The contraction you're is equivalent to you are even though the simple word-error normalization counts it as two edits. This review concerns transcription fidelity and does not fact-check the dataset statement.",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+          "example": {
+            "reference": "you are using a satellite",
+            "hypothesis": "you're using a satellite"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The U.N. attribution, intended fund, affected countries and coping purpose are all retained. UN versus U.N. is punctuation normalization, not a meaning error.",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "example": {
+            "reference": "The U.N. also hopes to finalize a fund",
+            "hypothesis": "The UN also hopes to finalize a fund"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "classification": "major_error",
+          "reason": "The proper name Lakkha Singh, leading action and bhajans are damaged. Lakas sing can be read as a different name plus verb; took the lead becomes to the lead and bhajans becomes pashams. This output does not faithfully identify the person or the musical activity.",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "hypothesis": "Then Lakas sing to the lead and singing the pashams",
+          "example": {
+            "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+            "hypothesis": "Then Lakas sing to the lead and singing the pashams"
+          },
+          "structural_status": "pass"
+        }
+      ],
+      "source_language_mode": "explicit el/en"
+    },
+    {
+      "report_file": "turbo-development-result.json",
+      "report_sha256": "a5ce4827ae355c7760cc3c79fa6484cb95c2335666fff36430a518bd64a5f259",
+      "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+      "evaluation_role": "candidate_comparison_on_exposed_development_clips",
+      "model": "large-v3-turbo",
+      "model_form_field_omitted": false,
+      "source_language_mode": "explicit el/en",
+      "model_repository": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+      "model_revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "classification_counts": {
+        "minor_issue": 3,
+        "major_error": 2,
+        "acceptable": 3
+      },
+      "structural_counts": {
+        "pass": 8
+      },
+      "elapsed_seconds": 49.461,
+      "process_peak_rss_bytes": 1762025472,
+      "source_files_unchanged": true,
+      "cases": [
+        {
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The complete camping-area proposition is preserved, with one spelling error: κατασκηνοτικούς rather than κατασκηνωτικούς. The extra article and ειδικούς error seen with small are absent.",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "The named person Μαρτελί becomes Μαρτεΐ, so identification is not faithful to the official reference. The 5ο and 4 forms correctly preserve fifth and four; those numerical-format word-edit flags are not semantic errors.",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "hypothesis": "Είναι το 5ο προσωρινό εκλογικό συμβούλιο του Μαρτεΐ μέσα σε 4 χρόνια.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "classification": "acceptable",
+          "reason": "The two complete negative sentences match the official reference, including δίκαιο. Neither negative statement is reversed or omitted.",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The concessive Μολονότι, count of three and nobody-injured meaning survive. πρόσκουση and τραυματίσκε are damaged spellings of πρόσκρουση and τραυματίστηκε, but the intended propositions remain clear. The written-out τρεις equals the reference numeral 3.",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "hypothesis": "Μολονότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκουση του αυτοκινήτου δεν τραυματίσκε κανείς.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The product descriptions and negation remain recognizable. μπίρα/μπύρα is an accepted spelling variation. δροσεκτική is a malformed replacement for δροσιστική, and the product name Manta is rendered phonetically as Manda; the latter needs spelling review but is not treated as a proven different product. Most earlier ordinary-word errors are reduced.",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "hypothesis": "Η κύρια τοπική μπύρα ονομάζεται Number One και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσεκτική. Η άλλη τοπική μπύρα λέγεται Manda.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The distant-call statement is preserved. you're is an acceptable contraction of you are; absent punctuation does not materially change the meaning.",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "hypothesis": "When you call someone who is thousands of miles away you're using a satellite",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The U.N. attribution, proposed fund, affected countries and purpose are all retained. UN versus U.N. is acceptable punctuation variation.",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "classification": "major_error",
+          "reason": "Lakkha Singh, took the lead and bhajans remain damaged as Laka sing, to the lead and pashams. The named person and musical activity are not faithfully identified against the official reference. This review is reference-based, not a claim of independent human listening validation.",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "hypothesis": "Then Laka sing to the lead and singing the pashams.",
+          "structural_status": "pass"
+        }
+      ]
+    },
+    {
+      "report_file": "turbo-fresh-auto-result.json",
+      "report_sha256": "ecf66502244c438ed8d9da0b9445629c523071b360e1149707e9de82e028fa88",
+      "manifest_sha256": "7417665987c91af5143cc1aa3375f404a4fdf6f787554d3d88206f45546353be",
+      "evaluation_role": "fresh_candidate_validation_before_any_use_for_confidence_diagnostics",
+      "model": "large-v3-turbo",
+      "model_form_field_omitted": false,
+      "source_language_mode": "auto via omitted language form field",
+      "all_detected_languages_match_fixture_languages": true,
+      "model_repository": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+      "model_revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "classification_counts": {
+        "acceptable": 5,
+        "major_error": 1,
+        "minor_issue": 2
+      },
+      "structural_counts": {
+        "pass": 8
+      },
+      "elapsed_seconds": 98.525,
+      "process_peak_rss_bytes": 1776443392,
+      "source_files_unchanged": true,
+      "telemetry_opt_out": {
+        "ORT_DISABLE_TELEMETRY": "1",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "onnxruntime_disable_telemetry_events_called": true
+      },
+      "cases": [
+        {
+          "case_id": "fleurs-fresh-el_gr-validation-12-1558",
+          "language": "el",
+          "classification": "acceptable",
+          "reason": "The complete statement is preserved: management must create an environment for innovation, knowledge exchange and organizational learning. The output matches the official reference.",
+          "reference": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+          "hypothesis": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-el_gr-validation-13-1564",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "The uncertainty qualifier ενδέχεται (may/might) becomes αντέχεται, a different word that does not convey the intended possibility here. μολύνθηκαν is also damaged as μολύθηκαν. This makes the qualification unreliable; it is not described as a proven clean reversal into certainty because the resulting wording is malformed. Dr. Moll is a reasonable rendering of Δρ Μολ, and at least two healthcare professionals remains correct.",
+          "reference": "Ο Δρ Μολ πιστεύει ότι κάποιοι ασθενείς ενδέχεται να μολύνθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+          "hypothesis": "Ο Dr. Moll πιστεύει ότι κάποιοι ασθενείς αντέχεται να μολύθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-el_gr-validation-18-1650",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The negation, estuary habitat and north-of-Rockhampton location are retained. κροκόδυλοι is a spelling error for κροκόδειλοι, the article before εκβολές is omitted, and the place-name accent differs. The intended habitat proposition and recognizable geographic identity remain intact.",
+          "reference": "Οι κροκόδειλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι οι εκβολές των ποταμών βόρεια από το Ρόκχαμπτον.",
+          "hypothesis": "Οι κροκόδυλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι εκβολές των ποταμών βόρεια από το Ροκχάμπτον.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-el_gr-validation-20-1574",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The below-zero rarity, wind/humidity explanation and distinction between perceived and thermometer temperature survive. των χειμώνα is a grammatical spelling error for τον χειμώνα, without changing the intended winter context.",
+          "reference": "Το κρύο τον χειμώνα είναι παραπλανητικό: οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+          "hypothesis": "Το κρύο των χειμώνα είναι παραπλανητικό. Οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-el_gr-validation-23-1581",
+          "language": "el",
+          "classification": "acceptable",
+          "reason": "The Amazon, river-width claim, sometimes qualification and six-mile value are preserved. έξι is equivalent to 6; punctuation differences are harmless.",
+          "reference": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως, που μερικές φορές φτάνει τα 6 μίλια.",
+          "hypothesis": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως που μερικές φορές φτάνει τα έξι μίλια.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-en_us-validation-8-1559",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The statement about Italian pronunciation, the reason based on spelling and the most-words qualification are preserved. Added final punctuation is harmless.",
+          "reference": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written",
+          "hypothesis": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-en_us-validation-11-1536",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "All three source precautions survive: remain indoors, turn off air conditioners and do not drink tap water. The negation is retained. air conditioners versus air-conditioners changes tokenization but not content.",
+          "reference": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air-conditioners and not to drink tap water.",
+          "hypothesis": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air conditioners, and not to drink tap water.",
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-fresh-en_us-validation-17-1593",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "Wooden wheels are replaced by iron wheels and 1767 remains the date of the first full-iron rails. Hyphenation of full iron is not a content error.",
+          "reference": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full-iron rails were introduced.",
+          "hypothesis": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full iron rails were introduced.",
+          "structural_status": "pass"
+        }
+      ]
+    },
+    {
+      "report_file": "small-development-rss-replay.json",
+      "report_sha256": "d4efdfebef241b8de71c38107969c0bd5190eac223cc635dd3c594f2c5f3df1f",
+      "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+      "evaluation_role": "development_regression_for_missing_memory_measurement_and_explicit_telemetry_controls",
+      "model": "small",
+      "model_form_field_omitted": true,
+      "source_language_mode": "explicit el/en",
+      "model_repository": "Systran/faster-whisper-small",
+      "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "hypotheses_identical_to_original_small_run": true,
+      "classification_counts": {
+        "minor_issue": 3,
+        "major_error": 3,
+        "acceptable": 2
+      },
+      "structural_counts": {
+        "pass": 8
+      },
+      "elapsed_seconds": 19.956,
+      "process_peak_rss_bytes": 694067200,
+      "source_files_unchanged": true,
+      "telemetry_opt_out": {
+        "ORT_DISABLE_TELEMETRY": "1",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "onnxruntime_disable_telemetry_events_called": true
+      },
+      "cases": [
+        {
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The family camping-area proposition remains recognizable, but ειδικούς is misspelled as ιδικούς, κατασκηνωτικούς as κατασκοινωτικούς, and an extra οι makes για οι οικογένειες ungrammatical. These need correction for a clean transcript; no new actor or opposing proposition is established.",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.",
+          "example": {
+            "reference": "ειδικούς κατασκηνωτικούς χώρους για οικογένειες",
+            "hypothesis": "ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "The named person Μαρτελί becomes Μαρτέη. The fifth council and four-year interval are preserved, but the proper name is not faithfully captured, undermining identification.",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια.",
+          "example": {
+            "reference": "του Μαρτελί",
+            "hypothesis": "του Μαρτέη"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "Both negations survive. δίκαιο is recognized as δίκιο, a nearby colloquial form; the intended not-fair/not-right sense remains recoverable. This is a limited word-fidelity difference, not a negation reversal.",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+          "example": {
+            "reference": "Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+            "hypothesis": "Σε κάθε περίπτωση δεν ήταν δίκιο."
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "Μολονότι (although) becomes Μόνο ότι (only that), losing the concessive relationship. The words αυτοκινήτου and τραυματίστηκε are also damaged into αυτοκοινή του and τραμματίσκε. The output still has the correct count (τρεις equals 3) and the negative δεν ... κανείς; no numeric or negation reversal is claimed.",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς.",
+          "example": {
+            "reference": "Μολονότι 3 άνθρωποι ... του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+            "hypothesis": "Μόνο ότι τρεις άνθρωποι ... του αυτοκοινή του δεν τραμματίσκε κανείς."
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The two product names and negated description remain identifiable; μάντα is a valid Greek rendering of Manta, and case differences in number one do not change identity. Several ordinary words have spelling or ending errors: κύριε/κύρια, μπήρα/μπίρα, ευχάρις/ευχάριστη and δροσητική/δροσιστική. The intended description is recoverable but the transcript is not clean enough to publish unchanged.",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+          "example": {
+            "reference": "Η κύρια τοπική μπίρα ... είναι όμως ευχάριστη και δροσιστική ... Manta",
+            "hypothesis": "Η κύριε τοπική μπήρα ... είναι όμως ευχάρις και δροσητική ... μάντα"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The condition and statement are preserved. The contraction you're is equivalent to you are even though the simple word-error normalization counts it as two edits. This review concerns transcription fidelity and does not fact-check the dataset statement.",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+          "example": {
+            "reference": "you are using a satellite",
+            "hypothesis": "you're using a satellite"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The U.N. attribution, intended fund, affected countries and coping purpose are all retained. UN versus U.N. is punctuation normalization, not a meaning error.",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "example": {
+            "reference": "The U.N. also hopes to finalize a fund",
+            "hypothesis": "The UN also hopes to finalize a fund"
+          },
+          "structural_status": "pass"
+        },
+        {
+          "case_id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "classification": "major_error",
+          "reason": "The proper name Lakkha Singh, leading action and bhajans are damaged. Lakas sing can be read as a different name plus verb; took the lead becomes to the lead and bhajans becomes pashams. This output does not faithfully identify the person or the musical activity.",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "hypothesis": "Then Lakas sing to the lead and singing the pashams",
+          "example": {
+            "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+            "hypothesis": "Then Lakas sing to the lead and singing the pashams"
+          },
+          "structural_status": "pass"
+        }
+      ]
+    }
+  ],
+  "findings": {
+    "pipeline": "All eight uploads completed the real production recognition path, stored exact recognized segments in isolated SQLite, and produced matching TXT/SRT/VTT/JSON/ZIP exports. Records survived job eviction and a separate Python process read the same stored segments.",
+    "timestamps": "Eight short clips each yielded one segment. The derived 36.84-second Greek technical clip yielded five ordered segments, exercising multi-cue persistence and exports. All finite bounds and export cue checks passed; no independently annotated timing accuracy reference was available.",
+    "quality": "Turbo improves the exposed development examples and demonstrates useful ordinary speech transcription on the new eight-clip set: five acceptable, two minor spelling/grammar issues and one major damaged uncertainty qualifier. Outputs remain editable drafts requiring review; no general unattended accuracy approval is implied.",
+    "numbers_and_negation": "The fresh run preserves the at-least-two count, below-zero qualifier, six-mile amount, 1767 date, the habitat negation and the tap-water prohibition. The separate possibility qualifier in the hospital sentence is damaged and must be corrected by review.",
+    "metrics": "On this chosen sample only, literal normalized WER is 18/73 (24.66%) for Greek and 7/45 (15.56%) for English. These include harmless contractions, 3/τρεις and Manta/μάντα differences, and are not population accuracy estimates."
+  },
+  "decision": "Turbo has evidence of useful ordinary transcription as an editable draft, with visible review expectations for names, quantities, negation and uncertainty. The initial fresh result includes one material qualifier error; no general accuracy or unattended semantic approval is granted.",
+  "technical_regression": {
+    "report_file": "small-derived-result.json",
+    "report_sha256": "69e2d29285ec1762bf6ece483f64a7aeedc1f34ea362e11e1c5781bc16ba3364",
+    "manifest_sha256": "5bf650e47b252914fa0a944de2ec208418dee2beaeae3262341ca96c65b4db6b",
+    "complete": true,
+    "evaluation_role": "derived_technical_regression_not_independent_quality_sample",
+    "source_language_mode": "explicit el",
+    "source_clip_count": 5,
+    "duration_seconds": 36.84,
+    "segment_count": 5,
+    "structural_status": "pass",
+    "elapsed_seconds": 10.974,
+    "source_files_unchanged": true,
+    "audio_encoding_note": "Source samples are mono float32 16 kHz; PyAV output stream used its default stereo layout, yielding a dual-mono WAV. No new speech was synthesized.",
+    "meaning_assessment": "Not approved. The collision injury predicate became δεν δραματήσει και κανείς, which does not faithfully preserve δεν τραυματίστηκε κανείς. The 5ο/πέμπτο and 4/τέσσερα representations preserve values. This run only establishes multi-cue workflow coverage."
+  },
+  "pending": [],
+  "development_designation": "The initial eight fixed samples are now development cases because observed errors are informing candidate selection; subsequent comparisons are not untouched validation.",
+  "updated_at": "2026-11-26T18:13:41.066039+00:00",
+  "fresh_validation": {
+    "manifest_file": "fresh-fixtures.json",
+    "sha256": "7417665987c91af5143cc1aa3375f404a4fdf6f787554d3d88206f45546353be",
+    "cases": 8,
+    "languages": {
+      "el": 5,
+      "en": 3
+    },
+    "duration_seconds": 76.58,
+    "frozen_before_inference_on_these_clips": true,
+    "source_sentence_ids_distinct_from_development": true,
+    "outputs_reviewed": true,
+    "report_file": "turbo-fresh-auto-result.json",
+    "classification_counts": {
+      "acceptable": 5,
+      "major_error": 1,
+      "minor_issue": 2
+    },
+    "subsequent_diagnostics": "The initial fresh run is preserved unchanged. A later confidence probe reuses selected outputs and is explicitly postselection diagnostic evidence, not another untouched validation run."
+  },
+  "candidate_comparison": {
+    "decision": "turbo_supported_as_reviewable_draft_candidate_by_fresh_diagnostic_evidence",
+    "reason": "The fresh run demonstrates ordinary content usefulness and correct auto detection while retaining a material uncertainty-word error. A practical editable-draft workflow is supported; perfection on proper names or a general accuracy promise is not required or established. Production default selection remains a parent decision.",
+    "small_counts": {
+      "minor_issue": 3,
+      "major_error": 3,
+      "acceptable": 2
+    },
+    "turbo_counts": {
+      "minor_issue": 3,
+      "major_error": 2,
+      "acceptable": 3
+    },
+    "memory_scope": "Turbo observed peak is about 1.64 GiB for the QA/application/model process alone; it excludes any simultaneously resident translation model and other processes.",
+    "latency_scope": "Observed 49.461 seconds includes cold model loading and ordinary QA work; no controlled cross-model speed benchmark is claimed.",
+    "fresh_classification_counts": {
+      "acceptable": 5,
+      "major_error": 1,
+      "minor_issue": 2
+    }
+  },
+  "resource_observations": [
+    {
+      "report_file": "small-result.json",
+      "audio_seconds": 52.44,
+      "language_mode": "explicit",
+      "elapsed_seconds": 18.182,
+      "process_peak_rss_bytes": null,
+      "note": "RSS was not instrumented in the initial run."
+    },
+    {
+      "report_file": "small-development-rss-replay.json",
+      "audio_seconds": 52.44,
+      "language_mode": "explicit",
+      "elapsed_seconds": 19.956,
+      "process_peak_rss_bytes": 694067200
+    },
+    {
+      "report_file": "turbo-development-result.json",
+      "audio_seconds": 52.44,
+      "language_mode": "explicit",
+      "elapsed_seconds": 49.461,
+      "process_peak_rss_bytes": 1762025472
+    },
+    {
+      "report_file": "turbo-fresh-auto-result.json",
+      "audio_seconds": 76.58,
+      "language_mode": "auto",
+      "elapsed_seconds": 98.525,
+      "process_peak_rss_bytes": 1776443392
+    }
+  ],
+  "resource_interpretation": "RSS is measured for the QA/application/model process only. Elapsed includes model loading and export checks; source versions, input sets, language mode and concurrent workload differ. Do not attribute all elapsed differences to model choice or automatic language detection, and do not extrapolate to combined ASR/translation whole-machine memory.",
+  "full_large_v3_advice": {
+    "recommendation": "do_not_download_for_this_milestone_without_a_specific_remaining_acceptance_need",
+    "reason": "The observed Turbo candidate already supports useful reviewable drafts. Full Large-v3 may help some errors but that benefit is unmeasured for these clips, while its larger decoder creates a CPU latency tradeoff for the four-core target. No claim is made that it would correct the observed names or uncertainty word.",
+    "primary_source": "https://huggingface.co/openai/whisper-large-v3-turbo",
+    "source_fact": "The primary model card describes Turbo as a pruned Large-v3 with four decoding layers instead of 32.",
+    "download_performed": false
+  },
+  "confidence_diagnostic": {
+    "report_file": "turbo-confidence-diagnostic.json",
+    "report_sha256": "8c09b620936b1050b7bee889980d40db9c84dfcc28c04e001ff4d0e1c5a0f7fa",
+    "script_file": "inspect_turbo_confidence.py",
+    "script_sha256": "6f4334c19a9d31aa15160de001b02867daad95ce0ae15f428f11ff71179bd860",
+    "evaluation_role": "postselection_explanatory_probe_not_calibration_or_independent_validation",
+    "cases": 4,
+    "exact_text_matches_production": true,
+    "production_difference": "word_timestamps=True was enabled only to expose actual word probabilities. All four produced exactly the saved production text. The current application does not retain these confidence fields.",
+    "observations": [
+      {
+        "case_id": "fleurs-fresh-el_gr-validation-12-1558",
+        "semantic_role": "accurate Greek control",
+        "segment_avg_logprob": -0.03848017837050595
+      },
+      {
+        "case_id": "fleurs-fresh-el_gr-validation-13-1564",
+        "semantic_role": "damaged Greek uncertainty qualifier",
+        "segment_avg_logprob": -0.06919770888102952,
+        "word_probabilities": {
+          "αντέχεται": 0.77983,
+          "μολύθηκαν": 0.93635,
+          "Dr.": 0.61141,
+          "Moll": 0.6707
+        },
+        "interpretation": "The erroneous qualifier has a higher word score than the correctly rendered name; the misspelled infection verb has a very high score. A low-score filter can therefore miss real errors."
+      },
+      {
+        "case_id": "fleurs-en_us-validation-2-1510",
+        "semantic_role": "accurate English control",
+        "segment_avg_logprob": -0.15719179630279542
+      },
+      {
+        "case_id": "fleurs-en_us-validation-3-1578",
+        "semantic_role": "damaged English name/action/music content",
+        "segment_avg_logprob": -0.5967552521649528,
+        "word_probabilities": {
+          "Laka": 0.68705,
+          "sing": 0.38522,
+          "to": 0.40443,
+          "pashams.": 0.5564
+        },
+        "interpretation": "The severe English error is lower-confidence, so scores can provide review hints for some cases."
+      }
+    ],
+    "threshold_recommendation": "No production semantic-approval or review-warning threshold is justified by four purposively selected probes. A 0.8 word threshold would flag the Greek uncertainty error and some English errors, but also the correct Dr./Moll rendering and would miss the incorrect μολύθηκαν at 0.93635. Segment-average confidence is also inadequate: the erroneous Greek sentence has a less negative average than the correct English control. If optional highlights are later introduced, call them review hints, never accuracy percentages, and validate them on new labeled material.",
+    "v1_recommendation": "Keep an always-visible editable-draft review expectation. Do not let high confidence suppress review of names, quantities, negation, uncertainty or other consequential wording."
+  },
+  "review_coverage": {
+    "reviewed_primary_reports": 4,
+    "reviewed_primary_case_outputs": 32,
+    "unique_native_clips": 16,
+    "technical_derived_runs": 1,
+    "postselection_confidence_probe_cases": 4
+  },
+  "archive_provenance": {
+    "raw_file": "assistant-review.json",
+    "raw_sha256": "9d58ad697b02a521ddf9997e9e3da44bd1c0d72a357c912db38573e8a9701b99",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

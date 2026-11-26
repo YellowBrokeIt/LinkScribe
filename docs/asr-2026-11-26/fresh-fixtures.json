@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T18:01:32.645746+00:00",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "Eight new clips chosen and frozen before any recognition on them. Sentence IDs are distinct from all eight ASR development clips and from each other. Five Greek and three English cover ordinary speech, a proper name, numerals, uncertainty and negation.",
+    "evaluation_role": "fresh_diagnostic_validation",
+    "turbo_development_outputs_inspected_by_selector": false,
+    "representativeness": "Purposive read-speech diagnostic sample, not random population validation or a conversational/noisy speech benchmark.",
+    "dataset_access_note": "Attempts to fetch the test-split preview returned HTTP 500; distinct previously unselected validation-split rows were used instead."
+  },
+  "audio_preparation": "Downloaded the dataset viewer audio renditions unchanged. These are native recorded speech, not synthesized speech. Viewer audio encoding may differ from the original dataset container; exact downloaded bytes are identified by SHA-256. No trimming, enhancement or reference-conditioned decoding is performed.",
+  "cases": [
+    {
+      "id": "fleurs-fresh-el_gr-validation-12-1558",
+      "language": "el",
+      "audio_file": "audio/fleurs-fresh-el_gr-validation-12-1558.wav",
+      "audio_sha256": "0a7369b9e3a8cf6b530abcb487edd98a8108f22bff9e02a7f9cffc45c50fa68c",
+      "audio_bytes": 583738,
+      "audio_mime": "audio/wav",
+      "reference": "Για να μπορέσει ένας οργανισμός να είναι καινοτόμος, πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας, ανταλλαγής γνώσεων και οργανωτικής μάθησης.",
+      "dataset_normalized_reference": "για να μπορέσει ένας οργανισμός να είναι καινοτόμος πρέπει η διοίκηση να δημιουργήσει ένα περιβάλλον καινοτομίας ανταλλαγής γνώσεων και οργανωτικής μάθησης",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 12,
+        "sentence_id": 1558,
+        "dataset_num_samples": 145920,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/12/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=12&length=1"
+      },
+      "review_criteria": [
+        "Retain the necessary role of management in creating conditions for innovation, knowledge sharing and organizational learning."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-13-1564",
+      "language": "el",
+      "audio_file": "audio/fleurs-fresh-el_gr-validation-13-1564.wav",
+      "audio_sha256": "4af74ccf74afd2687b9677bf2f7d3769ff11b0baebc67c3cc523fbbd16e893e3",
+      "audio_bytes": 583738,
+      "audio_mime": "audio/wav",
+      "reference": "Ο Δρ Μολ πιστεύει ότι κάποιοι ασθενείς ενδέχεται να μολύνθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου.",
+      "dataset_normalized_reference": "ο δρ μολ πιστεύει ότι κάποιοι ασθενείς ενδέχεται να μολύνθηκαν από τον ιό στο νοσοκομείο και τουλάχιστον δύο από αυτούς ανήκαν στους επαγγελματίες υγείας του νοσοκομείου",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 13,
+        "sentence_id": 1564,
+        "dataset_num_samples": 145920,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/13/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=13&length=1"
+      },
+      "review_criteria": [
+        "Preserve the attribution to Dr Moll, the possibility rather than certainty of infection, and at least two hospital health professionals.",
+        "This is fidelity to the recorded source statement, not a medical claim endorsement."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-18-1650",
+      "language": "el",
+      "audio_file": "audio/fleurs-fresh-el_gr-validation-18-1650.wav",
+      "audio_sha256": "d91d58089eede993b48f087949df2127783cc325581036dfb271e353a3434109",
+      "audio_bytes": 675898,
+      "audio_mime": "audio/wav",
+      "reference": "Οι κροκόδειλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα, το βασικό τους φυσικό περιβάλλον είναι οι εκβολές των ποταμών βόρεια από το Ρόκχαμπτον.",
+      "dataset_normalized_reference": "οι κροκόδειλοι της θάλασσας δεν ενδιαιτούν στη θάλασσα το βασικό τους φυσικό περιβάλλον είναι οι εκβολές των ποταμών βόρεια από το ρόκχαμπτον",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 18,
+        "sentence_id": 1650,
+        "dataset_num_samples": 168960,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/18/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=18&length=1"
+      },
+      "review_criteria": [
+        "Keep the contrast between not inhabiting the sea and estuary habitat; preserve Rockhampton as the geographic reference."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-20-1574",
+      "language": "el",
+      "audio_file": "audio/fleurs-fresh-el_gr-validation-20-1574.wav",
+      "audio_sha256": "60a8e9254fc29eda121b050ef6803029b3cad287bcafc0f68010fe5170da7a78",
+      "audio_bytes": 837178,
+      "audio_mime": "audio/wav",
+      "reference": "Το κρύο τον χειμώνα είναι παραπλανητικό: οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν, όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο.",
+      "dataset_normalized_reference": "το κρύο τον χειμώνα είναι παραπλανητικό οι θερμοκρασίες σπάνια πέφτουν υπό το μηδέν όμως ο άνεμος και η υγρασία συνδυάζονται δημιουργώντας την αίσθηση ότι κάνει περισσότερο κρύο από όσο δείχνει το θερμόμετρο",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 20,
+        "sentence_id": 1574,
+        "dataset_num_samples": 209280,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/20/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=20&length=1"
+      },
+      "review_criteria": [
+        "Preserve rarely below zero and the wind/humidity qualification about felt versus measured temperature."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-el_gr-validation-23-1581",
+      "language": "el",
+      "audio_file": "audio/fleurs-fresh-el_gr-validation-23-1581.wav",
+      "audio_sha256": "2021e894b91d8001007e5edcd4a1ebe672be853aa31d9f6409257ea8ce5370f9",
+      "audio_bytes": 556858,
+      "audio_mime": "audio/wav",
+      "reference": "Ο Αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως, που μερικές φορές φτάνει τα 6 μίλια.",
+      "dataset_normalized_reference": "ο αμαζόνιος αποτελεί επίσης τον ποταμό με το μεγαλύτερο πλάτος παγκοσμίως που μερικές φορές φτάνει τα 6 μίλια",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 23,
+        "sentence_id": 1581,
+        "dataset_num_samples": 139200,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/23/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=23&length=1"
+      },
+      "review_criteria": [
+        "Preserve the Amazon river, width claim and sometimes up to six miles, without converting width into length."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-8-1559",
+      "language": "en",
+      "audio_file": "audio/fleurs-fresh-en_us-validation-8-1559.wav",
+      "audio_sha256": "97c91f17d0fac2f617510489c1f149371234a16990c1e0b8945ea91611a74c4c",
+      "audio_bytes": 596538,
+      "audio_mime": "audio/wav",
+      "reference": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written",
+      "dataset_normalized_reference": "pronunciation is relatively easy in italian since most words are pronounced exactly how they are written",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "en_us",
+        "split": "validation",
+        "row_index": 8,
+        "sentence_id": 1559,
+        "dataset_num_samples": 149120,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/8/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=8&length=1"
+      },
+      "review_criteria": [
+        "Preserve the reason linking Italian pronunciation with spelling and the most-words qualification."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-11-1536",
+      "language": "en",
+      "audio_file": "audio/fleurs-fresh-en_us-validation-11-1536.wav",
+      "audio_sha256": "409c1b0f2e86fbc7996c1122e8ccbd0ff30bae145395b456e4ffa6b8c8279c12",
+      "audio_bytes": 522298,
+      "audio_mime": "audio/wav",
+      "reference": "Local authorities are warning residents in the vicinity of the plant to stay indoors, turn off air-conditioners and not to drink tap water.",
+      "dataset_normalized_reference": "local authorities are warning residents in the vicinity of the plant to stay indoors turn off air-conditioners and not to drink tap water",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "en_us",
+        "split": "validation",
+        "row_index": 11,
+        "sentence_id": 1536,
+        "dataset_num_samples": 130560,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/11/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=11&length=1"
+      },
+      "review_criteria": [
+        "Retain all three precautionary instructions and the negation on drinking tap water as part of the spoken source."
+      ]
+    },
+    {
+      "id": "fleurs-fresh-en_us-validation-17-1593",
+      "language": "en",
+      "audio_file": "audio/fleurs-fresh-en_us-validation-17-1593.wav",
+      "audio_sha256": "952145e2808bf8ea6354ec0ea656652a0eeff61438a466fa4f0f3568f89c23a3",
+      "audio_bytes": 545338,
+      "audio_mime": "audio/wav",
+      "reference": "Eventually, wooden wheels were replaced by iron wheels. In 1767, the first full-iron rails were introduced.",
+      "dataset_normalized_reference": "eventually wooden wheels were replaced by iron wheels in 1767 the first full-iron rails were introduced",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "en_us",
+        "split": "validation",
+        "row_index": 17,
+        "sentence_id": 1593,
+        "dataset_num_samples": 136320,
+        "dataset_sample_rate": 16000,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/17/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=17&length=1"
+      },
+      "review_criteria": [
+        "Preserve replacement of wooden by iron wheels and the date 1767 attached to the first all-iron rails."
+      ]
+    }
+  ],
+  "archive_provenance": {
+    "raw_file": "fresh-fixtures.json",
+    "raw_sha256": "7417665987c91af5143cc1aa3375f404a4fdf6f787554d3d88206f45546353be",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

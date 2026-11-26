@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T17:55:52.430428+00:00",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "All five fixed Greek fixtures concatenated in their original manifest order; created after the first run solely to exercise multisegment persistence/export ordering.",
+    "evaluation_role": "derived_technical_regression_not_untouched_quality_validation"
+  },
+  "cases": [
+    {
+      "id": "derived-greek-five-clips-in-source-order",
+      "language": "el",
+      "audio_file": "audio/derived-greek-five-clips-in-source-order.wav",
+      "audio_sha256": "bf69f9c727742c47fe45b069374c911ba8f4441ef7584071b3bf04a1af9d380e",
+      "audio_bytes": 4715612,
+      "audio_mime": "audio/wav",
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά. Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια. Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο. Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς. Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "review_criteria": [
+        "Exercise multiple genuine recognition segments and ordered export cues across a recording exceeding 30 seconds.",
+        "All five selected Greek source references remain in source order, without synthetic speech or reference-conditioned decoding.",
+        "This assembled mixed-topic clip is a technical regression sample, not a naturally continuous speech benchmark."
+      ],
+      "provenance": {
+        "derived_from_manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+        "source_spans": [
+          {
+            "id": "fleurs-el_gr-validation-2-1528",
+            "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+            "start": 0.0,
+            "end": 6.66
+          },
+          {
+            "id": "fleurs-el_gr-validation-5-1515",
+            "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+            "start": 7.41,
+            "end": 13.41
+          },
+          {
+            "id": "fleurs-el_gr-validation-6-1577",
+            "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+            "start": 14.16,
+            "end": 18.36
+          },
+          {
+            "id": "fleurs-el_gr-validation-7-1598",
+            "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+            "start": 19.11,
+            "end": 26.07
+          },
+          {
+            "id": "fleurs-el_gr-validation-11-1590",
+            "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+            "start": 26.82,
+            "end": 36.84
+          }
+        ],
+        "transform": "Concatenated unchanged float32 mono 16 kHz samples, with 0.75 seconds of zero-valued silence between clips; rewrapped as float32 WAV.",
+        "created_after_initial_small_run": true
+      }
+    }
+  ],
+  "archive_provenance": {
+    "raw_file": "derived-fixtures.json",
+    "raw_sha256": "5bf650e47b252914fa0a944de2ec208418dee2beaeae3262341ca96c65b4db6b",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

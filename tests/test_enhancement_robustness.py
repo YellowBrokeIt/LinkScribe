@@ -151,6 +151,7 @@ def test_diagnostics_handles_malformed_model_lists(monkeypatch, response):
 
 
 def test_diagnostics_detects_missing_model_and_real_audio_package(monkeypatch):
+    monkeypatch.setenv("LINKSCRIBE_SPEAKER_BACKEND", "pyannote")
     monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
     monkeypatch.setenv("HF_TOKEN", "dummy-token-never-in-output")
     monkeypatch.setattr(diagnostics, "local_ollama_json", lambda *_args, **_kw: {"models": []})

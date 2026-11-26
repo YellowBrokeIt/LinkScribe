@@ -198,7 +198,8 @@ def run(args) -> int:
                         shot("failure-" + name)
                     except Exception:
                         pass
-                    print(name + ": FAIL: " + str(error).splitlines()[0], flush=True)
+                    first_line = str(error).splitlines()
+                    print(name + ": FAIL: " + (first_line[0] if first_line else type(error).__name__), flush=True)
                 finally:
                     item["elapsed_seconds"] = round(time.monotonic() - started, 3)
                     checkpoint()
@@ -210,11 +211,8 @@ def run(args) -> int:
             def consent():
                 page.locator("#consent").check()
 
-            def layout(width, height, tab):
-                page.set_viewport_size({"width": width, "height": height})
-                fresh(tab)
-                shot(f"layout-{width}-{tab}")
-                sizes = page.evaluate("""() => ({
+            def layout_sizes():
+                return page.evaluate("""() => ({
                     viewport: document.documentElement.clientWidth,
                     document: document.documentElement.scrollWidth,
                     overflowing: [...document.querySelectorAll('body *')].filter(el => {
@@ -223,11 +221,17 @@ def run(args) -> int:
                     }).slice(0, 12).map(el => ({tag: el.tagName, id: el.id, cls: el.className,
                                               right: Math.round(el.getBoundingClientRect().right)}))
                 })""")
+            def layout(width, height, tab):
+                page.set_viewport_size({"width": width, "height": height})
+                fresh(tab)
+                shot(f"layout-{width}-{tab}")
+                sizes = layout_sizes()
                 assert sizes["document"] <= sizes["viewport"], sizes
                 return sizes
 
             for width, height, tab in [(1440, 1000, "link"), (390, 844, "link"), (320, 700, "link"),
-                                       (390, 844, "upload"), (390, 844, "batch"), (390, 844, "library")]:
+                                       (390, 844, "upload"), (390, 844, "batch"), (390, 844, "library"),
+                                       (320, 700, "upload"), (320, 700, "batch"), (320, 700, "library")]:
                 check(f"layout_{width}_{tab}", lambda w=width, h=height, t=tab: layout(w, h, t))
             page.set_viewport_size({"width": 1440, "height": 1000})
 
@@ -258,9 +262,15 @@ def run(args) -> int:
                 fresh()
                 page.locator("#url").fill("this is not a URL")
                 page.locator("#tab-" + tab).click()
+                expect(page.locator("#url")).to_be_disabled()
+                expect(page.locator("#file" if tab == "upload" else "#batch-urls")).to_be_enabled()
                 consent()
                 page.locator("#submit").click()
                 expect(page.locator("#status-title")).to_have_text(expected, timeout=3000)
+                page.locator("#tab-link").click()
+                expect(page.locator("#url")).to_be_enabled()
+                expect(page.locator("#url")).to_have_value("this is not a URL")
+                assert page.locator("#url").evaluate("el => el.validity.typeMismatch"), "Active URL validation was lost."
             for tab, expected in [("upload", "File required"), ("batch", "Links required")]:
                 check("inactive_url_does_not_block_" + tab,
                       lambda t=tab, e=expected: inactive_invalid_url(t, e))
@@ -344,19 +354,46 @@ def run(args) -> int:
                         "poll_requests": len(polled), "segments": len(upload_record["segments"]), "exports": exports}
             check("upload_asr_polling_exports", actual_upload)
 
+            def upload_result_mobile_layout():
+                assert upload_record, "The upload result was unavailable for this dependent check."
+                sizes_at_widths = []
+                try:
+                    for width, height in [(390, 844), (320, 700)]:
+                        page.set_viewport_size({"width": width, "height": height})
+                        shot(f"upload-result-mobile-{width}")
+                        sizes = layout_sizes()
+                        sizes_at_widths.append(sizes)
+                        assert sizes["document"] <= sizes["viewport"], sizes
+                        bounds = page.locator("#copy").bounding_box()
+                        assert bounds and bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= width, bounds
+                finally:
+                    page.set_viewport_size({"width": 1440, "height": 1000})
+                return {"mobile_layouts": sizes_at_widths}
+            check("upload_result_mobile_layout", upload_result_mobile_layout)
+
             def saved_edits_refresh_visible_result():
                 assert upload_record, "The upload result was unavailable for this dependent check."
                 page.locator("#result-actions button").click()
                 edited = "Saved browser edit. These are the current words, with 12 records."
+                title = "Updated browser upload title"
+                page.locator("#edit-title").fill(title)
                 page.get_by_label("Text of segment 1", exact=True).fill(edited)
+                page.get_by_label("Speaker of segment 1", exact=True).fill("Reader")
                 page.locator("#editor-save").click()
                 expect(page.locator("#editor-message")).to_contain_text("Saved.")
                 page.locator("#editor-close").click()
                 current = download('#downloads a[href$="/download/txt"]', "edited-upload.txt")
-                assert edited in current.read_text(encoding="utf-8")
-                expect(page.locator("#preview")).to_contain_text(edited)
+                assert "Reader: " + edited in current.read_text(encoding="utf-8")
+                expect(page.locator("#preview")).to_contain_text("Reader: " + edited)
+                expect(page.locator("#result-meta")).to_contain_text(title)
+                expect(page.locator("#downloads a")).to_have_count(5)
+                expect(page.locator("#summary-result")).to_be_hidden()
+                saved_job = context.request.get(BASE_URL + "/api/jobs/" + upload_record["id"]).json()
+                assert saved_job["title"] == title and "Reader: " + edited in saved_job["preview"], saved_job
+                assert not saved_job["extras"]["summary"] and not saved_job["extras"]["translation_language"], saved_job
                 shot("saved-result-refreshed")
-                return {"visible_preview_and_download_match_saved_edit": True}
+                return {"visible_preview_and_download_match_saved_edit": True,
+                        "title_speaker_and_job_status_refreshed": True}
             check("saved_edits_refresh_visible_result", saved_edits_refresh_visible_result)
 
             def link_success():
@@ -442,12 +479,21 @@ def run(args) -> int:
                 text_path = download('#editor-downloads a[href$="/download/txt"]', "edited-library.txt")
                 assert "Edited first segment" in text_path.read_text(encoding="utf-8") and "Edited final segment" in text_path.read_text(encoding="utf-8")
                 shot("library-edited-desktop")
-                page.set_viewport_size({"width": 390, "height": 844})
-                shot("library-edited-mobile")
-                assert page.evaluate("() => document.documentElement.scrollWidth <= document.documentElement.clientWidth")
-                page.set_viewport_size({"width": 1440, "height": 1000})
+                mobile_sizes = []
+                try:
+                    for width, height in [(390, 844), (320, 700)]:
+                        page.set_viewport_size({"width": width, "height": height})
+                        shot(f"library-edited-mobile-{width}")
+                        sizes = layout_sizes()
+                        mobile_sizes.append(sizes)
+                        assert sizes["document"] <= sizes["viewport"], sizes
+                        for control in ("#editor-prev", "#editor-next", "#editor-save", "#editor-delete"):
+                            bounds = page.locator(control).bounding_box()
+                            assert bounds and bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= width, {"control": control, "bounds": bounds}
+                finally:
+                    page.set_viewport_size({"width": 1440, "height": 1000})
                 return {"segments_preserved": 35, "edits_across_pages_saved": True,
-                        "derived_enhancements_invalidated": True}
+                        "derived_enhancements_invalidated": True, "mobile_layouts": mobile_sizes}
             check("library_search_edit_pagination_exports", search_edit_export)
             page.set_viewport_size({"width": 1440, "height": 1000})
 

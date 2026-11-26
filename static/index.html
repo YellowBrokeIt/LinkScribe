@@ -11,10 +11,10 @@
     html { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; scroll-behavior:smooth; }
     body { min-height:100vh; margin:0; background:radial-gradient(900px 580px at 7% -7%,#293068 0%,transparent 60%),radial-gradient(920px 650px at 94% 1%,#113e4b 0%,transparent 55%),var(--bg); color:var(--text); }
     .page { width:min(1080px,calc(100% - 36px)); margin:0 auto; }
-    header { display:flex; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
+    header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
     .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; font-size:19px; }
     .mark { width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(130deg,var(--accent),#6ee0d3); color:#0e1630; font-size:21px; font-weight:900; }
-    .locally { font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; white-space:nowrap; }
+    .locally { max-width:100%; font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; }
     .hero { max-width:810px; margin:0 auto 33px; text-align:center; }
     .eyebrow { letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:850; color:#b6acf9; margin-bottom:15px; }
     h1 { font-size:clamp(36px,6vw,66px); line-height:1.08; letter-spacing:-.065em; font-weight:820; margin:0 0 17px; }
@@ -60,7 +60,7 @@
     .downloads a { border:1px solid #576582; border-radius:10px; background:#223149; color:#f4f6ff; padding:11px 14px; text-decoration:none; font-size:13px; font-weight:750; }
     .downloads a:hover { border-color:#a698ff; }
     .downloads a:first-child { background:#384567; border-color:#998df2; }
-    .preview-title { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
+    .preview-title { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
     .copy { border:1px solid #576582; color:var(--muted); border-radius:8px; background:transparent; font:inherit; padding:7px 10px; cursor:pointer; }
     .transcript { margin:0; padding:18px; max-height:330px; overflow:auto; background:#0c1425; border:1px solid #35445e; border-radius:12px; color:#dce5f9; white-space:pre-wrap; font:13px/1.9 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace; overflow-wrap:anywhere; }
     .features { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; max-width:850px; margin:30px auto 60px; }
@@ -115,7 +115,7 @@
     .editor-paging {display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap:6px; color:var(--muted); font-size:12px}
     .editor-actions .submit {width:auto; padding:0 27px}
     .danger {color:#ffb5bc; border-color:#9c5960}
-    @media(max-width:650px) {.enhancements{grid-template-columns:1fr}.segment-row{grid-template-columns:1fr}.library-item{align-items:flex-start}.library-toolbar{flex-wrap:wrap}.editor-actions .submit{flex:1}}
+    @media(max-width:650px) {.enhancements{grid-template-columns:1fr}.segment-row{grid-template-columns:1fr}.library-item{align-items:flex-start;flex-wrap:wrap}.library-item>div{flex-basis:100%;min-width:0}.library-toolbar{flex-wrap:wrap}.editor-paging{display:grid;grid-template-columns:1fr 1fr}.editor-paging span{grid-column:1 / -1;grid-row:1;text-align:center}.editor-actions .submit{flex:1}}
   </style>
 </head>
 <body>
@@ -178,12 +178,12 @@
             </div>
             <div class="setting">
               <label for="model">Local AI model</label>
-              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option></select>
+              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option><option value="large-v3-turbo">Large Turbo · more memory</option></select>
               <p>Used when audio AI is needed.</p>
             </div>
           </div>
           <div class="enhancements" id="enhancements">
-            <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Separate speakers (needs pyannote + HF_TOKEN; audio mode)</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Optional public CPU model setup; no access token needed. Uses audio mode.</small></span></label>
             <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters</strong><small>Uses locally installed Ollama model</small></span></label>
             <div class="setting"><label for="target-language">Translate transcript · experimental</label>
               <select id="target-language"><option value="none">No translation</option><option value="el">To Greek 🇬🇷</option><option value="en">To English 🇬🇧</option></select>
@@ -223,6 +223,7 @@
     <section class="results" id="results" aria-label="Transcript results" hidden>
       <h2 class="result-title">✓ &nbsp;Your transcript is ready</h2>
       <div class="result-meta" id="result-meta"></div>
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
       <div class="warnings" id="result-warnings" hidden></div>
       <div class="secondary-actions" id="result-actions"></div>
       <nav class="downloads" id="downloads" aria-label="Download transcript formats"></nav>
@@ -240,6 +241,7 @@
     <section id="editor" class="results" aria-label="Transcript editor" hidden>
       <div class="preview-title"><h2 class="result-title">Edit saved transcript</h2><button type="button" id="editor-close" class="copy">Close</button></div>
       <label class="input-title" for="edit-title">Title</label><input id="edit-title" class="edit-title" maxlength="180">
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
       <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving invalidates any older translations and summaries.</p>
       <div class="downloads" id="editor-downloads"></div>
       <div id="editor-rows" class="editor-rows"></div>
@@ -262,7 +264,7 @@
  const tabs = {link:$("tab-link"),upload:$("tab-upload"),batch:$("tab-batch"),library:$("tab-library")};
  const views = {link:$("view-link"),upload:$("view-upload"),batch:$("view-batch"),library:$("view-library")};
  const form=$("job-form");
- let tab="link", currentJob=null, currentBatch=null, editing=null, editorPage=0;
+ let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0;
  const perPage=30;
  function chooseTab(name) {
    tab=name;
@@ -274,6 +276,9 @@
    $("mode-block").hidden=name==="upload" || name==="library";
    $("enhancements").hidden=name==="library";
    $("url").required=false; $("file").required=false;
+   $("url").disabled=name!=="link";
+   $("file").disabled=name!=="upload";
+   $("batch-urls").disabled=name!=="batch";
    $("consent").required=name!=="library";
    $("submit").hidden=name==="library";
    if(name==="library") {
@@ -309,7 +314,8 @@
    if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
  }
  function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
- async function showResults(job) {
+ async function showResults(job, scroll=true) {
+   resultJob=job;
    const root=$("results");
    $("result-meta").textContent=`${job.title} · ${job.language} · ${job.method.replaceAll("_"," ")} · ${job.segments} segments`;
    $("preview").textContent=job.preview||"(Empty preview)";
@@ -319,7 +325,7 @@
    $("result-warnings").textContent=(job.warnings||[]).join("\n");
    $("result-actions").replaceChildren();
    if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
-   $("summary-result").hidden=true;
+   $("summary-result").hidden=true;$("summary-result").textContent="";
    if(details.summary && job.library_id){
      try {
        const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
@@ -329,7 +335,7 @@
        }
      }catch(_){}
    }
-   root.hidden=false;root.scrollIntoView({behavior:"smooth",block:"start"});
+   root.hidden=false;if(scroll)root.scrollIntoView({behavior:"smooth",block:"start"});
  }
  async function trackJob(jobId){
    while(jobId===currentJob){
@@ -501,10 +507,18 @@
    if(editing.segments.some(s=>!s.text.trim())){$("editor-message").textContent="Every segment needs text.";return;}
    try{
      await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))})});
-     $("editor-message").textContent="Saved. Older translations and summaries were cleared; exported files now reflect your edits.";
      editing=await api(`/api/library/${encodeURIComponent(editing.id)}`);
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(editing.id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0});
      showEditorPage();if(tab==="library")loadLibrary();
+     if(!$("results").hidden && resultJob?.library_id===editing.id){
+       await showResults({...resultJob,title:editing.title,language:editing.language,method:editing.method,
+         segments:editing.segments.length,
+         preview:editing.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
+         extras:{...resultJob.extras,summary:!!editing.summary,
+           translation_language:Object.keys(editing.translations||{})[0]||"",
+           speakers:editing.segments.some(s=>s.speaker)}},false);
+     }
+     $("editor-message").textContent="Saved. Older translations and summaries were cleared; exported files now reflect your edits.";
    }catch(e){$("editor-message").textContent="Save failed: "+e.message;}
  });
  $("editor-delete").addEventListener("click",async()=>{

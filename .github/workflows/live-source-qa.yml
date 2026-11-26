@@ -1,0 +1,54 @@
+name: LinkScribe live source QA
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feature/**']
+    paths:
+      - 'app.py'
+      - 'sources.py'
+      - 'runtime_check.py'
+      - 'requirements.txt'
+      - 'tests/smoke_real_links.py'
+      - '.github/workflows/live-source-qa.yml'
+permissions:
+  contents: read
+jobs:
+  live-sources:
+    name: Real licensed links / ASR / exports / recovery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - name: Install application and supported public-web transport
+        run: |
+          python -m pip install -r requirements.txt curl-cffi==0.17.0
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Exercise actual provider acquisition and speech recognition
+        env:
+          PYTHONPATH: .
+          HF_HOME: ${{ runner.temp }}/linkscr-live-source-models
+          ORT_DISABLE_TELEMETRY: '1'
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: >-
+          python tests/smoke_real_links.py
+          --fixture youtube_sintel_trailer
+          --fixture youtube_tears_of_steel_teaser
+          --fixture vimeo_sintel_trailer
+          --fixture dailymotion_tears_of_steel
+          --model tiny --timeout 600 --output qa-real-links
+      - name: Preserve successful and failed provider evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-live-sources-${{ github.sha }}
+          path: qa-real-links/**
+          if-no-files-found: warn
+          retention-days: 30

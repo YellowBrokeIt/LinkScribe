@@ -67,7 +67,7 @@ def fake_audio(job_id, source):
     return target,"Sample " + source.provider
 
 
-def fake_recognize(path, language, model):
+def fake_recognize(path, language, model, **_kwargs):
     return ([{"start":0.0,"end":2.2,"text":"Hello world"},
              {"start":2.2,"end":4.0,"text":"Welcome back"}],"en")
 
@@ -80,7 +80,9 @@ def fake_summary(segments):
 def install_fake_models(monkeypatch):
     monkeypatch.setattr(module,"_download_source_audio",fake_audio)
     monkeypatch.setattr(module,"_recognize",fake_recognize)
-    monkeypatch.setattr(module,"assign_speakers",lambda path,segments:[{**s,"speaker":"Speaker 1"} for s in segments])
+    monkeypatch.setattr(module,"assign_speakers",lambda path,segments,include_report=False:{
+        "segments":[{**s,"speaker":"Speaker 1"} for s in segments], "warnings":[],
+        "provenance":{"backend":"test-double","model":{"id":"test-double"},"settings":{},"warnings":[]}})
     monkeypatch.setattr(module,"translate_segments",lambda segments,target,source_language=None:[{**s,"text":"Γειά σου"} for s in segments])
     monkeypatch.setattr(module,"summarize_segments",fake_summary)
 
@@ -113,6 +115,10 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     assert updated["segments"][0]["start"]==0
     assert updated["segments"][1]["speaker"]=="Bob"
     assert updated["translations"]=={} and updated["summary"] is None
+    current_job=client.get(f"/api/jobs/{job_id}").json()
+    assert current_job["title"]=="Edited sample"
+    assert current_job["preview"]=="Alice: Changed words\nBob: Other speaker"
+    assert current_job["extras"]=={"translation_language":"","summary":False,"speakers":True}
     assert "Changed words" in client.get(f"/api/library/{job_id}/download/txt").text
     assert "Changed words" in client.get(f"/api/jobs/{job_id}/download/txt").text
     assert client.get(f"/api/library/{job_id}/download/summary_md").status_code==404
@@ -230,6 +236,7 @@ def test_library_edit_rejects_invalid_and_markup_preserved(client,monkeypatch):
 
 
 def test_speaker_overlap_with_pyannote_object(monkeypatch,tmp_path):
+    monkeypatch.setenv("LINKSCRIBE_SPEAKER_BACKEND", "pyannote")
     monkeypatch.setenv("HF_TOKEN","dummy-token")
     class Timeline:
         def itertracks(self,yield_label):
