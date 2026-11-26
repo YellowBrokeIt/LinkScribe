@@ -52,11 +52,30 @@ Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube
 3. Optionally set `LINKSCRIBE_OLLAMA_MODEL=qwen3:4b` (default) in the environment **before starting** LinkScribe.
 4. Check **AI summary & chapters** and/or choose the English or Greek translation target.
 
+Translation can use a different installed model: set `LINKSCRIBE_TRANSLATION_MODEL`
+before starting the app. When this override is absent, translation inherits
+`LINKSCRIBE_OLLAMA_MODEL`; summaries always use `LINKSCRIBE_OLLAMA_MODEL`.
+**Check setup** reports each selected model separately. A missing or invalid
+translation model does not disable summaries or discard the original transcript.
+
+The experimental dedicated adapters support detected English and Greek source
+languages, including regional caption tags. `translategemma:4b` uses its native
+plain-text prompt. For the tested Hy-MT3 1.8B import, first run
+`ollama create linkscribe-hy-mt3:1.8b -f models/hy-mt3-1.8b.Modelfile` from this
+folder, then select `LINKSCRIBE_TRANSLATION_MODEL=linkscribe-hy-mt3:1.8b`.
+The checked-in template corrects a malformed automatic import observed in
+Ollama 0.40.12. These adapters are evaluation options, **not approved quality
+defaults**; development examples still contain material meaning errors.
+
 Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not sent to Ollama; only transcript text is sent directly to the **local Ollama process**, without environment proxies or HTTP redirects. **Check setup** distinguishes a running Ollama server from a missing selected model. These operations are optional. If Ollama fails or returns incomplete output, the original transcript and library record remain available, with warnings.
 
 The default `qwen3:4b` integration has been exercised with real English and Greek examples, but its wording still needs review: the test run included an incorrect Greek term for “transcript” and an unnatural English article before a name. Successful timing, storage and export checks do not certify translation quality. The original transcript is retained for comparison.
 
 For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
+
+The [v1.0 acceptance record](docs/V1-RELEASE-GATES.md) lists the workflows being
+verified before a release. The version remains a draft candidate while those
+gates are open.
 
 ## Optional speaker identification (pyannote)
 

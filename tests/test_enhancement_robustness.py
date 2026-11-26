@@ -13,6 +13,11 @@ import diagnostics
 import enhancements
 
 
+@pytest.fixture(autouse=True)
+def reset_translation_override(monkeypatch):
+    monkeypatch.delenv("LINKSCRIBE_TRANSLATION_MODEL", raising=False)
+
+
 @contextmanager
 def http_server(reply, port=0):
     requests = []
@@ -164,3 +169,56 @@ def test_diagnostics_recognizes_implicit_latest_model_tag(monkeypatch):
     monkeypatch.setattr(diagnostics, "local_ollama_json", lambda *_args, **_kw: {
         "models": [{"name": "qwen3:latest"}]})
     assert diagnostics.report()["ollama"]["model_available"]
+
+
+@pytest.mark.parametrize("models,summary_available,translation_available", [
+    (["qwen3:4b", "translategemma:4b"], True, True),
+    (["qwen3:4b"], True, False),
+    (["translategemma:4b"], False, True),
+    ([], False, False),
+])
+def test_diagnostics_reports_task_model_availability_independently(
+        monkeypatch, models, summary_available, translation_available):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    monkeypatch.setattr(diagnostics, "local_ollama_json", lambda *_args, **_kw: {
+        "models": [{"name": model} for model in models]})
+    result = diagnostics.report()
+    info = result["ollama"]
+    assert info["available"] is True
+    assert info["model_configured"] == "qwen3:4b"
+    assert info["translation_model_configured"] == "translategemma:4b"
+    assert info["translation_profile"] == "translategemma"
+    assert info["model_available"] is summary_available
+    assert info["translation_model_available"] is translation_available
+    missing = [message for message in result["warnings"] if "model is missing" in message]
+    assert len(missing) == int(not summary_available) + int(not translation_available)
+    if not summary_available:
+        assert any("summary model" in message and "ollama pull qwen3:4b" in message for message in missing)
+    if not translation_available:
+        assert any("translation model" in message and "ollama pull translategemma:4b" in message for message in missing)
+
+
+def test_diagnostics_does_not_duplicate_missing_inherited_model_warning(monkeypatch):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
+    monkeypatch.setattr(diagnostics, "local_ollama_json", lambda *_args, **_kw: {"models": []})
+    result = diagnostics.report()
+    assert not result["ollama"]["model_available"]
+    assert not result["ollama"]["translation_model_available"]
+    assert sum("ollama pull qwen3:4b" in warning for warning in result["warnings"]) == 1
+
+
+@pytest.mark.parametrize("invalid_task", ["summary", "translation"])
+def test_diagnostics_isolates_invalid_task_configuration(monkeypatch, invalid_task):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "" if invalid_task == "summary" else "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "" if invalid_task == "translation" else "translategemma:4b")
+    monkeypatch.setattr(diagnostics, "local_ollama_json", lambda *_args, **_kw: {
+        "models": [{"name": "qwen3:4b"}, {"name": "translategemma:4b"}]})
+    result = diagnostics.report()
+    info = result["ollama"]
+    assert info["available"] is True
+    assert info["model_available"] is (invalid_task != "summary")
+    assert info["translation_model_available"] is (invalid_task != "translation")
+    assert f"{invalid_task}_error" in info
+    assert any(warning.startswith(invalid_task.title() + ":") for warning in result["warnings"])
+    assert not any("model is missing" in warning for warning in result["warnings"])

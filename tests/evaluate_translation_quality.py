@@ -142,10 +142,10 @@ def source_identity(corpus_path):
 
 
 def runtime_identity():
-    url, model = enhancements.ollama_settings()
+    url, model = enhancements.ollama_settings(task="translation")
     version = enhancements.local_ollama_json("/api/version")
     tags = enhancements.local_ollama_json("/api/tags")
-    names = {model, model + ":latest"} if ":" not in model else {model}
+    names = {model, model + ":latest"} if ":" not in model.rsplit("/", 1)[-1] else {model}
     selected = next((item for item in tags.get("models", [])
                      if item.get("name") in names or item.get("model") in names), None)
     if not selected or not selected.get("digest"):
@@ -153,7 +153,8 @@ def runtime_identity():
     if not isinstance(version, dict) or not isinstance(version.get("version"), str):
         raise ValueError("Ollama did not return its runtime version.")
     identity = {"url": url, "ollama_version": version["version"], "configured_model": model,
-                "model": copy.deepcopy(selected)}
+                "model": copy.deepcopy(selected), "task": "translation",
+                "translation_profile": enhancements.translation_profile()}
     json.dumps(identity, allow_nan=False)
     return identity
 
@@ -285,7 +286,8 @@ def evaluate(corpus_path, output, case_ids=None, splits=None, fail_on_review=Fal
             checkpoint()
             try:
                 with observe_requests(result["requests"], checkpoint):
-                    result["translation"] = enhancements.translate_segments(source, case["target_language"])
+                    result["translation"] = enhancements.translate_segments(
+                        source, case["target_language"], source_language=case["source_language"])
             except Exception as exc:
                 result["error"] = {"type": type(exc).__name__, "message": str(exc)}
             result["structural_checks"] = structural_checks(before, source, result["translation"])

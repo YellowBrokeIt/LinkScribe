@@ -1,0 +1,11 @@
+# First-party Apache-2.0 weights. The explicit template fixes the malformed
+# automatic import observed with Ollama 0.40.12. No model weights are bundled.
+# Native dense 1.8B protocol:
+# https://github.com/Tencent-Hunyuan/Hy-MT3/blob/main/train/llama_factory_support/hy_dense_template.py
+FROM hf.co/tencent/Hy-MT3-1.8B-GGUF:Q4_K_M
+
+TEMPLATE """<｜hy_begin▁of▁sentence｜>{{ if .Messages }}{{ range .Messages }}{{ if eq .Role "system" }}{{ .Content }}<｜hy_place▁holder▁no▁3｜>{{ else if eq .Role "user" }}<｜hy_User｜>{{ .Content }}{{ else if eq .Role "assistant" }}<｜hy_Assistant｜>{{ .Content }}<｜hy_place▁holder▁no▁2｜>{{ end }}{{ end }}<｜hy_Assistant｜>{{ else }}{{ if .System }}{{ .System }}<｜hy_place▁holder▁no▁3｜>{{ end }}<｜hy_User｜>{{ .Prompt }}<｜hy_Assistant｜>{{ .Response }}{{ end }}"""
+PARAMETER stop "<｜hy_place▁holder▁no▁2｜>"
+PARAMETER temperature 0
+PARAMETER num_ctx 8192
+PARAMETER num_predict 2048

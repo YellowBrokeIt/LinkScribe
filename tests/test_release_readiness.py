@@ -44,7 +44,7 @@ def test_unexpected_optional_model_errors_keep_transcript(client, monkeypatch):
     monkeypatch.setattr(module, "_download_source_audio", fake_audio)
     monkeypatch.setattr(module, "_recognize", fake_recognize)
 
-    def fail(*args):
+    def fail(*args, **kwargs):
         raise RuntimeError("broken optional model")
 
     for function in ("assign_speakers", "translate_segments", "summarize_segments"):

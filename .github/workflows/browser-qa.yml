@@ -1,0 +1,37 @@
+name: LinkScribe browser QA
+on:
+  push:
+    branches: [master, 'feature/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-browser:
+    name: Real browser / upload / library / backup
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install app and browser dependencies
+        run: |
+          python -m pip install -r requirements.txt playwright==1.57.0
+          python -m playwright install --with-deps chromium
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Exercise the actual application in Chromium
+        env:
+          PYTHONPATH: .
+          HF_HOME: ${{ runner.temp }}/linkscr-browser-models
+        run: python tests/smoke_browser.py --output qa-browser
+      - name: Preserve browser results and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-browser-${{ github.sha }}
+          path: qa-browser/**
+          if-no-files-found: warn
+          retention-days: 30

@@ -81,7 +81,7 @@ def install_fake_models(monkeypatch):
     monkeypatch.setattr(module,"_download_source_audio",fake_audio)
     monkeypatch.setattr(module,"_recognize",fake_recognize)
     monkeypatch.setattr(module,"assign_speakers",lambda path,segments:[{**s,"speaker":"Speaker 1"} for s in segments])
-    monkeypatch.setattr(module,"translate_segments",lambda segments,target:[{**s,"text":"Γειά σου"} for s in segments])
+    monkeypatch.setattr(module,"translate_segments",lambda segments,target,source_language=None:[{**s,"text":"Γειά σου"} for s in segments])
     monkeypatch.setattr(module,"summarize_segments",fake_summary)
 
 
@@ -154,7 +154,7 @@ def test_batch_validation_and_speaker_caption_constraints(client):
 
 def test_unavailable_ollama_preserves_transcript(client,monkeypatch):
     install_fake_models(monkeypatch)
-    def offline(*args):raise enhancements.EnhancementError("Local AI is not installed")
+    def offline(*args,**kwargs):raise enhancements.EnhancementError("Local AI is not installed")
     monkeypatch.setattr(module,"translate_segments",offline)
     monkeypatch.setattr(module,"summarize_segments",offline)
     result=client.post("/api/link",data={"url":VALID_VIMEO,"mode":"audio","consent":"true","target_language":"el","summary":"true"})
@@ -162,6 +162,60 @@ def test_unavailable_ollama_preserves_transcript(client,monkeypatch):
     assert job["status"]=="done" and len(job["warnings"])==2
     assert job["extras"]["translation_language"]=="" and not job["extras"]["summary"]
     assert client.get(f"/api/jobs/{job['id']}/download/txt").status_code==200
+
+
+@pytest.mark.parametrize("language,target", [("en", "el"), ("el-GR", "en")])
+def test_enhancement_pipeline_passes_detected_source_to_translation(client, monkeypatch, language, target):
+    calls = []
+    segments = [{"start": 0, "end": 2, "text": "Original transcript", "speaker": "Speaker 1"}]
+
+    def translate(source, selected_target, source_language=None):
+        calls.append((selected_target, source_language))
+        return [{**segment, "text": "Translated transcript"} for segment in source]
+
+    monkeypatch.setattr(module, "translate_segments", translate)
+    monkeypatch.setattr(module, "summarize_segments", fake_summary)
+    job = module._new_job("owned-test-text", title="Source-language forwarding")
+    module._enhance_and_save(job.id, segments, language, "owned_test_text", None, False, target, True)
+    assert calls == [(target, language)]
+    assert job.status == "done" and not job.warnings
+    record = client.get(f"/api/library/{job.id}").json()
+    assert record["segments"] == segments and record["summary"]["summary"] == "A test conversation"
+    assert record["translations"][target][0]["text"] == "Translated transcript"
+    assert client.get(f"/api/jobs/{job.id}/download/txt").status_code == 200
+
+
+@pytest.mark.parametrize("invalid_task", ["translation", "summary"])
+def test_invalid_task_model_does_not_discard_the_other_enhancement(client, monkeypatch, invalid_task):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "" if invalid_task == "summary" else "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "" if invalid_task == "translation" else "translategemma:4b")
+    actual_models = []
+
+    def respond(path, payload, timeout):
+        assert path == "/api/chat"
+        actual_models.append(payload["model"])
+        if payload["model"] == "translategemma:4b":
+            content = "Η Μαρία αποθήκευσε το κείμενο."
+        elif "excerpt" in payload["messages"][0]["content"]:
+            content = json.dumps({"notes": "Maria saved the text.", "chapter_title": "Saved text"})
+        else:
+            content = json.dumps({"summary": "Maria saved the text.", "key_points": ["Text saved"]})
+        return {"done": True, "message": {"content": content}}
+
+    monkeypatch.setattr(enhancements, "local_ollama_json", respond)
+    segments = [{"start": 0, "end": 2, "text": "Maria saved the text."}]
+    job = module._new_job("owned-test-text", title="Independent model configuration")
+    module._enhance_and_save(job.id, segments, "en", "owned_test_text", None, False, "el", True)
+    record = client.get(f"/api/library/{job.id}").json()
+    assert job.status == "done" and len(job.warnings) == 1
+    assert job.warnings[0].startswith(invalid_task.title() + ":")
+    assert record["segments"] == segments
+    if invalid_task == "translation":
+        assert record["translations"] == {} and record["summary"]["summary"] == "Maria saved the text."
+        assert actual_models == ["qwen3:4b", "qwen3:4b"]
+    else:
+        assert record["summary"] is None and record["translations"]["el"][0]["text"] == "Η Μαρία αποθήκευσε το κείμενο."
+        assert actual_models == ["translategemma:4b"]
 
 
 def test_library_edit_rejects_invalid_and_markup_preserved(client,monkeypatch):

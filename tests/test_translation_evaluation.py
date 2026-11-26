@@ -63,6 +63,7 @@ def install_model(monkeypatch, chat=None, tags=None):
         }
 
     monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
+    monkeypatch.delenv("LINKSCRIBE_TRANSLATION_MODEL", raising=False)
     monkeypatch.delenv("LINKSCRIBE_OLLAMA_URL", raising=False)
     monkeypatch.delenv("LINKSCRIBE_OLLAMA_THREADS", raising=False)
     monkeypatch.setattr(enhancements, "local_ollama_json", transport)
@@ -124,6 +125,30 @@ def test_actual_thread_setting_is_recorded_without_changing_the_request(monkeypa
     assert report["cases"][0]["requests"][0]["request"]["options"] == calls[0]["options"]
 
 
+def test_evaluator_identifies_translation_override_and_passes_source_language(monkeypatch, corpus, tmp_path):
+    original, calls = install_model(monkeypatch, lambda _: {
+        "done": True, "message": {"content": "Η Μαρία αποθήκευσε 12 απομαγνητοφωνήσεις."}},
+        tags={"models": [{"name": "translategemma:4b", "digest": "b" * 64}]})
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "")  # Summary configuration is independent.
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    sources = []
+    translate = enhancements.translate_segments
+
+    def tracked(segments, target, source_language=None):
+        sources.append(source_language)
+        return translate(segments, target, source_language=source_language)
+
+    monkeypatch.setattr(enhancements, "translate_segments", tracked)
+    report, code = run(corpus, tmp_path)
+    assert code == 0 and sources == ["en"]
+    assert report["runtime"]["task"] == "translation"
+    assert report["runtime"]["translation_profile"] == "translategemma"
+    assert report["runtime"]["configured_model"] == "translategemma:4b"
+    assert report["runtime"]["model"]["digest"] == "b" * 64
+    assert calls[0]["model"] == "translategemma:4b" and "format" not in calls[0]
+    assert enhancements.local_ollama_json is original
+
+
 @pytest.mark.parametrize("text,kind", [
     ("Maria saved 12 transcripts.", "unchanged_source"),
     ("Maria saved 12 transcripts.", "target_script_missing"),
@@ -176,7 +201,7 @@ def test_copied_segment_is_detected_when_another_segment_is_greek(monkeypatch, c
 def test_structural_failures_cannot_be_lexical_passes(monkeypatch, corpus, tmp_path, failure):
     install_model(monkeypatch)
 
-    def broken(source, target):
+    def broken(source, target, source_language=None):
         result = copy.deepcopy(source)
         result[0]["text"] = "Η Μαρία αποθήκευσε 12 απομαγνητοφωνήσεις."
         if failure == "mutate":
@@ -199,7 +224,7 @@ def test_structural_failures_cannot_be_lexical_passes(monkeypatch, corpus, tmp_p
 def test_source_mutation_is_retained_even_when_inference_raises(monkeypatch, corpus, tmp_path):
     install_model(monkeypatch)
 
-    def broken(source, target):
+    def broken(source, target, source_language=None):
         source[0]["start"] = 999
         raise RuntimeError("failed after mutation")
 

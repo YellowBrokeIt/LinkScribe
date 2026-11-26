@@ -485,7 +485,7 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
             translations[target] = [dict(s) for s in segments]
         else:
             _set(job_id, stage=f"Translating into {target} with local Ollama...")
-            try: translations[target] = translate_segments(segments, target)
+            try: translations[target] = translate_segments(segments, target, source_language=language)
             except EnhancementError as exc: warnings.append("Translation: " + str(exc))
             except Exception as exc:
                 print(f"[LinkScribe] Translation failed ({type(exc).__name__}) for job {job_id}")

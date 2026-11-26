@@ -4,6 +4,16 @@ import pytest
 import enhancements
 
 
+@pytest.fixture
+def smoke_module():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("linkscribe_smoke_models", Path(__file__).with_name("smoke_real_ollama.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 @pytest.mark.parametrize("setting,expected", [(None, None), ("", None), ("  ", None),
                                                ("1", 1), (" 4 ", 4), ("32", 32)])
 def test_thread_configuration_reaches_actual_model_request(monkeypatch, setting, expected):
@@ -70,3 +80,68 @@ def test_translation_schema_matches_each_real_fragment_batch(monkeypatch, texts)
     assert seen and sum(seen) >= len(texts)
     if len(texts) > 12 or len(texts[0]) > enhancements.MAX_TRANSLATION_INPUT_BYTES:
         assert len(seen) > 1
+
+
+def test_smoke_identifies_both_task_models_with_digests(monkeypatch, smoke_module):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    monkeypatch.setattr(enhancements, "local_ollama_json", lambda *_args, **_kwargs: {
+        "models": [{"name": "qwen3:4b", "digest": "a" * 64},
+                   {"name": "translategemma:4b", "digest": "b" * 64}]})
+    identities = smoke_module.model_identities()
+    assert identities["summary"]["configured_model"] == "qwen3:4b"
+    assert identities["summary"]["model"]["digest"] == "a" * 64
+    assert identities["translation"]["configured_model"] == "translategemma:4b"
+    assert identities["translation"]["model"]["digest"] == "b" * 64
+    assert identities["translation"]["profile"] == "translategemma"
+
+
+def test_smoke_refuses_to_claim_an_unidentified_translation_model(monkeypatch, smoke_module):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "translategemma:4b")
+    monkeypatch.setattr(enhancements, "local_ollama_json", lambda *_args, **_kwargs: {
+        "models": [{"name": "qwen3:4b", "digest": "a" * 64}]})
+    with pytest.raises(AssertionError, match="translation model translategemma:4b"):
+        smoke_module.model_identities()
+
+
+@pytest.mark.parametrize("wrong_translation_model", [False, True])
+def test_smoke_records_actual_task_routing_and_restores_wrappers(monkeypatch, smoke_module, wrong_translation_model):
+    expected = {"translation": {"configured_model": "translategemma:4b"},
+                "summary": {"configured_model": "qwen3:4b"}}
+    network_calls = []
+
+    def transport(path, payload=None, timeout=1.5):
+        network_calls.append(payload)
+        return {"done": True}
+
+    def translate(*_args, **_kwargs):
+        return enhancements.local_ollama_json("/api/chat", {
+            "model": "qwen3:4b" if wrong_translation_model else "translategemma:4b",
+            "options": {"num_thread": 4}, "messages": [{"role": "user", "content": "source"}]})
+
+    def summarize(*_args, **_kwargs):
+        return enhancements.local_ollama_json("/api/chat", {
+            "model": "qwen3:4b", "options": {"num_thread": 4}, "format": "json", "think": False,
+            "messages": [{"role": "user", "content": "summary source"}]})
+
+    monkeypatch.setattr(enhancements, "local_ollama_json", transport)
+    monkeypatch.setattr(smoke_module.app, "translate_segments", translate)
+    monkeypatch.setattr(smoke_module.app, "summarize_segments", summarize)
+    if wrong_translation_model:
+        with pytest.raises(AssertionError):
+            with smoke_module.observe_task_models(expected):
+                smoke_module.app.translate_segments([], "el", source_language="en")
+        assert network_calls == []
+    else:
+        with smoke_module.observe_task_models(expected) as actual:
+            smoke_module.app.translate_segments([], "el", source_language="en")
+            smoke_module.app.summarize_segments([])
+        assert [entry["task"] for entry in actual] == ["translation", "summary"]
+        assert [entry["model"] for entry in actual] == ["translategemma:4b", "qwen3:4b"]
+        assert all(entry["options"]["num_thread"] == 4 for entry in actual)
+        assert actual[0]["format"] is None and actual[1]["format"] == "json"
+        assert len(network_calls) == 2
+    assert enhancements.local_ollama_json is transport
+    assert smoke_module.app.translate_segments is translate
+    assert smoke_module.app.summarize_segments is summarize
