@@ -8,7 +8,7 @@ Run from the repository root (the default is the 52-second licensed trailer)::
         --fixture dailymotion_tears_of_steel --output qa-real-links
 
 The real HTTP API, queue, downloader, local Whisper, SQLite, and exporters run
-unchanged. Two observer wrappers record acquisition and recognition evidence;
+unchanged. Observer wrappers record acquisition, decoding, and recognition evidence;
 they call the original functions and never supply media, captions, or text.
 The isolated server process is stopped and started again to check durable
 library downloads and completed batch history. No account, cookies, alternate
@@ -24,7 +24,9 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import hashlib
+import importlib
 import importlib.metadata
+import inspect
 import io
 import json
 import math
@@ -133,6 +135,27 @@ def exception_chain(error):
     return chain
 
 
+def observe_audio_decode(module, event):
+    """Measure the actual production decoder's return value without replacing it."""
+    original = module.decode_audio
+    signature = inspect.signature(original)
+
+    def observed_decode(input_file, *args, **kwargs):
+        arguments = signature.bind(input_file, *args, **kwargs)
+        arguments.apply_defaults()
+        audio = original(input_file, *args, **kwargs)
+        rate = arguments.arguments["sampling_rate"]
+        channels = audio if isinstance(audio, tuple) else (audio,)
+        counts = [len(channel) for channel in channels]
+        event("audio_decoded",
+              job_id=Path(input_file).parent.name if isinstance(input_file, (str, os.PathLike)) else None,
+              sampling_rate_hz=rate, channel_sample_counts=counts,
+              decoded_duration_seconds=max(counts, default=0) / rate)
+        return audio
+
+    module.decode_audio = observed_decode
+
+
 def serve(data_root, events_path):
     """Only data locations and evidence observers differ from normal app startup."""
     sys.path.insert(0, str(ROOT))
@@ -159,6 +182,12 @@ def serve(data_root, events_path):
             versions[package] = None
     event("server_start", versions=versions, system_certificates=os.getenv("LINKSCRIBE_USE_SYSTEM_CERTS") == "1",
           device="cpu", source_sha256=source_hashes())
+
+    # Observe the decoder that WhisperModel.transcribe actually calls. Its
+    # returned array is passed through unchanged; no second decode is run.
+    import onnxruntime
+    onnxruntime.disable_telemetry_events()
+    observe_audio_decode(importlib.import_module("faster_whisper.transcribe"), event)
 
     download = app._download_source_audio
     recognize = app._recognize
@@ -360,11 +389,16 @@ def run(args):
         assert not list((data_root / "jobs" / identifier).glob("audio.*")), "Downloaded audio was not cleaned."
         evidence = events_for(identifier)
         assert any(e["kind"] == "acquisition_done" and e["audio_streams"] > 0 for e in evidence), evidence
+        decoded = [e for e in evidence if e["kind"] == "audio_decoded"]
+        assert len(decoded) == 1 and decoded[0]["decoded_duration_seconds"] > 0, evidence
         assert any(e["kind"] == "recognition_done" and e["segment_count"] == len(segments) for e in evidence), evidence
         successful_records[identifier] = record
         export_payloads[identifier] = payloads
         return {"id": identifier, "title": record["title"], "language": record["language"],
                 "segment_count": len(segments), "events": evidence,
+                "decoded_duration_seconds": decoded[0]["decoded_duration_seconds"],
+                "last_segment_end_seconds": max(s["end"] for s in segments),
+                "maximum_segment_duration_seconds": max(s["end"] - s["start"] for s in segments),
                 "exports": {code: {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
                             for code, data in payloads.items()},
                 "sqlite_matches_saved_segments": True, "input_audio_cleaned": True,
