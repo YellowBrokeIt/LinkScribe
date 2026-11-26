@@ -251,7 +251,11 @@ def test_qa_ollama_real_local_http_contract_and_nonlocal_refusal(monkeypatch):
             translated=enhancements.translate_segments([{'start':0,'end':1,'text':'Hello!'}],'el')
             assert translated==[{'start':0,'end':1,'text':'Γεια!'}]
             assert len(requests)==1 and requests[0]['stream'] is False
-            assert requests[0]['format']=='json' and requests[0]['model']
+            assert requests[0]['model']
+            response_schema = requests[0]['format']
+            assert response_schema['required'] == ['translations']
+            assert response_schema['properties']['translations'] == {
+                'type': 'array', 'items': {'type': 'string'}, 'minItems': 1, 'maxItems': 1}
         finally:
             server.shutdown()
             worker.join(timeout=3)

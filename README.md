@@ -56,6 +56,8 @@ Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not
 
 The default `qwen3:4b` integration has been exercised with real English and Greek examples, but its wording still needs review: the test run included an incorrect Greek term for “transcript” and an unnatural English article before a name. Successful timing, storage and export checks do not certify translation quality. The original transcript is retained for comparison.
 
+For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
+
 ## Optional speaker identification (pyannote)
 
 ```bash
@@ -126,6 +128,25 @@ PYTHONPATH=. ./.venv/bin/python tests/smoke_live_providers.py --url https://www.
 ```
 
 The Ollama script requires the selected model already running locally. The provider script checks metadata and playable stream extraction by default; it is **not** a full transcription test. Live provider tests remain separate from CI because availability and access restrictions can change. The current live probe reached YouTube metadata with patched Node, while the selected Vimeo video required login and Dailymotion returned no playable formats in the test environment. **Full live link-to-transcript coverage across all three providers and gated pyannote Community-1 inference remain unverified.** The pyannote-core alignment check does not imply that the speaker model was run.
+
+### Bilingual translation evaluation
+
+The internally authored English/Greek corpus contains six development cases, four separate holdout cases, and two long passages that force production segment splitting. It covers terminology, names and roles, amounts, negation, conditions, uncertainty, quoted instructions, omissions, and continuity. References and review criteria are never sent to the model.
+
+With the selected model already installed and Ollama running locally:
+
+```bash
+LINKSCRIBE_OLLAMA_THREADS=4 PYTHONPATH=. ./.venv/bin/python \
+  tests/evaluate_translation_quality.py --output /tmp/linkscribe-translation-evaluation.json
+```
+
+Use `--split development` when adjusting a prompt, then evaluate the unchanged holdout and long passages. `--split` and `--case CASE_ID` can be repeated. Keep baseline and candidate reports separate and fix the candidate prompt before inspecting its holdout results.
+
+Reports retain exact source and output text, reference wording, review criteria, actual model requests and returned JSON, source/corpus fingerprints, model digest, runtime version, and inference settings. They checkpoint atomically before and after each model request. `complete` describes the requested selection; `corpus_complete` requires every corpus case. An interrupted or failed setup remains explicitly incomplete.
+
+Exit code zero means execution and structural checks passed. Lexical review flags do not certify errors or semantic quality: valid number formatting, transliteration and alternative wording can trigger them, while incorrect meaning can pass. Every automatic report therefore remains `semantic_quality: unreviewed`; compare full propositions and long-passage endings against the references. `--fail-on-review-flags` makes lexical misses fail the command when a stricter mechanical gate is useful.
+
+The Independent LinkScribe QA workflow runs the full corpus against the actual local model and retains its JSON report alongside the integration output for 30 days, including available evidence from failed runs. These are reproducible internal fixtures, not an external language benchmark or a release approval.
 
 ## GitHub Pages
 
