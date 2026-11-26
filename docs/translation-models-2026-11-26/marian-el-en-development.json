@@ -1,0 +1,478 @@
+{
+  "backend": "marian-ctranslate2",
+  "production_integration": false,
+  "semantic_quality": "unreviewed",
+  "source_corpus_sha256": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626",
+  "model": {
+    "source": {
+      "repository": "Helsinki-NLP/opus-mt-tc-big-el-en",
+      "revision": "a69108562775c6727edf3540346f9d8900b73634",
+      "license": "cc-by-4.0",
+      "original_archives": [
+        "https://object.pouta.csc.fi/Tatoeba-MT-models/ell-eng/opusTCv20210807+bt_transformer-big_2022-02-25.zip"
+      ],
+      "archive_bytes": 878830047,
+      "archive_sha256": "7f44ee3eddd632b1934bedbae79ad7ba2650fb932803a098234da3a76ccd4f47",
+      "members": [
+        {
+          "name": "README.md",
+          "bytes": 1055,
+          "compressed_bytes": 367
+        },
+        {
+          "name": "LICENSE",
+          "bytes": 18652,
+          "compressed_bytes": 5916
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.model1.npz.best-perplexity.npz",
+          "bytes": 946677790,
+          "compressed_bytes": 877606145
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.model1.npz.best-perplexity.yml",
+          "bytes": 1186,
+          "compressed_bytes": 480
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.vocab.yml",
+          "bytes": 1181971,
+          "compressed_bytes": 358721
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.valid1.log",
+          "bytes": 3394,
+          "compressed_bytes": 613
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.train1.log",
+          "bytes": 67784,
+          "compressed_bytes": 8988
+        },
+        {
+          "name": "source.spm",
+          "bytes": 1003051,
+          "compressed_bytes": 439711
+        },
+        {
+          "name": "target.spm",
+          "bytes": 798530,
+          "compressed_bytes": 405384
+        },
+        {
+          "name": "decoder.yml",
+          "bytes": 305,
+          "compressed_bytes": 160
+        },
+        {
+          "name": "preprocess.sh",
+          "bytes": 1413,
+          "compressed_bytes": 633
+        },
+        {
+          "name": "postprocess.sh",
+          "bytes": 80,
+          "compressed_bytes": 78
+        },
+        {
+          "name": "opusTCv20210807+bt.transformer-big.mk",
+          "bytes": 565,
+          "compressed_bytes": 307
+        }
+      ]
+    },
+    "conversion": {
+      "ctranslate2": "4.9.1",
+      "sentencepiece": "0.2.1",
+      "quantization": "int8",
+      "elapsed_seconds": 4.095
+    },
+    "files": {
+      "model.bin": {
+        "bytes": 246602285,
+        "sha256": "66bc596962b53f56ea1e9412fb1612b6b2b4c405c99dd92709a62dbe3f5d240d"
+      },
+      "config.json": {
+        "bytes": 221,
+        "sha256": "152eb448f1020eb55f90971d7b95f61896abee8415d555ca51ae7897ac0a0e68"
+      },
+      "target.spm": {
+        "bytes": 798530,
+        "sha256": "eb161fb698225d722b251738042d6e27481a66ba96477ab0fb046d8aa937ab2c"
+      },
+      "LICENSE": {
+        "bytes": 18652,
+        "sha256": "945fbcb37deca05bccd7c3ca0e261679f1f5373515504fdbad68f6f3cf6f49b9"
+      },
+      "source.spm": {
+        "bytes": 1003051,
+        "sha256": "1f78d71e80e2dc22697802dfea24855499c5d482d1c47611f96a96af0b38ea4f"
+      },
+      "README.md": {
+        "bytes": 1055,
+        "sha256": "ecdda5ac29081688d203db553dc7615f6f3e5e1bb83290ddcd35d204299dbcaa"
+      },
+      "shared_vocabulary.json": {
+        "bytes": 1977376,
+        "sha256": "de77938983aa10bc06e52ed06ab217e25e4545b61b04341034c0d3f0b6efcea7"
+      }
+    }
+  },
+  "settings": {
+    "device": "cpu",
+    "compute_type": "int8",
+    "beam_size": 4,
+    "length_penalty": 1.0,
+    "max_decoding_length": 512,
+    "max_input_length": 0,
+    "inter_threads": 1,
+    "intra_threads": 4,
+    "tokenizer": "SentencePiece directly; no additional text normalization in this development prototype"
+  },
+  "cases": [
+    {
+      "id": "dev-el-en-people-and-roles",
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁Ο",
+          "▁Νίκος",
+          "▁έστειλε",
+          "▁το",
+          "▁κείμενο",
+          "▁στην",
+          "▁Ελένη",
+          ",",
+          "▁όχι",
+          "▁στην",
+          "▁Έλεν",
+          "α",
+          "."
+        ],
+        [
+          "▁Η",
+          "▁Ελένη",
+          "▁είναι",
+          "▁η",
+          "▁μεταφράσ",
+          "τρια",
+          ".",
+          "▁Ο",
+          "▁Νίκος",
+          "▁κάνει",
+          "▁την",
+          "▁ηχογράφησ",
+          "η",
+          "▁και",
+          "▁η",
+          "▁Έλεν",
+          "α",
+          "▁ελέγχει",
+          "▁τους",
+          "▁υπό",
+          "τιτλο",
+          "υς",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁Nikos",
+          "▁sent",
+          "▁the",
+          "▁text",
+          "▁to",
+          "▁Helen",
+          ",",
+          "▁not",
+          "▁Helena",
+          "."
+        ],
+        [
+          "▁Helen",
+          "▁is",
+          "▁the",
+          "▁translator",
+          ";",
+          "▁Nikos",
+          "▁does",
+          "▁the",
+          "▁recording",
+          "▁and",
+          "▁Helena",
+          "▁controls",
+          "▁the",
+          "▁sub",
+          "title",
+          "s",
+          "."
+        ]
+      ],
+      "translations": [
+        "Nikos sent the text to Helen, not Helena.",
+        "Helen is the translator; Nikos does the recording and Helena controls the subtitles."
+      ],
+      "scores": [
+        -0.23325520753860474,
+        -0.3581528663635254
+      ],
+      "elapsed_seconds": 0.379,
+      "semantic_quality": "unreviewed"
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "reference_translations": [
+        "I did not say that Anna sold all the books. I said that she did not sell any yesterday.",
+        "She may sell one today, but that has not been decided."
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁Δεν",
+          "▁είπα",
+          "▁ότι",
+          "▁η",
+          "▁Άννα",
+          "▁πούλησε",
+          "▁όλα",
+          "▁τα",
+          "▁βιβλία",
+          ".",
+          "▁Είπα",
+          "▁ότι",
+          "▁δεν",
+          "▁πούλησε",
+          "▁κανένα",
+          "▁χθες",
+          "."
+        ],
+        [
+          "▁Σήμερα",
+          "▁μπορεί",
+          "▁να",
+          "▁πουλήσει",
+          "▁ένα",
+          ",",
+          "▁αλλά",
+          "▁αυτό",
+          "▁δεν",
+          "▁έχει",
+          "▁αποφασιστεί",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁I",
+          "▁didn",
+          "'",
+          "t",
+          "▁say",
+          "▁Anna",
+          "▁sold",
+          "▁all",
+          "▁the",
+          "▁books",
+          ",",
+          "▁I",
+          "▁said",
+          "▁she",
+          "▁didn",
+          "'",
+          "t",
+          "▁sell",
+          "▁any",
+          "▁yesterday",
+          "."
+        ],
+        [
+          "▁Today",
+          "▁he",
+          "▁can",
+          "▁sell",
+          "▁one",
+          ",",
+          "▁but",
+          "▁that",
+          "▁hasn",
+          "'",
+          "t",
+          "▁been",
+          "▁decided",
+          "."
+        ]
+      ],
+      "translations": [
+        "I didn't say Anna sold all the books, I said she didn't sell any yesterday.",
+        "Today he can sell one, but that hasn't been decided."
+      ],
+      "scores": [
+        -0.29669931530952454,
+        -0.31525740027427673
+      ],
+      "elapsed_seconds": 0.331,
+      "semantic_quality": "unreviewed"
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁Η",
+          "▁Μαρία",
+          "▁ρώτησε",
+          ":",
+          "▁«",
+          "Το",
+          "▁αρχείο",
+          "▁έχει",
+          "▁12",
+          "▁κεφάλαια",
+          "▁ή",
+          "▁21",
+          ";»"
+        ],
+        [
+          "▁Δεν",
+          "▁γνωρίζουμε",
+          "▁ακόμη",
+          "▁την",
+          "▁απάντηση",
+          ".",
+          "▁Ο",
+          "▁τίτλος",
+          "▁μόνος",
+          "▁του",
+          "▁δεν",
+          "▁αρκεί",
+          "▁για",
+          "▁να",
+          "▁το",
+          "▁διαπιστ",
+          "ώσουμε",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁Maria",
+          "▁asked",
+          ":",
+          "▁\"",
+          "Do",
+          "es",
+          "▁the",
+          "▁record",
+          "▁have",
+          "▁12",
+          "▁chapters",
+          "▁or",
+          "▁21",
+          "?\""
+        ],
+        [
+          "▁We",
+          "▁do",
+          "▁not",
+          "▁yet",
+          "▁know",
+          "▁the",
+          "▁answer",
+          ";",
+          "▁the",
+          "▁title",
+          "▁alone",
+          "▁is",
+          "▁not",
+          "▁enough",
+          "▁to",
+          "▁find",
+          "▁out",
+          "."
+        ]
+      ],
+      "translations": [
+        "Maria asked: \"Does the record have 12 chapters or 21?\"",
+        "We do not yet know the answer; the title alone is not enough to find out."
+      ],
+      "scores": [
+        -0.2905385196208954,
+        -0.36622995138168335
+      ],
+      "elapsed_seconds": 0.236,
+      "semantic_quality": "unreviewed"
+    }
+  ],
+  "elapsed_seconds": 0.95,
+  "peak_rss_bytes": 329129984
+}

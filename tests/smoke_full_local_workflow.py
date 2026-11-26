@@ -265,7 +265,8 @@ def main(argv=None):
         def transport(path, payload=None, **kwargs):
             if path != "/api/chat":
                 return originals["transport"](path, payload, **kwargs)
-            event = {"task": getattr(active, "task", None), "request": deepcopy(payload), "response_json": None}
+            event = {"kind": "control" if enhancements.is_ollama_control_request(payload) else "inference",
+                     "task": getattr(active, "task", None), "request": deepcopy(payload), "response_json": None}
             report["ollama_requests"].append(event)
             checkpoint()
             call_started = time.monotonic()
@@ -303,13 +304,13 @@ def main(argv=None):
                 active.task = None
                 checkpoint()
 
-        def summarize(segments):
-            event = {"source_segments": deepcopy(segments)}
+        def summarize(segments, source_language=None):
+            event = {"source_language": source_language, "source_segments": deepcopy(segments)}
             report["actual_summary_calls"].append(event)
             active.task = "summary"
             checkpoint()
             try:
-                result = originals["summarize"](segments)
+                result = originals["summarize"](segments, source_language=source_language)
                 event["output"] = deepcopy(result)
                 assert segments == event["source_segments"], "Summary mutated the recognized source."
                 return result
@@ -331,9 +332,12 @@ def main(argv=None):
                                    "--target", args.translation, "--summary", "--timeout", "900"])
         report["workflow"] = json.loads(workflow_path.read_text())
         assert exit_code == 0 and report["workflow"]["complete"], report["workflow"].get("error")
-        assert report["actual_translation_calls"] and report["actual_summary_calls"] and report["ollama_requests"]
+        inference = [item for item in report["ollama_requests"] if item["kind"] == "inference"]
+        report["inference_request_count"] = len(inference)
+        report["control_request_count"] = len(report["ollama_requests"]) - len(inference)
+        assert report["actual_translation_calls"] and report["actual_summary_calls"] and inference
         assert all(item["request"]["model"] == expected_models.get(item["task"]) for item in report["ollama_requests"])
-        assert {item["task"] for item in report["ollama_requests"]} == set(expected_models)
+        assert {item["task"] for item in inference} == set(expected_models)
         assert {name: file_sha(ROOT / name) for name in names} == report["source_sha256"], "Source changed during combined inference."
         report["complete"] = True
     except KeyboardInterrupt:

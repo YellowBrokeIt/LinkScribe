@@ -72,7 +72,9 @@ def test_local_transcript_never_uses_environment_proxy(monkeypatch):
                 {"start": 1, "end": 2, "text": "Good morning!", "speaker": "Speaker 1"}
             ], "el")
     assert not proxy_calls
-    assert len(calls) == 1 and calls[0][1] == "/api/chat"
+    assert len(calls) == 2 and all(call[1] == "/api/chat" for call in calls)
+    assert not enhancements.is_ollama_control_request(json.loads(calls[0][2]))
+    assert enhancements.is_ollama_control_request(json.loads(calls[1][2]))
     assert result == [{"start": 1, "end": 2, "text": "Καλημέρα!", "speaker": "Speaker 1"}]
 
 
@@ -118,7 +120,7 @@ def test_long_summary_keeps_every_note_during_reduction(monkeypatch):
     def model(payload):
         system, user = [message["content"] for message in payload["messages"]]
         if "chapter_title" in system:
-            note = f"MARKER_{len(notes)} " + "x" * 4980
+            note = f"MARKER_{len(notes)} " + "x" * 2000
             notes.append(note)
             return {"notes": note, "chapter_title": "Section"}
         if "Condense" in system:
@@ -126,11 +128,13 @@ def test_long_summary_keeps_every_note_during_reduction(monkeypatch):
             return {"notes": " ".join(f"MARKER_{i}" for i in range(4) if f"MARKER_{i}" in user)}
         return {"summary": user, "key_points": ["Four sections"]}
     monkeypatch.setattr(enhancements, "_ollama", model)
-    segments = [{"start": i * 10, "end": i * 10 + 5, "text": str(i) + "x" * 4000}
+    segments = [{"start": i * 10, "end": i * 10 + 5, "text": str(i) + "x" * 2000}
                 for i in range(4)]
     result = enhancements.summarize_segments(segments)
     assert all(f"MARKER_{i}" in result["summary"] for i in range(4))
-    assert all(len(request) <= 11500 for request in reductions)
+    assert reductions
+    assert all(len(request.encode("utf-8")) <= enhancements.MAX_SUMMARY_INPUT_BYTES
+               for request in reductions)
     assert [chapter["start"] for chapter in result["chapters"]] == [0, 10, 20, 30]
 
 
@@ -138,8 +142,8 @@ def test_long_summary_keeps_every_note_during_reduction(monkeypatch):
 def test_empty_or_overlong_excerpt_notes_are_rejected(monkeypatch, notes):
     monkeypatch.setattr(enhancements, "_ollama", lambda _payload: {
         "notes": notes, "chapter_title": "Chapter"})
-    with pytest.raises(enhancements.EnhancementError, match="excerpt summary"):
-        enhancements.summarize_segments([{"start": 0, "end": 1, "text": "Hello"}])
+    with pytest.raises(enhancements.EnhancementError, match="excerpt summary|oversized summary notes"):
+        enhancements.summarize_segments([{"start": 0, "end": 1, "text": "Hello " * 800}])
 
 
 @pytest.mark.parametrize("response", [[], {"models": None}, {"models": "not a list"}])

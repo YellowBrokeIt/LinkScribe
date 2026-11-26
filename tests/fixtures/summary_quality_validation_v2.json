@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "corpus_version": "2026-11-26-summary-validation-v2",
+  "frozen": true,
+  "description": "Two new internally authored short-summary validation cases prepared before any direct-source correction output. Distinct scenarios, people and quantities from the initial summary development set. Expected facts are review metadata and never extra model instructions. Output language is a separate usability observation.",
+  "cases": [
+    {
+      "id": "summary-v2-en-duplicate-refund",
+      "split": "holdout",
+      "source_language": "en",
+      "preferred_output_language": "en",
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 28.5,
+          "text": "At the print cooperative, Selma's card was charged twice for one order of nine posters. The duplicate charge was €17.35. Ivo reported the mistake on Selma's behalf; the refund is owed to Selma, not to Ivo.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 30.5,
+          "end": 58.5,
+          "text": "Tessa approved the refund request, but the payment has not yet been sent. The original payment was correct and the poster order remains active. The workshop has printed nine posters, not eighteen; the extra charge did not create another order.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 60.5,
+          "end": 88.5,
+          "text": "An earlier message had mistakenly stated a refund of €71.35. Tessa corrected it to €17.35 after checking the receipt. This is the total duplicate payment to return, not an amount for each poster.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 90.5,
+          "end": 118.5,
+          "text": "Selma may collect the posters on Thursday if the mounting boards are ready, but that collection time is not confirmed. Tessa will record the refund as paid only after bank confirmation. Ivo has reported the problem; he has not collected any refund or posters.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "important_facts": [
+        {
+          "fact": "Selma is owed the €17.35 duplicate-payment refund; Ivo reported the problem on her behalf and does not own or receive the refund.",
+          "segments": [
+            0,
+            3
+          ],
+          "priority": "critical_fact"
+        },
+        {
+          "fact": "The refund is approved but not yet sent or paid; the original payment and single nine-poster order remain valid.",
+          "segments": [
+            1,
+            3
+          ],
+          "priority": "critical_fact"
+        },
+        {
+          "fact": "€71.35 is the rejected mistaken amount; €17.35 is the total refund, not per poster. There are nine posters, not eighteen.",
+          "segments": [
+            1,
+            2
+          ]
+        },
+        {
+          "fact": "Thursday collection remains conditional on mounting boards being ready; no collection has occurred.",
+          "segments": [
+            3
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        "Ivo is owed or has collected the refund.",
+        "The refund has already been paid, or the original order was cancelled.",
+        "The refund is €71.35, €17.35 per poster, or there are eighteen ordered posters.",
+        "Thursday pickup is confirmed or Selma has collected the posters."
+      ],
+      "review_criteria": [
+        "Keep the customer owed money distinct from the person reporting the error.",
+        "Preserve the approved-but-unpaid status and corrected total, without inventing completion or an additional order.",
+        "Retain the conditional collection arrangement if discussed; ordinary supporting details may be compressed."
+      ],
+      "long_form": false
+    },
+    {
+      "id": "summary-v2-el-book-donations-and-loans",
+      "split": "holdout",
+      "source_language": "el",
+      "preferred_output_language": "el",
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 28.5,
+          "text": "Στο κινητό ανταλλακτήριο βιβλίων, ο Σάββας μετέφερε 28 βιβλία και η Δέσποινα τα καταχώρισε. Τα 20 ήταν δωρεές, ενώ τα 8 ήταν δανεικά της Μυρτώς μόνο για την παρουσίαση. Η μεταφορά και η καταχώριση δεν άλλαξαν την ιδιοκτησία των δανεικών.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 30.5,
+          "end": 58.5,
+          "text": "Στον τελικό έλεγχο βρέθηκαν δύο δωρημένα βιβλία με σελίδες που έλειπαν. Θα παραμείνουν χωριστά για εξέταση και δεν αποφασίστηκε να πεταχτούν. Έτσι, 18 δωρημένα βιβλία μπορούν να διατεθούν στο κοινό. Τα 8 δανεικά δεν προστίθενται στα βιβλία που θα μοιραστούν.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 60.5,
+          "end": 88.5,
+          "text": "Η επιβεβαιωμένη ώρα έναρξης είναι το Σάββατο στις 16:40, όχι στις 16:04 που έγραφε ένα παλιό σημείωμα. Η Μυρτώ έχει ζητήσει τα δανεικά της πίσω μέχρι τη Δευτέρα. Η ερώτηση αν θα μπορούσαν να μείνουν περισσότερο δεν έχει απαντηθεί, οπότε η προθεσμία δεν άλλαξε.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 90.5,
+          "end": 118.5,
+          "text": "Ο Σάββας θα επιστρέψει τα 8 βιβλία στη Μυρτώ μετά την παρουσίαση και μέχρι την προθεσμία. Η Δέσποινα θα ξεχωρίσει τις ετικέτες των 18 διαθέσιμων δωρεών, των δύο βιβλίων υπό εξέταση και των 8 δανεικών. Η εκδήλωση δεν έχει αρχίσει ακόμη και κανένα βιβλίο δεν έχει δοθεί σε επισκέπτη.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "important_facts": [
+        {
+          "fact": "Of 28 books, 20 are donations and 8 remain Myrto’s loans; Savvas transports/returns them and Despoina records/labels them.",
+          "segments": [
+            0,
+            3
+          ],
+          "priority": "critical_fact"
+        },
+        {
+          "fact": "Only 18 donated books are available to visitors; two damaged donations await examination and are not ordered discarded; eight loans are not giveaway stock.",
+          "segments": [
+            1,
+            3
+          ],
+          "priority": "critical_fact"
+        },
+        {
+          "fact": "The confirmed start is Saturday at 16:40, replacing the erroneous 16:04 note.",
+          "segments": [
+            2
+          ]
+        },
+        {
+          "fact": "Loans must still return to Myrto by Monday because a possible extension has not been approved; the event and distribution have not begun.",
+          "segments": [
+            2,
+            3
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        "All 28 books or all 20 donations can be distributed now.",
+        "The eight borrowed books were donated or now belong to the organisers.",
+        "The two damaged books have been discarded.",
+        "The current start time is 16:04 or the Monday loan deadline has been extended.",
+        "Visitors have already received books or the return has already occurred."
+      ],
+      "review_criteria": [
+        "Keep donated, temporarily borrowed, ready and awaiting-examination categories distinct.",
+        "Preserve the corrected time, unchanged return deadline and unanswered extension request.",
+        "Do not convert planned labeling, distribution or return into completed actions."
+      ],
+      "long_form": false
+    },
+    {
+      "id": "summary-v2-long-el-quiz-score-audit",
+      "split": "holdout",
+      "source_language": "el",
+      "preferred_output_language": "el",
+      "segments": [
+        {
+          "start": 1.25,
+          "end": 841.25,
+          "text": "Η Φλώρα άνοιξε τη συζήτηση μετά το τέλος ενός τοπικού διαγωνισμού γνώσεων. Είχαν δηλώσει συμμετοχή 10 ομάδες, αλλά τελικά διαγωνίστηκαν 9, επειδή μία αποχώρησε πριν αρχίσει ο πρώτος γύρος. Η αποχώρηση δεν καταγράφηκε ως ήττα με μηδενική βαθμολογία. Ο διαγωνισμός είχε ήδη ολοκληρωθεί, όμως η απονομή δεν είχε γίνει ακόμη και ο πίνακας αποτελεσμάτων παρέμενε προσωρινός μέχρι να τελειώσει ο έλεγχος των φύλλων.\n\nΟ Μανώλης είχε αναλάβει να μεταφέρει τις βαθμολογίες από τα έντυπα στον συγκεντρωτικό πίνακα. Η Ιωάννα έκανε δεύτερο έλεγχο συγκρίνοντας τις εγγραφές με τα πρωτότυπα. Η Φλώρα συντόνιζε την ανακοίνωση και δεν μπορούσε να αλλάξει μόνη της μια βαθμολογία επειδή κάποια ομάδα ήταν δημοφιλής. Κάθε διόρθωση θα έπρεπε να συνοδεύεται από σαφή αιτία, ώστε οι συμμετέχοντες να καταλαβαίνουν τι ελέγχθηκε και ποιο στοιχείο διορθώθηκε.\n\nΟι ομάδες είχαν απαντήσει σε τρεις γύρους με τους ίδιους δημοσιευμένους κανόνες. Η συζήτηση δεν αφορούσε αλλαγή της δυσκολίας των ερωτήσεων μετά το τέλος. Μια σωστή απάντηση δεν θα έπαυε να μετρά επειδή είχε γραφτεί με μικρά γράμματα, εφόσον διαβαζόταν καθαρά. Όταν μια λέξη ήταν ασαφής, οι ελεγκτές θα εξέταζαν το αρχικό χαρτί και δεν θα βασίζονταν μόνο σε μια μικρή εικόνα στην οθόνη του υπολογιστή.\n\nΣτον προσωρινό πίνακα, η ομάδα Ακτή είχε 42 βαθμούς, η ομάδα Πεύκο 44 και η ομάδα Κήπος 36. Η Φλώρα τόνισε ότι οι αριθμοί αυτοί δεν ήταν ακόμη ανακοίνωση νικητή. Δεν είχε δοθεί βραβείο και κανείς δεν έπρεπε να θεωρήσει ότι ο μεγαλύτερος προσωρινός αριθμός είχε ήδη επικυρωθεί. Οι υπόλοιπες ομάδες μπορούσαν επίσης να ζητήσουν να δουν τον τρόπο καταγραφής της δικής τους βαθμολογίας χωρίς να αλλάξει αυτό τους κανόνες.\n\nΤα φύλλα απαντήσεων έφεραν τον κωδικό της ομάδας και ορισμένες χειρόγραφες σημειώσεις εργασίας. Ο Μανώλης θα κρατούσε το αρχικό αρχείο ακόμη και αν χρειαζόταν να διορθώσει τον συγκεντρωτικό πίνακα. Η διόρθωση δεν θα εξαφάνιζε το προηγούμενο στοιχείο χωρίς εξήγηση. Η Ιωάννα πρότεινε μια ξεχωριστή στήλη παρατηρήσεων όπου θα φαίνονταν η αρχική εγγραφή, η διορθωμένη τιμή και ο λόγος της αλλαγής.\n\nΗ ώρα παράδοσης ενός φύλλου είχε καταγραφεί για να ελεγχθεί αν παραδόθηκε μέσα στον γύρο. Δεν είχε ανακοινωθεί ότι η ταχύτερη ομάδα θα κέρδιζε σε περίπτωση ισοβαθμίας. Η Φλώρα υπενθύμισε ότι δεν μπορούσαν να επινοήσουν έναν τέτοιο κανόνα εκ των υστέρων. Ο έλεγχος αφορούσε τις απαντήσεις και τις καταχωρίσεις που είχαν ήδη γίνει, όχι την επιλογή ενός νέου τρόπου για να αποφευχθεί μια πιθανή κοινή πρώτη θέση.\n\nΗ σύντομη ηχητική ανακοίνωση στο τέλος των γύρων έλεγε ότι οι απαντήσεις είχαν παραδοθεί και ότι ακολουθούσε έλεγχος. Δεν ανέφερε τελικό νικητή. Αν το γραπτό κείμενο της ανακοίνωσης είχε κάποιο ορθογραφικό λάθος, αυτό μπορούσε να διορθωθεί χωρίς να ισχυριστούν ότι άλλαξε και η παλιά ηχογράφηση. Η Φλώρα ήθελε να ξεχωρίζει το τι είχε πραγματικά ανακοινωθεί από το τι επρόκειτο να ειπωθεί μετά την επιβεβαίωση του αποτελέσματος.\n\nΗ δημόσια ανακοίνωση μπορούσε να αναφέρει τα ονόματα των ομάδων και τους τελικούς συνολικούς βαθμούς. Δεν είχε δοθεί γενική άδεια να δημοσιευθούν τα ονόματα όλων των μελών, τα στοιχεία επικοινωνίας ή κάθε ιδιωτική σημείωση στα φύλλα απαντήσεων. Μια φωτογραφία του συνοπτικού πίνακα δεν ήταν το ίδιο πράγμα με ανάρτηση ολόκληρου του φακέλου εργασίας. Η Ιωάννα θα έλεγχε ποια στοιχεία φαίνονταν πριν χρησιμοποιηθεί μια εικόνα.\n\nΤο εγκεκριμένο ανώτατο κόστος για τα αναλώσιμα ήταν €96. Τα παραστατικά που είχαν ήδη συγκεντρωθεί έδειχναν πραγματική πληρωμή €81.25. Το δεύτερο ποσό δεν ήταν προσφορά που περίμενε έγκριση και δεν έπρεπε να παρουσιαστεί σαν να είχε δαπανηθεί όλο το όριο. Η Φλώρα θα κρατούσε τις αποδείξεις μαζί με την οικονομική καταγραφή. Η πιθανή ισοβαθμία δεν δημιουργούσε από μόνη της νέα απόφαση για επιπλέον αγορά.\n\nΤέσσερις μικροί πίνακες προβολής είχαν παραχωρηθεί προσωρινά από το γειτονικό εργαστήριο. Δεν αποτελούσαν βραβεία και δεν θα δίνονταν στις ομάδες. Ο Μανώλης θα τους συγκέντρωνε μετά την απονομή και θα τους επέστρεφε την επόμενη ημέρα. Η χρήση τους κατά τη διάρκεια του διαγωνισμού δεν άλλαζε την ιδιοκτησία τους. Τα χάρτινα αντίγραφα των κανόνων, αντίθετα, μπορούσαν να παραμείνουν στους συμμετέχοντες.\n\nΚατά το διάλειμμα, μερικοί συμμετέχοντες ρώτησαν πότε θα ανακοινωνόταν το αποτέλεσμα. Η Φλώρα τους είπε ότι έπρεπε πρώτα να ολοκληρωθεί η διασταύρωση των βαθμών. Δεν τους ανακοίνωσε ότι είχε αναβληθεί ο διαγωνισμός, αφού οι γύροι είχαν ήδη τελειώσει. Η αναμονή αφορούσε την τελική επιβεβαίωση και την απονομή. Η ομάδα οργάνωσης προτίμησε να εξηγήσει αυτή τη διαφορά αντί να δώσει μια βιαστική και πιθανώς λανθασμένη κατάταξη.\n\nΣε μια από τις εγγραφές η Ιωάννα εντόπισε κάτι που έμοιαζε με διπλή μεταφορά βαθμών. Αρχικά το σημείωσε ως ζήτημα προς διερεύνηση και όχι ως βεβαιωμένο σφάλμα ή απόδειξη παραβίασης των κανόνων από κάποια ομάδα. Ζήτησε από τον Μανώλη να ανοίξει το σχετικό πρωτότυπο και να συγκρίνουν τη σειρά των γραμμών. Το ότι υπήρχε ερώτηση για μια καταχώριση δεν σήμαινε ότι όλες οι απαντήσεις της ομάδας ήταν λανθασμένες.\n\nΟι συμμετέχοντες μπορούσαν να ζητήσουν εξήγηση για το δικό τους αποτέλεσμα, αλλά ο έλεγχος δεν θα γινόταν με ψηφοφορία του κοινού. Η δυνατή υποστήριξη μιας ομάδας από φίλους δεν πρόσθετε βαθμούς. Η Φλώρα ζήτησε από όσους περίμεναν να αφήσουν τους ελεγκτές να συγκρίνουν τα στοιχεία. Η ανακοίνωση θα περιέγραφε οποιαδήποτε πραγματική διόρθωση με απλά λόγια, χωρίς να κατηγορεί κάποιον για πρόθεση που δεν τεκμηριωνόταν.\n\nΠριν τελειώσει η συζήτηση, η Ιωάννα επιβεβαίωσε ότι είχαν προστεθεί δύο φορές οι ίδιοι 2 βαθμοί στην ομάδα Πεύκο. Αφαιρέθηκε μόνο η διπλή καταχώριση, οπότε το σύνολό της άλλαξε από 44 σε 42. Η ομάδα Ακτή παρέμεινε στους 42 και η ομάδα Κήπος στους 36. Δεν προστέθηκαν 2 βαθμοί στην Ακτή και δεν ακυρώθηκε ολόκληρη η συμμετοχή του Πεύκου. Η διόρθωση αφορούσε την αντιγραφή στο συγκεντρωτικό φύλλο, όχι μια νέα απάντηση.\n\nΜετά τη διόρθωση, η τελική απόφαση ήταν κοινή πρώτη θέση για τις ομάδες Ακτή και Πεύκο, με 42 βαθμούς η καθεμία. Δεν ανακοινώθηκε αποκλειστική νίκη του Πεύκου με 44 βαθμούς ούτε νίκη της Ακτής μόνης της. Δεν θα διεξαγόταν επιπλέον γύρος για να διαχωριστούν οι δύο ομάδες. Η οργανωτική ομάδα αποδέχθηκε την ισοβαθμία σύμφωνα με τους κανόνες που ίσχυαν ήδη και η Κήπος παρέμεινε στους 36 βαθμούς.\n\nΗ απονομή ορίστηκε για τις 19:10. Ένα παλιότερο ανεπίσημο σημείωμα έγραφε 19:40, αλλά δεν ήταν το ισχύον ωράριο. Η Φλώρα θα ενημέρωνε την οθόνη και θα ανακοίνωνε τη σωστή ώρα πριν αρχίσει η απονομή. Εκείνη τη στιγμή οι αγωνιστικοί γύροι και ο έλεγχος είχαν ολοκληρωθεί, ενώ η απονομή ήταν ακόμη μελλοντική. Αυτές οι διαφορετικές φάσεις δεν έπρεπε να περιγραφούν όλες ως εκκρεμείς ή όλες ως τελειωμένες.\n\nΣτην τελική καταγραφή θα έμενε η εξήγηση της διπλής εγγραφής, ώστε η αλλαγή από το προσωρινό 44 στο τελικό 42 να είναι κατανοητή. Η δημόσια έκδοση θα έδειχνε τις ομάδες και τα επιβεβαιωμένα σύνολα, χωρίς να περιλαμβάνει τις ιδιωτικές πληροφορίες των φύλλων. Ο Μανώλης θα ενημέρωνε τον πίνακα, η Ιωάννα θα έλεγχε την τελική μεταφορά και η Φλώρα θα έκανε την ανακοίνωση. Κοινή πρώτη θέση: Ακτή και Πεύκο, από 42 βαθμούς.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "important_facts": [
+        {
+          "fact": "Ten teams registered and nine actually competed; the withdrawing team was not scored as a zero-point loser. The quiz rounds are already complete.",
+          "segments": [
+            0
+          ]
+        },
+        {
+          "fact": "The late audit removes a duplicate two-point entry from Pefko, changing 44 to 42; Akti stays 42 and Kipos stays 36. No points are added to Akti and Pefko is not disqualified.",
+          "segments": [
+            0
+          ],
+          "priority": "critical_late_fact"
+        },
+        {
+          "fact": "The final decision is joint first place for Akti and Pefko at 42 each, with no additional tiebreak round. The provisional sole lead at 44 is superseded.",
+          "segments": [
+            0
+          ],
+          "priority": "critical_late_fact"
+        },
+        {
+          "fact": "The awards ceremony is still future at 19:10, replacing an unofficial 19:40 note; the rounds and audit are already finished.",
+          "segments": [
+            0
+          ],
+          "priority": "critical_late_fact"
+        },
+        {
+          "fact": "€96 is the spending cap; €81.25 is already paid actual expenditure, not an unpaid quote or the full cap.",
+          "segments": [
+            0
+          ]
+        },
+        {
+          "fact": "Manolis records/updates, Ioanna audits and Flora announces; publication covers team names and totals, not private answer-card/contact information. Borrowed display boards must be returned and are not prizes.",
+          "segments": [
+            0
+          ]
+        }
+      ],
+      "forbidden_claims": [
+        "Pefko alone won with 44 points, Akti alone won, or a new tiebreak round is planned.",
+        "Akti received two extra points or Pefko was disqualified.",
+        "Ten teams actually competed or the withdrawn team lost with zero points.",
+        "The awards ceremony already happened, or the current ceremony time is 19:40.",
+        "€81.25 is an unpaid quote or actual expenditure is the full €96 cap.",
+        "The full private answer-card archive and contact details are authorized for publication."
+      ],
+      "review_criteria": [
+        "Keep the late corrected ranking, exact score relationship and phase distinction through all internal fragments and reductions.",
+        "Preserve paid-versus-budgeted money and permission boundaries without treating background details as exhaustive summary requirements.",
+        "Treat the single long source segment as exact source content; splitting must preserve all characters and may not invent extra chapter timestamps.",
+        "The single authentic source start is 1.25. Any internal splitting must keep it, and repeated equal starts should be deduplicated."
+      ],
+      "long_form": true
+    }
+  ],
+  "frozen_at": "2026-11-26T19:16:48.223799+00:00",
+  "freeze_scope": "All three new sources and semantic criteria were fixed before any corrected-summary model output. The long Greek source is one oversized segment and contains late score/time decisions. No fixture/reference text may be used in model prompts beyond its actual source transcript."
+}

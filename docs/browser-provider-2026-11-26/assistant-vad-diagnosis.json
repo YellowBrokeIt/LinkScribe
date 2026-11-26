@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "reviewer": "OpenAI assistant; source-text comparison and instrumentation review, without human/audio-listening approval",
+  "date": "2026-11-26",
+  "published_commit": "d1817885816bf06c4e16ab8826cf0dba59866280",
+  "normal_report": "providers-vad-d1817885.json",
+  "separate_diagnostic_report": "tail-vad-off-d1817885.json",
+  "conclusion": "Normal VAD discards all samples after 423.184s. Separately cropped VAD-off inference recovers recognizable later reference dialogue, strongly supporting speech-selection loss rather than truncated acquisition or decoding.",
+  "normal_model": "small",
+  "normal_decoded_sample_count": 11746325,
+  "normal_decoded_seconds": 734.1453125,
+  "normal_vad_interval_count": 25,
+  "normal_post_vad_sample_count": 1899520,
+  "normal_post_vad_seconds": 118.72,
+  "normal_last_kept_end_seconds": 423.184,
+  "normal_last_segment_end_seconds": 423.46,
+  "normal_output_segment_count": 43,
+  "normal_result_content_rating": "major_content_issues",
+  "diagnostic_execution_completed": true,
+  "diagnostic_total_audio_seconds": 48,
+  "diagnostic_windows_seconds": [
+    [
+      424,
+      434
+    ],
+    [
+      502,
+      522
+    ],
+    [
+      553,
+      571
+    ]
+  ],
+  "diagnostic_interpretation": [
+    {
+      "window_seconds": [
+        424,
+        434
+      ],
+      "observation": "Recognizes the later warning that time has run out, with repetition; does not establish complete accurate transcription of that window."
+    },
+    {
+      "window_seconds": [
+        502,
+        522
+      ],
+      "observation": "Recognizes the later world-change/Celia line; other reference speech in the interval is not fully recovered."
+    },
+    {
+      "window_seconds": [
+        553,
+        571
+      ],
+      "observation": "Recognizes the closing lesson and worse-outcome exchange represented by the published subtitle reference."
+    }
+  ],
+  "normal_record_unchanged_before_and_after": true,
+  "normal_record_sha256": "f99f8100fafd9319726ec342d65bc6fae41014d69920371c450dedea80893fa3",
+  "normal_media_cleaned_before_diagnostic": true,
+  "diagnostic_audio_persisted": false,
+  "limits": [
+    "Post-hoc selected windows, explicit English and VAD off all differ from normal full-recording auto-language processing; this is not an isolated parameter-quality benchmark.",
+    "No human audio listening, VAD recall score, full-film WER, or universal benefit from disabling VAD is claimed.",
+    "Raw normal outputs vary across the Small runs (53 then 43 segments); all three baseline runs stop near 423s. Do not treat raw text as a bit-reproducible model output.",
+    "The diagnostic never overwrites the library/export result. Actual provider failures, normal omitted dialogue, and normal timestamp problems remain visible.",
+    "No production ASR fix or validation of a proposed fix is contained in this evidence."
+  ]
+}

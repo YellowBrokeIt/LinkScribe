@@ -9,6 +9,14 @@ import pytest
 import enhancements as ai
 
 
+@pytest.fixture(autouse=True)
+def clean_translation_settings(monkeypatch):
+    for name in ("LINKSCRIBE_TRANSLATION_MODEL", "LINKSCRIBE_TRANSLATION_BACKEND",
+                 "LINKSCRIBE_OLLAMA_MODEL", "LINKSCRIBE_OLLAMA_URL",
+                 "LINKSCRIBE_OLLAMA_THREADS", "LINKSCRIBE_OLLAMA_RETAIN_MODELS"):
+        monkeypatch.delenv(name, raising=False)
+
+
 def segment(text, index=0):
     return {"start": index + 0.125, "end": index + 0.875, "text": text,
             "speaker": f"Speaker {index + 1}", "extra": {"keep": True}}
@@ -21,7 +29,7 @@ def capture_echo(monkeypatch):
         user = payload["messages"][1]["content"]
         encoded = user.split("JSON input: ", 1)[1]
         items = json.loads(encoded)
-        assert len(encoded.encode("utf-8")) <= ai.MAX_TRANSLATION_INPUT_BYTES
+        assert len(encoded.encode("utf-8")) <= 1000
         assert len(items) <= ai.MAX_TRANSLATION_BATCH_ITEMS
         assert [item["id"] for item in items] == list(range(len(items)))
         assert all(set(item) == {"id", "text"} for item in items)
@@ -32,6 +40,7 @@ def capture_echo(monkeypatch):
     return calls
 
 
+@pytest.mark.parametrize("max_input_bytes", [1000, 1600])
 @pytest.mark.parametrize("text", [
     "", "Hello", "a" * 2800, "a" * 20000,
     "Bitcoin is not a company. " * 400,
@@ -42,12 +51,82 @@ def capture_echo(monkeypatch):
     "α\u0301" * 4000,
     "\x01" * 1000,
 ])
-def test_fragments_are_lossless_and_bounded(text):
-    parts = list(ai._translation_fragments(text))
+def test_fragments_are_lossless_and_bounded(text, max_input_bytes):
+    parts = list(ai._translation_fragments(text, max_input_bytes))
     assert "".join(parts) == text
     assert all(parts)
     assert all(len(ai._translation_json([part]).encode("utf-8"))
-               <= ai.MAX_TRANSLATION_INPUT_BYTES for part in parts)
+               <= max_input_bytes for part in parts)
+
+
+@pytest.mark.parametrize("unit", ["a", "α", "🧪", '"', "\\", "\x01"])
+@pytest.mark.parametrize("extra_byte", [0, 1])
+def test_generic_wire_requests_respect_inclusive_1000_source_json_bytes(
+        monkeypatch, unit, extra_byte):
+    # Account independently for the source JSON's ID/key/escape overhead.
+    # The outer HTTP JSON and instruction prefix intentionally have other sizes.
+    def encode(text):
+        return json.dumps([{"id": 0, "text": text}], ensure_ascii=False)
+
+    overhead = len(encode("").encode("utf-8"))
+    width = len(encode(unit).encode("utf-8")) - overhead
+    count, remainder = divmod(1000 - overhead, width)
+    text = unit * count + "a" * (remainder + extra_byte)
+    assert len(encode(text).encode("utf-8")) == 1000 + extra_byte
+    source = [segment(text)]
+    before = copy.deepcopy(source)
+    sent = []
+    controls = []
+
+    def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            controls.append(payload)
+            return {"done": True, "done_reason": "unload"}
+        assert path == "/api/chat" and timeout == 240
+        assert payload["options"]["num_predict"] == 2048
+        encoded = payload["messages"][1]["content"].split("JSON input: ", 1)[1]
+        assert len(encoded.encode("utf-8")) <= 1000
+        items = json.loads(encoded)
+        sent.append(items)
+        return {"done": True, "message": {"content": json.dumps({
+            "translations": ["synthetic translation" for _ in items]})}}
+
+    monkeypatch.setattr(ai, "local_ollama_json", respond)
+    result = ai.translate_segments(source, "el", "en")
+    assert len(sent) == 1 + extra_byte and len(controls) == 1
+    assert "".join(item["text"] for batch in sent for item in batch) == text
+    assert source == before and len(result) == 1
+    assert {k: v for k, v in result[0].items() if k != "text"} == {
+        k: v for k, v in before[0].items() if k != "text"}
+
+
+@pytest.mark.parametrize("model,separator", [
+    ("translategemma:4b", "\n\n\n"), ("linkscribe-hy-mt3:1.8b", "\n"),
+])
+def test_dedicated_adapters_keep_the_original_1600_byte_fragment_budget(
+        monkeypatch, model, separator):
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", model)
+    overhead = len(json.dumps([{"id": 0, "text": ""}]).encode("utf-8"))
+    text = "a" * (1600 - overhead) + "b"
+    parts = list(ai._translation_fragments(text))
+    assert len(parts) == 2 and len(ai._translation_json([parts[0]]).encode("utf-8")) == 1600
+    sent = []
+
+    def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
+        assert "format" not in payload and len(payload["messages"]) == 1
+        assert timeout == 240 and payload["options"]["num_predict"] == 2048
+        sent.append(payload["messages"][0]["content"].split(separator, 1)[1])
+        return {"done": True, "message": {"content": "synthetic translation"}}
+
+    monkeypatch.setattr(ai, "local_ollama_json", respond)
+    source = [segment(text)]
+    before = copy.deepcopy(source)
+    result = ai.translate_segments(source, "el", "en")
+    assert sent == parts and "".join(sent) == text
+    assert source == before
+    assert result == [{**before[0], "text": "synthetic translation synthetic translation"}]
 
 
 @pytest.mark.parametrize("target", ["el", "en"])

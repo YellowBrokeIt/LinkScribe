@@ -7,6 +7,7 @@ from __future__ import annotations
 import html
 import json
 import io
+import gc
 import math
 import os
 
@@ -18,6 +19,7 @@ os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 
 import re
 import shutil
+import sys
 import threading
 import time
 import uuid
@@ -372,7 +374,9 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             str(path),
             language=None if language == "auto" else language,
             beam_size=5,
-            vad_filter=True,
+            # Quiet speech mixed with effects can be lost before recognition if
+            # VAD removes it. Preserve the complete recording for ASR.
+            vad_filter=False,
             condition_on_previous_text=False,
             **({"word_timestamps": True} if word_timestamps else {}),
         )
@@ -400,6 +404,30 @@ def _timecode(seconds: float, subtitle_format: str) -> str:
     mins, rest = divmod(rest, 60_000)
     secs, msecs = divmod(rest, 1000)
     return f"{hours:02d}:{mins:02d}:{secs:02d}{',' if subtitle_format == 'srt' else '.'}{msecs:03d}"
+
+
+def _release_audio_models() -> None:
+    """Drop finished audio models before text inference; next audio use reloads."""
+    caches = [_whisper_model]
+    for module_name, function_name in (("diarization", "_encoder"),
+                                        ("faster_whisper.vad", "get_vad_model")):
+        module = sys.modules.get(module_name)
+        if module is not None:
+            caches.append(getattr(module, function_name, None))
+    released = False
+    for cached in caches:
+        info, clear = getattr(cached, "cache_info", None), getattr(cached, "cache_clear", None)
+        if callable(info) and callable(clear):
+            try:
+                if info().currsize:
+                    clear()
+                    released = True
+            except Exception:
+                print("[LinkScribe] An audio model cache could not be released.")
+    if released:
+        # Model wrappers can contain reference cycles. This does not promise that
+        # every native allocator immediately returns its pages to the OS.
+        gc.collect()
 
 
 def _shown_text(segment: dict[str, Any]) -> str:
@@ -517,6 +545,8 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     # Word timings are transient alignment evidence. Persist the resulting text
     # groups and model provenance, without raw audio or voice embeddings.
     segments = [{key: value for key, value in segment.items() if key != "_words"} for segment in segments]
+    if summary_enabled or (target != "none" and language != target):
+        _release_audio_models()
     translations: dict[str, Any] = {}
     if target != "none":
         if language == target:
@@ -531,7 +561,7 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     summary = None
     if summary_enabled:
         _set(job_id, stage="Creating chapters and AI summary locally...")
-        try: summary = summarize_segments(segments)
+        try: summary = summarize_segments(segments, source_language=language)
         except EnhancementError as exc: warnings.append("Summary: " + str(exc))
         except Exception as exc:
             print(f"[LinkScribe] Summary failed ({type(exc).__name__}) for job {job_id}")

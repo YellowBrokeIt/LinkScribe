@@ -1,0 +1,59 @@
+diff --git a/enhancements.py b/enhancements.py
+index 236ebfb..01a78c2 100644
+--- a/enhancements.py
++++ b/enhancements.py
+@@ -212,7 +212,8 @@ def _validate_translation_text(text: str) -> None:
+         raise EnhancementError("Ollama returned an oversized translation. Try a different model.")
+ 
+ 
+-def _translate_plain_fragment(text: str, source: str, target: str, profile: str) -> str:
++def _translate_plain_fragment(text: str, source: str, target: str, profile: str,
++                              background: str = "") -> str:
+     # Dedicated translators use one source text and their documented prompt.
+     # Ollama applies each installed model's native chat template.
+     names = {"en": "English", "el": "Greek"}
+@@ -226,6 +227,16 @@ def _translate_plain_fragment(text: str, source: str, target: str, profile: str)
+             f"Produce only the {target_name} translation, without any additional explanations or commentary. "
+             f"Please translate the following {source_name} text into {target_name}:\n\n\n{text}"
+         )
++    elif background:
++        # Development experiment: the publisher's background-information task.
++        # Context contains only neighboring original source, never references.
++        prompt = (
++            f"[Background Information]\n{background}\n"
++            f"Please translate the following text into {target_name}, taking the provided "
++            f"background information into consideration. Only output the translation of "
++            f"the Source Text, without any additional explanation.\n"
++            f"[Source Text]\n{text}"
++        )
+     else:
+         prompt = (
+             f"Translate the following text into {target_name}. Note that you should only output "
+@@ -274,12 +285,22 @@ def translate_segments(segments: list[dict[str, Any]], target: str,
+                 "This translation model currently requires a detected English or Greek source language. "
+                 "Choose the source language or use a general translation model."
+             )
+-        results = []
+-        for segment in segments:
+-            parts = [_translate_plain_fragment(text, source, target, profile)
++        fragments = [(index, text) for index, segment in enumerate(segments)
+                      for text in _translation_fragments(segment["text"]) if text.strip()]
+-            results.append({**segment, "text": " ".join(parts) if parts else segment["text"]})
+-        return results
++        translated_parts = [[] for _segment in segments]
++        for position, (index, text) in enumerate(fragments):
++            context = []
++            if profile == "hy-mt3":
++                if position:
++                    previous = fragments[position - 1][1].encode("utf-8")[-800:].decode("utf-8", "ignore")
++                    context.append("Preceding source text:\n" + previous)
++                if position + 1 < len(fragments):
++                    following = fragments[position + 1][1].encode("utf-8")[:800].decode("utf-8", "ignore")
++                    context.append("Following source text:\n" + following)
++            translated_parts[index].append(_translate_plain_fragment(
++                text, source, target, profile, "\n\n".join(context)))
++        return [{**segment, "text": " ".join(parts) if parts else segment["text"]}
++                for segment, parts in zip(segments, translated_parts)]
+     translations: list[list[str]] = [[] for _segment in segments]
+     batch: list[tuple[int, str]] = []
+ 

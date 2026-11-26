@@ -178,7 +178,8 @@ def observe_requests(records, checkpoint):
     def observed(path, payload=None, timeout=1.5):
         if path != "/api/chat":
             return original(path, payload, timeout=timeout)
-        entry = {"request": copy.deepcopy(payload), "timeout_seconds": timeout,
+        entry = {"kind": "control" if enhancements.is_ollama_control_request(payload) else "inference",
+                 "request": copy.deepcopy(payload), "timeout_seconds": timeout,
                  "request_bytes_utf8": len(json.dumps(payload).encode("utf-8")),
                  "started_at": utc_now(), "raw_evidence_available": False}
         records.append(entry)
@@ -219,7 +220,7 @@ def observe_native_requests(records, checkpoint):
     def observed(engine, source_tokenizer, target_tokenizer, texts):
         class ObservedEngine:
             def translate_batch(self, tokens, **options):
-                entry = {"request": {"backend": "marian-ctranslate2",
+                entry = {"kind": "inference", "request": {"backend": "marian-ctranslate2",
                                      "source_texts": copy.deepcopy(texts),
                                      "source_tokens": copy.deepcopy(tokens),
                                      "options": copy.deepcopy(options)},
@@ -348,7 +349,9 @@ def evaluate(corpus_path, output, case_ids=None, splits=None, fail_on_review=Fal
                 result["review_flags"] = review_flags(case, result["translation"])
                 result["automatic_status"] = "review" if result["review_flags"] else "pass"
             result["elapsed_seconds"] = round(time.monotonic() - case_start, 3)
-            result["request_count"] = len(result["requests"])
+            result["request_count"] = sum(item["kind"] == "inference" for item in result["requests"])
+            result["control_request_count"] = sum(item["kind"] == "control" for item in result["requests"])
+            result["total_request_count"] = len(result["requests"])
             report["completed_cases"] += 1
             checkpoint()
             print(f"{case['id']}: {result['automatic_status']} "

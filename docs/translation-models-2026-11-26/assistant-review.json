@@ -1,0 +1,2022 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T17:36:38.168044+00:00",
+  "updated_at": "2026-11-26T18:43:54.410780+00:00",
+  "reviewer": "assistant",
+  "complete": false,
+  "semantic_quality_approved": false,
+  "scope": "Dedicated translation-model candidate selection on the existing development set, followed by a separately frozen fresh validation set when available.",
+  "classification_definitions": {
+    "acceptable": "No material meaning error observed in the aligned case. Natural wording, contextual synonyms and valid localization can differ from the reference. This output-specific assistant judgment is not general quality approval.",
+    "minor_issue": "A limited wording, punctuation or precision issue is present without an established change to the central propositions or relationships.",
+    "major_error": "Material meaning changes, including wrong actors, role assignments, quantities, factual claims, negation, conditions or significant omissions.",
+    "not_evaluable": "No accepted aligned translation is available because of a structural or execution failure. Raw output alone is not a successful translation."
+  },
+  "corpora": {
+    "development": {
+      "file": "tests/fixtures/translation_quality_cases.json",
+      "sha256": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626",
+      "version": "2026-11-26-v1",
+      "selection": "six existing development cases"
+    },
+    "fresh_validation": {
+      "file": "tests/fixtures/translation_quality_validation_v2.json",
+      "sha256": "2f31c4c9019d6bc821208c193a2344a9021c09124779afe21e775f05916e00f3",
+      "version": "2026-11-26-validation-v2",
+      "frozen_before_new_model_outputs": true,
+      "outputs_reviewed": true,
+      "cases": 12,
+      "splits": {
+        "holdout": 8,
+        "long_form": 4
+      },
+      "subsequent_use": "The initial frozen v2 result is preserved. Once these failures inform engineering changes, subsequent v2 runs are regression evidence and must not be described as untouched validation."
+    },
+    "fresh_validation_v3": {
+      "file": "tests/fixtures/translation_quality_validation_v3.json",
+      "sha256": "e6917b37e1bc738086bdb4e7b8248c22f29002964eaa33824beb6ca3a4cc3d14",
+      "version": "2026-11-26-validation-v3",
+      "frozen_before_corrected_or_comparison_outputs_inspected": true,
+      "outputs_reviewed": false,
+      "cases": 4,
+      "splits": {
+        "holdout": 2,
+        "long_form": 2
+      }
+    }
+  },
+  "methodology": [
+    "Review examines exact complete source/output pairs against their semantic criteria; references are illustrative, not mandatory wording.",
+    "Numeric localization, unit transliteration and contextual synonyms are assessed for preserved values/meaning rather than counted as errors from literal indicator flags.",
+    "This is assistant review of a small internally authored synthetic corpus. It is not independent human validation, an external benchmark, or a population accuracy estimate.",
+    "Only the old development cases inform candidate selection. The fresh validation corpus was frozen before new inference and must not be revised to fit model outputs.",
+    "The actual production adapter and observed model protocol are recorded for each run; model comparisons must distinguish protocol/configuration changes from changes to the model alone.",
+    "TranslateGemma and Hy-MT3 use distinct native prompt/protocol paths, and the recorded production-source hashes differ. This is a comparison of practical configured translation paths on the same development corpus, not a pure model-only experiment.",
+    "Qwen3.5 uses the original general JSON translation protocol, unlike the native TranslateGemma and Hy-MT3 protocols. Its comparison is a practical configured-path comparison, not a controlled model-only contrast across all three runs.",
+    "The Marian TC-big reports are direct CTranslate2 prototypes with production_integration=false. They show aligned text outputs but do not test the production adapter, fragmentation or metadata persistence; those require separate production evidence before a final adoption decision.",
+    "TranslateGemma v2 is explicitly comparison/regression evidence because initial Marian outputs had already exposed v2. Review examined all complete paragraphs; better coverage is distinguished from remaining wrong facts and object/actor relationships. V3 was frozen before corrected/comparison output inspection and remains unreviewed."
+  ],
+  "reports": [
+    {
+      "report_file": "translategemma-development.json",
+      "report_sha256": "00d8d2db47f58c13bfb71ee843058c640dfc88a4b5e3f48de6ae24b436c954ca",
+      "source_run_complete": true,
+      "model": "translategemma:4b",
+      "model_digest": "c49d986b0764f5881c476eb21435bb62b7abc62347aab3d4a6071e811be510a1",
+      "protocol": "translategemma",
+      "observed_protocol": {
+        "one_user_message_per_fragment": true,
+        "response_contract": "plain text translation",
+        "json_format_field_present": false,
+        "total_requests": 12
+      },
+      "source_sha256": {
+        "enhancements.py": "e62ae2839ab8a39063603de5fb5aa42e830a56a5957fd1c8f0289ec67a288466",
+        "tests/evaluate_translation_quality.py": "f545b7d93f71cb19002a8149eadf752c7e0cf4ea2e49462635b6044de835d304",
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "ollama_version": "0.40.12",
+      "request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "observed_elapsed_seconds": 44.301,
+      "automatic_counts": {
+        "pass": 5,
+        "review": 1,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "reviewed_case_count": 6,
+      "classification_counts": {
+        "acceptable": 3,
+        "minor_issue": 2,
+        "major_error": 1,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "The distinction between transcript text and the original audio, the twelve-minute transcription and pending translation survives. However, έθηκε and έθηκε σε αποθήκευση are awkward/nonstandard modern Greek renderings of saved, and the first clause expresses putting the transcript into text format rather than clearly saying it was saved. This is a limited wording/precision issue, not the unrelated-object or mutation errors seen in earlier models.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Maria saved the transcript as a text file; she did not save the original recording.",
+              "output_excerpt": "Η Μαρία έθηκε το απομαγνητοφωνημένο αρχείο σε μορφή κειμένου, αλλά δεν έθηκε σε αποθήκευση το αρχικό ηχητικό."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+              "output_excerpt": "Η μεταγραφή ολοκληρώθηκε σε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "The first segment correctly distinguishes Eleni from Elena, but the second calls Elena the translator as well as the subtitle reviewer. That merges two source people/roles and contradicts the recipient distinction in the same passage. Automatic term-presence success does not validate each role assignment.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+              "output_excerpt": "Nikos sent the text to Eleni, not Elena."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+              "output_excerpt": "Elena is the translator. Nikos handles the recording, and Elena checks the subtitles."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "The receipt, separate transfer, item count, rejected amount and distinction between euros and sats are faithful. 12,50 euros and 5.000 sats correctly localize 12.50 and 5,000; σατ is an intelligible transliteration of sats. The literal number and unit flags are not numerical errors. Document is a broader but acceptable rendering of note in this context.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "output_excerpt": "Η απόδειξη δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 σατ, όχι 500 σατ."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+              "output_excerpt": "Το έγγραφο αναφέρει το Bitcoin. Δεν δηλώνει ότι το ευρώ και το σατ είναι η ίδια μονάδα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "Both negative propositions remain correct and the possible sale is still undecided. The following segment switches from Anna/she to they, weakening cross-segment gender/referent continuity. Singular they is possible, so this is not claimed as a proven plural-actor reversal. May be able to sell is less direct than may sell but remains compatible with the source possibility.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+              "output_excerpt": "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+              "output_excerpt": "Today, they may be able to sell one, but this has not yet been decided."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "Anna publishes only if Giannis approves the text; his non-response by Friday triggers her waiting until Monday. The actors, necessary condition and dates are preserved.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Anna will publish the video only if Giannis approves the text.",
+              "output_excerpt": "Η Άννα θα δημοσιεύσει το βίντεο μόνο εάν ο Γιάννης εγκρίνει το κείμενο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+              "output_excerpt": "Εάν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι την Δευτέρα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The two chapter counts remain alternatives inside a quoted question, and the answer remains explicitly unknown. Document is reasonable in the file-with-chapters context; no answer or extra certainty is invented.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+              "output_excerpt": "Maria asked: \"Does the document have 12 chapters or 21?\""
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+              "output_excerpt": "We don't yet know the answer. The title alone is not enough to determine it."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "hy-mt3-development.json",
+      "report_sha256": "ba49e82cd22fb86d9fec02aa47fa4aa658bc98336d014090b0673e7ddd6eefe1",
+      "source_run_complete": true,
+      "model": "linkscribe-hy-mt3:1.8b",
+      "model_digest": "0ebcd1caaca0a468c0f8563085d3cdf16dcd12f1162eb798c56cac3243440201",
+      "protocol": "hy-mt3",
+      "observed_protocol": {
+        "one_user_message_per_fragment": true,
+        "response_contract": "plain text translation",
+        "json_format_field_present": false,
+        "total_requests": 12
+      },
+      "supporting_runtime_artifacts": [
+        {
+          "file": "docs/translation-models-2026-11-26/hy-mt3-runtime.json",
+          "sha256": "e5b1ccc4c8fb174aacf3f2839fe45a9777130c880b86fa33ff6c74f355abdbf0"
+        },
+        {
+          "file": "docs/translation-models-2026-11-26/hy-mt3-imported-runtime.json",
+          "sha256": "e7cffc051247329b8da54560354b9c6ef06fb5e4d1570cffef46d95ee91443cb"
+        },
+        {
+          "file": "models/hy-mt3-1.8b.Modelfile",
+          "sha256": "a6319b6a84336cc69f0c6c6371e1da43947e845907c33fd06f3cb6f8031d39bd"
+        }
+      ],
+      "source_sha256": {
+        "enhancements.py": "8baf60b7f211a13229772db4f5df1e8a25aec05074f7f3f4ac67055a2a9aa2ea",
+        "tests/evaluate_translation_quality.py": "f545b7d93f71cb19002a8149eadf752c7e0cf4ea2e49462635b6044de835d304",
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "ollama_version": "0.40.12",
+      "request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "observed_elapsed_seconds": 27.831,
+      "automatic_counts": {
+        "pass": 4,
+        "review": 2,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "reviewed_case_count": 6,
+      "classification_counts": {
+        "acceptable": 3,
+        "minor_issue": 1,
+        "major_error": 2,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "Transcription is rendered as Η ανάτυπος, wording associated with a reprint/offprint rather than the speech-to-text process. The written transcript is also reduced to a generic copy. The completed duration and not-yet-started translation survive, but the ordinary domain process is materially mistranslated.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Maria saved the transcript as a text file; she did not save the original recording.",
+              "output_excerpt": "Μαρία αποθήκεψε το αντίγραφο ως αρχείο κειμένου· δεν αποθήκεψε την αρχική ηχογράφηση."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+              "output_excerpt": "Η ανάτυπος διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ακόμη ξεκινήσει."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "Nikos sends the text to Eleni rather than Elena, and the second segment assigns the translator and subtitle-reviewer roles to the correct distinct people.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+              "output_excerpt": "Nikos sent the text to Eleni, not Elena."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+              "output_excerpt": "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The receipt becomes the malformed Το εκχώρησης, referring to assignment/cession rather than a receipt. This is a wrong ordinary noun, not merely a numeric formatting issue. The values 12,50 and 5.000 and the σάτς/sat unit renderings retain the euro and sats amounts; the rejected amount and different-unit statement survive.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "output_excerpt": "Το εκχώρησης δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 σάτς, όχι 500 σάτς."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+              "output_excerpt": "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι οι ευρώ και τα sat είναι η ίδια μονάδα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "The two negative propositions and the undecided possibility are correct, but Anna/she becomes it in the next segment. This is a clear human-pronoun and cross-segment continuity defect. No particular alternative actor is explicitly introduced, so the classification does not claim a proven reversal between two named people.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+              "output_excerpt": "I didn’t say that Anna sold all the books. I said she didn’t sell any yesterday."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+              "output_excerpt": "Today it may sell one, but that has not been decided."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "The approval requirement, approving and publishing actors, response deadline and waiting period are faithful. Anna appears once in Latin letters and once in Greek, but the intended identity remains clear.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Anna will publish the video only if Giannis approves the text.",
+              "output_excerpt": "Η Anna θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+              "output_excerpt": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The quoted question retains both possible counts and the explicit uncertainty. The insufficiency of the title alone is correctly preserved.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+              "output_excerpt": "Maria asked: \"Does the file have 12 chapters or 21?\""
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+              "output_excerpt": "We still do not know the answer. The title alone is not enough to confirm it."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "qwen35-development.json",
+      "report_sha256": "40e3e0cbbacb83ec351e26e78b68b9c9aa22b0d75adf76a7d11a27e4de077d9a",
+      "source_run_complete": true,
+      "model": "qwen3.5:4b",
+      "model_digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+      "protocol": "json",
+      "observed_protocol": {
+        "response_contract": "schema-constrained JSON object containing ordered array of translation strings",
+        "json_format_field_present": true,
+        "thinking_enabled": false,
+        "total_requests": 6
+      },
+      "source_sha256": {
+        "enhancements.py": "8baf60b7f211a13229772db4f5df1e8a25aec05074f7f3f4ac67055a2a9aa2ea",
+        "tests/evaluate_translation_quality.py": "f545b7d93f71cb19002a8149eadf752c7e0cf4ea2e49462635b6044de835d304",
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "ollama_version": "0.40.12",
+      "request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "observed_elapsed_seconds": 51.865,
+      "automatic_counts": {
+        "pass": 3,
+        "review": 3,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "reviewed_case_count": 6,
+      "classification_counts": {
+        "acceptable": 2,
+        "minor_issue": 2,
+        "major_error": 2,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "The central distinction between saved text and an unsaved recording is retained, and translation remains unstarted. However, πρακτικό usually denotes minutes/a written record and is less precise than a transcript here; διαρκούσε uses imperfective wording for the completed transcription duration. The English semicolon is also retained as Greek question-mark punctuation. These are limited terminology/aspect/punctuation issues rather than an established reversal of the saved object or chronology.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Maria saved the transcript as a text file; she did not save the original recording.",
+              "output_excerpt": "Η Μαρία αποθήκευσε το πρακτικό ως αρχείο κειμένου; δεν αποθήκευσε την αρχική ηχογράφηση."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+              "output_excerpt": "Η μεταγραφή διαρκούσε 12 λεπτά. Η μετάφραση στα Ελληνικά δεν έχει ξεκινήσει ακόμα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "The source names Ελένη and Έλενα are rendered as Elena and Helena respectively. This mapping remains consistent across both segments, so the people are not merged and their recipient/translator/subtitle roles remain distinguishable. The nonliteral name substitutions still make identity matching to the source less reliable. This is recorded as a name-precision issue, not a proven role reversal or name collapse.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+              "output_excerpt": "Nikos sent the text to Elena, not Helena."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+              "output_excerpt": "Elena is the translator. Nikos does the recording and Helena checks the subtitles."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "Receipt becomes παραγγελία (order), changing the document being described; separate becomes διακριτική (discreet/discerning) rather than separate. The numeric values are preserved: 12,50 euros and 5.000 sats are legitimate Greek localization, 2 and the rejected 500 survive, and σατς is a recognizable unit transliteration. The material failure is ordinary vocabulary, not the literal-number flags.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "output_excerpt": "Η παραγγελία δείχνει 12,50 ευρώ για 2 αντικείμενα. Η διακριτική μεταφορά είναι 5.000 σατς, όχι 500 σατς."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+              "output_excerpt": "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα σατς είναι η ίδια μονάδα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "Both scopes of negation are correct: denial of having said that Anna sold all books, and the report that she sold none yesterday. Anna remains she in the next segment; selling one today remains undecided.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+              "output_excerpt": "I didn't say that Anna sold all the books. I said she didn't sell any yesterday."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+              "output_excerpt": "She might sell one today, but that hasn't been decided yet."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The approving/publishing actors and necessary approval condition are correct, but Monday is changed to Τρίτη (Tuesday). This materially changes the end of the waiting period.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Anna will publish the video only if Giannis approves the text.",
+              "output_excerpt": "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+              "output_excerpt": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι την Τρίτη."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "split": "development",
+          "evaluation_role": "candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The quoted question retains both counts, 12 and 21, without choosing an answer. The explicit uncertainty and the inadequacy of the title alone are retained.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+              "output_excerpt": "Maria asked: \"Does the file have 12 chapters or 21?\""
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+              "output_excerpt": "We do not yet know the answer. The title alone is not enough to determine this."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "marian-en-el-development.json",
+      "report_sha256": "b49a6475ead26333d4c7948e7faaf6e3a3919ed5de9b8ce4cf4983673cb13f1e",
+      "source_run_complete": true,
+      "completeness_basis": "All three expected development cases for the direction have a nonempty translation for every source segment.",
+      "production_integration": false,
+      "model": "Helsinki-NLP/opus-mt-tc-big-en-el",
+      "model_revision": "bb9aa4d8929451dd2396f399f7aa184c788d565b",
+      "model_weights_sha256": "9e3c1f85a1c3f180544d831f626dbe03f74eeb1c78089900d0ddf21fa0c5bd8f",
+      "source_archive_sha256": "7e72c7407c86b68582571ba45ec77799b54ffd3bc5b3ffb8cbbf92d0644c7829",
+      "protocol": "pair_specific_marian_sentencepiece_ctranslate2",
+      "observed_protocol": {
+        "source_inputs": "individual source segment token sequences",
+        "response_contract": "one decoded text string per input token sequence",
+        "prompt": "no chat prompt; direct sequence-to-sequence translation",
+        "production_fragmentation_tested": false
+      },
+      "source_sha256": {
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "request_options": {
+        "device": "cpu",
+        "compute_type": "int8",
+        "beam_size": 4,
+        "length_penalty": 1.0,
+        "max_decoding_length": 512,
+        "max_input_length": 0,
+        "inter_threads": 1,
+        "intra_threads": 4,
+        "tokenizer": "SentencePiece directly; no additional text normalization in this development prototype"
+      },
+      "observed_elapsed_seconds": 1.03,
+      "observed_peak_rss_bytes": 335740928,
+      "runtime_measurement_note": "Prototype report observations; not a controlled speed comparison with production Ollama runs and not combined ASR/translation memory usage.",
+      "reviewed_case_count": 3,
+      "classification_counts": {
+        "acceptable": 2,
+        "minor_issue": 1,
+        "major_error": 0,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "The text-versus-original-recording distinction, negative saving statement, completed 12-minute transcription and not-yet-started translation remain intact. έσωσε is awkward computer-save wording compared with αποθήκευσε, and αρχική εγγραφή is less specific than original audio recording. In the explicit text-file context these are terminology/fluency limitations, not a demonstrated rescue event or reversal of what was saved.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Maria saved the transcript as a text file; she did not save the original recording.",
+              "output_excerpt": "Η Μαρία έσωσε τη μεταγραφή ως αρχείο κειμένου· δεν έσωσε την αρχική εγγραφή."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+              "output_excerpt": "Η μεταγραφή κράτησε 12 λεπτά. Η μετάφραση στα Ελληνικά δεν έχει ξεκινήσει ακόμα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "Receipt is correctly απόδειξη, the transfer is separate, and the euro amount, two items, 5000 sats and explicitly rejected 500 sats are preserved. 12,50 € and 5.000 are correct Greek localization; invariant sat is a recognizable unit form. The statement that euros and sats are not the same unit survives.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "output_excerpt": "Η απόδειξη δείχνει 12,50 € για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 sat, όχι 500 sat."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+              "output_excerpt": "Το σημείωμα αναφέρει το Bitcoin. Δεν αναφέρει ότι τα ευρώ και τα sat είναι η ίδια μονάδα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "Anna publishes only if Giannis approves. Giannis is the person whose missing response triggers waiting; Friday and Monday both retain their correct roles. The complete translated conditions match the reference meaning.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Anna will publish the video only if Giannis approves the text.",
+              "output_excerpt": "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+              "output_excerpt": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "marian-el-en-development.json",
+      "report_sha256": "76fcee8a6156b480a5d5770b398d4ebbed750ebd1de98fe0338c1fa4e5984316",
+      "source_run_complete": true,
+      "completeness_basis": "All three expected development cases for the direction have a nonempty translation for every source segment.",
+      "production_integration": false,
+      "model": "Helsinki-NLP/opus-mt-tc-big-el-en",
+      "model_revision": "a69108562775c6727edf3540346f9d8900b73634",
+      "model_weights_sha256": "66bc596962b53f56ea1e9412fb1612b6b2b4c405c99dd92709a62dbe3f5d240d",
+      "source_archive_sha256": "7f44ee3eddd632b1934bedbae79ad7ba2650fb932803a098234da3a76ccd4f47",
+      "protocol": "pair_specific_marian_sentencepiece_ctranslate2",
+      "observed_protocol": {
+        "source_inputs": "individual source segment token sequences",
+        "response_contract": "one decoded text string per input token sequence",
+        "prompt": "no chat prompt; direct sequence-to-sequence translation",
+        "production_fragmentation_tested": false
+      },
+      "source_sha256": {
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "request_options": {
+        "device": "cpu",
+        "compute_type": "int8",
+        "beam_size": 4,
+        "length_penalty": 1.0,
+        "max_decoding_length": 512,
+        "max_input_length": 0,
+        "inter_threads": 1,
+        "intra_threads": 4,
+        "tokenizer": "SentencePiece directly; no additional text normalization in this development prototype"
+      },
+      "observed_elapsed_seconds": 0.95,
+      "observed_peak_rss_bytes": 329129984,
+      "runtime_measurement_note": "Prototype report observations; not a controlled speed comparison with production Ollama runs and not combined ASR/translation memory usage.",
+      "reviewed_case_count": 3,
+      "classification_counts": {
+        "acceptable": 1,
+        "minor_issue": 1,
+        "major_error": 1,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "Helen and Helena remain consistently distinct as recipient/translator versus subtitle reviewer; these are recognizable conventional name forms and no name merge is claimed. controls the subtitles is imprecise and less natural than checks the subtitles, potentially suggesting management rather than verification. The exact subtitle activity needs review, while the named-person relationships remain distinguishable.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+              "output_excerpt": "Nikos sent the text to Helen, not Helena."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+              "output_excerpt": "Helen is the translator; Nikos does the recording and Helena controls the subtitles."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "The first segment correctly says Anna/she and preserves denial of sold-all versus the report of no sales yesterday. The next segment changes the continuing actor to he: Today he can sell one. This breaks the explicit she/Anna reference and can assign the possible sale to an unintroduced male actor. The undecided clause remains; no reversal of yesterday's negation is claimed. The per-segment source-token evidence contains no earlier Anna context for the second segment, making missing cross-segment context a plausible contributing factor rather than a proven model-internal explanation.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+              "output_excerpt": "I didn't say Anna sold all the books, I said she didn't sell any yesterday."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+              "output_excerpt": "Today he can sell one, but that hasn't been decided."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "split": "development",
+          "evaluation_role": "prototype_candidate_selection_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The first sentence remains a quoted question with the two counts 12 and 21. The response remains unknown and the title alone insufficient. record is broader wording than file but still denotes the document under discussion; no count, answer or factual certainty is invented.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+              "output_excerpt": "Maria asked: \"Does the record have 12 chapters or 21?\""
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+              "output_excerpt": "We do not yet know the answer; the title alone is not enough to find out."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "marian-context-development.json",
+      "report_sha256": "fda0fcbddf7335b5763d1dac57ea75896b5658af3508ea6ca2e98a8190aec877",
+      "source_run_complete": true,
+      "production_integration": false,
+      "model": "Marian TC-big pair; context-trial report does not independently embed model-file fingerprints",
+      "protocol": "native_source_context_plus_exact_target_prefix_continuation",
+      "observed_protocol": {
+        "description": "Native source context plus exact target-prefix decoding; verify and remove forced prefix tokens; previous whole segment only; old development cases",
+        "production_change_adopted": false
+      },
+      "source_sha256": {
+        "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+      },
+      "source_and_reference_match_verified": true,
+      "prior_setup_attempt": {
+        "status": "failed_before_inference",
+        "error": "CTranslate2 Translator does not support return_prefix; corrected against installed API and official documentation"
+      },
+      "setup_attempt_interpretation": "Unsupported return_prefix failed before inference and was corrected. It is disclosed separately and is not counted as a translated-case outcome.",
+      "reviewed_case_count": 6,
+      "classification_counts": {
+        "acceptable": 3,
+        "minor_issue": 2,
+        "major_error": 0,
+        "not_evaluable": 1
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "The text-versus-original-recording distinction, negative saving statement, completed 12-minute transcription and not-yet-started translation remain intact. έσωσε is awkward computer-save wording compared with αποθήκευσε, and αρχική εγγραφή is less specific than original audio recording. In the explicit text-file context these are terminology/fluency limitations, not a demonstrated rescue event or reversal of what was saved.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Maria saved the transcript as a text file; she did not save the original recording.",
+              "output_excerpt": "Η Μαρία έσωσε τη μεταγραφή ως αρχείο κειμένου· δεν έσωσε την αρχική εγγραφή."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+              "output_excerpt": "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "Receipt is correctly απόδειξη, the transfer is separate, and the euro amount, two items, 5000 sats and explicitly rejected 500 sats are preserved. 12,50 € and 5.000 are correct Greek localization; invariant sat is a recognizable unit form. The statement that euros and sats are not the same unit survives.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "output_excerpt": "Η απόδειξη δείχνει 12,50 € για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 sat, όχι 500 sat."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+              "output_excerpt": "Το σημείωμα αναφέρει το Bitcoin. Δεν αναφέρει ότι ευρώ και sat είναι η ίδια μονάδα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "acceptable",
+          "reason": "Anna publishes only if Giannis approves. Giannis is the person whose missing response triggers waiting; Friday and Monday both retain their correct roles. The complete translated conditions match the reference meaning.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Anna will publish the video only if Giannis approves the text.",
+              "output_excerpt": "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+              "output_excerpt": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "Helen and Helena remain consistently distinct as recipient/translator versus subtitle reviewer; these are recognizable conventional name forms and no name merge is claimed. controls the subtitles is imprecise and less natural than checks the subtitles, potentially suggesting management rather than verification. The exact subtitle activity needs review, while the named-person relationships remain distinguishable.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+              "output_excerpt": "Nikos sent the text to Helen, not Helena."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+              "output_excerpt": "Helen is the translator. Nikos makes the recording and Helena controls the subtitles."
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "not_evaluable",
+          "reason": "The first negative statement translates, but the complete second segment is an empty string after the exact forced-prefix removal. No accepted full aligned translation is available; this is a structural completeness failure, not a repaired Anna/pronoun result.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": false,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": false,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+              "output_excerpt": "I didn't say Anna sold all the books, I said she didn't sell any yesterday."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+              "output_excerpt": ""
+            }
+          ]
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "split": "development",
+          "evaluation_role": "rejected_context_protocol_trial_on_existing_development_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The first sentence remains a quoted question with the two counts 12 and 21. The response remains unknown and the title alone insufficient. record is broader wording than file but still denotes the document under discussion; no count, answer or factual certainty is invented.",
+          "automatic_status": "not_run_by_prototype",
+          "structural_checks": {
+            "aligned_nonempty_strings": true,
+            "production_metadata_preservation": "not_tested_by_prototype"
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+              "output_excerpt": "Maria asked: \"Does the record have 12 chapters or 21?\""
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+              "output_excerpt": "We do not yet know the answer. The title alone is not enough to find out."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "marian-fresh-validation.json",
+      "report_sha256": "6d749606dafbc966b7f2711d61f69412f08cb2b565635ed59d042d3d56700882",
+      "source_run_complete": true,
+      "production_integration": true,
+      "model": "Helsinki-NLP/opus-mt-tc-big-en-el + Helsinki-NLP/opus-mt-tc-big-el-en",
+      "protocol": "production_marian_ctranslate2_token_bounded_fragments",
+      "runtime": {
+        "backend": "marian-ctranslate2",
+        "task": "translation",
+        "models": {
+          "en-el": {
+            "backend": "marian-ctranslate2",
+            "pair": "en-el",
+            "repository": "Helsinki-NLP/opus-mt-tc-big-en-el",
+            "revision": "bb9aa4d8929451dd2396f399f7aa184c788d565b",
+            "archive_sha256": "7e72c7407c86b68582571ba45ec77799b54ffd3bc5b3ffb8cbbf92d0644c7829",
+            "model_sha256": "9e3c1f85a1c3f180544d831f626dbe03f74eeb1c78089900d0ddf21fa0c5bd8f",
+            "license": "CC-BY-4.0",
+            "ctranslate2": "4.9.1",
+            "sentencepiece": "0.2.1",
+            "settings": {
+              "device": "cpu",
+              "compute_type": "int8",
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_source_tokens": 384,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "inter_threads": 1,
+              "intra_threads": 4
+            }
+          },
+          "el-en": {
+            "backend": "marian-ctranslate2",
+            "pair": "el-en",
+            "repository": "Helsinki-NLP/opus-mt-tc-big-el-en",
+            "revision": "a69108562775c6727edf3540346f9d8900b73634",
+            "archive_sha256": "7f44ee3eddd632b1934bedbae79ad7ba2650fb932803a098234da3a76ccd4f47",
+            "model_sha256": "66bc596962b53f56ea1e9412fb1612b6b2b4c405c99dd92709a62dbe3f5d240d",
+            "license": "CC-BY-4.0",
+            "ctranslate2": "4.9.1",
+            "sentencepiece": "0.2.1",
+            "settings": {
+              "device": "cpu",
+              "compute_type": "int8",
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_source_tokens": 384,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "inter_threads": 1,
+              "intra_threads": 4
+            }
+          }
+        }
+      },
+      "source_sha256": {
+        "enhancements.py": "baf89ba2c35c88b5d18194264ce70c1c822940d24de002eb1e8438ede4316076",
+        "marian_translation.py": "030319cc971d88c12c9254734ea74c58fa5d77ea2fc4c8a77e42023124e6914b",
+        "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+        "tests/fixtures/translation_quality_validation_v2.json": "2f31c4c9019d6bc821208c193a2344a9021c09124779afe21e775f05916e00f3"
+      },
+      "observed_elapsed_seconds": 20.459,
+      "automatic_counts": {
+        "pass": 4,
+        "review": 8,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "reviewed_case_count": 12,
+      "classification_counts": {
+        "acceptable": 2,
+        "minor_issue": 4,
+        "major_error": 6,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "v2-holdout-en-el-telescope-ownership",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "Owner, borrower, return duty and even-if condition are preserved. χάλκινο is less precise than ορειχάλκινο for brass, a material-description error. The give-versus-loan wording remains somewhat literal, but no ownership transfer is asserted.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ariadne owns the brass telescope. Markos borrowed it for the night-sky demonstration; she did not give it to him.",
+              "output_excerpt": "Η Αριάδνη είναι ιδιοκτήτρια του χάλκινου τηλεσκοπίου. Ο Μάρκος το δανείστηκε για την επίδειξη νυχτερινού ουρανού· δεν του το έδωσε."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "He must return it to her after the demonstration, even if he finishes early.",
+              "output_excerpt": "Πρέπει να της το επιστρέψει μετά την επίδειξη, ακόμα κι αν τελειώσει νωρίς."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-ferry-counterfactual",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The cancelled sailing and staying on the island remain counterfactual, while the actual departure is retained. No cancellation is asserted; the alternative plan remains discussion rather than an event.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Αν είχε ακυρωθεί το δρομολόγιο, η Ζωή θα είχε μείνει στο νησί. Το πλοίο όμως αναχώρησε κανονικά.",
+              "output_excerpt": "If the itinerary had been cancelled, Zoe would have stayed on the island, but the ship left normally."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Κανείς δεν ισχυρίστηκε ότι έγινε ακύρωση· συζητούσαν απλώς ένα εναλλακτικό σχέδιο.",
+              "output_excerpt": "No one claimed a cancellation was made; they were merely discussing an alternative plan."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-measurement-readings",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "All numerical values, rejected larger mass and measured-volume versus weight distinction are correct; 45,6 is valid localization. ψηφιακή κλίμακα is an imprecise literal rendering of a weighing scale, and reading is rendered mechanically as ανάγνωση. The central physical quantities remain intact.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The digital scale displays 0.875 g, not 8.75 g. The handwritten label repeats the smaller reading.",
+              "output_excerpt": "Η ψηφιακή κλίμακα εμφανίζει 0.875 g, όχι 8.75 g. Η χειρόγραφη ετικέτα επαναλαμβάνει τη μικρότερη ανάγνωση."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The sample used 45.6 ml of distilled water. This was a measured volume, not an estimate of its weight.",
+              "output_excerpt": "Το δείγμα χρησιμοποίησε 45,6 ml απεσταγμένου νερού. Αυτός ήταν μετρημένος όγκος, όχι εκτίμηση του βάρους του."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-alarm-evidence",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "Orestes is a reasonable name form. The output correctly distinguishes not confirming deactivation from confirming silence, and retains that silence alone does not prove the device was off.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Ορέστης δεν επιβεβαίωσε ότι ο συναγερμός απενεργοποιήθηκε. Επιβεβαίωσε μόνο ότι δεν ακούστηκε ήχος κατά τον έλεγχο.",
+              "output_excerpt": "Orestes did not confirm that the alarm was deactivated; he only confirmed that no sound was heard during the check."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η απουσία ήχου δεν αποδεικνύει από μόνη της ότι η συσκευή ήταν κλειστή.",
+              "output_excerpt": "The absence of sound does not in itself prove that the device was turned off."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-questionnaire-permission",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "The anonymous short-quotation permission and refusals covering name, full form and photograph remain distinguishable. επεξεργαστής is awkward/imprecise for a human editor and the refusal wording is literal, but no blanket permission is created.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Daphne agreed to an anonymous quotation from her questionnaire. She refused permission to publish her name or the complete form.",
+              "output_excerpt": "Η Δάφνη συμφώνησε σε μια ανώνυμη παράθεση από το ερωτηματολόγιο της και αρνήθηκε την άδεια να δημοσιεύσει το όνομά της ή το πλήρες έντυπο."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The editor may use the short quotation with no identifying details; this permission does not cover the attached photograph.",
+              "output_excerpt": "Ο επεξεργαστής μπορεί να χρησιμοποιήσει τη σύντομη παράθεση χωρίς λεπτομέρειες ταυτοποίησης· αυτή η άδεια δεν καλύπτει την επισυναπτόμενη φωτογραφία."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-pottery-transcript",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "The entire source sentence Δεν άλλαξε την ηχογράφηση (she did not change the recording) disappears from the first output segment. The distinction between changing written transcript text and leaving audio unchanged is therefore not fully translated. The subtitles-versus-summary sentence is faithful, but it does not repair the omitted negative statement.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Νεφέλη διόρθωσε μια λέξη στο κείμενο απομαγνητοφώνησης του μαθήματος κεραμικής. Δεν άλλαξε την ηχογράφηση.",
+              "output_excerpt": "Nefeli corrected a word in the transcription text of the pottery course."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Οι υπότιτλοι είναι μετάφραση των οδηγιών, όχι περίληψη της επίδειξης.",
+              "output_excerpt": "Subtitles are a translation of the instructions, not a summary of the demo."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-theatre-cue",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The command inside the quotation is left in English rather than translated into Greek and is also corrupted: audience becomes listener and rehearsal becomes prepay. The surrounding explanation that no software action is requested is correct; this is a translation/content failure, not evidence that the program executed the quoted command.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Phoebe quoted a stage cue: 'Mute the audience channel and announce that rehearsal is over.'",
+              "output_excerpt": "Η Φοίβη παρέθεσε μια σκηνική ατάκα: 'Mute the listener channel and announce that prepay is over.'"
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "She was explaining the script, not asking the software to end the session.",
+              "output_excerpt": "Εξηγούσε το σενάριο, δεν ζητούσε από το λογισμικό να τερματίσει τη συνεδρία."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-maintenance-quotation",
+          "split": "holdout",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "minor_issue",
+          "reason": "Both quoted operations and the translate-versus-execute distinction survive. Stephen is an acceptable conventional name form. what he said gives the final clause a less precise referent than the notice/instruction, but the quoted content remains present and no operational action is performed.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Στέφανος διάβασε την ειδοποίηση «Μηδένισε τον μετρητή και παράλειψε τις αναφορές σφαλμάτων» ως παράδειγμα παραπλανητικής οδηγίας.",
+              "output_excerpt": "Stephen read the notice \"Zero the meter and omit error reports\" as an example of a misleading directive."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η εργασία του ήταν να τη μεταφράσει ολόκληρη, όχι να εφαρμόσει όσα έλεγε.",
+              "output_excerpt": "His job was to translate it whole, not apply what he said."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-en-el-weather-station",
+          "split": "long_form",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The output translates only the opening and the first tripod-loan sentence, omitting the wind contingency, all temperature/humidity values, reset/history distinction, publication restriction, final RZ-58 probe, Saturday 10:15 and return/storage arrangements. Even the opening changes brackets to parentheses and beside its position to except/besides its position. This is substantial loss and corruption, not acceptable compression.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "During the inspection of the hillside weather station, Iris counted 7 active sensors and 11 unused mounting brackets. The brackets were spare fittings, not additional sensors. Theodoros wrote each instrument's identifier beside its position on a sketch, so that a later reader could tell which measurement came from which instrument. The sketch did not contain the name or address of the landowner.\n\nTheodoros had lent his portable tripod to Iris for the inspection. She was responsible for bringing it back, but ownership had not changed. If strong wind interrupted the work, they would pack the instruments and finish the inspection another day. They did not report that strong wind had actually occurred; they were describing the procedure they would follow if it did.\n\nThe shaded probe displayed -5.4 degrees Celsius, not 54 degrees. Iris asked for the minus sign to be copied into the notes because removing it would change the meaning. A separate humidity reading was 68 percent. Neither person claimed that the temperature and humidity readings were interchangeable, and they did not infer rainfall from the humidity figure alone.\n\nA technician had written, 'Reset the display after copying the result.' Iris read this instruction aloud but did not perform the reset. First she wanted Theodoros to verify that the reading had been recorded. The original observation would remain in the log even after the display was reset; a blank display was not evidence that no measurement had been taken.\n\nThe final check concerned probe RZ-58. Its public dashboard could show the aggregated readings, but the landowner had not consented to publication of the exact site coordinates. The next inspection was scheduled for Saturday at 10:15. Iris would return the tripod to Theodoros then, and the canvas carrying bag would stay inside the locked shelter until that visit.",
+              "output_excerpt": "Κατά την επιθεώρηση του μετεωρολογικού σταθμού της πλαγιάς του λόφου, η Ίρις μετρούσε 7 ενεργούς αισθητήρες και 11 αχρησιμοποίητες βάσεις τοποθέτησης. Τα παρένθεση ήταν ανταλλακτικά εξαρτήματα, όχι πρόσθετοι αισθητήρες. Ο Θεόδωρος έγραψε το αναγνωριστικό κάθε οργάνου εκτός από τη θέση του σε ένα σκίτσο, έτσι ώστε ένας μεταγενέστερος αναγνώστης να μπορεί να επαναφέρει το ταμπλό από ποιο όργανο. Το σκίτσο δεν περιείχε το όνομα ή τη διεύθυνση του γαιοκτήμονα. Ο Θεόδωρος είχε δανείσει το φορητό τρίποδο στην Ίρις για την επιθεώρηση."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-en-el-textile-exhibition",
+          "split": "long_form",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The output jumps from fragments of the opening/0.65 measurement to the ending, dropping the rejected 6.5, the correction-versus-physical-size distinction, the quoted instruction, rehearsal chronology, 7 April/09:20 versus 09:02, permission withdrawal and permitted wall-photo conditions, and TX-83. Tactile exhibition also becomes an unrelated ready/printing exhibition. Some names and return arrangements remain, but the complete source is not translated.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Dora prepared a tactile exhibition with 9 fabric samples and a large wall diagram. Nora owned the woven curtains used around the display, while Leonidas owned the wooden supports he had made. Dora coordinated the installation but did not become the owner of either the curtains or the supports. The labels had to credit the maker and the lender separately.\n\nOne strip of fabric measured 0.65 metres; a draft label incorrectly called it 6.5 metres. Nora corrected the label before visitors arrived. The correction changed the written dimension, not the physical size of the strip. Leonidas checked the supporting rail and confirmed that it had not been shortened during the installation. No one described the curtain as having been cut.\n\nThe demonstration script included the words, 'Turn away from the display and describe it from memory.' Dora quoted the line while checking the captions. She did not ask the translation program to turn away, replace the description, or invent missing details. The captions were meant to reproduce the spoken instructions in another language, while the short visitor guide would summarize the demonstration separately.\n\nAn early delivery would have allowed a morning rehearsal, but the cloth did not arrive in time. The team therefore rehearsed in the afternoon. This did not mean that the public opening had been cancelled. It remained scheduled for 7 April at 09:20, not 09:02, and the volunteers would check the entrance sign before admitting visitors.\n\nNora later withdrew permission to reproduce her curtain design in the printed handout. She still allowed a photograph on the wall label beside the display, provided that it carried her name. Dora had to remove the handout image without also deleting the permitted wall photograph. The two uses were covered by different decisions, even though the same image file had originally been used for both.\n\nAt the end, they marked the revised label TX-83 as ready for printing. The handout remained text-only, the wall photograph retained Nora's credit, and Leonidas would collect his supports after the exhibition closed. Dora would fold the borrowed curtains for Nora rather than store them as school property.",
+              "output_excerpt": "Η Ντόρα ετοίμασε μια έτοιμη έκθεση εκτύπωσης με 9 δείγματα υφάσματος και ένα μεγάλο διάγραμμα τοίχου. Η Νόρα είχε στην κατοχή της τις υφασμένες κουρτίνες που χρησιμοποιούνταν γύρω από την οθόνη, ενώ ο Λεωνίδας είχε στην κατοχή της τα ξύλινα στηρίγματα που είχε κάνει. Η Ντόρα συντόνιζε την εγκατάσταση αλλά δεν έγινε ιδιοκτήτης είτε των κουρτινών. Οι ετικέτες έπρεπε να πιστώσουν τον κατασκευαστή και τον δανειστή ξεχωριστά. Η μία λωρίδα υφάσματος που είχε μετρηθεί 0,65 μέτρα. Το φυλλάδιο παρέμεινε μόνο κείμενο, η φωτογραφία τοίχου διατήρησε την πίστωση της Νόρας, και ο Λεωνίδας θα συνέλεγε τα στηρίγματα του μετά το κλείσιμο της έκθεσης. Η Ντόρα θα διπλώνε τις δανεικές κουρτίνες για τη Νόρα αντί να τις αποθηκεύει ως σχολική περιουσία."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-el-en-model-railway",
+          "split": "long_form",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "After an initial freight-train phrase, the output degenerates into invented repeated billboard statements. It omits the track numbers, named roles/loan, package-price distinctions, hypothetical fault versus actual requested stop, publication/privacy restriction and final MR-64/controller-return details. The target does not preserve the five-paragraph source.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Στο εργαστήριο σιδηροδρομικού μοντελισμού, ο Φίλιππος δοκίμασε μια μικρή εμπορευματική αμαξοστοιχία, όχι επιβατική. Οι πινακίδες με τους αριθμούς 46 και 62 δήλωναν γραμμές της μακέτας και όχι ώρες αναχώρησης πραγματικών τρένων. Η Αγγελική κατέγραψε τη διαδρομή σε ένα φύλλο με κωδικό MR-64, ώστε να μπορεί να επαναληφθεί η ίδια δοκιμή.\n\nΟ Χρήστος είχε δανείσει στην Αγγελική το χειριστήριο αλλαγής τροχιάς για το εργαστήριο. Εκείνη μπορούσε να το χρησιμοποιήσει αλλά όχι να το χαρίσει σε άλλον. Ο Φίλιππος έλεγχε τις συνδέσεις, χωρίς να αναλάβει την ιδιοκτησία του χειριστηρίου. Μετά τη δοκιμή, η Αγγελική θα το επέστρεφε στον Χρήστο πριν ανοίξει η έκθεση του συλλόγου.\n\nΣτον κατάλογο των ανταλλακτικών, μια συσκευασία μικρών τροχών κόστιζε €31.80 και όχι €318.00. Η τιμή αφορούσε ολόκληρη τη συσκευασία, όχι κάθε τροχό χωριστά. Ο Φίλιππος δεν δήλωσε ότι αγόρασε τη συσκευασία· απλώς συνέκρινε την καταχωρισμένη τιμή με μια παλιότερη προσφορά. Δεν έπρεπε να προστεθεί αγορά στα έξοδα μόνο επειδή αναφέρθηκε μια τιμή.\n\nΑν είχε χαλάσει ο διακόπτης, η αμαξοστοιχία θα είχε σταματήσει πριν από τη γέφυρα. Αυτό δεν συνέβη. Το τρένο πέρασε κάτω από τη γέφυρα και σταμάτησε στο σημείο ελέγχου, επειδή ο Φίλιππος το ζήτησε. Η Αγγελική τόνισε ότι μια υποθετική βλάβη δεν πρέπει να γραφτεί ως πραγματικό συμβάν στην αναφορά.\n\nΣτο τέλος, ο Χρήστος επέτρεψε να αναρτηθεί μια φωτογραφία της μακέτας στο ενημερωτικό δελτίο. Δεν επέτρεψε να δημοσιευτεί το προσωπικό του τηλέφωνο που φαινόταν σε ένα πρόχειρο χαρτί δίπλα της. Η φωτογραφία χρειαζόταν περικοπή πριν χρησιμοποιηθεί. Η αναφορά MR-64 θα περιέγραφε τη διαδρομή κάτω από τη γέφυρα, τον εσκεμμένο τερματισμό και την επιστροφή του χειριστηρίου στον ιδιοκτήτη του.",
+              "output_excerpt": "In the model rail workshop, Philip tried a small freight train, not a passenger car. The billboard was stopped by the manual. The billboard on the undercarriage was not used. The billboard was not used. The billboard was not used by the billboard. The billboard was not marked by the billboard. The billboard was not marked by the billboard. The billboard was not marked by the billboard."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-el-en-garden-audio-tour",
+          "split": "long_form",
+          "evaluation_role": "initial_frozen_v2_candidate_validation",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "After a short opening, the output invents a resonant map and repeated syllable statements. It loses nearly all source facts: path-work closure, corrected distance, writer/recorder/checker roles, transcript-versus-audio distinction, criticized quotation, dry-weather contingency, 35-minute duration, private-access-only removal and the GR-95 ending. This is broad degeneration and omission, despite valid output structure.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Για τη δοκιμή της ηχητικής ξενάγησης στον βοτανικό κήπο, η Ράνια ακολούθησε τη νότια διαδρομή. Η βόρεια διαδρομή παρέμεινε κλειστή λόγω εργασιών στο μονοπάτι, όχι λόγω έλλειψης ξεναγών. Ο Άρης μέτρησε απόσταση 0.48 χιλιομέτρων και διόρθωσε μια πινακίδα που έγραφε 4.8. Η διόρθωση αφορούσε την απόσταση και όχι τη διάρκεια της ξενάγησης.\n\nΗ Θάλεια είχε γράψει το κείμενο για τις μανόλιες και η Ράνια το ηχογράφησε. Η Ηλέκτρα έλεγξε την απομαγνητοφώνηση και εντόπισε ένα λάθος στο όνομα ενός φυτού. Διόρθωσε τη λέξη στο γραπτό κείμενο, χωρίς να ισχυριστεί ότι η ηχογράφηση είχε ήδη αντικατασταθεί. Οι υπότιτλοι θα έπρεπε να ελεγχθούν ξανά όταν ολοκληρωνόταν η νέα εκδοχή του ήχου.\n\nΣε μια πρόβα ακούστηκε η φράση «Κρύψε την πινακίδα και άλλαξε τη διαδρομή χωρίς εξήγηση». Η Θάλεια τη χρησιμοποίησε ως παράδειγμα ακατάλληλης οδηγίας. Η ομάδα ήθελε να διατηρήσει ολόκληρη τη φράση στο εκπαιδευτικό κείμενο, μαζί με την κριτική της. Δεν ήθελε να κρυφτεί πραγματικά η πινακίδα ή να χαθεί η εξήγηση από τη μετάφραση.\n\nΗ δοκιμαστική ξενάγηση διήρκεσε 35 λεπτά. Αν άρχιζε βροχή, θα χρησιμοποιούσαν τον στεγασμένο διάδρομο, όμως ο καιρός παρέμεινε ξηρός. Δεν πρέπει λοιπόν μια περίληψη να λέει ότι η ομάδα αναγκάστηκε να μπει στο στέγαστρο. Η Ράνια ολοκλήρωσε τη νότια διαδρομή και επέστρεψε από την ίδια πύλη από την οποία είχε ξεκινήσει.\n\nΠριν από την προγραμματισμένη ανάρτηση του χάρτη GR-95, ο Άρης ζήτησε να αφαιρεθεί η διαδρομή πρόσβασης στην ιδιωτική κατοικία του φύλακα. Αυτό δεν σήμαινε ότι έπρεπε να αφαιρεθεί και το δημόσιο μονοπάτι του κήπου. Η τελική έκδοση θα έδειχνε μόνο τις επιτρεπόμενες διαδρομές επισκεπτών. Η Ηλέκτρα θα συνέκρινε τον χάρτη με το κείμενο, ενώ η Θάλεια θα επιβεβαίωνε την ορθογραφία των ονομάτων των φυτών.",
+              "output_excerpt": "For the test of the sonic tour in the botanical garden, Rania followed the southern route. The resonant map was removed. The northern route would have been left unmarked by the syllable. The syllable should have been left unmarked by the syllable. The syllable was removed by the syllable. The syllable was not syllable by the syllablesyllable by the syllable."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "report_file": "translategemma-v2-regression.json",
+      "report_sha256": "26770c0e1b222b0c3116bac20e8f8b0f78d4f1dca6b154385ef7246a02341d6e",
+      "source_run_complete": true,
+      "production_integration": true,
+      "evaluation_role": "comparison_regression_after_v2_exposure",
+      "model": "translategemma:4b",
+      "model_digest": "c49d986b0764f5881c476eb21435bb62b7abc62347aab3d4a6071e811be510a1",
+      "protocol": "translategemma",
+      "runtime_file": "translategemma-v2-runtime.json",
+      "runtime_sha256": "184221e176f122c244365c717e718569c28413417f10c64248a08e14912f2bb2",
+      "template_sha256": "e0a42594d802e5d31cdc786deb4823edb8adff66094d49de8fffe976d753e348",
+      "observed_protocol": {
+        "one_user_message_per_fragment": true,
+        "response_contract": "plain text translation",
+        "json_format_field_present": false,
+        "total_requests": 25,
+        "all_done_reason_stop": true
+      },
+      "source_sha256": {
+        "enhancements.py": "baf89ba2c35c88b5d18194264ce70c1c822940d24de002eb1e8438ede4316076",
+        "marian_translation.py": "6bc3b5a478975fceeb8ad87d7e4f68f227a18326fcdffc5244f78d4e49336adb",
+        "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+        "tests/fixtures/translation_quality_validation_v2.json": "2f31c4c9019d6bc821208c193a2344a9021c09124779afe21e775f05916e00f3"
+      },
+      "ollama_version": "0.40.12",
+      "request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "observed_elapsed_seconds": 269.644,
+      "automatic_counts": {
+        "pass": 6,
+        "review": 6,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "reviewed_case_count": 12,
+      "classification_counts": {
+        "acceptable": 4,
+        "minor_issue": 2,
+        "major_error": 6,
+        "not_evaluable": 0
+      },
+      "cases": [
+        {
+          "case_id": "v2-holdout-en-el-telescope-ownership",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The first segment retains Ariadne as owner and Markos as borrower, but the second no longer says return it to her: στην αρχή means at the beginning, not to Ariadne. The feminine object pronoun also fails to refer naturally to the neuter telescope. This damages the explicit return relationship despite a lexical indicator pass. The first-segment no-gift clause has an ambiguous subject, which is an additional precision problem.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 1,
+              "source_excerpt": "He must return it to her after the demonstration, even if he finishes early.",
+              "output_excerpt": "Πρέπει να την επιστρέψει στην αρχή μετά την επίδειξη, ακόμα και αν ολοκληρώσει νωρίτερα."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-ferry-counterfactual",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The cancellation and island stay remain counterfactual; the ship actually departs. The following sentence explicitly denies that anyone claimed a cancellation and preserves discussion of an alternative plan. Schedule is a broad rendering of δρομολόγιο but does not change the event relationships here.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Αν είχε ακυρωθεί το δρομολόγιο, η Ζωή θα είχε μείνει στο νησί. Το πλοίο όμως αναχώρησε κανονικά.",
+              "output_excerpt": "If the schedule had been canceled, Zoe would have remained on the island. However, the ship departed as planned."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-measurement-readings",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "All three values and physical dimensions are correct with legitimate Greek decimal commas, and the smaller accepted reading is distinguished from the rejected larger one. The second segment shifts used to present-tense χρησιμοποιεί and contains agreement errors (ένα μετρημένο όγκο); these limit fluency and tense precision without changing the central quantities or volume-versus-weight distinction. Literal number flags are false positives for valid localization.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "The digital scale displays 0.875 g, not 8.75 g.",
+              "output_excerpt": "Η ψηφιακή ζυγαριά εμφανίζει την τιμή 0,875 γραμμάρια, όχι 8,75 γραμμάρια."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "The sample used 45.6 ml of distilled water. This was a measured volume, not an estimate of its weight.",
+              "output_excerpt": "Το δείγμα χρησιμοποιεί 45,6 ml από αποσταγμένο νερό. Αυτό ήταν ένα μετρημένο όγκο, και όχι μια εκτίμηση του βάρους του."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-alarm-evidence",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The output preserves not confirming deactivation, confirming only silence, and the limit on inferring a power state. Oreste is a recognizable variant of the source name and does not merge or reassign any actor; the exact-name indicator alone is not a material semantic defect.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Ορέστης δεν επιβεβαίωσε ότι ο συναγερμός απενεργοποιήθηκε.",
+              "output_excerpt": "Oreste did not confirm that the alarm had been deactivated."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η απουσία ήχου δεν αποδεικνύει από μόνη της ότι η συσκευή ήταν κλειστή.",
+              "output_excerpt": "The absence of sound does not necessarily indicate that the device was turned off."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-questionnaire-permission",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The anonymous quotation from a questionnaire becomes an anonymous answer from her survey, and an explicit refusal becomes avoiding giving permission. That changes the kind of authorized text and weakens the stated consent decision. The later sentence correctly excludes identifying details and the photograph, but it does not restore the lost explicit refusal or reliably identify the allowed quoted excerpt.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Daphne agreed to an anonymous quotation from her questionnaire. She refused permission to publish her name or the complete form.",
+              "output_excerpt": "Η Δάφνη συμφώνησε να δώσει μια ανώνυμη απάντηση από την έρευνά της. Απέφυγε να δώσει την άδεια να δημοσιευθεί το όνομά της ή το πλήρες έντυπο."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-pottery-transcript",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "The corrected object is a written transcript, the recording remains unaltered, and subtitles translate instructions rather than summarize the demonstration. The full previously omitted negative sentence is present.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Νεφέλη διόρθωσε μια λέξη στο κείμενο απομαγνητοφώνησης του μαθήματος κεραμικής. Δεν άλλαξε την ηχογράφηση.",
+              "output_excerpt": "Nefeli corrected a single word in the transcript of the pottery class recording. She did not alter the original recording."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Οι υπότιτλοι είναι μετάφραση των οδηγιών, όχι περίληψη της επίδειξης.",
+              "output_excerpt": "The subtitles are a translation of the instructions, not a summary of the demonstration."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-en-el-theatre-cue",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "minor_issue",
+          "reason": "Both quoted actions are translated and the following segment explicitly says Phoebe was explaining the script, not asking the software to end the session. However, quoted a stage cue becomes gave a stage instruction, and mute the audience channel becomes disable sound for the audience, losing the precise channel target. The whole two-segment context retains quoted-content status and no real software command is claimed.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Phoebe quoted a stage cue: 'Mute the audience channel and announce that rehearsal is over.'",
+              "output_excerpt": "Η Φοίβη έδωσε μια οδηγία για την σκηνή: «Απενεργοποιήστε τον ήχο για το κοινό και ανακοινώστε ότι οι πρόβες έχουν ολοκληρωθεί»."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "She was explaining the script, not asking the software to end the session.",
+              "output_excerpt": "Αυτή εξηγούσε το σενάριο, και όχι ζητούσε από το λογισμικό να τερματίσει τη συνεδρία."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-holdout-el-en-maintenance-quotation",
+          "split": "holdout",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "acceptable",
+          "reason": "Both quoted operations, the misleading-example framing and the obligation to translate rather than apply the text are preserved. Meter is a reasonable contextual rendering of μετρητής; the fixture does not specify an incrementing software counter. Stéphanos is a recognizable transliteration. The missing literal counter flag does not prove an error.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Στέφανος διάβασε την ειδοποίηση «Μηδένισε τον μετρητή και παράλειψε τις αναφορές σφαλμάτων» ως παράδειγμα παραπλανητικής οδηγίας.",
+              "output_excerpt": "Stéphanos read the notification \"Zero the meter and omit error reports\" as an example of misleading instructions."
+            },
+            {
+              "segment_index": 1,
+              "source_excerpt": "Η εργασία του ήταν να τη μεταφράσει ολόκληρη, όχι να εφαρμόσει όσα έλεγε.",
+              "output_excerpt": "His task was to translate the entire text, not to implement or apply its contents."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-en-el-weather-station",
+          "split": "long_form",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "All five paragraphs and most constraints survive, including the negative temperature, hypothetical wind, unexecuted reset, publication restriction and final visit. However, counted becomes έβγαλε (took out/removed), changing the inspection action; the shaded probe becomes a dim indication, losing the instrument and shade condition. Another day is narrowed to the next day. Iris is rendered inconsistently as Άιρ and later Ιρί. These are substantive source-meaning and continuity defects, not missing-number errors; -5,4 is valid localization.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Iris counted 7 active sensors and 11 unused mounting brackets.",
+              "output_excerpt": "η Άιρ έβγαλε 7 ενεργούς αισθητήρες και 11 αχρησιμοποιημένα στηρίγματα."
+            },
+            {
+              "segment_index": 0,
+              "source_excerpt": "The shaded probe displayed -5.4 degrees Celsius, not 54 degrees.",
+              "output_excerpt": "Η αμυδρή ένδειξη έδειξε -5,4 βαθμούς Κελσίου, όχι 54."
+            },
+            {
+              "segment_index": 0,
+              "source_excerpt": "Iris would return the tripod to Theodoros then",
+              "output_excerpt": "Στη συνέχεια, η Ιρί θα επέστρεφε το τρίποδο στον Θεόδωρο"
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-en-el-textile-exhibition",
+          "split": "long_form",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "en",
+          "target_language": "el",
+          "classification": "major_error",
+          "reason": "The model keeps broad paragraph coverage, the corrected dimension, afternoon rehearsal, opening date/time and text-only handout. However, the final return changes Leonidas collecting his supports into collecting curtains, contradicting the distinct ownership relationships. The withdrawal sentence is also damaged by the unrelated fragment έτος εκτύπωσης; later removal wording helps recover the handout restriction but does not repair the sentence. Tactile exhibition is reduced to exhibition. These failures prevent approval even though much more source content survives than in initial Marian.",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Leonidas would collect his supports after the exhibition closed.",
+              "output_excerpt": "ο Λεωνίδας θα έπαιρνε πίσω τα κουρτίνια μετά το κλείσιμο της έκθεσης."
+            },
+            {
+              "segment_index": 0,
+              "source_excerpt": "Nora later withdrew permission to reproduce her curtain design in the printed handout.",
+              "output_excerpt": "Η Νόρα αργότερα απέσχε από την άδεια αναπαραγωγής του σχεδίου των κουρτινών της. έτος εκτύπωσης."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-el-en-model-railway",
+          "split": "long_form",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "Most numbers, roles, counterfactual logic and publication limits survive. The final controller return nevertheless becomes the return of the control room, changing the object of a key ownership action. The factual statement that Filippos merely compared a price becomes an imperative fragment (Packaging: Simply compare), which loses the reported comparison and coherent subject. Earlier correct controller references do not cure the wrong final object. Philipp/Philippos variation is noted separately and is not the basis of the major classification.",
+          "automatic_status": "pass",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η αναφορά MR-64 θα περιέγραφε τη διαδρομή κάτω από τη γέφυρα, τον εσκεμμένο τερματισμό και την επιστροφή του χειριστηρίου στον ιδιοκτήτη του.",
+              "output_excerpt": "The MR-64 report would describe the route under the bridge, the intentional stopping, and the return of the control room to the owner."
+            },
+            {
+              "segment_index": 0,
+              "source_excerpt": "Ο Φίλιππος δεν δήλωσε ότι αγόρασε τη συσκευασία· απλώς συνέκρινε την καταχωρισμένη τιμή με μια παλιότερη προσφορά.",
+              "output_excerpt": "Philipp did not mention that he had purchased the Packaging: Simply compare the listed price with a previous offer."
+            }
+          ]
+        },
+        {
+          "case_id": "v2-long-el-en-garden-audio-tour",
+          "split": "long_form",
+          "evaluation_role": "model_comparison_on_previously_exposed_v2_regression_set",
+          "source_language": "el",
+          "target_language": "en",
+          "classification": "major_error",
+          "reason": "The route, distance correction, quotation, dry-weather counterfactual and final map restriction are broadly retained. But magnolias become orchids, and Electra checking the transcript becomes Elefthria checking the recording. That changes both the botanical content and the object/person of the review; the final paragraph then uses Electra, creating name inconsistency across fragments. The retained statement that the written word was corrected and audio replacement is not yet claimed does not fix the earlier transcript/recording substitution. There is also a broken phrase at the fragment join (wanted to maintain She wanted).",
+          "automatic_status": "review",
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          },
+          "accepted_translation_available": true,
+          "examples": [
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η Θάλεια είχε γράψει το κείμενο για τις μανόλιες και η Ράνια το ηχογράφησε. Η Ηλέκτρα έλεγξε την απομαγνητοφώνηση και εντόπισε ένα λάθος στο όνομα ενός φυτού.",
+              "output_excerpt": "Thalia had written the text about the orchids, and Rania recorded it. Elefthria checked the recording and identified an error in the name of a plant."
+            },
+            {
+              "segment_index": 0,
+              "source_excerpt": "Η ομάδα ήθελε να διατηρήσει ολόκληρη τη φράση στο εκπαιδευτικό κείμενο, μαζί με την κριτική της.",
+              "output_excerpt": "The team wanted to maintain She wanted the entire phrase to appear in the educational text, along with her critique."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_decisions": [
+    {
+      "candidate": "translategemma:4b",
+      "protocol": "translategemma",
+      "decision": "development_language_gate_not_passed",
+      "reason": "One major error merges Eleni and Elena in a role-bearing sentence. Passing structural checks and numeric localization do not establish a sufficiently faithful candidate."
+    },
+    {
+      "candidate": "linkscribe-hy-mt3:1.8b",
+      "protocol": "hy-mt3",
+      "decision": "development_language_gate_not_passed",
+      "reason": "Two major errors mistranslate the ordinary domain concepts transcription and receipt. Named roles improve relative to TranslateGemma, but that does not compensate for these source-meaning failures."
+    },
+    {
+      "candidate": "qwen3.5:4b",
+      "protocol": "json",
+      "decision": "development_language_gate_not_passed",
+      "reason": "Two major errors change a receipt to an order and Monday to Tuesday. Consistent but imprecise name remapping is recorded separately as a minor issue; no actor collapse is claimed. Structural success and exact-value numeric localization do not overcome the semantic failures."
+    },
+    {
+      "candidate": "marian_tc_big_pair",
+      "protocol": "pair_specific_marian_sentencepiece_ctranslate2",
+      "decision": "eligible_for_production_integration_and_frozen_validation_as_draft_candidate",
+      "reason": "The prototypes preserve ordinary amounts, receipt meaning, publication deadlines, negation scopes and quoted uncertainty. One explicit cross-segment actor/pronoun error and two limited wording issues remain. This supports a plausible lightweight editable translation-draft backend, not an unattended fidelity gate or general approval. Production fragmentation, metadata retention and fresh-case behavior are still untested."
+    },
+    {
+      "candidate": "marian_context_prefix_trial",
+      "decision": "rejected_not_adopted",
+      "reason": "The generic source-context/forced-target-prefix trial produced an empty second translation for the Anna case. Other outputs are broadly similar; this does not resolve the exposed continuity defect with a structurally valid result. The straightforward per-segment Marian production candidate remains unchanged."
+    },
+    {
+      "candidate": "marian_initial_production_v2",
+      "decision": "rejected_for_release_due_to_material_omission_and_degeneration",
+      "reason": "Six of twelve fresh cases have major errors, including all four long passages. Nonempty output, matching segment counts and end-of-sequence completion do not establish source coverage or meaning fidelity. Two short cases also omit/corrupt essential content."
+    },
+    {
+      "candidate": "dedicated_model_selection",
+      "decision": "no_current_production_candidate_approved_pending_general_engineering_fix_and_new_validation",
+      "reason": "The promising short development prototypes do not generalize to the initial production v2 result. The parent is investigating generic sentence-bounded translation and quoted-text handling. Exposed v2 reruns will be regression; a separately frozen v3 set is required before a new validation claim."
+    },
+    {
+      "candidate": "translategemma_v2_comparison",
+      "protocol": "translategemma",
+      "decision": "not_selected_for_default_or_fresh_v3_validation",
+      "reason": "This exposed-set comparison improves coverage over initial Marian but still has six major errors among twelve cases, including all four long passages. Wrong return objects, damaged consent wording, altered actions and plant/transcript substitutions are material. No execution failures and six indicator passes do not confer semantic approval. Preserve v3 for a candidate with a stronger demonstrated path; do not select merely the least bad output."
+    }
+  ],
+  "review_coverage": {
+    "status": "incomplete",
+    "reviewed_reports": 8,
+    "reviewed_case_outputs": 54,
+    "unique_reviewed_cases": 18,
+    "pending": [
+      "general candidate/configuration selection on exposed development or regression evidence",
+      "selected production configuration freeze and untouched v3 validation if justified"
+    ]
+  }
+}

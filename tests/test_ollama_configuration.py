@@ -39,6 +39,8 @@ def test_thread_configuration_reaches_actual_model_request(monkeypatch, setting,
     requests = []
 
     def respond(path, payload, timeout):
+        if enhancements.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         requests.append((path, payload, timeout))
         return {"done": True, "message": {"content": '{"translations":["Hello"]}'}}
 
@@ -75,6 +77,8 @@ def test_translation_schema_matches_each_real_fragment_batch(monkeypatch, texts)
     seen = []
 
     def respond(path, payload, timeout):
+        if enhancements.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         items = json.loads(payload["messages"][-1]["content"].split("JSON input: ", 1)[1])
         schema = payload["format"]
         assert schema["type"] == "object" and schema["additionalProperties"] is False

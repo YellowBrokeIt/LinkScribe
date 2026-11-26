@@ -1,0 +1,70 @@
+{
+  "template": "<｜hy_begin▁of▁sentence｜>{{ if .Messages }}{{ range .Messages }}{{ if eq .Role \"system\" }}{{ .Content }}<｜hy_place▁holder▁no▁3｜>{{ else if eq .Role \"user\" }}<｜hy_User｜>{{ .Content }}{{ else if eq .Role \"assistant\" }}<｜hy_Assistant｜>{{ .Content }}<｜hy_place▁holder▁no▁2｜>{{ end }}{{ end }}<｜hy_Assistant｜>{{ else }}{{ if .System }}{{ .System }}<｜hy_place▁holder▁no▁3｜>{{ end }}<｜hy_User｜>{{ .Prompt }}<｜hy_Assistant｜>{{ .Response }}{{ end }}",
+  "parameters": "stop                           \"<｜hy_place▁holder▁no▁2｜>\"\ntemperature                    0\nnum_ctx                        8192\nnum_predict                    2048",
+  "details": {
+    "parent_model": "hf.co/tencent/Hy-MT3-1.8B-GGUF:Q4_K_M",
+    "format": "gguf",
+    "family": "hunyuan-dense",
+    "families": [
+      "hunyuan-dense"
+    ],
+    "parameter_size": "1.79B",
+    "quantization_level": "Q4_K_M",
+    "runner": "llamacpp"
+  },
+  "model_info": {
+    "general.architecture": "hunyuan-dense",
+    "general.basename": "Hy-MT3",
+    "general.file_type": 15,
+    "general.parameter_count": 1791080448,
+    "general.quantization_version": 2,
+    "general.sampling.penalty_repeat": 1.05,
+    "general.sampling.temp": 0.7,
+    "general.sampling.top_k": 20,
+    "general.sampling.top_p": 0.8,
+    "general.size_label": "1.8B",
+    "general.type": "model",
+    "general.version": "1118",
+    "hunyuan-dense.attention.head_count": 16,
+    "hunyuan-dense.attention.head_count_kv": 4,
+    "hunyuan-dense.attention.key_length": 128,
+    "hunyuan-dense.attention.layer_norm_rms_epsilon": 1e-05,
+    "hunyuan-dense.attention.value_length": 128,
+    "hunyuan-dense.block_count": 32,
+    "hunyuan-dense.context_length": 262144,
+    "hunyuan-dense.embedding_length": 2048,
+    "hunyuan-dense.feed_forward_length": 6144,
+    "hunyuan-dense.rope.freq_base": 11158840,
+    "hunyuan-dense.rope.scaling.factor": 1,
+    "hunyuan-dense.rope.scaling.original_context_length": 262144,
+    "hunyuan-dense.rope.scaling.type": "none",
+    "quantize.imatrix.chunks_count": 551,
+    "quantize.imatrix.dataset": "calib_chat.txt",
+    "quantize.imatrix.entries_count": 224,
+    "quantize.imatrix.file": "imatrix.gguf",
+    "tokenizer.ggml.add_bos_token": false,
+    "tokenizer.ggml.add_eos_token": false,
+    "tokenizer.ggml.bos_token_id": 120000,
+    "tokenizer.ggml.clean_spaces": true,
+    "tokenizer.ggml.eos_token_id": 120020,
+    "tokenizer.ggml.merges": [],
+    "tokenizer.ggml.model": "gpt2",
+    "tokenizer.ggml.padding_token_id": 120002,
+    "tokenizer.ggml.pre": "hunyuan-dense",
+    "tokenizer.ggml.seperator_token_id": 120007,
+    "tokenizer.ggml.token_type": [],
+    "tokenizer.ggml.tokens": []
+  },
+  "capabilities": [
+    "completion"
+  ],
+  "modified_at": "2026-11-26T19:38:00.384193905+02:00",
+  "configured_model": "linkscribe-hy-mt3:1.8b",
+  "template_sha256": "e3746253f82658ea2036fd50de80518f4607f57bf76301235983caf50779fcde",
+  "generation_settings": {
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 4
+  }
+}

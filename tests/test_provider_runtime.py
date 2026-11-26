@@ -156,6 +156,97 @@ def test_tail_diagnostic_is_separate_and_retains_partial_failure(tmp_path, failu
     assert json.loads(path.read_text()) == report
 
 
+@pytest.mark.parametrize("raise_error", [False, True])
+def test_normal_transcribe_observer_preserves_return_identity_and_real_failure(raise_error):
+    from dataclasses import dataclass
+    from types import SimpleNamespace
+
+    @dataclass
+    class Info:
+        duration: float = 2.0
+        duration_after_vad: float = 2.0
+        vad_options: object = None
+
+    result = (iter([]), Info())
+    calls, events = [], []
+
+    class Model:
+        def transcribe(self, audio, language=None, vad_filter=True, clip_timestamps="0"):
+            calls.append((audio, language, vad_filter, clip_timestamps))
+            if raise_error:
+                raise ValueError("Owned real-boundary error")
+            return result
+
+    _provider_smoke().observe_transcribe(SimpleNamespace(WhisperModel=Model),
+        lambda kind, **data: events.append((kind, data)), lambda: "owned-job")
+    if raise_error:
+        with pytest.raises(ValueError, match="Owned real-boundary error"):
+            Model().transcribe("owned.wav", vad_filter=False)
+    else:
+        assert Model().transcribe("owned.wav", vad_filter=False) is result
+    assert calls == [("owned.wav", None, False, "0")]
+    assert events[0][1]["explicit_kwargs"] == {"vad_filter": False}
+    assert events[0][1]["resolved_options"]["vad_filter"] is False
+    assert [kind for kind, _ in events] == (["transcribe_request"] if raise_error else
+                                           ["transcribe_request", "transcribe_info"])
+
+
+def _normal_observations(vad=False, retained=2.0):
+    events = [
+        {"kind": "audio_decoded", "decoded_duration_seconds": 2.0, "sampling_rate_hz": 16000},
+        {"kind": "transcribe_request", "explicit_kwargs": {"vad_filter": vad},
+         "resolved_options": {"vad_filter": vad, "clip_timestamps": "0"}},
+        {"kind": "transcribe_info", "info": {"duration": 2.0, "duration_after_vad": retained,
+                                                "vad_options": {"threshold": 0.5} if vad else None}},
+    ]
+    if vad:
+        events += [{"kind": "vad_speech_intervals", "kept_sample_count": int(retained * 16000),
+                    "last_kept_end_seconds": 1.75},
+                   {"kind": "post_vad_audio", "sample_count": int(retained * 16000), "duration_seconds": retained}]
+    return events
+
+
+def test_observation_validation_distinguishes_requested_vad_from_full_audio():
+    smoke = _provider_smoke()
+    direct = smoke.transcription_evidence(_normal_observations())
+    selected = smoke.transcription_evidence(_normal_observations(vad=True, retained=1.5))
+    assert direct["normal_vad_filter"] is False and direct["post_vad_duration_seconds"] == 2
+    assert direct["last_vad_kept_end_seconds"] is None
+    assert selected["normal_vad_filter"] is True and selected["post_vad_duration_seconds"] == 1.5
+
+
+@pytest.mark.parametrize("defect", ["requested_vad_missing", "unrequested_vad_present", "audio_lost_without_vad"])
+def test_inconsistent_vad_evidence_cannot_pass(defect):
+    if defect == "requested_vad_missing":
+        events = _normal_observations(vad=True)[:3]
+    elif defect == "unrequested_vad_present":
+        events = _normal_observations() + _normal_observations(vad=True)[3:]
+    else:
+        events = _normal_observations(retained=1.0)
+    with pytest.raises(AssertionError):
+        _provider_smoke().transcription_evidence(events)
+
+
+@pytest.mark.parametrize("kind", ["silence", "white_noise"])
+def test_owned_nonspeech_fixture_has_bounded_duration_and_reproducible_pcm(kind):
+    from array import array
+    import io
+    import wave
+    smoke = _provider_smoke()
+    payload, provenance = smoke.generated_nonspeech(kind)
+    again, repeated = smoke.generated_nonspeech(kind)
+    assert payload == again and provenance == repeated
+    with wave.open(io.BytesIO(payload)) as audio:
+        assert (audio.getnchannels(), audio.getsampwidth(), audio.getframerate(), audio.getnframes()) == (
+            1, 2, 16000, 32 * 16000)
+        samples = array("h", audio.readframes(audio.getnframes()))
+    if kind == "silence":
+        assert not any(samples)
+    else:
+        assert max(samples) > 0 and min(samples) < 0
+    assert provenance["expected_speech"] == "none_by_construction"
+
+
 @pytest.mark.parametrize("detected", [
     {"deno": "2.2.9", "node": "24.22.0"},
     {"deno": "unreadable version"},

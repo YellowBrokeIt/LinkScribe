@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "Three six-case development trials completed; no default quality approval",
+  "runtime": {
+    "name": "Ollama",
+    "version": "0.40.12"
+  },
+  "model": {
+    "name": "linkscribe-hy-mt3:7b",
+    "model": "linkscribe-hy-mt3:7b",
+    "modified_at": "2026-11-26T20:58:19.281745353+02:00",
+    "size": 5145532057,
+    "digest": "5cd558f1a3f813d2a75755e3b51daadabec1252e9c4b6fde3b836f58fe85aa61",
+    "details": {
+      "parent_model": "hf.co/tencent/Hy-MT3-7B-GGUF:Q4_K_M",
+      "format": "gguf",
+      "family": "hunyuan-dense",
+      "families": [
+        "hunyuan-dense"
+      ],
+      "parameter_size": "7.5B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 4096,
+      "runner": "llamacpp"
+    },
+    "capabilities": [
+      "completion"
+    ]
+  },
+  "sources": {
+    "base": {
+      "repository": "tencent/Hy-MT3-7B",
+      "revision": "38d6c3c31d6b4dbdfc208e0621b822ae7bf6aeb2"
+    },
+    "gguf": {
+      "repository": "tencent/Hy-MT3-7B-GGUF",
+      "revision": "aee8478cafe9a14a4f6e074614a5688e1242c0f8",
+      "filename": "Hy-MT3-7B-Q4_K_M.gguf",
+      "bytes": 5145531232,
+      "sha256": "e08a5098918c6615e1a84fbe714637237bfdc832e17761bdde4bb65878eb17c9",
+      "file_hash_verified": true
+    }
+  },
+  "license": "Apache-2.0 (publisher model cards)",
+  "native_protocol": {
+    "bos": "<|startoftext|>",
+    "user_suffix": "<|extra_0|>",
+    "eos": [
+      "<|eos|>",
+      "<|extra_5|>"
+    ],
+    "system_suffix": "<|extra_4|>",
+    "single_user_rendering": "<|startoftext|>{user_content}<|extra_0|>"
+  },
+  "source_files": {
+    "tokenizer_config.json": "1fffdb809549222938f4a732645dd984c7c0b2973d592c2d01e05425274317da",
+    "chat_template.jinja": "788ac16c5d7bfefc28655928ad524c8f378a44cb24d24fb125d6a5859b167677",
+    "generation_config.json": "f786ed6734246caf78549360455c8bd56f6a8dae891a8e276235edb4a02bef47",
+    "README.md": "4524bd0c092e5564fbbf34def48536144eaf5b3e5307135d8a651f00a494d3fa"
+  },
+  "modelfile_sha256": "5f698a3aacebe9c4c18e02524a4072e5ecf0195bbb610c4677f31d7ef39d0aaa",
+  "actual_template": "{{ if .Messages }}{{ $hasHead := true }}{{ range $index, $message := .Messages }}{{ if and (eq $index 0) (eq .Content \"\") }}{{ $hasHead = false }}{{ end }}{{ if eq .Role \"user\" }}{{ if not (and (eq $index 1) $hasHead) }}<|startoftext|>{{ end }}{{ .Content }}<|extra_0|>{{ else if eq .Role \"assistant\" }}{{ .Content }}<|eos|>{{ else if and (eq $index 0) (eq .Role \"system\") .Content }}<|startoftext|>{{ .Content }}<|extra_4|>{{ else }}{{ .Content }}{{ end }}{{ end }}{{ else }}<|startoftext|>{{ if .System }}{{ .System }}<|extra_4|>{{ end }}{{ .Prompt }}<|extra_0|>{{ .Response }}{{ end }}",
+  "actual_parameters": "num_ctx                        8192\nnum_predict                    2048\nstop                           \"<|eos|>\"\nstop                           \"<|extra_5|>\"\ntemperature                    0",
+  "evaluation_options": {
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 4
+  },
+  "options_note": "Greedy baseline uses the existing app options. It is not the publisher-recommended stochastic sampling configuration.",
+  "preparation_failures": [
+    {
+      "scope": "temporary QA setup helper, before inference",
+      "failure": "Ollama delete returns an empty successful response; helper initially attempted to parse it as JSON.",
+      "resolution": "Treat empty successful response as no response data; rerun preparation. No source transcript or inference was affected."
+    }
+  ],
+  "notes": [
+    "Qwen summary model cache was preserved. Unused 1.8B and TranslateGemma QA weights were removed to make space; prior result and provenance files remain.",
+    "The 7B protocol differs from 1.8B; its own first-party native template and both end tokens are used.",
+    "No transcripts, reference translations, or review criteria were used for preparation."
+  ],
+  "review_file": "hy-mt3-7b-review.json"
+}

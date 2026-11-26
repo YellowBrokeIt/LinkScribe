@@ -83,7 +83,8 @@ def observe_task_models(identities):
             assert active_task in identities, "Model call outside a recorded application task"
             assert payload["model"] == identities[active_task]["configured_model"], (
                 active_task, payload["model"], identities[active_task]["configured_model"])
-            requests.append({"task": active_task, "model": payload["model"],
+            requests.append({"kind": "control" if enhancements.is_ollama_control_request(payload) else "inference",
+                             "task": active_task, "model": payload["model"],
                              "options": copy.deepcopy(payload.get("options", {})),
                              "format": copy.deepcopy(payload.get("format")),
                              "think": payload.get("think")})
@@ -158,7 +159,9 @@ def main() -> None:
                     results.append({"source": language, "target": target,
                                     "elapsed_seconds": round(time.monotonic() - started, 2),
                                     "translation": [item["text"] for item in translated],
-                                    "summary": summary, "inference_requests": actual_requests})
+                                    "summary": summary,
+                                    "inference_requests": [item for item in actual_requests if item["kind"] == "inference"],
+                                    "control_requests": [item for item in actual_requests if item["kind"] == "control"]})
     finally:
         app.DATA_DIR, library.DB_FILE = previous_jobs, previous_db
         for job_id in created_jobs:

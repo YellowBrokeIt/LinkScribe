@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "reviewer": "assistant (root)",
+  "complete": true,
+  "semantic_quality_approved": false,
+  "scope": "All 18 actual outputs across three six-case old development trials; no fresh v3 evaluation.",
+  "methodology": [
+    "Complete source/output pairs were read; automatic lexical flags are not semantic approval.",
+    "Context trial includes only bounded neighboring original source text. It includes no reference translations or case-specific repairs.",
+    "Sampling trial uses temperature 0.7, top_p 0.6, top_k 20, repeat_penalty 1.05 and seed 0; 2048 output-token and 8192 context guards remain from the app. There was no repeated random-seed selection.",
+    "Prototype patches and exact source commit/hash identify code differing from the main app. Neither experiment was adopted.",
+    "Assistant review of internally authored cases is not blinded human evaluation or a general accuracy rate."
+  ],
+  "reports": [
+    {
+      "report_file": "hy-mt3-7b-development.json",
+      "report_sha256": "2d253d3dfc236d237113866b7ace4fe2005f6443bad6b2bda55bf415d88e073e",
+      "protocol": "production native prompt, greedy",
+      "elapsed_seconds": 92.18,
+      "model_digest": "5cd558f1a3f813d2a75755e3b51daadabec1252e9c4b6fde3b836f58fe85aa61",
+      "actual_request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "source": {
+        "sha256": {
+          "enhancements.py": "762825acfd2107261a7ca86995313a2b68152bd80a10ea12e9185338870c1cc4",
+          "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+          "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+          "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+        },
+        "git_commit": "01bfa720cd09f6541450fdf4f9e48136c923caea",
+        "git_dirty": true
+      },
+      "classification_counts": {
+        "acceptable": 3,
+        "minor_issue": 2,
+        "major_error": 1
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "classification": "minor_issue",
+          "reason": "Transcript is rendered as απόδοση (rendering), an imprecise domain term, while text-versus-original-audio, the twelve minutes and pending translation remain intact.",
+          "source": [
+            "Maria saved the transcript as a text file; she did not save the original recording.",
+            "Transcription took 12 minutes. Translation into Greek has not started yet."
+          ],
+          "actual_output": [
+            "Η Μαρία αποθήκευσε την απόδοση ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+            "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "classification": "major_error",
+          "reason": "The first segment distinguishes Eleni and Elena, but the second makes Eleni both translator and subtitle reviewer, erasing Elena's role.",
+          "source": [
+            "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+            "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους."
+          ],
+          "actual_output": [
+            "Nikos sent the text to Eleni, not to Elena.",
+            "Eleni is the translator. Nikos does the recording, and Eleni checks the subtitles."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "classification": "acceptable",
+          "reason": "Receipt, item count, separate transfer, rejected amount and unit distinction survive. Greek decimal/thousands localization preserves 12.50 and 5,000; literal numeric flags are not errors.",
+          "source": [
+            "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+            "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+          ],
+          "actual_output": [
+            "Η απόδειξη δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 σατς, όχι 500 σατς.",
+            "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "classification": "minor_issue",
+          "reason": "Negation scope, yesterday and tentative today survive, but the next isolated segment refers to Anna as it. This is an erroneous pronoun without another named human actor.",
+          "source": [
+            "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+            "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί."
+          ],
+          "actual_output": [
+            "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.",
+            "Today it may sell one, but this has not been decided."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "classification": "acceptable",
+          "reason": "Publication remains conditional on Giannis approving; no answer by Friday leads to waiting until Monday.",
+          "source": [
+            "Anna will publish the video only if Giannis approves the text.",
+            "If Giannis does not answer by Friday, Anna will wait until Monday."
+          ],
+          "actual_output": [
+            "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+            "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "classification": "acceptable",
+          "reason": "The question retains 12 versus 21 chapters, explicitly unknown answer and the insufficiency of the title alone.",
+          "source": [
+            "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+            "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε."
+          ],
+          "actual_output": [
+            "Maria asked: \"Does the file have 12 chapters or 21?\"",
+            "We do not yet know the answer. The title alone is not enough for us to determine that."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        }
+      ],
+      "decision": "Not approved; one material actor collapse remains."
+    },
+    {
+      "report_file": "hy-mt3-7b-context-development.json",
+      "report_sha256": "c48f57621762c3c12342342b79c599779c44a73b22fda0027c1a18055dc58201",
+      "protocol": "isolated general neighboring-source context prototype, greedy",
+      "elapsed_seconds": 120.46,
+      "model_digest": "5cd558f1a3f813d2a75755e3b51daadabec1252e9c4b6fde3b836f58fe85aa61",
+      "actual_request_options": {
+        "temperature": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "source": {
+        "sha256": {
+          "enhancements.py": "d0f65f62815ec7c00ddff8e11ce91178d64c5f194c79fc624ec96353e19190c1",
+          "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+          "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+          "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+        },
+        "git_commit": "01bfa720cd09f6541450fdf4f9e48136c923caea",
+        "git_dirty": true
+      },
+      "classification_counts": {
+        "acceptable": 4,
+        "minor_issue": 1,
+        "major_error": 1
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "classification": "minor_issue",
+          "reason": "Transcript is rendered as απόδοση (rendering), an imprecise domain term, while text-versus-original-audio, the twelve minutes and pending translation remain intact.",
+          "source": [
+            "Maria saved the transcript as a text file; she did not save the original recording.",
+            "Transcription took 12 minutes. Translation into Greek has not started yet."
+          ],
+          "actual_output": [
+            "Η Μαρία αποθήκευσε την απόδοση ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+            "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "classification": "major_error",
+          "reason": "Context makes the first segment internally contradictory (to Eleni, not to Eleni) and still assigns both translation and subtitle review to Eleni in the second segment.",
+          "source": [
+            "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+            "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους."
+          ],
+          "actual_output": [
+            "Nikos sent the text to Eleni, not to Eleni.",
+            "Eleni is the translator. Nikos does the recording, and Eleni checks the subtitles."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "classification": "acceptable",
+          "reason": "Receipt, item count, separate transfer, rejected amount and unit distinction survive. Greek decimal/thousands localization preserves 12.50 and 5,000; literal numeric flags are not errors.",
+          "source": [
+            "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+            "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+          ],
+          "actual_output": [
+            "Η απόδειξη δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 sats, όχι 500 sats.",
+            "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "classification": "acceptable",
+          "reason": "The contextual prototype keeps Anna as she while preserving the negation and pending decision.",
+          "source": [
+            "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+            "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί."
+          ],
+          "actual_output": [
+            "I didn't say that Anna sold all the books. I said she didn't sell any yesterday.",
+            "Today she might sell one, but that hasn't been decided."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "classification": "acceptable",
+          "reason": "Publication remains conditional on Giannis approving; no answer by Friday leads to waiting until Monday.",
+          "source": [
+            "Anna will publish the video only if Giannis approves the text.",
+            "If Giannis does not answer by Friday, Anna will wait until Monday."
+          ],
+          "actual_output": [
+            "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+            "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "classification": "acceptable",
+          "reason": "The question retains 12 versus 21 chapters, explicitly unknown answer and the insufficiency of the title alone.",
+          "source": [
+            "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+            "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε."
+          ],
+          "actual_output": [
+            "Maria asked: \"Does the file have 12 chapters or 21?\"",
+            "We do not yet know the answer. The title alone is not enough for us to determine this."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        }
+      ],
+      "decision": "Rejected for production adoption. It improves one pronoun but worsens the distinct-name case."
+    },
+    {
+      "report_file": "hy-mt3-7b-author-sampling-development.json",
+      "report_sha256": "a8a8b827bb0106f56ab66fc133fe25146dac852461c842513663fa88f6c46c9e",
+      "protocol": "isolated original-prompt trial using publisher sampling recommendations and fixed seed 0",
+      "elapsed_seconds": 95.134,
+      "model_digest": "5cd558f1a3f813d2a75755e3b51daadabec1252e9c4b6fde3b836f58fe85aa61",
+      "actual_request_options": {
+        "temperature": 0.7,
+        "top_p": 0.6,
+        "top_k": 20,
+        "repeat_penalty": 1.05,
+        "seed": 0,
+        "num_ctx": 8192,
+        "num_predict": 2048,
+        "num_thread": 4
+      },
+      "source": {
+        "sha256": {
+          "enhancements.py": "d209aa05d4ce613888f4f5dfc669846ef1986d37e8d17f8f6fe57cb074a3122e",
+          "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+          "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+          "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+        },
+        "git_commit": "01bfa720cd09f6541450fdf4f9e48136c923caea",
+        "git_dirty": true
+      },
+      "classification_counts": {
+        "acceptable": 2,
+        "minor_issue": 2,
+        "major_error": 2
+      },
+      "cases": [
+        {
+          "case_id": "dev-en-el-transcript-terminology",
+          "classification": "minor_issue",
+          "reason": "Transcript is rendered as απόδοση (rendering), an imprecise domain term, while text-versus-original-audio, the twelve minutes and pending translation remain intact.",
+          "source": [
+            "Maria saved the transcript as a text file; she did not save the original recording.",
+            "Transcription took 12 minutes. Translation into Greek has not started yet."
+          ],
+          "actual_output": [
+            "Η Μαρία αποθήκευσε την απόδοση ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+            "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-people-and-roles",
+          "classification": "major_error",
+          "reason": "Elena's subtitle-review role again becomes Eleni's, despite the correct distinction in the first segment.",
+          "source": [
+            "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+            "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους."
+          ],
+          "actual_output": [
+            "Nikos sent the text to Eleni, not to Elena.",
+            "Eleni is the translator. Nikos does the recording, and Eleni checks the subtitles."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-bitcoin-amounts",
+          "classification": "minor_issue",
+          "reason": "Numeric values and the transfer distinction survive, but the receipt is rendered as the malformed απόδειξμα rather than the ordinary απόδειξη.",
+          "source": [
+            "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+            "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+          ],
+          "actual_output": [
+            "Το απόδειξμα δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 σατς, όχι 500 σατς.",
+            "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-negation-scope",
+          "classification": "major_error",
+          "reason": "The explicit female Anna/she from the first segment becomes he in the second segment, introducing a different-gender actor into the continuing proposition.",
+          "source": [
+            "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+            "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί."
+          ],
+          "actual_output": [
+            "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.",
+            "Today he may sell one, but this has not been decided."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-en-el-conditional-publication",
+          "classification": "acceptable",
+          "reason": "Publication remains conditional on Giannis approving; no answer by Friday leads to waiting until Monday.",
+          "source": [
+            "Anna will publish the video only if Giannis approves the text.",
+            "If Giannis does not answer by Friday, Anna will wait until Monday."
+          ],
+          "actual_output": [
+            "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+            "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        },
+        {
+          "case_id": "dev-el-en-uncertain-question",
+          "classification": "acceptable",
+          "reason": "The question retains 12 versus 21 chapters, explicitly unknown answer and the insufficiency of the title alone.",
+          "source": [
+            "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+            "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε."
+          ],
+          "actual_output": [
+            "Maria asked: \"Does the file have 12 chapters or 21?\"",
+            "We do not yet know the answer. The title alone is not enough for us to ascertain this."
+          ],
+          "structural_checks": {
+            "source_unchanged": true,
+            "segment_count": true,
+            "metadata_preserved": true,
+            "valid_text": true
+          }
+        }
+      ],
+      "decision": "Not adopted. Recommended sampling does not repair the actor errors and adds wording instability; no seed search was performed."
+    }
+  ],
+  "final_decision": "The larger candidate is not approved as a default. Preserve its explicit native model option for reproducible evaluation without presenting size or successful execution as evidence of faithful translation."
+}

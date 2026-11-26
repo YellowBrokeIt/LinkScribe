@@ -1,0 +1,65 @@
+{
+  "template": "{{- range $i, $_ := .Messages }}\n{{- $last := eq (len (slice $.Messages $i)) 1 }}\n{{- if or (eq .Role \"user\") (eq .Role \"system\") }}<start_of_turn>user\n{{ .Content }}<end_of_turn>\n{{ if $last }}<start_of_turn>model\n{{ end }}\n{{- else if eq .Role \"assistant\" }}<start_of_turn>model\n{{ .Content }}{{ if not $last }}<end_of_turn>\n{{ end }}\n{{- end }}\n{{- end }}",
+  "parameters": "stop                           \"<end_of_turn>\"\ntop_k                          64\ntop_p                          0.95",
+  "details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "gemma3",
+    "families": [
+      "gemma3"
+    ],
+    "parameter_size": "4.3B",
+    "quantization_level": "Q4_K_M"
+  },
+  "model_info": {
+    "gemma3.attention.head_count": 8,
+    "gemma3.attention.head_count_kv": 4,
+    "gemma3.attention.key_length": 256,
+    "gemma3.attention.sliding_window": 1024,
+    "gemma3.attention.value_length": 256,
+    "gemma3.block_count": 34,
+    "gemma3.context_length": 131072,
+    "gemma3.embedding_length": 2560,
+    "gemma3.feed_forward_length": 10240,
+    "gemma3.mm.tokens_per_image": 256,
+    "gemma3.vision.attention.head_count": 16,
+    "gemma3.vision.attention.layer_norm_epsilon": 1e-06,
+    "gemma3.vision.block_count": 27,
+    "gemma3.vision.embedding_length": 1152,
+    "gemma3.vision.feed_forward_length": 4304,
+    "gemma3.vision.image_size": 896,
+    "gemma3.vision.num_channels": 3,
+    "gemma3.vision.patch_size": 14,
+    "general.architecture": "gemma3",
+    "general.file_type": 15,
+    "general.parameter_count": 4300079472,
+    "general.quantization_version": 2,
+    "tokenizer.ggml.add_bos_token": true,
+    "tokenizer.ggml.add_eos_token": false,
+    "tokenizer.ggml.add_padding_token": false,
+    "tokenizer.ggml.add_unknown_token": false,
+    "tokenizer.ggml.bos_token_id": 2,
+    "tokenizer.ggml.eos_token_id": 1,
+    "tokenizer.ggml.merges": [],
+    "tokenizer.ggml.model": "llama",
+    "tokenizer.ggml.padding_token_id": 0,
+    "tokenizer.ggml.pre": "default",
+    "tokenizer.ggml.scores": [],
+    "tokenizer.ggml.token_type": [],
+    "tokenizer.ggml.tokens": [],
+    "tokenizer.ggml.unknown_token_id": 3
+  },
+  "capabilities": [
+    "completion",
+    "vision"
+  ],
+  "modified_at": "2026-11-26T19:27:17.022322471+02:00",
+  "configured_model": "translategemma:4b",
+  "template_sha256": "e0a42594d802e5d31cdc786deb4823edb8adff66094d49de8fffe976d753e348",
+  "generation_settings": {
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 4
+  }
+}

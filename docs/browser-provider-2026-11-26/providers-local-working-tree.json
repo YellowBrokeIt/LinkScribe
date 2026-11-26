@@ -1,0 +1,490 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-26T18:30:19.871388+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "tiny",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "04decd723aedfbbf2a7865e9b55ffcb0d0d350b3633746a021bbf59cbee1db16",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "baf89ba2c35c88b5d18194264ce70c1c822940d24de002eb1e8438ede4316076",
+    "tests/smoke_real_links.py": "e11db20a6c6c5fb49ce9bf5893a345096a44a726d6280d85082bdc5aeff6eaad"
+  },
+  "fixture_licenses": {
+    "youtube_sintel_trailer": {
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "provider": "youtube",
+      "title_contains": "Sintel",
+      "public_title": "\"Sintel\" Trailer, Durian Open Movie Project",
+      "uploader": "Blender",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://durian.blender.org/news/sintel-teaser/",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org"
+    },
+    "youtube_tears_of_steel_teaser": {
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "provider": "youtube",
+      "title_contains": "Tears of Steel",
+      "public_title": "Tears of Steel - Teaser",
+      "uploader": "MangoOpenMovie",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://mango.blender.org/production/tears-of-steel-teaser/",
+      "attribution": "(CC) Blender Foundation | mango.blender.org"
+    },
+    "vimeo_sintel_trailer": {
+      "url": "https://vimeo.com/11721242",
+      "provider": "vimeo",
+      "title_contains": "Sintel",
+      "public_title": "Sintel trailer!",
+      "uploader": "Dykam",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://vimeo.com/11721242",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org",
+      "note": "Uploader identifies this as a reupload of the licensed original trailer."
+    },
+    "dailymotion_tears_of_steel": {
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "provider": "dailymotion",
+      "title_contains": "Tears of Steel",
+      "public_title": "\u0641\u064a\u0644\u0645 \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "uploader": "MixTube",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://www.dailymotion.com/video/xbvubxi",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Repost with an Arabic title; the public description names the film and licence."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": true,
+  "fixtures": [
+    {
+      "fixture": "youtube_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T18:30:20.502309+00:00",
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "job_id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+      "poll_count": 38,
+      "transitions": [
+        {
+          "at": "2026-11-26T18:30:20.507593+00:00",
+          "id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T18:30:39.309798+00:00",
+          "id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube HOfdboHvshg",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/88e3e0e8fa8f/LinkScribe/tests/smoke_real_links.py\", line 387, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T18:30:20.504971+00:00",
+          "pid": 5,
+          "kind": "acquisition_start",
+          "job_id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=HOfdboHvshg"
+        },
+        {
+          "at": "2026-11-26T18:30:38.976824+00:00",
+          "pid": 5,
+          "kind": "acquisition_failed",
+          "job_id": "7ce86ab7fbfb4191aeffdf205fa242bb",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: unable to download video data: HTTP Error 403: Forbidden"
+            },
+            {
+              "type": "HTTPError",
+              "message": "HTTP Error 403: Forbidden",
+              "http_status": 403,
+              "response_headers": {
+                "Content-Type": "text/html; charset=utf-8",
+                "Server": "envoy",
+                "Date": "Thu, 26 Nov 2026 18:30:38 GMT",
+                "X-Mitmproxy-Blocked-Reason": null,
+                "X-Proxy-Error": null,
+                "X-Squid-Error": null
+              },
+              "response_origin": "https://rr3---sn-ojq4f5-58.googlevideo.com",
+              "response_body_prefix": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n        <p>Unable to access this site.</p>\n      </center>\n    </body>\n</html>\n"
+            }
+          ],
+          "elapsed_seconds": 18.471
+        }
+      ],
+      "elapsed_seconds": 18.821
+    },
+    {
+      "fixture": "youtube_tears_of_steel_teaser",
+      "status": "fail",
+      "started_at": "2026-11-26T18:30:39.324568+00:00",
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "job_id": "3786877bacc44ca7a82928ecdd610780",
+      "poll_count": 40,
+      "transitions": [
+        {
+          "at": "2026-11-26T18:30:39.337088+00:00",
+          "id": "3786877bacc44ca7a82928ecdd610780",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T18:30:59.140987+00:00",
+          "id": "3786877bacc44ca7a82928ecdd610780",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "3786877bacc44ca7a82928ecdd610780",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube WwHux5QZfC8",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/88e3e0e8fa8f/LinkScribe/tests/smoke_real_links.py\", line 387, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T18:30:39.335104+00:00",
+          "pid": 5,
+          "kind": "acquisition_start",
+          "job_id": "3786877bacc44ca7a82928ecdd610780",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=WwHux5QZfC8"
+        },
+        {
+          "at": "2026-11-26T18:30:58.777333+00:00",
+          "pid": 5,
+          "kind": "acquisition_failed",
+          "job_id": "3786877bacc44ca7a82928ecdd610780",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: unable to download video data: HTTP Error 403: Forbidden"
+            },
+            {
+              "type": "HTTPError",
+              "message": "HTTP Error 403: Forbidden",
+              "http_status": 403,
+              "response_headers": {
+                "Content-Type": "text/html; charset=utf-8",
+                "Server": "envoy",
+                "Date": "Thu, 26 Nov 2026 18:30:58 GMT",
+                "X-Mitmproxy-Blocked-Reason": null,
+                "X-Proxy-Error": null,
+                "X-Squid-Error": null
+              },
+              "response_origin": "https://rr8---sn-ojq4f5-5t.googlevideo.com",
+              "response_body_prefix": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n        <p>Unable to access this site.</p>\n      </center>\n    </body>\n</html>\n"
+            }
+          ],
+          "elapsed_seconds": 19.444
+        }
+      ],
+      "elapsed_seconds": 19.818
+    },
+    {
+      "fixture": "vimeo_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T18:30:59.142940+00:00",
+      "url": "https://vimeo.com/11721242",
+      "job_id": "6542ad07c79141f68c9b94705d65c5fb",
+      "poll_count": 8,
+      "transitions": [
+        {
+          "at": "2026-11-26T18:30:59.215214+00:00",
+          "id": "6542ad07c79141f68c9b94705d65c5fb",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T18:31:02.771788+00:00",
+          "id": "6542ad07c79141f68c9b94705d65c5fb",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "6542ad07c79141f68c9b94705d65c5fb",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Vimeo 11721242",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/88e3e0e8fa8f/LinkScribe/tests/smoke_real_links.py\", line 387, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T18:30:59.146044+00:00",
+          "pid": 5,
+          "kind": "acquisition_start",
+          "job_id": "6542ad07c79141f68c9b94705d65c5fb",
+          "provider": "vimeo",
+          "url": "https://vimeo.com/11721242"
+        },
+        {
+          "at": "2026-11-26T18:31:02.715558+00:00",
+          "pid": 5,
+          "kind": "acquisition_failed",
+          "job_id": "6542ad07c79141f68c9b94705d65c5fb",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            }
+          ],
+          "elapsed_seconds": 3.569
+        }
+      ],
+      "elapsed_seconds": 3.631
+    },
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "fail",
+      "started_at": "2026-11-26T18:31:02.775659+00:00",
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "job_id": "c3501703ecb74e58a82c1807017374c5",
+      "poll_count": 35,
+      "transitions": [
+        {
+          "at": "2026-11-26T18:31:02.835985+00:00",
+          "id": "c3501703ecb74e58a82c1807017374c5",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T18:31:19.973262+00:00",
+          "id": "c3501703ecb74e58a82c1807017374c5",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "c3501703ecb74e58a82c1807017374c5",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Dailymotion xbvubxi",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/88e3e0e8fa8f/LinkScribe/tests/smoke_real_links.py\", line 387, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T18:31:02.779472+00:00",
+          "pid": 5,
+          "kind": "acquisition_start",
+          "job_id": "c3501703ecb74e58a82c1807017374c5",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-26T18:31:19.501916+00:00",
+          "pid": 5,
+          "kind": "acquisition_failed",
+          "job_id": "c3501703ecb74e58a82c1807017374c5",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+            }
+          ],
+          "elapsed_seconds": 16.722
+        }
+      ],
+      "elapsed_seconds": 17.198
+    }
+  ],
+  "mixed_batch": {
+    "status": "not_exercised",
+    "reason": "Requires one actual successful and one actually failing licensed fixture."
+  },
+  "restart": {
+    "status": "not_exercised",
+    "verified_record_ids": []
+  },
+  "initial_server_pid": 5,
+  "restarted_server_pid": 44,
+  "source_sha256_after": {
+    "app.py": "04decd723aedfbbf2a7865e9b55ffcb0d0d350b3633746a021bbf59cbee1db16",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "baf89ba2c35c88b5d18194264ce70c1c822940d24de002eb1e8438ede4316076",
+    "tests/smoke_real_links.py": "e11db20a6c6c5fb49ce9bf5893a345096a44a726d6280d85082bdc5aeff6eaad"
+  },
+  "source_files_unchanged": true,
+  "finished_at": "2026-11-26T18:31:20.933331+00:00",
+  "all_selected_providers_passed": false
+}

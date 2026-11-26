@@ -25,6 +25,8 @@ def test_independent_models_reach_the_actual_requests(monkeypatch):
     calls = []
 
     def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         calls.append(payload)
         content = {"translations": ["Καλημέρα"]} if len(calls) == 1 else {"notes": "A greeting"}
         return {"done": True, "message": {"content": json.dumps(content)}}
@@ -79,6 +81,8 @@ def test_dedicated_request_uses_actual_source_language_and_plain_output(
     calls = []
 
     def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         calls.append(payload)
         assert path == "/api/chat"
         assert payload["model"] == "translategemma:4b"
@@ -116,6 +120,8 @@ def test_dedicated_long_input_preserves_all_source_and_segment_metadata(monkeypa
     sent = []
 
     def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         text = payload["messages"][0]["content"].split("\n\n\n", 1)[1]
         assert len(ai._translation_json([text]).encode("utf-8")) <= ai.MAX_TRANSLATION_INPUT_BYTES
         sent.append(text)
@@ -159,6 +165,8 @@ def test_later_plain_request_failure_keeps_original_transcript(monkeypatch):
     calls = []
 
     def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         calls.append(payload)
         if len(calls) == 2:
             raise TimeoutError("Synthetic timeout")
@@ -197,6 +205,8 @@ def test_hy_mt_uses_its_own_plain_translation_contract(monkeypatch):
     calls = []
 
     def respond(path, payload, timeout):
+        if ai.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         calls.append(payload)
         assert payload["model"] == model and "format" not in payload
         assert payload["messages"] == [{"role": "user", "content":

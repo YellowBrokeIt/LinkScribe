@@ -72,7 +72,7 @@ def fake_recognize(path, language, model, **_kwargs):
              {"start":2.2,"end":4.0,"text":"Welcome back"}],"en")
 
 
-def fake_summary(segments):
+def fake_summary(segments, source_language=None):
     return {"summary":"A test conversation", "key_points":["Introductions"],
             "chapters":[{"start":0,"title":"Welcome"}]}
 
@@ -198,6 +198,8 @@ def test_invalid_task_model_does_not_discard_the_other_enhancement(client, monke
     actual_models = []
 
     def respond(path, payload, timeout):
+        if enhancements.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
         assert path == "/api/chat"
         actual_models.append(payload["model"])
         if payload["model"] == "translategemma:4b":
@@ -218,7 +220,7 @@ def test_invalid_task_model_does_not_discard_the_other_enhancement(client, monke
     assert record["segments"] == segments
     if invalid_task == "translation":
         assert record["translations"] == {} and record["summary"]["summary"] == "Maria saved the text."
-        assert actual_models == ["qwen3:4b", "qwen3:4b"]
+        assert actual_models == ["qwen3:4b"]
     else:
         assert record["summary"] is None and record["translations"]["el"][0]["text"] == "Η Μαρία αποθήκευσε το κείμενο."
         assert actual_models == ["translategemma:4b"]

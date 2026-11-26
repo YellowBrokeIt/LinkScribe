@@ -22,6 +22,7 @@ the original licence pages. Transcripts are machine-generated derivatives.
 from __future__ import annotations
 
 import argparse
+from array import array
 from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
 import hashlib
@@ -33,6 +34,7 @@ import json
 import math
 import os
 from pathlib import Path
+import random
 import socket
 import sqlite3
 import subprocess
@@ -44,12 +46,14 @@ import traceback
 import urllib.error
 import urllib.parse
 import urllib.request
+import wave
 import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = "http://127.0.0.1:8765"
 TAIL_WINDOWS_SECONDS = ((424, 434), (502, 522), (553, 571))
+NONSPEECH_SECONDS = 32
 SOURCE_FILES = ("app.py", "sources.py", "runtime_check.py", "library.py", "batch_store.py",
                 "enhancements.py", "tests/smoke_real_links.py")
 FIXTURES = {
@@ -209,6 +213,84 @@ def observe_speech_selection(module, event, current_job):
     module.get_speech_timestamps, module.collect_chunks = observed_vad, observed_collect
 
 
+def observe_transcribe(module, event, current_job):
+    """Retain real normal-call options/info, preserving the returned generator."""
+    original = module.WhisperModel.transcribe
+    signature = inspect.signature(original)
+
+    def observed(self, audio, *args, **kwargs):
+        job_id = current_job()
+        if job_id is None:
+            return original(self, audio, *args, **kwargs)
+        arguments = signature.bind(self, audio, *args, **kwargs)
+        arguments.apply_defaults()
+        options = {key: value for key, value in arguments.arguments.items() if key not in {"self", "audio"}}
+        event("transcribe_request", job_id=job_id, explicit_kwargs=evidence_value(kwargs),
+              resolved_options=evidence_value(options))
+        result = original(self, audio, *args, **kwargs)
+        event("transcribe_info", job_id=job_id, info=evidence_value(result[1]))
+        return result
+
+    module.WhisperModel.transcribe = observed
+
+
+def transcription_evidence(events):
+    """Require observations consistent with what normal ASR actually requested."""
+    decoded = [item for item in events if item["kind"] == "audio_decoded"]
+    requests = [item for item in events if item["kind"] == "transcribe_request"]
+    infos = [item for item in events if item["kind"] == "transcribe_info"]
+    vad = [item for item in events if item["kind"] == "vad_speech_intervals"]
+    collected = [item for item in events if item["kind"] == "post_vad_audio"]
+    assert len(decoded) == len(requests) == len(infos) == 1, "Missing or repeated normal ASR observation."
+    duration, rate = decoded[0]["decoded_duration_seconds"], decoded[0]["sampling_rate_hz"]
+    options, info = requests[0]["resolved_options"], infos[0]["info"]
+    assert duration > 0 and abs(info["duration"] - duration) <= 1 / rate
+    assert options["clip_timestamps"] == "0", "The normal full recording must not be clipped."
+    requested_vad = options["vad_filter"]
+    if requested_vad is False:
+        assert not vad and not collected, "VAD ran despite normal ASR explicitly disabling it."
+        assert info["vad_options"] is None
+        assert abs(info["duration_after_vad"] - duration) <= 1 / rate, "ASR lost audio despite VAD being off."
+    else:
+        assert requested_vad is True and len(vad) == len(collected) == 1, "Requested VAD evidence is missing."
+        assert vad[0]["kept_sample_count"] == collected[0]["sample_count"]
+        assert abs(info["duration_after_vad"] - collected[0]["duration_seconds"]) <= 1 / rate
+    return {"decoded_duration_seconds": duration, "normal_vad_filter": requested_vad,
+            "normal_explicit_transcribe_kwargs": requests[0]["explicit_kwargs"],
+            "normal_transcribe_info": info,
+            "last_vad_kept_end_seconds": vad[0]["last_kept_end_seconds"] if vad else None,
+            "post_vad_duration_seconds": info["duration_after_vad"]}
+
+
+def generated_nonspeech(kind):
+    """Deterministic owned PCM fixtures; no text or recording is synthesized."""
+    rate, count = 16000, 16000 * NONSPEECH_SECONDS
+    if kind == "silence":
+        samples = array("h", [0]) * count
+        recipe = "Signed 16-bit PCM zeros"
+    elif kind == "white_noise":
+        generator = random.Random(20261126)
+        samples = array("h", (generator.randint(-3276, 3276) for _ in range(count)))
+        recipe = "Python random.Random(20261126); one randint(-3276,3276) per signed 16-bit PCM sample"
+    else:
+        raise ValueError("Unknown owned no-speech fixture.")
+    if sys.byteorder != "little":
+        samples.byteswap()
+    pcm = samples.tobytes()
+    buffer = io.BytesIO()
+    with wave.open(buffer, "wb") as output:
+        output.setnchannels(1)
+        output.setsampwidth(2)
+        output.setframerate(rate)
+        output.writeframes(pcm)
+    payload = buffer.getvalue()
+    return payload, {"kind": kind, "expected_speech": "none_by_construction", "recipe": recipe,
+        "duration_seconds": NONSPEECH_SECONDS, "sampling_rate_hz": rate, "channels": 1,
+        "sample_count": count, "pcm_format": "signed_16_bit_little_endian",
+        "pcm_sha256": hashlib.sha256(pcm).hexdigest(), "wav_sha256": hashlib.sha256(payload).hexdigest(),
+        "wav_bytes": len(payload), "attribution": "Owned generated QA data; no external recording or reference text."}
+
+
 def prepare_tail_windows(audio, rate):
     """Copy only 48 seconds of predetermined licensed-fixture diagnostic audio."""
     windows = []
@@ -313,6 +395,7 @@ def serve(data_root, events_path, diagnose_tail=False):
     whisper_module = importlib.import_module("faster_whisper.transcribe")
     observe_audio_decode(whisper_module, event, retain_tail)
     observe_speech_selection(whisper_module, event, lambda: getattr(context, "job_id", None))
+    observe_transcribe(whisper_module, event, lambda: getattr(context, "job_id", None))
 
     download = app._download_source_audio
     recognize = app._recognize
@@ -439,6 +522,10 @@ def run(args):
         "mixed_batch": {"status": "pending"}, "restart": {"status": "pending"},
         "tail_diagnostic": {"status": "pending" if args.diagnose_dailymotion_tail else "not_requested",
                             "included_in_normal_pipeline_output": False},
+        "nonspeech": {"status": "pending" if args.check_nonspeech else "not_requested",
+            "scope": "Two owned generated 32-second fixtures; no general silence/music/noise guarantee.",
+            "cases": [{"kind": kind, "status": "pending"} for kind in ("silence", "white_noise")]
+                     if args.check_nonspeech else []},
     }
     checkpoint = lambda: write_json(output / "provider-report.json", report)
     checkpoint()
@@ -461,6 +548,20 @@ def run(args):
         with opener.open(urllib.request.Request(BASE_URL + path, data=body, headers=headers), timeout=30) as response:
             raw = response.read()
         return json.loads(raw) if as_json else raw
+
+    def upload_owned_wav(name, payload):
+        boundary = "linkscribe-owned-qa-" + hashlib.sha256(payload).hexdigest()[:24]
+        assert boundary.encode("ascii") not in payload
+        parts = []
+        for key, value in {"consent": "true", "model": args.model, "language": args.language}.items():
+            parts.append((f"--{boundary}\r\nContent-Disposition: form-data; name=\"{key}\"\r\n\r\n{value}\r\n").encode("ascii"))
+        parts.append((f"--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"{name}\"\r\n"
+                      "Content-Type: audio/wav\r\n\r\n").encode("ascii") + payload + b"\r\n")
+        parts.append(f"--{boundary}--\r\n".encode("ascii"))
+        headers = {"Origin": BASE_URL, "Content-Type": "multipart/form-data; boundary=" + boundary}
+        with opener.open(urllib.request.Request(BASE_URL + "/api/upload", data=b"".join(parts), headers=headers),
+                         timeout=30) as response:
+            return json.loads(response.read())
 
     def start_server():
         nonlocal server
@@ -568,22 +669,15 @@ def run(args):
         assert not list((data_root / "jobs" / identifier).glob("audio.*")), "Downloaded audio was not cleaned."
         evidence = events_for(identifier)
         assert any(e["kind"] == "acquisition_done" and e["audio_streams"] > 0 for e in evidence), evidence
-        decoded = [e for e in evidence if e["kind"] == "audio_decoded"]
-        assert len(decoded) == 1 and decoded[0]["decoded_duration_seconds"] > 0, evidence
-        vad = [e for e in evidence if e["kind"] == "vad_speech_intervals"]
-        collected = [e for e in evidence if e["kind"] == "post_vad_audio"]
-        assert len(vad) == len(collected) == 1, evidence
-        assert vad[0]["kept_sample_count"] == collected[0]["sample_count"], evidence
+        observations = transcription_evidence(evidence)
         assert any(e["kind"] == "recognition_done" and e["segment_count"] == len(segments) for e in evidence), evidence
         successful_records[identifier] = record
         export_payloads[identifier] = payloads
         return {"id": identifier, "title": record["title"], "language": record["language"],
                 "segment_count": len(segments), "events": evidence,
-                "decoded_duration_seconds": decoded[0]["decoded_duration_seconds"],
+                **observations,
                 "last_segment_end_seconds": max(s["end"] for s in segments),
                 "maximum_segment_duration_seconds": max(s["end"] - s["start"] for s in segments),
-                "last_vad_kept_end_seconds": vad[0]["last_kept_end_seconds"],
-                "post_vad_duration_seconds": collected[0]["duration_seconds"],
                 "exports": {code: {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
                             for code, data in payloads.items()},
                 "sqlite_matches_saved_segments": True, "input_audio_cleaned": True,
@@ -670,6 +764,62 @@ def run(args):
             batch.update(status="not_exercised", reason="Requires one actual successful and one actually failing licensed fixture.")
         checkpoint()
 
+        if args.check_nonspeech:
+            report["nonspeech"]["status"] = "running"
+            for item in report["nonspeech"]["cases"]:
+                item.update(status="running", started_at=now())
+                checkpoint()
+                started = time.monotonic()
+                try:
+                    payload, provenance = generated_nonspeech(item["kind"])
+                    item["input"] = provenance
+                    posted = upload_owned_wav("owned-" + item["kind"] + ".wav", payload)
+                    item["job_id"] = posted["id"]
+                    final = poll("/api/jobs/" + posted["id"], item, min(args.timeout, 180))
+                    item["final_job"] = final
+                    evidence = events_for(posted["id"])
+                    starts = [event for event in evidence if event["kind"] == "recognition_start"]
+                    assert len(starts) == 1 and starts[0]["audio_sha256"] == provenance["wav_sha256"], "Recognizer did not receive the exact owned no-speech WAV."
+                    assert starts[0]["model"] == args.model
+                    item["recognition_evidence"] = transcription_evidence(evidence)
+                    assert item["recognition_evidence"]["normal_vad_filter"] is False, "No-speech gate must exercise the corrected VAD-off default."
+                    assert abs(item["recognition_evidence"]["decoded_duration_seconds"] - NONSPEECH_SECONDS) <= 1 / 16000
+                    if final["status"] == "done":
+                        record = request("/api/library/" + posted["id"])
+                        write_json(output / "records" / ("nonspeech-" + posted["id"] + ".json"), record)
+                        item["hallucinated_saved_record"] = "records/nonspeech-" + posted["id"] + ".json"
+                        raise AssertionError("Actual ASR saved words from owned audio with no speech; raw normal output retained.")
+                    assert final["error"] == "No spoken words were detected in this recording.", final
+                    try:
+                        request("/api/library/" + posted["id"])
+                    except urllib.error.HTTPError as error:
+                        assert error.code == 404, error.code
+                    else:
+                        raise AssertionError("No-speech input unexpectedly has a library record.")
+                    with sqlite3.connect(f"file:{data_root / 'library.sqlite3'}?mode=ro", uri=True) as connection:
+                        assert connection.execute("SELECT COUNT(*) FROM transcripts WHERE id=?", (posted["id"],)).fetchone()[0] == 0
+                    deadline = time.monotonic() + 5
+                    directory = data_root / "jobs" / posted["id"]
+                    while time.monotonic() < deadline and list(directory.glob("input.*")):
+                        time.sleep(0.1)
+                    assert not list(directory.glob("input.*")), "Owned no-speech upload was not cleaned."
+                    assert not list(directory.glob("transcript.*")), "No-speech input unexpectedly has transcript exports."
+                    item.update(status="pass", library_record_absent=True, input_audio_cleaned=True)
+                except TimeoutError:
+                    item["status"] = "incomplete"
+                    raise
+                except Exception as error:
+                    item.update(status="fail", errors=exception_chain(error), traceback=traceback.format_exc())
+                finally:
+                    if "job_id" in item:
+                        item["events"] = events_for(item["job_id"])
+                    item["elapsed_seconds"] = round(time.monotonic() - started, 3)
+                    checkpoint()
+                    print("nonspeech_" + item["kind"] + ": " + item["status"].upper(), flush=True)
+            report["nonspeech"]["status"] = "pass" if all(item["status"] == "pass"
+                for item in report["nonspeech"]["cases"]) else "fail"
+            checkpoint()
+
         restart = report["restart"]
         restart["status"] = "running"
         stop_server()
@@ -694,9 +844,12 @@ def run(args):
         for item in report["fixtures"]:
             if item["status"] in {"pending", "running"}:
                 item["status"] = "incomplete"
-        for key in ("mixed_batch", "restart", "tail_diagnostic"):
+        for key in ("mixed_batch", "restart", "tail_diagnostic", "nonspeech"):
             if report[key]["status"] in {"pending", "running"}:
                 report[key]["status"] = "incomplete"
+        for item in report["nonspeech"]["cases"]:
+            if item["status"] in {"pending", "running"}:
+                item["status"] = "incomplete"
     finally:
         stop_server()
         for path in output.glob("tail-diagnostic-*.json"):
@@ -718,7 +871,8 @@ def run(args):
         report["all_selected_providers_passed"] = all(item["status"] == "pass" for item in report["fixtures"])
         passed = (report["complete"] and report["all_selected_providers_passed"] and report["source_files_unchanged"]
                   and report["restart"]["status"] == "pass" and report["mixed_batch"]["status"] != "fail"
-                  and report["tail_diagnostic"]["status"] in {"not_requested", "not_exercised", "completed"})
+                  and report["tail_diagnostic"]["status"] in {"not_requested", "not_exercised", "completed"}
+                  and report["nonspeech"]["status"] in {"not_requested", "pass"})
         if args.require_mixed_batch:
             passed = passed and report["mixed_batch"]["status"] == "pass"
         report["result"] = "pass" if passed else "fail"
@@ -739,6 +893,8 @@ def main():
     parser.add_argument("--require-mixed-batch", action="store_true")
     parser.add_argument("--diagnose-dailymotion-tail", action="store_true",
                         help="Separately diagnose three bounded licensed tail excerpts after normal saving/cleanup")
+    parser.add_argument("--check-nonspeech", action="store_true",
+                        help="Exercise real ASR on owned silence/noise; any saved words fail the no-speech gate")
     parser.add_argument("--serve", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--events", type=Path, help=argparse.SUPPRESS)
     args = parser.parse_args()

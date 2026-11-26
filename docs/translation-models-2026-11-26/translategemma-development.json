@@ -1,0 +1,949 @@
+{
+  "schema_version": 1,
+  "run_id": "96d27776-b6cf-4b7c-bbac-a07252342f6f",
+  "created_at": "2026-11-26T17:31:40.824182+00:00",
+  "corpus_version": "2026-11-26-v1",
+  "source": {
+    "sha256": {
+      "enhancements.py": "e62ae2839ab8a39063603de5fb5aa42e830a56a5957fd1c8f0289ec67a288466",
+      "tests/evaluate_translation_quality.py": "f545b7d93f71cb19002a8149eadf752c7e0cf4ea2e49462635b6044de835d304",
+      "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+    },
+    "git_commit": "d841d044dd00e58ab2ced4cd8ec26cae40f42ea8",
+    "git_dirty": true
+  },
+  "interpretation": "Indicators only identify outputs needing review. Indicator pass does not approve meaning, names, numerical relationships, negation, completeness or fluency. Complete describes the requested selection; corpus_complete identifies full coverage. Compare exact outputs with the references and review criteria separately.",
+  "semantic_quality": "unreviewed",
+  "complete": true,
+  "corpus_complete": false,
+  "automatic_status": "review",
+  "requested_cases": 6,
+  "completed_cases": 6,
+  "selection": {
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "corpus_cases": 12,
+    "split_counts": {
+      "development": 6
+    }
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:11434",
+    "ollama_version": "0.40.12",
+    "configured_model": "translategemma:4b",
+    "model": {
+      "name": "translategemma:4b",
+      "model": "translategemma:4b",
+      "modified_at": "2026-11-26T19:27:17.022322471+02:00",
+      "size": 3298875707,
+      "digest": "c49d986b0764f5881c476eb21435bb62b7abc62347aab3d4a6071e811be510a1",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "gemma3",
+        "families": [
+          "gemma3"
+        ],
+        "parameter_size": "4.3B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "vision"
+      ]
+    },
+    "task": "translation",
+    "translation_profile": "translategemma"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "terminology",
+        "names",
+        "chronology"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c4\u03b7\u03c2 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7\u03c2 \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7.",
+        "\u0397 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7 \u03b4\u03b9\u03ae\u03c1\u03ba\u03b5\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7."
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as \u039c\u03b1\u03c1\u03af\u03b1."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria",
+              "\u039c\u03b1\u03c1\u03af\u03b1"
+            ]
+          },
+          {
+            "label": "transcription terminology",
+            "alternatives": [
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd",
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd",
+              "\u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6"
+            ]
+          },
+          {
+            "label": "translation",
+            "alternatives": [
+              "\u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3",
+              "\u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03b1\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12"
+        ]
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nMaria saved the transcript as a text file; she did not save the original recording."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 634,
+          "started_at": "2026-11-26T17:31:40.839450+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:31:53.443468981Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u039c\\u03b1\\u03c1\\u03af\\u03b1 \\u03ad\\u03b8\\u03b7\\u03ba\\u03b5 \\u03c4\\u03bf \\u03b1\\u03c0\\u03bf\\u03bc\\u03b1\\u03b3\\u03bd\\u03b7\\u03c4\\u03bf\\u03c6\\u03c9\\u03bd\\u03b7\\u03bc\\u03ad\\u03bd\\u03bf \\u03b1\\u03c1\\u03c7\\u03b5\\u03af\\u03bf \\u03c3\\u03b5 \\u03bc\\u03bf\\u03c1\\u03c6\\u03ae \\u03ba\\u03b5\\u03b9\\u03bc\\u03ad\\u03bd\\u03bf\\u03c5, \\u03b1\\u03bb\\u03bb\\u03ac \\u03b4\\u03b5\\u03bd \\u03ad\\u03b8\\u03b7\\u03ba\\u03b5 \\u03c3\\u03b5 \\u03b1\\u03c0\\u03bf\\u03b8\\u03ae\\u03ba\\u03b5\\u03c5\\u03c3\\u03b7 \\u03c4\\u03bf \\u03b1\\u03c1\\u03c7\\u03b9\\u03ba\\u03cc \\u03b7\\u03c7\\u03b7\\u03c4\\u03b9\\u03ba\\u03cc.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 12602186268, \"load_duration\": 8949158968, \"prompt_eval_count\": 93, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1380431000, \"eval_count\": 41, \"eval_duration\": 2267024000}",
+          "elapsed_seconds": 12.605
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nTranscription took 12 minutes. Translation into Greek has not started yet."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 625,
+          "started_at": "2026-11-26T17:31:53.450950+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:31:56.629045914Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u03bc\\u03b5\\u03c4\\u03b1\\u03b3\\u03c1\\u03b1\\u03c6\\u03ae \\u03bf\\u03bb\\u03bf\\u03ba\\u03bb\\u03b7\\u03c1\\u03ce\\u03b8\\u03b7\\u03ba\\u03b5 \\u03c3\\u03b5 12 \\u03bb\\u03b5\\u03c0\\u03c4\\u03ac. \\u0397 \\u03bc\\u03b5\\u03c4\\u03ac\\u03c6\\u03c1\\u03b1\\u03c3\\u03b7 \\u03c3\\u03c4\\u03b1 \\u03b5\\u03bb\\u03bb\\u03b7\\u03bd\\u03b9\\u03ba\\u03ac \\u03b4\\u03b5\\u03bd \\u03ad\\u03c7\\u03b5\\u03b9 \\u03be\\u03b5\\u03ba\\u03b9\\u03bd\\u03ae\\u03c3\\u03b5\\u03b9 \\u03b1\\u03ba\\u03cc\\u03bc\\u03b1.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 3173573031, \"load_duration\": 1028168, \"prompt_eval_count\": 91, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1279842000, \"eval_count\": 30, \"eval_duration\": 1889362000}",
+          "elapsed_seconds": 3.178
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03ad\u03b8\u03b7\u03ba\u03b5 \u03c4\u03bf \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd\u03b7\u03bc\u03ad\u03bd\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03c3\u03b5 \u03bc\u03bf\u03c1\u03c6\u03ae \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5, \u03b1\u03bb\u03bb\u03ac \u03b4\u03b5\u03bd \u03ad\u03b8\u03b7\u03ba\u03b5 \u03c3\u03b5 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b7 \u03c4\u03bf \u03b1\u03c1\u03c7\u03b9\u03ba\u03cc \u03b7\u03c7\u03b7\u03c4\u03b9\u03ba\u03cc.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "\u0397 \u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae \u03bf\u03bb\u03bf\u03ba\u03bb\u03b7\u03c1\u03ce\u03b8\u03b7\u03ba\u03b5 \u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 15.797,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "names",
+        "roles",
+        "relationships"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Nikos",
+            "alternatives": [
+              "Nikos",
+              "Nicos",
+              "Niko"
+            ]
+          },
+          {
+            "label": "Eleni",
+            "alternatives": [
+              "Eleni",
+              "Elen\u0113"
+            ]
+          },
+          {
+            "label": "Elena",
+            "alternatives": [
+              "Elena"
+            ]
+          },
+          {
+            "label": "translator",
+            "alternatives": [
+              "translator"
+            ]
+          },
+          {
+            "label": "subtitles",
+            "alternatives": [
+              "subtitle",
+              "caption"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 822,
+          "started_at": "2026-11-26T17:31:56.638180+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:31:58.79893344Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Nikos sent the text to Eleni, not Elena.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2157589536, \"load_duration\": 744014, \"prompt_eval_count\": 99, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1535334000, \"eval_count\": 13, \"eval_duration\": 597686000}",
+          "elapsed_seconds": 2.16
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 1038,
+          "started_at": "2026-11-26T17:31:58.802406+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:01.436355374Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Elena is the translator. Nikos handles the recording, and Elena checks the subtitles.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2631427892, \"load_duration\": 874045, \"prompt_eval_count\": 114, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1687872000, \"eval_count\": 18, \"eval_duration\": 937679000}",
+          "elapsed_seconds": 2.635
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nikos sent the text to Eleni, not Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Elena is the translator. Nikos handles the recording, and Elena checks the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 4.804,
+      "request_count": 2
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "numbers",
+        "decimals",
+        "grouped_amounts",
+        "bitcoin",
+        "negation"
+      ],
+      "segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b5\u03af\u03b4\u03b7. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5,000 sats, \u03cc\u03c7\u03b9 500 sats.",
+        "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sats \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Bitcoin",
+            "alternatives": [
+              "Bitcoin",
+              "\u039c\u03c0\u03af\u03c4\u03ba\u03bf\u03ca\u03bd"
+            ]
+          },
+          {
+            "label": "sats unit",
+            "alternatives": [
+              "sats",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12.50",
+          "2",
+          "5,000",
+          "500"
+        ]
+      },
+      "automatic_status": "review",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nThe receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 644,
+          "started_at": "2026-11-26T17:32:01.444023+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:05.548183078Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u03b1\\u03c0\\u03cc\\u03b4\\u03b5\\u03b9\\u03be\\u03b7 \\u03b4\\u03b5\\u03af\\u03c7\\u03bd\\u03b5\\u03b9 12,50 \\u03b5\\u03c5\\u03c1\\u03ce \\u03b3\\u03b9\\u03b1 2 \\u03b1\\u03bd\\u03c4\\u03b9\\u03ba\\u03b5\\u03af\\u03bc\\u03b5\\u03bd\\u03b1. \\u0397 \\u03be\\u03b5\\u03c7\\u03c9\\u03c1\\u03b9\\u03c3\\u03c4\\u03ae \\u03bc\\u03b5\\u03c4\\u03b1\\u03c6\\u03bf\\u03c1\\u03ac \\u03b5\\u03af\\u03bd\\u03b1\\u03b9 5.000 \\u03c3\\u03b1\\u03c4, \\u03cc\\u03c7\\u03b9 500 \\u03c3\\u03b1\\u03c4.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 4101148800, \"load_duration\": 811356, \"prompt_eval_count\": 109, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1497268000, \"eval_count\": 49, \"eval_duration\": 2522766000}",
+          "elapsed_seconds": 4.104
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nThe note mentions Bitcoin. It does not say that euros and sats are the same unit."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 632,
+          "started_at": "2026-11-26T17:32:05.553755+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:08.625316524Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u03a4\\u03bf \\u03ad\\u03b3\\u03b3\\u03c1\\u03b1\\u03c6\\u03bf \\u03b1\\u03bd\\u03b1\\u03c6\\u03ad\\u03c1\\u03b5\\u03b9 \\u03c4\\u03bf Bitcoin. \\u0394\\u03b5\\u03bd \\u03b4\\u03b7\\u03bb\\u03ce\\u03bd\\u03b5\\u03b9 \\u03cc\\u03c4\\u03b9 \\u03c4\\u03bf \\u03b5\\u03c5\\u03c1\\u03ce \\u03ba\\u03b1\\u03b9 \\u03c4\\u03bf \\u03c3\\u03b1\\u03c4 \\u03b5\\u03af\\u03bd\\u03b1\\u03b9 \\u03b7 \\u03af\\u03b4\\u03b9\\u03b1 \\u03bc\\u03bf\\u03bd\\u03ac\\u03b4\\u03b1.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 3068286103, \"load_duration\": 879554, \"prompt_eval_count\": 94, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1450085000, \"eval_count\": 28, \"eval_duration\": 1575340000}",
+          "elapsed_seconds": 3.072
+        }
+      ],
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9 12,50 \u03b5\u03c5\u03c1\u03ce \u03b3\u03b9\u03b1 2 \u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5.000 \u03c3\u03b1\u03c4, \u03cc\u03c7\u03b9 500 \u03c3\u03b1\u03c4.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "\u03a4\u03bf \u03ad\u03b3\u03b3\u03c1\u03b1\u03c6\u03bf \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03b4\u03b7\u03bb\u03ce\u03bd\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03bf \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03bf \u03c3\u03b1\u03c4 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "sats unit",
+          "alternatives": [
+            "sats",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3"
+          ]
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "12.50",
+          "expected_count": 1,
+          "observed_count": 0
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "elapsed_seconds": 7.191,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "negation",
+        "scope",
+        "uncertainty",
+        "time"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "reference_translations": [
+        "I did not say that Anna sold all the books. I said that she did not sell any yesterday.",
+        "She may sell one today, but that has not been decided."
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "Anna"
+            ]
+          },
+          {
+            "label": "yesterday",
+            "alternatives": [
+              "yesterday"
+            ]
+          },
+          {
+            "label": "today",
+            "alternatives": [
+              "today"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 929,
+          "started_at": "2026-11-26T17:32:08.638469+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:11.433133255Z\", \"message\": {\"role\": \"assistant\", \"content\": \"I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2791080089, \"load_duration\": 915278, \"prompt_eval_count\": 110, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1492643000, \"eval_count\": 24, \"eval_duration\": 1243594000}",
+          "elapsed_seconds": 2.794
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 870,
+          "started_at": "2026-11-26T17:32:11.436509+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:13.638837122Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Today, they may be able to sell one, but this has not yet been decided.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2199323136, \"load_duration\": 722992, \"prompt_eval_count\": 94, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1287246000, \"eval_count\": 19, \"eval_duration\": 908315000}",
+          "elapsed_seconds": 2.201
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today, they may be able to sell one, but this has not yet been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 5.006,
+      "request_count": 2
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "conditions",
+        "negation",
+        "names",
+        "roles"
+      ],
+      "segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+        "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "\u0386\u03bd\u03bd\u03b1",
+              "Anna"
+            ]
+          },
+          {
+            "label": "Giannis",
+            "alternatives": [
+              "\u0393\u03b9\u03ac\u03bd\u03bd\u03b7",
+              "Giannis",
+              "Yannis",
+              "Yiannis"
+            ]
+          },
+          {
+            "label": "only if",
+            "alternatives": [
+              "\u03bc\u03cc\u03bd\u03bf \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03c6\u03cc\u03c3\u03bf\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b5\u03ac\u03bd"
+            ]
+          },
+          {
+            "label": "Friday",
+            "alternatives": [
+              "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5"
+            ]
+          },
+          {
+            "label": "Monday",
+            "alternatives": [
+              "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nAnna will publish the video only if Giannis approves the text."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 613,
+          "started_at": "2026-11-26T17:32:13.645810+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:16.689732412Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u0386\\u03bd\\u03bd\\u03b1 \\u03b8\\u03b1 \\u03b4\\u03b7\\u03bc\\u03bf\\u03c3\\u03b9\\u03b5\\u03cd\\u03c3\\u03b5\\u03b9 \\u03c4\\u03bf \\u03b2\\u03af\\u03bd\\u03c4\\u03b5\\u03bf \\u03bc\\u03cc\\u03bd\\u03bf \\u03b5\\u03ac\\u03bd \\u03bf \\u0393\\u03b9\\u03ac\\u03bd\\u03bd\\u03b7\\u03c2 \\u03b5\\u03b3\\u03ba\\u03c1\\u03af\\u03bd\\u03b5\\u03b9 \\u03c4\\u03bf \\u03ba\\u03b5\\u03af\\u03bc\\u03b5\\u03bd\\u03bf.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 3040996114, \"load_duration\": 839108, \"prompt_eval_count\": 89, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1255981000, \"eval_count\": 32, \"eval_duration\": 1776074000}",
+          "elapsed_seconds": 3.043
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional English (en) to Greek (el) translator. Your goal is to accurately convey the meaning and nuances of the original English text while adhering to Greek grammar, vocabulary, and cultural sensitivities.\nProduce only the Greek translation, without any additional explanations or commentary. Please translate the following English text into Greek:\n\n\nIf Giannis does not answer by Friday, Anna will wait until Monday."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 617,
+          "started_at": "2026-11-26T17:32:16.693099+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:19.839281861Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0395\\u03ac\\u03bd \\u03bf \\u0393\\u03b9\\u03ac\\u03bd\\u03bd\\u03b7\\u03c2 \\u03b4\\u03b5\\u03bd \\u03b1\\u03c0\\u03b1\\u03bd\\u03c4\\u03ae\\u03c3\\u03b5\\u03b9 \\u03bc\\u03ad\\u03c7\\u03c1\\u03b9 \\u03c4\\u03b7\\u03bd \\u03a0\\u03b1\\u03c1\\u03b1\\u03c3\\u03ba\\u03b5\\u03c5\\u03ae, \\u03b7 \\u0386\\u03bd\\u03bd\\u03b1 \\u03b8\\u03b1 \\u03c0\\u03b5\\u03c1\\u03b9\\u03bc\\u03ad\\u03bd\\u03b5\\u03b9 \\u03bc\\u03ad\\u03c7\\u03c1\\u03b9 \\u03c4\\u03b7\\u03bd \\u0394\\u03b5\\u03c5\\u03c4\\u03ad\\u03c1\\u03b1.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 3143249510, \"load_duration\": 752356, \"prompt_eval_count\": 91, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1344632000, \"eval_count\": 34, \"eval_duration\": 1794586000}",
+          "elapsed_seconds": 3.145
+        }
+      ],
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "\u0395\u03ac\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 6.199,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "questions",
+        "uncertainty",
+        "numbers",
+        "quotation"
+      ],
+      "segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria"
+            ]
+          },
+          {
+            "label": "chapters",
+            "alternatives": [
+              "chapter"
+            ]
+          },
+          {
+            "label": "title",
+            "alternatives": [
+              "title"
+            ]
+          }
+        ],
+        "numbers": [
+          "12",
+          "21"
+        ]
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb"
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 778,
+          "started_at": "2026-11-26T17:32:19.846281+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:22.43636019Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Maria asked: \\\"Does the document have 12 chapters or 21?\\\"\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2586972291, \"load_duration\": 1200684, \"prompt_eval_count\": 102, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1503153000, \"eval_count\": 18, \"eval_duration\": 1074984000}",
+          "elapsed_seconds": 2.589
+        },
+        {
+          "request": {
+            "model": "translategemma:4b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "You are a professional Greek (el) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Greek text while adhering to English grammar, vocabulary, and cultural sensitivities.\nProduce only the English translation, without any additional explanations or commentary. Please translate the following Greek text into English:\n\n\n\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 1001,
+          "started_at": "2026-11-26T17:32:22.441982+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"translategemma:4b\", \"created_at\": \"2026-11-26T17:32:25.125649966Z\", \"message\": {\"role\": \"assistant\", \"content\": \"We don't yet know the answer. The title alone is not enough to determine it.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2680418072, \"load_duration\": 720538, \"prompt_eval_count\": 106, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 1637459000, \"eval_count\": 20, \"eval_duration\": 1038163000}",
+          "elapsed_seconds": 2.682
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Maria asked: \"Does the document have 12 chapters or 21?\"",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We don't yet know the answer. The title alone is not enough to determine it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 5.285,
+      "request_count": 2
+    }
+  ],
+  "counts": {
+    "pass": 5,
+    "review": 1,
+    "fail": 0,
+    "error": 0,
+    "incomplete": 0
+  },
+  "finished_at": "2026-11-26T17:32:25.131567+00:00",
+  "elapsed_seconds": 44.301
+}

@@ -4,9 +4,9 @@ LinkScribe is a **real, locally hosted** Python web app for downloading captions
 
 ## Features
 
-- **Single links or batches of 1–20 links**: YouTube, Vimeo and Dailymotion, allowlisted/canonicalized; sequential processing and batch ZIP of successful results. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions.
+- **Single links or batches of 1–20 links**: accepts allowlisted YouTube, Vimeo and Dailymotion URLs; sequential processing and batch ZIP of successful results. Accepted URL formats do not guarantee provider access. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions. See [verified provider scope](#verified-provider-scope).
 - **Speaker labels (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from a public CPU model, with no account or access token. Extra dependencies are required. Actual Whisper word timestamps allow text to split at estimated speaker changes; uncertain speech remains `Unknown speaker`. Overlapping voices are not separated, and names must be assigned manually.
-- **Translation**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports.
+- **Experimental translation drafts**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports. Actual evaluations found material meaning errors, so compare translations with the original transcript.
 - **AI summary and chapters**: local Ollama creates summaries, key points and chapter titles anchored to transcript segment timestamps. Review outputs for errors.
 - **Persistent transcript library**: local SQLite store with full-text search by title/transcript, editing of segment text/speaker names, deletion and on-demand exports. Original audio is deleted after each processing job. Edit invalidates stale translation/summary so saved exports remain consistent.
 - **Uploads**: MP3, WAV, MP4 and other accepted audio/video formats.
@@ -45,6 +45,27 @@ When no installed runtime meets those requirements, LinkScribe explicitly disabl
 
 Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube sources may not require a JS runtime. LinkScribe will show a clear download error if access fails.
 
+### Verified provider scope
+
+The [hosted browser and live-provider evidence](docs/browser-provider-2026-11-26/README.md)
+separates accepted URLs from actual acquisition and transcription. These results
+describe the tested clips and environment, not universal availability:
+
+| Provider | Observed end-to-end status |
+| --- | --- |
+| Dailymotion | A licensed film completed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Transcript quality remains unresolved: the normal VAD discarded later dialogue despite a complete audio decode. |
+| YouTube | Both hosted test clips stopped at a bot sign-in requirement. No successful transcript is claimed for those attempts. |
+| Vimeo | The selected clip stopped at an extractor login fallback. No successful transcript is claimed for that attempt. |
+
+The [VAD diagnosis](docs/browser-provider-2026-11-26/assistant-vad-diagnosis.json)
+records that Small decoded the full 734.15-second Dailymotion input, but VAD kept
+no samples after 423.184 seconds. Separate VAD-off excerpts recovered later
+dialogue without replacing the normal saved transcript. The current production
+candidate disables this ASR filter; complete-recording and no-speech checks
+remain pending. The overall three-provider
+gate remains failed; successful processing and faithful exports do not establish
+transcription accuracy or subtitle synchronization.
+
 ## Optional translation, summaries and chapters (Ollama)
 
 1. Install Ollama from https://ollama.com/download and start the local daemon (`ollama serve` if it isn't already running).
@@ -69,9 +90,38 @@ defaults**; development examples still contain material meaning errors.
 
 Ollama must listen on `127.0.0.1:11434` or `localhost:11434`. Media/audio is not sent to Ollama; only transcript text is sent directly to the **local Ollama process**, without environment proxies or HTTP redirects. **Check setup** distinguishes a running Ollama server from a missing selected model. These operations are optional. If Ollama fails or returns incomplete output, the original transcript and library record remain available, with warnings.
 
-The default `qwen3:4b` integration has been exercised with real English and Greek examples, but its wording still needs review: the test run included an incorrect Greek term for “transcript” and an unnatural English article before a name. Successful timing, storage and export checks do not certify translation quality. The original transcript is retained for comparison.
+**Translation remains experimental.** The [original default-model evaluation](docs/evaluation-2026-11-26/README.md)
+and [subsequent local-model comparisons](docs/translation-models-2026-11-26/README.md)
+found material errors involving actors, objects, quantities, negation and
+conditions, even when every request completed successfully. No replacement
+translation default has been approved. The original transcript is retained for
+comparison; timing, storage and export checks do not certify meaning.
 
 For a CPU thread limit, set `LINKSCRIBE_OLLAMA_THREADS` before starting the app, for example `LINKSCRIBE_OLLAMA_THREADS=4`. Values from 1 through 32 are accepted. Leaving it unset or empty keeps Ollama's automatic choice; the other inference settings remain unchanged. The repeatable language QA uses four threads and records the actual request options.
+
+### Model lifetime and memory
+
+When a job needs translation or summary, the app releases already-loaded
+Whisper, public SpeechBrain ECAPA and Silero VAD caches after audio analysis,
+before starting text-model inference. Downloaded weights stay on disk. Jobs
+with only transcription or speaker labeling retain those caches for reuse;
+the next audio job after text enhancement reloads its models, adding some
+loading time.
+
+Each Ollama translation or summary operation reuses its selected model across
+all fragments or summary steps, then makes one best-effort unload request for
+that model. Cleanup is also attempted after inference failure, and a cleanup
+error does not discard completed text or replace the original error. The app
+does not change global daemon settings or unload unrelated model tags.
+
+Model residency is shared by all clients of an Ollama daemon. Unloading a model
+can require another application using the same model to reload it. Set
+`LINKSCRIBE_OLLAMA_RETAIN_MODELS=1` before starting LinkScribe to disable its
+phase-end unload requests when that tradeoff is undesirable. The
+[model-lifetime notes](docs/model-memory-lifecycle.md) explain the scope and
+failure behavior. Clearing caches does not guarantee an immediate return of
+all native memory; a complete app-plus-Ollama memory measurement is still
+pending, and no fit claim for a 7.3 GiB machine is made.
 
 The [v1.0 acceptance record](docs/V1-RELEASE-GATES.md) lists the workflows being
 verified before a release. The version remains a draft candidate while those
@@ -82,8 +132,12 @@ gates are open.
 `LINKSCRIBE_TRANSLATION_BACKEND=marian` selects the dedicated local English↔Greek
 candidate independently of Ollama. This is an evaluation option, not the default.
 The initial paragraph-based implementation omitted text and degenerated on long
-passages. Sentence and quotation handling is being corrected and evaluated;
-semantic quality is not approved. Keep and review the original transcript.
+passages. Integrated sentence and quotation handling removed those catastrophic
+coverage and repetition failures in the observed regression, but material
+word-sense, measurement and actor errors remain. The
+[retained comparison](docs/translation-models-2026-11-26/README.md) includes both
+failed and corrected outputs; semantic quality is not approved. Keep and review
+the original transcript.
 
 Both public [English→Greek](https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-el)
 and [Greek→English](https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-el-en) models
@@ -127,8 +181,10 @@ isolated Linux test environment, dependencies occupied about 1.3 GiB and weights
 plus their download cache about 170 MiB; allow additional installation/cache
 space. A short real-voice validation run peaked at about 862 MiB for the speaker
 process alone. Whisper, Ollama, longer audio and other running applications add
-memory. Only one Whisper model is retained in the app cache to limit steady
-memory use; switching model sizes can temporarily require both models to load.
+memory. The app cache retains at most one Whisper model for audio-only reuse;
+switching model sizes can temporarily require both models to load. The
+[text-enhancement cleanup policy](#model-lifetime-and-memory) releases the
+public audio-model caches before translation or summary.
 
 Speaker labels are estimates, not personal identification. The
 [controlled real-voice evaluation](docs/speaker-evaluation-2026-11-26/README.md)
@@ -200,7 +256,17 @@ To restore, select the saved ZIP and choose **Restore backup**. LinkScribe check
 
 For the optional real annotation-alignment check without downloading the gated speaker model, also install `pyannote.core==6.1.0`. CI installs it as a test dependency; the base app does not require it.
 
-Network-free tests exercise validation, queueing, journal recovery, backup integrity, imports, exports, CRUD and failure cases. The recovery suite kills a separate process immediately after a transcript's SQLite commit and starts a fresh process to verify recovery without duplicate transcription. Source media in that particular test is synthetic. GitHub Actions independently exercises the real file-upload → PyAV → Whisper Tiny → SQLite → export path on generated speech, checks recognizable source words, and verifies fresh Linux installation. A separate QA job runs the actual default `qwen3:4b` model for English↔Greek translation, summaries and subtitle/summary exports using owned text fixtures. Browser UI controls were previously checked with simulated API responses.
+Network-free tests exercise validation, queueing, journal recovery, backup integrity, imports, exports, CRUD and failure cases. The recovery suite kills a separate process immediately after a transcript's SQLite commit and starts a fresh process to verify recovery without duplicate transcription. Source media in that particular test is synthetic. GitHub Actions independently exercises the real file-upload → PyAV → Whisper Tiny → SQLite → export path on generated speech, checks recognizable source words, and verifies fresh Linux installation. A separate QA job runs the actual default `qwen3:4b` model for English↔Greek translation, summaries and subtitle/summary exports using owned text fixtures. Its structural success does not approve generated meaning.
+
+Hosted Chromium runs passed 30 checks against the actual local app, including
+real Whisper Tiny upload, desktop and 320/390px layouts, library editing,
+downloads, backup/restore, validation, diagnostics and failure handling.
+Screenshots were retained and visually inspected. Link and batch UI checks used
+controlled caption fixtures; actual provider access is exercised by the
+separate **LinkScribe live source QA** GitHub Actions workflow. That workflow
+keeps successful and failed evidence and currently fails its complete provider
+scope. See the [browser/provider record](docs/browser-provider-2026-11-26/README.md)
+for exact commits, run links, screenshots and limitations.
 
 Optional live probes can also be run explicitly:
 
@@ -209,11 +275,26 @@ PYTHONPATH=. ./.venv/bin/python tests/smoke_real_ollama.py
 PYTHONPATH=. ./.venv/bin/python tests/smoke_live_providers.py --url https://www.youtube.com/watch?v=aqz-KE-bpKQ
 ```
 
-The Ollama script requires the selected model already running locally. The provider script checks metadata and playable stream extraction by default; it is **not** a full transcription test. Live provider tests remain separate from CI because availability and access restrictions can change. The current live probe reached YouTube metadata with patched Node, while the selected Vimeo video required login and Dailymotion returned no playable formats in the test environment. **Full live link-to-transcript coverage across all three providers and gated pyannote Community-1 inference remain unverified.** The pyannote-core alignment check does not imply that the speaker model was run.
+The Ollama script requires the selected model to be installed and the local
+daemon running. The lightweight `smoke_live_providers.py` probe checks metadata
+and playable stream extraction by default; it is **not** a full transcription
+test. The hosted workflow instead runs `tests/smoke_real_links.py` through the
+actual app route, acquisition, recognition, persistence, exports, mixed batch
+and fresh-process retrieval. Provider availability and restrictions can change;
+the [verified scope](#verified-provider-scope) records the actual Dailymotion
+functional pass, unresolved ASR defect, and YouTube/Vimeo access blockers.
+Gated pyannote Community-1 inference remains unverified; the pyannote-core
+alignment check does not imply that the gated model was run.
 
 ### Bilingual translation evaluation
 
-The [26 November evaluation and full output comparison](docs/evaluation-2026-11-26/README.md) records the current evidence. Both tested models complete the 12 cases after the request-size/schema fixes, but assistant review still finds material meaning errors. The original prompt and `qwen3:4b` default are retained; translation remains experimental.
+The [original 26 November evaluation](docs/evaluation-2026-11-26/README.md) and
+[later model and long-input comparisons](docs/translation-models-2026-11-26/README.md)
+retain actual outputs and assistant reviews. Qwen, Gemma, TranslateGemma,
+Hy-MT3 and Marian paths have completed structural checks while producing
+material meaning errors. Later Marian input-processing fixes repaired observed
+coverage failures without resolving its semantic errors. The general Ollama
+prompt and `qwen3:4b` default remain unchanged; translation remains experimental.
 
 The internally authored English/Greek corpus contains six development cases, four separate holdout cases, and two long passages that force production segment splitting. It covers terminology, names and roles, amounts, negation, conditions, uncertainty, quoted instructions, omissions, and continuity. References and review criteria are never sent to the model.
 
