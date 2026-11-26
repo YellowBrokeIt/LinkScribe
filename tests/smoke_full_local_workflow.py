@@ -24,7 +24,6 @@ os.environ["ORT_DISABLE_TELEMETRY"] = "1"
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-import smoke_real_speaker_app as app_smoke
 
 
 def file_sha(path):
@@ -184,6 +183,10 @@ class ProcessMemory:
 
 
 def main(argv=None):
+    # The actual speaker smoke uses Linux resource accounting. Keep pure memory
+    # helpers importable for the cross-platform unit suite without that module.
+    import smoke_real_speaker_app as app_smoke
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--audio", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)

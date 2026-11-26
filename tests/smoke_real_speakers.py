@@ -14,7 +14,6 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
-import resource
 import sys
 import time
 import uuid
@@ -194,6 +193,10 @@ def score(case, result):
 
 
 def main(argv=None):
+    # Only the actual Linux CPU run needs POSIX peak-RSS accounting; fixture
+    # validation and scoring helpers are also imported by Windows unit tests.
+    import resource
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sources", type=Path, required=True, help="Licensed source manifest with actual file hashes.")
     parser.add_argument("--work-dir", type=Path, required=True, help="QA-only fixture output directory.")
