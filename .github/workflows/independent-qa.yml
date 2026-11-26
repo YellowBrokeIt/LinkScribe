@@ -113,7 +113,7 @@ jobs:
   real-ollama-integration:
     name: Real local Ollama / English-Greek / summaries / exports
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     needs: api-test-matrix
     steps:
       - uses: actions/checkout@v4
@@ -144,6 +144,7 @@ jobs:
           OLLAMA_CONTEXT_LENGTH: '8192'
           OLLAMA_KEEP_ALIVE: 1m
           LINKSCRIBE_OLLAMA_MODEL: qwen3:4b
+          LINKSCRIBE_OLLAMA_THREADS: '4'
         run: |
           set -euo pipefail
           export OLLAMA_MODELS="$RUNNER_TEMP/linkscr-ollama-models"
@@ -171,4 +172,18 @@ jobs:
               result = json.load(response)
               assert result.get('status') == 'success', result
           PY
-          PYTHONPATH=. python tests/smoke_real_ollama.py
+          mkdir -p "$RUNNER_TEMP/linkscr-language-qa"
+          qa_status=0
+          PYTHONPATH=. python tests/smoke_real_ollama.py \
+            > "$RUNNER_TEMP/linkscr-language-qa/integration.json" || qa_status=$?
+          PYTHONPATH=. python tests/evaluate_translation_quality.py \
+            --output "$RUNNER_TEMP/linkscr-language-qa/translation-evaluation.json" || qa_status=$?
+          exit "$qa_status"
+      - name: Preserve exact language-evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-language-qa-${{ github.sha }}
+          path: ${{ runner.temp }}/linkscr-language-qa/*.json
+          if-no-files-found: warn
+          retention-days: 30

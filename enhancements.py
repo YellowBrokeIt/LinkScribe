@@ -78,6 +78,21 @@ def _strict_model_json(content: str) -> dict[str, Any]:
     return result
 
 
+def ollama_inference_options() -> dict[str, Any]:
+    """Keep the model defaults reproducible; allow a CPU thread limit."""
+    options: dict[str, Any] = {"temperature": 0, "num_ctx": 8192, "num_predict": 2048}
+    threads = os.getenv("LINKSCRIBE_OLLAMA_THREADS", "").strip()
+    if threads:
+        try:
+            value = int(threads)
+        except ValueError as exc:
+            raise EnhancementError("LINKSCRIBE_OLLAMA_THREADS must be an integer from 1 through 32.") from exc
+        if not 1 <= value <= 32:
+            raise EnhancementError("LINKSCRIBE_OLLAMA_THREADS must be an integer from 1 through 32.")
+        options["num_thread"] = value
+    return options
+
+
 def _ollama(payload: dict[str, Any]) -> Any:
     """Call a locally controlled Ollama instance, not an untrusted user URL."""
     _url, model = ollama_settings()
@@ -86,7 +101,7 @@ def _ollama(payload: dict[str, Any]) -> Any:
         "stream": False,
         "format": "json",
         "messages": payload["messages"],
-        "options": {"temperature": 0, "num_ctx": 8192, "num_predict": 2048},
+        "options": ollama_inference_options(),
         "think": False,
     }
     try:
