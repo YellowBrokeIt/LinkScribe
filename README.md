@@ -131,6 +131,8 @@ The Ollama script requires the selected model already running locally. The provi
 
 ### Bilingual translation evaluation
 
+The [26 November evaluation and full output comparison](docs/evaluation-2026-11-26/README.md) records the current evidence. Both tested models complete the 12 cases after the request-size/schema fixes, but assistant review still finds material meaning errors. The original prompt and `qwen3:4b` default are retained; translation remains experimental.
+
 The internally authored English/Greek corpus contains six development cases, four separate holdout cases, and two long passages that force production segment splitting. It covers terminology, names and roles, amounts, negation, conditions, uncertainty, quoted instructions, omissions, and continuity. References and review criteria are never sent to the model.
 
 With the selected model already installed and Ollama running locally:
