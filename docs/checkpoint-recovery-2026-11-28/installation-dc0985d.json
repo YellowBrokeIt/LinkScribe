@@ -1,0 +1,48 @@
+{
+  "started_at": "2026-11-27T23:29:04.608498+00:00",
+  "status": "passed",
+  "checks": [
+    "archive provenance and safe extraction",
+    "actual start_linux.sh, fresh venv and /health",
+    "setup diagnostics",
+    "packaged static homepage",
+    "fresh SQLite library",
+    "installed dependency consistency"
+  ],
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "scope": "Fresh Linux source-archive install and startup; no model inference.",
+  "source": {
+    "repository": "YellowBrokeIt/LinkScribe",
+    "commit": "dc0985dabaacdbeedd1d55daf0351ea6bda69d84",
+    "artifact": "LinkScribe-candidate-source.zip",
+    "sha256": "b5b9c89d426f520b1ddf818ec5c9c3a47b5a9d78b13df16a488b4b97708301a2",
+    "members": 326,
+    "uncompressed_bytes": 10183125
+  },
+  "health": {
+    "status": "ok",
+    "service": "LinkScribe",
+    "js_runtime": {
+      "runtime": "node",
+      "version": "24.22.3",
+      "supported": true,
+      "note": "Node.js security-patched fallback",
+      "detected": {
+        "node": "24.22.3"
+      }
+    }
+  },
+  "finished_at": "2026-11-27T23:29:34.289603+00:00",
+  "evidence": {
+    "github_run": 45897284276,
+    "github_artifact": 15154885343,
+    "downloaded_artifact_sha256": "5a81c6ab2f05a2111ad9064521b27a99a548a11f7cb1774e424234a68c9b765c",
+    "verifier_path": "tests/smoke_candidate_install.py",
+    "verifier_sha256": "75092195a65d80122827459bdb53824348d36eea372d7d6f99060b14a8915035",
+    "verifier_regressions": "6 unittest tests passed",
+    "scope": "New verifier run against previously published dc0985d source archive; not a new model-quality evaluation."
+  }
+}

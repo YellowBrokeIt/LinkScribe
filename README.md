@@ -2,6 +2,17 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
+The published **0.3.0 draft checkpoint `dc0985d`** passed 607 automated tests in
+each of five hosted platform/Python configurations, 30 browser checks, fresh
+Linux installation and an actual audio-upload workflow. Provider access and
+generated-text quality still have open release gates. The
+[28 November checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
+records the exact tested commit, completed runs and remaining work; these
+results do not certify later revisions or constitute a v1.0 release.
+The downloaded source archive also passed a fresh local installation during
+recovery. The candidate-artifact workflow now verifies installation from its
+actual generated ZIP, in addition to the checkout-based installation checks.
+
 ## Features
 
 - **Single links or batches of 1–20 links**: accepts allowlisted YouTube, Vimeo and Dailymotion URLs; sequential processing and batch ZIP of successful results. Accepted URL formats do not guarantee provider access. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions. See [verified provider scope](#verified-provider-scope).
@@ -47,15 +58,16 @@ Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube
 
 ### Verified provider scope
 
-The [hosted browser and live-provider evidence](docs/browser-provider-2026-11-26/README.md)
-separates accepted URLs from actual acquisition and transcription. These results
+The [latest completed hosted checks at `dc0985d`](docs/checkpoint-recovery-2026-11-28/README.md)
+and [earlier browser/provider evidence](docs/browser-provider-2026-11-26/README.md)
+separate accepted URLs from actual acquisition and transcription. These results
 describe the tested clips and environment, not universal availability:
 
 | Provider | Observed end-to-end status |
 | --- | --- |
-| Dailymotion | A licensed film completed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Disabling ASR VAD recovered later dialogue; output still needs review. |
-| YouTube | Both hosted audio tests stopped at a bot sign-in requirement. A separate local public-caption request returned `IpBlocked`. No successful transcript is claimed for these attempts. |
-| Vimeo | The selected clip stopped at an extractor login fallback. No successful transcript is claimed for that attempt. |
+| Dailymotion | At `dc0985d`, the complete 734.15-second licensed film passed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Disabling ASR VAD recovered later dialogue; output still needs review. |
+| YouTube | At `dc0985d`, both hosted audio attempts returned the extractor error “This content isn’t available.” Earlier runs encountered bot sign-in requirements, and a separate public-caption request returned `IpBlocked`. These observations do not establish one common cause. No successful YouTube transcript is claimed. |
+| Vimeo | At `dc0985d`, the selected clip returned “The web client only works when logged-in.” No successful transcript is claimed for that attempt. |
 
 The [VAD diagnosis](docs/browser-provider-2026-11-26/assistant-vad-diagnosis.json)
 records that Small decoded the full 734.15-second Dailymotion input, but VAD kept
@@ -77,8 +89,10 @@ candidate rejected the same noise output that the baseline saved, while
 preserving identical text and timings for ordinary and 20 dB quieter Greek
 and English recordings. The quiet English clip required the second detector
 and was correctly retained. These seven fixtures do not establish general
-accuracy on music, noise or very faint speech; the updated unseeded hosted
-full-film check remains pending. The
+accuracy on music, noise or very faint speech. The
+[unseeded hosted follow-up at `dc0985d`](docs/checkpoint-recovery-2026-11-28/README.md)
+also passed complete-film processing and rejection of exact silence and white
+noise, without claiming general ASR accuracy. The
 [public-caption probe](docs/public-captions-2026-11-26/README.md) preserves the
 separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
