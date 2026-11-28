@@ -1,0 +1,33 @@
+{
+  "scope": "Independent read-only supplemental review of fixture-only correction; no new test/model execution by reviewer",
+  "decision": "No blocker; the fixture now gives each declared one-second mock segment an in-audio physical interval.",
+  "source_bindings": [
+    {
+      "path": "tests/test_asr_speech_evidence.py",
+      "sha256": "077e4f784e767d63dd6b782ec3ee149cdd29bfccbaf4e32e188eaa17a2e58069"
+    },
+    {
+      "path": "docs/asr-timing-boundary-2026-11-28/historical-speech-evidence-unit.py",
+      "sha256": "9900e1dbb7a7b160f45ae13466d17a2abd25981c50d4ed58632a904b195ec443"
+    },
+    {
+      "path": "app.py",
+      "sha256": "5a5732ffcb420d2ca7dde87008168b91d67d8cabfd5f54a13a43436f087c0d4d"
+    },
+    {
+      "path": "docs/asr-timing-boundary-2026-11-28/first-combined-failure-reproduction.txt",
+      "sha256": "49eb673fc7fb2aa2767d5a08f8d9afa914de799eb5ece1003b87f5813d2dc512"
+    }
+  ],
+  "only_AST_change": "Replace five-sample audio allocation with zero-padded max(1,len(scores))*16000 float32 samples and write the same original first five values.",
+  "all_other_fixture_code_and_all_test_assertions_AST_identical": true,
+  "nonzero_and_arbitrarily_quiet_samples_preserved": true,
+  "original_audio_before_after_identity_assertions_preserved": true,
+  "mock_segment_text_timestamps_scores_word_evidence_unchanged": true,
+  "all_policy_threshold_VAD_order_and_whole_transcript_assertions_preserved": true,
+  "current_app_sha256_unchanged_from_completed_review": "5a5732ffcb420d2ca7dde87008168b91d67d8cabfd5f54a13a43436f087c0d4d",
+  "original_failure_retained": "15 failed / 2 passed because mock timestamps 0–2 seconds exceeded five samples (0.0003125 seconds); the new production timestamp guard correctly exposed this inconsistency.",
+  "implementation_agent_reported_targeted_result": "17 passed in 0.56 seconds; parent owns combined-suite rerun.",
+  "historical_original_matches_HEAD_at_review": true,
+  "earlier_implementation_review_not_modified": true
+}

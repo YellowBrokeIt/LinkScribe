@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/package_verification",
+  "reviewed_at_utc": "2026-11-28T02:53:38.770338+00:00",
+  "scope": "Independent complete raw-output review on the same eight already exposed native English/Greek development clips. Compared against exact frozen publisher references and original criteria, with no audio-listening claim. This is not fresh validation, long-audio testing, word-alignment testing or app integration.",
+  "candidate": "Official Qwen3-ASR-0.6B-hf, revision 7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c, native Transformers 5.13 CPU float32; exact declared single-attempt screen.",
+  "classification_definitions": {
+    "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+    "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+    "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+    "not_evaluable": "No completed aligned transcript is available."
+  },
+  "run_id": 46099257439,
+  "job_id": 140837721855,
+  "artifact_id": 15244707388,
+  "commit": "7ee0c7f2ac319d817ae9861a1d632a56ed62908e",
+  "report_sha256": "92f068bbb01bc456e9b3bbc784b1c0545e6c34ca150b8a0c2df4def2feeada2a",
+  "execution_sha256": "1ad47a304665c3cab5bf8d0024e1aa0337a5b86e95b1331b033ea914d7c8afea",
+  "plan_sha256": "a46131a56018ad24f70faa76cea1d206407358271ff60fab1dbe1afd6bb72380",
+  "source_criteria_binding_sha256": "e58bacb2916dd6a337ff433460f92638000de74b10b300b256005bf924ae6c9d",
+  "followup_binding_sha256": "38a34255ed8ab5300a5ddbb9fc0ccba369dafe0065e46eb8675afee1a52c692d",
+  "output_binding_audit_sha256": "c98f1aaee1e60029b27f14c9e936b4828ec6d21459fe974d1b0b3d83d4dace14",
+  "audit_script_sha256": "f08d356ff795899c2bbba63874706f038234634a7fa79cfdd8f39f4d2359915d",
+  "complete": true,
+  "counts": {
+    "acceptable": 2,
+    "minor_issue": 0,
+    "major_error": 6,
+    "not_evaluable": 0
+  },
+  "language_counts": {
+    "el": {
+      "acceptable": 0,
+      "minor_issue": 0,
+      "major_error": 5,
+      "not_evaluable": 0
+    },
+    "en": {
+      "acceptable": 2,
+      "minor_issue": 0,
+      "major_error": 1,
+      "not_evaluable": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "source_language": "el",
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "original_review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ],
+      "raw_transcript_without_repetition_repair": "Κάποια βασιλεία παρέχουν δικούς κατασκηνωτικούς χώρους για εικογένεις με μικρά παιδιά.",
+      "raw_transcript_utf8_sha256": "da7c6a0503dcb91730f673363dceece36c2f1ae0cf72a45aa18d144bf4cfb70c",
+      "raw_case_json_sha256": "ad6eb203265c84678de6b2e7c9d1dcd76747a6dde526da56893bd55385ac9843",
+      "token_progress_sha256": "cc1e5758911ebdb249285faf8f51b36e03914635bb07b6157373a4daf792ca7e",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "Κάποια φεστιβάλ",
+          "actual": "Κάποια βασιλεία",
+          "explanation": "Festivals becomes kingdoms, replacing the actor/entity providing the camping areas."
+        },
+        {
+          "reference": "ειδικούς κατασκηνωτικούς χώρους",
+          "actual": "δικούς κατασκηνωτικούς χώρους",
+          "explanation": "Special camping areas becomes own camping areas, changing the provision being described."
+        },
+        {
+          "reference": "οικογένειες",
+          "actual": "εικογένεις",
+          "explanation": "Malformed spelling needs correction, although the intended families remain recoverable."
+        }
+      ],
+      "preserved": [
+        "Provision of camping areas is present.",
+        "The reference to families with young children remains recoverable."
+      ],
+      "criterion_assessment": "Partially preserved; special provision is changed and the complete sentence substitutes its actor. The original whole-content major-error rule therefore applies."
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "source_language": "el",
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "original_review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ],
+      "raw_transcript_without_repetition_repair": "Είναι το πέμπτο προσορινό εκλογικό συμβούλιο του Μαρτείου μέσα σε τέσσερα χρόνια.",
+      "raw_transcript_utf8_sha256": "add1d88a27fdad42f7ffab812a053b2adbae09c25864f011bd29c0da3d56c63b",
+      "raw_case_json_sha256": "71d003d746b0364c8fddb56da90148fbedca5bf76ce5a82d1aea0eb374844604",
+      "token_progress_sha256": "d8a4cca27746581cc5e943c26bdb8d332219c391e13d528ebaf36249aa5a23f7",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "του Μαρτελί",
+          "actual": "του Μαρτείου",
+          "explanation": "The required proper name Martelly is not preserved."
+        },
+        {
+          "reference": "προσωρινό",
+          "actual": "προσορινό",
+          "explanation": "Additional spelling error; this alone would be minor."
+        }
+      ],
+      "preserved": [
+        "The fifth electoral council remains explicit.",
+        "The four-year interval remains explicit.",
+        "The provisional-council description is recoverable despite spelling."
+      ],
+      "criterion_assessment": "The count and interval pass, but the explicitly required proper name fails."
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "source_language": "el",
+      "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "original_review_criteria": [
+        "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+      ],
+      "raw_transcript_without_repetition_repair": "Αυτό δεν μου βγάζει νόημα, σε κάθε περίπτωση δεν ταινίκιο.",
+      "raw_transcript_utf8_sha256": "a5c6c7a240f57c5e32ae49ce8ed8ccd9c16da069fa5f9e8572882ad9c46a0649",
+      "raw_case_json_sha256": "4f273624e3a07563799907d7e663298c6920faa9c8b0a88fe5f9ece8b799e473",
+      "token_progress_sha256": "00e1c3d4979b5c00f62caa27ba5274849501d15e0d9b3e3d43fe77c903363617",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "actual": "σε κάθε περίπτωση δεν ταινίκιο.",
+          "explanation": "The second predicate is garbled, so the proposition that it was not fair is not intelligibly retained. The negation word remains; this is not a demonstrated reversal to a positive fairness claim."
+        }
+      ],
+      "preserved": [
+        "The first statement, that it does not make sense to the speaker, is intact.",
+        "The in-any-case transition and a second negation token remain."
+      ],
+      "criterion_assessment": "First negative proposition passes. The second complete negative proposition fails because the predicate is unintelligible."
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "source_language": "el",
+      "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+      "original_review_criteria": [
+        "Preserve the count of three people and the claim that nobody was injured despite the collision."
+      ],
+      "raw_transcript_without_repetition_repair": "Μολονότι τρίσα άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκληση του αυτοκινήτου, δεν δραματισκε και γανήση.",
+      "raw_transcript_utf8_sha256": "d35a200eeedea93e94b2df2271f126c66124caa585c0b334cabae12b50f29315",
+      "raw_case_json_sha256": "15a943e6148959081f86f51b5e6966962cb59b5f6727d09be4331ac80537398e",
+      "token_progress_sha256": "2f5a9e0e365ed1e132d6d13de4c5c4626d53017d9fd9aa425449e66393c4c340",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "3 άνθρωποι",
+          "actual": "τρίσα άνθρωποι",
+          "explanation": "The number word is malformed. Three may be inferred from the fragment, but the exact count is not cleanly transcribed."
+        },
+        {
+          "reference": "πρόσκρουση του αυτοκινήτου",
+          "actual": "πρόσκληση του αυτοκινήτου",
+          "explanation": "Collision becomes invitation, changing the event."
+        },
+        {
+          "reference": "δεν τραυματίστηκε κανείς",
+          "actual": "δεν δραματισκε και γανήση",
+          "explanation": "The nobody-was-injured predicate and subject are garbled. The negation token survives; the output does not establish the opposite claim that somebody was injured."
+        }
+      ],
+      "preserved": [
+        "The although relation, people inside the house, and reference to the car remain."
+      ],
+      "criterion_assessment": "The collision/no-injury proposition is materially corrupted. Count wording is also damaged; rejection does not depend on claiming a definite numerical substitution."
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "source_language": "el",
+      "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "original_review_criteria": [
+        "Preserve the two product names Number One and Manta and the negated description of the first beer."
+      ],
+      "raw_transcript_without_repetition_repair": "Η κύρια τοπική βήρα ονομάζεται Ναμβρούαν και δεν αποτελεί μια συνηθιστή βήρα. Είναι ομοσεφήρις και δροσιστική. Η άλλη τοπική βήρα λέγεται Μάντα.",
+      "raw_transcript_utf8_sha256": "c2210a52522bb583c35688427cfed7e925559eb3a2272311b2c091d2a80b35c0",
+      "raw_case_json_sha256": "c3bd0a036af255cf57d225a807cecbdcdf737f5283c17126601fed5ba8c0d327",
+      "token_progress_sha256": "15520caf3f2f43a958f557cbc5298711f3a27139875368c939c7d552461a5823",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "Number One",
+          "actual": "Ναμβρούαν",
+          "explanation": "The first brand is rendered as a malformed fused phonetic form. It is damaged rather than cleanly preserved as the label; the independent content errors below remain decisive even if this is read leniently as an approximate transliteration."
+        },
+        {
+          "reference": "δεν αποτελεί μια σύνθετη μπύρα",
+          "actual": "δεν αποτελεί μια συνηθιστή βήρα",
+          "explanation": "Not a complex beer changes to not a usual beer; negation is retained but its description changes meaning."
+        },
+        {
+          "reference": "είναι όμως ευχάριστη και δροσιστική",
+          "actual": "Είναι ομοσεφήρις και δροσιστική.",
+          "explanation": "The pleasant/however wording becomes unintelligible. Refreshing remains."
+        }
+      ],
+      "preserved": [
+        "The main local beer and a second local beer remain distinguished.",
+        "Manta becomes Μάντα, an acceptable Greek transliteration.",
+        "The negation token and refreshing description survive."
+      ],
+      "criterion_assessment": "The first product label is damaged and its required negated description changes; the second product name passes."
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "source_language": "en",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "original_review_criteria": [
+        "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+      ],
+      "raw_transcript_without_repetition_repair": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "raw_transcript_utf8_sha256": "5414588c40aaca6face4fea72a1f5d2a04472de8372c9114edd5a7d303dc57e8",
+      "raw_case_json_sha256": "0bb3aa9b3b9704805b8acbc637d80d85f7d05485315b9680892098431109e72b",
+      "token_progress_sha256": "cc19fae8c103403353b920ccbcf330da90dec283749d3a2c210bf4b425966e53",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "acceptable",
+      "issues": [],
+      "preserved": [
+        "The distant phone-call condition, thousands-of-miles distance and satellite claim match the complete reference."
+      ],
+      "criterion_assessment": "Pass. Evaluated as transcription fidelity; no attempt to fact-check or rewrite the spoken claim."
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "source_language": "en",
+      "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "original_review_criteria": [
+        "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+      ],
+      "raw_transcript_without_repetition_repair": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "raw_transcript_utf8_sha256": "22348fd42247b2aeeb9c78454b759ee242ce524c246548e98c642a24a3f49399",
+      "raw_case_json_sha256": "4d51e426b70df459bbbe1ed81bdb7d55385e7f4cd618d1c94932c0e148dd8f82",
+      "token_progress_sha256": "772605635d79a89adcbed5b1f31894105e6bc5fc7673349ac31724540bdea150",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "acceptable",
+      "issues": [],
+      "preserved": [
+        "UN attribution, also hopes, finalizing a fund, affected countries, global warming and coping with impacts are retained.",
+        "UN versus U.N. is an accepted punctuation convention."
+      ],
+      "criterion_assessment": "Pass; complete reference meaning preserved."
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "source_language": "en",
+      "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+      "original_review_criteria": [
+        "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+      ],
+      "raw_transcript_without_repetition_repair": "Then, like a singer, to delete and singing the passions.",
+      "raw_transcript_utf8_sha256": "564bbe2f5501a91ad5b17c301744e0815472b0f0fcc367ce40c60ab1b911eb2b",
+      "raw_case_json_sha256": "5747c79235d5e19d15fd5416ae43ea4a2102dc1d0f6b28877606e2635aed0bd2",
+      "token_progress_sha256": "524743c1c111101ace660b45b750797ae683aae90268aa7e7dd6f46430a062f4",
+      "native_parser_rewrites_raw_transcript": false,
+      "structural_audit": "pass",
+      "classification": "major_error",
+      "issues": [
+        {
+          "reference": "Lakkha Singh",
+          "actual": "like a singer",
+          "explanation": "The person name is replaced with a generic phrase."
+        },
+        {
+          "reference": "took the lead",
+          "actual": "to delete and",
+          "explanation": "The leading role is corrupted into a different, ungrammatical phrase."
+        },
+        {
+          "reference": "bhajans",
+          "actual": "passions",
+          "explanation": "The sung form/content is changed to another word."
+        }
+      ],
+      "preserved": [
+        "Then and the general act of singing remain."
+      ],
+      "criterion_assessment": "All three required content elements—person name, leading role and bhajans—fail."
+    }
+  ],
+  "mechanical_result": "All eight full saved PCM arrays, recorded native audio-only prompts/features/masks, streamed/returned token sequences, ByteLevel token-piece decodes, native EOS and raw/native-parser equality pass the retained-evidence audit. Each case ran once; no parser rewrites, invented timing or decoder hints. See separate audit for the limits of retrospective verification.",
+  "resource_scope": {
+    "worker_seconds": 100.403564382,
+    "controller_seconds": 101.432693699,
+    "initialization_seconds": 5.403865652999997,
+    "longest_case_seconds": 23.619864390000004,
+    "sampled_group_peak_rss_bytes": 4766765056,
+    "recorded_process_peak_rss_bytes": 5269831680,
+    "rss_limit_bytes": 6442450944,
+    "sampling_seconds_declared": 0.1,
+    "time_series_archived": false,
+    "owned_process_group_clean": true,
+    "limitation": "Retained controller aggregate and OS process high-water records satisfy the frozen gate. No monitor sample time series exists here to recompute the aggregate independently. This is an isolated short-clip worker measurement, not whole-app or long-audio validation."
+  },
+  "decision": {
+    "semantic_quality_approved": false,
+    "production_adoption_approved": false,
+    "reason": "Six material content failures under unchanged criteria. Structural completion and bounded resources do not compensate for corrupted names, predicates and relationships.",
+    "next_inference_authorized_by_this_review": false
+  },
+  "evidence_handling": "No raw experiment or frozen criteria files changed. Independent audit and review are new scratch artifacts. Full source and successful criteria are retained alongside failures."
+}

@@ -1,0 +1,245 @@
+{
+  "review_type": "independent bounded source, retained-output replay, and focused non-model test review",
+  "review_date": "2026-11-28",
+  "reviewer": "/root/package_verification",
+  "status": "no remaining blocking defect found within reviewed scope",
+  "reviewed_files": [
+    {
+      "path": "app.py",
+      "sha256": "5a5732ffcb420d2ca7dde87008168b91d67d8cabfd5f54a13a43436f087c0d4d",
+      "bytes": 60730
+    },
+    {
+      "path": "tests/test_asr_timing_bounds.py",
+      "sha256": "91654df125a67672aabf6b92580639fd6390b0c79662b9ac2afc360f68f7152b",
+      "bytes": 10083
+    },
+    {
+      "path": "tests/test_asr_vad_policy.py",
+      "sha256": "79b4dd578b15bc5013d1567939b8f01ef7b82ac48d8f6f58e3e72a1c8c350144",
+      "bytes": 6992
+    },
+    {
+      "path": "tests/test_large_v3_candidate_qa.py",
+      "sha256": "e3417767c39b1db6fb15b2bb31c81c1fecffacf5ba0b50a3d53b6c79de255bcc",
+      "bytes": 6941
+    },
+    {
+      "path": "tests/qa_large_v3_candidate.py",
+      "sha256": "cd7f933b27fc297fcdd0f1901657306ee90d17211ceae16dd0c4d9d23200c451",
+      "bytes": 30634
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/plan.json",
+      "sha256": "b9b779a48cb265e28c060fbf433d40e54058bb86290decc042e620ec363851f2",
+      "bytes": 7018
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/production-policy.json",
+      "sha256": "2f0d178461fa195e81b7d31731adac92045b6d8ee77020ccbd5a461102208724",
+      "bytes": 4007
+    },
+    {
+      "path": "docs/large-v3-hosted-results-2026-11-28/artifact/recognizer-report.json",
+      "sha256": "26098ab9a14bc328d7c9aea77e43defadbec57d1055f8190976ecd492fc6485f",
+      "bytes": 271241
+    },
+    {
+      "path": "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json",
+      "sha256": "abf6ad93ec75a2a3c95138e3e8c2d9181e2daf52b01edc7a9c8eb5b57a384f17",
+      "bytes": 291807
+    },
+    {
+      "path": "docs/asr-timing-boundary-2026-11-28/historical-large-v3-unit.py",
+      "sha256": "b383028077a6d81ace6ee5c76d04827b4f519ac9722310ef114c9fbdaba69bcd",
+      "bytes": 4976
+    }
+  ],
+  "source_contract": {
+    "native_transcribe_call_ast_unchanged": true,
+    "full_decoded_duration_authoritative": true,
+    "strict_finite_positive_segment_intervals": true,
+    "only_overlong_segment_end_clamped": true,
+    "rounding_collapse_preserves_valid_native_precision": true,
+    "optional_invalid_word_evidence_falls_back_to_whole_segment_without_losing_text": true,
+    "subtitle_inward_decimal_quantization_then_integer_formatting": true,
+    "no_fabricated_100ms_extension": true,
+    "unrepresentable_timed_exports_do_not_discard_TXT_JSON_or_original_segments": true,
+    "direct_unavailable_timed_download_HTTP_status": 422,
+    "new_job_warning_persisted_in_library_and_job": true,
+    "batch_report_combines_deduplicated_saved_and_fresh_export_notes": true
+  },
+  "verification": {
+    "command": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python -m pytest -q tests/test_asr_timing_bounds.py tests/test_asr_vad_policy.py tests/test_large_v3_candidate_qa.py",
+    "working_directory": "/workspace/scratch/94360995dd61/LinkScribe",
+    "exit_code": 0,
+    "observed_stdout_summary": "48 passed in 1.01s",
+    "test_platform": "Linux",
+    "fresh_model_inference": false,
+    "model_weights_downloaded": false,
+    "cases": [
+      {
+        "id": "fleurs-el_gr-validation-2-1528",
+        "full_pcm_sample_count": 106560,
+        "full_pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d",
+        "duration_seconds": 6.66,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-el_gr-validation-5-1515",
+        "full_pcm_sample_count": 96000,
+        "full_pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b",
+        "duration_seconds": 6.0,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-el_gr-validation-6-1577",
+        "full_pcm_sample_count": 67200,
+        "full_pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad",
+        "duration_seconds": 4.2,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-el_gr-validation-7-1598",
+        "full_pcm_sample_count": 111360,
+        "full_pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae",
+        "duration_seconds": 6.96,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-el_gr-validation-11-1590",
+        "full_pcm_sample_count": 160320,
+        "full_pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9",
+        "duration_seconds": 10.02,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-en_us-validation-0-1548",
+        "full_pcm_sample_count": 104640,
+        "full_pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7",
+        "duration_seconds": 6.54,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": [
+          {
+            "segment_index": 0,
+            "field": "end",
+            "before": 7.0,
+            "after": 6.54
+          }
+        ]
+      },
+      {
+        "id": "fleurs-en_us-validation-2-1510",
+        "full_pcm_sample_count": 126720,
+        "full_pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270",
+        "duration_seconds": 7.92,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      },
+      {
+        "id": "fleurs-en_us-validation-3-1578",
+        "full_pcm_sample_count": 66240,
+        "full_pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb",
+        "duration_seconds": 4.14,
+        "retained_output_replay_assertions_passed": true,
+        "text_order_and_native_transcribe_options_unchanged": true,
+        "timed_exports_available": true,
+        "public_interval_changes": []
+      }
+    ],
+    "synthetic_edges": [
+      "NaN/infinity/negative/nonpositive/outside-start timestamp rejection with preserved timestamp-specific errors",
+      "104649 samples: exact 6.5405625-second physical end becomes at most 6.540 in SRT/VTT",
+      "valid 40ms cue receives no 100ms extension",
+      "sub-ms native interval remains in saved JSON/TXT and yields timed-download 422 plus persisted warning",
+      "actual historical zero-duration native word preserves whole segment and existing speaker fallback",
+      "private word clipping preserves original word strings and starts",
+      "mixed batch retains available exports and explains unavailable subtitles"
+    ],
+    "final_test_source_hashes_before_after_equal": true
+  },
+  "historical_provenance": {
+    "frozen_helper_and_plan_unchanged": true,
+    "unit_validation_copies_and_hashes_original_bound_sources": true,
+    "temporary_app_view_reconstructs_original_function_and_constants_only": true,
+    "does_not_claim_historical_full_app_byte_identity": true,
+    "test_explicitly_rejects_changed_current_policy": true,
+    "original_test_source_archived": true,
+    "new_inference_or_candidate_acceptance_claimed": false
+  },
+  "resolved_review_findings": [
+    {
+      "issue": "Default locale decoding of retained Greek reports can fail Windows test collection",
+      "evidence": "Actual retained bytes fail cp1252 at offsets 5588 and 49123; original fixture fails at 1903",
+      "resolution": "Explicit UTF-8 reads for new report tests; a test-only historical_utf8 fixture reproduces the frozen Ubuntu decoding environment without changing the old runner."
+    },
+    {
+      "issue": "Windows checkout could change the hash of the newly bound historical zero-duration report",
+      "resolution": "Scoped text eol=lf rule now present",
+      "observed_attributes": [
+        "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json: text: set",
+        "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json: eol: lf"
+      ]
+    }
+  ],
+  "limitations": [
+    "Focused tests are Linux tests using retained native data and synthetic controlled decoders; no fresh speech inference or Windows runtime is claimed.",
+    "The eight-case full-large-v3 candidate remains semantically rejected under its original criteria; this change repairs timing bounds only.",
+    "Original raw hosted outputs, original model judgments, frozen helper and plan are not rewritten.",
+    "Full application regression and hosted validation are owned by the parent/implementation agent and are not inferred from these 48 checks."
+  ],
+  "final_artifacts": [
+    {
+      "path": "/workspace/scratch/94360995dd61/timing-boundary-independent-review-2026-11-28/focused-tests.json",
+      "sha256": "ae5cbb0aac93ed5f89603b4db1a2d9a4fe7a3ab3f90903eed5d3fcad0e7eb2ac",
+      "bytes": 1310
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/timing-boundary-independent-review-2026-11-28/focused-tests.txt",
+      "sha256": "e9bd64450cadb0a92b0ce8f9fba58e67809d093f82a3fa44270351c2d1547e1e",
+      "bytes": 99
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/timing-boundary-independent-review-2026-11-28/retained-replay-audit.json",
+      "sha256": "83f7fa3ab7640cd4715af8e8bf8d6cfce48928aae459721d07558fd4c03149b1",
+      "bytes": 8820
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/asr-timing-boundary-replay-2026-11-28/replay-report.json",
+      "sha256": "32e4d2a838f9f0da5cfba0554540c110ee96858c992dc0a590fe203bb64a5789",
+      "bytes": 16669
+    }
+  ],
+  "retained_replay_review": {
+    "passed": true,
+    "all_eight_original_complete_WAVs_decoded_once_by_implementation_replay": true,
+    "no_new_acoustic_inference": true,
+    "independent_standard_library_audit_of_persisted_outputs": true,
+    "export_files_checked": 40,
+    "exact_current_segments_equal_historical_except_single_phone_end": true,
+    "all_SRT_and_VTT_intervals_positive_and_inside_physical_audio_ms_bound": true,
+    "both_SQLite_databases_equal_all_logical_columns": true,
+    "backup_manifest_payload_digest_and_record_count_verified": true,
+    "raw_SQLite_JSON_serialization_note": "Restore uses different JSON spacing for segments; parsed field values and all other columns are equal.",
+    "nonfatal_runtime_warning": "Implementation replay reported UCX VFS socket creation unavailable before a successful exit; no retry or workaround was performed."
+  }
+}

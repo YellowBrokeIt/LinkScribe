@@ -1,0 +1,40 @@
+{
+  "scope": "First combined-run failure and isolated reproduction, preserved before fixture-only correction.",
+  "combined_result_reported_by_root": {
+    "failed": 15,
+    "passed": 738,
+    "subtests_passed": 54,
+    "seconds": 10.36
+  },
+  "failure": "The synthetic fixture supplied only five samples while native mock segments occupied seconds 0\u20132. The new physical bound correctly rejected those impossible test intervals before no-speech assertions.",
+  "production_app_changed_for_this_resolution": false,
+  "original_fixture": {
+    "path": "tests/test_asr_speech_evidence.py",
+    "archived_as": "historical-speech-evidence-unit.py",
+    "sha256": "9900e1dbb7a7b160f45ae13466d17a2abd25981c50d4ed58632a904b195ec443"
+  },
+  "isolated_reproduction": {
+    "path": "first-combined-failure-reproduction.txt",
+    "sha256": "49eb673fc7fb2aa2767d5a08f8d9afa914de799eb5ece1003b87f5813d2dc512"
+  },
+  "correction": {
+    "path": "tests/test_asr_speech_evidence.py",
+    "sha256": "077e4f784e767d63dd6b782ec3ee149cdd29bfccbaf4e32e188eaa17a2e58069",
+    "behavior": "Allocate max(1, len(scores)) full seconds at 16 kHz; retain the exact original first five float32 samples and all test assertions/segments/options.",
+    "changed_scope": "configure() audio fixture only"
+  },
+  "targeted_validation": {
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_asr_speech_evidence.py"
+    ],
+    "exit_code": 0,
+    "passed": 17,
+    "seconds": 0.56,
+    "output": "speech-fixture-targeted-tests.txt",
+    "model_inference": false
+  }
+}

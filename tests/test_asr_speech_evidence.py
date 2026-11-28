@@ -9,7 +9,9 @@ import app
 
 
 def configure(monkeypatch, scores, *, speech=None, failure=None, word_timestamps=False):
-    audio = np.array([0, 0.1, -0.1, 0, 1e-30], dtype=np.float32)
+    # Cover the supplied one-second segments without changing the quiet samples.
+    audio = np.zeros(max(1, len(scores)) * 16000, dtype=np.float32)
+    audio[:5] = [0, 0.1, -0.1, 0, 1e-30]
     before = audio.tobytes()
     events = []
     segments = [SimpleNamespace(start=float(i), end=float(i + 1), text=f"Owned phrase {i}",

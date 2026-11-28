@@ -1,9 +1,14 @@
-"""Non-model checks for the isolated native full-large-v3 QA contract."""
+"""Historical large-v3 contract checks; current ASR timing has separate tests.
+
+The published runner/plan stay immutable. Their source-policy preflight must not
+claim that a later application policy generated the historical results.
+"""
 import ast
 import importlib.util
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
 
 import pytest
@@ -14,12 +19,45 @@ qa = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(qa)
 
 
-def test_frozen_plan_and_production_policy():
+@pytest.fixture
+def historical_utf8(monkeypatch):
+    """Reproduce the frozen runner's declared Ubuntu UTF-8 decoding environment.
+
+    Only these historical checks adapt its implicit text reads; source bytes and
+    the immutable runner itself remain unchanged on Windows as well as Linux.
+    """
+    original = Path.read_text
+    def read(path, encoding=None, *args, **kwargs):
+        return original(path, "utf-8" if encoding is None else encoding, *args, **kwargs)
+    monkeypatch.setattr(Path, "read_text", read)
+
+
+def test_frozen_plan_in_reconstructed_historical_function_view(tmp_path, monkeypatch, historical_utf8):
+    plan = json.loads(qa.DEFAULT_PLAN.read_text(encoding="utf-8"))
+    original_root = qa.ROOT
+    for item in plan["source_files"]:
+        source = original_root / item["path"]
+        assert source.stat().st_size == item["bytes"] and qa.sha256(source) == item["sha256"]
+        destination = tmp_path / item["path"]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    policy = json.loads((tmp_path / plan["production_policy_path"]).read_text(encoding="utf-8"))
+    # This is only the original function/constants, not the historical full app.py.
+    declarations = "\n".join(f"{name} = {value!r}" for name, value in policy["constants"].items())
+    (tmp_path / "app.py").write_text(declarations + "\n\n" + policy["function_source_lf"], encoding="utf-8")
+    monkeypatch.setattr(qa, "ROOT", tmp_path)
+    monkeypatch.setattr(qa.common, "ROOT", tmp_path)
     plan = qa.validate_plan(qa.DEFAULT_PLAN)
     assert plan["model_id"] == "Systran/faster-whisper-large-v3"
     assert len(plan["cases"]) == 8
-    policy, _ = qa.production_policy()
-    assert policy["constants"] == {"MAX_SECONDS": 7200, "ASR_NO_SPEECH_THRESHOLD": 0.6}
+    observed, _ = qa.production_policy()
+    assert observed["function_ast_sha256"] == policy["function_ast_sha256"]
+    assert observed["constants"] == {"MAX_SECONDS": 7200, "ASR_NO_SPEECH_THRESHOLD": 0.6}
+
+
+def test_frozen_runner_rejects_the_current_changed_production_policy(historical_utf8):
+    with pytest.raises(ValueError, match="production recognition policy changed"):
+        qa.validate_plan(qa.DEFAULT_PLAN)
 
 
 def test_policy_fingerprint_preserves_semantics_and_detects_beam_change():

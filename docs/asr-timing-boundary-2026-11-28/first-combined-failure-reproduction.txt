@@ -1,0 +1,469 @@
+FFFFFFFF.FFFFFF.F                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_consistent_no_speech_without_corroboration_rejects_whole_output _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57c05cd550>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_consistent_no_speech_with0')
+
+    def test_consistent_no_speech_without_corroboration_rejects_whole_output(monkeypatch, tmp_path):
+        audio, before, segments, events = configure(monkeypatch, [0.991, 0.999])
+>       with pytest.raises(app.ReadableError, match=r"^No spoken words were detected in this recording\.$") as caught:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: 
+E       - The speech model returned timestamps outside this recording or an invalid interval.
+E       + No spoken words were detected in this recording.
+
+tests/test_asr_speech_evidence.py:56: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[1795838437.535576] [163d5bc5bdff:6    :f]        vfs_fuse.c:413  UCX  ERROR failed to create VFS socket: Operation not permitted
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores0] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57bb90c9b0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_0')
+scores = [0.1, 0.999], word_timestamps = False
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores1] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b3136030>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_1')
+scores = [0.999, 0.1], word_timestamps = False
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores2] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b3136120>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_2')
+scores = [0.6, 0.999], word_timestamps = False
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores0] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ee7b0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_3')
+scores = [0.1, 0.999], word_timestamps = True
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores1] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57c05cd670>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_4')
+scores = [0.999, 0.1], word_timestamps = True
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+_ test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores2] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31378c0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_asr_anchor_preserves_5')
+scores = [0.6, 0.999], word_timestamps = True
+
+    @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
+    @pytest.mark.parametrize("word_timestamps", [False, True])
+    def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+        audio, before, segments, events = configure(monkeypatch, scores)
+>       result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_one_vad_interval_preserves_entire_output_without_cropping ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ed460>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_one_vad_interval_preserve0')
+
+    def test_one_vad_interval_preserves_entire_output_without_cropping(monkeypatch, tmp_path):
+        audio, before, segments, events = configure(monkeypatch, [0.99, 0.98], speech=[{"start": 1, "end": 2}])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small", word_timestamps=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_invalid_score_cannot_establish_consistent_no_speech[None] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31eca40>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_invalid_score_cannot_esta0')
+score = None
+
+    @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
+    def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
+        _, _, segments, events = configure(monkeypatch, [0.99, score])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_invalid_score_cannot_establish_consistent_no_speech[nan] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ef590>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_invalid_score_cannot_esta1')
+score = nan
+
+    @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
+    def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
+        _, _, segments, events = configure(monkeypatch, [0.99, score])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_invalid_score_cannot_establish_consistent_no_speech[inf] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ec9e0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_invalid_score_cannot_esta2')
+score = inf
+
+    @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
+    def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
+        _, _, segments, events = configure(monkeypatch, [0.99, score])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_invalid_score_cannot_establish_consistent_no_speech[-inf] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b3136a50>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_invalid_score_cannot_esta3')
+score = -inf
+
+    @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
+    def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
+        _, _, segments, events = configure(monkeypatch, [0.99, score])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+________ test_invalid_score_cannot_establish_consistent_no_speech[0.99] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ef3e0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_invalid_score_cannot_esta4')
+score = '0.99'
+
+    @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
+    def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
+        _, _, segments, events = configure(monkeypatch, [0.99, score])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+__________________ test_blank_segments_never_supply_an_anchor __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ecbf0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_blank_segments_never_supp0')
+
+    def test_blank_segments_never_supply_an_anchor(monkeypatch, tmp_path):
+        _, _, segments, _ = configure(monkeypatch, [0.1, 0.99])
+        segments[0].text = " \n "
+>       with pytest.raises(app.ReadableError, match="No spoken words"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'No spoken words'
+E         Actual message: 'The speech model returned timestamps outside this recording or an invalid interval.'
+
+tests/test_asr_speech_evidence.py:104: AssertionError
+__________ test_threshold_cannot_drift_from_actual_transcribe_option ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57b31ed190>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-21/test_threshold_cannot_drift_fr0')
+
+    def test_threshold_cannot_drift_from_actual_transcribe_option(monkeypatch, tmp_path):
+        monkeypatch.setattr(app, "ASR_NO_SPEECH_THRESHOLD", 0.7)
+        _, _, segments, events = configure(monkeypatch, [0.65, 0.99])
+>       result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_asr_speech_evidence.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app.py:428: in _recognize
+    start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = 1.0, end = 2.0, duration = 0.0003125
+
+    def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+        if (not isinstance(start, Real) or isinstance(start, bool) or
+                not isinstance(end, Real) or isinstance(end, bool)):
+            raise ReadableError("The speech model returned invalid timestamps for this recording.")
+        start, end = float(start), float(end)
+        if (not math.isfinite(start) or not math.isfinite(end) or
+                start < 0 or start >= duration or end <= start):
+>           raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+E           app.ReadableError: The speech model returned timestamps outside this recording or an invalid interval.
+
+app.py:386: ReadableError
+=========================== short test summary info ============================
+FAILED tests/test_asr_speech_evidence.py::test_consistent_no_speech_without_corroboration_rejects_whole_output
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores0]
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores1]
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[False-scores2]
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores0]
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores1]
+FAILED tests/test_asr_speech_evidence.py::test_one_asr_anchor_preserves_every_segment_without_loading_vad[True-scores2]
+FAILED tests/test_asr_speech_evidence.py::test_one_vad_interval_preserves_entire_output_without_cropping
+FAILED tests/test_asr_speech_evidence.py::test_invalid_score_cannot_establish_consistent_no_speech[None]
+FAILED tests/test_asr_speech_evidence.py::test_invalid_score_cannot_establish_consistent_no_speech[nan]
+FAILED tests/test_asr_speech_evidence.py::test_invalid_score_cannot_establish_consistent_no_speech[inf]
+FAILED tests/test_asr_speech_evidence.py::test_invalid_score_cannot_establish_consistent_no_speech[-inf]
+FAILED tests/test_asr_speech_evidence.py::test_invalid_score_cannot_establish_consistent_no_speech[0.99]
+FAILED tests/test_asr_speech_evidence.py::test_blank_segments_never_supply_an_anchor
+FAILED tests/test_asr_speech_evidence.py::test_threshold_cannot_drift_from_actual_transcribe_option
+15 failed, 2 passed in 0.75s

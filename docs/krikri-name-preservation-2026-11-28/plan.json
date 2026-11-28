@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T03:17:19.077160+00:00",
+  "status": "frozen_before_native_preparation_and_any_followup_generation",
+  "authorization_scope": "Root authorizes preparation only of one generic instruction clarification. Actual six-case generation requires separate independent native-contract review and root authorization.",
+  "baseline": {
+    "directory": "docs/krikri-screen-2026-11-28",
+    "evidence_manifest_sha256": "927bf095ad99ff2a4f03dbb6fc1b53a4ed0d359800ea0fa43159a3f16dd58b06",
+    "result": "5acceptable/1major; sole material defect is personal-name localization",
+    "independent_review_sha256": "c562821a070b756937adacf28f270f284c3e0ad69945cb804082746c5477adca",
+    "immutable": true
+  },
+  "published_production_sha256": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+  "adapter": {
+    "path": "docs/krikri-name-preservation-2026-11-28/enhancements-context4096.py",
+    "sha256": "be1e36c614bd1d89ad35b96f3d4c7bda7b58ff66302734efdfc08a592cfff3c6",
+    "baseline_adapter_sha256": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3",
+    "only_followup_source_change": "Append one generic name-preservation clarification to existing translation system message.",
+    "added_instruction": "Preserve personal names with faithful transliteration when changing scripts. Do not translate or localize personal names into culturally equivalent names. ",
+    "original_system_instruction_retained": true,
+    "foreign_script_guard_preserved": true,
+    "no_case_names_glossary_examples_or_postprocessing": true
+  },
+  "runtime": {
+    "directory": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+    "version": "0.40.12",
+    "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+    "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+    "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+    "files_sha256": {
+      "bin/ollama": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+      "lib/ollama/llama-server": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b"
+    }
+  },
+  "model": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+    "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+    "bytes": 5041147264,
+    "sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+    "local_name": "linkscribe-krikri-8b-q4km:20261128",
+    "license": "Llama3.1 Community License",
+    "license_sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+    "use_policy_sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+    "public_ungated": true,
+    "projector_or_draft": false
+  },
+  "storage": {
+    "owned_runtime_directory": "/workspace/scratch/94360995dd61/linkscribe-krikri-runtime",
+    "reserve_bytes": 1073741824,
+    "download_attempts_per_object": 1,
+    "allocation_policy": "One original payload in own content-addressed cache; partial renamed in place after hash verification. Native import must reuse its inode/allocation; no second full weight copy.",
+    "private_logs_directory": "/workspace/scratch/94360995dd61/linkscribe-krikri-runtime/name-preservation/setup-revision-1"
+  },
+  "native_setup": {
+    "selected_q4_header_not_yet_observed": false,
+    "expected_template_sha256": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "expected_vocabulary_size": 149248,
+    "expected_architecture": "llama",
+    "expected_quantization": "Q4_K_M",
+    "import_parameters": {
+      "num_ctx": 4096,
+      "temperature": 0,
+      "top_p": 0.95,
+      "stop": [
+        "<|start_header_id|>",
+        "<|end_header_id|>",
+        "<|eot_id|>"
+      ]
+    },
+    "import_system": "No publisher persona is imported; original application system/user messages are explicit. Native fixed date/header framing is observed and bound.",
+    "checks_before_generation": [
+      "Read and bind actual selected Q4 GGUF header, complete embedded tokenizer/merges/special IDs and template; compare with pinned publisher references.",
+      "Verify original model file and imported descriptors/config/parameters/stops with exact bytes and hashes, no draft/projector/system persona.",
+      "Verify actual owned native text runner uses pinned file, context4096 and four CPU threads; all loads/preflights externally measured.",
+      "Render every exact complete original application request through native runtime; bind effective formatting including BOS/date/stops with no source loss or generated answer.",
+      "Count full actual native prompt including required special tokens and allow full2048 response plus end reserve within4096; no cropping.",
+      "Freeze preparation report and helper/runner identities, then obtain independent native contract review before generation."
+    ],
+    "verified_selected_header_report_sha256": "1726ecc301501b68481070f05321e0ac241d7effd228790b026292b60c5f4ce1",
+    "import_policy": "Reuse exact verified baseline native cache; no create/import mutation."
+  },
+  "request_profile": {
+    "temperature": 0,
+    "num_ctx": 4096,
+    "num_predict": 2048,
+    "num_thread": 4,
+    "think": false,
+    "stream": false,
+    "request_timeout_seconds": 240,
+    "messages_schema_and_source": "Unchanged current production translation; exact six expected requests are frozen.",
+    "retention": "Existing bounded production cleanup; explicit unload and empty resident-model list after each case."
+  },
+  "evaluation": {
+    "corpus": "docs/krikri-name-preservation-2026-11-28/development-cases.json",
+    "corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "case_count": 6,
+    "attempts_per_case": 1,
+    "order": "original corpus order",
+    "independent_criterion_binding_sha256": "ce07270d13873c238153d716b22a3d92ddd52bf75d06b73275464963e3f18085",
+    "semantic_rule": "All original case-specific criteria and unchanged global actor/name/number/unit/relationship/negation/uncertainty/action/condition/chronology/completeness rule. Grade final raw meanings separately from successful app acceptance.",
+    "guard_rejection": "Keep full returned raw JSON/final content even when the current app guard rejects; operational rejection is a failed case and cannot be counted as success.",
+    "unused_v3_access": false
+  },
+  "limits": {
+    "process_budget_mib": 6144,
+    "sample_interval_seconds": 0.2,
+    "preparation_seconds": 600,
+    "initialization_seconds": 180,
+    "request_seconds": 240,
+    "case_seconds": 600,
+    "inference_total_seconds": 1800,
+    "scope": "Externally sampled concurrent supervisor/worker/owned daemon/native process tree, including loading. PSS recorded. Sampling may miss transients; not a kernel cap or full-app/whole-machine approval."
+  },
+  "changes": {
+    "model_downloads": 0,
+    "native_create_calls": 0,
+    "model_template_sampling_context_output_schema_source_and_criteria_changes": false,
+    "system_instruction_change_only": true
+  },
+  "stop_rules": [
+    "Stop and preserve evidence on first storage/hash/import/tokenizer/template/protocol/structure/script-guard/execution/resource/time/measurement/cleanup failure; no retry or crop.",
+    "Completed normal responses that require semantic review retain all errors; no tuning between the originally fixed six cases.",
+    "No model or quantization sweep, hints, glossary, repairs, altered prompt/sampling/context/output budget, extra case, unusedv3, summary, whole-app test or production switch."
+  ],
+  "scope_limits": [
+    "Exactly six original exposed development cases once if separately authorized; no retries or tuning between cases.",
+    "A six-case pass permits no automatic next stage or promotion; all meaning/protocol/resource gates remain.",
+    "No v2/v3, summary, whole-app or production change in this stage."
+  ],
+  "source_sha256": {
+    "docs/gemma4-screen-2026-11-28/experiment.py": "8c121ae1bd39305005dedb1b92e2ea4bd6677ada286882125ecdf6d4bf9fca4b",
+    "docs/gemma4-screen-2026-11-28/run_phase.py": "8ac32cee61c63de90ca2c7a959d7eb134c73e7ab5068b8b50496346c138c14f8",
+    "docs/krikri-name-preservation-2026-11-28/added-instruction.txt": "76040012907042d333c3db8768fb092a3b085bffdef7f82671667260fc16b5dc",
+    "docs/krikri-name-preservation-2026-11-28/context.py": "62bd4b10c34022a17230dd72432a0f5c136e6cb6fa4de7538bcdc02600d71435",
+    "docs/krikri-name-preservation-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/krikri-name-preservation-2026-11-28/enhancements-baseline-context4096.py": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3",
+    "docs/krikri-name-preservation-2026-11-28/enhancements-context4096.py": "be1e36c614bd1d89ad35b96f3d4c7bda7b58ff66302734efdfc08a592cfff3c6",
+    "docs/krikri-name-preservation-2026-11-28/expected-requests.json": "7c6f2688cd3b05cff983bd0724b5451df098e8eb5414d85962113e91cf265dec",
+    "docs/krikri-name-preservation-2026-11-28/independent-criterion-binding.json": "ce07270d13873c238153d716b22a3d92ddd52bf75d06b73275464963e3f18085",
+    "docs/krikri-name-preservation-2026-11-28/independent-source-and-criteria-before-output.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/krikri-name-preservation-2026-11-28/infer_native.py": "f2b9a45be2307535e02bdf1bfba9a825c6152b5a74a38ade31f110d39f337c61",
+    "docs/krikri-name-preservation-2026-11-28/name-instruction-only.patch": "11735138d15c846807924b67ec55f205801cccfae0ef51c0f1088b9aad43b2c9",
+    "docs/krikri-name-preservation-2026-11-28/prepare_native.py": "127bac9fe6933191daa62907982be8d4540a1ad005236805f469e280ac3b389e",
+    "docs/krikri-name-preservation-2026-11-28/request-diff-check.json": "f0a9dfbfaa83ebbe8895e68f287b585175ea30527498418786b659fda44ed4c5",
+    "docs/krikri-name-preservation-2026-11-28/run_native.py": "ddf3a084b61895a200a0cbaeb0ba8d66e958bee07b969c9ba98d35941ad44acb",
+    "docs/krikri-name-preservation-2026-11-28/runner-reuse.patch": "0d9773b4ee118f34d4781b17f9ba1443c97bb7bc8fad05c4b913afb62cc33869",
+    "docs/krikri-screen-2026-11-28/evidence-manifest.json": "927bf095ad99ff2a4f03dbb6fc1b53a4ed0d359800ea0fa43159a3f16dd58b06",
+    "docs/krikri-screen-2026-11-28/independent-output-review.json": "c562821a070b756937adacf28f270f284c3e0ad69945cb804082746c5477adca",
+    "docs/krikri-screen-2026-11-28/infer_native.py": "f3b61208c66c115ff391d4524fa9e06d35cdd19dac54b9cdd22ab55e413ea864",
+    "docs/krikri-screen-2026-11-28/native_verify.py": "3ae73c0cdd7ca3342010aa7d1a352abf1f229e4b2bca17fefd57db27c819cd98",
+    "docs/krikri-screen-2026-11-28/plan.json": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+    "docs/krikri-screen-2026-11-28/prepare-resources.json": "dca49a48aa6f76fbee8afbef6b3b3e747e77d8b918063015b516b1c75b630645",
+    "docs/krikri-screen-2026-11-28/prepare.json": "36a9e3a5b25e0b2a2ac73f121789a1b8d18e9f1c34889d3ddbf7980baf472fe5",
+    "docs/krikri-screen-2026-11-28/selected-gguf-header.json": "1726ecc301501b68481070f05321e0ac241d7effd228790b026292b60c5f4ce1",
+    "docs/krikri-screen-2026-11-28/staging.py": "4504aa96d1751f83dfe4537e453efe922a8a57529a0065d64f20298bb2d97ff2",
+    "tests/evaluate_translation_quality.py": "412265b53e0dfb9333b90acdf117f84764acd2fcbe73568c122882ed669980f4",
+    "docs/krikri-name-preservation-2026-11-28/parameter-display-probes.json": "f65d5a15655b6300f816807972c06859c431535564a37c2280ee1d135ddc13db",
+    "docs/krikri-name-preservation-2026-11-28/setup-revision-only.patch": "c4008bd19d48ee1e2ee52d9ae70b7ae71eccd213eb51b6ac5341f6a6cfb81288",
+    "docs/krikri-name-preservation-2026-11-28/initial-setup-failure/manifest.json": "41acd5ab4bd826ee82bf1f385d26154b9b6c0098bab525c3d021ffbb1a8af600"
+  },
+  "setup_revision": {
+    "number": 1,
+    "initial_plan_sha256": "d3e7eca8758e83fba2b74537b7a87849957a356a8e92de8d2253ba9f5957ef84",
+    "failed_preload_attempt_manifest_sha256": "41acd5ab4bd826ee82bf1f385d26154b9b6c0098bab525c3d021ffbb1a8af600",
+    "only_behavior_change": "Compare complete parsed parameter mapping rather than arbitrary /api/show map line order; reject missing/unexpected/duplicate singleton fields and preserve stop list order. New private log paths preserve the failed attempt.",
+    "candidate_model_instruction_source_criteria_caps_unchanged": true,
+    "root_and_independent_reviewer_approved_setup_correction": true
+  }
+}

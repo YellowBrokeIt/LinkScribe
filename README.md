@@ -2,18 +2,20 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `745554b`** passed 685 automated tests
-and 32 subtests in each of five hosted platform/Python configurations, fresh
-Linux installation, installation from the actual candidate archive and an actual
-audio-upload workflow. Chromium passed all **34 checks**, including preservation
+The published **0.3.0 integration checkpoint `a4ca88e`** passed **717 tests and
+54 subtests** on Ubuntu and independent Python 3.11/3.13 configurations. Windows
+and macOS each passed 715 tests and 54 subtests, with two Linux-only process-group
+harness controls skipped. Fresh Linux installation, installation from the actual
+candidate archive and an actual audio-upload workflow passed. Chromium passed all
+**34 checks**, including preservation
 of corrections during saves and navigation, highlights after editing, and backups
 containing saved highlights. The
 [integration record](docs/integration-2026-11-28/README.md) retains the preceding
 31/32 and 33/34 harness failures, their corrections and actual editor fixes.
 Generated meaning still requires approval. Provider access and speech-quality
 regressions also leave release gates open. The
-[28 November checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
-records the exact tested commit, completed runs and remaining work; these
+[exact hosted record](docs/integration-2026-11-28/hosted-a4ca88e/checkpoint.json)
+records the tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
 The downloaded source archive also passed a fresh local installation during
 recovery. The candidate-artifact workflow now verifies installation from its
@@ -36,6 +38,22 @@ the source. This addresses observed mixed-script corruption while preserving
 foreign names and quotations. The original transcript remains saved when a
 translation is rejected. The [regression record](docs/translation-script-guard-2026-11-28/README.md)
 separates this narrow fix from the still-failing translation meaning gate.
+
+The separate [native Qwen speech screen](docs/qwen3-asr-hosted-results-2026-11-28/README.md)
+completed its bounded eight-clip run after a workflow setup correction, but
+independent review found six major errors and two acceptable transcripts. It is
+not adopted. The ordinary application checks and an experiment's successful
+execution do not establish speech or generated-text accuracy.
+
+The next [timing correction](docs/asr-timing-boundary-2026-11-28/README.md)
+keeps speech timestamps within the complete decoded recording and removes an
+artificial 100-millisecond subtitle extension. If an interval is too short for
+SRT/VTT, the app preserves its text and precise JSON timing, explains the omitted
+formats, and retains the warning in saved and batch results. Eight retained
+recordings passed actual decoding, export, SQLite and backup-restoration replay;
+no recognition was repeated. The combined local suite passed **753 tests and
+54 subtests**. Hosted verification of this later source is still pending and the
+speech, translation and summary meaning gates remain open.
 
 ## Features
 

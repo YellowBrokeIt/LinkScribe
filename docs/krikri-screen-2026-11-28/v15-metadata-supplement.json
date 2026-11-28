@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/package_verification",
+  "observed_at_utc": "2026-11-28T02:48:30.333915+00:00",
+  "scope": "Supplemental public metadata only for the separately published Krikri v1.5. No frozen earlier research was modified; current authorized original-Q4 experiment/source/criteria stay unchanged. No weights, range reads, conversion, model switch or execution.",
+  "official_repository_inventory": {
+    "query": {
+      "url": "https://huggingface.co/api/models?author=ilsp&search=Krikri&full=true&limit=1000",
+      "fetched_at_utc": "2026-11-28T02:47:06.199725+00:00",
+      "link_header": null,
+      "bytes": 10502,
+      "sha256": "4a55899af8162e2a0d32762bb540bebec0424c6698ec0b5331eaa35f93c13096"
+    },
+    "count": 9,
+    "ids": [
+      "ilsp/Llama-Krikri-8B-Base",
+      "ilsp/Llama-Krikri-8B-Instruct",
+      "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+      "ilsp/Llama-Krikri-8B-Instruct-bnb-4bit",
+      "ilsp/Llama-Krikri-8B-Instruct-v1.5",
+      "ilsp/llama-krikri-8b-ag-mg-qlora",
+      "ilsp/llama-krikri-8b-ag-mg-full-ft",
+      "ilsp/Llama-Krikri-8B-Instruct-4bit-mlx",
+      "ilsp/Llama-Krikri-8B-Instruct-v1.5-4bit-mlx"
+    ],
+    "gguf_repositories": [
+      "ilsp/Llama-Krikri-8B-Instruct-GGUF"
+    ],
+    "v15_gguf_repository_found": false,
+    "limit": "Bounded observation of the public publisher inventory and both v1.5 file inventories at the recorded time, not a claim about future or private releases."
+  },
+  "separate_v15": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-v1.5",
+    "revision": "326e2c0ea90d771c19fcf06225fe87dc922b51b2",
+    "private": false,
+    "gated": false,
+    "license": "llama3.1",
+    "publisher_description": "Chat-focused alternative variant of Llama-Krikri-8B-Instruct.",
+    "format": "Four full model safetensors shards, plus native chat-template/tokenizer/config files.",
+    "weight_bytes": 16404489288,
+    "gguf_files": [],
+    "published_weight_comparison": [
+      {
+        "file": "model-00001-of-00004.safetensors",
+        "bytes": 4913767264,
+        "v15_sha256": "ca278ed6f262c1993c3bc9cee433a93fff6ffebb217cb767cc9a5ec5cc9e5464",
+        "original_sha256": "089e1492a5a75fdd2f5b8b8f578eb874fb0173e6ac45744e66c390203e8f83fe",
+        "different_from_original": true
+      },
+      {
+        "file": "model-00002-of-00004.safetensors",
+        "bytes": 4915916160,
+        "v15_sha256": "cf1c87f848dec168d63b5d0742a3d79b0dbc521b3de5c68e8c70f23d082364e6",
+        "original_sha256": "f18cbfc939178c8247ddf2eb9f35966aa0f492644b40ba22223bfeb631175bfe",
+        "different_from_original": true
+      },
+      {
+        "file": "model-00003-of-00004.safetensors",
+        "bytes": 4999819336,
+        "v15_sha256": "7728f1f441f5a51b5292b4b790eb65cce0d3964e6734a5d244bdf2fbc33b9cc8",
+        "original_sha256": "f4dd717e13208f91ad7fd8064b2213c22d0040c1a57f98afe62dd6749e690db2",
+        "different_from_original": true
+      },
+      {
+        "file": "model-00004-of-00004.safetensors",
+        "bytes": 1574986528,
+        "v15_sha256": "e1576939e0f64e6d1d029d52f8de042a9045e4ac9e36054c4a6b197beb18631d",
+        "original_sha256": "15044dbfb317ba46597b1962922f7440ab80000e55e150177288141be2422b04",
+        "different_from_original": true
+      }
+    ]
+  },
+  "official_v15_quantized_release": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-v1.5-4bit-mlx",
+    "revision": "140ab6af4203751d7f91896e6d534f11a1e1863d",
+    "private": false,
+    "gated": false,
+    "license": "llama3.1",
+    "format": "4-bit MLX safetensors package; official card library_name mlx.",
+    "weight_bytes": 4614220690,
+    "weight_files": [
+      {
+        "file": "model.safetensors",
+        "bytes": 4614220690,
+        "published_lfs_sha256": "b595db2ae372036c1635a124dab58b14da7a7da20f9387622e9672ac6302b5e4"
+      }
+    ],
+    "gguf_files": [],
+    "runtime_scope": "This published MLX package is not a GGUF artifact for the currently authorized Linux/Ollama native-GGUF screen. No MLX runtime feasibility or conversion route was executed or approved."
+  },
+  "distinction_from_original_audit": {
+    "original_base_metadata_sha256": "834927709f60d1a12bcf36726c2807d6022be38a3bb2f90d0f4e877c9a03fc45",
+    "original_base_revision": "5b6f2625e9b329ec70ab8cb6cbea7a06629b431f",
+    "original_gguf_revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "statement": "The original base repository’s 2026 update remains README-only and its official Q4 is unchanged. The separately named v1.5 repository is a distinct post-trained release with all four published weight shard hashes changed. The original-Q4 screen is not a v1.5 test; its result cannot be attributed to v1.5.",
+    "earlier_audit_retained_unchanged": true
+  },
+  "conclusion": "No official public v1.5 GGUF was found in the complete returned ILSP Krikri inventory or the two v1.5 repositories. Official options observed are full safetensors and 4-bit MLX. The currently authorized original-Q4 experiment remains exactly as frozen.",
+  "sources": {
+    "official_inventory": "https://huggingface.co/api/models?author=ilsp&search=Krikri&full=true&limit=1000",
+    "official_collection": "https://huggingface.co/collections/ilsp/krikri-8b",
+    "v15_card": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-v1.5/blob/326e2c0ea90d771c19fcf06225fe87dc922b51b2/README.md",
+    "v15_tree": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-v1.5/tree/326e2c0ea90d771c19fcf06225fe87dc922b51b2",
+    "v15_mlx_card": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-v1.5-4bit-mlx/blob/140ab6af4203751d7f91896e6d534f11a1e1863d/README.md",
+    "v15_mlx_tree": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-v1.5-4bit-mlx/tree/140ab6af4203751d7f91896e6d534f11a1e1863d"
+  },
+  "evidence_files": [
+    {
+      "path": "inventory-request.json",
+      "bytes": 273,
+      "sha256": "d8d91fc6f39915817bbe35b0d5f84d74504a2408a6645076e2634b999ccef0c6"
+    },
+    {
+      "path": "official-krikri-repository-inventory.json",
+      "bytes": 10502,
+      "sha256": "4a55899af8162e2a0d32762bb540bebec0424c6698ec0b5331eaa35f93c13096"
+    },
+    {
+      "path": "v15-README.md",
+      "bytes": 12659,
+      "sha256": "773be08c586336faa0f380f1aa05e2aa0c37f54c4c5d4033c02f8456ce1a651b"
+    },
+    {
+      "path": "v15-format-provenance.json",
+      "bytes": 8370,
+      "sha256": "021f8f30f5704d884fb5d2c65865c62c04988c789ce030c1aa05ff0a3e1e1cc9"
+    },
+    {
+      "path": "v15-metadata.json",
+      "bytes": 8590,
+      "sha256": "2235f8760b572354cab1b3a0b25a4a43c15839689375812da4712871dccf1f54"
+    },
+    {
+      "path": "v15-mlx-README.md",
+      "bytes": 181,
+      "sha256": "9cc789705047519fa9e33f112a3f16d8ae102c0abda8e947fe550beb9c5e5382"
+    },
+    {
+      "path": "v15-mlx-metadata.json",
+      "bytes": 7292,
+      "sha256": "b640e2e92767c5be200b4b5e1fce67485022ccb36f08f4174ee954038800bef1"
+    }
+  ]
+}

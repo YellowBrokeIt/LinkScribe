@@ -22,7 +22,9 @@ def stub_decode(monkeypatch, audio):
 @pytest.mark.parametrize("word_timestamps", [False, True])
 def test_asr_preserves_full_input_and_optional_word_timing(monkeypatch, tmp_path, word_timestamps):
     calls = []
-    audio = np.array([0, 0.1, -0.1, 0, 1e-30], dtype=np.float32)
+    # The declared late speech must lie inside the complete decoded recording.
+    audio = np.zeros(561 * 16000, dtype=np.float32)
+    audio[[0, 1, 2, -2, -1]] = [0, 0.1, -0.1, 0, 1e-30]
     original = audio.copy()
     decodes = stub_decode(monkeypatch, audio)
     spoken = [SimpleNamespace(start=start, end=start + 1, text=text,

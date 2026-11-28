@@ -27,7 +27,9 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
+from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 from functools import lru_cache
+from numbers import Real
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlsplit
@@ -120,6 +122,10 @@ batches: dict[str, Batch] = {}
 
 class ReadableError(Exception):
     """Error that can be safely displayed in the browser."""
+
+
+class SubtitleTimingError(ReadableError):
+    """Source timing cannot be represented honestly in a subtitle file."""
 
 
 def youtube_video_id(raw_url: str) -> str:
@@ -370,6 +376,17 @@ def _whisper_model(size: str):
     return WhisperModel(size, device=device, compute_type="int8" if device == "cpu" else "float16")
 
 
+def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+    if (not isinstance(start, Real) or isinstance(start, bool) or
+            not isinstance(end, Real) or isinstance(end, bool)):
+        raise ReadableError("The speech model returned invalid timestamps for this recording.")
+    start, end = float(start), float(end)
+    if (not math.isfinite(start) or not math.isfinite(end) or
+            start < 0 or start >= duration or end <= start):
+        raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+    return start, min(end, duration)
+
+
 def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:
     try:
         from faster_whisper.audio import decode_audio
@@ -382,6 +399,7 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
     # every nonzero sample, including arbitrarily quiet speech; it is not VAD.
     if not audio.any():
         raise ReadableError("No spoken words were detected in this recording.")
+    duration = len(audio) / 16000
     engine = _whisper_model(model)
     try:
         segments, info = engine.transcribe(
@@ -407,12 +425,26 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
                 and math.isfinite(probability)
                 and probability > ASR_NO_SPEECH_THRESHOLD
             )
-            item = {"start": round(float(segment.start), 3), "end": round(float(segment.end), 3),
-                    "text": segment.text.strip()}
+            start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+            public_start, public_end = round(start, 3), min(round(end, 3), duration)
+            # Keep valid native precision if millisecond rounding would erase it.
+            if public_start >= public_end:
+                public_start, public_end = start, end
+            item = {"start": public_start, "end": public_end, "text": segment.text.strip()}
             if word_timestamps:
-                item["_words"] = [{"start": float(word.start), "end": float(word.end), "word": word.word}
-                                  for word in (getattr(segment, "words", None) or [])]
+                words = []
+                try:
+                    for word in (getattr(segment, "words", None) or []):
+                        word_start, word_end = _bounded_asr_interval(word.start, word.end, duration)
+                        words.append({"start": word_start, "end": word_end, "word": word.word})
+                except (ReadableError, AttributeError, TypeError, ValueError):
+                    # Optional alignment evidence must not discard recognized text.
+                    # An empty list keeps the existing whole-segment speaker warning/fallback.
+                    words = []
+                item["_words"] = words
             output.append(item)
+    except ReadableError:
+        raise
     except Exception as exc:
         raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
     if not output:
@@ -431,12 +463,29 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
     return output, str(info.language or language)
 
 
-def _timecode(seconds: float, subtitle_format: str) -> str:
-    ms = max(0, round(seconds * 1000))
+def _millisecond_timecode(ms: int, subtitle_format: str) -> str:
     hours, rest = divmod(ms, 3_600_000)
     mins, rest = divmod(rest, 60_000)
     secs, msecs = divmod(rest, 1000)
     return f"{hours:02d}:{mins:02d}:{secs:02d}{',' if subtitle_format == 'srt' else '.'}{msecs:03d}"
+
+
+def _timecode(seconds: float, subtitle_format: str) -> str:
+    return _millisecond_timecode(max(0, round(seconds * 1000)), subtitle_format)
+
+
+def _subtitle_interval_ms(segment: dict[str, Any]) -> tuple[int, int]:
+    start, end = segment["start"], segment["end"]
+    if (not isinstance(start, Real) or isinstance(start, bool) or
+            not isinstance(end, Real) or isinstance(end, bool) or
+            not math.isfinite(start) or not math.isfinite(end) or not 0 <= start < end):
+        raise SubtitleTimingError("Subtitle timestamps must be finite, nonnegative, positive intervals.")
+    # Quantize inward once; formatting integer milliseconds cannot round outward again.
+    start_ms = int((Decimal(str(start)) * 1000).to_integral_value(rounding=ROUND_CEILING))
+    end_ms = int((Decimal(str(end)) * 1000).to_integral_value(rounding=ROUND_FLOOR))
+    if end_ms <= start_ms:
+        raise SubtitleTimingError("These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    return start_ms, end_ms
 
 
 def _release_audio_models() -> None:
@@ -472,8 +521,9 @@ def _shown_text(segment: dict[str, Any]) -> str:
 def _render_subtitles(segments: list[dict[str, Any]], fmt: str) -> str:
     blocks = []
     for i, segment in enumerate(segments, start=1):
-        start = _timecode(segment["start"], fmt)
-        end = _timecode(max(segment["end"], segment["start"] + 0.1), fmt)
+        start_ms, end_ms = _subtitle_interval_ms(segment)
+        start = _millisecond_timecode(start_ms, fmt)
+        end = _millisecond_timecode(end_ms, fmt)
         index = f"{i}\n" if fmt == "srt" else ""
         blocks.append(f"{index}{start} --> {end}\n{_shown_text(segment)}\n")
     return ("WEBVTT\n\n" if fmt == "vtt" else "") + "\n".join(blocks)
@@ -489,17 +539,24 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
     highlights = _valid_highlights(record)
     if highlights is not None:
         json_record["highlights"] = highlights
-    contents = {
-        "transcript.txt": text.encode("utf-8"),
-        "transcript.srt": _render_subtitles(segments, "srt").encode("utf-8"),
-        "transcript.vtt": _render_subtitles(segments, "vtt").encode("utf-8"),
-        "transcript.json": json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8"),
-    }
+    contents = {"transcript.txt": text.encode("utf-8")}
+    export_notes = []
+
+    def add_subtitles(prefix, timed_segments):
+        try:
+            rendered = {f"{prefix}.{fmt}": _render_subtitles(timed_segments, fmt).encode("utf-8")
+                        for fmt in ("srt", "vtt")}
+        except SubtitleTimingError as exc:
+            export_notes.append(f"{prefix}.srt / {prefix}.vtt unavailable: {exc}")
+        else:
+            contents.update(rendered)
+
+    add_subtitles("transcript", segments)
+    contents["transcript.json"] = json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
     for lang, translated in record.get("translations", {}).items():
         if lang not in {"el", "en"}: continue
         contents[f"translation_{lang}.txt"] = ("\n".join(_shown_text(s) for s in translated) + "\n").encode("utf-8")
-        contents[f"translation_{lang}.srt"] = _render_subtitles(translated,"srt").encode("utf-8")
-        contents[f"translation_{lang}.vtt"] = _render_subtitles(translated,"vtt").encode("utf-8")
+        add_subtitles(f"translation_{lang}", translated)
         contents[f"translation_{lang}.json"] = json.dumps({"language":lang,"segments":translated},ensure_ascii=False,indent=2).encode("utf-8")
     if summary := record.get("summary"):
         md = "# Summary\n\n" + summary["summary"] + "\n\n## Key points\n\n"
@@ -522,6 +579,8 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
             md += "\n## Selection notes\n\n" + "\n".join("- " + warning for warning in highlights["warnings"]) + "\n"
         contents["highlights.md"] = md.encode("utf-8")
         contents["highlights.json"] = json.dumps(highlights, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
+    if export_notes:
+        contents["export-notes.txt"] = ("\n".join(export_notes) + "\n").encode("utf-8")
     stream = io.BytesIO()
     with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
         for name, data in contents.items(): z.writestr(name,data)
@@ -577,9 +636,19 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
     record = {"source": job.source, "title": job.title, "language": lang, "method": method,
               "segments": segments, "translations": translations or {}, "summary": summary,
               "processing_metadata": processing_metadata or {}, "highlights": highlights}
-    for filename, payload in _exports(record).items():
+    contents = _exports(record)
+    if "export-notes.txt" in contents:
+        metadata = dict(record["processing_metadata"])
+        warnings = list(metadata.get("warnings", []))
+        for note in contents["export-notes.txt"].decode("utf-8").splitlines():
+            if note not in warnings:
+                warnings.append(note)
+        metadata["warnings"] = warnings
+        record["processing_metadata"] = metadata
+        contents = _exports(record)
+    for filename, payload in contents.items():
         (job.workdir / filename).write_bytes(payload)
-    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, processing_metadata, highlights)
+    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, record["processing_metadata"], highlights)
     _complete_job(job_id, record)
 
 
@@ -704,7 +773,12 @@ def _batch_archive(batch_id: str) -> bytes:
                      "library_id": item["id"] if record else None}
             if record:
                 prefix = f"{index:02d}_{item['id'][:8]}"
-                for filename, content in _exports(record).items():
+                available = _exports(record)
+                saved_warnings = record.get("processing_metadata", {}).get("warnings", [])
+                saved_warnings = [w for w in saved_warnings if isinstance(w, str)] if isinstance(saved_warnings, list) else []
+                export_warnings = available.get("export-notes.txt", b"").decode("utf-8").splitlines()
+                entry["warnings"] = list(dict.fromkeys(saved_warnings + export_warnings))
+                for filename, content in available.items():
                     if filename.endswith((".txt", ".srt", ".vtt", ".json", ".md")):
                         archive.writestr(f"{prefix}/{filename}", content)
             elif item["status"] == "done":
@@ -1015,7 +1089,10 @@ def download(job_id: str,file_type: str):
     if not record: raise HTTPException(404,"Transcript was deleted from the library.")
     key=_export_key(file_type,record)
     if not key: raise HTTPException(404,"Requested enhancement was not generated.")
-    contents=_exports(record)[key]  # Current saved edits, never stale temporary exports.
+    available = _exports(record)  # Current saved edits, never stale temporary exports.
+    if key not in available:
+        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    contents = available[key]
     mime="application/zip" if key.endswith(".zip") else ("application/json" if key.endswith(".json") else "text/plain; charset=utf-8")
     return StreamingResponse(io.BytesIO(contents),media_type=mime,
                              headers={"Content-Disposition":f'attachment; filename="{key}"',
@@ -1141,7 +1218,10 @@ def library_download(item_id: str, file_type: str):
     if not record: raise HTTPException(404,"Transcript not found.")
     name=_export_key(file_type,record)
     if not name: raise HTTPException(404,"Requested enhancement not available.")
-    content=_exports(record)[name]
+    available = _exports(record)
+    if name not in available:
+        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    content = available[name]
     mime="application/zip" if name.endswith(".zip") else ("application/json" if name.endswith(".json") else "text/plain; charset=utf-8")
     return StreamingResponse(io.BytesIO(content),media_type=mime,
                              headers={"Content-Disposition":f'attachment; filename="{name}"',

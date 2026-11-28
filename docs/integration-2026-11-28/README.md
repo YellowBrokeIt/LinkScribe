@@ -195,3 +195,73 @@ The isolated [M2M100 translation screen](../m2m100-followup-2026-11-28/README.md
 also remains rejected: its measured execution completed, while material role and
 transcription/translation meaning errors survived. Its successful setup and small
 memory footprint do not close the translation gate.
+
+## Completed script-guard checkpoint: `a4ca88e`
+
+The [exact hosted record](hosted-a4ca88e/checkpoint.json) binds this verification
+to `a4ca88ec2820f8c0e1c29f4a7f5d36b8f0a32db3`. All ordinary application workflows
+completed successfully. Ubuntu and independent Python 3.11/3.13 configurations
+passed **717 tests and 54 subtests**. Windows and macOS each passed **715 tests
+and 54 subtests**, skipping two Linux-only owned-process-group controls in the
+isolated speech-experiment harness. These skips do not remove application tests.
+
+Chromium passed **34/34** with no JavaScript page errors. All eight recorded
+source-file hashes match the tested commit. The original
+[browser report](hosted-a4ca88e/browser-browser-report.json) retains actual Tiny
+upload, source highlights, edit/save/open behavior, backups and mobile checks.
+Fresh checkout, actual Tiny upload and all six checks against the actual generated
+source ZIP also passed; the [installation report](hosted-a4ca88e/install-installation.json)
+identifies that ZIP and the exercised launcher/health/diagnostic/static/SQLite paths.
+
+The actual default Ollama integration passed its execution checks, and all twelve
+corpus cases completed with **five automatic passes, seven review flags and zero
+execution errors**. The original [integration report](hosted-a4ca88e/language-integration.json)
+and [corpus report](hosted-a4ca88e/language-translation-evaluation.json) retain
+`semantic_quality: unreviewed`. Existing adverse meaning reviews remain open.
+There was no new provider request at this checkpoint; the six failed acquisitions
+at `745554b` remain the most recent live-provider evidence.
+
+The separate Qwen candidate workflow initially failed configuration validation
+before any job existed because a job-level environment expression used the
+unavailable `runner` context. A [recorded setup-only correction](../qwen3-asr-hosted-env-followup-2026-11-28/README.md)
+placed the path in the first shell step and preserved the model, original helper,
+all eight full inputs and fixed inference settings. The isolated `7ee0c7f2`
+run subsequently completed within its process budget, but independent
+[actual-output review](../qwen3-asr-hosted-results-2026-11-28/README.md) found
+six major errors and two acceptable results. Neither successful execution nor
+the ordinary application tests qualify that recognizer for adoption.
+
+
+## Physical timing correction: local integration complete
+
+The [timing fix and independent review](../asr-timing-boundary-2026-11-28/README.md)
+bind application SHA-256
+`5a5732ffcb420d2ca7dde87008168b91d67d8cabfd5f54a13a43436f087c0d4d`.
+It clips valid overlong native endpoints to the complete decoded recording,
+rejects impossible public timing, and preserves recognized text if optional word
+alignment is unusable. Subtitle formatting now quantizes inward without extending
+short cues; unrepresentable SRT/VTT leaves TXT/JSON available with persisted,
+download and batch warnings.
+
+The eight-case replay decoded original full WAVs and reused retained native
+outputs without model loading. Independent review verified unchanged words,
+order and decoder arguments, all 40 exports, ZIP membership, two SQLite stores
+and the exact eight-record backup restore. Only the observed phone endpoint
+changed from 7.0 to 6.54 seconds. This does not improve or regrade the failed
+speech candidate's semantic results.
+
+The first full local run found 15 failures in an older synthetic speech-evidence
+fixture that supplied five samples but claimed intervals lasting two seconds.
+The original fixture and complete isolated reproduction are retained with the
+timing evidence. Its correction supplies enough samples while retaining every
+original sample, mock interval and speech-policy assertion; independent AST
+review confirmed that scope. The subsequent [combined test record](timing-local/combined-tests.json)
+and [full output](timing-local/combined-tests.txt) report **753 passed and
+54 subtests passed in 8.74 seconds**. The default host Python initially lacked
+pytest; the run uses the existing project development environment.
+
+The completed rejected Qwen experiment's automatic workflow is archived as
+[documented separately](../qwen3-asr-workflow-retirement-2026-11-28/README.md).
+Its immutable source contract still passes in an explicitly reconstructed
+historical view. All ordinary hosted application workflows are unchanged.
+This local result does not stand in for hosted checks of the later exact commit.

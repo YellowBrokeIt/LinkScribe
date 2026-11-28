@@ -1,4 +1,4 @@
-"""Non-model regression checks for the isolated hosted QA contract."""
+"""Non-model checks of the completed, archived hosted Qwen screen contract."""
 import copy
 import hashlib
 import importlib.util
@@ -6,6 +6,7 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -20,6 +21,26 @@ PLAN = qa.ROOT / "docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json"
 
 
 class QwenCandidateContractTests(unittest.TestCase):
+    def setUp(self):
+        # The rejected screen is reproducible at its published QA commit. Keep
+        # verifying that exact historical contract after retiring its live job.
+        original_root = qa.ROOT
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        self.historical_root = Path(folder.name)
+        for item in json.loads(PLAN.read_text(encoding="utf-8"))["source_files"]:
+            source = original_root / item["path"]
+            if item["path"] == ".github/workflows/qwen3-asr-candidate-qa.yml":
+                source = original_root / "docs/qwen3-asr-workflow-retirement-2026-11-28/completed-hosted-workflow.yml"
+            self.assertEqual(source.stat().st_size, item["bytes"])
+            self.assertEqual(qa.sha256(source), item["sha256"])
+            destination = self.historical_root / item["path"]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+        patcher = mock.patch.object(qa, "ROOT", self.historical_root)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def test_frozen_plan_passes_without_model_dependencies(self):
         plan = qa.validate_plan(PLAN)
         self.assertEqual(len(plan["cases"]), 8)
@@ -31,7 +52,8 @@ class QwenCandidateContractTests(unittest.TestCase):
             "m['validate_plan'](sys.argv[2]); "
             "assert not ({'torch','transformers','numpy','av'} & set(sys.modules))"
         )
-        result = subprocess.run([sys.executable, "-c", program, str(HELPER), str(PLAN)],
+        historical_helper = self.historical_root / "tests/qa_qwen3_asr_candidate.py"
+        result = subprocess.run([sys.executable, "-c", program, str(historical_helper), str(PLAN)],
                                 capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stderr)
 

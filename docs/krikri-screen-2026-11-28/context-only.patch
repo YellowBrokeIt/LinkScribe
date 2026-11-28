@@ -1,0 +1,11 @@
+--- enhancements-production.py
++++ enhancements-context4096.py
+@@ -169,7 +169,7 @@
+ 
+ def ollama_inference_options() -> dict[str, Any]:
+     """Keep the model defaults reproducible; allow a CPU thread limit."""
+-    options: dict[str, Any] = {"temperature": 0, "num_ctx": 8192, "num_predict": 2048}
++    options: dict[str, Any] = {"temperature": 0, "num_ctx": 4096, "num_predict": 2048}
+     threads = os.getenv("LINKSCRIBE_OLLAMA_THREADS", "").strip()
+     if threads:
+         try:

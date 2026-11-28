@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T02:53:08.494343+00:00",
+  "status": "frozen_before_any_cleanup_or_model_download",
+  "authorization": "Root approved one original-six-case official Krikri Q4 development experiment and exact rejected Gemma payload unlink, with unchanged original criteria and fixed resource/protocol limits.",
+  "base_commit": "a4ca88ec2820f8c0e1c29f4a7f5d36b8f0a32db3",
+  "published_production_sha256": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+  "adapter": {
+    "path": "docs/krikri-screen-2026-11-28/enhancements-context4096.py",
+    "sha256": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3",
+    "only_source_change": "num_ctx8192 to4096",
+    "current_production_script_guard_preserved": true,
+    "source_snapshot_is_published_and_clean": true
+  },
+  "runtime": {
+    "directory": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+    "version": "0.40.12",
+    "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+    "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+    "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+    "files_sha256": {
+      "bin/ollama": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+      "lib/ollama/llama-server": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b"
+    }
+  },
+  "model": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+    "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+    "bytes": 5041147264,
+    "sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+    "local_name": "linkscribe-krikri-8b-q4km:20261128",
+    "license": "Llama3.1 Community License",
+    "license_sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+    "use_policy_sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+    "public_ungated": true,
+    "projector_or_draft": false
+  },
+  "tokenizer_reference": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct",
+    "revision": "5b6f2625e9b329ec70ab8cb6cbea7a06629b431f",
+    "filename": "tokenizer.json",
+    "bytes": 19508014,
+    "sha256": "1b12728a215cde26d96f3add66a7a10f0e47147afbf2e677cc0a70ba49228ada",
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct/resolve/5b6f2625e9b329ec70ab8cb6cbea7a06629b431f/tokenizer.json",
+    "purpose": "Independently compare the actual selected-GGUF expanded tokenizer and special IDs with the publisher tokenizer before native use; no extra model."
+  },
+  "storage": {
+    "owned_runtime_directory": "/workspace/scratch/94360995dd61/linkscribe-krikri-runtime",
+    "reserve_bytes": 1073741824,
+    "download_attempts_per_object": 1,
+    "allocation_policy": "One original payload in own content-addressed cache; partial renamed in place after hash verification. Native import must reuse its inode/allocation; no second full weight copy."
+  },
+  "cleanup": {
+    "exact_payload_path": "/workspace/scratch/94360995dd61/linkscribe-gemma4-runtime/models/blobs/sha256-676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+    "bytes": 5154941280,
+    "sha256": "676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+    "authorized_unlink_count": 1,
+    "stopped_process_reports": [
+      "docs/gemma4-screen-2026-11-28/prepare-resources.json",
+      "docs/gemma4-screen-2026-11-28/infer-resources.json",
+      "docs/gemma4-exposed-v2-2026-11-28/resources.json",
+      "docs/gemma4-thinking-ablation-2026-11-28/resources.json"
+    ],
+    "checks": "Verify full SHA/regular-file size/inode/single hardlink, previous owned process exits and accessible namespace open-file/owned-process conflicts before unlink. Retain every evidence/manifest/template/config/script/shared cache/runtime. Record exact unlink and before/after free space."
+  },
+  "native_setup": {
+    "selected_q4_header_not_yet_observed": true,
+    "expected_template_sha256": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "expected_vocabulary_size": 149248,
+    "expected_architecture": "llama",
+    "expected_quantization": "Q4_K_M",
+    "import_parameters": {
+      "num_ctx": 4096,
+      "temperature": 0,
+      "top_p": 0.95,
+      "stop": [
+        "<|start_header_id|>",
+        "<|end_header_id|>",
+        "<|eot_id|>"
+      ]
+    },
+    "import_system": "No publisher persona is imported; original application system/user messages are explicit. Native fixed date/header framing is observed and bound.",
+    "checks_before_generation": [
+      "Read and bind actual selected Q4 GGUF header, complete embedded tokenizer/merges/special IDs and template; compare with pinned publisher references.",
+      "Verify original model file and imported descriptors/config/parameters/stops with exact bytes and hashes, no draft/projector/system persona.",
+      "Verify actual owned native text runner uses pinned file, context4096 and four CPU threads; all loads/preflights externally measured.",
+      "Render every exact complete original application request through native runtime; bind effective formatting including BOS/date/stops with no source loss or generated answer.",
+      "Count full actual native prompt including required special tokens and allow full2048 response plus end reserve within4096; no cropping.",
+      "Freeze preparation report and helper/runner identities, then obtain independent native contract review before generation."
+    ]
+  },
+  "request_profile": {
+    "temperature": 0,
+    "num_ctx": 4096,
+    "num_predict": 2048,
+    "num_thread": 4,
+    "think": false,
+    "stream": false,
+    "request_timeout_seconds": 240,
+    "messages_schema_and_source": "Unchanged current production translation; exact six expected requests are frozen.",
+    "retention": "Existing bounded production cleanup; explicit unload and empty resident-model list after each case."
+  },
+  "evaluation": {
+    "corpus": "docs/krikri-screen-2026-11-28/development-cases.json",
+    "corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "case_count": 6,
+    "attempts_per_case": 1,
+    "order": "original corpus order",
+    "independent_criterion_binding_sha256": "ce07270d13873c238153d716b22a3d92ddd52bf75d06b73275464963e3f18085",
+    "semantic_rule": "All original case-specific criteria and unchanged global actor/name/number/unit/relationship/negation/uncertainty/action/condition/chronology/completeness rule. Grade final raw meanings separately from successful app acceptance.",
+    "guard_rejection": "Keep full returned raw JSON/final content even when the current app guard rejects; operational rejection is a failed case and cannot be counted as success.",
+    "unused_v3_access": false
+  },
+  "limits": {
+    "process_budget_mib": 6144,
+    "sample_interval_seconds": 0.2,
+    "cleanup_seconds": 120,
+    "download_seconds": 900,
+    "preparation_seconds": 600,
+    "initialization_seconds": 180,
+    "request_seconds": 240,
+    "case_seconds": 600,
+    "inference_total_seconds": 1800,
+    "scope": "Externally sampled concurrent supervisor/worker/owned daemon/native process tree, including loading. PSS recorded. Sampling may miss transients; not a kernel cap or full-app/whole-machine approval."
+  },
+  "stop_rules": [
+    "Stop and preserve evidence on first storage/hash/import/tokenizer/template/protocol/structure/script-guard/execution/resource/time/measurement/cleanup failure; no retry or crop.",
+    "Completed normal responses that require semantic review retain all errors; no tuning between the originally fixed six cases.",
+    "No model or quantization sweep, hints, glossary, repairs, altered prompt/sampling/context/output budget, extra case, unusedv3, summary, whole-app test or production switch."
+  ],
+  "phase_freezes": "This plan and storage drivers freeze before cleanup/download. Native preparation worker/header reader/source hashes freeze separately before import/loading; actual setup and inference driver/observer hashes freeze separately before generation. Prior phases remain immutable.",
+  "source_sha256": {
+    "docs/gemma4-exposed-v2-2026-11-28/resources.json": "35274fd5b2305a4a9e1388af7bc99f81c0c33a51daac7ec7202e4deee1f76a6b",
+    "docs/gemma4-screen-2026-11-28/experiment.py": "8c121ae1bd39305005dedb1b92e2ea4bd6677ada286882125ecdf6d4bf9fca4b",
+    "docs/gemma4-screen-2026-11-28/infer-resources.json": "e9001374bf432abee8dab6bcfb401920a6e3d2070d5cfc30fb6d27f8c8c84ede",
+    "docs/gemma4-screen-2026-11-28/prepare-resources.json": "138c54ad54868677b6ae4304e696d77b69590d907db2edbda02eae07a5903f7a",
+    "docs/gemma4-screen-2026-11-28/run_phase.py": "8ac32cee61c63de90ca2c7a959d7eb134c73e7ab5068b8b50496346c138c14f8",
+    "docs/gemma4-thinking-ablation-2026-11-28/resources.json": "796a799afc297d5b77024435e49ba3a74f66a1374cd1c9f4c83e30b0d15864ef",
+    "docs/greek-specialist-research-2026-11-28/research-manifest.json": "5364447d88ab3277e642a6324a8f8b7dcd412bc3fa86e5dc859a23ad0c1c262c",
+    "docs/krikri-screen-2026-11-28/context-only.patch": "0f4fe2c3def9456deeb123c3fe52a945764c8c3684fc7632a733e5ba70b8769a",
+    "docs/krikri-screen-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/krikri-screen-2026-11-28/enhancements-context4096.py": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3",
+    "docs/krikri-screen-2026-11-28/enhancements-production.py": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+    "docs/krikri-screen-2026-11-28/expected-requests.json": "9bad36451d55023f0cc4b3650af5095ffbe662b696b295a83a566590d0dbb558",
+    "docs/krikri-screen-2026-11-28/independent-criterion-binding.json": "ce07270d13873c238153d716b22a3d92ddd52bf75d06b73275464963e3f18085",
+    "docs/krikri-screen-2026-11-28/independent-source-and-criteria-before-output.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/krikri-screen-2026-11-28/model-license.txt": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+    "docs/krikri-screen-2026-11-28/model-use-policy.md": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+    "docs/krikri-screen-2026-11-28/official-model-metadata.json": "973c3a4d099de9f12497b2406a039c311853a3e740853e790ede936edea0a328",
+    "docs/krikri-screen-2026-11-28/publisher-chat-template.jinja": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "docs/krikri-screen-2026-11-28/publisher-generation_config.json": "46650402223e517e09ac32797ba8cff47cf4cfea248aed800a76a0c50ba4e92d",
+    "docs/krikri-screen-2026-11-28/publisher-params.json": "837ac4de5a981faabe04d28e6035d10e6838a07cd896ced1a3c8de1d5038f5b3",
+    "docs/krikri-screen-2026-11-28/publisher-system.txt": "f810f7e385556575d3603991c47e690b2f9b24a8a91b154518fcfc09fcdc9e3e",
+    "docs/krikri-screen-2026-11-28/publisher-tokenizer_config.json": "7870abea342b65881d6eff454c06de05457505fd22d20f42fa43303ce03d7e11",
+    "docs/krikri-screen-2026-11-28/run_staging.py": "ae07f7772e1114e9f8c9a9e8f65689bcb4437495e36cb3cfec6e80d551b7734e",
+    "docs/krikri-screen-2026-11-28/staging.py": "4504aa96d1751f83dfe4537e453efe922a8a57529a0065d64f20298bb2d97ff2",
+    "docs/krikri-screen-2026-11-28/v15-metadata-supplement.json": "2f215ad47fc272781ec6df42882ba01e31e5717499b76f98609097b643c45178",
+    "docs/krikri-screen-2026-11-28/v15-metadata-supplement.md": "b0a60ae5ea2e9b30fd4b9392b506ea046740ea735427d65a6d0c591cf730eaa7",
+    "docs/translation-followup-2026-11-28/baseline-development.json": "24ff0a087191a112f8f7b778638d0a2c7df4b9518f2d243a35f976eef14824ba",
+    "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+    "tests/evaluate_translation_quality.py": "412265b53e0dfb9333b90acdf117f84764acd2fcbe73568c122882ed669980f4",
+    "tests/measure_summary_memory.py": "7e6eeb61349b42562169dbf598fc9e885e65967cf5170faebe77a178120f7412",
+    "tests/smoke_full_local_workflow.py": "bfac638d06e4fb747a3702668178b08b828bf3841748797ed94ac9622a73b5ce"
+  }
+}

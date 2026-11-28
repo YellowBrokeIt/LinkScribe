@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T03:07:38.064354+00:00",
+  "reviewer": "independent package_verification agent",
+  "decision": "Native preparation and fixed six-case inference contract accepted for the already authorized isolated development experiment. No production or semantic-quality approval.",
+  "independent_native_contract_approved": true,
+  "blocking_findings": [],
+  "review_scope": "Retained actual setup evidence, exact hashes, source/request reconstruction and read-only code review. No new daemon, inference, tokenization, weight download or installation by reviewer.",
+  "files_sha256": {
+    "plan.json": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+    "native-setup-freeze.json": "08e9571c437ef64e1a9b4e1ee859c984d6ff9542a8d13a439b02c643c58558a3",
+    "prepare.json": "36a9e3a5b25e0b2a2ac73f121789a1b8d18e9f1c34889d3ddbf7980baf472fe5",
+    "prepare-resources.json": "dca49a48aa6f76fbee8afbef6b3b3e747e77d8b918063015b516b1c75b630645",
+    "selected-gguf-header.json": "1726ecc301501b68481070f05321e0ac241d7effd228790b026292b60c5f4ce1",
+    "native-preparation-freeze.json": "396327e61363de780eb42e106db4f1b28d05c982997ba6ebe11e0cb6a3ff1205",
+    "native_verify.py": "3ae73c0cdd7ca3342010aa7d1a352abf1f229e4b2bca17fefd57db27c819cd98",
+    "prepare_native.py": "bb15535f6ceca726bfcff3e6dda804eba14ad09462d9a5221cbb8a3c4589ab1d",
+    "run_native.py": "865a1f4429b1452b06c8c7193fdce6a3dc4f775211ab57aa7c4edc9ed6141347",
+    "infer_native.py": "f3b61208c66c115ff391d4524fa9e06d35cdd19dac54b9cdd22ab55e413ea864",
+    "expected-requests.json": "9bad36451d55023f0cc4b3650af5095ffbe662b696b295a83a566590d0dbb558",
+    "development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "enhancements-context4096.py": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3"
+  },
+  "criterion_binding_sha256": "ce07270d13873c238153d716b22a3d92ddd52bf75d06b73275464963e3f18085",
+  "plan_binding_sha256": "2ac15450c442ee3a00f0401e609a8e08c2862a3cb4deaca3aedc76685cda5f89",
+  "source_and_criteria_unchanged": true,
+  "native_package": {
+    "manifest_sha256": "8d1e35c1899333a62454ffaf37b1f2f6b7f4a7e4dee52da137f8647453ccfd8f",
+    "gguf_sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "template_sha256": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "complete_vocabulary_entries": 149248,
+    "complete_ordered_merges": 301139,
+    "recorded_full_payload_and_descriptor_verification": true,
+    "reviewer_did_not_rehash_weight_payload": true,
+    "system_persona_projector_draft_absent": true,
+    "params": {
+      "num_ctx": 4096,
+      "temperature": 0,
+      "top_p": 0.95,
+      "stop": [
+        "<|start_header_id|>",
+        "<|end_header_id|>",
+        "<|eot_id|>"
+      ]
+    }
+  },
+  "per_case_native_preflight": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "source_segments": 2,
+      "prompt_tokens": 151,
+      "render_sha256": "3e7ce6d946de3d7dbaace0a2e308adf491bd2e4de0a2f28fafe55b4fe98ff9ee",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "source_segments": 2,
+      "prompt_tokens": 156,
+      "render_sha256": "7a1b58c5fbeff174db36d86c237a184dfb6bd41fdcc899a90485cfebc0a3e06a",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "source_segments": 2,
+      "prompt_tokens": 167,
+      "render_sha256": "901307145cb04e3295e840be26a289f7c64023a7e24f492b1d75140bfa70aec9",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "source_segments": 2,
+      "prompt_tokens": 153,
+      "render_sha256": "f29071436bbfa6824bc05bc957e9c28b0bc39c351e6b96dc4899e7fabf0a2d16",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "source_segments": 2,
+      "prompt_tokens": 147,
+      "render_sha256": "13918a2d0358407a9942570107dbdbf5de495140d01216fcd22d3d34935cba5b",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "source_segments": 2,
+      "prompt_tokens": 152,
+      "render_sha256": "8ea784691352dce5b5c4a97e2f9ff692cb69906c2f6ff0563ec08f3746a31c4e",
+      "complete_source_and_one_bos": true,
+      "2048_output_plus_reserve_fits": true
+    }
+  ],
+  "runner_review": {
+    "single_attempt_per_case": true,
+    "repeats_exact_preflight_before_each_generation": true,
+    "requires_actual_prompt_eval_count_equal_to_preflight": true,
+    "original_evaluator_preserves_returned_json_before_guard": true,
+    "rejects_empty_reasoning_mismatch_or_missing_final_content": true,
+    "requires_normal_stop_and_strictly_less_than_2048_output_tokens": true,
+    "unload_acknowledgment_and_empty_resident_list_each_case": true,
+    "stops_on_first_execution_protocol_guard_or_resource_failure": true,
+    "no_semantic_approval_from_automatic_flags": true,
+    "existing_240_second_request_timeout_preserved": true,
+    "external_caps": {
+      "process_budget_mib": 6144,
+      "sample_interval_seconds": 0.2,
+      "cleanup_seconds": 120,
+      "download_seconds": 900,
+      "preparation_seconds": 600,
+      "initialization_seconds": 180,
+      "request_seconds": 240,
+      "case_seconds": 600,
+      "inference_total_seconds": 1800,
+      "scope": "Externally sampled concurrent supervisor/worker/owned daemon/native process tree, including loading. PSS recorded. Sampling may miss transients; not a kernel cap or full-app/whole-machine approval."
+    }
+  },
+  "observed_setup": {
+    "generation_calls": 0,
+    "elapsed_seconds": 21.833,
+    "peak_rss_mib": 5525.6,
+    "peak_pss_mib": 5517.0,
+    "sample_count": 110,
+    "process_budget_mib": 6144,
+    "models_empty_after_unload": true,
+    "worker_exit_code": 0,
+    "owned_daemon_stopped": true
+  },
+  "limitations": [
+    "Read-only review relies on recorded native verifier/tokenizer and controller observations; no model was rerun.",
+    "0.2-second sampled process memory can miss transient peaks; it is not a kernel cap or full-app/whole-machine fit result.",
+    "Setup success does not establish generation correctness or resource use; actual responses still require exact prompt count/protocol checks and independent semantic review.",
+    "The reused monitor labels its enforcement mode phase=infer but this setup explicitly records actual_phase=prepare and generation_calls=0.",
+    "Only the original exposed six development cases are authorized here; unused validation v3 remains unopened."
+  ]
+}

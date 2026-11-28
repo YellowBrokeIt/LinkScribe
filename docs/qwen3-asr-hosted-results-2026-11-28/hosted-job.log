@@ -1,0 +1,414 @@
+﻿2026-11-28T02:40:53.3322813Z Current runner version: '2.338.2'
+2026-11-28T02:40:53.3351561Z ##[group]Runner Image Provisioner
+2026-11-28T02:40:53.3352686Z Hosted Compute Agent
+2026-11-28T02:40:53.3353427Z Version: 20261111.635
+2026-11-28T02:40:53.3354256Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-28T02:40:53.3355167Z Build Date: 2026-11-11T01:49:01Z
+2026-11-28T02:40:53.3356434Z Worker ID: {725c02bd-d676-4806-b3e2-5645e146a398}
+2026-11-28T02:40:53.3357460Z Region: eastus2
+2026-11-28T02:40:53.3358153Z Cloud: Azure
+2026-11-28T02:40:53.3358970Z ##[endgroup]
+2026-11-28T02:40:53.3360746Z ##[group]Operating System
+2026-11-28T02:40:53.3361868Z Ubuntu
+2026-11-28T02:40:53.3362574Z 24.04.5
+2026-11-28T02:40:53.3363194Z LTS
+2026-11-28T02:40:53.3363990Z ##[endgroup]
+2026-11-28T02:40:53.3364678Z ##[group]Runner Image
+2026-11-28T02:40:53.3365493Z Image: ubuntu-24.04
+2026-11-28T02:40:53.3366220Z Version: 20261122.23.1
+2026-11-28T02:40:53.3367996Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261122.23/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-28T02:40:53.3370038Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261122.23
+2026-11-28T02:40:53.3371637Z ##[endgroup]
+2026-11-28T02:40:53.3373150Z ##[group]GITHUB_TOKEN Permissions
+2026-11-28T02:40:53.3375588Z Contents: read
+2026-11-28T02:40:53.3376371Z Metadata: read
+2026-11-28T02:40:53.3377177Z ##[endgroup]
+2026-11-28T02:40:53.3379604Z Secret source: Actions
+2026-11-28T02:40:53.3380872Z Cache mode: write
+2026-11-28T02:40:53.3382212Z Prepare workflow directory
+2026-11-28T02:40:53.3830996Z Prepare all required actions
+2026-11-28T02:40:53.3887870Z Getting action download info
+2026-11-28T02:40:53.5613529Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-28T02:40:53.6955926Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-28T02:40:53.8593430Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-28T02:40:54.1940614Z Complete job name: Exposed English/Greek clips / native FP32 / 6 GiB bound
+2026-11-28T02:40:54.2641251Z ##[group]Run printf '%s\n' "QWEN_QA_ROOT=$RUNNER_TEMP/linkscribe-qwen3-asr-candidate" >> "$GITHUB_ENV"
+2026-11-28T02:40:54.2643458Z [36;1mprintf '%s\n' "QWEN_QA_ROOT=$RUNNER_TEMP/linkscribe-qwen3-asr-candidate" >> "$GITHUB_ENV"[0m
+2026-11-28T02:40:54.2687675Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-28T02:40:54.2689000Z env:
+2026-11-28T02:40:54.2689706Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:40:54.2690545Z   DO_NOT_TRACK: 1
+2026-11-28T02:40:54.2691498Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:40:54.2692375Z ##[endgroup]
+2026-11-28T02:40:54.3067540Z ##[group]Run actions/checkout@v4
+2026-11-28T02:40:54.3068429Z with:
+2026-11-28T02:40:54.3069134Z   persist-credentials: false
+2026-11-28T02:40:54.3070277Z   repository: YellowBrokeIt/LinkScribe
+2026-11-28T02:40:54.3078049Z   token: ***
+2026-11-28T02:40:54.3078774Z   ssh-strict: true
+2026-11-28T02:40:54.3079531Z   ssh-user: git
+2026-11-28T02:40:54.3080230Z   clean: true
+2026-11-28T02:40:54.3080988Z   sparse-checkout-cone-mode: true
+2026-11-28T02:40:54.3082059Z   fetch-depth: 1
+2026-11-28T02:40:54.3082781Z   fetch-tags: false
+2026-11-28T02:40:54.3083535Z   show-progress: true
+2026-11-28T02:40:54.3084349Z   lfs: false
+2026-11-28T02:40:54.3085214Z   submodules: false
+2026-11-28T02:40:54.3085975Z   set-safe-directory: true
+2026-11-28T02:40:54.3086808Z   allow-unsafe-pr-checkout: false
+2026-11-28T02:40:54.3087654Z env:
+2026-11-28T02:40:54.3088324Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:40:54.3089125Z   DO_NOT_TRACK: 1
+2026-11-28T02:40:54.3089857Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:40:54.3091039Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:40:54.3092664Z ##[endgroup]
+2026-11-28T02:40:54.5473136Z Syncing repository: YellowBrokeIt/LinkScribe
+2026-11-28T02:40:54.5475678Z ##[group]Getting Git version info
+2026-11-28T02:40:54.5477270Z Working directory is '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T02:40:54.5479734Z [command]/usr/bin/git version
+2026-11-28T02:40:54.5582965Z git version 2.56.1
+2026-11-28T02:40:54.5587399Z ##[endgroup]
+2026-11-28T02:40:54.5599694Z Temporarily overriding HOME='/home/runner/work/_temp/0de67b0a-5c99-4f2c-8946-419252f08590' before making global git config changes
+2026-11-28T02:40:54.5603220Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T02:40:54.5614139Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T02:40:54.5665233Z Deleting the contents of '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T02:40:54.5669171Z ##[group]Initializing the repository
+2026-11-28T02:40:54.5673789Z [command]/usr/bin/git init /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T02:40:54.5872938Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-28T02:40:54.5875733Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-28T02:40:54.5878520Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-28T02:40:54.5880581Z hint: call:
+2026-11-28T02:40:54.5881892Z hint:
+2026-11-28T02:40:54.5883321Z hint: 	git config --global init.defaultBranch <name>
+2026-11-28T02:40:54.5885066Z hint:
+2026-11-28T02:40:54.5886723Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-28T02:40:54.5889573Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-28T02:40:54.5891760Z hint:
+2026-11-28T02:40:54.5893015Z hint: 	git branch -m <name>
+2026-11-28T02:40:54.5894400Z hint:
+2026-11-28T02:40:54.5896114Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-28T02:40:54.5898941Z Initialized empty Git repository in /home/runner/work/LinkScribe/LinkScribe/.git/
+2026-11-28T02:40:54.5903697Z [command]/usr/bin/git remote add origin https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T02:40:54.5938036Z ##[endgroup]
+2026-11-28T02:40:54.5939861Z ##[group]Disabling automatic garbage collection
+2026-11-28T02:40:54.5941763Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-28T02:40:54.5983436Z ##[endgroup]
+2026-11-28T02:40:54.5985375Z ##[group]Setting up auth
+2026-11-28T02:40:54.5988077Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T02:40:54.6032464Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T02:40:54.6399226Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T02:40:54.6441769Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T02:40:54.6648372Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T02:40:54.6688493Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T02:40:54.6896910Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-28T02:40:54.6941490Z ##[endgroup]
+2026-11-28T02:40:54.6942751Z ##[group]Fetching the repository
+2026-11-28T02:40:54.6953468Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7ee0c7f2ac319d817ae9861a1d632a56ed62908e:refs/remotes/origin/qa/qwen3-asr-a4ca88e-env
+2026-11-28T02:40:56.2141978Z From https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T02:40:56.2143906Z  * [new ref]         7ee0c7f2ac319d817ae9861a1d632a56ed62908e -> origin/qa/qwen3-asr-a4ca88e-env
+2026-11-28T02:40:56.2146797Z ##[endgroup]
+2026-11-28T02:40:56.2147631Z ##[group]Determining the checkout info
+2026-11-28T02:40:56.2148938Z ##[endgroup]
+2026-11-28T02:40:56.2154894Z [command]/usr/bin/git sparse-checkout disable
+2026-11-28T02:40:56.2290595Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-28T02:40:56.2293844Z ##[group]Checking out the ref
+2026-11-28T02:40:56.2294780Z [command]/usr/bin/git checkout --progress --force -B qa/qwen3-asr-a4ca88e-env refs/remotes/origin/qa/qwen3-asr-a4ca88e-env
+2026-11-28T02:40:56.3034820Z Switched to a new branch 'qa/qwen3-asr-a4ca88e-env'
+2026-11-28T02:40:56.3038529Z branch 'qa/qwen3-asr-a4ca88e-env' set up to track 'origin/qa/qwen3-asr-a4ca88e-env'.
+2026-11-28T02:40:56.3050324Z ##[endgroup]
+2026-11-28T02:40:56.3098866Z [command]/usr/bin/git log -1 --format=%H
+2026-11-28T02:40:56.3128313Z 7ee0c7f2ac319d817ae9861a1d632a56ed62908e
+2026-11-28T02:40:56.3137322Z ##[group]Removing auth
+2026-11-28T02:40:56.3140444Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T02:40:56.3175749Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T02:40:56.3383798Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T02:40:56.3415785Z http.https://github.com/.extraheader
+2026-11-28T02:40:56.3423385Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-28T02:40:56.3460514Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T02:40:56.3666789Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T02:40:56.3702232Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T02:40:56.3907211Z ##[endgroup]
+2026-11-28T02:40:56.4099697Z ##[group]Run actions/setup-python@v5
+2026-11-28T02:40:56.4100106Z with:
+2026-11-28T02:40:56.4100419Z   python-version: 3.12
+2026-11-28T02:40:56.4100749Z   check-latest: false
+2026-11-28T02:40:56.4103188Z   token: ***
+2026-11-28T02:40:56.4103541Z   update-environment: true
+2026-11-28T02:40:56.4103921Z   allow-prereleases: false
+2026-11-28T02:40:56.4104267Z   freethreaded: false
+2026-11-28T02:40:56.4104580Z env:
+2026-11-28T02:40:56.4104882Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:40:56.4105218Z   DO_NOT_TRACK: 1
+2026-11-28T02:40:56.4105537Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:40:56.4105983Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:40:56.4106426Z ##[endgroup]
+2026-11-28T02:40:56.5260397Z ##[group]Installed versions
+2026-11-28T02:40:56.5352276Z (node:2198) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T02:40:56.5353161Z Successfully set up CPython (3.12.16)
+2026-11-28T02:40:56.5359715Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T02:40:56.5360504Z ##[endgroup]
+2026-11-28T02:40:56.5517514Z ##[group]Run python tests/qa_qwen3_asr_candidate.py --action validate --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"
+2026-11-28T02:40:56.5519125Z [36;1mpython tests/qa_qwen3_asr_candidate.py --action validate --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"[0m
+2026-11-28T02:40:56.5583754Z shell: /usr/bin/bash -e {0}
+2026-11-28T02:40:56.5584138Z env:
+2026-11-28T02:40:56.5584472Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:40:56.5584836Z   DO_NOT_TRACK: 1
+2026-11-28T02:40:56.5585170Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:40:56.5585681Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:40:56.5586285Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.5587123Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:40:56.5587773Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.5588312Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.5588843Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.5589380Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:40:56.5589841Z ##[endgroup]
+2026-11-28T02:40:56.7464352Z {"validated_at": "2026-11-28T02:40:56.744407+00:00", "plan_sha256": "a46131a56018ad24f70faa76cea1d206407358271ff60fab1dbe1afd6bb72380", "helper_sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f", "model_initialized": false, "inference_performed": false, "python": "3.12.16 (main, Oct 26 2026, 02:50:49) [GCC 13.3.0]", "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.39", "github_sha": "7ee0c7f2ac319d817ae9861a1d632a56ed62908e"}
+2026-11-28T02:40:56.7570656Z ##[group]Run set -euo pipefail
+2026-11-28T02:40:56.7571020Z [36;1mset -euo pipefail[0m
+2026-11-28T02:40:56.7571554Z [36;1mpython -m venv "$QWEN_QA_ROOT/runtime"[0m
+2026-11-28T02:40:56.7571977Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" -m pip install --no-cache-dir \[0m
+2026-11-28T02:40:56.7572431Z [36;1m  --report "$QWEN_QA_ROOT/evidence/runtime-install.json" \[0m
+2026-11-28T02:40:56.7572887Z [36;1m  -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt \[0m
+2026-11-28T02:40:56.7573312Z [36;1m  2>&1 | tee "$QWEN_QA_ROOT/evidence/runtime-install.log"[0m
+2026-11-28T02:40:56.7573804Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" -m pip freeze > "$QWEN_QA_ROOT/evidence/installed-packages.txt"[0m
+2026-11-28T02:40:56.7574387Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" -m pip check | tee "$QWEN_QA_ROOT/evidence/pip-check.txt"[0m
+2026-11-28T02:40:56.7614876Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-28T02:40:56.7615225Z env:
+2026-11-28T02:40:56.7615484Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:40:56.7615760Z   DO_NOT_TRACK: 1
+2026-11-28T02:40:56.7615996Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:40:56.7616348Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:40:56.7616758Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.7617160Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:40:56.7617558Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.7617917Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.7618285Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:40:56.7618678Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:40:56.7618994Z ##[endgroup]
+2026-11-28T02:40:59.6879170Z Collecting torch@ https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl#sha256=0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 3))
+2026-11-28T02:40:59.7382322Z   Downloading https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl (209.5 MB)
+2026-11-28T02:41:00.2225280Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 209.5/209.5 MB 445.6 MB/s eta 0:00:00
+2026-11-28T02:41:00.4248120Z Collecting transformers@ https://files.pythonhosted.org/packages/a5/3a/d99704c5effe10c6339c98cb236259161103e159bb99a78468b6729572ec/transformers-5.13.0-py3-none-any.whl#sha256=8adbc1d20bd5463cd6876b2eb7cb31971e1065788e7dc6bc12bab597a7c504b7 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 4))
+2026-11-28T02:41:00.5086820Z   Downloading transformers-5.13.0-py3-none-any.whl (11.5 MB)
+2026-11-28T02:41:00.6447604Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.5/11.5 MB 135.6 MB/s eta 0:00:00
+2026-11-28T02:41:01.3195482Z Collecting numpy==2.5.5 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 5))
+2026-11-28T02:41:01.3363959Z   Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-11-28T02:41:01.4432165Z Collecting av==16.1.0 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 6))
+2026-11-28T02:41:01.4620487Z   Downloading av-16.1.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (4.6 kB)
+2026-11-28T02:41:01.5731551Z Collecting huggingface-hub==1.5.0 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:01.5932111Z   Downloading huggingface_hub-1.5.0-py3-none-any.whl.metadata (13 kB)
+2026-11-28T02:41:01.7583208Z Collecting safetensors==0.8.0 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 8))
+2026-11-28T02:41:01.7752198Z   Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+2026-11-28T02:41:01.9507670Z Collecting tokenizers==0.22.2 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 9))
+2026-11-28T02:41:01.9675618Z   Downloading tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2026-11-28T02:41:02.0631825Z Collecting Jinja2==3.1.6 (from -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 10))
+2026-11-28T02:41:02.0799210Z   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+2026-11-28T02:41:02.1744373Z Collecting filelock>=3.10.0 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.1959500Z   Downloading filelock-4.3.2-py3-none-any.whl.metadata (2.3 kB)
+2026-11-28T02:41:02.2827426Z Collecting fsspec>=2023.5.0 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.3000656Z   Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+2026-11-28T02:41:02.4214358Z Collecting hf-xet<2.0.0,>=1.2.0 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.4380579Z   Downloading hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+2026-11-28T02:41:02.5229996Z Collecting httpx<1,>=0.23.0 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.5431798Z   Downloading httpx-0.29.0-py3-none-any.whl.metadata (7.1 kB)
+2026-11-28T02:41:02.6285622Z Collecting packaging>=20.9 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.6452118Z   Downloading packaging-26.4-py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T02:41:02.7431330Z Collecting pyyaml>=5.1 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.7600611Z   Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+2026-11-28T02:41:02.8551705Z Collecting tqdm>=4.42.1 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.8718881Z   Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+2026-11-28T02:41:02.9614198Z Collecting typer (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:02.9837020Z   Downloading typer-0.29.3-py3-none-any.whl.metadata (16 kB)
+2026-11-28T02:41:03.0676564Z Collecting typing-extensions>=4.1.0 (from huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:03.0847313Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-11-28T02:41:03.2103476Z Collecting MarkupSafe>=2.0 (from Jinja2==3.1.6->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 10))
+2026-11-28T02:41:03.2297845Z   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2026-11-28T02:41:03.3858403Z Collecting setuptools>=77.0.3 (from torch@ https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl#sha256=0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 3))
+2026-11-28T02:41:03.4146708Z   Downloading setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+2026-11-28T02:41:03.5024534Z Collecting sympy>=1.13.3 (from torch@ https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl#sha256=0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 3))
+2026-11-28T02:41:03.5189036Z   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+2026-11-28T02:41:03.6067234Z Collecting networkx>=2.5.1 (from torch@ https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl#sha256=0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 3))
+2026-11-28T02:41:03.6231802Z   Downloading networkx-3.7-py3-none-any.whl.metadata (6.7 kB)
+2026-11-28T02:41:04.1049933Z Collecting regex>=2025.10.22 (from transformers@ https://files.pythonhosted.org/packages/a5/3a/d99704c5effe10c6339c98cb236259161103e159bb99a78468b6729572ec/transformers-5.13.0-py3-none-any.whl#sha256=8adbc1d20bd5463cd6876b2eb7cb31971e1065788e7dc6bc12bab597a7c504b7->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 4))
+2026-11-28T02:41:04.1223592Z   Downloading regex-2026.11.25-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+2026-11-28T02:41:04.2247645Z Collecting anyio (from httpx<1,>=0.23.0->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.2445061Z   Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+2026-11-28T02:41:04.3286824Z Collecting certifi (from httpx<1,>=0.23.0->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.3469862Z   Downloading certifi-2026.11.20-py3-none-any.whl.metadata (2.5 kB)
+2026-11-28T02:41:04.4333884Z Collecting httpcore==1.* (from httpx<1,>=0.23.0->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.4515915Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-11-28T02:41:04.5339584Z Collecting idna (from httpx<1,>=0.23.0->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.5505132Z   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+2026-11-28T02:41:04.6299546Z Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.23.0->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.6469169Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-11-28T02:41:04.7318672Z Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch@ https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl#sha256=0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 3))
+2026-11-28T02:41:04.7495380Z   Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+2026-11-28T02:41:04.8941013Z Collecting pydantic>=2.5.3 (from typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:04.9108447Z   Downloading pydantic-2.14.4-py3-none-any.whl.metadata (143 kB)
+2026-11-28T02:41:04.9951586Z Collecting shellingham>=1.3.0 (from typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:05.0125500Z   Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T02:41:05.1090498Z Collecting rich>=13.8.0 (from typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:05.1294767Z   Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+2026-11-28T02:41:05.2133981Z Collecting annotated-doc>=0.0.2 (from typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:05.2300871Z   Downloading annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)
+2026-11-28T02:41:05.3099909Z Collecting annotated-types>=0.6.0 (from pydantic>=2.5.3->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:05.3269588Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-11-28T02:41:05.8862124Z Collecting pydantic-core==2.50.5 (from pydantic>=2.5.3->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:05.9045133Z   Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+2026-11-28T02:41:05.9858174Z Collecting typing-inspection>=0.4.4 (from pydantic>=2.5.3->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:06.0024246Z   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+2026-11-28T02:41:06.0875695Z Collecting markdown-it-py>=2.2.0 (from rich>=13.8.0->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:06.1054981Z   Downloading markdown_it_py-4.3.0-py3-none-any.whl.metadata (7.9 kB)
+2026-11-28T02:41:06.1919962Z Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.8.0->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:06.2088562Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-11-28T02:41:06.2939468Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.8.0->typer->huggingface-hub==1.5.0->-r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt (line 7))
+2026-11-28T02:41:06.3113431Z   Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+2026-11-28T02:41:06.3352537Z Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.7 MB)
+2026-11-28T02:41:06.3566642Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 795.9 MB/s eta 0:00:00
+2026-11-28T02:41:06.3862461Z Downloading av-16.1.0-cp312-cp312-manylinux_2_28_x86_64.whl (41.2 MB)
+2026-11-28T02:41:06.9814200Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.2/41.2 MB 69.2 MB/s eta 0:00:00
+2026-11-28T02:41:07.0020227Z Downloading huggingface_hub-1.5.0-py3-none-any.whl (596 kB)
+2026-11-28T02:41:07.0051929Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 596.3/596.3 kB 636.2 MB/s eta 0:00:00
+2026-11-28T02:41:07.0217879Z Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+2026-11-28T02:41:07.0388270Z Downloading tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+2026-11-28T02:41:07.0439204Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 939.9 MB/s eta 0:00:00
+2026-11-28T02:41:07.0605084Z Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+2026-11-28T02:41:07.0781566Z Downloading filelock-4.3.2-py3-none-any.whl (244 kB)
+2026-11-28T02:41:07.0954134Z Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)
+2026-11-28T02:41:07.1128894Z Downloading hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+2026-11-28T02:41:07.1200959Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 985.7 MB/s eta 0:00:00
+2026-11-28T02:41:07.1375062Z Downloading httpx-0.29.0-py3-none-any.whl (73 kB)
+2026-11-28T02:41:07.1543224Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-11-28T02:41:07.1717807Z Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2026-11-28T02:41:07.1907696Z Downloading networkx-3.7-py3-none-any.whl (2.1 MB)
+2026-11-28T02:41:07.2002290Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 257.9 MB/s eta 0:00:00
+2026-11-28T02:41:07.2176317Z Downloading packaging-26.4-py3-none-any.whl (140 kB)
+2026-11-28T02:41:07.2350492Z Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (849 kB)
+2026-11-28T02:41:07.2373701Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 849.2/849.2 kB 1.0 GB/s eta 0:00:00
+2026-11-28T02:41:07.2589337Z Downloading regex-2026.11.25-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (820 kB)
+2026-11-28T02:41:07.2614473Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 820.5/820.5 kB 878.0 MB/s eta 0:00:00
+2026-11-28T02:41:07.2790940Z Downloading setuptools-84.2.1-py3-none-any.whl (876 kB)
+2026-11-28T02:41:07.2815583Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 876.3/876.3 kB 1.0 GB/s eta 0:00:00
+2026-11-28T02:41:07.3003954Z Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+2026-11-28T02:41:07.3100742Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 850.8 MB/s eta 0:00:00
+2026-11-28T02:41:07.3284434Z Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+2026-11-28T02:41:07.3453083Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-11-28T02:41:07.3624799Z Downloading typer-0.29.3-py3-none-any.whl (121 kB)
+2026-11-28T02:41:07.3842422Z Downloading annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)
+2026-11-28T02:41:07.4066858Z Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+2026-11-28T02:41:07.4118804Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 237.6 MB/s eta 0:00:00
+2026-11-28T02:41:07.4380607Z Downloading pydantic-2.14.4-py3-none-any.whl (494 kB)
+2026-11-28T02:41:07.4555384Z Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+2026-11-28T02:41:07.4598223Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 779.5 MB/s eta 0:00:00
+2026-11-28T02:41:07.4770735Z Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+2026-11-28T02:41:07.4939387Z Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+2026-11-28T02:41:07.5112334Z Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+2026-11-28T02:41:07.5299493Z Downloading idna-3.20-py3-none-any.whl (69 kB)
+2026-11-28T02:41:07.5474897Z Downloading certifi-2026.11.20-py3-none-any.whl (127 kB)
+2026-11-28T02:41:07.5662254Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-11-28T02:41:07.5832985Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+2026-11-28T02:41:07.6012852Z Downloading markdown_it_py-4.3.0-py3-none-any.whl (96 kB)
+2026-11-28T02:41:07.6180926Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-11-28T02:41:07.6207562Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 1.1 GB/s eta 0:00:00
+2026-11-28T02:41:07.6380854Z Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+2026-11-28T02:41:07.6554453Z Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+2026-11-28T02:41:08.0333844Z Installing collected packages: mpmath, typing-extensions, tqdm, sympy, shellingham, setuptools, safetensors, regex, pyyaml, pygments, packaging, numpy, networkx, mdurl, MarkupSafe, idna, hf-xet, h11, fsspec, filelock, certifi, av, annotated-types, annotated-doc, typing-inspection, pydantic-core, markdown-it-py, Jinja2, httpcore, anyio, torch, rich, pydantic, httpx, typer, huggingface-hub, tokenizers, transformers
+2026-11-28T02:41:37.3372762Z Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.4 annotated-doc-0.0.7 annotated-types-0.8.0 anyio-4.16.0 av-16.1.0 certifi-2026.11.20 filelock-4.3.2 fsspec-2026.9.0 h11-0.16.0 hf-xet-1.8.0 httpcore-1.0.9 httpx-0.29.0 huggingface-hub-1.5.0 idna-3.20 markdown-it-py-4.3.0 mdurl-0.1.2 mpmath-1.3.0 networkx-3.7 numpy-2.5.5 packaging-26.4 pydantic-2.14.4 pydantic-core-2.50.5 pygments-2.21.0 pyyaml-6.0.4 regex-2026.11.25 rich-15.0.0 safetensors-0.8.0 setuptools-84.2.1 shellingham-1.5.4 sympy-1.14.0 tokenizers-0.22.2 torch-2.15.0+cpu tqdm-4.70.1 transformers-5.13.0 typer-0.29.3 typing-extensions-4.16.0 typing-inspection-0.4.5
+2026-11-28T02:41:38.0076637Z No broken requirements found.
+2026-11-28T02:41:38.0415673Z ##[group]Run "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action prepare-inputs --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"
+2026-11-28T02:41:38.0416861Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action prepare-inputs --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"[0m
+2026-11-28T02:41:38.0454959Z shell: /usr/bin/bash -e {0}
+2026-11-28T02:41:38.0455173Z env:
+2026-11-28T02:41:38.0455343Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:41:38.0455536Z   DO_NOT_TRACK: 1
+2026-11-28T02:41:38.0455710Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:41:38.0455996Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:41:38.0456330Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:38.0456697Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:41:38.0457017Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:38.0457323Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:38.0457612Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:38.0457905Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:41:38.0458158Z ##[endgroup]
+2026-11-28T02:41:51.6583130Z ##[group]Run "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action download-model --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"
+2026-11-28T02:41:51.6584314Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action download-model --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"[0m
+2026-11-28T02:41:51.6621886Z shell: /usr/bin/bash -e {0}
+2026-11-28T02:41:51.6622081Z env:
+2026-11-28T02:41:51.6622240Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:41:51.6622426Z   DO_NOT_TRACK: 1
+2026-11-28T02:41:51.6622613Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:41:51.6622889Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:41:51.6623222Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:51.6623600Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:41:51.6623937Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:51.6624223Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:51.6624507Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:41:51.6624790Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:41:51.6625038Z ##[endgroup]
+2026-11-28T02:42:29.3872857Z ##[group]Run "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action execute --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"
+2026-11-28T02:42:29.3874036Z [36;1m"$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py --action execute --work "$QWEN_QA_ROOT/work" --plan docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json --evidence "$QWEN_QA_ROOT/evidence"[0m
+2026-11-28T02:42:29.3912499Z shell: /usr/bin/bash -e {0}
+2026-11-28T02:42:29.3912719Z env:
+2026-11-28T02:42:29.3912890Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:42:29.3913089Z   DO_NOT_TRACK: 1
+2026-11-28T02:42:29.3913270Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:42:29.3913554Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:42:29.3913903Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:42:29.3914263Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:42:29.3914599Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:42:29.3914897Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:42:29.3915186Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:42:29.3915487Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:42:29.3915744Z ##[endgroup]
+2026-11-28T02:44:10.9030480Z ##[group]Run actions/upload-artifact@v4
+2026-11-28T02:44:10.9030711Z with:
+2026-11-28T02:44:10.9030965Z   name: qwen3-asr-native-fp32-7ee0c7f2ac319d817ae9861a1d632a56ed62908e
+2026-11-28T02:44:10.9031588Z   path: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate/evidence/**
+2026-11-28T02:44:10.9031892Z   if-no-files-found: warn
+2026-11-28T02:44:10.9032084Z   retention-days: 30
+2026-11-28T02:44:10.9032261Z   compression-level: 6
+2026-11-28T02:44:10.9032435Z   overwrite: false
+2026-11-28T02:44:10.9032607Z   include-hidden-files: false
+2026-11-28T02:44:10.9032793Z env:
+2026-11-28T02:44:10.9032953Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T02:44:10.9033140Z   DO_NOT_TRACK: 1
+2026-11-28T02:44:10.9033316Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T02:44:10.9033593Z   QWEN_QA_ROOT: /home/runner/work/_temp/linkscribe-qwen3-asr-candidate
+2026-11-28T02:44:10.9033934Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:44:10.9034289Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T02:44:10.9034612Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:44:10.9034901Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:44:10.9035188Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T02:44:10.9035473Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T02:44:10.9035719Z ##[endgroup]
+2026-11-28T02:44:11.0426767Z (node:2401) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T02:44:11.0427466Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T02:44:11.0518424Z With the provided path, there will be 36 files uploaded
+2026-11-28T02:44:11.0522856Z Artifact name is valid!
+2026-11-28T02:44:11.0523203Z Root directory input is valid!
+2026-11-28T02:44:11.3089771Z Beginning upload of artifact content to blob storage
+2026-11-28T02:44:11.6345506Z (node:2401) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-28T02:44:11.8218705Z Uploaded bytes 4148654
+2026-11-28T02:44:11.8391604Z Finished uploading artifact content to blob storage!
+2026-11-28T02:44:11.8392481Z SHA256 digest of uploaded artifact zip is 3f5d7635edb1caed673e046e631fee82561f3524c29bbc517b8b0182224ffd1f
+2026-11-28T02:44:11.8394289Z Finalizing artifact upload
+2026-11-28T02:44:12.1419874Z Artifact qwen3-asr-native-fp32-7ee0c7f2ac319d817ae9861a1d632a56ed62908e.zip successfully finalized. Artifact ID 15244707388
+2026-11-28T02:44:12.1421350Z Artifact qwen3-asr-native-fp32-7ee0c7f2ac319d817ae9861a1d632a56ed62908e has been successfully uploaded! Final size is 4148654 bytes. Artifact ID is 15244707388
+2026-11-28T02:44:12.1426048Z Artifact download URL: https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46099257439/artifacts/15244707388
+2026-11-28T02:44:12.1605004Z Post job cleanup.
+2026-11-28T02:44:12.2581625Z (node:2414) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T02:44:12.2582223Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T02:44:12.2701658Z Post job cleanup.
+2026-11-28T02:44:12.3490904Z [command]/usr/bin/git version
+2026-11-28T02:44:12.3529023Z git version 2.56.1
+2026-11-28T02:44:12.3570625Z Temporarily overriding HOME='/home/runner/work/_temp/f381d2e9-28b7-43d8-8771-ac5fb0681b5a' before making global git config changes
+2026-11-28T02:44:12.3572334Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T02:44:12.3576863Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T02:44:12.3627922Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T02:44:12.3731890Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T02:44:12.3926539Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T02:44:12.3959820Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T02:44:12.4192918Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T02:44:12.4229700Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T02:44:12.4590784Z Cleaning up orphan processes
+2026-11-28T02:44:12.4877663Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

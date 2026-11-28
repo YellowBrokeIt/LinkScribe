@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T03:37:25.956305+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Read-only contract/edge-case review before production patch. Existing pure subtitle formatter functions executed only on synthetic timing records; retained actual native word evidence inspected. No app import, model calls, audio inference, criteria change or Git edit.",
+  "observed_source_sha256": {
+    "app.py": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "enhancements.py": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+    "tests/test_speaker_integration.py": "0fafc1eba59c5f1e8332b59728145480ccba5d85246921b2a83e8f0f72ad45ae",
+    "tests/qa_large_v3_candidate.py": "cd7f933b27fc297fcdd0f1901657306ee90d17211ceae16dd0c4d9d23200c451",
+    "docs/large-v3-screen-2026-11-28/plan.json": "b9b779a48cb265e28c060fbf433d40e54058bb86290decc042e620ec363851f2"
+  },
+  "authoritative_duration": "N complete decoded float32 mono samples /16000; original media-container duration and rounded segment metadata are not authoritative.",
+  "segment_contract": [
+    "Validate finite native numbers with0<=start<end before applying any endpoint correction. NaN/Infinity, negative start and reversed/nonpositive intervals are invalid; do not repair them by clamping.",
+    "Reject start>=decoded_duration, because no positive in-audio interval can retain that start.",
+    "For valid start<duration, cap only an overlong end at exact decoded duration; preserve original text, segment sequence and native decoder/settings. Do not drop, sort, merge or shorten text to make timing pass.",
+    "Validate the final returned interval again after any existing presentation rounding. Round-trip subtitle formatting must not place its end beyond physical audio.",
+    "A valid source interval below one millisecond cannot always be encoded as a positive millisecond interval without moving a boundary. Preserve precision internally and handle unrepresentable export explicitly; do not fabricate a minimum duration."
+  ],
+  "concrete_export_findings": [
+    {
+      "kind": "minimum_duration_extension",
+      "input_segment": {
+        "start": 6.5,
+        "end": 6.54
+      },
+      "decoded_audio_seconds": 6.54,
+      "actual_existing_srt": "1\n00:00:06,500 --> 00:00:06,600\nPreserved final words.\n",
+      "violation": "_render_subtitles forces start+0.1, exporting6.600 instead of bounded6.540.",
+      "fix_requirement": "Remove invented minimum duration for otherwise valid segments, and preserve actual bounded endpoints in subtitles."
+    },
+    {
+      "kind": "rounding_outward_after_exact_duration_cap",
+      "sample_count": 104649,
+      "decoded_audio_seconds": 6.5405625,
+      "candidate_min_round_end_duration_value": 6.5405625,
+      "actual_existing_timecode": "00:00:06,541",
+      "exported_end_seconds": 6.541,
+      "violation_seconds": 0.0004375,
+      "largest_whole_millisecond_end_seconds": 6.54,
+      "fix_requirement": "Account for final millisecond conversion. N//16 is an exact integer floor for the last in-audio millisecond at16kHz; a second nearest rounding of exact duration can overrun."
+    }
+  ],
+  "optional_word_evidence": [
+    {
+      "path": "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json",
+      "sha256": "abf6ad93ec75a2a3c95138e3e8c2d9181e2daf52b01edc7a9c8eb5b57a384f17",
+      "actual_native_word_count": 361,
+      "nonpositive_native_word_count": 7,
+      "examples": [
+        {
+          "event_index": 13,
+          "word_index": 0,
+          "start": 42.42,
+          "end": 42.42,
+          "word": " Oh,"
+        },
+        {
+          "event_index": 20,
+          "word_index": 3,
+          "start": 192.38,
+          "end": 192.38,
+          "word": " Of"
+        },
+        {
+          "event_index": 22,
+          "word_index": 17,
+          "start": 211.64,
+          "end": 211.64,
+          "word": " Go!"
+        },
+        {
+          "event_index": 22,
+          "word_index": 18,
+          "start": 211.98,
+          "end": 211.98,
+          "word": " Go!"
+        },
+        {
+          "event_index": 71,
+          "word_index": 5,
+          "start": 452.04,
+          "end": 452.04,
+          "word": " out"
+        },
+        {
+          "event_index": 71,
+          "word_index": 6,
+          "start": 452.04,
+          "end": 452.04,
+          "word": " of"
+        },
+        {
+          "event_index": 71,
+          "word_index": 7,
+          "start": 452.04,
+          "end": 452.04,
+          "word": " time!"
+        }
+      ]
+    },
+    {
+      "path": "docs/asr-official-tail-2026-11-28/alignment-only-results/vimeo_sintel-report.json",
+      "sha256": "9427702a555170bc52d4c563ad1ff64f7d18d1701e06032ce9581b324e456a97",
+      "actual_native_word_count": 256,
+      "nonpositive_native_word_count": 2,
+      "examples": [
+        {
+          "event_index": 16,
+          "word_index": 2,
+          "start": 250.6,
+          "end": 250.6,
+          "word": " fearless."
+        },
+        {
+          "event_index": 24,
+          "word_index": 1,
+          "start": 332.8,
+          "end": 332.8,
+          "word": " go!"
+        }
+      ]
+    }
+  ],
+  "optional_word_contract": [
+    "The native engine demonstrably emits zero-duration word observations. Existing _word_speaker_alignment rejects those as unusable alignment while retaining the whole segment text and warning; do not turn this into a new whole-transcript failure.",
+    "Apply physical bounds only when the observed word interval remains finite and genuinely positive after capping. Do not shift word starts, create duration, discard individual word strings or manufacture alignment.",
+    "For unusable optional word timing, preserve whole-segment text and the existing conservative speaker fallback; retain raw evidence in QA. Do not label invalid timing as verified word alignment.",
+    "Existing parent containment tolerance0.05s, order tolerance0.001s, positive-duration and exact joined-word-text checks already govern whether words may split a segment. Additional parent clamping or new fatal containment rules are unnecessary for the physical audio-end fix and would change behavior."
+  ],
+  "error_handling": "Timestamp-specific ReadableError raised inside the current broad recognition try will be rewrapped by except Exception unless explicitly re-raised before the generic decoding-error handler.",
+  "historical_experiment_contract": [
+    "Keep the already-run large-v3 helper, source-policy JSON, workflow, plan, outputs and frozen manifest unchanged. They describe commit73b75b45 and the original recognizer AST, including the observed overrun.",
+    "Historical positive non-model validation may reconstruct only the old _recognize function and literal constants from frozen production-policy.json inside a temporary copied source view. Label this as a reconstructed function view, not byte-identical historical full app.py.",
+    "Patch both the helper ROOT and shared common.ROOT for temporary validation because repo_file closes over the latter. Exact plan-bound files must still be copied and hashed; symlink escape should not weaken path safety.",
+    "Retain explicit negative validation that the old plan rejects the changed current recognizer or a deliberately changed AST. Do not suppress/relax the original policy fingerprint gate to keep tests green.",
+    "Archive original test bytes and changed-test rationale in the new timing-fix evidence directory. Do not rewrite historical experiment evidence.",
+    "Any later hosted test of the new physical-boundary policy needs a distinct plan/source identity and must not be described as the earlier73b75b45 experiment."
+  ],
+  "recommended_bounded_cases": [
+    "Observed native[0,7.0] against6.54s decoded audio -> same text/start, end6.54.",
+    "Final positive[6.50,6.54] -> subtitle end no later than6.54; no100ms extension.",
+    "N104649 -> end remains<=6.5405625 after final millisecond formatting.",
+    "Start exactly at/beyond duration -> clear invalid-timing outcome, no shifted start.",
+    "NaN/Infinity/negative/reversed segment times -> reject before clipping.",
+    "Positive sub-ms interval -> no rounded zero/reversed internal result and no fabricated subtitle interval.",
+    "Actual zero-duration word evidence -> whole-segment text fallback, no new whole-job failure.",
+    "Valid wordend beyond audio -> cap if still positive; unusable results preserve conservative whole-segment fallback.",
+    "Unchanged valid in-audio segment/word data and decoder kwargs remain unchanged."
+  ]
+}

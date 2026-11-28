@@ -105,32 +105,90 @@ to the originals. This guard cannot identify the other meaning errors and does
 not approve the candidate. Independent review also caught and fixed false
 rejections of name apostrophes and mathematical notation. The combined local
 suite, including the new hosted-speech harness controls, passed **717 tests and
-54 subtests**; the new source revision needs its own hosted verification.
+54 subtests**. The subsequent exact-checkpoint hosted results are recorded below.
 
 A [single native-thinking ablation](gemma4-thinking-ablation-2026-11-28/README.md)
 also failed the original telescope loan/material criteria, despite a complete
 normal response within the unchanged limits. No additional cases or production
 switch followed that failure. The
-[Qwen native speech screen](qwen3-asr-screen-2026-11-28/README.md) is now prepared
-for hosted execution with eight unchanged full recordings, pinned CPU runtime,
-raw token/EOS evidence and a sampled process-group limit. Its fourteen controls
-and independent pre-execution review do not establish recognition quality or
-resource fit; actual inference is still required.
+[Qwen native speech preparation](qwen3-asr-screen-2026-11-28/README.md) froze eight
+unchanged full recordings, pinned CPU runtime, raw token/EOS evidence and a
+sampled process-group limit before the actual run described below.
+
+The `a4ca88e` checkpoint completed all ordinary hosted application workflows:
+Ubuntu and independent Python 3.11/3.13 passed **717 tests and 54 subtests**;
+Windows and macOS passed **715 tests and 54 subtests**, skipping only two
+Linux-specific owned-process-group harness controls. Chromium passed **34/34**
+with no JavaScript page errors, fresh checkout and actual generated ZIP
+installation passed, and the actual Tiny upload completed its pipeline. Default
+Ollama completed all twelve cases with five automatic passes and seven review
+flags; generated meaning remains unapproved. The [exact record and original
+reports](integration-2026-11-28/hosted-a4ca88e/checkpoint.json) retain source and
+artifact identities. No fresh provider attempt was made at this checkpoint.
+
+The initial Qwen workflow failed expression validation before any job or model
+attempt. A [separate path-setup correction](qwen3-asr-hosted-env-followup-2026-11-28/README.md)
+left the original helper, inputs, model and decoder unchanged. Its isolated
+`7ee0c7f2` hosted run then completed all eight clips, with 4545.9 MiB sampled
+process-group RSS and 5025.7 MiB worker high-water RSS under the 6144 MiB cap.
+Independent [meaning review](qwen3-asr-hosted-results-2026-11-28/README.md)
+found **six major errors and two acceptable results**, including major errors
+in all five Greek clips. It is rejected for adoption. This recognizer-only
+screen does not establish timestamps, speaker integration, fresh validation or
+whole-application resource fit.
+
+The official [Krikri six-case translation screen](krikri-screen-2026-11-28/README.md)
+completed all original cases with verified native prompts, normal stops and
+unloads. Independent review found **five acceptable outputs and one major
+error**: Nikos and Eleni became the localized names Nick and Helen. Their roles
+and the distinction from Elena survived, but the name-preservation criterion
+still fails. The standalone run took 110.945 seconds and peaked at 5533.7 MiB
+sampled concurrent RSS under the 6144 MiB limit. It is not approved for promotion
+or broader validation. The separate [generic name-instruction clarification](krikri-name-preservation-2026-11-28/README.md)
+also completed all six cases but retained the identical Nick/Helen substitutions:
+again **five acceptable and one major error**. The actual changed prompts were
+verified. It took 113.511 seconds with 5538.5 MiB sampled concurrent RSS. Neither
+profile progressed to broader validation; the original baseline, criteria and
+failed setup-check attempt remain preserved.
+
+The [full large-v3 hosted screen](large-v3-hosted-results-2026-11-28/README.md)
+completed all eight original recordings on isolated commit `73b75b45`, using the
+unchanged production recognition policy. It used 3096.65 MiB worker high-water
+RSS and completed its recognition calls in 136.213 seconds. Independent review
+found **four major, one minor and three acceptable** results: several meanings
+improved, but three name errors and a malformed concessive relationship remain.
+It is not approved for adoption. A native segment also ended at 7.0 seconds for
+6.54 seconds of audio. The raw overrun remains unchanged in the evidence. The
+separate [production timing correction](asr-timing-boundary-2026-11-28/README.md)
+caps valid native endpoints at the full recording duration and quantizes subtitle
+cues inward, removing the artificial 100-millisecond extension. It preserves
+TXT/JSON and saved/batch warnings when a subtitle interval is unrepresentable.
+The eight-record retained-output replay verified actual full WAV decoding,
+unchanged text and decoder requests, 40 export files, SQLite persistence and
+backup restoration. This is not new acoustic inference or meaning approval.
+The combined local suite passed **753 tests and 54 subtests**; the exact next
+published source still needs its hosted application checks.
+
+The [completed rejected Qwen workflow](qwen3-asr-workflow-retirement-2026-11-28/README.md)
+is archived to prevent an identical expensive experiment from restarting merely
+because its setup correction is integrated. Its original plans, helper, criteria,
+inputs, outputs and published QA commit remain unchanged. Historical contract
+tests verify the archived source; all ordinary application workflows remain active.
 
 ## Acceptance gates
 
 | Area | Required evidence | Current position |
 | --- | --- | --- |
-| Installation | Fresh installation, actual launcher, health and homepage; supported-platform checks | At `745554b`, Windows, macOS, Ubuntu and independent Python 3.11/3.13 configurations each passed 685 tests and 32 subtests. Fresh Linux checkout and the actual generated candidate ZIP passed installation, launcher and endpoint checks. Ordinary requirements installed both the public-video transport and SOCKS dependency. |
-| English and Greek ASR | Real licensed speech through upload, reviewed words/names/numbers, ordered timestamps, persistence and exports | Native development and fresh Auto/Turbo recordings passed integrated checks with retained word errors. Small VAD-off development remains two acceptable, three minor, three major; default Auto/Small also passed two Greek app workflows without changing those hypotheses. A seven-input paired comparison now rejects the identical noise hallucination while preserving all four ordinary/20 dB quieter English/Greek transcripts and timings. Quiet English genuinely exercised the second speech detector. This is narrow regression evidence, not an accuracy guarantee. |
-| Translation | Faithful actors, quantities, negation and conditions on frozen validation passages; original preserved on failure | No new default is approved. At `dc0985d`, the actual default model completed all 12 hosted corpus cases with five automatic passes/seven review flags, no execution errors, and semantic quality explicitly unreviewed. Whole-result identity detection prevents copied English from being advertised as Greek. A final generic name-preservation experiment on native Hy-MT3 7B completed six development cases but retained three material errors, so it was rejected. Fresh v3 validation remains unused in the published evidence. |
+| Installation | Fresh installation, actual launcher, health and homepage; supported-platform checks | At `a4ca88e`, Ubuntu and independent Python 3.11/3.13 passed 717 tests and 54 subtests; Windows/macOS passed 715 tests and 54 subtests with two Linux-only harness controls skipped. Fresh Linux checkout and all six actual candidate ZIP installation/startup checks passed. Ordinary requirements provide both the public-video transport and SOCKS dependency. |
+| English and Greek ASR | Real licensed speech through upload, reviewed words/names/numbers, ordered timestamps, persistence and exports | Native development and fresh Auto/Turbo recordings passed integrated checks with retained word errors. Small VAD-off development remains two acceptable, three minor, three major; default Auto/Small also passed two Greek app workflows without changing those hypotheses. A seven-input paired comparison now rejects the identical noise hallucination while preserving all four ordinary/20 dB quieter English/Greek transcripts and timings. Quiet English genuinely exercised the second speech detector. Later Parakeet profiles retained four major errors each; native Qwen retained six major errors; full large-v3 retained four major, one minor and three acceptable results. None is adopted. These are development regressions, not an accuracy guarantee. |
+| Translation | Faithful actors, quantities, negation and conditions on frozen validation passages; original preserved on failure | No new default is approved. At `a4ca88e`, the actual default model completed all 12 hosted corpus cases with five automatic passes/seven review flags, no execution errors, and semantic quality explicitly unreviewed. Whole-result identity detection prevents copied English from being advertised as Greek; the new script guard rejects newly introduced unsupported writing systems while preserving the original transcript. Neither guard verifies meaning. The retained Hy-MT3, Qwen, M2M100 and expanded Gemma candidates all have material meaning failures. Fresh v3 validation remains unused in the published evidence. |
 | Summaries and chapters | Actual model, factual source-grounded content, valid chapter times, complete storage/export path | The eight-point prompt/schema/local contract passes two actual final/direct checks, with five earlier English map/reduction responses explicitly replayed. English long output was acceptable, but the direct consent output contained a malformed amount. A fully live Greek long run failed with HTTP500/runner EOF during prompt-cache saving after repeated weak reductions. The next actual run still misstated the consent amount and changed planned returns/feedback to completed actions. Its strict 700/399-character note experiment was rejected: Greek notes also end midword despite valid JSON/stop. Published source retains the model-lifetime fix. Hosted text runs completed but do not approve meaning. This gate remains separate from source highlights. |
-| Source highlights | Verbatim text/time fidelity, useful selection on frozen English/Greek sources, complete storage/edit/export/backup path | Rebuilt selector passed six development cases (25/25 declared coverage goals) and four previously unseen frozen cases (18/18 goals), preserving original words/times with no declared context omissions. Both failed development iterations remain retained. At `929cf2d`, actual-upload and saved-highlight generation, source navigation, edits/regeneration and nonnull-highlight backup/restore passed Chromium. Short sources are explicitly uncondensed. These internal fixtures do not establish arbitrary-recording coverage, ASR accuracy or speaker attribution. |
+| Source highlights | Verbatim text/time fidelity, useful selection on frozen English/Greek sources, complete storage/edit/export/backup path | Rebuilt selector passed six development cases (25/25 declared coverage goals) and four previously unseen frozen cases (18/18 goals), preserving original words/times with no declared context omissions. Both failed development iterations remain retained. At `a4ca88e`, actual-upload and saved-highlight generation, source navigation, edits/regeneration and nonnull-highlight backup/restore passed Chromium. Short sources are explicitly uncondensed. These internal fixtures do not establish arbitrary-recording coverage, ASR accuracy or speaker attribution. |
 | Speaker labeling | Actual acoustic inference on repeated and distinct voices, silence, short and mixed turns; anonymous labels and honest uncertainty | Public-model inference passed fresh one-/two-/three-reader checks. Actual two-reader upload through Small ASR, conservative word alignment, SQLite and all exports passed; uncertain words retain warnings. Greek/noisy/overlapping-meeting accuracy is not established. |
 | Sources | Actual link-to-transcript processing for advertised providers, recognizable content, persistence, exports and cleanup | At `dc0985d`, unseeded hosted processing of the complete 734.15-second Dailymotion film passed storage/export/recovery checks; silence and actual white noise were correctly rejected. Original YouTube/Vimeo access failures remain retained. A separate official YouTube full-film follow-up obtained metadata but media download failed HTTP403 locally. Preserving an explicitly supplied public Vimeo player route fixed an application rewrite bug; an 888.07-second permitted recording passed download/full Small ASR/SQLite/exports/cleanup/restart on frozen `002d8fc` plus that parser correction. Suspicious repeated phrases and low language confidence leave semantic accuracy open. Overall provider gate remains open. |
 | Batch recovery | Continued processing after one failed item; persistence and restart without duplicating saved work; correct batch downloads | At `dc0985d`, deterministic process-interruption tests and the actual hosted Dailymotion-success/YouTube-failure batch passed. Stored transcripts and batch ZIP contents survived a fresh-process restart. |
-| Library and backups | Browser search/edit/download/delete, invalidation of stale AI output, backup/restore and malformed-backup handling | Hosted integration covers source-hash validation, atomic rejection of fabricated excerpts, stale-data invalidation, damaged optional highlights, version2 backups and legacy version1 imports. At `929cf2d`, actual Chromium verified corrections after generation, preservation during saves/opens, saving to the original record while leaving another record unchanged, and backup/restore with actual nonnull highlights. |
-| Browser usability | Desktop and mobile layout, consent/errors, job polling, result display, downloads and setup diagnostics | At `745554b`, hosted Chromium passed 34/34 checks with actual speech recognition and no JavaScript page errors, including 1440/390/320-pixel layouts. All eight source hashes match the checkpoint. The unchanged interface's representative `929cf2d` screenshots were independently reviewed. Prior 31/32 and 33/34 failures remain retained and their corrections were rerun. Link/batch UI fixtures remain controlled and separate from actual provider evidence. |
+| Library and backups | Browser search/edit/download/delete, invalidation of stale AI output, backup/restore and malformed-backup handling | Hosted integration covers source-hash validation, atomic rejection of fabricated excerpts, stale-data invalidation, damaged optional highlights, version2 backups and legacy version1 imports. At `a4ca88e`, actual Chromium verified corrections after generation, preservation during saves/opens, saving to the original record while leaving another record unchanged, and backup/restore with actual nonnull highlights. |
+| Browser usability | Desktop and mobile layout, consent/errors, job polling, result display, downloads and setup diagnostics | At `a4ca88e`, hosted Chromium passed 34/34 checks with actual speech recognition and no JavaScript page errors, including 1440/390/320-pixel layouts. All eight recorded source hashes match the checkpoint. The unchanged interface's representative `929cf2d` screenshots were independently reviewed. Prior 31/32 and 33/34 failures remain retained and their corrections were rerun. Link/batch UI fixtures remain controlled and separate from actual provider evidence. |
 | Resource use | Measured CPU/memory for the default speech model plus optional enhancements on a modest machine | Actual 34.635-second Small/public-speaker/default-Qwen workflow at `a3b8652` completed in 59.202 seconds, peaking at 4584.3 MiB concurrent RSS / 4576.3 MiB PSS. It passed a 6144 MiB process budget on a 9967.3 MiB host, with OS/browser headroom excluded; generated-text quality failed. The published long-summary recorder measures the two-response unload policy and available OOM counters; a later reported approximately 4.2 GiB highlights workflow has not been recovered and verified here. Earlier cache-save EOF is not a proven OOM kill; whole-machine 7.3 GiB fit and long-recording resource approval remain open. |
 
 ## Evidence rules
@@ -165,6 +223,14 @@ resource fit; actual inference is still required.
 - [Rejected expanded Gemma 4 translation regression](gemma4-exposed-v2-2026-11-28/README.md)
 - [Rejected one-case native-thinking ablation](gemma4-thinking-ablation-2026-11-28/README.md)
 - [Prepared native CPU Qwen speech screen](qwen3-asr-screen-2026-11-28/README.md)
+- [Rejected actual Qwen speech run and independent meaning review](qwen3-asr-hosted-results-2026-11-28/README.md)
+- [Completed application workflows at a4ca88e](integration-2026-11-28/hosted-a4ca88e/checkpoint.json)
+- [Official Greek-specialist model research](greek-specialist-research-2026-11-28/README.md)
+- [Krikri six-case translation screen and exact name-substitution failure](krikri-screen-2026-11-28/README.md)
+- [Rejected generic name-instruction clarification](krikri-name-preservation-2026-11-28/README.md)
+- [Full large-v3 actual outputs, independent review and native timing overrun](large-v3-hosted-results-2026-11-28/README.md)
+- [Physical recording boundaries, subtitle exports and retained-output replay](asr-timing-boundary-2026-11-28/README.md)
+- [Completed rejected Qwen workflow archive](qwen3-asr-workflow-retirement-2026-11-28/README.md)
 - [Translation writing-system corruption guard and retained-output replay](translation-script-guard-2026-11-28/README.md)
 - [Published evaluation and limitations](evaluation-2026-11-26/README.md)
 - [Real native speech evidence](asr-2026-11-26/README.md)
