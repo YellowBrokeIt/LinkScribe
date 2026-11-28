@@ -106,7 +106,7 @@ jobs:
               assert '<title>LinkScribe' in html
           with urlopen('http://127.0.0.1:8765/api/library') as response:
               saved=json.load(response)
-              assert saved=={'items':[]},saved
+              assert saved=={'items':[],'next_cursor':None},saved
           print('Fresh Ubuntu clone, start_linux.sh, /health, homepage, library endpoint: PASS')
           PY
 

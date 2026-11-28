@@ -185,7 +185,7 @@ def run(args: argparse.Namespace) -> int:
                     report["checks"].append("packaged static homepage")
                     with opener.open(BASE_URL + "/api/library", timeout=5) as response:
                         saved = json.load(response)
-                    if saved != {"items": []}:
+                    if saved != {"items": [], "next_cursor": None}:
                         raise AssertionError("Freshly installed candidate does not have an empty library.")
                     report["checks"].append("fresh SQLite library")
                     subprocess.run([str(root / ".venv/bin/python"), "-m", "pip", "check"],

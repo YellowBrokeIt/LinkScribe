@@ -112,15 +112,14 @@ def _validate_summary(summary: Any) -> None:
             raise BackupError("Backup contains an invalid summary chapter.")
 
 
-def make_backup() -> tuple[bytes, int]:
-    """Snapshot rows in one read transaction without retaining the entire library."""
-    buff = io.BytesIO()
+def write_backup(stream: BinaryIO) -> int:
+    """Write a snapshot to an empty seekable stream owned by the caller."""
     digest = hashlib.sha256()
     size = count = 0
     conn = library._connect()
     try:
         conn.execute("BEGIN")
-        with zipfile.ZipFile(buff, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zipout:
+        with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zipout:
             with zipout.open("transcripts.json", "w") as member:
                 def write(chunk: bytes) -> None:
                     nonlocal size
@@ -145,10 +144,16 @@ def make_backup() -> tuple[bytes, int]:
         conn.rollback()
     finally:
         conn.close()
-    archive_bytes = buff.getvalue()
-    if len(archive_bytes) > MAX_ARCHIVE_BYTES:
+    if stream.tell() > MAX_ARCHIVE_BYTES:
         raise BackupError("Library backup exceeds the 50 MB restore limit; use the local SQLite backup procedure.")
-    return archive_bytes, count
+    return count
+
+
+def make_backup() -> tuple[bytes, int]:
+    """Compatibility helper for callers explicitly requiring archive bytes."""
+    with io.BytesIO() as stream:
+        count = write_backup(stream)
+        return stream.getvalue(), count
 
 
 def _validated_record(record: Any) -> tuple:

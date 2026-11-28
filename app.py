@@ -875,20 +875,28 @@ def _batch_archive(batch_id: str) -> bytes:
     return stream.getvalue()
 
 
-class _BatchArchiveResponse(StreamingResponse):
-    def __init__(self, stream: BinaryIO, batch_id: str):
+class _ZipArchiveResponse(StreamingResponse):
+    def __init__(self, stream: BinaryIO, filename: str, *, nosniff: bool = False):
         self.stream = stream
         length = stream.tell()
         stream.seek(0)
+        headers = {"Content-Disposition": f'attachment; filename="{filename}"',
+                   "Content-Length": str(length), "Cache-Control": "no-store"}
+        if nosniff:
+            headers["X-Content-Type-Options"] = "nosniff"
         super().__init__(iter(lambda: stream.read(64 * 1024), b""), media_type="application/zip",
-                         headers={"Content-Disposition": f'attachment; filename="linkscr-batch-{batch_id[:8]}.zip"',
-                                  "Content-Length": str(length), "Cache-Control": "no-store"})
+                         headers=headers)
 
     async def __call__(self, scope, receive, send):
         try:
             await super().__call__(scope, receive, send)
         finally:
             self.stream.close()
+
+
+class _BatchArchiveResponse(_ZipArchiveResponse):
+    def __init__(self, stream: BinaryIO, batch_id: str):
+        super().__init__(stream, f"linkscr-batch-{batch_id[:8]}.zip")
 
 
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
@@ -1246,13 +1254,16 @@ def list_library(q: str = "", limit: int = 50, before_created_at: float | None =
 
 @app.get("/api/library/backup")
 def export_library_backup():
+    stream = tempfile.TemporaryFile(mode="w+b")
     try:
-        content, _count = library_backup.make_backup()
+        library_backup.write_backup(stream)
+        return _ZipArchiveResponse(stream, "linkscr-library-backup.zip", nosniff=True)
     except library_backup.BackupError as exc:
+        stream.close()
         raise HTTPException(413, str(exc)) from None
-    return StreamingResponse(io.BytesIO(content), media_type="application/zip",
-               headers={"Content-Disposition": 'attachment; filename="linkscr-library-backup.zip"',
-                        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+    except BaseException:
+        stream.close()
+        raise
 
 
 @app.post("/api/library/restore")

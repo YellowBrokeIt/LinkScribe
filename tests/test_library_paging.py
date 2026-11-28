@@ -67,3 +67,13 @@ def test_deleted_cursor_and_new_insert(site, monkeypatch):
 ])
 def test_bad_cursor(site, params):
     assert site.get("/api/library", params=params).status_code == 400
+
+
+def test_empty_library_installation_contract(tmp_path, monkeypatch):
+    monkeypatch.setattr(library, "DB_FILE", tmp_path / "empty.sqlite3")
+    application = FastAPI()
+    application.get("/api/library")(app.list_library)
+    with TestClient(application) as client:
+        response = client.get("/api/library")
+        assert response.status_code == 200
+        assert response.json() == {"items": [], "next_cursor": None}
