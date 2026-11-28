@@ -1,0 +1,168 @@
+--- docs/krikri-marker-grammar-screen-preparation-2026-11-28/context.py
++++ docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/context.py
+@@ -11,7 +11,7 @@
+ PRIOR = ROOT / "docs/krikri-source-spelling-screen-2026-11-28"
+ GRAMMAR = ROOT / "docs/krikri-marker-grammar-preparation-2026-11-28"
+ NATIVE = ROOT / "docs/krikri-marker-grammar-build-continuation-2026-11-28"
+-PRIVATE = Path("/workspace/scratch/94360995dd61/linkscribe-krikri-runtime/marker-grammar-screen")
++PRIVATE = Path("/workspace/scratch/94360995dd61/linkscribe-krikri-runtime/marker-grammar-screen-v2")
+ 
+ # Reuse the closed source-spelling runtime helpers; importing them does not load
+ # a model, tokenize or make a request. Their original file bindings are retained.
+--- docs/krikri-marker-grammar-screen-preparation-2026-11-28/native_gate.py
++++ docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py
+@@ -23,6 +23,62 @@
+     def constant(value):
+         raise ValueError("Nonfinite JSON in prerequisite evidence: " + value)
+     return json.loads(Path(path).read_bytes(), object_pairs_hook=pairs, parse_constant=constant)
++
++
++def require_http_receipts(native, record, expected_version):
++    """Replay the retained calls; only the observed initial refusal lacks bytes.
++
++    This exception is not a generic missing-response allowance. It requires the
++    exact first connection-refused version poll and the immediate successful
++    readiness response. The documented closed-error sentinel still needs its
++    complete HTTP error/raw-response receipt; no candidate error is accepted.
++    """
++    calls = native.get("http_calls", [])
++    first_refusal = {"index": 0, "kind": "version", "path": "/api/version", "port": 11434,
++                     "request": None, "timeout_seconds": 10, "complete": False,
++                     "error": {"type": "URLError", "message": "<urlopen error [Errno 111] Connection refused>"}}
++    sentinel = next((row for row in native.get("grammars", [])
++                     if row.get("id") == "unsupported-lookahead-gate-sentinel"), {})
++    refused, ready, raw_count = False, False, 0
++    for index, call in enumerate(calls):
++        if type(call.get("index")) is not int or call["index"] != index:
++            raise ValueError("Actual native HTTP call ordering changed.")
++        if (call == first_refusal and call.get("complete") is False
++                and type(call.get("port")) is int and type(call.get("timeout_seconds")) is int):
++            if index != 0 or len(calls) < 2 or calls[1].get("kind") != "version":
++                raise ValueError("The initial readiness refusal is not followed immediately by readiness.")
++            refused = True
++            continue
++        if not isinstance(call.get("raw_response"), dict) or not isinstance(call.get("response"), dict):
++            raise ValueError("A native call lacks its complete captured HTTP response.")
++        if read(record(call["raw_response"])) != call["response"]:
++            raise ValueError("Native JSON differs from its captured raw response.")
++        raw_count += 1
++        successful = (type(call.get("http_status")) is int and 200 <= call["http_status"] < 300
++                      and call.get("complete") is True and "error" not in call)
++        if call.get("kind") == "version":
++            if (ready or index != int(refused) or not successful
++                    or call.get("path") != "/api/version" or call.get("port") != 11434
++                    or call.get("request") is not None or call.get("timeout_seconds") != 10
++                    or call["response"] != {"version": expected_version}):
++                raise ValueError("The full successful readiness response does not follow the allowed startup order.")
++            ready = True
++            continue
++        if not ready:
++            raise ValueError("A non-readiness call occurred before successful readiness.")
++        if not successful:
++            closed = (sentinel.get("conversion_error_closed") is True
++                      and sentinel.get("response_receipt") == {k: v for k, v in call.items() if k != "error"}
++                      and call.get("kind") == "grammar" and call.get("path") == "/completion"
++                      and call.get("request") == sentinel.get("request")
++                      and call.get("complete") is False and call.get("http_status") in (400, 500)
++                      and call.get("error", {}).get("type") == "NativeHTTPError")
++            if not closed:
++                raise ValueError("A successful or non-readiness call has an incomplete/error receipt.")
++    if not ready:
++        raise ValueError("No complete successful native readiness response exists.")
++    return {"initial_connection_refusals": int(refused), "raw_http_responses": raw_count,
++            "successful_version_observed": ready}
+ 
+ 
+ def require_native_contract(native, validation, requests, queries, probes):
+@@ -154,9 +210,7 @@
+     tokenize = [row for row in calls if row["kind"] == "tokenize"]
+     if len(render) != 6 or len(tokenize) != 6:
+         raise ValueError("Actual render/tokenization call inventory is incomplete.")
+-    for call in calls:
+-        if read(record(call["raw_response"])) != call.get("response"):
+-            raise ValueError("Native JSON differs from its captured raw response.")
++    require_http_receipts(native, record, profile["runtime"]["version"])
+     for prompt, rendered, tokenized in zip(native["prompts"], render, tokenize):
+         if (rendered["request"] != {**prompt["request"], "_debug_render_only": True}
+                 or rendered["response"] != prompt["debug_response"]
+--- docs/krikri-marker-grammar-screen-preparation-2026-11-28/check_preparation.py
++++ docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/check_preparation.py
+@@ -9,7 +9,7 @@
+ from context import HERE, ROOT, PRIOR, GRAMMAR, read_plan
+ from execution_gate import verify_receipt
+ from format_projection import require_format_only, grammar_payloads
+-from native_gate import require_native_contract
++from native_gate import require_native_contract, require_http_receipts
+ from source_context import source_context_payloads
+ 
+ 
+@@ -203,5 +203,69 @@
+         self.assertIn(b'final_elapsed > limits["total_seconds"]', original.read_bytes())
+ 
+ 
++class RetainedReadinessControls(unittest.TestCase):
++    """Read actual completed evidence; mutations are in-memory negative controls."""
++    @classmethod
++    def setUpClass(cls):
++        path = ROOT / "docs/krikri-marker-grammar-build-continuation-2026-11-28/native_prepare.json"
++        if hashlib.sha256(path.read_bytes()).hexdigest() != "92c674e206ac013d90e6efd1f1570152f1d07682e138915047aba6146640ad2c":
++            raise ValueError("The exact reviewed native readiness report changed.")
++        cls.native = read(path)
++
++    @staticmethod
++    def record(item):
++        path = Path(item["path"])
++        if path.stat().st_size != item["bytes"] or hashlib.sha256(path.read_bytes()).hexdigest() != item["sha256"]:
++            raise ValueError("Retained raw native HTTP evidence changed.")
++        return path
++
++    def check(self, native):
++        return require_http_receipts(native, self.record, "0.40.12")
++
++    def test_exact_actual_one_refusal_and_23_raw_responses(self):
++        self.assertEqual(self.check(self.native), {"initial_connection_refusals": 1,
++            "raw_http_responses": 23, "successful_version_observed": True})
++
++    def test_old_gate_failure_is_reproduced_without_native_calls(self):
++        with self.assertRaises(KeyError) as caught:
++            for call in self.native["http_calls"]:
++                self.record(call["raw_response"])
++        self.assertEqual(caught.exception.args, ("raw_response",))
++
++    def test_changed_startup_error_shape_or_endpoint_rejected(self):
++        for key, value in (("path", "/api/chat"), ("kind", "render"), ("port", 40931),
++                           ("request", {}), ("timeout_seconds", 10.0), ("complete", True),
++                           ("error", {"type": "URLError", "message": "timed out"}),
++                           ("raw_response", None), ("http_status", 200), ("response", {})):
++            native = copy.deepcopy(self.native); native["http_calls"][0][key] = value
++            with self.subTest(key=key), self.assertRaises(ValueError): self.check(native)
++
++    def test_refusal_after_readiness_or_repeated_refusal_rejected(self):
++        for target in (1, 4, 22):
++            native = copy.deepcopy(self.native)
++            refusal = copy.deepcopy(native["http_calls"][0]); refusal["index"] = target
++            native["http_calls"][target] = refusal
++            with self.subTest(target=target), self.assertRaises(ValueError): self.check(native)
++
++    def test_every_success_requires_raw_response_and_complete_status(self):
++        for index in range(1, 24):
++            for field in ("raw_response", "response", "complete", "http_status"):
++                native = copy.deepcopy(self.native); native["http_calls"][index].pop(field)
++                with self.subTest(index=index, field=field), self.assertRaises(ValueError): self.check(native)
++
++    def test_raw_json_mismatch_error_or_wrong_readiness_version_rejected(self):
++        for key, value in (("response", {"version": "wrong"}),
++                           ("error", {"type": "URLError", "message": "unexpected"}),
++                           ("http_status", 500)):
++            native = copy.deepcopy(self.native); native["http_calls"][1][key] = value
++            with self.subTest(key=key), self.assertRaises(ValueError): self.check(native)
++
++    def test_call_index_or_no_successful_readiness_rejected(self):
++        native = copy.deepcopy(self.native); native["http_calls"][1]["index"] = 5
++        with self.assertRaises(ValueError): self.check(native)
++        native = copy.deepcopy(self.native); native["http_calls"] = native["http_calls"][:1]
++        with self.assertRaises(ValueError): self.check(native)
++
++
+ if __name__ == "__main__":
+     unittest.main(verbosity=2)

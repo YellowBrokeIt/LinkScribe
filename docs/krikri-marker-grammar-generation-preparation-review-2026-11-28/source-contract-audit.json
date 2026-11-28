@@ -1,0 +1,1699 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T08:43:06.657501+00:00",
+  "scope": "Independent read/hash/AST-only audit; no candidate import, control rerun, network, native, compiler, tokenizer, validator or model execution.",
+  "source_counts": {
+    "krikri-marker-grammar-screen-preparation-2026-11-28": {
+      "source_bindings": 136,
+      "manifest_members": 14
+    },
+    "krikri-marker-grammar-screen-preparation-v2-2026-11-28": {
+      "source_bindings": 140,
+      "manifest_members": 17
+    }
+  },
+  "checked_files": [
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/plan.json",
+      "bytes": 32723,
+      "sha256": "735ca4e02410c06b15c41c99c7f3d3b3c88a9007e858abfd727be686d67ff796"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/manifest.json",
+      "bytes": 2826,
+      "sha256": "ca026d2c798f6c140fefca18e64f11cae10781252392789e37b40f7c905114d5"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/context.py",
+      "bytes": 2344,
+      "sha256": "540af7eb4c8737e6af9594ec0cd762a9b71f94de638b3ca0f10911edbe8c58e8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py",
+      "bytes": 14791,
+      "sha256": "8ecb84b8735ffaaa7e005bc0d3a4b29c855522a3082b5de8c5b577f4868e292d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/format_projection.py",
+      "bytes": 1900,
+      "sha256": "c92812f2883d422ae32d3dbb338e259d0d5e0a07dd1f1dcf2aacc2b9d51c47b8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/execution_gate.py",
+      "bytes": 3172,
+      "sha256": "e388330682caca6ff84e39525d4ebb88f2b492ad74f80334fc39388d41b6a778"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/infer_native.py",
+      "bytes": 17593,
+      "sha256": "2ad2b37438c29f05f2178a8cb3f0d5d8d8a3bc7e862c879356a2acf37b21db38"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/run_native.py",
+      "bytes": 3609,
+      "sha256": "c0753b7e44c2b2c9ad83bd6eec344f1ab8ee50e5cfc509e2fa809cc3672fa72d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/resource_monitor.py",
+      "bytes": 13302,
+      "sha256": "fac821f2f0c7a70d3b835981b5bc19dade8ed2991c802aef36dbc10be3d5d99b"
+    }
+  ],
+  "prior_actual_native_review": {
+    "path": "/workspace/scratch/94360995dd61/grammar-native-prepare-independent-review-2026-11-28/independent-native-validation-review.json",
+    "bytes": 8189,
+    "sha256": "7b6b977c0f01eadf652e36eb39973f52ca2bd109055da116ad5b42f3c1f8675a"
+  },
+  "original_corpus": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/development-cases.json",
+    "bytes": 12854,
+    "sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce"
+  },
+  "actual_native_prompt_counts": [
+    261,
+    350,
+    262,
+    266,
+    302,
+    264
+  ],
+  "retained_readiness_shape": {
+    "first_refusals": 1,
+    "raw_successes": 23,
+    "attempts": 24
+  },
+  "owner_control_evidence": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/source-only-controls.json",
+    "bytes": 2406,
+    "sha256": "9bd08ac2ac761c19d4f20a01dafac6a8b3820e8acaa56dae1d327e4f5ab62ce4"
+  },
+  "controls_reviewed_not_reexecuted": [
+    "test_exact_plan_and_unchanged_original_corpus_settings",
+    "test_all_six_requests_change_only_format",
+    "test_message_or_option_change_rejected",
+    "test_projection_changes_only_schema_and_restores_builder",
+    "test_wrong_payload_and_second_call_fail_before_transport",
+    "test_composed_source_context_and_schema_preserve_all_six_payloads",
+    "test_synthetic_contract_control_only",
+    "test_incomplete_or_wrong_grammar_inventory_rejected",
+    "test_missing_failed_or_misbound_probe_rejected",
+    "test_partial_or_changed_prompt_binding_rejected",
+    "test_no_prior_generation_or_resident_model_allowed",
+    "test_sentinel_or_candidate_fallback_rejected",
+    "test_separate_exact_root_authority_required",
+    "test_corrected_monitor_is_reused_exactly",
+    "test_exact_actual_one_refusal_and_23_raw_responses",
+    "test_old_gate_failure_is_reproduced_without_native_calls",
+    "test_changed_startup_error_shape_or_endpoint_rejected",
+    "test_refusal_after_readiness_or_repeated_refusal_rejected",
+    "test_every_success_requires_raw_response_and_complete_status",
+    "test_raw_json_mismatch_error_or_wrong_readiness_version_rejected",
+    "test_call_index_or_no_successful_readiness_rejected"
+  ],
+  "receipts_at_audit_time": {
+    "infer-authorization.json": false,
+    "infer-claim.json": false,
+    "execution.json": false,
+    "native-evidence-freeze.json": false
+  },
+  "checks_passed": 394,
+  "checks": [
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/native_prepare.json",
+      "passed": true
+    },
+    {
+      "check": "fixed identity: /workspace/scratch/94360995dd61/grammar-native-prepare-independent-review-2026-11-28/independent-native-validation-review.json",
+      "passed": true
+    },
+    {
+      "check": "plan sidecar: krikri-marker-grammar-screen-preparation-2026-11-28",
+      "passed": true
+    },
+    {
+      "check": "manifest sidecar: krikri-marker-grammar-screen-preparation-2026-11-28",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/experiment.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/independent-corrected-preparation-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/initial-protocol-review/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/development-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/enhancements-context4096.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/enhancements-production.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/guard-reuse-check.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-audit_completed_outputs.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-audit_native_setup.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-corrected-preparation-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-criterion-binding.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/marker-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protected-source-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection-control-results-v2.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection-inputs.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/reuse-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/runtime-adaptation-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/runtime-path-only.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/syntax-revision-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/native_actions.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/native_contract.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/phase_actions.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/status_contract.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/native-probe-matrix.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/proposed-native-grammar-queries.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/schema_profile.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/schemas.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/check_preparation.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-name-preservation-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/independent-output-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/native_verify.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/prepare.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/selected-gguf-header.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/staging.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/independent-output-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/context-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/estimate_tokens.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/evidence-manifest.sha256",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/feasibility-results.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/input-build-report.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/plan.sha256",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/prepare_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/proposal.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/source-context-maps.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/context-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/development-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/enhancements-context4096.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/enhancements-production.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-criterion-binding.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-proposal-source-audit.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-proposal-source-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/marker-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/no-model-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/no-model-controls.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protected-source-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection-control-results-v2.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection-inputs.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/reuse-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-adaptation-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-deltas.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-path-only.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/source-context-maps.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/source_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-visible-name-tag-preparation-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-visible-name-tag-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-negation-scope.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-people-and-roles.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-uncertain-question.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-conditional-publication.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-transcript-terminology.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/independent-replay-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-negation-scope.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-people-and-roles.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-uncertain-question.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-conditional-publication.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-transcript-terminology.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/infer-resources.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/revised-control-probes.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/run_phase.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-protection-research-2026-11-28/original-six-source-only.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/tests/evaluate_translation_quality.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/check_preparation.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/plan.sha256",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/source-only-controls.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/source-only-controls.txt",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/worker-adaptation.patch",
+      "passed": true
+    },
+    {
+      "check": "plan sidecar: krikri-marker-grammar-screen-preparation-v2-2026-11-28",
+      "passed": true
+    },
+    {
+      "check": "manifest sidecar: krikri-marker-grammar-screen-preparation-v2-2026-11-28",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/experiment.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/independent-corrected-preparation-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/initial-protocol-review/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-source-name-protection-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/development-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/enhancements-context4096.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/enhancements-production.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/guard-reuse-check.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-audit_completed_outputs.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-audit_native_setup.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-corrected-preparation-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/independent-criterion-binding.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/marker-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protected-source-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection-control-results-v2.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection-inputs.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/protection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/reuse-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/runtime-adaptation-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/runtime-path-only.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/syntax-revision-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-compact-tag-screen-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/native_prepare.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/native_actions.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/native_contract.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/phase_actions.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/status_contract.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/native-probe-matrix.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/proposed-native-grammar-queries.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/schema_profile.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-preparation-2026-11-28/schemas.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/check_preparation.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/readiness-observation.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-name-preservation-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/independent-output-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/native_verify.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/prepare.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/selected-gguf-header.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-screen-2026-11-28/staging.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/independent-output-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/context-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/estimate_tokens.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/evidence-manifest.sha256",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/feasibility-results.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/input-build-report.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/plan.sha256",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/prepare_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/proposal.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/source-context-maps.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-context-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/context-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/development-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/enhancements-context4096.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/enhancements-production.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/expected-requests.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-criterion-binding.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-proposal-source-audit.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/independent-proposal-source-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/marker-instruction.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/no-model-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/no-model-controls.txt",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/prepare_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protected-source-cases.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection-control-results-v2.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection-inputs.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/protection.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/reuse-verification.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-adaptation-controls.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-deltas.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/runtime-path-only.patch",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/source-context-maps.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/source_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/token-estimates.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-visible-name-tag-preparation-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-visible-name-tag-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-negation-scope.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-people-and-roles.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-el-en-uncertain-question.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-conditional-publication.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/dev-en-el-transcript-terminology.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/independent-replay-review.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-boundary-normalizer-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-negation-scope.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-people-and-roles.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-el-en-uncertain-question.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-conditional-publication.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/dev-en-el-transcript-terminology.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/infer-resources.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/revised-control-probes.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-detector-screen-2026-11-28/run_phase.py",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/docs/name-span-protection-research-2026-11-28/original-six-source-only.json",
+      "passed": true
+    },
+    {
+      "check": "source: /workspace/scratch/94360995dd61/LinkScribe/tests/evaluate_translation_quality.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/README.md",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/check_preparation.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/correction-verification.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/plan.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/plan.sha256",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/readiness-correction.patch",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/readiness-observation.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/run_native.py",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/source-only-controls.json",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/source-only-controls.txt",
+      "passed": true
+    },
+    {
+      "check": "manifest member: /workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/worker-adaptation.patch",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: model",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: runtime",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: python_runtime",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: native_setup",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: limits",
+      "passed": true
+    },
+    {
+      "check": "unchanged original profile: evaluation",
+      "passed": true
+    },
+    {
+      "check": "unchanged execution file: execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "unchanged execution file: format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "unchanged execution file: infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "unchanged execution file: run_native.py",
+      "passed": true
+    },
+    {
+      "check": "unchanged execution file: resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "exact prior reviewed monitor",
+      "passed": true
+    },
+    {
+      "check": "context changes private path only",
+      "passed": true
+    },
+    {
+      "check": "unchanged native function AST: read",
+      "passed": true
+    },
+    {
+      "check": "unchanged native function AST: require_native_contract",
+      "passed": true
+    },
+    {
+      "check": "original fourteen control AST unchanged",
+      "passed": true
+    },
+    {
+      "check": "only receipt loop replacement shape",
+      "passed": true
+    },
+    {
+      "check": "rest of actual prerequisite gate AST unchanged",
+      "passed": true
+    },
+    {
+      "check": "six ordered original requests",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-transcript-terminology exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-transcript-terminology actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-transcript-terminology full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-people-and-roles exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-people-and-roles actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-people-and-roles full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-bitcoin-amounts exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-bitcoin-amounts actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-bitcoin-amounts full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-negation-scope exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-negation-scope actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-negation-scope full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-conditional-publication exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-conditional-publication actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-en-el-conditional-publication full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-uncertain-question exact only-format change",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-uncertain-question actual complete native source/schema binding",
+      "passed": true
+    },
+    {
+      "check": "dev-el-en-uncertain-question full native prompt fits unchanged output allowance",
+      "passed": true
+    },
+    {
+      "check": "actual initial no-response refusal equals exact permitted literal",
+      "passed": true
+    },
+    {
+      "check": "actual immediate successful pinned-version receipt",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 1",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 2",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 3",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 4",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 5",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 6",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 7",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 8",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 9",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 10",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 11",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 12",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 13",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 14",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 15",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 16",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 17",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 18",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 19",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 20",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 21",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 22",
+      "passed": true
+    },
+    {
+      "check": "retained raw successful response 23",
+      "passed": true
+    },
+    {
+      "check": "actual 24 attempts and 23 full raw responses",
+      "passed": true
+    },
+    {
+      "check": "reported 21 controls match source method inventory",
+      "passed": true
+    },
+    {
+      "check": "control log bound",
+      "passed": true
+    },
+    {
+      "check": "control result bound to current plan",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/check_preparation.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/context.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/execution_gate.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/format_projection.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/infer_native.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/native_gate.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/resource_monitor.py",
+      "passed": true
+    },
+    {
+      "check": "control source identity: docs/krikri-marker-grammar-screen-preparation-v2-2026-11-28/run_native.py",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

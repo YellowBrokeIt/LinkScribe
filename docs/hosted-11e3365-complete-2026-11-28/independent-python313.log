@@ -1,0 +1,389 @@
+﻿2026-11-28T08:35:01.7438735Z Current runner version: '2.338.2'
+2026-11-28T08:35:01.7460320Z ##[group]Runner Image Provisioner
+2026-11-28T08:35:01.7461005Z Hosted Compute Agent
+2026-11-28T08:35:01.7461602Z Version: 20261111.635
+2026-11-28T08:35:01.7462184Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-28T08:35:01.7462787Z Build Date: 2026-11-11T01:49:01Z
+2026-11-28T08:35:01.7463431Z Worker ID: {3bb8a21f-70f2-445e-9c43-42f8ffeaa8ea}
+2026-11-28T08:35:01.7464006Z Region: eastus2
+2026-11-28T08:35:01.7464522Z Cloud: Azure
+2026-11-28T08:35:01.7464988Z ##[endgroup]
+2026-11-28T08:35:01.7466049Z ##[group]Operating System
+2026-11-28T08:35:01.7466615Z Ubuntu
+2026-11-28T08:35:01.7467226Z 26.04.1
+2026-11-28T08:35:01.7467642Z LTS
+2026-11-28T08:35:01.7468166Z ##[endgroup]
+2026-11-28T08:35:01.7468632Z ##[group]Runner Image
+2026-11-28T08:35:01.7469213Z Image: ubuntu-26.04
+2026-11-28T08:35:01.7469761Z Version: 20261122.9.1
+2026-11-28T08:35:01.7471224Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261122.9/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-28T08:35:01.7472485Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261122.9
+2026-11-28T08:35:01.7473303Z ##[endgroup]
+2026-11-28T08:35:01.7474210Z ##[group]GITHUB_TOKEN Permissions
+2026-11-28T08:35:01.7476127Z Contents: read
+2026-11-28T08:35:01.7476629Z Metadata: read
+2026-11-28T08:35:01.7477386Z ##[endgroup]
+2026-11-28T08:35:01.7479223Z Secret source: Actions
+2026-11-28T08:35:01.7480057Z Cache mode: write
+2026-11-28T08:35:01.7480934Z Prepare workflow directory
+2026-11-28T08:35:01.7758069Z Prepare all required actions
+2026-11-28T08:35:01.7797712Z Getting action download info
+2026-11-28T08:35:01.9170713Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-28T08:35:02.0200621Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-28T08:35:02.1913393Z Complete job name: API and regressions / Python 3.13
+2026-11-28T08:35:02.2641624Z ##[group]Run actions/checkout@v4
+2026-11-28T08:35:02.2642330Z with:
+2026-11-28T08:35:02.2642713Z   repository: YellowBrokeIt/LinkScribe
+2026-11-28T08:35:02.2645762Z   token: ***
+2026-11-28T08:35:02.2646125Z   ssh-strict: true
+2026-11-28T08:35:02.2646494Z   ssh-user: git
+2026-11-28T08:35:02.2646863Z   persist-credentials: true
+2026-11-28T08:35:02.2647579Z   clean: true
+2026-11-28T08:35:02.2647965Z   sparse-checkout-cone-mode: true
+2026-11-28T08:35:02.2648391Z   fetch-depth: 1
+2026-11-28T08:35:02.2648748Z   fetch-tags: false
+2026-11-28T08:35:02.2649114Z   show-progress: true
+2026-11-28T08:35:02.2649482Z   lfs: false
+2026-11-28T08:35:02.2649825Z   submodules: false
+2026-11-28T08:35:02.2650201Z   set-safe-directory: true
+2026-11-28T08:35:02.2650609Z   allow-unsafe-pr-checkout: false
+2026-11-28T08:35:02.2651215Z ##[endgroup]
+2026-11-28T08:35:02.5487833Z Syncing repository: YellowBrokeIt/LinkScribe
+2026-11-28T08:35:02.5491005Z ##[group]Getting Git version info
+2026-11-28T08:35:02.5492473Z Working directory is '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T08:35:02.5494457Z [command]/usr/bin/git version
+2026-11-28T08:35:02.5496885Z git version 2.56.1
+2026-11-28T08:35:02.5513476Z ##[endgroup]
+2026-11-28T08:35:02.5521095Z Temporarily overriding HOME='/home/runner/work/_temp/079937f3-04c8-44e4-b46e-eb798100bea8' before making global git config changes
+2026-11-28T08:35:02.5524491Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T08:35:02.5527474Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:35:02.5594975Z Deleting the contents of '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T08:35:02.5599027Z ##[group]Initializing the repository
+2026-11-28T08:35:02.5603756Z [command]/usr/bin/git init /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:35:02.5728918Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-28T08:35:02.5730781Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-28T08:35:02.5732733Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-28T08:35:02.5734085Z hint: call:
+2026-11-28T08:35:02.5735011Z hint:
+2026-11-28T08:35:02.5735919Z hint: 	git config --global init.defaultBranch <name>
+2026-11-28T08:35:02.5737182Z hint:
+2026-11-28T08:35:02.5738631Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-28T08:35:02.5740963Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-28T08:35:02.5743018Z hint:
+2026-11-28T08:35:02.5744047Z hint: 	git branch -m <name>
+2026-11-28T08:35:02.5745253Z hint:
+2026-11-28T08:35:02.5746896Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-28T08:35:02.5749930Z Initialized empty Git repository in /home/runner/work/LinkScribe/LinkScribe/.git/
+2026-11-28T08:35:02.5762717Z [command]/usr/bin/git remote add origin https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T08:35:02.5816005Z ##[endgroup]
+2026-11-28T08:35:02.5818069Z ##[group]Disabling automatic garbage collection
+2026-11-28T08:35:02.5821594Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-28T08:35:02.5863494Z ##[endgroup]
+2026-11-28T08:35:02.5865636Z ##[group]Setting up auth
+2026-11-28T08:35:02.5872000Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T08:35:02.5924023Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T08:35:02.6414215Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T08:35:02.6445737Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T08:35:02.6685352Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T08:35:02.6716419Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T08:35:02.6956070Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-28T08:35:02.6992778Z ##[endgroup]
+2026-11-28T08:35:02.6994077Z ##[group]Fetching the repository
+2026-11-28T08:35:02.7001792Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11e336577c7980f8da9dd817f265472596347a48:refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:08.2437456Z From https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T08:35:08.2438780Z  * [new ref]         11e336577c7980f8da9dd817f265472596347a48 -> origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:08.2441169Z ##[endgroup]
+2026-11-28T08:35:08.2441917Z ##[group]Determining the checkout info
+2026-11-28T08:35:08.2443008Z ##[endgroup]
+2026-11-28T08:35:08.2448404Z [command]/usr/bin/git sparse-checkout disable
+2026-11-28T08:35:08.2499414Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-28T08:35:08.2527947Z ##[group]Checking out the ref
+2026-11-28T08:35:08.2532363Z [command]/usr/bin/git checkout --progress --force -B feature/linkscribe-v03-reliability refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:08.5674354Z Switched to a new branch 'feature/linkscribe-v03-reliability'
+2026-11-28T08:35:08.5677812Z branch 'feature/linkscribe-v03-reliability' set up to track 'origin/feature/linkscribe-v03-reliability'.
+2026-11-28T08:35:08.5700275Z ##[endgroup]
+2026-11-28T08:35:08.5818639Z [command]/usr/bin/git log -1 --format=%H
+2026-11-28T08:35:08.5844440Z 11e336577c7980f8da9dd817f265472596347a48
+2026-11-28T08:35:08.7535500Z ##[group]Run actions/setup-python@v5
+2026-11-28T08:35:08.7535770Z with:
+2026-11-28T08:35:08.7535947Z   python-version: 3.13
+2026-11-28T08:35:08.7536366Z   cache: pip
+2026-11-28T08:35:08.7536538Z   check-latest: false
+2026-11-28T08:35:08.7538595Z   token: ***
+2026-11-28T08:35:08.7538777Z   update-environment: true
+2026-11-28T08:35:08.7538980Z   allow-prereleases: false
+2026-11-28T08:35:08.7539176Z   freethreaded: false
+2026-11-28T08:35:08.7539356Z ##[endgroup]
+2026-11-28T08:35:08.8659570Z ##[group]Installed versions
+2026-11-28T08:35:08.9796339Z (node:2197) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T08:35:08.9797498Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T08:35:08.9798046Z Successfully set up CPython (3.13.18)
+2026-11-28T08:35:08.9798673Z ##[endgroup]
+2026-11-28T08:35:09.2053683Z [command]/opt/hostedtoolcache/Python/3.13.18/x64/bin/pip cache dir
+2026-11-28T08:35:09.5251907Z /home/runner/.cache/pip
+2026-11-28T08:35:09.6305445Z Cache hit for: setup-python-Linux-x64-26.04-Ubuntu-python-3.13.18-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526
+2026-11-28T08:35:09.6391691Z (node:2197) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-28T08:35:10.5840406Z Received 207873131 of 207873131 (100.0%), 216.7 MBs/sec
+2026-11-28T08:35:10.5840976Z Cache Size: ~198 MB (207873131 B)
+2026-11-28T08:35:10.5909794Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c73a2e21-9dd6-4665-84ef-2ac28e023cea/cache.tzst -P -C /home/runner/work/LinkScribe/LinkScribe --use-compress-program unzstd
+2026-11-28T08:35:10.8420763Z Cache restored successfully
+2026-11-28T08:35:10.8513752Z Cache restored from key: setup-python-Linux-x64-26.04-Ubuntu-python-3.13.18-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526
+2026-11-28T08:35:10.8788374Z ##[group]Run python -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'
+2026-11-28T08:35:10.8789042Z [36;1mpython -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'[0m
+2026-11-28T08:35:10.8824963Z shell: /usr/bin/bash -e {0}
+2026-11-28T08:35:10.8825208Z env:
+2026-11-28T08:35:10.8825447Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:10.8825830Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib/pkgconfig
+2026-11-28T08:35:10.8826193Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:10.8826519Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:10.8826823Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:10.8827346Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib
+2026-11-28T08:35:10.8827614Z ##[endgroup]
+2026-11-28T08:35:11.5973115Z Collecting pytest
+2026-11-28T08:35:11.5985847Z   Using cached pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+2026-11-28T08:35:11.6170029Z Collecting httpx
+2026-11-28T08:35:11.6180590Z   Using cached httpx-0.29.0-py3-none-any.whl.metadata (7.1 kB)
+2026-11-28T08:35:11.6804412Z Collecting pyannote.core==6.1.0
+2026-11-28T08:35:11.6814514Z   Using cached pyannote_core-6.1.0-py3-none-any.whl.metadata (2.1 kB)
+2026-11-28T08:35:11.7680554Z Collecting scipy<2,>=1.15
+2026-11-28T08:35:11.7692003Z   Using cached scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+2026-11-28T08:35:11.8122822Z Collecting fastapi<1,>=0.115 (from -r requirements.txt (line 1))
+2026-11-28T08:35:11.8133632Z   Using cached fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+2026-11-28T08:35:11.8363199Z Collecting uvicorn<1,>=0.30 (from -r requirements.txt (line 2))
+2026-11-28T08:35:11.8372723Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-28T08:35:11.8872428Z Collecting python-multipart>=0.0.18 (from -r requirements.txt (line 3))
+2026-11-28T08:35:11.8883021Z   Using cached python_multipart-0.0.34-py3-none-any.whl.metadata (6.3 kB)
+2026-11-28T08:35:11.9057275Z Collecting faster-whisper<2,>=1.1 (from -r requirements.txt (line 4))
+2026-11-28T08:35:11.9066364Z   Using cached faster_whisper-1.2.1-py3-none-any.whl.metadata (16 kB)
+2026-11-28T08:35:11.9437078Z Collecting sentencepiece<0.3,>=0.2.1 (from -r requirements.txt (line 5))
+2026-11-28T08:35:11.9449279Z   Using cached sentencepiece-0.2.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (34 kB)
+2026-11-28T08:35:11.9592148Z Collecting youtube-transcript-api<2,>=1.2.4 (from -r requirements.txt (line 6))
+2026-11-28T08:35:11.9607885Z   Using cached youtube_transcript_api-1.2.5-py3-none-any.whl.metadata (25 kB)
+2026-11-28T08:35:12.0096145Z Collecting yt-dlp>=2026.3 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:12.0107161Z   Using cached yt_dlp-2026.11.23-py3-none-any.whl.metadata (183 kB)
+2026-11-28T08:35:12.0709961Z Collecting curl-cffi<0.18,>=0.17 (from -r requirements.txt (line 8))
+2026-11-28T08:35:12.0720819Z   Using cached curl_cffi-0.17.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (18 kB)
+2026-11-28T08:35:12.0854703Z Collecting socksio<2,>=1.0 (from -r requirements.txt (line 9))
+2026-11-28T08:35:12.0863129Z   Using cached socksio-1.0.0-py3-none-any.whl.metadata (6.1 kB)
+2026-11-28T08:35:12.1206156Z Collecting av<17,>=11 (from -r requirements.txt (line 10))
+2026-11-28T08:35:12.1216393Z   Using cached av-16.1.0-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (4.6 kB)
+2026-11-28T08:35:12.2955262Z Collecting numpy>=2.0 (from pyannote.core==6.1.0)
+2026-11-28T08:35:12.2965943Z   Using cached numpy-2.5.5-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-11-28T08:35:12.3787094Z Collecting pandas>=2.2.3 (from pyannote.core==6.1.0)
+2026-11-28T08:35:12.3798403Z   Using cached pandas-3.1.1-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (16 kB)
+2026-11-28T08:35:12.3952270Z Collecting sortedcontainers>=2.4.0 (from pyannote.core==6.1.0)
+2026-11-28T08:35:12.3960784Z   Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+2026-11-28T08:35:12.4168282Z Collecting starlette>=1.6.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.4179047Z   Using cached starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-28T08:35:12.4333739Z Collecting anyio>=4.1.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.4343094Z   Using cached anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+2026-11-28T08:35:12.5046054Z Collecting pydantic>=2.9.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.5056700Z   Using cached pydantic-2.14.4-py3-none-any.whl.metadata (143 kB)
+2026-11-28T08:35:12.5230862Z Collecting typing-extensions>=4.8.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.5242184Z   Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-11-28T08:35:12.5352272Z Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.5361022Z   Using cached typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+2026-11-28T08:35:12.5465776Z Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.5474770Z   Using cached annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)
+2026-11-28T08:35:12.5629475Z Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:12.5638285Z   Using cached opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+2026-11-28T08:35:12.5943287Z Collecting click>=7.0 (from uvicorn<1,>=0.30->-r requirements.txt (line 2))
+2026-11-28T08:35:12.5952522Z   Using cached click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+2026-11-28T08:35:12.6067802Z Collecting h11>=0.8 (from uvicorn<1,>=0.30->-r requirements.txt (line 2))
+2026-11-28T08:35:12.6079637Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-11-28T08:35:12.6716335Z Collecting ctranslate2<5,>=4.0 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:12.6726873Z   Using cached ctranslate2-4.9.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (11 kB)
+2026-11-28T08:35:12.7920918Z Collecting huggingface-hub>=0.21 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:12.7931749Z   Using cached huggingface_hub-2.5.0-py3-none-any.whl.metadata (16 kB)
+2026-11-28T08:35:12.8942565Z Collecting tokenizers<1,>=0.13 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:12.8953856Z   Using cached tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.8 kB)
+2026-11-28T08:35:12.9945010Z Collecting onnxruntime<2,>=1.14 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:12.9956007Z   Using cached onnxruntime-1.32.0-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (5.8 kB)
+2026-11-28T08:35:13.0193420Z Collecting tqdm (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.0204508Z   Using cached tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+2026-11-28T08:35:13.0365039Z Collecting defusedxml<0.8.0,>=0.7.1 (from youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:13.0373895Z   Using cached defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+2026-11-28T08:35:13.0846782Z Collecting requests (from youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:13.0857144Z   Using cached requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+2026-11-28T08:35:13.1558815Z Collecting cffi>=2.1.1 (from curl-cffi<0.18,>=0.17->-r requirements.txt (line 8))
+2026-11-28T08:35:13.1569986Z   Using cached cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+2026-11-28T08:35:13.1735710Z Collecting certifi>=2026.10.19 (from curl-cffi<0.18,>=0.17->-r requirements.txt (line 8))
+2026-11-28T08:35:13.1744840Z   Using cached certifi-2026.11.20-py3-none-any.whl.metadata (2.5 kB)
+2026-11-28T08:35:13.2042429Z Collecting pyyaml<7,>=5.3 (from ctranslate2<5,>=4.0->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.2053340Z   Using cached pyyaml-6.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+2026-11-28T08:35:13.2183957Z Collecting flatbuffers (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.2193079Z   Using cached flatbuffers-25.12.19-py2.py3-none-any.whl.metadata (1.0 kB)
+2026-11-28T08:35:13.2347703Z Collecting packaging (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.2356772Z   Using cached packaging-26.4-py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T08:35:13.3345925Z Collecting protobuf>=4.25.8 (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.3356261Z   Using cached protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+2026-11-28T08:35:13.3628558Z Collecting filelock>=3.10.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.3638527Z   Using cached filelock-4.3.2-py3-none-any.whl.metadata (2.3 kB)
+2026-11-28T08:35:13.3951730Z Collecting fsspec>=2023.5.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.3961699Z   Using cached fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+2026-11-28T08:35:13.4389209Z Collecting hf-xet<2.0.0,>=1.6.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.4399806Z   Using cached hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+2026-11-28T08:35:13.4522877Z Collecting httpx2<3,>=2.0.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.4531779Z   Using cached httpx2-2.16.2-py3-none-any.whl.metadata (10.0 kB)
+2026-11-28T08:35:13.4730963Z Collecting httpcore2==2.16.2 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.4740141Z   Using cached httpcore2-2.16.2-py3-none-any.whl.metadata (28 kB)
+2026-11-28T08:35:13.4878213Z Collecting idna>=3.18 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.4887800Z   Using cached idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+2026-11-28T08:35:13.5010717Z Collecting truststore>=0.10 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:13.5020108Z   Using cached truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)
+2026-11-28T08:35:13.5144709Z Collecting iniconfig>=2 (from pytest)
+2026-11-28T08:35:13.5155355Z   Using cached iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-11-28T08:35:13.6242741Z Collecting pluggy<2,>=1.6 (from pytest)
+2026-11-28T08:35:13.6253570Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-11-28T08:35:13.6404351Z Collecting pygments>=2.15 (from pytest)
+2026-11-28T08:35:13.6414043Z   Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-11-28T08:35:13.6561927Z Collecting httpcore==1.* (from httpx)
+2026-11-28T08:35:13.6571379Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-11-28T08:35:13.6733767Z Collecting pycparser (from cffi>=2.1.1->curl-cffi<0.18,>=0.17->-r requirements.txt (line 8))
+2026-11-28T08:35:13.6742849Z   Using cached pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+2026-11-28T08:35:13.6916260Z Collecting python-dateutil>=2.9.0 (from pandas>=2.2.3->pyannote.core==6.1.0)
+2026-11-28T08:35:13.6925566Z   Using cached python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+2026-11-28T08:35:13.7041032Z Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:13.7050291Z   Using cached annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-11-28T08:35:14.1714930Z Collecting pydantic-core==2.50.5 (from pydantic>=2.9.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:14.1725475Z   Using cached pydantic_core-2.50.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+2026-11-28T08:35:14.1883278Z Collecting tzdata (from python-dateutil>=2.9.0->pandas>=2.2.3->pyannote.core==6.1.0)
+2026-11-28T08:35:14.1892605Z   Using cached tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-11-28T08:35:14.2271079Z Collecting brotli (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.2282287Z   Using cached brotli-1.2.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.1 kB)
+2026-11-28T08:35:14.2407678Z Collecting mutagen (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.2416427Z   Using cached mutagen-1.48.1-py3-none-any.whl.metadata (1.8 kB)
+2026-11-28T08:35:14.2947324Z Collecting pycryptodomex (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.2958594Z   Using cached pycryptodomex-3.24.2-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.4 kB)
+2026-11-28T08:35:14.3229920Z Collecting urllib3<3,>=2.0.2 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.3239638Z   Using cached urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+2026-11-28T08:35:14.4132591Z Collecting websockets>=13.0 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.4144124Z   Using cached websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+2026-11-28T08:35:14.4256856Z Collecting yt-dlp-ejs==0.8.0 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:14.4265895Z   Using cached yt_dlp_ejs-0.8.0-py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T08:35:14.5182785Z Collecting charset_normalizer<4,>=2 (from requests->youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:14.5195034Z   Using cached charset_normalizer-3.5.3-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (43 kB)
+2026-11-28T08:35:14.5301036Z Using cached pyannote_core-6.1.0-py3-none-any.whl (57 kB)
+2026-11-28T08:35:14.5309993Z Using cached scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-11-28T08:35:14.5415578Z Using cached fastapi-0.165.0-py3-none-any.whl (159 kB)
+2026-11-28T08:35:14.5423881Z Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-11-28T08:35:14.5432835Z Using cached faster_whisper-1.2.1-py3-none-any.whl (1.1 MB)
+2026-11-28T08:35:14.5444824Z Using cached sentencepiece-0.2.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+2026-11-28T08:35:14.5457292Z Using cached youtube_transcript_api-1.2.5-py3-none-any.whl (485 kB)
+2026-11-28T08:35:14.5467092Z Using cached curl_cffi-0.17.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (14.1 MB)
+2026-11-28T08:35:14.5512432Z Using cached socksio-1.0.0-py3-none-any.whl (12 kB)
+2026-11-28T08:35:14.5520433Z Using cached av-16.1.0-cp313-cp313-manylinux_2_28_x86_64.whl (40.9 MB)
+2026-11-28T08:35:14.5641023Z Using cached ctranslate2-4.9.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (28.3 MB)
+2026-11-28T08:35:14.5740088Z Using cached defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+2026-11-28T08:35:14.5748334Z Using cached numpy-2.5.5-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.7 MB)
+2026-11-28T08:35:14.5797942Z Using cached onnxruntime-1.32.0-cp313-cp313-manylinux_2_28_x86_64.whl (27.8 MB)
+2026-11-28T08:35:14.5883837Z Using cached pyyaml-6.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (838 kB)
+2026-11-28T08:35:14.5893591Z Using cached tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+2026-11-28T08:35:14.5910697Z Using cached huggingface_hub-2.5.0-py3-none-any.whl (863 kB)
+2026-11-28T08:35:14.5921193Z Using cached click-8.5.1-py3-none-any.whl (126 kB)
+2026-11-28T08:35:14.5930209Z Using cached hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+2026-11-28T08:35:14.5949200Z Using cached httpx2-2.16.2-py3-none-any.whl (97 kB)
+2026-11-28T08:35:14.5957276Z Using cached httpcore2-2.16.2-py3-none-any.whl (85 kB)
+2026-11-28T08:35:14.5965197Z Using cached pytest-9.2.0-py3-none-any.whl (411 kB)
+2026-11-28T08:35:14.5974626Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-11-28T08:35:14.5982690Z Using cached httpx-0.29.0-py3-none-any.whl (73 kB)
+2026-11-28T08:35:14.5990740Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-11-28T08:35:14.5998853Z Using cached python_multipart-0.0.34-py3-none-any.whl (32 kB)
+2026-11-28T08:35:14.6006546Z Using cached yt_dlp-2026.11.23-py3-none-any.whl (3.2 MB)
+2026-11-28T08:35:14.6023671Z Using cached annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)
+2026-11-28T08:35:14.6031674Z Using cached anyio-4.16.0-py3-none-any.whl (134 kB)
+2026-11-28T08:35:14.6040124Z Using cached certifi-2026.11.20-py3-none-any.whl (127 kB)
+2026-11-28T08:35:14.6048714Z Using cached cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-11-28T08:35:14.6056692Z Using cached filelock-4.3.2-py3-none-any.whl (244 kB)
+2026-11-28T08:35:14.6065697Z Using cached fsspec-2026.9.0-py3-none-any.whl (221 kB)
+2026-11-28T08:35:14.6074262Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-11-28T08:35:14.6082354Z Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-11-28T08:35:14.6090593Z Using cached iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-11-28T08:35:14.6098581Z Using cached opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+2026-11-28T08:35:14.6109151Z Using cached packaging-26.4-py3-none-any.whl (140 kB)
+2026-11-28T08:35:14.6117795Z Using cached pandas-3.1.1-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.0 MB)
+2026-11-28T08:35:14.6157607Z Using cached protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl (343 kB)
+2026-11-28T08:35:14.6166266Z Using cached pydantic-2.14.4-py3-none-any.whl (494 kB)
+2026-11-28T08:35:14.6176047Z Using cached pydantic_core-2.50.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+2026-11-28T08:35:14.6190027Z Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-11-28T08:35:14.6198101Z Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-11-28T08:35:14.6209308Z Using cached python_dateutil-4.0.0-py3-none-any.whl (92 kB)
+2026-11-28T08:35:14.6217404Z Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+2026-11-28T08:35:14.6225075Z Using cached starlette-1.10.0-py3-none-any.whl (80 kB)
+2026-11-28T08:35:14.6233174Z Using cached tqdm-4.70.1-py3-none-any.whl (80 kB)
+2026-11-28T08:35:14.6241360Z Using cached truststore-0.10.5-py3-none-any.whl (19 kB)
+2026-11-28T08:35:14.6249415Z Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-11-28T08:35:14.6257398Z Using cached typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+2026-11-28T08:35:14.6264901Z Using cached yt_dlp_ejs-0.8.0-py3-none-any.whl (53 kB)
+2026-11-28T08:35:14.6272987Z Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+2026-11-28T08:35:14.6281770Z Using cached charset_normalizer-3.5.3-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (256 kB)
+2026-11-28T08:35:14.6290237Z Using cached urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-11-28T08:35:14.6298906Z Using cached websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+2026-11-28T08:35:14.6307387Z Using cached brotli-1.2.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.4 MB)
+2026-11-28T08:35:14.6319313Z Using cached flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+2026-11-28T08:35:14.6327119Z Using cached mutagen-1.48.1-py3-none-any.whl (195 kB)
+2026-11-28T08:35:14.6335532Z Using cached pycparser-3.12-py3-none-any.whl (62 kB)
+2026-11-28T08:35:14.6344056Z Using cached pycryptodomex-3.24.2-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+2026-11-28T08:35:14.6358354Z Using cached tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+2026-11-28T08:35:15.1049249Z Installing collected packages: sortedcontainers, flatbuffers, brotli, yt-dlp-ejs, yt-dlp, websockets, urllib3, tzdata, typing-extensions, truststore, tqdm, socksio, sentencepiece, pyyaml, python-multipart, pygments, pycryptodomex, pycparser, protobuf, pluggy, packaging, numpy, mutagen, iniconfig, idna, hf-xet, h11, fsspec, filelock, defusedxml, click, charset_normalizer, certifi, av, annotated-types, annotated-doc, uvicorn, typing-inspection, scipy, requests, python-dateutil, pytest, pydantic-core, opentelemetry-api, onnxruntime, httpcore2, httpcore, ctranslate2, cffi, anyio, youtube-transcript-api, starlette, pydantic, pandas, httpx2, httpx, curl-cffi, pyannote.core, huggingface-hub, fastapi, tokenizers, faster-whisper
+2026-11-28T08:35:33.4141138Z 
+2026-11-28T08:35:33.4193354Z Successfully installed annotated-doc-0.0.7 annotated-types-0.8.0 anyio-4.16.0 av-16.1.0 brotli-1.2.1 certifi-2026.11.20 cffi-2.1.1 charset_normalizer-3.5.3 click-8.5.1 ctranslate2-4.9.1 curl-cffi-0.17.0 defusedxml-0.7.1 fastapi-0.165.0 faster-whisper-1.2.1 filelock-4.3.2 flatbuffers-25.12.19 fsspec-2026.9.0 h11-0.16.0 hf-xet-1.8.0 httpcore-1.0.9 httpcore2-2.16.2 httpx-0.29.0 httpx2-2.16.2 huggingface-hub-2.5.0 idna-3.20 iniconfig-2.3.1 mutagen-1.48.1 numpy-2.5.5 onnxruntime-1.32.0 opentelemetry-api-1.45.2 packaging-26.4 pandas-3.1.1 pluggy-1.7.0 protobuf-7.36.2 pyannote.core-6.1.0 pycparser-3.12 pycryptodomex-3.24.2 pydantic-2.14.4 pydantic-core-2.50.5 pygments-2.21.0 pytest-9.2.0 python-dateutil-4.0.0 python-multipart-0.0.34 pyyaml-6.0.4 requests-2.34.2 scipy-1.18.1 sentencepiece-0.2.3 socksio-1.0.0 sortedcontainers-2.4.0 starlette-1.10.0 tokenizers-0.23.3 tqdm-4.70.1 truststore-0.10.5 typing-extensions-4.16.0 typing-inspection-0.4.5 tzdata-2026.6 urllib3-2.8.0 uvicorn-0.54.0 websockets-17.4 youtube-transcript-api-1.2.5 yt-dlp-2026.11.23 yt-dlp-ejs-0.8.0
+2026-11-28T08:35:33.7853149Z ##[group]Run python -m pytest -q
+2026-11-28T08:35:33.7853533Z [36;1mpython -m pytest -q[0m
+2026-11-28T08:35:33.7886866Z shell: /usr/bin/bash -e {0}
+2026-11-28T08:35:33.7887284Z env:
+2026-11-28T08:35:33.7887517Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:33.7888102Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib/pkgconfig
+2026-11-28T08:35:33.7888450Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:33.7888754Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:33.7889057Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:33.7889363Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib
+2026-11-28T08:35:33.7889633Z ##[endgroup]
+2026-11-28T08:35:37.1357721Z ........................................................................ [  8%]
+2026-11-28T08:35:38.0601625Z ........................................................................ [ 16%]
+2026-11-28T08:35:41.0440031Z ................................................................ [ 24%]
+2026-11-28T08:35:42.4027827Z ........................................................................ [ 32%]
+2026-11-28T08:35:43.8461994Z ........................................................................ [ 41%]
+2026-11-28T08:35:47.1550234Z ........................................................................ [ 49%]
+2026-11-28T08:35:48.7338733Z .................................................................................................. [ 61%]
+2026-11-28T08:35:49.1505105Z ........................................................................ [ 69%]
+2026-11-28T08:35:49.3505502Z ........................................................................ [ 78%]
+2026-11-28T08:35:49.8041201Z ........................................................................ [ 86%]
+2026-11-28T08:35:50.0640338Z ........................................................................ [ 95%]
+2026-11-28T08:35:50.4434112Z .........................................                                [100%]
+2026-11-28T08:35:50.4434646Z 851 passed, 54 subtests passed in 14.96s
+2026-11-28T08:35:50.6864950Z ##[group]Run python -m compileall -q app.py asr_timing.py library.py sources.py source_highlights.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py
+2026-11-28T08:35:50.6865934Z [36;1mpython -m compileall -q app.py asr_timing.py library.py sources.py source_highlights.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py[0m
+2026-11-28T08:35:50.6866493Z [36;1mpython -m pip check[0m
+2026-11-28T08:35:50.6866728Z [36;1mbash -n start_linux.sh launch.sh[0m
+2026-11-28T08:35:50.6896208Z shell: /usr/bin/bash -e {0}
+2026-11-28T08:35:50.6896421Z env:
+2026-11-28T08:35:50.6896640Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:50.6897191Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib/pkgconfig
+2026-11-28T08:35:50.6897535Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:50.6897838Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:50.6898179Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-28T08:35:50.6898484Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib
+2026-11-28T08:35:50.6898758Z ##[endgroup]
+2026-11-28T08:35:50.9363825Z No broken requirements found.
+2026-11-28T08:35:50.9730685Z Post job cleanup.
+2026-11-28T08:35:51.0717710Z Cache hit occurred on the primary key setup-python-Linux-x64-26.04-Ubuntu-python-3.13.18-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526, not saving cache.
+2026-11-28T08:35:51.0719176Z (node:3032) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T08:35:51.0719984Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T08:35:51.0876426Z Post job cleanup.
+2026-11-28T08:35:51.1570438Z [command]/usr/bin/git version
+2026-11-28T08:35:51.1608417Z git version 2.56.1
+2026-11-28T08:35:51.1642826Z Temporarily overriding HOME='/home/runner/work/_temp/bc2c17d0-6a71-4b3e-a0b6-c42aaa483cc1' before making global git config changes
+2026-11-28T08:35:51.1643990Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T08:35:51.1647441Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:35:51.1685026Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T08:35:51.1718618Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T08:35:51.2002393Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T08:35:51.2024814Z http.https://github.com/.extraheader
+2026-11-28T08:35:51.2037638Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-28T08:35:51.2072012Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T08:35:51.2369178Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T08:35:51.2416561Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T08:35:51.2822567Z Cleaning up orphan processes
+2026-11-28T08:35:51.3129681Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

@@ -11,6 +11,52 @@ The application version remains **0.3.0**.
 
 ## Latest verified state: 28 November 2026
 
+The current published application source is **11e3365**. Its production app,
+timing and enhancement files remain identical to d62df26; the maintained QA
+change corrects the default recognizer constructor expectation without changing
+CPU limits or acoustic thresholds. All six hosted workflows completed
+successfully. The [exact current hosted record](hosted-11e3365-complete-2026-11-28/README.md)
+retains raw logs, actual speaker/install artifacts and independent review.
+
+- Ubuntu and independent Python 3.11/3.13 each passed **851 tests and 54 subtests**.
+  Windows and macOS each passed **845 tests and 54 subtests**, with six Linux-only
+  process controls skipped. Chromium passed **35/35**, and all six actual
+  candidate ZIP installation/startup checks passed.
+- The actual two-reader application path is now green under its original
+  criteria: **two speakers, 221/258 assigned core samples (85.66%), 100% matched
+  purity**. This run saved **21 groups, eight Unknown**. Exact SQLite, exports,
+  backup, raw alignment and resource evidence passed 240 independent checks.
+  Previous failed d62/f2 statuses remain preserved. This is a controlled fixture,
+  not a general speaker-accuracy claim.
+- The exact native marker-grammar continuation and all **285 original probes**
+  passed. Its [complete execution record](krikri-marker-grammar-execution-2026-11-28/README.md)
+  retains raw commands, responses, grammars, samples and independent review.
+  The initial build/header failure remains unchanged.
+- Actual generation with that grammar completed all six original translation
+  cases, normal stops, exact full prompts, per-case unloads and cleanup within
+  144.365 seconds and 5,573.8 MiB sampled owned-process RSS. Full independent
+  and [root meaning review](krikri-marker-grammar-screen-preparation-v2-2026-11-28/root-meaning-review.json)
+  found **four acceptable results and two major errors**. The model added
+  substituted-name/contradictory-role clauses or appended a correct name after
+  the wrong asking actor. The profile is **rejected for quality promotion**;
+  marker membership is not semantic identity or correct placement.
+- The default Ollama hosted job completed its twelve cases with five automatic
+  passes/seven review flags. The complete d62 review at identical production
+  language source still establishes nine major errors and three acceptable
+  outputs. No default/model replacement is approved. Fresh translation v3 and
+  summary validation remain unopened.
+- Faithful summaries, broader Greek/English speech meaning, access to the
+  unsuccessful providers, and whole-application modest-machine resource fit
+  remain open. The original three-reader recording has a separately frozen
+  [next integration proposal](speaker-three-reader-hosted-plan-2026-11-28/README.md);
+  it is not an executed result.
+
+The version remains **0.3.0**. These are completed, qualified milestones; they do
+not close the remaining quality gates. The prior source-specific reports and
+criteria below are retained as history.
+
+## Previous verified checkpoint: 28 November 2026
+
 The completed application and speaker evidence is saved in
 [checkpoint 6b779db](https://github.com/YellowBrokeIt/LinkScribe/commit/6b779dba8d0ac9a1b099628eadb98db7ad8d894e).
 The production application files at `f2ebd04` are identical to the integrated

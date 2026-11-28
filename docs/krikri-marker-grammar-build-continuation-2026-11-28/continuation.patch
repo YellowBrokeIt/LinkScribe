@@ -1,0 +1,166 @@
+--- v2/context.py
++++ continuation/context.py
+@@ -14,7 +14,7 @@
+ GRAMMAR_PREP = ROOT / "docs/krikri-marker-grammar-preparation-2026-11-28"
+ PRIOR = ROOT / "docs/krikri-source-spelling-screen-2026-11-28"
+ OWNED = Path("/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime")
+-PHASES = ("acquire", "build", "native_prepare", "validate")
++PHASES = ("build", "native_prepare", "validate")
+ PHASE_KEYS = {"acquire": "acquire", "build": "build-and-sanity", "native_prepare": "native-prepare",
+               "validate": "validate-emitted-grammars"}
+ 
+@@ -158,12 +158,13 @@
+     return value
+ 
+ 
+-def phase_limits(native, phase, completed_elapsed):
++def phase_limits(native, phase, completed_elapsed, phase_elapsed=0.0):
+     specification = next(row for row in native["phases"] if row["name"] == PHASE_KEYS[phase])
+     remaining = native["aggregate_seconds"] - completed_elapsed
+-    if remaining <= 0:
++    phase_remaining = specification["seconds"] - phase_elapsed
++    if remaining <= 0 or phase_remaining <= 0:
+         raise ValueError("Aggregate active-phase time budget exhausted.")
+     return {"rss_bytes": specification["rss_mib"] * 1024**2,
+-            "total_seconds": min(specification["seconds"], remaining),
++            "total_seconds": min(phase_remaining, remaining),
+             "initialization_seconds": specification.get("initialization_seconds", specification["seconds"]),
+             "case_seconds": 2 if phase == "validate" else specification["seconds"]}
+--- v2/execution_gate.py
++++ continuation/execution_gate.py
+@@ -4,6 +4,7 @@
+ import psutil
+ 
+ from context import HERE, ROOT, NATIVE_PLAN, PHASES, read, sha, read_plan, verify_files
++from continuation_contract import verify_prior_stage
+ 
+ RUNTIME_FILES = ("plan.json", "context.py", "execution_gate.py", "run_stage.py", "phase_worker.py",
+                  "resource_monitor.py", "process_io.py", "phase_actions.py", "native_actions.py",
+@@ -39,7 +40,11 @@
+         relative = str((HERE / name).relative_to(ROOT))
+         if bindings.get(relative) != sha(HERE / name):
+             raise ValueError("Root receipt omits required controller file: " + name)
+-    elapsed = 0.0
++    carried = verify_prior_stage()
++    if (plan["continuation"]["spent_build_seconds"] != carried["spent_build_seconds"]
++            or plan["continuation"]["carried_active_seconds"] != carried["carried_active_seconds"]):
++        raise ValueError("The continuation plan does not carry forward exact prior observed time.")
++    elapsed = carried["carried_active_seconds"]
+     for predecessor in PHASES[:PHASES.index(phase)]:
+         report_path, resources_path = HERE / (predecessor + ".json"), HERE / (predecessor + "-resources.json")
+         expected = value.get("completed_phase_bindings", {}).get(predecessor)
+--- v2/phase_actions.py
++++ continuation/phase_actions.py
+@@ -1,4 +1,4 @@
+-"""Materialization, one compile and model-free grammar validation actions.
++"""Retained-build continuation and model-free grammar validation actions.
+ 
+ Actions are called only by the root-receipted monitored phase worker. Nothing
+ executes at import. The source capsule is a retained primary-source document,
+@@ -123,37 +123,44 @@
+ 
+ 
+ def build(report, output, plan):
+-    verify_materialized_sources()
+-    acquired = read(HERE / "acquire.json")
+-    require_record(acquired["source_manifest"])
++    """Verify the retained compile, then run only the three previously unrun probes."""
++    from continuation_contract import verify_prior_stage, verify_exact_dependencies
++    expected = verify_materialized_sources()
++    previous = verify_prior_stage()
++    old = previous["prior_build_report"]
++    dependencies = verify_exact_dependencies()
++    required = {str((OWNED / "source" / row["path"]).resolve()) for row in expected
++                if row["path"] != "LICENSE"}
++    if not required <= {row["path"] for row in dependencies}:
++        raise ValueError("The retained dependency receipt omits the pinned source/header closure.")
+     command = read(NATIVE_PLAN / "build-command.json")
+     environment = command["environment_allowlist"]
+-    binary = OWNED / "bin/test-gbnf-validator"
+-    if binary.exists():
+-        raise ValueError("Refusing to overwrite a previous compiled artifact.")
+-    result, _, _ = run_command(command["argv"], environment, OWNED, OWNED / "logs/compiler", 120, 8*1024**2)
+-    report["compile_receipt"] = record(OWNED / "logs/compiler-command.json")
++    binary = require_record(old["validator"])
++    elf = read(require_record(old["elf_receipt"]))
++    elf_out = require_record(elf["raw_streams"]["stdout"]).read_bytes()
++    text = elf_out.decode("utf-8", errors="strict")
++    if ("ELF64" not in text or "Advanced Micro Devices X86-64" not in text
++            or str(Path(plan["runtime"]["directory"]) / "lib/ollama") not in text):
++        raise ValueError("Retained ELF receipt does not match the required architecture/runtime path.")
++    loader = read(require_record(old["loader_receipt"]))
++    loader_out = require_record(loader["raw_streams"]["stdout"]).read_bytes()
++    resolved = verify_loader_output(loader_out, read(NATIVE_PLAN / "retained-binary-metadata.json"))
++    if resolved != old["resolved_libraries"]:
++        raise ValueError("Retained native/system library bindings differ.")
++    report.update({"mode": "retained_build_verification_then_original_unrun_sanity",
++                   "compiler_invocations_this_phase": 0, "acquisition_invocations_this_phase": 0,
++                   "prior_failed_build_report": previous["prior_build_report_record"],
++                   "prior_failed_build_resources": previous["prior_build_resource_record"],
++                   "prior_failed_build_remains_failed": True,
++                   "carried_prior_active_seconds": previous["carried_active_seconds"],
++                   "previous_build_active_seconds": previous["spent_build_seconds"],
++                   "compile_receipt": old["compile_receipt"], "validator": old["validator"],
++                   "elf_receipt": old["elf_receipt"], "loader_receipt": old["loader_receipt"],
++                   "resolved_libraries": resolved,
++                   "compiler_dependency_file": old["compiler_dependency_file"],
++                   "actual_compiler_dependencies": dependencies,
++                   "exact_outside_root_system_headers": read(HERE / "independent-prior-stage-review/actual-header-dependencies.json")["unexpected_resolved_headers"]})
+     save(output, report)
+-    if result["exit_code"] != 0 or not binary.is_file() or binary.is_symlink():
+-        raise ValueError("The one pinned compile/link did not succeed.")
+-    report["validator"] = record(binary)
+-    elf_receipt, elf_out, elf_err = run_command(command["post_link_elf_read_argv"], environment, OWNED,
+-                                               OWNED / "logs/validator-elf", 10, 65536)
+-    text = elf_out.decode("utf-8", errors="strict")
+-    if (elf_receipt["exit_code"] or elf_err or "ELF64" not in text
+-            or "Advanced Micro Devices X86-64" not in text
+-            or str(Path(plan["runtime"]["directory"]) / "lib/ollama") not in text):
+-        raise ValueError("Compiled artifact lacks the declared ELF architecture or runtime path.")
+-    loader_receipt, loader_out, loader_err = run_command(command["post_link_loader_list_argv"], environment,
+-                                                       OWNED, OWNED / "logs/validator-loader", 10, 65536)
+-    if loader_receipt["exit_code"] or loader_err:
+-        raise ValueError("The exact validator dependency resolution failed.")
+-    report["resolved_libraries"] = verify_loader_output(loader_out, read(NATIVE_PLAN / "retained-binary-metadata.json"))
+-    report["elf_receipt"] = record(OWNED / "logs/validator-elf-command.json")
+-    report["loader_receipt"] = record(OWNED / "logs/validator-loader-command.json")
+-    dependencies = OWNED / "build/validator.d"
+-    report["compiler_dependency_file"] = record(dependencies)
+-    report["actual_compiler_dependencies"] = dependency_manifest(dependencies, binary)
+     sanity = read(NATIVE_PLAN / "validator-sanity.json")
+     grammar = OWNED / "probes/sanity.gbnf"
+     with grammar.open("xb") as stream: stream.write(sanity["grammar"].encode("utf-8"))
+--- v2/phase_worker.py
++++ continuation/phase_worker.py
+@@ -30,8 +30,8 @@
+             native_prepare(report, output, plan)
+         else:
+             event("initialized", phase=phase, model_loads=0)
+-            from phase_actions import acquire, build, validate
+-            {"acquire": acquire, "build": build, "validate": validate}[phase](report, output, plan)
++            from phase_actions import build, validate
++            {"build": build, "validate": validate}[phase](report, output, plan)
+         require_storage(); verify_tools(plan["extra_tool_bindings"])
+         report["complete"] = True
+     except BaseException as error:
+--- v2/run_stage.py
++++ continuation/run_stage.py
+@@ -40,7 +40,7 @@
+         import json
+         json.dump(claim, stream, indent=2); stream.write("\n")
+     OWNED.mkdir(exist_ok=True)
+-    private = OWNED / "logs"; private.mkdir(exist_ok=True)
++    private = OWNED / "continuation-worker-logs"; private.mkdir(exist_ok=True)
+     maximum_file = native["disk"]["maximum_file_bytes"]
+     resource.setrlimit(resource.RLIMIT_FSIZE, (maximum_file, maximum_file))
+     signal.signal(signal.SIGTERM, lambda *_: (_ for _ in ()).throw(KeyboardInterrupt("Controller terminated.")))
+@@ -50,7 +50,8 @@
+                    "GRAMMAR_PHASE_CLAIM_SHA256": sha(claim_path)}
+     if phase == "native_prepare":
+         environment["HOME"] = os.environ["HOME"]  # Inherit unchanged; never repurpose this variable.
+-    limits = phase_limits(native, phase, completed_elapsed)
++    phase_elapsed = plan["continuation"]["spent_build_seconds"] if phase == "build" else 0.0
++    limits = phase_limits(native, phase, completed_elapsed, phase_elapsed)
+     worker = HERE / "phase_worker.py"
+     result = monitor([sys.executable, "-B", str(worker), "--phase", phase], environment,
+                      private / (phase + "-worker-private.log"), HERE / (phase + "-resources.json"),

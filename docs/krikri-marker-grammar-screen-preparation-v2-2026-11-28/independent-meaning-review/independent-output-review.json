@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-11-28T08:57:05.302333+00:00",
+  "reviewer": "/root/highlights_validation",
+  "scope": "Independent original-six complete-output meaning review; original criteria unchanged.",
+  "decision": "rejected_for_translation_quality",
+  "quality_promotion_supported": false,
+  "counts": {
+    "acceptable": 4,
+    "minor_issue": 0,
+    "major_error": 2,
+    "operational_rejections": 0,
+    "unrun": 0
+  },
+  "major_error_rule": "Any material omission, invention, role reversal, name substitution, quantity/relationship error, or changed condition blocks quality promotion.",
+  "classification_definitions": {
+    "acceptable": "No material semantic error or notable fluency defect observed in the complete output for this case.",
+    "minor_issue": "Recoverable wording or grammar defect without a material change of the tested meaning.",
+    "major_error": "The unchanged original major-error rule applies; any such finding blocks quality promotion."
+  },
+  "pre_output_binding_sha256": "93fffd771297171d586ad5670f6f08a834f7b9b1c042e58644ba46c84b1c9bd9",
+  "execution_binding_sha256": "6c9dd356dc808cb9b4bedb51475cac7974414ae0dd32e948b3fb91922c2c201b",
+  "source_and_criteria_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+  "original_criterion_binding_sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+  "plan_sha256": "735ca4e02410c06b15c41c99c7f3d3b3c88a9007e858abfd727be686d67ff796",
+  "execution_sha256": "7e28bf812ecfe593aa64a40803521cf2021ee2282d830984dea83b7807a0b6ba",
+  "completed_protocol_audit_sha256": "c465447a15b2b9e11347394e1e7837f979b42a2fb035b11b61562b4e577c2012",
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "classification": "acceptable",
+      "source_language": "en",
+      "target_language": "el",
+      "complete_original_source": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"Η <x0/> αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.\",\n    \"Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "Η <x0/> αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+        "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Η Maria αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Distinguish the transcript text, the transcription process and the original audio recording.",
+          "status": "pass",
+          "explanation": "The transcript is saved as a text file, while the original recording is an audio recording. Μεταγραφή is contextually appropriate for transcript/transcription here."
+        },
+        {
+          "criterion": "Preserve that the text was saved but the original recording was not.",
+          "status": "pass",
+          "explanation": "The saved text and unsaved original recording are both explicit; the negation remains attached to saving the recording."
+        },
+        {
+          "criterion": "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+          "status": "pass",
+          "explanation": "The transcription took 12 minutes in the past; Greek translation has not started yet. The two activities and their chronology remain distinct."
+        },
+        {
+          "criterion": "Maria may remain in Latin letters or be rendered naturally as Μαρία.",
+          "status": "pass",
+          "explanation": "Exact Latin Maria is allowed by the original criterion and appears as the grammatical subject with the natural Greek article Η."
+        }
+      ],
+      "global_findings": [],
+      "complete_meaning_note": "All actors, objects, actions, 12-minute duration and chronology survive, with ordinary Greek prose and no notable fluency defect.",
+      "automatic_review_flags_preserved": [],
+      "operational_acceptance": true,
+      "source_report_sha256": "045c189d8019b50eec2ec1a28fbb19ab99f62c85e1a21855702cda24a8ba0332",
+      "preflight_sha256": "421b6488a26213bb3460b557872a787b565574e6b4b2b253533e169d2d787358",
+      "protection_sha256": "2dd7cdbf6c04044edc824061124b7fee84b2e28fc8726d4f1e0b2ce8bcd22368",
+      "reported_raw_envelope_sha256": "2783db77033dc2fef9a0c2e9a59a3fe4a85f66e08423a694a777786c6348ed10",
+      "raw_final_content_sha256": "4eb66fb049731308575bea8fa8f88761a9704c1e37ae8fe0d2f20e58cb618c8e",
+      "restored_text_sha256": [
+        "cd0744fdfa4af64b35a444596893aee5b6358f4790b518f9f0f54c489c552941",
+        "33af1a172dc86553a7151ede7dc43c8fb82ac9587ed1e0da13bfd7c1a43a8e2c"
+      ]
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "classification": "major_error",
+      "source_language": "el",
+      "target_language": "en",
+      "complete_original_source": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"Nick sent the text to Helen, not to Elena. <x0/> sent the text to <x1/>, not to <x2/>.\",\n    \"Elena is the translator. Nick is doing the recording and Helen is checking the subtitles. <x3/> is the translator. <x4/> is doing the recording and <x5/> is checking the subtitles.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "Nick sent the text to Helen, not to Elena. <x0/> sent the text to <x1/>, not to <x2/>.",
+        "Elena is the translator. Nick is doing the recording and Helen is checking the subtitles. <x3/> is the translator. <x4/> is doing the recording and <x5/> is checking the subtitles."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nick sent the text to Helen, not to Elena. Νίκος sent the text to Ελένη, not to Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Elena is the translator. Nick is doing the recording and Helen is checking the subtitles. Ελένη is the translator. Νίκος is doing the recording and Έλενα is checking the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+          "status": "fail",
+          "explanation": "The extra unmarked clause says Elena is the translator and Helen checks subtitles, contradicting the source. Later correct restored clauses do not cancel those false role assignments."
+        },
+        {
+          "criterion": "Nikos sent the text to Eleni; Elena was not the recipient.",
+          "status": "partial",
+          "explanation": "The exact restored clause correctly says Νίκος sent the text to Ελένη, not Έλενα, but a preceding duplicate substitutes Nick and Helen. The complete output is not a faithful single rendering of the original identities."
+        },
+        {
+          "criterion": "Do not add an unnatural English article before a person's name.",
+          "status": "pass",
+          "explanation": "No unnatural English article is added before the names in this output."
+        },
+        {
+          "criterion": "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable.",
+          "status": "fail",
+          "explanation": "Nick and Helen are culturally substituted names, not faithful transliterations under the unchanged rule. Their unmarked duplication remains in the accepted final text."
+        }
+      ],
+      "global_findings": [
+        {
+          "kind": "name_substitution",
+          "severity": "major_error",
+          "evidence": "Nick sent the text to Helen, not to Elena.",
+          "explanation": "The source names Νίκος and Ελένη are replaced in an additional unmarked clause. Exact later names do not remove this content."
+        },
+        {
+          "kind": "contradictory_role_invention",
+          "severity": "major_error",
+          "evidence": "Elena is the translator. Nick is doing the recording and Helen is checking the subtitles.",
+          "explanation": "The original translator is Ελένη, while Έλενα checks subtitles. These extra statements reverse those women's role assignments."
+        }
+      ],
+      "complete_meaning_note": "Every required marker occurs exactly once in its correct entry, and the restored marker-bearing clauses are correct. The unrestricted ordinary-prose gaps also contain a second, materially wrong account. The full returned output therefore fails meaning.",
+      "automatic_review_flags_preserved": [
+        {
+          "kind": "substantial_greek_text",
+          "segment": 0
+        },
+        {
+          "kind": "term_not_observed",
+          "label": "Nikos",
+          "alternatives": [
+            "Nikos",
+            "Nicos",
+            "Niko"
+          ]
+        },
+        {
+          "kind": "term_not_observed",
+          "label": "Eleni",
+          "alternatives": [
+            "Eleni",
+            "Elenē"
+          ]
+        }
+      ],
+      "operational_acceptance": true,
+      "source_report_sha256": "89a93e84cd6386a59e1d5ae205ce0ecc5d3c1e6d8700006b8e4bcaf877284e3c",
+      "preflight_sha256": "78006be4b659ff7b01a0ac8b6941ec85b88e394b269e16fdb8453567c3b06433",
+      "protection_sha256": "42d035b50d93c2c02cafbdb0bde7cbbe60059da3da2e17d62af07c23aec290e2",
+      "reported_raw_envelope_sha256": "240222cf89b5ab45ea3ea4fb15bedc2effa12eba5e2928e7418e53cb3f4202a7",
+      "raw_final_content_sha256": "6b30bcb1f790fd3d63fb935fd1b5eeb9ccfa41b4b2aaf68189fcde318abfe6b6",
+      "restored_text_sha256": [
+        "f6213609e951dcfa37009e68504ce966ebf384aaf5052f4e9d4ed17b90e18899",
+        "4d2912a982fe2c6f9f10346d5b0b39fec0e1ceef84d047ae4a77c9e8a444c146"
+      ]
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "classification": "acceptable",
+      "source_language": "en",
+      "target_language": "el",
+      "complete_original_source": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"Το απόκομμα δείχνει €12.50 για 2 είδη. Η ξεχωριστή μεταφορά είναι 5.000 sats, όχι 500 sats.\",\n    \"Η σημείωση αναφέρει Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "Το απόκομμα δείχνει €12.50 για 2 είδη. Η ξεχωριστή μεταφορά είναι 5.000 sats, όχι 500 sats.",
+        "Η σημείωση αναφέρει Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "Το απόκομμα δείχνει €12.50 για 2 είδη. Η ξεχωριστή μεταφορά είναι 5.000 sats, όχι 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "Η σημείωση αναφέρει Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+          "status": "pass",
+          "explanation": "€12.50, two items, a separate 5,000-sat transfer and the explicitly excluded 500 sats all survive."
+        },
+        {
+          "criterion": "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+          "status": "pass",
+          "explanation": "5.000 is valid Greek thousands punctuation for 5000. The literal-number flag is not a numerical error."
+        },
+        {
+          "criterion": "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+          "status": "pass",
+          "explanation": "The receipt/slip and separate transfer remain different objects. The note does not claim euros and sats are the same unit."
+        },
+        {
+          "criterion": "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation.",
+          "status": "pass",
+          "explanation": "Ordinary prose is translated into Greek; Bitcoin and sats remain permitted technical notation."
+        }
+      ],
+      "global_findings": [],
+      "complete_meaning_note": "Απόκομμα is understandable as the receipt/slip in this price-and-items context. No quantity, relationship, negation or substantive prose error was found.",
+      "automatic_review_flags_preserved": [
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "operational_acceptance": true,
+      "source_report_sha256": "f073e45ff7bf16a48b6c44e02503275f7575180adddd7568f7f46b4857e816af",
+      "preflight_sha256": "689ea546fe6efcd5575f50602b44f6b28b5658e1e279164219f7fbae7efc9519",
+      "protection_sha256": "c039a5e33f85d018374837dc3f92cc62970115051a65df92473dd5f4627810c0",
+      "reported_raw_envelope_sha256": "7b0832afecd04ae01fbbef2177efca0372ae5549e6fc7976ebea689f1a369d36",
+      "raw_final_content_sha256": "f51b946cc18c7ad74543a1659f67a0e9b42ebfa91ab6d415638d54fe0b8e26fe",
+      "restored_text_sha256": [
+        "49edafea05e1001e0066efd510e727a0d3668d57cd7b7e9b60f7e361b9a49730",
+        "4db917bd2295f06ec0adee42938b5cbbf5785b4b3c811c89bc1d43f46f0d7b56"
+      ]
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "classification": "acceptable",
+      "source_language": "el",
+      "target_language": "en",
+      "complete_original_source": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"I didn't say that <x0/> sold all the books. I said that she didn't sell any yesterday.\",\n    \"She might sell one today, but that hasn't been decided yet.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "I didn't say that <x0/> sold all the books. I said that she didn't sell any yesterday.",
+        "She might sell one today, but that hasn't been decided yet."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn't say that Άννα sold all the books. I said that she didn't sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "She might sell one today, but that hasn't been decided yet.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+          "status": "pass",
+          "explanation": "The speaker denies saying Άννα sold all books, then positively reports saying she sold none yesterday; these two scopes remain separate."
+        },
+        {
+          "criterion": "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+          "status": "pass",
+          "explanation": "Didn't sell any retains zero sales, without weakening it to didn't sell all."
+        },
+        {
+          "criterion": "Today's possible sale remains undecided rather than certain or completed.",
+          "status": "pass",
+          "explanation": "Today's possible single sale is expressed as might and remains not yet decided."
+        },
+        {
+          "criterion": "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation.",
+          "status": "pass",
+          "explanation": "The full propositions preserve their actors, quantifier scopes, yesterday/today chronology and uncertainty."
+        }
+      ],
+      "global_findings": [],
+      "complete_meaning_note": "Exact source-script Άννα is allowed. Both follow-on references use she and correctly preserve the source's female actor; ordinary prose is English.",
+      "automatic_review_flags_preserved": [
+        {
+          "kind": "term_not_observed",
+          "label": "Anna",
+          "alternatives": [
+            "Anna"
+          ]
+        }
+      ],
+      "operational_acceptance": true,
+      "source_report_sha256": "27e4c0aae9090a6b6a7c36c9e6fa0b6c2799ada5471c49bbd6f5e015de35928a",
+      "preflight_sha256": "2dda953226efc1756a7681a060a18c4b8dd87fe495d71f478c7bbd64a2e67cfd",
+      "protection_sha256": "b84a322e1d42b5d7c9bbc9c3fe50f50542055968bd79cffb65e6e546f4abc514",
+      "reported_raw_envelope_sha256": "edc66f82c77f893f81187053f9cdaf3bb58edd92e492fd099a35d48d168bbd9f",
+      "raw_final_content_sha256": "e87dc3a838c82165d1112b6d764e322a81a5f16060c9489a0d97a97fa0da2b83",
+      "restored_text_sha256": [
+        "d7294ccee61061c2ffc02a959075c66121458551fb6a98622841192e38ec4a0e",
+        "9fbf7e1bb0d47338170cca0598d519e98385accd74631485e66a18f0bb4c343b"
+      ]
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "classification": "acceptable",
+      "source_language": "en",
+      "target_language": "el",
+      "complete_original_source": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"Η <x0/> θα δημοσιεύσει το βίντεο μόνο αν ο <x1/> εγκρίνει το κείμενο.\",\n    \"Αν ο <x2/> δεν απαντήσει μέχρι την Παρασκευή, η <x3/> θα περιμένει μέχρι τη Δευτέρα.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "Η <x0/> θα δημοσιεύσει το βίντεο μόνο αν ο <x1/> εγκρίνει το κείμενο.",
+        "Αν ο <x2/> δεν απαντήσει μέχρι την Παρασκευή, η <x3/> θα περιμένει μέχρι τη Δευτέρα."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Η Anna θα δημοσιεύσει το βίντεο μόνο αν ο Giannis εγκρίνει το κείμενο.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "Αν ο Giannis δεν απαντήσει μέχρι την Παρασκευή, η Anna θα περιμένει μέχρι τη Δευτέρα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Giannis approves and Anna publishes; do not reverse their roles.",
+          "status": "pass",
+          "explanation": "Anna publishes the video and Giannis approves the text; their roles remain correct."
+        },
+        {
+          "criterion": "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+          "status": "pass",
+          "explanation": "Μόνο αν preserves approval as a necessary condition for publication."
+        },
+        {
+          "criterion": "The no-answer condition concerns Giannis, not Anna.",
+          "status": "pass",
+          "explanation": "The no-answer condition applies to Giannis; Anna is the person who waits."
+        },
+        {
+          "criterion": "Retain Friday as the response deadline and Monday as the end of the waiting period.",
+          "status": "pass",
+          "explanation": "Friday is the response deadline and Monday is the end of the waiting period."
+        }
+      ],
+      "global_findings": [],
+      "complete_meaning_note": "Exact Latin Anna/Giannis are retained as allowed. Natural η/ο articles, complete conditions and all temporal relationships survive.",
+      "automatic_review_flags_preserved": [],
+      "operational_acceptance": true,
+      "source_report_sha256": "09bbdbb6e4a386936c833a0b535470f860f8a0b4d3ecc38308460c2bcf18175b",
+      "preflight_sha256": "d5c27dd811b1fe57e1bd845e8dfb148a81efe0a1e8a09709d63b4bee8149e605",
+      "protection_sha256": "98766c526ff5de7e4dbdedaa4c46d3eb59fbbef57c75e7a942170c5fa8c85295",
+      "reported_raw_envelope_sha256": "e405f29f412ec492f8f448892550d61022ffd83749a276a37d0e41f8084bb7a6",
+      "raw_final_content_sha256": "da9e7f78395689378c2acf016ff115b7bfc8aeafe33bee2b222328db54608fa9",
+      "restored_text_sha256": [
+        "0d92ee4786b2b8924f1e9ae698a2daecaec501aaccfddcf109716640a1906b92",
+        "41dac621fdc830557270c5663fdb885a287a867bf7f96938ad2c3f759503715d"
+      ]
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "classification": "major_error",
+      "source_language": "el",
+      "target_language": "en",
+      "complete_original_source": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "complete_raw_final_content": "{\n  \"translations\": [\n    \"Mary asked: 'Does the file have 12 chapters or 21?'<x0/>\",\n    \"We still don't know the answer. The title alone is not enough to confirm it.\"\n  ]\n}",
+      "raw_marker_translations": [
+        "Mary asked: 'Does the file have 12 chapters or 21?'<x0/>",
+        "We still don't know the answer. The title alone is not enough to confirm it."
+      ],
+      "complete_restored_result": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Mary asked: 'Does the file have 12 chapters or 21?'Μαρία",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We still don't know the answer. The title alone is not enough to confirm it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "criterion_judgments": [
+        {
+          "criterion": "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+          "status": "pass",
+          "explanation": "The chapter count remains a quoted question with alternatives 12 and 21; no count is chosen."
+        },
+        {
+          "criterion": "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+          "status": "pass",
+          "explanation": "The answer remains unknown and the title alone remains insufficient evidence."
+        },
+        {
+          "criterion": "Do not invent an answer or convert the question into a factual statement.",
+          "status": "pass",
+          "explanation": "No answer is invented and the question is not turned into a factual count."
+        }
+      ],
+      "global_findings": [
+        {
+          "kind": "name_substitution_and_unbound_restored_mention",
+          "severity": "major_error",
+          "evidence": "Mary asked: 'Does the file have 12 chapters or 21?'Μαρία",
+          "explanation": "Mary is a substitute name rather than a faithful transliteration of Μαρία under the unchanged name-preservation rule. The actual restored Μαρία is appended after the quotation, without being the grammatical asking actor. Its marker's presence does not repair the wrong actor name."
+        }
+      ],
+      "complete_meaning_note": "All three question-specific criteria pass. The independent global name/actor rule still makes the complete result a major error, with an additional dangling-name fluency defect.",
+      "automatic_review_flags_preserved": [
+        {
+          "kind": "term_not_observed",
+          "label": "Maria",
+          "alternatives": [
+            "Maria"
+          ]
+        }
+      ],
+      "operational_acceptance": true,
+      "source_report_sha256": "5765aceae91a5820d4cb6be90f5c63cd13ff6a0213c97d3d78d648a03bd7f25d",
+      "preflight_sha256": "f745e14d2623465ad392e9ab28cc010b27f7ba78673fe2161b0acb2abf090666",
+      "protection_sha256": "3b7254d97a829dccc08fd1d01ea96389ff8384ff7111e4a37fb7c463ace1b0cf",
+      "reported_raw_envelope_sha256": "82cbb37aac0a662c6b3551a8997cfea0112f6d1a50235248b6be4ea618bab9bd",
+      "raw_final_content_sha256": "725a16b82bb1fa304ac624c90af9074946d7d0eb07e98d7293cd87ff5a3e34c7",
+      "restored_text_sha256": [
+        "e15f42e8a15ec888aaa385541acb4a57ebe3fc07ad4c155bc4d3284d16a58b24",
+        "f57399bb990a7d666b11d3da9a1a7219bf850852da060ceafe43090c08e1384b"
+      ]
+    }
+  ],
+  "mechanism_observation": "The six required markers in the people/roles case and the question marker are present exactly, but wrong ordinary-prose names/roles and a dangling restored name remain. Structural enforcement is successful while complete meaning fails.",
+  "no_output_repair_or_criterion_relaxation": true,
+  "automatic_reports_unmodified": true,
+  "unused_validation_or_summaries_accessed": false,
+  "model_native_network_calls": 0,
+  "further_screen_or_default_change_approved": false
+}

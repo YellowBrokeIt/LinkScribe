@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T08:55:58.335410+00:00",
+  "head_sha": "11e336577c7980f8da9dd817f265472596347a48",
+  "production_sha256": {
+    "app.py": "56f515e6943c49fa75565086e41b840816af3972909ceb5e95ed8d8a7fa99e3b",
+    "asr_timing.py": "7780261b5ebeba913fe82836547408e7b0562381a7cc616d01f76822ce00db5e",
+    "enhancements.py": "129d0f8c7dbbd5e621b8017d73c7aff204a40446d8ed59f7df8904c87efb579e"
+  },
+  "production_code_unchanged_from": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+  "all_six_workflows_completed_successfully": true,
+  "unit_regressions": {
+    "ubuntu": {
+      "passed": 851,
+      "subtests": 54,
+      "seconds": 15.72
+    },
+    "windows": {
+      "passed": 845,
+      "skipped": 6,
+      "subtests": 54,
+      "seconds": 37.4
+    },
+    "macos": {
+      "passed": 845,
+      "skipped": 6,
+      "subtests": 54,
+      "seconds": 49.61
+    },
+    "python311": {
+      "passed": 851,
+      "subtests": 54,
+      "seconds": 10.49
+    },
+    "python313": {
+      "passed": 851,
+      "subtests": 54,
+      "seconds": 14.96
+    }
+  },
+  "browser": {
+    "passed": 35,
+    "real_asr_executed": true,
+    "no_uncaught_javascript_errors": true,
+    "raw_log": "browser-job.log",
+    "screenshots_included_in_this_bundle": false
+  },
+  "speaker": {
+    "actual_pipeline_passed": true,
+    "original_acoustic_gate_passed": true,
+    "assigned_core_samples": 221,
+    "core_samples": 258,
+    "assignment_fraction": 0.8565891472868217,
+    "matched_purity": 1.0,
+    "unassigned_core_samples": 37,
+    "saved_groups": 21,
+    "unknown_saved_groups": 8,
+    "same_engine_fixed_text_alignment": true,
+    "constructor_cpu_threads": 0,
+    "cpu_limit_evidence": "source-enforced four-CPU launch affinity and OMP/MKL settings; no effective native-thread readback claim",
+    "independent_review_sha256": "8ea18d2d2a970846cd311ba58f717510569e2b58687fb0c326eb1e974b365cad"
+  },
+  "install": {
+    "all_six_checks_passed": true,
+    "candidate_source_zip_sha256": "466443904cfff8cd68c90ffa72338810a4dd7b3315393727a688d5af6b29d4f1",
+    "candidate_source_members": 2831,
+    "candidate_uncompressed_bytes": 86366233,
+    "scope": "Actual hosted source ZIP and launcher checks; source ZIP not redundantly downloaded locally. Exact hosted reports/logs and artifact metadata retained."
+  },
+  "default_ollama": {
+    "completed_cases": 12,
+    "automatic_pass": 5,
+    "automatic_review": 7,
+    "semantic_quality": "unreviewed for this new run; earlier complete twelve-case d62 review at identical production code found9major/3acceptable and remains blocker"
+  },
+  "limitations": [
+    "Automated success does not establish translation or summary meaning.",
+    "No new live provider test at this checkpoint. Earlier provider access failures remain open.",
+    "Speaker scope is the original two-reader fixture; this does not establish Greek/noisy/overlapping meeting accuracy.",
+    "Stand-alone resource recordings do not establish whole-machine modest-target fit."
+  ]
+}

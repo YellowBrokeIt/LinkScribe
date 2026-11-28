@@ -1,0 +1,152 @@
+--- docs/krikri-source-spelling-screen-2026-11-28/infer_native.py
++++ docs/krikri-marker-grammar-screen-preparation-2026-11-28/infer_native.py
+@@ -1,7 +1,8 @@
+ """Run the fixed six source-protected cases once through the archived app.
+ 
+-Actual response JSON is retained by the existing observer before app parsing or
+-script rejection. Native preflight counts must match each completed response.
++Source-only conditional adaptation: only format changes. Actual native grammar
++validation, an independent review and separate root authority must exist first.
++The unchanged observer retains raw JSON before parsing or rejection.
+ """
+ from __future__ import annotations
+ from datetime import datetime, timezone
+@@ -16,29 +17,16 @@
+ import sys
+ import time
+ 
+-from context import HERE, ROOT, PRIVATE, common, read_plan, cache_identity, native_preflight, storage_reserve, stop_daemon
++from context import HERE, ROOT, PRIOR, GRAMMAR, PRIVATE, common, read_plan, cache_identity, native_preflight, storage_reserve, stop_daemon
+ from protection import build_protection, restore_segments, strict_response_strings
+ from source_context import source_context_payloads
+-from execution_gate import authorize_phase
+-
+-
+-def verify_freeze():
+-    path = HERE / "inference-freeze.json"
+-    if common.sha(path) != (HERE / "inference-freeze.sha256").read_text().strip():
+-        raise ValueError("Pre-output inference freeze changed.")
+-    freeze = json.loads(path.read_text())
+-    for rel, expected in freeze["files_sha256"].items():
+-        if common.sha(ROOT / rel) != expected:
+-            raise ValueError("Frozen inference file changed: " + rel)
+-    if freeze.get("independent_native_contract_approved") is not True:
+-        raise ValueError("Independent before-output native contract review is absent.")
++from execution_gate import authorize_phase, verify_controller_parent
++from native_gate import require_native_evidence
++from format_projection import grammar_payloads
+ 
+ 
+ def run_cases(runtime, plan, process, report, output):
+-    setup = json.loads((HERE / "prepare.json").read_text())
+-    setup_resources = json.loads((HERE / "prepare-resources.json").read_text())
+-    if not setup["complete"] or not setup_resources["passed"]:
+-        raise ValueError("Measured native preparation did not pass.")
++    setup, native_freeze = require_native_evidence()
+     if cache_identity(runtime, plan) != setup["cache"]:
+         raise ValueError("Actual native import differs from the frozen prepared package.")
+     os.environ.update({"LINKSCRIBE_TRANSLATION_BACKEND": "ollama", "LINKSCRIBE_TRANSLATION_MODEL": plan["model"]["local_name"],
+@@ -46,7 +34,7 @@
+     os.environ.pop("LINKSCRIBE_OLLAMA_RETAIN_MODELS", None)
+     sys.path.insert(0, str(ROOT))
+     sys.path.insert(0, str(ROOT / "tests"))
+-    spec = importlib.util.spec_from_file_location("enhancements", HERE / "enhancements-context4096.py")
++    spec = importlib.util.spec_from_file_location("enhancements", PRIOR / "enhancements-context4096.py")
+     module = importlib.util.module_from_spec(spec)
+     sys.modules["enhancements"] = module
+     spec.loader.exec_module(module)
+@@ -56,28 +44,33 @@
+     def identity(path):
+         value = source_identity(path)
+         value["checkout_identity_scope"] = "Live checkout only; actual executed app adapter is the immutable snapshot below."
+-        value["executed_enhancements_snapshot"] = {"path": str(HERE / "enhancements-context4096.py"),
+-                                                  "sha256": common.sha(HERE / "enhancements-context4096.py"),
++        value["executed_enhancements_snapshot"] = {"path": str(PRIOR / "enhancements-context4096.py"),
++                                                  "sha256": common.sha(PRIOR / "enhancements-context4096.py"),
+                                                   "published_source_sha256": plan["published_production_sha256"],
+                                                   "only_code_changes": "num_ctx8192 to4096 plus generic marker instruction; source-only protection wrapper is separately bound",
+                                                   "current_foreign_script_guard_preserved": True}
+-        value["source_spelling_projection"] = {"path": str(HERE / "source_context.py"),
+-                                               "sha256": common.sha(HERE / "source_context.py"),
+-                                               "scope": "Per-case reviewed source map projected before native request construction; no response rewrite."}
++        value["source_spelling_projection"] = {"path": str(PRIOR / "source_context.py"),
++                                               "sha256": common.sha(PRIOR / "source_context.py"),
++                                               "scope": "Unchanged per-case source map before request construction; only schema changes afterward."}
++        value["grammar_schema_projection"] = {"path": str(HERE / "format_projection.py"),
++                                               "sha256": common.sha(HERE / "format_projection.py"),
++                                               "expected_requests_sha256": common.sha(GRAMMAR / "expected-requests.json"),
++                                               "only_native_format_changed": True}
+         return value
+ 
+     qa.source_identity = identity
+-    cases = json.loads((HERE / "development-cases.json").read_text())["cases"]
+-    expected = json.loads((HERE / "expected-requests.json").read_text())
+-    protected_cases = json.loads((HERE / "protected-source-cases.json").read_text())["cases"]
+-    protections = json.loads((HERE / "protection-inputs.json").read_text())["cases"]
+-    context_maps = json.loads((HERE / "source-context-maps.json").read_text())["cases"]
+-    if not len(cases) == len(expected) == len(protected_cases) == len(protections) == len(context_maps) == len(setup["prompts"]) == 6:
++    cases = json.loads((PRIOR / "development-cases.json").read_text(encoding="utf-8"))["cases"]
++    expected = json.loads((GRAMMAR / "expected-requests.json").read_text(encoding="utf-8"))
++    previous = json.loads((PRIOR / "expected-requests.json").read_text(encoding="utf-8"))
++    protected_cases = json.loads((PRIOR / "protected-source-cases.json").read_text(encoding="utf-8"))["cases"]
++    protections = json.loads((PRIOR / "protection-inputs.json").read_text(encoding="utf-8"))["cases"]
++    context_maps = json.loads((PRIOR / "source-context-maps.json").read_text(encoding="utf-8"))["cases"]
++    if not len(cases) == len(expected) == len(protected_cases) == len(protections) == len(context_maps) == len(previous) == len(setup["prompts"]) == 6:
+         raise ValueError("The fixed original-six source/context/request/native layout changed.")
+     report["cases"] = []
+     original_transport = module.local_ollama_json
+     native_translate = module.translate_segments
+-    for case, protected_case, protection, context_map, request, prepared in zip(cases, protected_cases, protections, context_maps, expected, setup["prompts"]):
++    for case, protected_case, protection, context_map, request, previous_request, prepared in zip(cases, protected_cases, protections, context_maps, expected, previous, setup["prompts"]):
+         case_started = time.monotonic()
+         report["free_disk_before_case_bytes"] = storage_reserve()
+         case_id = case["id"]
+@@ -100,8 +93,8 @@
+         if protected_path.exists():
+             raise ValueError("Refusing to repeat a protected translation case.")
+         protection_report = {"id": case_id, "complete": False, "plan_sha256": common.sha(HERE / "plan.json"),
+-                             "source_protection_input_sha256": common.sha(HERE / "protection-inputs.json"),
+-                             "source_context_maps_sha256": common.sha(HERE / "source-context-maps.json"),
++                             "source_protection_input_sha256": common.sha(PRIOR / "protection-inputs.json"),
++                             "source_context_maps_sha256": common.sha(PRIOR / "source-context-maps.json"),
+                              "source_segments": copy.deepcopy(case["segments"]),
+                              "bundle": copy.deepcopy(protection["bundle"]), "model_response_json": None,
+                              "exact_source_only_restoration": False, "post_restoration_guard_accepted": False}
+@@ -130,7 +123,9 @@
+                 if bundle != protection["bundle"] or bundle["masked_segments"] != protected_case["segments"]:
+                     raise ValueError("Actual source-derived protection differs from the frozen input representation.")
+                 masked_source = copy.deepcopy(bundle["masked_segments"])
+-                with source_context_payloads(module, bundle, context_map, protection_report,
++                with grammar_payloads(module, previous_request["request"], request["request"],
++                                      protection_report, lambda: common.save(protected_path, protection_report)), \
++                     source_context_payloads(module, bundle, context_map, protection_report,
+                                              lambda: common.save(protected_path, protection_report)):
+                     result = native_translate(masked_source, target, source_language=source_language)
+                 protection_report["masked_app_result"] = copy.deepcopy(result)
+@@ -163,7 +158,7 @@
+         module.translate_segments = protected_translate
+         module.local_ollama_json = checked_transport
+         try:
+-            value, status = qa.evaluate(HERE / "development-cases.json", path, case_ids=[case_id], splits=["development"])
++            value, status = qa.evaluate(PRIOR / "development-cases.json", path, case_ids=[case_id], splits=["development"])
+         finally:
+             module.local_ollama_json = original_transport
+             module.translate_segments = native_translate
+@@ -211,7 +206,7 @@
+ 
+ def main():
+     authorize_phase("infer")
+-    verify_freeze()
++    verify_controller_parent()
+     plan = read_plan()
+     runtime = Path(plan["storage"]["owned_runtime_directory"])
+     output = HERE / "execution.json"
+@@ -219,7 +214,7 @@
+         raise ValueError("Refusing to repeat the frozen development screen.")
+     report = {"schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(), "complete": False,
+               "generation_calls": 0, "plan_sha256": common.sha(HERE / "plan.json"),
+-              "inference_freeze_sha256": common.sha(HERE / "inference-freeze.json"),
++              "native_evidence_freeze_sha256": common.sha(HERE / "native-evidence-freeze.json"),
+               "authorization_sha256": common.sha(HERE / "infer-authorization.json"),
+               "semantic_quality": "unreviewed", "unused_validation_opened": False}
+     common.save(output, report)

@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "decision": "actual_native_preparation_and_all_frozen_grammar_validation_outcomes_pass",
+  "unresolved_findings": [],
+  "scope": "Independent read-only review of actual native preparation and all285native candidate grammar probes plus the separate unsupported-pattern sentinel. No compiler/controller/validator/native/tokenizer/model/network execution or rerun by reviewer.",
+  "plan_sha256": "d2a00e31038f43cebb643980826767c8322fd84883cfa327b7511a7ad2701652",
+  "native_report": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/native_prepare.json",
+    "bytes": 242089,
+    "sha256": "92c674e206ac013d90e6efd1f1570152f1d07682e138915047aba6146640ad2c"
+  },
+  "native_resources": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/native_prepare-resources.json",
+    "bytes": 7607,
+    "sha256": "1262ae4630c89ed2b5f0bcf27f2bb9b17fba84632008fc4c976613bebc9a0c88"
+  },
+  "validation_report": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/validate.json",
+    "bytes": 270704,
+    "sha256": "91540169868d9c1e72a4cfdf2912c06f5b0f9bc5927aba683c4db9631c8ce9df"
+  },
+  "validation_resources": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/validate-resources.json",
+    "bytes": 93805,
+    "sha256": "41f52624fbaf0d24804935b3455821d871ff33d9daaf6cb2737fd9d07cb0698d"
+  },
+  "audits": [
+    {
+      "path": "/workspace/scratch/94360995dd61/grammar-native-prepare-independent-review-2026-11-28/actual-native-prepare-audit.json",
+      "sha256": "a98a48c03b8d9789522e6573b3ada924583d6bd4b472665c7e2eebf23abd0462",
+      "checks": 972
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/grammar-native-prepare-independent-review-2026-11-28/actual-native-validation-audit.json",
+      "sha256": "a3452ea236ed8ab71c85fb106c6a50d264ae4e101bc0326c462307e91fbd2c3e",
+      "checks": 3732
+    }
+  ],
+  "native_preparation": {
+    "actual_http_attempts": 24,
+    "successful_http_responses": 23,
+    "retained_startup_refusal": "One initial /api/version connection refusal followed by successful readiness, as allowed by the frozen readiness loop; no model/query retry.",
+    "actual_counts": {
+      "show": 1,
+      "full_render_only_requests": 6,
+      "full_native_tokenizations": 6,
+      "zero_prediction_schema_queries": 7,
+      "unload": 1,
+      "resident_check": 1
+    },
+    "full_prompt_tokens": [
+      261,
+      350,
+      262,
+      266,
+      302,
+      264
+    ],
+    "all_full_messages_rendered_and_vectors_equal_prior_source_spelling": true,
+    "one_bos_each": true,
+    "context": 4096,
+    "reserved_output_tokens_each": 2048,
+    "threads": 4,
+    "owned_native_port": 40931,
+    "runtime": "Ollama0.40.12 with exact pinned llama-server binary",
+    "model": "Exact existing Krikri Q4_K_M native package/cache; actual runner path and worker full-hash/cache checks are bound. Reviewer independently rehashed runtime executables and retained raw evidence, not the5GB model payload.",
+    "zero_work_evidence": "The filtered completion responses contain only emitted grammar. Independently inspected daemon logs separately record seven empty prompts, seven prompt-evaluation counts0, and seven generation-evaluation counts0. This supports the zero-output claim beyond absent response fields.",
+    "candidate_grammars": [
+      {
+        "id": "dev-en-el-transcript-terminology",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-en-el-transcript-terminology.gbnf",
+        "bytes": 488,
+        "sha256": "f5ca75da7a6a9be89f84120d5d6d96c4e854f715c905280e19faed6362c6a80e"
+      },
+      {
+        "id": "dev-el-en-people-and-roles",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-el-en-people-and-roles.gbnf",
+        "bytes": 3220,
+        "sha256": "263e59e3c6bfb715e0c42d656fd46c4e54aa16e5c0a7ddcfca3b82c692d43eca"
+      },
+      {
+        "id": "dev-en-el-bitcoin-amounts",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-en-el-bitcoin-amounts.gbnf",
+        "bytes": 424,
+        "sha256": "da0d66bbad424373a57b0f7c0e0b33fe628dc230dc642f15bb82f8cfc7e7d3c7"
+      },
+      {
+        "id": "dev-el-en-negation-scope",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-el-en-negation-scope.gbnf",
+        "bytes": 488,
+        "sha256": "f5ca75da7a6a9be89f84120d5d6d96c4e854f715c905280e19faed6362c6a80e"
+      },
+      {
+        "id": "dev-en-el-conditional-publication",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-en-el-conditional-publication.gbnf",
+        "bytes": 1036,
+        "sha256": "c22db6114712b96e1b498b4a3a55bc5825e195ed3f0366701b30ef83adcf19db"
+      },
+      {
+        "id": "dev-el-en-uncertain-question",
+        "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/dev-el-en-uncertain-question.gbnf",
+        "bytes": 488,
+        "sha256": "f5ca75da7a6a9be89f84120d5d6d96c4e854f715c905280e19faed6362c6a80e"
+      }
+    ],
+    "sentinel_grammar": {
+      "id": "unsupported-lookahead-gate-sentinel",
+      "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/grammars/unsupported-lookahead-gate-sentinel.gbnf",
+      "bytes": 462,
+      "sha256": "6ea744459c7a93a7d49c46a91de2ab6e426a745608a513bb0aa3a79930cdfa33"
+    },
+    "fallback_warning": "Only the predeclared unsupported lookahead sentinel logs accepting-any-string fallback; no candidate pattern produces that diagnostic.",
+    "explicit_unload_resident_empty_daemon_group_cleanup": true,
+    "elapsed_seconds": 30.403367,
+    "resource_samples": 294,
+    "peak_sampled_rss_mib": 5501.8,
+    "peak_sampled_pss_mib": 5494.0
+  },
+  "native_grammar_validation": {
+    "complete_original_candidate_probes": 285,
+    "accepted_as_expected": 74,
+    "rejected_as_expected": 211,
+    "all_actual_raw_statuses_match_original_expectations": true,
+    "raw_binding": "Every original probe string, emitted grammar, exact validator argv/environment/binary, raw stdout/stderr/exit and receipt hash was verified. All286CLI calls returned normally with empty stderr; status came from exact stdout, never exit0 alone.",
+    "sentinel": "The separate weak lookahead grammar actually accepts a missing-marker JSON string. Its expected weakness is caught and explicitly marked rejected by the enforcement gate; it is never used as a candidate grammar.",
+    "same_original_sanity_checked_binary_sha256": "175a68a01c5b0250a025a9b9ea888411de43d5d0269a2ca2ad8ddd9aa18ac9ba",
+    "elapsed_seconds": 1.994905,
+    "resource_samples": 292,
+    "peak_sampled_rss_mib": 50.1,
+    "peak_sampled_pss_mib": 42.0,
+    "owned_cleanup": true
+  },
+  "budget_and_history": {
+    "aggregate_active_seconds_including_original_failed_build": 33.918908,
+    "aggregate_limit_seconds": 900,
+    "all_current_phase_memory_time_disk_limits_pass": true,
+    "original_failed_build_remains_failed": true,
+    "no_recompilation_or_reacquisition": true,
+    "source_criteria_requests_and_probes_unchanged": true
+  },
+  "limitations": [
+    "This establishes the declared finite marker/serialized-JSON grammar expectations on the exact retained runtime. It does not prove arbitrary schemas or every possible Unicode/string behavior.",
+    "No translated answer was generated. Exact marker occurrence does not establish correct names/roles/negation/anaphora or complete meaning.",
+    "All future generation still needs independently reviewed executable source and a new root receipt. No production model/default/prompt acceptance follows.",
+    "Memory accounting is the declared sampled owned-process RSS/PSS scope; this is not a whole-application resource claim."
+  ],
+  "semantic_acceptance_or_generation_authorization": false,
+  "reviewer_execution_authorizations_created": 0,
+  "historical_or_candidate_files_modified": false
+}

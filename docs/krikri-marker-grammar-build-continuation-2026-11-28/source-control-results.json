@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "checks": [
+    {
+      "id": "parse-context.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-continuation_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-execution_gate.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-native_actions.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-native_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-phase_actions.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-phase_worker.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-process_io.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-resource_monitor.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-run_stage.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-status_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-test_continuation.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "no-acquisition-phase",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "exact-retained-stage-dispositions",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "exact273-dependencies-and-five-bound-aliases",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "missing-uapi-exception",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Exactly the five independently observed system-header aliases are required."
+      }
+    },
+    {
+      "id": "duplicate-uapi-exception",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Exactly the five independently observed system-header aliases are required."
+      }
+    },
+    {
+      "id": "changed-uapi-hash",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "An out-of-root dependency is not one of the exact five bound files."
+      }
+    },
+    {
+      "id": "changed-alias-link",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "The bound system include alias differs."
+      }
+    },
+    {
+      "id": "changed-alias-location",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "The bound system include alias differs."
+      }
+    },
+    {
+      "id": "missing-dependency",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained compiler dependency membership/order differs."
+      }
+    },
+    {
+      "id": "unobserved-dependency-path",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained compiler dependency membership/order differs."
+      }
+    },
+    {
+      "id": "wrong-original-classification",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Original dependency-gate classification differs."
+      }
+    },
+    {
+      "id": "changed-depfile-hash",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained artifact changed: /workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/build/validator.d"
+      }
+    },
+    {
+      "id": "incomplete-retained-compile",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained command did not complete under its exact frozen invocation."
+      }
+    },
+    {
+      "id": "failed-retained-compile",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained command did not complete under its exact frozen invocation."
+      }
+    },
+    {
+      "id": "changed-compile-argv",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained command did not complete under its exact frozen invocation."
+      }
+    },
+    {
+      "id": "changed-compile-environment",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Retained command did not complete under its exact frozen invocation."
+      }
+    },
+    {
+      "id": "prior-cleanup-absent",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Previous phase lacks its exact observed resource/cleanup disposition."
+      }
+    },
+    {
+      "id": "prior-memory-stop",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Previous phase lacks its exact observed resource/cleanup disposition."
+      }
+    },
+    {
+      "id": "prior-phase-overrun",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Previous phase lacks its exact observed resource/cleanup disposition."
+      }
+    },
+    {
+      "id": "regraded-prior-build",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Previous phase lacks its exact observed resource/cleanup disposition."
+      }
+    },
+    {
+      "id": "previous-build-time-deducted",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "exhausted-build-budget",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Aggregate active-phase time budget exhausted."
+      }
+    },
+    {
+      "id": "exhausted-aggregate-budget",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Aggregate active-phase time budget exhausted."
+      }
+    },
+    {
+      "id": "actual-entrypoint-missing-root-receipt-build",
+      "passed": true
+    },
+    {
+      "id": "actual-entrypoint-missing-root-receipt-native_prepare",
+      "passed": true
+    },
+    {
+      "id": "actual-entrypoint-missing-root-receipt-validate",
+      "passed": true
+    },
+    {
+      "id": "unchanged-resource_monitor.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-process_io.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-native_actions.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-native_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-status_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-official-source-capsule.json",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "unchanged-285-probe-validator",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "original-three-sanity-cases",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    }
+  ],
+  "scope": "Read-only source, retained artifact and pure guard checks, with missing-receipt controller entrypoints only.",
+  "subprocess_compiler_validator_native_tokenizer_model_network_calls": 0,
+  "actual_phase_receipts_created": 0,
+  "prior_build_regraded": false,
+  "plan_sha256": "d2a00e31038f43cebb643980826767c8322fd84883cfa327b7511a7ad2701652"
+}

@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T08:16:59.465860+00:00",
+  "complete": false,
+  "passed": false,
+  "limits": {
+    "rss_bytes": 536870912,
+    "total_seconds": 120,
+    "initialization_seconds": 120,
+    "case_seconds": 120
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "events": [
+    {
+      "event": "initialized",
+      "phase": "build",
+      "model_loads": 0,
+      "observed_elapsed_seconds": 0.113979
+    },
+    {
+      "event": "case_start",
+      "id": "compiler",
+      "observed_elapsed_seconds": 0.121447
+    },
+    {
+      "event": "case_complete",
+      "id": "compiler",
+      "exit_code": 0,
+      "complete": true,
+      "observed_elapsed_seconds": 1.017077
+    },
+    {
+      "event": "case_start",
+      "id": "validator-elf",
+      "observed_elapsed_seconds": 1.019137
+    },
+    {
+      "event": "case_complete",
+      "id": "validator-elf",
+      "exit_code": 0,
+      "complete": true,
+      "observed_elapsed_seconds": 1.020994
+    },
+    {
+      "event": "case_start",
+      "id": "validator-loader",
+      "observed_elapsed_seconds": 1.021022
+    },
+    {
+      "event": "case_complete",
+      "id": "validator-loader",
+      "exit_code": 0,
+      "complete": true,
+      "observed_elapsed_seconds": 1.022347
+    },
+    {
+      "event": "phase_complete",
+      "phase": "build",
+      "complete": false,
+      "error": {
+        "type": "ValueError",
+        "message": "Compiler consumed an unexpected source/header: /usr/lib/linux/uapi/x86/asm/errno.h"
+      },
+      "observed_elapsed_seconds": 1.05438
+    }
+  ],
+  "measurement_errors": [],
+  "scope": "Owned monitor plus worker and descendants, deduplicated by PID, from spawn through exit.",
+  "rss_scope": "Summed process RSS can double-count shared pages; excludes OS/browser/unrelated processes.",
+  "pss_scope": "PSS apportions shared pages. System available memory is a separate uncontrolled observation.",
+  "sampling_limit": "Sequential scans at 0.1-second intervals can miss transient peaks.",
+  "phase": "build",
+  "plan_sha256": "edc16c0a14699c38bb7cd1916f5118d6778958cd708f0fbca920720ebc0d8c00",
+  "native_plan_sha256": "ddc3b28c5539fb14486634ac022951e3235c3326508713debb044c0660629761",
+  "authorization_sha256": "27760b72a41fa2e00f8f3db1a49bfb87f641ca857f9caed48b16f8dffeafa698",
+  "claim_sha256": "72db85c3260f46fe45e5f9fc47d316a3737c50e7724ba429c2bb53c3d1dd1653",
+  "worker_sha256": "22f0dcd0aabb8d513e56fee8daafd165ccf70637f8a760f34d85ba171d58ecf3",
+  "observer_sha256": "fac821f2f0c7a70d3b835981b5bc19dade8ed2991c802aef36dbc10be3d5d99b",
+  "free_disk_before_bytes": 1544863744,
+  "completed_predecessor_active_seconds": 0.188254,
+  "generation_authorized": false,
+  "sample_count": 17,
+  "peak_rss_sample": {
+    "elapsed_seconds": 0.844669,
+    "rss_bytes": 132624384,
+    "pss_bytes": 125283328,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 17465344,
+        "pss_bytes": 14630912,
+        "cpu_user_seconds": 0.06,
+        "cpu_system_seconds": 0.1,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "python",
+        "rss_bytes": 16396288,
+        "pss_bytes": 13560832,
+        "cpu_user_seconds": 0.09,
+        "cpu_system_seconds": 0.03,
+        "threads": 1
+      },
+      {
+        "pid": 7,
+        "name": "x86_64-linux-gnu-g++-14",
+        "rss_bytes": 1286144,
+        "pss_bytes": 620544,
+        "cpu_user_seconds": 0.0,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      },
+      {
+        "pid": 8,
+        "name": "cc1plus",
+        "rss_bytes": 97476608,
+        "pss_bytes": 96471040,
+        "cpu_user_seconds": 0.44,
+        "cpu_system_seconds": 0.27,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8607780864,
+    "system_total_bytes": 10451427328,
+    "active_case": "compiler",
+    "storage": {
+      "free_bytes": 1544830976,
+      "reserve_bytes": 1073741824,
+      "tree_bytes": 295387,
+      "file_count": 18,
+      "largest_file_bytes": 118304,
+      "maximum_tree_bytes": 67108864,
+      "maximum_file_bytes": 16777216,
+      "violation": null,
+      "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+    }
+  },
+  "peak_pss_sample": {
+    "elapsed_seconds": 0.844669,
+    "rss_bytes": 132624384,
+    "pss_bytes": 125283328,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 17465344,
+        "pss_bytes": 14630912,
+        "cpu_user_seconds": 0.06,
+        "cpu_system_seconds": 0.1,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "python",
+        "rss_bytes": 16396288,
+        "pss_bytes": 13560832,
+        "cpu_user_seconds": 0.09,
+        "cpu_system_seconds": 0.03,
+        "threads": 1
+      },
+      {
+        "pid": 7,
+        "name": "x86_64-linux-gnu-g++-14",
+        "rss_bytes": 1286144,
+        "pss_bytes": 620544,
+        "cpu_user_seconds": 0.0,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      },
+      {
+        "pid": 8,
+        "name": "cc1plus",
+        "rss_bytes": 97476608,
+        "pss_bytes": 96471040,
+        "cpu_user_seconds": 0.44,
+        "cpu_system_seconds": 0.27,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8607780864,
+    "system_total_bytes": 10451427328,
+    "active_case": "compiler",
+    "storage": {
+      "free_bytes": 1544830976,
+      "reserve_bytes": 1073741824,
+      "tree_bytes": 295387,
+      "file_count": 18,
+      "largest_file_bytes": 118304,
+      "maximum_tree_bytes": 67108864,
+      "maximum_file_bytes": 16777216,
+      "violation": null,
+      "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+    }
+  },
+  "worker_exit_code": 1,
+  "owned_processes_stopped": true,
+  "owned_process_identities": [
+    {
+      "pid": 6,
+      "created": 1795853818.73
+    },
+    {
+      "pid": 7,
+      "created": 1795853818.85
+    },
+    {
+      "pid": 8,
+      "created": 1795853818.85
+    },
+    {
+      "pid": 12,
+      "created": 1795853819.74
+    },
+    {
+      "pid": 13,
+      "created": 1795853819.75
+    }
+  ],
+  "sample_interval_seconds": 0.1,
+  "peak_rss_mib": 126.5,
+  "peak_pss_mib": 119.5,
+  "minimum_system_available_bytes": 8607780864,
+  "measurement_complete": true,
+  "samples_file": "build-samples.jsonl",
+  "samples_sha256": "d181b373369645d380f72291b1d4b0b5c7631152aa0dd57e6eb30d1b4253293e",
+  "storage_after_cleanup": {
+    "free_bytes": 1544761344,
+    "reserve_bytes": 1073741824,
+    "tree_bytes": 338822,
+    "file_count": 25,
+    "largest_file_bytes": 118304,
+    "maximum_tree_bytes": 67108864,
+    "maximum_file_bytes": 16777216,
+    "violation": null,
+    "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+  },
+  "elapsed_seconds": 1.062938,
+  "finished_at": "2026-11-28T08:17:00.528864+00:00",
+  "phase_time_limit_exceeded": false,
+  "phase_report_sha256": "39c9353e21d4ace2c50e0ddafbbb740cb5fc9711744bc4ca6d92115c8fc63eab",
+  "phase_report_complete": false,
+  "storage_final": {
+    "free_bytes": 1544761344,
+    "reserve_bytes": 1073741824,
+    "tree_bytes": 338822,
+    "file_count": 25,
+    "largest_file_bytes": 118304,
+    "maximum_tree_bytes": 67108864,
+    "maximum_file_bytes": 16777216,
+    "violation": null,
+    "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+  },
+  "active_aggregate_seconds": 1.2511919999999999,
+  "frozen_inputs_unchanged": true
+}

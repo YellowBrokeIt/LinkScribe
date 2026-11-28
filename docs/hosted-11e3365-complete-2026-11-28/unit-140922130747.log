@@ -1,0 +1,385 @@
+﻿2026-11-28T08:35:02.6725610Z Current runner version: '2.338.2'
+2026-11-28T08:35:02.6741640Z ##[group]Runner Image Provisioner
+2026-11-28T08:35:02.6742210Z Hosted Compute Agent
+2026-11-28T08:35:02.6742600Z Version: 20261111.635
+2026-11-28T08:35:02.6743020Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-28T08:35:02.6743500Z Build Date: 2026-11-11T01:49:01Z
+2026-11-28T08:35:02.6743950Z Worker ID: {ecb7277d-a83a-43b9-a67d-4471b4bfce16}
+2026-11-28T08:35:02.6744400Z Region: westus
+2026-11-28T08:35:02.6744780Z Cloud: MacCloud
+2026-11-28T08:35:02.6745140Z ##[endgroup]
+2026-11-28T08:35:02.6746110Z ##[group]Operating System
+2026-11-28T08:35:02.6746500Z macOS
+2026-11-28T08:35:02.6746840Z 26.7.2
+2026-11-28T08:35:02.6747160Z 25G332
+2026-11-28T08:35:02.6747510Z ##[endgroup]
+2026-11-28T08:35:02.6747870Z ##[group]Runner Image
+2026-11-28T08:35:02.6748250Z Image: macos-26-arm64
+2026-11-28T08:35:02.6748640Z Version: 20261123.0526.1
+2026-11-28T08:35:02.6749510Z Included Software: https://github.com/actions/runner-images/blob/macos-26-arm64/20261123.0526/images/macos/macos-26-arm64-Readme.md
+2026-11-28T08:35:02.6750570Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-26-arm64%2F20261123.0526
+2026-11-28T08:35:02.6751250Z ##[endgroup]
+2026-11-28T08:35:02.6751990Z ##[group]GITHUB_TOKEN Permissions
+2026-11-28T08:35:02.6753200Z Contents: read
+2026-11-28T08:35:02.6753590Z Metadata: read
+2026-11-28T08:35:02.6753950Z ##[endgroup]
+2026-11-28T08:35:02.6755410Z Secret source: Actions
+2026-11-28T08:35:02.6756020Z Cache mode: write
+2026-11-28T08:35:02.6756560Z Prepare workflow directory
+2026-11-28T08:35:02.7024730Z Prepare all required actions
+2026-11-28T08:35:02.7071540Z Getting action download info
+2026-11-28T08:35:03.0935120Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-28T08:35:03.3088910Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-28T08:35:03.4930860Z Complete job name: Unit and API / macos-latest
+2026-11-28T08:35:03.5651490Z ##[group]Run actions/checkout@v4
+2026-11-28T08:35:03.5652230Z with:
+2026-11-28T08:35:03.5652580Z   repository: YellowBrokeIt/LinkScribe
+2026-11-28T08:35:03.5655880Z   token: ***
+2026-11-28T08:35:03.5656240Z   ssh-strict: true
+2026-11-28T08:35:03.5656600Z   ssh-user: git
+2026-11-28T08:35:03.5656970Z   persist-credentials: true
+2026-11-28T08:35:03.5657330Z   clean: true
+2026-11-28T08:35:03.5657670Z   sparse-checkout-cone-mode: true
+2026-11-28T08:35:03.5658060Z   fetch-depth: 1
+2026-11-28T08:35:03.5658390Z   fetch-tags: false
+2026-11-28T08:35:03.5658730Z   show-progress: true
+2026-11-28T08:35:03.5659070Z   lfs: false
+2026-11-28T08:35:03.5659380Z   submodules: false
+2026-11-28T08:35:03.5659720Z   set-safe-directory: true
+2026-11-28T08:35:03.5660100Z   allow-unsafe-pr-checkout: false
+2026-11-28T08:35:03.5660870Z ##[endgroup]
+2026-11-28T08:35:03.9999760Z Syncing repository: YellowBrokeIt/LinkScribe
+2026-11-28T08:35:04.0001410Z ##[group]Getting Git version info
+2026-11-28T08:35:04.0002030Z Working directory is '/Users/runner/work/LinkScribe/LinkScribe'
+2026-11-28T08:35:04.0003080Z [command]/opt/homebrew/bin/git version
+2026-11-28T08:35:04.0250770Z git version 2.56.1
+2026-11-28T08:35:04.0265470Z ##[endgroup]
+2026-11-28T08:35:04.0280590Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/90884732-676a-471b-a207-a308c380438d/.gitconfig'
+2026-11-28T08:35:04.0286050Z Temporarily overriding HOME='/Users/runner/work/_temp/90884732-676a-471b-a207-a308c380438d' before making global git config changes
+2026-11-28T08:35:04.0287210Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T08:35:04.0289660Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:35:04.0414540Z Deleting the contents of '/Users/runner/work/LinkScribe/LinkScribe'
+2026-11-28T08:35:04.0420140Z ##[group]Initializing the repository
+2026-11-28T08:35:04.0423140Z [command]/opt/homebrew/bin/git init /Users/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:35:04.0642940Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-28T08:35:04.0644260Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-28T08:35:04.0645160Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-28T08:35:04.0668690Z hint: call:
+2026-11-28T08:35:04.0669100Z hint:
+2026-11-28T08:35:04.0669500Z hint: 	git config --global init.defaultBranch <name>
+2026-11-28T08:35:04.0669940Z hint:
+2026-11-28T08:35:04.0670440Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-28T08:35:04.0671150Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-28T08:35:04.0671690Z hint:
+2026-11-28T08:35:04.0672080Z hint: 	git branch -m <name>
+2026-11-28T08:35:04.0672470Z hint:
+2026-11-28T08:35:04.0672920Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-28T08:35:04.0673860Z Initialized empty Git repository in /Users/runner/work/LinkScribe/LinkScribe/.git/
+2026-11-28T08:35:04.0676410Z [command]/opt/homebrew/bin/git remote add origin https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T08:35:04.0752120Z ##[endgroup]
+2026-11-28T08:35:04.0752770Z ##[group]Disabling automatic garbage collection
+2026-11-28T08:35:04.0754970Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-28T08:35:04.0899300Z ##[endgroup]
+2026-11-28T08:35:04.0902170Z ##[group]Setting up auth
+2026-11-28T08:35:04.0904890Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T08:35:04.0954590Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T08:35:04.2406280Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T08:35:04.2473060Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T08:35:04.3291970Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T08:35:04.3353250Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T08:35:04.4166730Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-28T08:35:04.4241260Z ##[endgroup]
+2026-11-28T08:35:04.4242230Z ##[group]Fetching the repository
+2026-11-28T08:35:04.4246960Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11e336577c7980f8da9dd817f265472596347a48:refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:12.2891100Z From https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T08:35:12.2962390Z  * [new ref]         11e336577c7980f8da9dd817f265472596347a48 -> origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:12.3147790Z ##[endgroup]
+2026-11-28T08:35:12.3250440Z ##[group]Determining the checkout info
+2026-11-28T08:35:12.3356860Z ##[endgroup]
+2026-11-28T08:35:12.3461810Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-28T08:35:12.3767310Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-28T08:35:12.3863540Z ##[group]Checking out the ref
+2026-11-28T08:35:12.3871420Z [command]/opt/homebrew/bin/git checkout --progress --force -B feature/linkscribe-v03-reliability refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T08:35:13.0661470Z Switched to a new branch 'feature/linkscribe-v03-reliability'
+2026-11-28T08:35:13.0763910Z branch 'feature/linkscribe-v03-reliability' set up to track 'origin/feature/linkscribe-v03-reliability'.
+2026-11-28T08:35:13.1089650Z ##[endgroup]
+2026-11-28T08:35:13.1383900Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-28T08:35:13.1385020Z 11e336577c7980f8da9dd817f265472596347a48
+2026-11-28T08:35:13.2051850Z ##[group]Run actions/setup-python@v5
+2026-11-28T08:35:13.2052320Z with:
+2026-11-28T08:35:13.2052640Z   python-version: 3.11
+2026-11-28T08:35:13.2052950Z   cache: pip
+2026-11-28T08:35:13.2053190Z   check-latest: false
+2026-11-28T08:35:13.2055690Z   token: ***
+2026-11-28T08:35:13.2055990Z   update-environment: true
+2026-11-28T08:35:13.2056270Z   allow-prereleases: false
+2026-11-28T08:35:13.2056590Z   freethreaded: false
+2026-11-28T08:35:13.2056860Z ##[endgroup]
+2026-11-28T08:35:13.5152270Z ##[group]Installed versions
+2026-11-28T08:35:13.5256440Z (node:1779) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T08:35:13.5257580Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T08:35:13.5258160Z Successfully set up CPython (3.11.9)
+2026-11-28T08:35:13.5259120Z ##[endgroup]
+2026-11-28T08:35:13.6857160Z [command]/Users/runner/hostedtoolcache/Python/3.11.9/arm64/bin/pip cache dir
+2026-11-28T08:35:14.3770590Z /Users/runner/Library/Caches/pip
+2026-11-28T08:35:14.6969800Z Cache hit for: setup-python-macOS-arm64-python-3.11.9-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526
+2026-11-28T08:35:14.6981770Z (node:1779) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-28T08:35:16.0025640Z Received 0 of 119529067 (0.0%), 0.0 MBs/sec
+2026-11-28T08:35:16.9967440Z Received 79691776 of 119529067 (66.7%), 37.9 MBs/sec
+2026-11-28T08:35:17.7427790Z Received 119529067 of 119529067 (100.0%), 41.6 MBs/sec
+2026-11-28T08:35:17.7529410Z Cache Size: ~114 MB (119529067 B)
+2026-11-28T08:35:17.7631780Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/b0441e10-a0e1-42ef-bf9d-7f14b79366e7/cache.tzst -P -C /Users/runner/work/LinkScribe/LinkScribe --delay-directory-restore --use-compress-program unzstd
+2026-11-28T08:35:18.1633550Z Cache restored successfully
+2026-11-28T08:35:18.1758410Z Cache restored from key: setup-python-macOS-arm64-python-3.11.9-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526
+2026-11-28T08:35:18.1975980Z ##[group]Run python -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'
+2026-11-28T08:35:18.1976640Z [36;1mpython -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'[0m
+2026-11-28T08:35:18.2030610Z shell: /bin/bash -e {0}
+2026-11-28T08:35:18.2031050Z env:
+2026-11-28T08:35:18.2031390Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:18.2031860Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-11-28T08:35:18.2032310Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:18.2032710Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:18.2033110Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:18.2033440Z ##[endgroup]
+2026-11-28T08:35:19.1911970Z Collecting pytest
+2026-11-28T08:35:19.1948320Z   Using cached pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+2026-11-28T08:35:19.2146980Z Collecting httpx
+2026-11-28T08:35:19.2173640Z   Using cached httpx-0.29.0-py3-none-any.whl.metadata (7.1 kB)
+2026-11-28T08:35:19.2397290Z Collecting pyannote.core==6.1.0
+2026-11-28T08:35:19.2416050Z   Using cached pyannote_core-6.1.0-py3-none-any.whl.metadata (2.1 kB)
+2026-11-28T08:35:19.3345060Z Collecting scipy<2,>=1.15
+2026-11-28T08:35:19.3368700Z   Using cached scipy-1.17.1-cp311-cp311-macosx_14_0_arm64.whl.metadata (62 kB)
+2026-11-28T08:35:19.3841610Z Collecting fastapi<1,>=0.115 (from -r requirements.txt (line 1))
+2026-11-28T08:35:19.3916760Z   Using cached fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+2026-11-28T08:35:19.4125090Z Collecting uvicorn<1,>=0.30 (from -r requirements.txt (line 2))
+2026-11-28T08:35:19.4140050Z   Using cached uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-28T08:35:19.4327350Z Collecting python-multipart>=0.0.18 (from -r requirements.txt (line 3))
+2026-11-28T08:35:19.4347580Z   Using cached python_multipart-0.0.34-py3-none-any.whl.metadata (6.3 kB)
+2026-11-28T08:35:19.4537190Z Collecting faster-whisper<2,>=1.1 (from -r requirements.txt (line 4))
+2026-11-28T08:35:19.4563300Z   Using cached faster_whisper-1.2.1-py3-none-any.whl.metadata (16 kB)
+2026-11-28T08:35:19.5553670Z Collecting sentencepiece<0.3,>=0.2.1 (from -r requirements.txt (line 5))
+2026-11-28T08:35:19.5628510Z   Using cached sentencepiece-0.2.3-cp311-cp311-macosx_11_0_arm64.whl.metadata (34 kB)
+2026-11-28T08:35:19.5894900Z Collecting youtube-transcript-api<2,>=1.2.4 (from -r requirements.txt (line 6))
+2026-11-28T08:35:19.5923550Z   Using cached youtube_transcript_api-1.2.5-py3-none-any.whl.metadata (25 kB)
+2026-11-28T08:35:19.6587300Z Collecting yt-dlp>=2026.3 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:19.6605930Z   Using cached yt_dlp-2026.11.23-py3-none-any.whl.metadata (183 kB)
+2026-11-28T08:35:19.7362400Z Collecting curl-cffi<0.18,>=0.17 (from -r requirements.txt (line 8))
+2026-11-28T08:35:19.7376400Z   Using cached curl_cffi-0.17.0-cp310-abi3-macosx_11_0_arm64.whl.metadata (18 kB)
+2026-11-28T08:35:19.7553440Z Collecting socksio<2,>=1.0 (from -r requirements.txt (line 9))
+2026-11-28T08:35:19.7565620Z   Using cached socksio-1.0.0-py3-none-any.whl.metadata (6.1 kB)
+2026-11-28T08:35:19.7935390Z Collecting av<17,>=11 (from -r requirements.txt (line 10))
+2026-11-28T08:35:19.7992870Z   Using cached av-16.1.0-cp311-cp311-macosx_14_0_arm64.whl.metadata (4.6 kB)
+2026-11-28T08:35:19.9549110Z Collecting numpy>=2.0 (from pyannote.core==6.1.0)
+2026-11-28T08:35:19.9631580Z   Using cached numpy-2.4.6-cp311-cp311-macosx_14_0_arm64.whl.metadata (6.6 kB)
+2026-11-28T08:35:20.0289800Z Collecting pandas>=2.2.3 (from pyannote.core==6.1.0)
+2026-11-28T08:35:20.0302400Z   Using cached pandas-3.1.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (16 kB)
+2026-11-28T08:35:20.0497080Z Collecting sortedcontainers>=2.4.0 (from pyannote.core==6.1.0)
+2026-11-28T08:35:20.0510240Z   Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+2026-11-28T08:35:20.0748470Z Collecting starlette>=1.6.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.0761460Z   Using cached starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-28T08:35:20.0959160Z Collecting anyio>=4.1.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.0976290Z   Using cached anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+2026-11-28T08:35:20.1769070Z Collecting pydantic>=2.9.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.1783620Z   Using cached pydantic-2.14.4-py3-none-any.whl.metadata (143 kB)
+2026-11-28T08:35:20.2000090Z Collecting typing-extensions>=4.8.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.2013460Z   Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-11-28T08:35:20.2173700Z Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.2187520Z   Using cached typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+2026-11-28T08:35:20.2356820Z Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.2368770Z   Using cached annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)
+2026-11-28T08:35:20.2563260Z Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:20.2576700Z   Using cached opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+2026-11-28T08:35:20.2762160Z Collecting click>=7.0 (from uvicorn<1,>=0.30->-r requirements.txt (line 2))
+2026-11-28T08:35:20.2775550Z   Using cached click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+2026-11-28T08:35:20.2934470Z Collecting h11>=0.8 (from uvicorn<1,>=0.30->-r requirements.txt (line 2))
+2026-11-28T08:35:20.2945890Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-11-28T08:35:20.3500180Z Collecting ctranslate2<5,>=4.0 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.3512540Z   Using cached ctranslate2-4.9.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (11 kB)
+2026-11-28T08:35:20.3859830Z Collecting huggingface-hub>=0.21 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.3875340Z   Using cached huggingface_hub-2.5.0-py3-none-any.whl.metadata (16 kB)
+2026-11-28T08:35:20.5562000Z Collecting tokenizers<1,>=0.13 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.5667200Z   Using cached tokenizers-0.23.3-cp310-abi3-macosx_11_0_arm64.whl.metadata (9.8 kB)
+2026-11-28T08:35:20.6193810Z Collecting onnxruntime<2,>=1.14 (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.6296710Z   Using cached onnxruntime-1.32.0-cp311-cp311-macosx_14_0_arm64.whl.metadata (5.8 kB)
+2026-11-28T08:35:20.6967040Z Collecting tqdm (from faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.7045030Z   Using cached tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+2026-11-28T08:35:20.7180320Z Collecting defusedxml<0.8.0,>=0.7.1 (from youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:20.7193470Z   Using cached defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+2026-11-28T08:35:20.7427260Z Collecting requests (from youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:20.7441400Z   Using cached requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+2026-11-28T08:35:20.8548050Z Collecting cffi>=2.1.1 (from curl-cffi<0.18,>=0.17->-r requirements.txt (line 8))
+2026-11-28T08:35:20.8567700Z   Using cached cffi-2.1.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (2.5 kB)
+2026-11-28T08:35:20.8816810Z Requirement already satisfied: certifi>=2026.10.19 in /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages (from curl-cffi<0.18,>=0.17->-r requirements.txt (line 8)) (2026.11.20)
+2026-11-28T08:35:20.9189580Z Collecting pyyaml<7,>=5.3 (from ctranslate2<5,>=4.0->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.9203630Z   Using cached pyyaml-6.0.4-cp311-cp311-macosx_11_0_arm64.whl.metadata (2.3 kB)
+2026-11-28T08:35:20.9671670Z Collecting flatbuffers (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:20.9686700Z   Using cached flatbuffers-25.12.19-py2.py3-none-any.whl.metadata (1.0 kB)
+2026-11-28T08:35:21.0147350Z Collecting packaging (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.0165060Z   Using cached packaging-26.4-py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T08:35:21.1581880Z Collecting protobuf>=4.25.8 (from onnxruntime<2,>=1.14->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.1596180Z   Using cached protobuf-7.36.2-cp310-abi3-macosx_10_9_universal2.whl.metadata (595 bytes)
+2026-11-28T08:35:21.2337520Z Collecting filelock>=3.10.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.2358760Z   Using cached filelock-4.3.2-py3-none-any.whl.metadata (2.3 kB)
+2026-11-28T08:35:21.2918410Z Collecting fsspec>=2023.5.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.2932870Z   Using cached fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+2026-11-28T08:35:21.3394090Z Collecting hf-xet<2.0.0,>=1.6.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.3412020Z   Using cached hf_xet-1.8.0-cp38-abi3-macosx_11_0_arm64.whl.metadata (4.9 kB)
+2026-11-28T08:35:21.3623480Z Collecting httpx2<3,>=2.0.0 (from huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.3638540Z   Using cached httpx2-2.16.2-py3-none-any.whl.metadata (10.0 kB)
+2026-11-28T08:35:21.3882830Z Collecting httpcore2==2.16.2 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.3899340Z   Using cached httpcore2-2.16.2-py3-none-any.whl.metadata (28 kB)
+2026-11-28T08:35:21.4212830Z Collecting idna>=3.18 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.4389950Z   Using cached idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+2026-11-28T08:35:21.4542540Z Collecting truststore>=0.10 (from httpx2<3,>=2.0.0->huggingface-hub>=0.21->faster-whisper<2,>=1.1->-r requirements.txt (line 4))
+2026-11-28T08:35:21.4557090Z   Using cached truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)
+2026-11-28T08:35:21.4745510Z Collecting iniconfig>=2 (from pytest)
+2026-11-28T08:35:21.4785060Z   Using cached iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-11-28T08:35:21.4940280Z Collecting pluggy<2,>=1.6 (from pytest)
+2026-11-28T08:35:21.4955460Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-11-28T08:35:21.5235840Z Collecting pygments>=2.15 (from pytest)
+2026-11-28T08:35:21.5255710Z   Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-11-28T08:35:21.5622800Z Collecting httpcore==1.* (from httpx)
+2026-11-28T08:35:21.5636100Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-11-28T08:35:21.5864100Z Collecting pycparser (from cffi>=2.1.1->curl-cffi<0.18,>=0.17->-r requirements.txt (line 8))
+2026-11-28T08:35:21.5877180Z   Using cached pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+2026-11-28T08:35:21.6172890Z Collecting python-dateutil>=2.9.0 (from pandas>=2.2.3->pyannote.core==6.1.0)
+2026-11-28T08:35:21.6173850Z   Using cached python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+2026-11-28T08:35:21.6299660Z Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:21.6327890Z   Using cached annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-11-28T08:35:22.1718720Z Collecting pydantic-core==2.50.5 (from pydantic>=2.9.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+2026-11-28T08:35:22.1765380Z   Using cached pydantic_core-2.50.5-cp311-cp311-macosx_11_0_arm64.whl.metadata (6.6 kB)
+2026-11-28T08:35:22.1875220Z Collecting tzdata (from python-dateutil>=2.9.0->pandas>=2.2.3->pyannote.core==6.1.0)
+2026-11-28T08:35:22.1889280Z   Using cached tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-11-28T08:35:22.2257690Z Collecting brotli (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.2270180Z   Using cached brotli-1.2.1-cp311-cp311-macosx_10_9_universal2.whl.metadata (6.1 kB)
+2026-11-28T08:35:22.2449770Z Collecting mutagen (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.2465110Z   Using cached mutagen-1.48.1-py3-none-any.whl.metadata (1.8 kB)
+2026-11-28T08:35:22.2962170Z Collecting pycryptodomex (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.2977500Z   Using cached pycryptodomex-3.24.2-cp37-abi3-macosx_10_9_universal2.whl.metadata (3.4 kB)
+2026-11-28T08:35:22.3191930Z Collecting urllib3<3,>=2.0.2 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.3204580Z   Using cached urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+2026-11-28T08:35:22.4313890Z Collecting websockets>=13.0 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.4327300Z   Using cached websockets-17.4-cp311-cp311-macosx_11_0_arm64.whl.metadata (6.3 kB)
+2026-11-28T08:35:22.4493380Z Collecting yt-dlp-ejs==0.8.0 (from yt-dlp[default]>=2026.3->-r requirements.txt (line 7))
+2026-11-28T08:35:22.4505370Z   Using cached yt_dlp_ejs-0.8.0-py3-none-any.whl.metadata (3.5 kB)
+2026-11-28T08:35:22.5297460Z Collecting charset_normalizer<4,>=2 (from requests->youtube-transcript-api<2,>=1.2.4->-r requirements.txt (line 6))
+2026-11-28T08:35:22.5310480Z   Using cached charset_normalizer-3.5.3-cp311-cp311-macosx_10_9_universal2.whl.metadata (43 kB)
+2026-11-28T08:35:22.5394690Z Using cached pyannote_core-6.1.0-py3-none-any.whl (57 kB)
+2026-11-28T08:35:22.5407220Z Using cached scipy-1.17.1-cp311-cp311-macosx_14_0_arm64.whl (20.3 MB)
+2026-11-28T08:35:22.5540090Z Using cached fastapi-0.165.0-py3-none-any.whl (159 kB)
+2026-11-28T08:35:22.5565790Z Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-11-28T08:35:22.5579220Z Using cached faster_whisper-1.2.1-py3-none-any.whl (1.1 MB)
+2026-11-28T08:35:22.5609340Z Using cached sentencepiece-0.2.3-cp311-cp311-macosx_11_0_arm64.whl (1.4 MB)
+2026-11-28T08:35:22.5635380Z Using cached youtube_transcript_api-1.2.5-py3-none-any.whl (485 kB)
+2026-11-28T08:35:22.5656510Z Using cached curl_cffi-0.17.0-cp310-abi3-macosx_11_0_arm64.whl (2.9 MB)
+2026-11-28T08:35:22.5727250Z Using cached socksio-1.0.0-py3-none-any.whl (12 kB)
+2026-11-28T08:35:22.5738760Z Using cached av-16.1.0-cp311-cp311-macosx_14_0_arm64.whl (21.5 MB)
+2026-11-28T08:35:22.5897800Z Using cached ctranslate2-4.9.1-cp311-cp311-macosx_11_0_arm64.whl (1.7 MB)
+2026-11-28T08:35:22.5946060Z Using cached defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+2026-11-28T08:35:22.5958330Z Using cached numpy-2.4.6-cp311-cp311-macosx_14_0_arm64.whl (5.5 MB)
+2026-11-28T08:35:22.6003780Z Using cached onnxruntime-1.32.0-cp311-cp311-macosx_14_0_arm64.whl (22.5 MB)
+2026-11-28T08:35:22.6176710Z Using cached pyyaml-6.0.4-cp311-cp311-macosx_11_0_arm64.whl (180 kB)
+2026-11-28T08:35:22.6199710Z Using cached tokenizers-0.23.3-cp310-abi3-macosx_11_0_arm64.whl (3.1 MB)
+2026-11-28T08:35:22.6247740Z Using cached huggingface_hub-2.5.0-py3-none-any.whl (863 kB)
+2026-11-28T08:35:22.6272870Z Using cached click-8.5.1-py3-none-any.whl (126 kB)
+2026-11-28T08:35:22.6290300Z Using cached hf_xet-1.8.0-cp38-abi3-macosx_11_0_arm64.whl (3.6 MB)
+2026-11-28T08:35:22.6338260Z Using cached httpx2-2.16.2-py3-none-any.whl (97 kB)
+2026-11-28T08:35:22.6354450Z Using cached httpcore2-2.16.2-py3-none-any.whl (85 kB)
+2026-11-28T08:35:22.6369610Z Using cached pytest-9.2.0-py3-none-any.whl (411 kB)
+2026-11-28T08:35:22.6384790Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-11-28T08:35:22.6395790Z Using cached httpx-0.29.0-py3-none-any.whl (73 kB)
+2026-11-28T08:35:22.6410850Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-11-28T08:35:22.6429330Z Using cached python_multipart-0.0.34-py3-none-any.whl (32 kB)
+2026-11-28T08:35:22.6441300Z Using cached yt_dlp-2026.11.23-py3-none-any.whl (3.2 MB)
+2026-11-28T08:35:22.6474200Z Using cached annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)
+2026-11-28T08:35:22.6491750Z Using cached anyio-4.16.0-py3-none-any.whl (134 kB)
+2026-11-28T08:35:22.6589030Z Using cached cffi-2.1.1-cp311-cp311-macosx_11_0_arm64.whl (184 kB)
+2026-11-28T08:35:22.6749830Z Using cached filelock-4.3.2-py3-none-any.whl (244 kB)
+2026-11-28T08:35:22.6933460Z Using cached fsspec-2026.9.0-py3-none-any.whl (221 kB)
+2026-11-28T08:35:22.6942860Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-11-28T08:35:22.6968010Z Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-11-28T08:35:22.6978240Z Using cached iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-11-28T08:35:22.6997450Z Using cached opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+2026-11-28T08:35:22.7020300Z Using cached packaging-26.4-py3-none-any.whl (140 kB)
+2026-11-28T08:35:22.7045240Z Using cached pandas-3.1.1-cp311-cp311-macosx_11_0_arm64.whl (11.2 MB)
+2026-11-28T08:35:22.7272600Z Using cached protobuf-7.36.2-cp310-abi3-macosx_10_9_universal2.whl (456 kB)
+2026-11-28T08:35:22.7346230Z Using cached pydantic-2.14.4-py3-none-any.whl (494 kB)
+2026-11-28T08:35:22.7386780Z Using cached pydantic_core-2.50.5-cp311-cp311-macosx_11_0_arm64.whl (2.1 MB)
+2026-11-28T08:35:22.7448950Z Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-11-28T08:35:22.7467230Z Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-11-28T08:35:22.7541580Z Using cached python_dateutil-4.0.0-py3-none-any.whl (92 kB)
+2026-11-28T08:35:22.7558500Z Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+2026-11-28T08:35:22.7579780Z Using cached starlette-1.10.0-py3-none-any.whl (80 kB)
+2026-11-28T08:35:22.7601370Z Using cached tqdm-4.70.1-py3-none-any.whl (80 kB)
+2026-11-28T08:35:22.7618580Z Using cached truststore-0.10.5-py3-none-any.whl (19 kB)
+2026-11-28T08:35:22.7635600Z Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-11-28T08:35:22.7648220Z Using cached typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+2026-11-28T08:35:22.7661970Z Using cached yt_dlp_ejs-0.8.0-py3-none-any.whl (53 kB)
+2026-11-28T08:35:22.7679900Z Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+2026-11-28T08:35:22.7701230Z Using cached charset_normalizer-3.5.3-cp311-cp311-macosx_10_9_universal2.whl (409 kB)
+2026-11-28T08:35:22.7726900Z Using cached urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-11-28T08:35:22.7741330Z Using cached websockets-17.4-cp311-cp311-macosx_11_0_arm64.whl (216 kB)
+2026-11-28T08:35:22.7764670Z Using cached brotli-1.2.1-cp311-cp311-macosx_10_9_universal2.whl (863 kB)
+2026-11-28T08:35:22.7823320Z Using cached flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+2026-11-28T08:35:22.7858990Z Using cached mutagen-1.48.1-py3-none-any.whl (195 kB)
+2026-11-28T08:35:22.7898080Z Using cached pycparser-3.12-py3-none-any.whl (62 kB)
+2026-11-28T08:35:22.7915530Z Using cached pycryptodomex-3.24.2-cp37-abi3-macosx_10_9_universal2.whl (2.5 MB)
+2026-11-28T08:35:22.7979600Z Using cached tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+2026-11-28T08:35:23.2269610Z Installing collected packages: sortedcontainers, flatbuffers, brotli, yt-dlp-ejs, yt-dlp, websockets, urllib3, tzdata, typing-extensions, truststore, tqdm, socksio, sentencepiece, pyyaml, python-multipart, pygments, pycryptodomex, pycparser, protobuf, pluggy, packaging, numpy, mutagen, iniconfig, idna, hf-xet, h11, fsspec, filelock, defusedxml, click, charset_normalizer, av, annotated-types, annotated-doc, uvicorn, typing-inspection, scipy, requests, python-dateutil, pytest, pydantic-core, opentelemetry-api, onnxruntime, httpcore2, httpcore, ctranslate2, cffi, anyio, youtube-transcript-api, starlette, pydantic, pandas, httpx2, httpx, curl-cffi, pyannote.core, huggingface-hub, fastapi, tokenizers, faster-whisper
+2026-11-28T08:35:43.7981920Z 
+2026-11-28T08:35:43.8005890Z Successfully installed annotated-doc-0.0.7 annotated-types-0.8.0 anyio-4.16.0 av-16.1.0 brotli-1.2.1 cffi-2.1.1 charset_normalizer-3.5.3 click-8.5.1 ctranslate2-4.9.1 curl-cffi-0.17.0 defusedxml-0.7.1 fastapi-0.165.0 faster-whisper-1.2.1 filelock-4.3.2 flatbuffers-25.12.19 fsspec-2026.9.0 h11-0.16.0 hf-xet-1.8.0 httpcore-1.0.9 httpcore2-2.16.2 httpx-0.29.0 httpx2-2.16.2 huggingface-hub-2.5.0 idna-3.20 iniconfig-2.3.1 mutagen-1.48.1 numpy-2.4.6 onnxruntime-1.32.0 opentelemetry-api-1.45.2 packaging-26.4 pandas-3.1.1 pluggy-1.7.0 protobuf-7.36.2 pyannote.core-6.1.0 pycparser-3.12 pycryptodomex-3.24.2 pydantic-2.14.4 pydantic-core-2.50.5 pygments-2.21.0 pytest-9.2.0 python-dateutil-4.0.0 python-multipart-0.0.34 pyyaml-6.0.4 requests-2.34.2 scipy-1.17.1 sentencepiece-0.2.3 socksio-1.0.0 sortedcontainers-2.4.0 starlette-1.10.0 tokenizers-0.23.3 tqdm-4.70.1 truststore-0.10.5 typing-extensions-4.16.0 typing-inspection-0.4.5 tzdata-2026.6 urllib3-2.8.0 uvicorn-0.54.0 websockets-17.4 youtube-transcript-api-1.2.5 yt-dlp-2026.11.23 yt-dlp-ejs-0.8.0
+2026-11-28T08:35:44.1058200Z ##[group]Run python -m pytest -q
+2026-11-28T08:35:44.1058880Z [36;1mpython -m pytest -q[0m
+2026-11-28T08:35:44.1102900Z shell: /bin/bash -e {0}
+2026-11-28T08:35:44.1103210Z env:
+2026-11-28T08:35:44.1103540Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:44.1104070Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-11-28T08:35:44.1104600Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:44.1105080Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:44.1105510Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:35:44.1105910Z ##[endgroup]
+2026-11-28T08:35:46.5127510Z ........................................................................ [  8%]
+2026-11-28T08:35:47.5650080Z ........................................................................ [ 16%]
+2026-11-28T08:36:25.5754990Z ................................................................ [ 24%]
+2026-11-28T08:36:27.0205370Z ........................................................................ [ 32%]
+2026-11-28T08:36:27.9255890Z ........................................ss.............................. [ 41%]
+2026-11-28T08:36:30.8810030Z ........................................................................ [ 49%]
+2026-11-28T08:36:32.1141960Z ....................................................ss............................................ [ 61%]
+2026-11-28T08:36:32.2301240Z ...............ss....................................................... [ 69%]
+2026-11-28T08:36:32.3891870Z ........................................................................ [ 78%]
+2026-11-28T08:36:33.3566690Z ........................................................................ [ 86%]
+2026-11-28T08:36:33.8612300Z ........................................................................ [ 95%]
+2026-11-28T08:36:34.2476260Z .........................................                                [100%]
+2026-11-28T08:36:34.2476820Z 845 passed, 6 skipped, 54 subtests passed in 49.61s
+2026-11-28T08:36:34.5500890Z ##[group]Run python -m compileall -q app.py asr_timing.py sources.py enhancements.py library.py runtime_check.py
+2026-11-28T08:36:34.5501740Z [36;1mpython -m compileall -q app.py asr_timing.py sources.py enhancements.py library.py runtime_check.py[0m
+2026-11-28T08:36:34.5757220Z shell: /bin/bash -e {0}
+2026-11-28T08:36:34.5757520Z env:
+2026-11-28T08:36:34.5758020Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:36:34.5758570Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-11-28T08:36:34.5759150Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:36:34.5759660Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:36:34.5760100Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-11-28T08:36:34.5760520Z ##[endgroup]
+2026-11-28T08:36:34.6890610Z Post job cleanup.
+2026-11-28T08:36:35.0535290Z Cache hit occurred on the primary key setup-python-macOS-arm64-python-3.11.9-pip-3ca9d3c380d3dbee6fd3acfabdde7650e8dffbd538041f88d9d67fe5581fe526, not saving cache.
+2026-11-28T08:36:35.0537030Z (node:3302) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T08:36:35.0537860Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T08:36:35.0655070Z Post job cleanup.
+2026-11-28T08:36:35.1815230Z [command]/opt/homebrew/bin/git version
+2026-11-28T08:36:35.1896370Z git version 2.56.1
+2026-11-28T08:36:35.1923840Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/0d99fc48-52ed-4696-88c9-f63aa01072be/.gitconfig'
+2026-11-28T08:36:35.1931580Z Temporarily overriding HOME='/Users/runner/work/_temp/0d99fc48-52ed-4696-88c9-f63aa01072be' before making global git config changes
+2026-11-28T08:36:35.1932560Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T08:36:35.1935830Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/LinkScribe/LinkScribe
+2026-11-28T08:36:35.2012510Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T08:36:35.2087820Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T08:36:35.3141420Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T08:36:35.3208650Z http.https://github.com/.extraheader
+2026-11-28T08:36:35.3274980Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-28T08:36:35.3289120Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T08:36:35.4196960Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T08:36:35.4267190Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T08:36:35.5468070Z Cleaning up orphan processes
+2026-11-28T08:36:36.3064300Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

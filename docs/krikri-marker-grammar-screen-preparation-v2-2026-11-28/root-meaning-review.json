@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T08:53:49.127795+00:00",
+  "reviewer": "/root",
+  "review_scope": "Read complete original source segments, full raw final JSON strings, all restored translations and original case-specific criteria for all six cases. Applied unchanged global name/actor/relationship/completeness criteria as well. No outputs repaired or criteria changed.",
+  "decision": "rejected_for_quality_promotion",
+  "counts": {
+    "acceptable": 4,
+    "minor_only": 0,
+    "major_error": 2
+  },
+  "execution_sha256": "7e28bf812ecfe593aa64a40803521cf2021ee2282d830984dea83b7807a0b6ba",
+  "resources_sha256": "a68d15dd8fb5b35c73a93684d10ca88301f0b747efd9b10b0c0ccab492055b8a",
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report_sha256": "045c189d8019b50eec2ec1a28fbb19ab99f62c85e1a21855702cda24a8ba0332",
+      "judgment": "acceptable",
+      "reason": "Full text-file/transcript/audio distinction, Maria, saved versus not saved, completed12-minute transcription and not-yet-started Greek translation are intact; μεταγραφή is acceptable in context."
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "report_sha256": "89a93e84cd6386a59e1d5ae205ce0ecc5d3c1e6d8700006b8e4bcaf877284e3c",
+      "judgment": "major_error",
+      "reason": "Both entries add an unmarked English translation before the correctly restored one. Nick/Helen substitutions are added; Elena is incorrectly called translator and Helen subtitle checker. Correct later Ελένη-translator and Έλενα-subtitle clauses do not cancel the contradictory assertions. Six exact markers alone do not establish identity or roles."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "report_sha256": "f073e45ff7bf16a48b6c44e02503275f7575180adddd7568f7f46b4857e816af",
+      "judgment": "acceptable",
+      "reason": "All values, receipt-versus-transfer distinction, rejected500-sat amount, Bitcoin/sats terminology and different-unit proposition are intact.5.000 validly represents5000; source receipt-style€12.50 remains unambiguous."
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "report_sha256": "27e4c0aae9090a6b6a7c36c9e6fa0b6c2799ada5471c49bbd6f5e015de35928a",
+      "judgment": "acceptable",
+      "reason": "Denial of saying sold-all and affirmative report of sold-none yesterday, possible undecided sale today, Άννα and both female pronouns are intact."
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "report_sha256": "09bbdbb6e4a386936c833a0b535470f860f8a0b4d3ecc38308460c2bcf18175b",
+      "judgment": "acceptable",
+      "reason": "Anna publishes only if Giannis approves, Giannis no-answer condition, Friday response deadline and Monday waiting endpoint all intact; Greek articles before Latin source names are natural."
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "report_sha256": "5765aceae91a5820d4cb6be90f5c63cd13ff6a0213c97d3d78d648a03bd7f25d",
+      "judgment": "major_error",
+      "reason": "Mary is made the asking actor and exact Μαρία is appended as an unattached trailing token after the quoted question. Correct12/21 alternatives, quotation, uncertainty and title-insufficiency do not repair the changed identity. This violates the unchanged global name rule."
+    }
+  ],
+  "operational_scope": {
+    "completed_generation_calls": 6,
+    "all_per_case_mechanical_checks_pass": true,
+    "normal_stops": 6,
+    "prompt_tokens": [
+      261,
+      350,
+      262,
+      266,
+      302,
+      264
+    ],
+    "elapsed_seconds": 144.364313,
+    "peak_summed_rss_mib": 5573.8,
+    "peak_pss_mib": 5564.8,
+    "samples": 1108,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "owned_processes_stopped": true,
+    "measurement_complete": true,
+    "whole_app_resource_approval": false
+  },
+  "next_repair_observation": "Grammar enforces marker membership but allows ordinary substituted names before required markers, including a whole incorrect translation followed by a correct tagged one. The native enforcement result remains valid; it did not promise semantic position/actor correctness.",
+  "fresh_validation_opened": false,
+  "production_change": false,
+  "release_approval": false
+}

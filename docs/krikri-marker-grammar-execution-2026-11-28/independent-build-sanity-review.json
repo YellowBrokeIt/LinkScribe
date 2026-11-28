@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "decision": "actual_retained_build_verification_and_original_three_sanity_checks_pass",
+  "unresolved_findings": [],
+  "scope": "Independent read-only audit of completed build wrapper and raw/native parser status receipts. No compiler, parser, native/model/tokenizer/network call or rerun by reviewer.",
+  "plan_sha256": "d2a00e31038f43cebb643980826767c8322fd84883cfa327b7511a7ad2701652",
+  "report": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/build.json",
+    "bytes": 58745,
+    "sha256": "07955d3fdadbf36e6e93441ec6048a68e2f41bb6fc1623cd1a00d76c03ed85ce"
+  },
+  "resources": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/build-resources.json",
+    "bytes": 6331,
+    "sha256": "fc28eacaf137fd02a76c295246175975594d784265458394f11bbd869d025215"
+  },
+  "authorization": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-build-continuation-2026-11-28/build-authorization.json",
+    "bytes": 57874,
+    "sha256": "3c0cbd9789bffa42e34ef93e923cdd0f8c6dc128cb49027dfbb89b5a488f6fc0"
+  },
+  "audit": {
+    "path": "/workspace/scratch/94360995dd61/grammar-continuation-build-result-independent-review-2026-11-28/actual-build-audit.json",
+    "sha256": "126e794d1570b9119513ca9b1e9cf3c65bfb0ed0b58c3e673717b9bb39ea74d2",
+    "passed_checks": 1183
+  },
+  "actual_results": {
+    "same_retained_binary_sha256": "175a68a01c5b0250a025a9b9ea888411de43d5d0269a2ca2ad8ddd9aa18ac9ba",
+    "new_compiler_invocations": 0,
+    "new_acquisition_invocations": 0,
+    "dependency_files_verified": 273,
+    "exact_uapi_exceptions": 5,
+    "original_three_sanity_statuses": [
+      {
+        "id": "accept-complete",
+        "status": "accepted",
+        "stdout_sha256": "12ac60362c1950427be267c2aaf0eca4e4eabd7e745638617bc4e1c00825fe09",
+        "stderr_bytes": 0,
+        "exit_code": 0,
+        "elapsed_seconds": 0.004949
+      },
+      {
+        "id": "reject-other",
+        "status": "rejected",
+        "stdout_sha256": "2d05f5b6fd441fd8a05dd1f50102f86da6a5e7dbe6bc7d9fdd2ca88e8806a230",
+        "stderr_bytes": 0,
+        "exit_code": 0,
+        "elapsed_seconds": 0.004732
+      },
+      {
+        "id": "reject-incomplete",
+        "status": "rejected",
+        "stdout_sha256": "a4a898ade9b0d69af16f94bdeefa1ddd34ab2d97fbd0ac0730b22d6c7cc726df",
+        "stderr_bytes": 0,
+        "exit_code": 0,
+        "elapsed_seconds": 0.003564
+      }
+    ],
+    "all_three_exit_codes": 0,
+    "all_three_stderr_empty": true,
+    "status_interpretation": "Literal ok is accepted; no is rejected at the first character; incomplete o is rejected at end of input. Exit zero alone was not treated as acceptance.",
+    "native_model_loads": 0,
+    "generation_calls": 0,
+    "time_seconds": 0.269444,
+    "sample_count": 10,
+    "peak_rss_mib": 37.9,
+    "peak_pss_mib": 32.7,
+    "measurement_complete": true,
+    "owned_processes_stopped": true,
+    "remaining_original_build_cap_seconds": 118.937062,
+    "carried_previous_active_seconds": 1.2511919999999999,
+    "total_active_seconds_after_wrapper": 1.5206359999999999
+  },
+  "preserved_failure": "Original V2 build report39c9353e21d4ace2c50e0ddafbbb740cb5fc9711744bc4ca6d92115c8fc63eab and resources5cf50d351e0aa75d1e8cfa5026fc606547e546b5ecf8aac58fc341d9192ed230 remain unchanged and failed. This result is the separately authorized verification/sanity wrapper.",
+  "source_authorization_integrity": {
+    "all_plan_bindings": 426,
+    "all_root_receipt_bindings": 430,
+    "exact_receipt_claim_and_phase_hashes_verified": true
+  },
+  "next_phase_limit": "The build/parser sanity prerequisite is now evidenced. Root may separately authorize the unchanged native_prepare phase. Actual six rendered prompts/token vectors, seven zero-output schema responses and285native grammar outcomes remain unobserved; no generation or semantic approval is granted.",
+  "historical_or_candidate_files_modified": false,
+  "reviewer_execution_authorizations_created": 0
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T08:54:16.538405+00:00",
+  "reviewer": "/root/package_verification",
+  "decision": "Current hosted speaker pipeline and source-archive installation evidence verified within the declared scope; no material defect found.",
+  "head_sha": "11e336577c7980f8da9dd817f265472596347a48",
+  "checks_passed": 240,
+  "audit_sha256": "d87340198fef75b98ff9e3a55fd5f76023c232ba21a226b337020248133a7f4d",
+  "speaker": {
+    "run_id": 46126494171,
+    "job_id": 140922130930,
+    "artifact_id": 15254889987,
+    "published_and_recomputed_zip_sha256": "700c5562d5ec95ccd27d75b3018bc451b48caebec8781e33c9c39f363180154b",
+    "plan_sha256": "3a613e540873888ffeb0007b4817d1dfabd8d8470033f8b935bb7e991ce4ecca",
+    "report_sha256": "0c3411fed2ae749885c527b20675c16d2dc4a856fa4f9e601e64ba4fc10e5b95",
+    "execution_sha256": "340939c89c2a450babc0f96294954ca24ac36eaee95080d714f2bd425c2aa865",
+    "source_scope": "GitHub job/artifact metadata and embedded head/plan identify exact 11e; all 21 planned source hashes and 8 recorded worker source hashes match the inspected source bytes. No Git command was used.",
+    "actual_pipeline": "One actual upload and one complete Small transcribe with word_timestamps=false, VAD false, beam 5, previous-text false, full default fallback and no hints. Native constructor cpu_threads=0/one worker/CPU/int8_float32 matches the unchanged app. Same engine completes recognition then 2 fixed-text encode+align calls on original tokens/windows and full waveform.",
+    "full_input": {
+      "sample_count": 554160,
+      "sample_rate_hz": 16000,
+      "seconds": 34.635,
+      "pcm_sha256": "70f602e7be70e59448259d311dad673459d551198cf274c3615a2649f513b194"
+    },
+    "timing_and_text": "All 8 timing segments retain exact authoritative recognized text; both native monotone paths, token probabilities and frame/window bindings are consistent. All 8 have real word evidence; no timing fallback warning. No new word-timing accuracy or recognition-correctness claim is made.",
+    "current_output": {
+      "saved_groups": 21,
+      "unknown_groups": 8,
+      "speaker_labels": 2,
+      "speaker_warning_count": 4
+    },
+    "acoustic": {
+      "independent_score_sha256": "7a1a19349f1307ef5be7fc03dcedf59b0d271f77fc09a49be00078ef53bcaea3",
+      "reference_core_samples": 258,
+      "assigned": 221,
+      "unassigned": 37,
+      "assigned_fraction": 0.8566,
+      "permutation_matched_purity": 1.0,
+      "minimum_assigned_fraction": 0.8,
+      "minimum_purity": 0.95,
+      "original_thresholds_unchanged": true
+    },
+    "persistence": "Exact 21-group record and warnings agree across saved report, independent immutable read-only SQLite reload, fresh-process reload, JSON/TXT/SRT/VTT, transcript ZIP member contents and schema-v2 library backup. All timed endpoints stay inward and within physical 34.635-second audio.",
+    "lifetime": "Actual weak-reference/cache evidence shows recognizer released before speakers. No translation or summary was requested, so an actual subsequent text-AI transition is outside this run.",
+    "resources": {
+      "samples": 166,
+      "sampled_group_peak_rss_bytes": 1193730048,
+      "worker_os_peak_rss_bytes": 1193308160,
+      "worker_elapsed_seconds": 17.01864365600001,
+      "controller_elapsed_seconds": 17.478703276000005,
+      "owned_group_cleanup_complete": true
+    },
+    "cpu_scope": "Successful source-enforced 4-CPU launch affinity plus OMP/MKL 4; constructor 0 is a native-default request. Effective thread count and in-worker affinity readback are not claimed.",
+    "quality_scope": "One already-exposed constructed English reading fixture. Same acoustic counts as f2 were independently recomputed from 11e raw turns; text/group counts were reviewed as new 11e outputs. General Greek, meeting, overlap, ASR meaning and precise word timing remain unapproved."
+  },
+  "install": {
+    "run_id": 46126494141,
+    "evidence_artifact_id": 15255569442,
+    "published_and_recomputed_evidence_zip_sha256": "e39cf2ee953f1c6a285e680a20594c9afe6929016b0c849af1d342b166f78fd9",
+    "report_sha256": "869238c12bae2c2421a7330eb43db8542bdf1595f79ccfc2987596243725be0e",
+    "launcher_log_sha256": "f57c1a00bddc3141a3610ef4fa476e49e216da4e39982897643c2d876999dfe3",
+    "checks": [
+      "archive provenance and safe extraction",
+      "actual start_linux.sh, fresh venv and /health",
+      "setup diagnostics",
+      "packaged static homepage",
+      "fresh SQLite library",
+      "installed dependency consistency"
+    ],
+    "runtime": {
+      "python": "3.11.18",
+      "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43"
+    },
+    "source_artifact": {
+      "id": 15254769950,
+      "outer_zip_bytes": 41996185,
+      "published_outer_zip_sha256": "96e433fb4936364108be7823be173680be70e580fe3c8088cde5bd011f8ff4de",
+      "inner_candidate_zip_sha256": "466443904cfff8cd68c90ffa72338810a4dd7b3315393727a688d5af6b29d4f1",
+      "members": 2831,
+      "uncompressed_bytes": 86366233
+    },
+    "observed_install": "Hosted fresh extraction ran actual start_linux.sh/new venv, installed curl-cffi 0.17.0 from standard requirements, returned 200 from health/diagnostics/homepage/library, passed pip check and shut down cleanly.",
+    "provenance_scope": "Source ZIP commit/repository/SHA/Git-comment/path/member/module checks are recorded by the actual hosted verifier. The reviewer independently verified the installation evidence ZIP/log and GitHub metadata, and did not redownload or rehash the 42 MB source artifact. Outer artifact ZIP and inner candidate ZIP identities are distinct.",
+    "scope_limit": "Fresh Linux Python 3.11 source install and startup only; no standalone installer, Windows/macOS install or model inference approval."
+  },
+  "reviewer_execution": {
+    "application_or_model_calls": 0,
+    "native_calls": 0,
+    "provider_calls": 0,
+    "downloads": 0,
+    "git_commands": 0,
+    "original_artifact_mutations": false,
+    "sqlite_open_mode": "mode=ro&immutable=1"
+  },
+  "reviewer_preparation_note": "One reviewer-only audit variable collided with a backup-manifest variable and raised KeyError before final reporting. Exact initial script and correction note are retained. Corrected stdlib audit passed 240 checks; no original artifact bytes or hosted gate were changed.",
+  "errors": []
+}

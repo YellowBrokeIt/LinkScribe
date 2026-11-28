@@ -1,0 +1,110 @@
+{
+  "plan_sha256": "3a613e540873888ffeb0007b4817d1dfabd8d8470033f8b935bb7e991ce4ecca",
+  "github_sha": "11e336577c7980f8da9dd817f265472596347a48",
+  "command": [
+    "/home/runner/work/_temp/linkscribe-speaker-pipeline/runtime/bin/python",
+    "/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_speaker_app.py",
+    "--audio",
+    "/home/runner/work/_temp/linkscribe-speaker-pipeline/evidence/inputs/two_speakers_returning.wav",
+    "--output",
+    "/home/runner/work/_temp/linkscribe-speaker-pipeline/evidence/speaker-app-report.json",
+    "--timeout",
+    "600"
+  ],
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sampled_group_peak_rss_bytes": 1193730048,
+  "sample_count": 166,
+  "all_resource_samples_complete": true,
+  "stop_reason": null,
+  "owned_process_group_id": 2340,
+  "cleanup": {
+    "live_group_members_before_cleanup": [],
+    "signals_sent": [],
+    "live_group_members_after_cleanup": [],
+    "leader_exited": true,
+    "strict_final_sample": {
+      "rss_bytes": 0,
+      "members": [],
+      "read_errors": [],
+      "complete": true
+    }
+  },
+  "returncode": 0,
+  "elapsed_seconds": 17.478703276000005,
+  "resource_samples_sha256": "8b7de77b5ce9f9656d5cc085886dc147be0f4436ba8821d3b31efe21ed034e3d",
+  "controlled_fixture_acoustic_assessment": {
+    "status": "passed",
+    "expected_speakers_for_scoring_only": 2,
+    "reported_speakers": 2,
+    "core_samples": 258,
+    "assigned_core_fraction": 0.8566,
+    "permutation_matched_label_purity": 1.0,
+    "correctly_attributed_core_fraction": 0.8566,
+    "mapping_for_scoring_only": {
+      "Speaker 1": "2961",
+      "Speaker 2": "8455"
+    },
+    "per_interval": [
+      {
+        "reference": {
+          "start": 0.5,
+          "end": 8.5,
+          "speaker": "2961",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 1": 65
+        }
+      },
+      {
+        "reference": {
+          "start": 9.1,
+          "end": 16.835,
+          "speaker": "8455",
+          "short": false
+        },
+        "core_samples": 63,
+        "label_counts": {
+          "Speaker 2": 50,
+          "None": 13
+        }
+      },
+      {
+        "reference": {
+          "start": 17.435,
+          "end": 25.435,
+          "speaker": "2961",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 1": 55,
+          "None": 10
+        }
+      },
+      {
+        "reference": {
+          "start": 26.035,
+          "end": 34.035,
+          "speaker": "8455",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 2": 51,
+          "None": 14
+        }
+      }
+    ]
+  },
+  "pipeline_contract_pass": true,
+  "controlled_fixture_acoustic_pass": true,
+  "broader_speaker_or_word_timing_accuracy_approved": false,
+  "passed": true
+}
