@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "source_commit": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+  "run_id": 46121980931,
+  "job_id": 140908265566,
+  "artifact_id": 15253967591,
+  "artifact_sha256": "6c7b20cf3ec5497b7ca8d67cd055dd6e8ea6633608318d38a118a2b00f93067a",
+  "report_sha256": "bece78060365cf6f8a9d9ce624490d81894e7c8d5fceb105ee4d06a0dd00e190",
+  "exact_source_bindings": 10,
+  "results": [
+    {
+      "fixture": "youtube_tears_of_steel_full",
+      "status": "fail",
+      "native_acquisition_errors": [
+        {
+          "type": "ReadableError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        },
+        {
+          "type": "DownloadError",
+          "message": "ERROR: [youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+        },
+        {
+          "type": "ExtractorError",
+          "message": "[youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+        }
+      ],
+      "asr_executed": false
+    },
+    {
+      "fixture": "vimeo_sintel_rerendered_player",
+      "status": "fail",
+      "native_acquisition_errors": [
+        {
+          "type": "ReadableError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        },
+        {
+          "type": "DownloadError",
+          "message": "ERROR: [vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+        },
+        {
+          "type": "ExtractorError",
+          "message": "[vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+        },
+        {
+          "type": "HTTPError",
+          "message": "HTTP Error 401: Unauthorized",
+          "http_status": 401,
+          "response_headers": {
+            "Content-Type": "text/html;charset=UTF-8",
+            "Server": "cloudflare",
+            "Date": "Sat, 28 Nov 2026 07:37:14 GMT",
+            "X-Mitmproxy-Blocked-Reason": null,
+            "X-Proxy-Error": null,
+            "X-Squid-Error": null
+          },
+          "response_origin": "https://player.vimeo.com",
+          "response_body_prefix": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta name=\"robots\" content=\"noindex, nofollow\" />\n    <title>Vimeo</title>\n    <style type=\"text/css\">\n      * {\n        margin: 0;\n        padding: 0;\n      }\n\n      body {\n        background: #000;\n        color: #fff;\n      }\n\n      @keyframes rotate {\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n\n      @keyframes dash {\n        0% {\n          stroke-dasharray: 1, 200;\n          stroke-dashoffset: 0;\n        }\n        50% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -35px;\n        }\n        100% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -135px;\n        }\n      }\n\n      .spinner {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        background: transparent;\n        transform: translate(-50%, -50%);\n        transition: opacity 0.1s,\n          transform 0.25s cubic-bezier(0.17, 0.88, 0.32, 1.28);\n        max-width: 120px;\n        width: 18%;\n      }\n\n      .spinner circle {\n        stroke-width: 4px;\n        background: transparent;\n        stroke-width: 2px;\n      }\n\n      .spinner [data-spinner-trace=\"true\"] {\n        stroke-opacity: 20%;\n      }\n\n      .spinner [data-spinner-circle=\"true\"] {\n        transform-origin: 50% 50%;\n        stroke-linecap: round;\n        stroke-dasharray: 200;\n        stroke-dashoffset: 200;\n        animation: rotate 2s linear 0.25s infinite,\n          dash 1.5s ease-in-out 0.25s infinite;\n      }\n\n      .error {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        width: 100%;\n      }\n\n      .error__header {\n        font-family: \"Helvetica Neue\";\n        font-size: 40px;\n        font-style: normal;\n        font-weight: 700;\n        line-height: 48px;\n        letter-spacing: -1.2px;\n        text-align: center;\n      }\n\n      .error_subheader {\n        font-family: \"Helvetica Neue\";\n        font-size: 18px;\n        font-style: normal;\n        font-weight: 400;\n        line-height: 28px"
+        }
+      ],
+      "asr_executed": false
+    }
+  ],
+  "conclusion": "Both original follow-up provider attempts failed acquisition. YouTube requested bot sign-in; Vimeo player returned HTTP401. No transcript or speech-quality inference follows; fixtures and criteria unchanged."
+}

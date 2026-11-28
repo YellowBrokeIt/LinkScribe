@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T08:01:13.759783+00:00",
+  "source_commit": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+  "raw_report_sha256": "0ccc6c2017beece99b3a91b68f2533d1a91cd15ed4374a972a94ff1c4c5d40b9",
+  "peer_full_review_sha256": "f17ef465140cb3c6b555e616abd83593ff34871e3d81f3db74a217ae727ea183",
+  "peer_manifest_sha256": "1d787d4514dcafa6a989ee60756411ed32a5226de9fdd4697b5b6c940d59b274",
+  "root_read_full_sources_criteria_and_outputs_for_all_twelve": true,
+  "original_exposed_source_criteria_verified": true,
+  "current_source_hashes_verified_against_git": true,
+  "decision": "Reject default Qwen output for the unchanged faithful-translation gate.",
+  "counts": {
+    "reviewed": 12,
+    "major": 9,
+    "acceptable": 3,
+    "minor_only": 0
+  },
+  "major_findings": {
+    "dev-en-el-transcript-terminology": "Recording becomes a little car; transcription and translation become mutation.",
+    "dev-el-en-people-and-roles": "Eleni is truncated to Ele, an unsupported identity change, despite retained roles/distinction.",
+    "dev-en-el-bitcoin-amounts": "5000 is malformed as5,00.000 and receipt prose loses its clear meaning; ordinary locale separators were accepted.",
+    "dev-en-el-conditional-publication": "The necessary Giannis-approval proposition is replaced by garbled text involving Antonios despite an automatic pass.",
+    "holdout-en-el-quoted-instructions": "The object all saved transcripts becomes a malformed transcriber expression and the explicitly female speaker receives masculine framing. Quoted commands remain data.",
+    "holdout-en-el-objects-and-times": "Blue changes to green; the return-to-Kostas and kept-object proposition is broken/omitted.",
+    "holdout-el-en-literal-example": "The quoted response OK becomes ENTRANCE. The model did not obey the quoted command, but mistranslated it.",
+    "long-en-el-community-archive": "Tuesday changes to Wednesday and final yellow box to green; further prose/condition corruption and a literal truncated phrase remain.",
+    "long-el-en-library-meeting": "The financial amounts and one-document correction are omitted; Thursday changes to Friday and Eleni to Elena."
+  },
+  "acceptable_cases": [
+    "dev-el-en-negation-scope",
+    "dev-el-en-uncertain-question",
+    "holdout-el-en-lending-direction"
+  ],
+  "allowed_variants": [
+    "Peter/Petros and Sophia/Sofia in the expressly permitted lending case.",
+    "Natural localized numeric/date separators where values are unchanged.",
+    "Greek source names retained in Latin script when authorized by each original criterion."
+  ],
+  "all_twelve_complete_outputs_source_and_criteria_equal_6de3fad": true,
+  "fresh_validation_used": false,
+  "new_model_calls": 0,
+  "limitations": [
+    "This reviews the already exposed twelve-case corpus, including two long cases; it is not fresh validation.",
+    "The two short summaries in the separate integration smoke are outside this translation count.",
+    "Normal responses and all-source request reconstruction do not make these omissions or corruptions acceptable."
+  ]
+}

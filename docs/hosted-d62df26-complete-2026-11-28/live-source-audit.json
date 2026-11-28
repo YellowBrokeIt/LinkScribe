@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T07:48:30.790845+00:00",
+  "source_commit": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+  "run_id": 46121980931,
+  "job_id": 140908265757,
+  "artifact_id": 15254277519,
+  "artifact_sha256": "cd02b5d808623a7537ceca27b21a5f71e8002cd97af194b249ee5113c21888d8",
+  "report_sha256": "597e7df7689987e381681a8343c4c66c1df6f53b9e6fac5948ebf01f60644e8a",
+  "source_bindings": 8,
+  "fixture_results": [
+    {
+      "fixture": "youtube_sintel_trailer",
+      "status": "fail",
+      "elapsed_seconds": 1.514
+    },
+    {
+      "fixture": "youtube_tears_of_steel_teaser",
+      "status": "fail",
+      "elapsed_seconds": 1.009
+    },
+    {
+      "fixture": "vimeo_sintel_trailer",
+      "status": "fail",
+      "elapsed_seconds": 1.065
+    },
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "pass",
+      "elapsed_seconds": 138.893
+    }
+  ],
+  "ordinary_single_dailymotion": {
+    "full_pcm_seconds": 734.1453125,
+    "pcm_sha256": "7cebce904626489b7b336a60c64cde40fd483fb138fc33d9c67086c6a14f6a66",
+    "single_full_transcribe_request": true,
+    "word_timestamps_requested": false,
+    "native_recognition_seconds": 134.12,
+    "segments": 82
+  },
+  "mixed_batch": {
+    "status": "pass",
+    "successful_segments": 79,
+    "failed_acquisition_count": 1,
+    "completed_batch_history_and_exports_preserved": true
+  },
+  "restart": {
+    "status": "pass",
+    "completed_batch_history_and_exports_preserved": true,
+    "verified_record_ids": [
+      "d125178dd4714f80b70aaf9962067928",
+      "3f4d42f91bc7436b9c6e8021e1237a08"
+    ]
+  },
+  "nonspeech": [
+    {
+      "kind": "silence",
+      "status": "pass"
+    },
+    {
+      "kind": "white_noise",
+      "status": "pass"
+    }
+  ],
+  "tail_replay": {
+    "equal_to_hosted_report": true,
+    "passed_checks": 28,
+    "scope": "The same four full-recording anchors and unchanged segment-time windows, with the restored ordinary decoder policy. No word-timing, all-word, provider-availability or general semantic accuracy approval.",
+    "semantic_accuracy_approved": false,
+    "word_timing_accuracy_approved": false
+  },
+  "limitations": [
+    "Five of six total single-source attempts failed when combined with the separately retained follow-up job.",
+    "The two successful full-PCM recognitions produced different segmentations. Existing unchanged settings do not make this a deterministic transcript or broad semantic approval.",
+    "Optional fixed-text timing and acoustic speakers were not requested in these provider jobs."
+  ]
+}
