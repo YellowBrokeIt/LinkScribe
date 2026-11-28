@@ -1,0 +1,41 @@
+--- rejected-marker-controls.py
++++ compact-tag-controls.py
+@@ -100,13 +100,13 @@
+ probe("exact-roundtrip-repeated-mentions-and-metadata", roundtrip)
+ probe("missing-marker", lambda: alter_text(0, lambda s: s.replace(markers[0], "")), True)
+ probe("duplicate-marker", lambda: alter_text(0, lambda s: s + markers[0]), True)
+-probe("marker-case-change", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0].lower())), True)
+-probe("split-marker", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0][:12] + " " + markers[0][12:])), True)
++probe("marker-case-change", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0].upper())), True)
++probe("split-marker", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0][:2] + " " + markers[0][2:])), True)
+ probe("cross-segment-marker-move", swap_entries, True)
+-probe("unknown-well-formed-marker", lambda: alter_text(0, lambda s: s + "__LSNP_0000000000000000_9999_9999__"), True)
+-probe("unknown-malformed-prefix", lambda: alter_text(0, lambda s: s + "__LSNP_bad"), True)
+-probe("source-marker-collision", lambda: build_protection([{"text": "__LSNP_existing source"}], [], "en"), True)
+-probe("compatibility-marker-collision", lambda: build_protection([{"text": "＿＿ｌｓｎｐ_existing"}], [], "en"), True)
++probe("unknown-well-formed-marker", lambda: alter_text(0, lambda s: s + "<x9999/>"), True)
++probe("unknown-malformed-prefix", lambda: alter_text(0, lambda s: s + "<xbroken>"), True)
++probe("source-marker-collision", lambda: build_protection([{"text": "<x0/> pre-existing source"}], [], "en"), True)
++probe("compatibility-marker-collision", lambda: build_protection([{"text": "＜Ｘ０／＞ pre-existing source"}], [], "en"), True)
+ probe("source-map-corruption", lambda: mutate_bundle("map"), True)
+ probe("source-metadata-corruption", lambda: mutate_bundle("source"), True)
+ probe("translated-metadata-change", metadata_change, True)
+@@ -121,6 +121,18 @@
+ probe("restored-production-script-guard", guard_rejects_foreign, True)
+ probe("restored-production-copy-guard", lambda: guard._translation_result(segments, restore_segments(bundle, bundle["masked_segments"])[0], "el", "en"), True)
+ probe("within-segment-role-order-not-certified", actor_swap_limit, semantic_limit="Once-only marker accounting cannot certify who acts on whom; independent meaning review remains mandatory.")
++def source_bound_maps():
++    alternate = build_protection([{"text": "Διονύσης"}],
++                                 [{"start": 0, "end": 8, "text": "Διονύσης", "label": "person", "score": 0.91}], "el")
++    assert alternate["markers"][0]["marker"] == bundle["markers"][0]["marker"]
++    assert alternate["source_binding_sha256"] != bundle["source_binding_sha256"]
++    assert alternate["protection_binding_sha256"] != bundle["protection_binding_sha256"]
++    return {"tags_are_request_local": True, "source_map_identity_bound_outside_tag": True,
++            "cross_request_semantic_identity_not_certified_by_tag_alone": True}
++
++probe("request-local-tags-external-source-map-binding", source_bound_maps,
++      semantic_limit="Compact occurrence tags can repeat across requests; the wrapper must bind each actual request to its exact source/map. Marker strings alone do not authenticate cross-request meaning.")
++
+ passed = all(r["mechanical_passed"] for r in results)
+ report = {"complete": True, "mechanical_passed": passed, "controls": len(results), "results": results,
+           "detector_calls": 0, "translation_calls": 0, "model_calls": 0,

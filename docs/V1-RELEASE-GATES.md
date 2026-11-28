@@ -266,6 +266,27 @@ worker exit 1, 65.990-second duration, 5562.9 MiB sampled RSS and successful
 owned-process cleanup are retained.
 It is not a successful six-case screen or a production feature.
 
+The separate [compact empty-tag screen](krikri-compact-tag-screen-2026-11-28/README.md)
+completed all six original development cases once, retaining all thirteen name
+mentions and passing its execution/resource contracts. Independent meaning
+review found **two acceptable outputs, three minor errors and one major error**:
+the explicitly feminine subject in the Greek negation passage became `he` in
+two continuing propositions. Exact name restoration therefore did not preserve
+all statements about that person. This candidate is rejected. Its 139.865-second
+generation phase peaked at 5548.7 MiB sampled owned-process RSS, with successful
+unload and cleanup; those measurements do not approve meaning or whole-app fit.
+The [preparation record](krikri-compact-source-name-protection-2026-11-28/README.md)
+also preserves the initially missed closing-tag guard and its reviewed fix.
+
+A separate [summary feasibility proposal](krikri-summary-feasibility-2026-11-28/README.md)
+has retained the first two already-exposed English/Greek summary sources and
+their original criteria. Pure source/request-layout checks establish that both
+complete timestamped excerpts fit the existing direct-summary branch. The
+[independent prospective review](integration-2026-11-28/summary-feasibility-review.json)
+finds no preparation blocker, but no native model execution or summary-quality
+approval is recorded in that proposal. The planned English-first semantic gate
+must pass before its Greek case may run. Fresh validation remains unused.
+
 ## Acceptance gates
 
 | Area | Required evidence | Current position |
@@ -331,6 +352,9 @@ It is not a successful six-case screen or a production feature.
 - [Reuse of validated provider metadata and independent contract review](provider-metadata-reuse-2026-11-28/README.md)
 - [Default-model meaning review and exact current-output comparison](default-qwen-meaning-review-2026-11-28/README.md)
 - [Rejected source-name marker experiment with four cases unrun](krikri-source-name-protection-2026-11-28/README.md)
+- [Rejected complete compact-tag translation screen](krikri-compact-tag-screen-2026-11-28/README.md)
+- [Compact-tag preparation and preserved initial guard failure](krikri-compact-source-name-protection-2026-11-28/README.md)
+- [Prospective English/Greek summary feasibility without model execution](krikri-summary-feasibility-2026-11-28/README.md)
 - [Translation writing-system corruption guard and retained-output replay](translation-script-guard-2026-11-28/README.md)
 - [Published evaluation and limitations](evaluation-2026-11-26/README.md)
 - [Real native speech evidence](asr-2026-11-26/README.md)

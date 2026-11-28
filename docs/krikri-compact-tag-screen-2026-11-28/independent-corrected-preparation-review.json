@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T05:23:55.235031+00:00",
+  "decision": "No remaining blocking defect in the corrected no-model compact-tag preparation. Root can decide whether to authorize a separately frozen native setup and single original-six stage; this review itself authorizes neither.",
+  "preparation_review_passed": true,
+  "actual_native_contract_approved": false,
+  "actual_translation_quality_approved": false,
+  "scope": "Static implementation/source-map/recorded-control/reference-tokenizer estimate review, plus the exact corrected pure-guard regression. No native runtime/model loading, detector execution or translation generation.",
+  "bindings": {
+    "plan.json": "f4f6affa0fb1f5c0e67343c790e376b51363c3905f6d4dc8950afa4bc8a39847",
+    "protection.py": "cb78fafb66c8b7810f860b983a2f0de0570464b98c7a3f843b924d0e43cfbf11",
+    "enhancements-context4096.py": "f3f072f92ca1ddf82c8b611138a314baee2cdcc401b2eba76e06c72291d7878a",
+    "expected-requests.json": "23d04ca2eee26d9fa279381087e35f0d3ac7c2372909af8e7cb9678a481bdd5b",
+    "protection-inputs.json": "d16693a1b9e551b0b48e0f94ee71889e9804a9c38bb33e5be582c25425600ae0",
+    "protected-source-cases.json": "996d0164c5179f0936a1ac5a2ca4b6617e041065dd4d1b8424c3c082ed9f40ab",
+    "protection-control-results-v2.json": "e65d5e694e981362c633291136b0cae256de5a8792ad5da0f13087c827a45151",
+    "token-estimates.json": "4e97f9360e34e8a8c6e0c68352ce2084baab74c582c545e3b7bda3c4e7bef70f",
+    "syntax-revision-verification.json": "0b8b6d8f653bd1c36714c77cff31d05c2b08ebaa41ac00d64d0448577099145e",
+    "initial-protocol-review/manifest.json": "80943c74de5603837102d0653a2b548ab60da989676243c96ddbed8092eb3471"
+  },
+  "independent_audit": {
+    "path": "corrected-preparation-audit.json",
+    "sha256": "6497199b710fb7603a27757ea0cd1e1ab07419b2a49f9798e36312a5d7229b78",
+    "script_sha256": "a2e3779325dfe0a7e9f6361608e2d96f0bbd7920f1153a03ef7acc64a2227a5d",
+    "source_bindings_verified": 39,
+    "initial_archive_files_verified": 24,
+    "checks_passed": true
+  },
+  "original_criteria_binding_sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+  "original_six_corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+  "initial_finding_and_correction": {
+    "original_plan_sha256": "f444379a4aeb05f4eb05b544bc907ae6d56a9ae3b5d08c158c683197e0714469",
+    "original_guard_sha256": "62db501bd49fe55f31e55c029cedf0c8ea1a158461086653e0e3e231071c2c97",
+    "independent_counterexample_sha256": "13aae8e794fedd656b61da76cae42792ab56e2fe4af4d672cf4b7030609800aa",
+    "finding": "A valid <x0/> plus an added </x0> survived restoration and source closing-tag collisions were not detected.",
+    "correction": "A rejection-only scanner now recognizes opening and closing x-tag namespace forms with intervening whitespace after comparison-only NFKC/casefold/format-character removal. Exact accepted tag grammar is unchanged.",
+    "independent_corrected_probe": "The exact prior response Η <x0/> έφτασε. </x0> now raises the malformed/unrecognized-prefix ValueError. Closing and spaced namespace source checks now reject. No output is normalized or repaired.",
+    "evidence_preserved": "Initial plan, all source/preparation records, 25-control result and exact independent counterexample are archived unchanged. Revised 29-control record is separately retained."
+  },
+  "findings": [
+    {
+      "area": "One materially distinct representation",
+      "judgment": "Only one compact <xN/> syntax is proposed. It removes digest/category wording from the text the model must copy, addressing the observed Person/nonce rewrite mechanism. That is a plausible hypothesis, not proof that the model will preserve the new tags."
+    },
+    {
+      "area": "Source and identity binding",
+      "judgment": "All 13 spans remain the exact reviewed actual detector/normalizer mentions. Independently verified full original text/metadata reconstruction, every source slice/offset and external source/map hash. Every mention has a distinct request-local ordinal. No case-specific name, example, glossary or reference translation is added to the native instruction."
+    },
+    {
+      "area": "Request-local tradeoff",
+      "judgment": "Tags may repeat across different requests. The external source/map digest and exact request association, not the tag string, identify the source. A later wrapper must bind the original case, newly derived bundle, exact actual request and returned response in one call. The unchanged semantic gate still decides whether the returned meaning belongs to that source."
+    },
+    {
+      "area": "Strict acceptance preserved",
+      "judgment": "Canonical/hash, strict JSON parsing and restoration functions are AST-identical to the prior reviewed implementation. Missing, duplicated, altered, wrong-segment and unknown tags remain rejected. Source/map metadata must match, restoration uses exact source spelling, and the unchanged production result guard remains required against the original source."
+    },
+    {
+      "area": "No-model controls",
+      "judgment": "All 29 revised controls are retained as passed, including the four meaningful closing/source/spacing regressions. The within-segment actor-reversal and cross-request tag-identity controls explicitly demonstrate limitations rather than certify meaning."
+    },
+    {
+      "area": "Prompt estimates",
+      "judgment": "The estimator first reproduces all six retained old native token vectors with the pinned official tokenizer, then replaces only complete system/user messages in the retained wrapper. The recorded new estimates are 203/222/217/206/206/205 tokens, with a full 2048-token output reserve and one end token under context4096. All six actual tag forms are three ordinary tokens. No new actual native count or translation is inferred from those estimates."
+    },
+    {
+      "area": "Correction scope",
+      "judgment": "Independently confirmed the corrected scanner is the sole protection-code delta from the initial compact preparation; adapters, all six source maps, requests, original corpus and estimate bytes remain identical. The entire initial archive and 39 revised plan bindings verify."
+    }
+  ],
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "exact_source_mentions": 1,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 203,
+      "actual_new_native_count_observed": false
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "exact_source_mentions": 6,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 222,
+      "actual_new_native_count_observed": false
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "exact_source_mentions": 0,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 217,
+      "actual_new_native_count_observed": false
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "exact_source_mentions": 1,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 206,
+      "actual_new_native_count_observed": false
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "exact_source_mentions": 4,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 206,
+      "actual_new_native_count_observed": false
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "exact_source_mentions": 1,
+      "source_roundtrip_exact": true,
+      "estimated_prompt_tokens": 205,
+      "actual_new_native_count_observed": false
+    }
+  ],
+  "requirements_before_any_later_generation": [
+    "Root must separately authorize native work and the later execution runner must be frozen/reviewed; this preparation includes no new execution runner.",
+    "Actual native model/cache/template/stops/context/threads and complete rendered prompts/token counts must be verified again, followed by actual inference prompt-count equality. Estimates cannot substitute for that evidence.",
+    "Keep all six original cases and meaning criteria unchanged, preserve raw responses before rejection, stop first operational/schema/marker/guard/resource failure, and do not retry, change syntax or repair output.",
+    "Reuse the reviewed full-sample owned-process observer and cleanup controls under the unchanged proposed limits; verify unload and empty resident-model lists.",
+    "Judge final actors, names, ordinary prose, quantities, negation, conditions and completeness independently. Same-segment once-only tags cannot certify roles; source-script names do not excuse untranslated ordinary prose."
+  ],
+  "limits": [
+    "The source-boundary normalizer still has known article-like-name, bare-initial and residual-prose ambiguity; only these 13 development spans have been independently reviewed.",
+    "The reserved namespace intentionally rejects legitimate source markup/mathematics beginning with an opening or closing x form, including spacing. No alternate namespace is silently chosen.",
+    "The prior raw detector, initial Krikri, generic name-instruction and digest-marker stage rejections remain unchanged.",
+    "No broader/fresh validation, summaries, whole-app resource claim or production integration is approved."
+  ],
+  "reviewer_actions": {
+    "model_calls": 0,
+    "native_api_calls": 0,
+    "tokenizer_loads": 0,
+    "provider_or_network_calls": 0,
+    "production_or_peer_edits": 0,
+    "pure_stdlib_integrity_and_exact_guard_regression": true
+  }
+}

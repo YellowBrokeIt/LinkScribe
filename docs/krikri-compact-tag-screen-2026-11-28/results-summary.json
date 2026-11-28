@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-28T05:40:46.112954+00:00",
+  "decision": "reject_compact_empty_tag_profile_for_material_actor_anaphora_error",
+  "planned_original_cases": 6,
+  "native_translation_calls": 6,
+  "completed_native_responses": 6,
+  "retries": 0,
+  "unrun_cases": 0,
+  "meaning_classification_counts": {
+    "acceptable": 2,
+    "minor_error": 3,
+    "major_error": 1,
+    "operational_failure": 0,
+    "not_run": 0
+  },
+  "per_case": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "classification": "acceptable",
+      "material_meaning_error": false,
+      "summary": "The saved transcript, unsaved original recording, twelve-minute transcription and not-yet-started Greek translation are all preserved."
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "classification": "minor_error",
+      "material_meaning_error": false,
+      "summary": "Exact source names, recipient negation and all three roles survive; two English articles are unnatural."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "classification": "acceptable",
+      "material_meaning_error": false,
+      "summary": "All quantities, units, negation and the distinction between the receipt/slip and separate transfer are preserved."
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "classification": "major_error",
+      "material_meaning_error": true,
+      "summary": "The two negation scopes and temporal/modal facts survive, but both later propositions introduce masculine he where the Greek source continues the explicitly feminine Άννα."
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "classification": "minor_error",
+      "material_meaning_error": false,
+      "summary": "Actors, necessary approval condition, nonresponse condition and both dates remain correct; η Giannis is an unnatural Greek gender agreement."
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "classification": "minor_error",
+      "material_meaning_error": false,
+      "summary": "The quoted question, both alternatives, lack of an answer and insufficient title evidence survive; Person is an unnecessary label before Μαρία."
+    }
+  ],
+  "mechanical_execution_checks_all_passed": true,
+  "exact_source_name_mentions_restored": 13,
+  "raw_responses_preserved_before_guard": true,
+  "native_counts": {
+    "prompt": [
+      203,
+      222,
+      217,
+      206,
+      206,
+      205
+    ],
+    "output": [
+      60,
+      66,
+      68,
+      56,
+      62,
+      57
+    ],
+    "done_reason": [
+      "stop",
+      "stop",
+      "stop",
+      "stop",
+      "stop",
+      "stop"
+    ]
+  },
+  "resources": {
+    "elapsed_seconds": 139.865458,
+    "peak_rss_mib": 5548.7,
+    "peak_pss_mib": 5539.8,
+    "samples": 1087,
+    "measurement_complete": true,
+    "resource_limit_triggered": false,
+    "owned_processes_stopped": true,
+    "worker_exit_code": 0,
+    "supervisor_passed": true,
+    "free_disk_after_bytes": 1681690624,
+    "scope": "Standalone owned group only. Mechanical success and resource fit do not establish semantic correctness or whole-app fit; sampled peaks may miss transients."
+  },
+  "independent_review_sha256": "ef33bda5ad465866452786d1cbc17a26caecb68c166f4a6c0ca91b1de2f9bfd4",
+  "independent_protocol_audit_sha256": "bcb7fc9b8d89629ce2d6bb09370a24848cd124545538a0267e94136b575193d5",
+  "execution_report_semantic_unreviewed_field_preserved": true,
+  "normalizer_ambiguity_limits_unchanged": true,
+  "prior_baselines_not_regraded": true,
+  "new_detector_calls": 0,
+  "model_downloads": 0,
+  "production_changes": false,
+  "unused_validation_opened": false,
+  "automatic_protection_approval": false,
+  "broader_stage_approved": false
+}

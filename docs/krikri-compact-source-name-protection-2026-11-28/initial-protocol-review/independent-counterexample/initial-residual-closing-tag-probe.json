@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-28T05:18:27.243528+00:00",
+  "candidate_protection_sha256": "62db501bd49fe55f31e55c029cedf0c8ea1a158461086653e0e3e231071c2c97",
+  "probe_sha256": "280a461d13f147e09f93bbf423ccb5a5ebc183d698c67d9f6c437a4306a9cbbf",
+  "scope": "Exact four pure guard functions compiled from frozen candidate; independent synthetic source and plausible translated prose. No source normalizer, model, native runtime, full wrapper or post-restoration production guard invoked.",
+  "source": [
+    {
+      "start": 0.0,
+      "end": 2.0,
+      "text": "Dana arrived."
+    }
+  ],
+  "candidate_response": [
+    {
+      "start": 0.0,
+      "end": 2.0,
+      "text": "Η <x0/> έφτασε. </x0>"
+    }
+  ],
+  "restoration_guard_accepted": true,
+  "restored_result": [
+    {
+      "start": 0.0,
+      "end": 2.0,
+      "text": "Η Dana έφτασε. </x0>"
+    }
+  ],
+  "source_closing_namespace_detected": false,
+  "finding": "A valid expected self-closing marker plus an extra closing tag passes exact-marker counting, and the closing namespace escapes residual/source collision detection.",
+  "recommended_narrow_correction": "Treat closing x-tag namespace forms as reserved in source and in post-marker residue; reject instead of repairing. Preserve the initial candidate and add the exact source/output controls.",
+  "new_model_calls": 0
+}

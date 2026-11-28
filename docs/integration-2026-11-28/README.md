@@ -414,3 +414,28 @@ now records nine major errors and three acceptable cases in the earlier
 establish at least two current major errors and three acceptable unchanged
 cases. The other seven newer outputs were not regraded. Completed requests
 therefore do not approve translation quality.
+
+## Completed compact-tag experiment and separate summary preparation
+
+The [compact empty-tag translation experiment](../krikri-compact-tag-screen-2026-11-28/README.md)
+ran all six original cases once. Its full prompts, thirteen exact restored name
+mentions, normal stops, unloads and owned-process cleanup passed the mechanical
+contract. Independent meaning review still rejected the candidate: two outputs
+were acceptable, three had minor issues and the negation passage had a major
+actor/anaphora error. The source's explicitly feminine subject became `he` in
+both continuing references. No defaults or production code changed.
+
+The measured generation phase was 139.865458 seconds with 5548.7 MiB peak
+sampled RSS under its 6144 MiB owned-process cap. The original raw outputs,
+complete samples, failed predecessor and unchanged criteria remain retained.
+The [preparation bundle](../krikri-compact-source-name-protection-2026-11-28/README.md)
+preserves the first scanner's closing-tag gap and independently reviewed fix.
+This is completed development evidence, not fresh-validation or release approval.
+
+The separate [summary proposal](../krikri-summary-feasibility-2026-11-28/README.md)
+uses two already-exposed sources, unchanged direct-summary behavior and the
+existing Greek-specialist model. Its full source-layout check and
+[independent feasibility review](summary-feasibility-review.json) required no
+model execution. Native prompt-fit verification, English output review and the
+conditional Greek run remain separate future gates. That prospective proposal
+does not change any prior summary failure or the current application checkpoint.

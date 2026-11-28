@@ -1,0 +1,74 @@
+--- initial/protection.py
++++ revised/protection.py
+@@ -36,7 +36,9 @@
+     # Comparison only. Preserve all source/output characters, including formats.
+     folded = "".join(c for c in unicodedata.normalize("NFKC", text).casefold()
+                      if unicodedata.category(c) != "Cf")
+-    return "<x" in folded
++    # Reserve both opening and closing forms, even if a model inserts spacing.
++    # This is rejection-only comparison; no source or output is rewritten.
++    return bool(re.search(r"<\s*/?\s*x", folded))
+ 
+ 
+ def build_protection(segments, raw_entities, source_language):
+--- initial/check_protection_controls.py
++++ revised/check_protection_controls.py
+@@ -105,7 +105,11 @@
+ probe("cross-segment-marker-move", swap_entries, True)
+ probe("unknown-well-formed-marker", lambda: alter_text(0, lambda s: s + "<x9999/>"), True)
+ probe("unknown-malformed-prefix", lambda: alter_text(0, lambda s: s + "<xbroken>"), True)
++probe("extra-closing-tag-after-valid-marker", lambda: alter_text(0, lambda s: s + " </x0>"), True)
++probe("extra-spaced-closing-tag-after-valid-marker", lambda: alter_text(0, lambda s: s + " < / x0 >"), True)
+ probe("source-marker-collision", lambda: build_protection([{"text": "<x0/> pre-existing source"}], [], "en"), True)
++probe("source-closing-tag-collision", lambda: build_protection([{"text": "</x0> pre-existing source"}], [], "en"), True)
++probe("source-spaced-opening-tag-collision", lambda: build_protection([{"text": "< x0 /> pre-existing source"}], [], "en"), True)
+ probe("compatibility-marker-collision", lambda: build_protection([{"text": "＜Ｘ０／＞ pre-existing source"}], [], "en"), True)
+ probe("source-map-corruption", lambda: mutate_bundle("map"), True)
+ probe("source-metadata-corruption", lambda: mutate_bundle("source"), True)
+@@ -138,7 +142,7 @@
+           "detector_calls": 0, "translation_calls": 0, "model_calls": 0,
+           "meaning_or_automatic_name_safety_certified": False,
+           "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+-with (HERE / "protection-control-results.json").open("x", encoding="utf-8") as stream:
++with (HERE / "protection-control-results-v2.json").open("x", encoding="utf-8") as stream:
+     json.dump(report, stream, ensure_ascii=False, indent=2, allow_nan=False);stream.write("\n")
+ print(json.dumps({"controls": len(results), "mechanical_passed": passed}))
+ raise SystemExit(0 if passed else 1)
+--- initial/proposal.md
++++ revised/proposal.md
+@@ -46,8 +46,9 @@
+ Input reconstruction must equal the original exactly before any later model
+ request.
+ 
+-`<x` is a reserved namespace. The source is rejected before masking if that
+-prefix occurs, including NFKC/casefold/format-character-equivalent spellings.
++Opening `<x` and closing `</x` forms are a reserved namespace. The source is
++rejected before masking if either prefix occurs, including intervening
++whitespace and NFKC/casefold/format-character-equivalent spellings.
+ Generated tags are checked for collision and uniqueness. The namespace check
+ is deliberately conservative: real source markup or mathematical text beginning
+ with `<x` would also be refused. There is no automatic alternative namespace,
+@@ -72,13 +73,22 @@
+ 
+ ## Offline checks completed
+ 
+-All **25** generic source/marker/schema/guard controls passed. These include
++All **29** revised generic source/marker/schema/guard controls passed. These include
+ collisions, repeated mentions, missing/altered/duplicated/cross-segment tags,
+ source and map corruption, inflected/decomposed original spellings, exact
+ metadata preservation, final production guards and strict JSON failures.
+ The within-segment actor reversal and request-local identity examples remain
+ limitations even when structural checks pass. The normalizer's article-like
+ name, undotted initial and residual-prose counterexamples also remain unchanged.
++
++The independent initial review found a real syntax-guard gap: a valid `<x0/>`
++followed by an extra `</x0>` survived restoration because the scanner recognized
++only the opening prefix. The initial plan, code, 25-control result and independent
++counterexample are preserved in `initial-protocol-review`. The single correction
++rejects opening and closing prefixes, including spacing, and adds four relevant
++controls. No tag, prompt, source map, reference-tokenizer estimate, restoration
++value or semantic criterion changed. No model work occurred before or after
++this correction.
+ 
+ All six original protected inputs reconstruct exactly and fit the unchanged
+ 1,000-byte single-request input limit. Their JSON source sizes are **203, 286,
