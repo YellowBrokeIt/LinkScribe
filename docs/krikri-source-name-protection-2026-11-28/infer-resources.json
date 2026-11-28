@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T05:02:39.969043+00:00",
+  "complete": false,
+  "passed": false,
+  "limits": {
+    "rss_bytes": 6442450944,
+    "total_seconds": 1800,
+    "initialization_seconds": 180,
+    "case_seconds": 600
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "events": [
+    {
+      "event": "case_start",
+      "id": "dev-en-el-transcript-terminology",
+      "prompt_tokens": 229,
+      "observed_elapsed_seconds": 16.867363
+    },
+    {
+      "event": "case_complete",
+      "id": "dev-en-el-transcript-terminology",
+      "report": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/dev-en-el-transcript-terminology.json",
+      "sha256": "c0acb692b23caaff56b26f4764ec092788b2e4b3764f63a899e25b15a4646e38",
+      "observed_elapsed_seconds": 32.942201
+    },
+    {
+      "event": "case_start",
+      "id": "dev-el-en-people-and-roles",
+      "prompt_tokens": 323,
+      "observed_elapsed_seconds": 40.070123
+    },
+    {
+      "event": "case_failed",
+      "id": "dev-el-en-people-and-roles",
+      "report": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-name-protection-2026-11-28/dev-el-en-people-and-roles.json",
+      "sha256": "8215f0dfee6e00b0e191381338fd5f386fb368d7069634ad2ac7b586e00f885f",
+      "observed_elapsed_seconds": 65.987509
+    },
+    {
+      "event": "phase_complete",
+      "phase": "infer",
+      "complete": false,
+      "error": {
+        "type": "ValueError",
+        "message": "First execution/protocol/structure/script-guard/time failure; remaining fixed cases stop without retry."
+      },
+      "observed_elapsed_seconds": 65.987556
+    }
+  ],
+  "measurement_errors": [],
+  "scope": "Owned monitor plus worker and descendants, deduplicated by PID, from spawn through exit.",
+  "rss_scope": "Summed process RSS can double-count shared pages; excludes OS/browser/unrelated processes.",
+  "pss_scope": "PSS apportions shared pages. System available memory is a separate uncontrolled observation.",
+  "sampling_limit": "Sequential scans at 0.1-second intervals can miss transient peaks.",
+  "phase": "infer",
+  "plan_sha256": "d8b4c2e29998cd650be1f2d5bf232d47c6a8b478f831102f71bed0e2b3581bf4",
+  "worker_sha256": "2c91a06f4d84c211de8b3f4786e40be7c0a45abb1bba7e8be299b259521c74f2",
+  "observer_sha256": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d",
+  "free_disk_before_bytes": 1749798912,
+  "whole_app_resource_approval": false,
+  "sample_count": 507,
+  "peak_rss_sample": {
+    "elapsed_seconds": 59.982976,
+    "rss_bytes": 5833158656,
+    "pss_bytes": 5823792128,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 18743296,
+        "pss_bytes": 15281152,
+        "cpu_user_seconds": 0.57,
+        "cpu_system_seconds": 7.24,
+        "threads": 1
+      },
+      {
+        "pid": 5,
+        "name": "python",
+        "rss_bytes": 24096768,
+        "pss_bytes": 20618240,
+        "cpu_user_seconds": 6.06,
+        "cpu_system_seconds": 2.75,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "ollama",
+        "rss_bytes": 21483520,
+        "pss_bytes": 20335616,
+        "cpu_user_seconds": 0.21,
+        "cpu_system_seconds": 0.08,
+        "threads": 10
+      },
+      {
+        "pid": 52,
+        "name": "llama-server",
+        "rss_bytes": 5768835072,
+        "pss_bytes": 5767557120,
+        "cpu_user_seconds": 80.77,
+        "cpu_system_seconds": 3.45,
+        "threads": 16
+      }
+    ],
+    "system_available_bytes": 2921582592,
+    "system_total_bytes": 10451427328,
+    "active_case": "dev-el-en-people-and-roles"
+  },
+  "peak_pss_sample": {
+    "elapsed_seconds": 59.982976,
+    "rss_bytes": 5833158656,
+    "pss_bytes": 5823792128,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 18743296,
+        "pss_bytes": 15281152,
+        "cpu_user_seconds": 0.57,
+        "cpu_system_seconds": 7.24,
+        "threads": 1
+      },
+      {
+        "pid": 5,
+        "name": "python",
+        "rss_bytes": 24096768,
+        "pss_bytes": 20618240,
+        "cpu_user_seconds": 6.06,
+        "cpu_system_seconds": 2.75,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "ollama",
+        "rss_bytes": 21483520,
+        "pss_bytes": 20335616,
+        "cpu_user_seconds": 0.21,
+        "cpu_system_seconds": 0.08,
+        "threads": 10
+      },
+      {
+        "pid": 52,
+        "name": "llama-server",
+        "rss_bytes": 5768835072,
+        "pss_bytes": 5767557120,
+        "cpu_user_seconds": 80.77,
+        "cpu_system_seconds": 3.45,
+        "threads": 16
+      }
+    ],
+    "system_available_bytes": 2921582592,
+    "system_total_bytes": 10451427328,
+    "active_case": "dev-el-en-people-and-roles"
+  },
+  "worker_exit_code": 1,
+  "owned_processes_stopped": true,
+  "owned_process_identities": [
+    {
+      "pid": 5,
+      "created": 1795842159.23
+    },
+    {
+      "pid": 6,
+      "created": 1795842165.02
+    },
+    {
+      "pid": 16,
+      "created": 1795842165.03
+    },
+    {
+      "pid": 30,
+      "created": 1795842168.5
+    },
+    {
+      "pid": 52,
+      "created": 1795842192.23
+    }
+  ],
+  "sample_interval_seconds": 0.1,
+  "peak_rss_mib": 5562.9,
+  "peak_pss_mib": 5554.0,
+  "minimum_system_available_bytes": 2787373056,
+  "measurement_complete": true,
+  "samples_file": "infer-samples.jsonl",
+  "samples_sha256": "c73d1b7a0d0711e3ca40bd7aeba06b7dbf23d8a1e1ae56911406b565123839ef",
+  "elapsed_seconds": 65.989885,
+  "finished_at": "2026-11-28T05:03:45.959044+00:00",
+  "phase_report_sha256": "c424551ca73724955468406c7cace70bba46876ed9e0db29dd66ff055070349c",
+  "frozen_inputs_unchanged": true,
+  "free_disk_after_bytes": 1749315584,
+  "disk_reserve_retained": true
+}

@@ -378,3 +378,39 @@ retains the complete output. The repaired app hash is
 This run makes no live-provider or language/speech-model calls. Hosted checks
 are still required for the next published revision. Neither intermittent source
 availability nor the historical native timing failure is regraded by this fix.
+
+## Completed provider checkpoint `6de3fad`
+
+The [completed hosted record](hosted-6de3fad/checkpoint.json) binds the exact
+published commit `6de3faddf88bb5da8ea35d985b33ad26e55e249f` and tree
+`1c8095da5eaecdefd86589194116a7d60b4535a4`. All ordinary workflows passed:
+Ubuntu/Python 3.11/Python 3.13 **777 tests plus 54 subtests**, Windows/macOS
+**773 plus 54 with four Linux-only harness skips**, fresh checkout, actual
+source ZIP installation and actual Tiny upload. Chromium passed all **35**
+unchanged cases, with exact checkpoint source hashes, actual restart and no
+page exceptions. The unchanged interface was not given a redundant new visual
+review; the prior independently inspected screenshots remain separate evidence.
+
+The full 734.1453125-second Dailymotion recording passed the normal Small
+pipeline both individually and inside the actual mixed batch. The latter
+retained its successful record while the YouTube item failed. Both records,
+batch history and exports survived restart. Exact silence and actual white
+noise were correctly rejected. Five other individual provider fixtures failed:
+three YouTube bot checks, regular Vimeo requiring login and the explicit Vimeo
+player returning HTTP 401. Provider availability remains unapproved.
+
+The unchanged single-source tail checker passed **28/28** this time, with the
+world-change phrase at 519–521 seconds. The previous `7a53991` failure stays
+27/28. No speech settings or timing code changed, so the new pass does not
+establish that metadata reuse repaired timing. The two successful current
+recognitions also differ in native segmentation (72 versus 61 segments) despite
+identical full input PCM. Word-level timing and general speech accuracy remain
+unapproved.
+
+Default Ollama again completed all twelve cases, with five automatic passes,
+seven review flags and no execution errors. A separate [meaning review](../default-qwen-meaning-review-2026-11-28/README.md)
+now records nine major errors and three acceptable cases in the earlier
+`7a53991` outputs. Five exact output/source/criterion comparisons to `6de3fad`
+establish at least two current major errors and three acceptable unchanged
+cases. The other seven newer outputs were not regraded. Completed requests
+therefore do not approve translation quality.

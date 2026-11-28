@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T05:02:12.776555+00:00",
+  "decision": "No blocking defect found for the already-authorized single original-six development stage under the exact frozen contract.",
+  "independent_native_contract_approved": true,
+  "scope": "Read-only implementation, source-map, native render/tokenization and measured preparation review before any candidate translation output. This is execution-contract approval only.",
+  "bindings": {
+    "plan.json": "d8b4c2e29998cd650be1f2d5bf232d47c6a8b478f831102f71bed0e2b3581bf4",
+    "native-setup-freeze.json": "f8b5a6f5094598ca733ea62d5ebc4a61019896d647b6a45d7cb5721582e68ed9",
+    "protection.py": "a3cb1007738d354e68f88ba6da2b2407b6943eed17e05d49f1dd17b64fb1caa6",
+    "infer_native.py": "2c91a06f4d84c211de8b3f4786e40be7c0a45abb1bba7e8be299b259521c74f2",
+    "prepare_native.py": "cf2862ccea3f4148c0a9c788dcbe3ef3925a35906c9b3ed262d31f9f15103e6e",
+    "run_native.py": "bcaad034ad47061ed5e62e6633694bfa329eff640e6c5d81924c5b6b745d6717",
+    "resource_monitor.py": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d",
+    "enhancements-context4096.py": "a7e9417ab7e3aa2de30c4fe1cebc128d39b578c10d4725cf4c94b81e27265395",
+    "prepare.json": "22316c01f002b46694524158d30fe39c86ab7e222a4cfc624f37e1f3c98dee67",
+    "prepare-resources.json": "209d6c125451d0d2eaeb72677b20b8f70ae46b970046e2eb64cb64915a8948c1",
+    "prepare-samples.jsonl": "de49906416e383ddc6fea585ad15c7469f92ed37a2c0ff36c34a5d863e891134",
+    "expected-requests.json": "b5b5fa53eb37289b7592c6a423713c5d0602c546b511c2dbdb7335c00561f6bc",
+    "protection-inputs.json": "eb4d021ec23171cb747de2a58e75c1dcfcff0176f6a21b93addd7555993e27ec",
+    "protected-source-cases.json": "c0676c000889bc5a4a434981b38c4dd9aef915ddce07e2ba15ccb52c05d9b847",
+    "protection-control-results.json": "77585ce81554688351c4e78cec5252a3729893f58c1e9affe9eb4e8fabd75227",
+    "runtime-adaptation-controls.json": "3bec3f53c0a45624e4cfc054983e984d788c83a23bd2125216e96a37fb90fdba"
+  },
+  "independent_audit": {
+    "path": "native-contract-audit.json",
+    "sha256": "c45901c42a10a5e3e2fa67deeb4fb84e98b936b6511542cdd6340debbe32551e",
+    "script": "audit_native_contract.py",
+    "script_sha256": "a178dd947f926e83115cf90779b9735ccdd26fb6e9432791cfca5564bbcd93ba",
+    "all_checks_passed": true,
+    "source_files_verified": 59,
+    "native_setup_files_verified": 11
+  },
+  "criteria_binding": {
+    "path": "criterion-binding.json",
+    "sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+    "source_and_criteria_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "unchanged_original_six_only": true,
+    "unused_v3_accessed": false,
+    "no_new_annotation_or_exception": true
+  },
+  "findings": [
+    {
+      "area": "Candidate delta",
+      "result": "Exact baseline context4096 adapter differs only by the generic opaque-marker instruction. No source names, examples, glossary, reference answer or role hints are added. Native request schema, generic task/target instructions and all fixed generation settings remain unchanged."
+    },
+    {
+      "area": "Actual source maps",
+      "result": "Independently reconstructed every protected source and metadata value, checked all source-derived nonces and unique per-mention marker IDs, and matched all 13 protected mentions to the unchanged pre-output source annotation and the retained actual detector plus boundary replay. Source articles and other ordinary text remain unmasked. Empty-person case remains complete. No fragmentation or truncation is introduced."
+    },
+    {
+      "area": "Returned-output integrity",
+      "result": "Runner retains raw returned JSON before app or wrapper rejection. Strict parsing rejects duplicate/extra properties, nonstandard constants, wrong segment counts and invalid text. Marker accounting rejects missing, duplicate, modified, unknown, cross-segment and residual reserved-prefix tokens. Restoration uses exact original source slices and preserves segment metadata. The unchanged production translation-result guard runs again against the original source after restoration; accepted text changes only baseline edge trimming and exact marker replacement."
+    },
+    {
+      "area": "Protocol controls",
+      "result": "All 24 retained generic controls are recorded as passed. They cover map/source/metadata corruption, marker loss/duplication/case change/splitting/unknown-prefix/cross-segment movement, exact Unicode/inflection preservation, empty entities, strict JSON and post-restoration script/copy rejection. The explicit within-segment actor-reversal counterexample remains a semantic limitation, not an accepted translation."
+    },
+    {
+      "area": "Native preparation",
+      "result": "Actual selected official Q4 cache/header and embedded template equal the earlier frozen baseline. Native parameter mapping retains context4096/T0/top_p0.95 and the ordered three stops; no persona/projector/draft is present. Actual rendered messages contain every protected source entry and the sole generic instruction addition. The native tokenizer accounts for exactly one BOS per request. Runner command binds the exact payload/binary, offline mode, one parallel sequence, context4096 and four threads."
+    },
+    {
+      "area": "Inference acceptance",
+      "result": "Each actual request must equal its exact frozen request and fresh native preflight; actual prompt_eval_count must equal the prepared count. There is one generation per fixed case, a normal stop below2048 output tokens, empty reasoning, acknowledged unload and empty resident-model list. First operational, protocol, source, script/marker guard, timing or resource failure stops remaining cases without retry. Fixed remaining cases may continue after semantic defects, preserving evidence."
+    },
+    {
+      "area": "Resource monitor",
+      "result": "Independently confirmed core monitor/ownership/cleanup AST is identical to the previously corrected detector monitor after event-prefix adaptation. It retains group/session ownership after leader exit, sums deduplicated owned monitor/worker/daemon/runner resources, retains complete sample series, rejects missing measurements or surviving owned children, and applies bounded TERM/KILL cleanup. The retained harmless daemon-child probe passed."
+    },
+    {
+      "area": "Measured setup",
+      "result": "All220 actual samples were checked for unique process IDs, exact RSS/PSS sums, monotonic clock and agreement with recorded peak samples. Zero-generation setup completed in23.004660seconds, at5500.8MiB sampledRSS and5491.7MiB PSS, within the6144MiB cap. Explicit unload/resident-list checks and owned-process cleanup passed; more than1GiB disk reserve remained."
+    }
+  ],
+  "native_prompt_counts": [
+    229,
+    323,
+    223,
+    229,
+    276,
+    228
+  ],
+  "source_maps": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "source_segments": 2,
+      "exact_source_mentions": 1,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 229,
+      "unused_context_after_full_output": 1819
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "source_segments": 2,
+      "exact_source_mentions": 6,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 323,
+      "unused_context_after_full_output": 1725
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "source_segments": 2,
+      "exact_source_mentions": 0,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 223,
+      "unused_context_after_full_output": 1825
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "source_segments": 2,
+      "exact_source_mentions": 1,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 229,
+      "unused_context_after_full_output": 1819
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "source_segments": 2,
+      "exact_source_mentions": 4,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 276,
+      "unused_context_after_full_output": 1772
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "source_segments": 2,
+      "exact_source_mentions": 1,
+      "full_source_metadata_roundtrip": true,
+      "native_prompt_tokens": 228,
+      "unused_context_after_full_output": 1820
+    }
+  ],
+  "limitations": [
+    "Correct same-segment marker counts do not establish actor roles, pronoun reference, names added as ordinary prose, negation, amounts, conditions or completeness. Every final restored output still requires independent original-criteria semantic review.",
+    "Exact source-script names are permitted by the previously bound criteria; all surrounding ordinary prose must still translate correctly. No criterion is loosened and the original Krikri and generic-instruction failures remain rejected.",
+    "The 13 source spans are development-reviewed. The article normalizer has explicit article-like-name, bare-initial and ordinary-prose limitations. This screen cannot establish automatic name detection or normalization safety on new inputs.",
+    "These are six previously exposed short development sources. No v2/v3, long-source, whole-app, simultaneous detector/translation or production model approval follows.",
+    "Native prompt counts are observed from the retained tokenizer route and must be matched by actual inference; no candidate final output has yet been reviewed.",
+    "Resource evidence is sampled at0.1seconds and can miss transient peaks. It covers the owned monitor and children, not the whole application, browser, OS or unrelated processes."
+  ],
+  "reviewer_actions": {
+    "model_imports": 0,
+    "model_loads": 0,
+    "inference_calls": 0,
+    "provider_calls": 0,
+    "downloads": 0,
+    "production_or_peer_edits": 0,
+    "repository_mutations": 0,
+    "additional_control_or_candidate_replays": 0,
+    "standard_library_read_only_audit": true
+  }
+}

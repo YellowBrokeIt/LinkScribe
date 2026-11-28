@@ -2,9 +2,9 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `7a53991`** passed **757 tests and
+The published **0.3.0 integration checkpoint `6de3fad`** passed **777 tests and
 54 subtests** on Ubuntu and independent Python 3.11/3.13 configurations. Windows
-and macOS each passed 753 tests and 54 subtests, with four Linux-only process-group
+and macOS each passed 773 tests and 54 subtests, with four Linux-only process-group
 harness controls skipped. Fresh Linux installation, installation from the actual
 candidate archive and an actual audio-upload workflow passed. Chromium passed all
 **35 checks**, including persisted processing warnings across a server restart, preservation
@@ -14,7 +14,7 @@ containing saved highlights. The
 31/32 and 33/34 harness failures, their corrections and actual editor fixes.
 Generated meaning still requires approval. Provider access and speech-quality
 regressions also leave release gates open. The
-[exact hosted record](docs/integration-2026-11-28/hosted-7a53991/checkpoint.json)
+[exact hosted record](docs/integration-2026-11-28/hosted-6de3fad/checkpoint.json)
 records the tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
 The downloaded source archive also passed a fresh local installation during
@@ -74,9 +74,20 @@ The [provider metadata repair](docs/provider-metadata-reuse-2026-11-28/README.md
 downloads the exact resolved video information that passed validation, avoiding a
 second extraction. Extra-result and unresolved-result guards prevent that route
 from dispatching another extractor. Independent review, 104 focused checks and
-the combined **777-test, 54-subtest** local suite passed. Hosted verification of
-this revision is still required; this repair does not establish that intermittent
-provider access failures are resolved.
+the combined **777-test, 54-subtest** local suite passed. All ordinary hosted
+checks passed at `6de3fad`. The full Dailymotion recording succeeded both alone
+and in the mixed batch, with exports and restart recovery; five other individual
+provider fixtures still failed acquisition. This repair does not establish that
+intermittent provider access failures are resolved.
+
+The [default-model meaning review](docs/default-qwen-meaning-review-2026-11-28/README.md)
+found nine major translation errors in the twelve already-published `7a53991`
+cases. Five complete outputs are identical at `6de3fad`, establishing at least
+two major errors in the newer run; its other seven outputs are not regraded.
+A separate [source-name protection experiment](docs/krikri-source-name-protection-2026-11-28/README.md)
+stopped after the second case rewrote protected markers. Its guard rejected the
+response, no names were guessed, and the remaining four cases were not run.
+These findings keep the language-quality gate open.
 
 ## Features
 
