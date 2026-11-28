@@ -1,0 +1,12 @@
+--- a/app.py
++++ b/app.py
+@@ -391,7 +391,8 @@
+             vad_filter=False,
+             no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,
+             condition_on_previous_text=False,
+-            **({"word_timestamps": True} if word_timestamps else {}),
++            word_timestamps=True,
++            hallucination_silence_threshold=2.0,
+         )
+         # transcribe() returns a generator, which must be consumed.
+         output = []

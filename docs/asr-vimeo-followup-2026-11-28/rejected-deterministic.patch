@@ -1,0 +1,10 @@
+--- a/app.py
++++ b/app.py
+@@ -386,6 +386,7 @@
+             audio,
+             language=None if language == "auto" else language,
+             beam_size=5,
++            temperature=0.0,
+             # Quiet speech mixed with effects can be lost before recognition if
+             # VAD removes it. Preserve the complete recording for ASR.
+             vad_filter=False,

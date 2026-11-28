@@ -525,9 +525,12 @@ def run(args) -> int:
             def library_source_highlights():
                 from source_highlights import validate_highlights
                 fresh("library")
-                page.locator("#library-search").fill("fixture")
+                page.locator("#library-search").fill("Edited owned fixture")
                 page.locator("#library-refresh").click()
-                page.locator("#library-items .library-item").get_by_role("button", name="Open / edit", exact=True).click()
+                fixture_row = page.locator("#library-items .library-item").filter(
+                    has_text="Edited owned fixture — English and Ελληνικά")
+                expect(fixture_row).to_have_count(1)
+                fixture_row.get_by_role("button", name="Open / edit", exact=True).click()
                 page.locator("#editor-highlights").click()
                 expect(page.locator("#editor-message")).to_contain_text("Source highlights saved")
                 before = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
@@ -549,9 +552,104 @@ def run(args) -> int:
                 return {"saved_source_generation": "pass", "unsaved_edit_guard": "pass", "edit_regeneration": "pass"}
             check("library_source_highlights_edit_and_regenerate", library_source_highlights)
 
+            def edits_during_save():
+                fresh("library")
+                fixture_row = page.locator("#library-items .library-item").filter(
+                    has_text="Edited owned fixture — English and Ελληνικά")
+                expect(fixture_row).to_have_count(1)
+                fixture_row.get_by_role("button", name="Open / edit", exact=True).click()
+                first = page.get_by_label("Text of segment 1", exact=True)
+                earlier = first.input_value() + " First saved version."
+                newer = earlier + " This correction was typed while saving."
+                first.fill(earlier)
+                intercepted = []
+                endpoint = BASE_URL + "/api/library/" + FIXTURE_ID
+
+                def finish_save_after_edit(route):
+                    if route.request.method != "PUT" or intercepted:
+                        return route.continue_()
+                    response = route.fetch()  # The real SQLite save completes; its response waits.
+                    assert response.ok, response.text()
+                    intercepted.append(True)
+                    page.evaluate("""text => {
+                      const input=document.querySelector('[aria-label="Text of segment 1"]');
+                      input.value=text; input.dispatchEvent(new Event('input',{bubbles:true}));
+                    }""", newer)
+                    route.fulfill(response=response)
+
+                page.route(endpoint, finish_save_after_edit)
+                try:
+                    page.locator("#editor-save").click()
+                    expect(page.locator("#editor-message")).to_contain_text("Your newer edits are still here")
+                    expect(first).to_have_value(newer)
+                    expect(page.locator("#editor-highlights")).to_be_disabled()
+                    assert intercepted
+                    saved = context.request.get(endpoint).json()
+                    assert saved["segments"][0]["text"] == earlier
+                    assert saved["highlights"] is None
+                finally:
+                    page.unroute(endpoint, finish_save_after_edit)
+                page.locator("#editor-save").click()
+                expect(page.locator("#editor-message")).to_contain_text("Saved.")
+                assert context.request.get(endpoint).json()["segments"][0]["text"] == newer
+                page.locator("#editor-highlights").click()
+                expect(page.locator("#editor-message")).to_contain_text("Source highlights saved")
+                shot("edits-preserved-during-save")
+                page.locator("#editor-close").click()
+                return {"actual_sqlite_save": True, "newer_unsaved_edit_preserved": True,
+                        "explicit_second_save_persisted_newer_text": True}
+            check("new_edits_survive_inflight_save", edits_during_save)
+
+            def edits_during_open():
+                fresh("library")
+                fixture_row = page.locator("#library-items .library-item").filter(
+                    has_text="Edited owned fixture — English and Ελληνικά")
+                expect(fixture_row).to_have_count(1)
+                fixture_row.get_by_role("button", name="Open / edit", exact=True).click()
+                old_title = page.locator("#edit-title").input_value()
+                first = page.get_by_label("Text of segment 1", exact=True)
+                newer = first.input_value() + " Keep this edit made while opening another transcript."
+                endpoint = BASE_URL + "/api/library/" + upload_record["id"]
+                other = context.request.get(endpoint).json()
+                intercepted = []
+
+                def finish_open_after_edit(route):
+                    response = route.fetch()
+                    assert response.ok, response.text()
+                    intercepted.append(True)
+                    page.evaluate("""text => {
+                      const input=document.querySelector('[aria-label="Text of segment 1"]');
+                      input.value=text; input.dispatchEvent(new Event('input',{bubbles:true}));
+                    }""", newer)
+                    route.fulfill(response=response)
+
+                page.route(endpoint, finish_open_after_edit)
+                try:
+                    other_row = page.locator("#library-items .library-item").filter(has_text=other["title"])
+                    expect(other_row).to_have_count(1)
+                    other_row.get_by_role("button", name="Open / edit", exact=True).click()
+                    expect(page.locator("#editor-message")).to_contain_text("Newer edits were kept")
+                    expect(page.locator("#edit-title")).to_have_value(old_title)
+                    expect(first).to_have_value(newer)
+                    assert intercepted
+                finally:
+                    page.unroute(endpoint, finish_open_after_edit)
+                page.locator("#editor-save").click()
+                expect(page.locator("#editor-message")).to_contain_text("Saved.")
+                original = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
+                assert original["segments"][0]["text"] == newer
+                assert context.request.get(endpoint).json() == other
+                page.locator("#editor-highlights").click()
+                expect(page.locator("#editor-message")).to_contain_text("Source highlights saved")
+                page.locator("#editor-close").click()
+                return {"pending_open_preserved_newer_edit": True,
+                        "saved_to_original_transcript": True, "other_transcript_unchanged": True}
+            check("new_edits_survive_inflight_open", edits_during_open)
+
             def backup_delete_restore():
                 fresh("library")
                 source_before = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
+                assert source_before["highlights"] is not None, "The backup fixture must contain actual saved highlights."
                 backup_path = download('a[href="/api/library/backup"]', "library-backup.zip")
                 with zipfile.ZipFile(backup_path) as archive:
                     names = archive.namelist()

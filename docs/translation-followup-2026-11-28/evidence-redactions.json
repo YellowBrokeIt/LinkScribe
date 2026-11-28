@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-28T00:26:23.814621+00:00",
+  "artifact": "daemon-both.log",
+  "reason": "The startup log included runtime proxy/environment values unnecessary for inference or provenance verification. Matching values were not printed during inspection.",
+  "original_sha256": "35775ad115a09b8006f4848af6e7885d7c5c66cd254bd9737ed389561cc0c88e",
+  "sanitized_sha256": "06cf02845d595bf54588ecce09ce0d91fe9d877f9ec9373086e8da5f84c54d01",
+  "original_bytes": 179211,
+  "sanitized_bytes": 177870,
+  "redacted_lines": [
+    1
+  ],
+  "transformation": "Replaced the complete startup environment mapping with a redaction notice; preserved the rest of the log. No inference request, output or timing row was altered.",
+  "private_original_retained_outside_repository": true,
+  "manifest": "early-stop.json",
+  "manifest_sha256_before_update": "15e4194f8a3e17a35c2bc0d2e6d1273829f78946971c03ff4d87b6a9794b38a5",
+  "manifest_sha256_after_update": "941b05137d26dcad295abc9b0f6e8e5028f2be48620056c62589344ec197fdf7",
+  "raw_json_checkpoints_changed": false,
+  "scan_scope": "URL user-info, common credential prefixes, proxy environment assignments and common secret field assignments; no credential values printed. No credential-pattern match was observed in the JSON evidence."
+}

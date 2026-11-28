@@ -1,0 +1,78 @@
+{
+  "scope": "Hosted provider access context only; both failures preceded ASR and do not evaluate decoder candidates.",
+  "commit": "f12afd80e99d9673e416d7f243976697a66675a9",
+  "job_url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46085586538/job/140794270324",
+  "started_at": "2026-11-28T00:02:00.468447+00:00",
+  "finished_at": "2026-11-28T00:02:04.470764+00:00",
+  "result": "fail",
+  "original_report_sha256": "9cb063b21a10c2ac9a96e4f3e06ae0de59c3b22ae4e686bac3573f193e093b65",
+  "fixtures": [
+    {
+      "fixture": "youtube_tears_of_steel_full",
+      "url": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+      "status": "fail",
+      "acquisition_failure": {
+        "at": "2026-11-28T00:02:02.795505+00:00",
+        "pid": 3673,
+        "kind": "acquisition_failed",
+        "job_id": "45d442373edb4d8b9e8d4c4f3da77b89",
+        "errors": [
+          {
+            "type": "ReadableError",
+            "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+          },
+          {
+            "type": "DownloadError",
+            "message": "ERROR: [youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+          },
+          {
+            "type": "ExtractorError",
+            "message": "[youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+          }
+        ],
+        "elapsed_seconds": 1.705
+      }
+    },
+    {
+      "fixture": "vimeo_sintel_rerendered_player",
+      "url": "https://player.vimeo.com/video/19934655",
+      "status": "fail",
+      "acquisition_failure": {
+        "at": "2026-11-28T00:02:03.654813+00:00",
+        "pid": 3673,
+        "kind": "acquisition_failed",
+        "job_id": "30c8b11bb8404494a86d54a18f7105a2",
+        "errors": [
+          {
+            "type": "ReadableError",
+            "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+          },
+          {
+            "type": "DownloadError",
+            "message": "ERROR: [vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+          },
+          {
+            "type": "ExtractorError",
+            "message": "[vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+          },
+          {
+            "type": "HTTPError",
+            "message": "HTTP Error 401: Unauthorized",
+            "http_status": 401,
+            "response_headers": {
+              "Content-Type": "text/html;charset=UTF-8",
+              "Server": "cloudflare",
+              "Date": "Sat, 28 Nov 2026 00:02:03 GMT",
+              "X-Mitmproxy-Blocked-Reason": null,
+              "X-Proxy-Error": null,
+              "X-Squid-Error": null
+            },
+            "response_origin": "https://player.vimeo.com",
+            "response_body_prefix": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta name=\"robots\" content=\"noindex, nofollow\" />\n    <title>Vimeo</title>\n    <style type=\"text/css\">\n      * {\n        margin: 0;\n        padding: 0;\n      }\n\n      body {\n        background: #000;\n        color: #fff;\n      }\n\n      @keyframes rotate {\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n\n      @keyframes dash {\n        0% {\n          stroke-dasharray: 1, 200;\n          stroke-dashoffset: 0;\n        }\n        50% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -35px;\n        }\n        100% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -135px;\n        }\n      }\n\n      .spinner {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        background: transparent;\n        transform: translate(-50%, -50%);\n        transition: opacity 0.1s,\n          transform 0.25s cubic-bezier(0.17, 0.88, 0.32, 1.28);\n        max-width: 120px;\n        width: 18%;\n      }\n\n      .spinner circle {\n        stroke-width: 4px;\n        background: transparent;\n        stroke-width: 2px;\n      }\n\n      .spinner [data-spinner-trace=\"true\"] {\n        stroke-opacity: 20%;\n      }\n\n      .spinner [data-spinner-circle=\"true\"] {\n        transform-origin: 50% 50%;\n        stroke-linecap: round;\n        stroke-dasharray: 200;\n        stroke-dashoffset: 200;\n        animation: rotate 2s linear 0.25s infinite,\n          dash 1.5s ease-in-out 0.25s infinite;\n      }\n\n      .error {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        width: 100%;\n      }\n\n      .error__header {\n        font-family: \"Helvetica Neue\";\n        font-size: 40px;\n        font-style: normal;\n        font-weight: 700;\n        line-height: 48px;\n        letter-spacing: -1.2px;\n        text-align: center;\n      }\n\n      .error_subheader {\n        font-family: \"Helvetica Neue\";\n        font-size: 18px;\n        font-style: normal;\n        font-weight: 400;\n        line-height: 28px"
+          }
+        ],
+        "elapsed_seconds": 0.549
+      }
+    }
+  ]
+}

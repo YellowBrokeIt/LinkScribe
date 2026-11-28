@@ -1,0 +1,39 @@
+{
+  "created_utc": "2026-11-28T00:16:20.499605+00:00",
+  "kind": "Non-model adversarial checks of validator limits; no corpus or production changes",
+  "interpretation": "These deliberately false statements passing the lexical checker show what it cannot validate. They are not model results and not semantic passes.",
+  "cases": [
+    {
+      "name": "ownership",
+      "source": "Rowan owns the recorder; Beatrice organises the event.",
+      "false_statement": "Beatrice owns the recorder.",
+      "quote": "Rowan owns the recorder; Beatrice organises the event.",
+      "validator_errors": [],
+      "semantic_truth": false
+    },
+    {
+      "name": "planned_to_completed",
+      "source": "Hana will return the recorder after the interviews.",
+      "false_statement": "Hana returned the recorder after the interviews.",
+      "quote": "Hana will return the recorder after the interviews.",
+      "validator_errors": [],
+      "semantic_truth": false
+    },
+    {
+      "name": "quote_excludes_negation",
+      "source": "There is no permission to publish the full recording.",
+      "false_statement": "There is permission to publish the full recording.",
+      "quote": "permission to publish the full recording",
+      "validator_errors": [],
+      "semantic_truth": false
+    },
+    {
+      "name": "negative_sign",
+      "source": "The temperature was -3 degrees.",
+      "false_statement": "The temperature was 3 degrees.",
+      "quote": "The temperature was -3 degrees.",
+      "validator_errors": [],
+      "semantic_truth": false
+    }
+  ]
+}

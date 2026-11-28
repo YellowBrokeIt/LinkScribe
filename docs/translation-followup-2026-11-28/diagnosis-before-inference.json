@@ -1,0 +1,63 @@
+{
+  "evidence_path": "docs/evaluation-2026-11-26/qwen3-final.json",
+  "evidence_sha256": "d97e4e00cb1e552e1ac5aa3ce8f10014466ef9ed0005f1e33002b50eca576921",
+  "observations": [
+    {
+      "case_id": "dev-en-el-transcript-terminology",
+      "inference_requests": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_tokens": 132,
+          "generated_tokens": 160,
+          "input_contains_all_case_text": true
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "inference_requests": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_tokens": 153,
+          "generated_tokens": 160,
+          "input_contains_all_case_text": true
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "case_id": "dev-en-el-conditional-publication",
+      "inference_requests": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_tokens": 127,
+          "generated_tokens": 150,
+          "input_contains_all_case_text": true
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    }
+  ],
+  "supported_diagnosis": "Material mistranslations are present in complete short inputs that finish normally with valid expected structure. Missing input context, output truncation, or JSON parsing is not sufficient to explain these failures.",
+  "limits": "These observations locate a semantic generation failure; they do not distinguish training data, quantization, decoding or instruction-following as the ultimate cause. Valid schema and token presence cannot certify actor/role relationships or lexical sense.",
+  "experiment_hypothesis": "Test one publisher-supported same-model thinking/sampling profile, with production output/context limits unchanged. No fresh validation or production code edits."
+}

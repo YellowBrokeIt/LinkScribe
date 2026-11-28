@@ -1,0 +1,280 @@
+{
+  "reviewed_utc": "2026-11-28T00:42:29.243809+00:00",
+  "checker_sha256": "c308462b92e2051a44f5b48b8078064322ffbac15915ea484c18d843105cbe3f",
+  "review_mode": "Read-only source review and bounded in-memory negative mutations; no production file edits and no ASR inference",
+  "retained_report_path": "/workspace/scratch/94360995dd61/hosted-f12afd8-live-sources/provider-report.json",
+  "retained_report_sha256": "37be896a137d4fb2accf592b7e1cdb1627df203197c7ff03ebd49c32524fe2ee",
+  "synthetic_control_warning": "The candidate-shaped control uses synthetic evenly spaced words plus coherent metadata solely to exercise the checker. It is not an actual candidate ASR result or release evidence.",
+  "real_historical_baseline_passes_explicit_baseline_mode": true,
+  "positive_controls": 2,
+  "negative_probes": 24,
+  "all_expected_outcomes_observed": true,
+  "finding": "No remaining material false-pass path identified for the declared four-anchor regression scope in these bounded probes. Actual hosted normal-pipeline output remains unvalidated until run.",
+  "results": [
+    {
+      "probe": "untouched_real_historical_baseline",
+      "status": "pass",
+      "expected_status": "pass",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": []
+    },
+    {
+      "probe": "SYNTHETIC_logic_control_NOT_real_candidate_evidence",
+      "status": "pass",
+      "expected_status": "pass",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": true,
+      "failed_checks": []
+    },
+    {
+      "probe": "reference_prefix",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_decoder_policy_retained"
+      ]
+    },
+    {
+      "probe": "translation_task",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_decoder_policy_retained"
+      ]
+    },
+    {
+      "probe": "forced_wrong_language",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_decoder_policy_retained"
+      ]
+    },
+    {
+      "probe": "changed_decode_threshold",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_decoder_policy_retained"
+      ]
+    },
+    {
+      "probe": "missing_restart_block",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "restart_preserved_record"
+      ]
+    },
+    {
+      "probe": "missing_restart_process_identity",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "distinct_restarted_process"
+      ]
+    },
+    {
+      "probe": "restart_same_process",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "distinct_restarted_process"
+      ]
+    },
+    {
+      "probe": "events_from_another_job",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_lifecycle_bound_to_fixture"
+      ]
+    },
+    {
+      "probe": "events_from_another_process",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_lifecycle_bound_to_fixture"
+      ]
+    },
+    {
+      "probe": "wrong_requested_model",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "single_normal_small_inference"
+      ]
+    },
+    {
+      "probe": "wrong_model_weight_hash",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_measured_small_weights"
+      ]
+    },
+    {
+      "probe": "model_resolution_after_request",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_measured_small_weights"
+      ]
+    },
+    {
+      "probe": "stale_app_source",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "expected_app_source"
+      ]
+    },
+    {
+      "probe": "wrong_acquired_source",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_baseline_acquired_audio"
+      ]
+    },
+    {
+      "probe": "truncated_source_sample_count",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_complete_decoded_pcm"
+      ]
+    },
+    {
+      "probe": "wrong_pcm_dtype",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_complete_decoded_pcm"
+      ]
+    },
+    {
+      "probe": "wrong_sampling_rate",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "same_complete_decoded_pcm"
+      ]
+    },
+    {
+      "probe": "raw_saved_text_divergence",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "raw_matches_actual_saved_record"
+      ]
+    },
+    {
+      "probe": "raw_creation_event_divergence",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "raw_matches_actual_segment_events"
+      ]
+    },
+    {
+      "probe": "effective_policy_differs_from_request",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "aligned_candidate_policy"
+      ]
+    },
+    {
+      "probe": "missing_effective_info",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "normal_lifecycle_bound_to_fixture",
+        "actual_effective_decoder_policy",
+        "actual_full_transcribe_info",
+        "aligned_candidate_policy"
+      ]
+    },
+    {
+      "probe": "missing_anchor_with_consistent_raw_events_record_and_completion",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "late_dialogue_could_have_gone_worse"
+      ]
+    },
+    {
+      "probe": "late_dialogue_shifted_early_with_consistent_parent_events_record",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "late_dialogue_world_changed",
+        "late_dialogue_maybe_we_can",
+        "late_dialogue_lesson_learned",
+        "late_dialogue_could_have_gone_worse"
+      ]
+    },
+    {
+      "probe": "late_words_attached_to_unrelated_parent_with_consistent_creation_events",
+      "status": "fail",
+      "expected_status": "fail",
+      "expectation_met": true,
+      "candidate_tail_regression_passed": false,
+      "failed_checks": [
+        "late_dialogue_world_changed",
+        "late_dialogue_maybe_we_can",
+        "late_dialogue_lesson_learned",
+        "late_dialogue_could_have_gone_worse"
+      ]
+    }
+  ]
+}

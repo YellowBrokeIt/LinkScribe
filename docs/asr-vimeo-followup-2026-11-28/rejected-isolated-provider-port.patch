@@ -1,0 +1,29 @@
+--- a/tests/smoke_real_links.py
++++ b/tests/smoke_real_links.py
+@@ -52,7 +52,7 @@
+ 
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+-BASE_URL = "http://127.0.0.1:8765"
++BASE_URL = "http://127.0.0.1:8767"
+ TAIL_WINDOWS_SECONDS = ((424, 434), (502, 522), (553, 571))
+ NONSPEECH_SECONDS = 32
+ SOURCE_FILES = ("app.py", "sources.py", "runtime_check.py", "library.py", "batch_store.py",
+@@ -638,7 +638,7 @@
+     app._download_source_audio = observed_download
+     app._recognize = observed_recognize
+     app._guarded_worker = observed_worker
+-    uvicorn.run(app.app, host="127.0.0.1", port=8765, log_level="warning")
++    uvicorn.run(app.app, host="127.0.0.1", port=8767, log_level="warning")
+ 
+ 
+ def zip_members(data):
+@@ -718,7 +718,7 @@
+         nonlocal server
+         with socket.socket() as probe:
+             probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+-            probe.bind(("127.0.0.1", 8765))
++            probe.bind(("127.0.0.1", 8767))
+         command = [args.server_python or sys.executable, str(Path(__file__).resolve()),
+                    "--serve", str(data_root), "--events", str(events_path)]
+         if args.diagnose_dailymotion_tail:

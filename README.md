@@ -2,11 +2,15 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 recovery checkpoint `002d8fc`** passed 613 automated tests in
-each of five hosted platform/Python configurations, 30 browser checks, fresh
+The published **0.3.0 integration checkpoint `f12afd8`** passed 652 automated tests
+and 32 subtests in each of five hosted platform/Python configurations, fresh
 Linux installation, installation from the actual candidate archive and an actual
 audio-upload workflow. Its real-Ollama integration completed; generated meaning
-still requires approval. Provider access and generated-text quality have open release gates. The
+still requires approval. Chromium passed 31 of 32 checks; a newly added library
+test hit an ambiguous selector before generation. The
+[integration record](docs/integration-2026-11-28/README.md) retains that failure
+and the follow-up editor fixes. Provider access and generated-text quality have
+open release gates. The
 [28 November checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
 records the exact tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
@@ -14,11 +18,13 @@ The downloaded source archive also passed a fresh local installation during
 recovery. The candidate-artifact workflow now verifies installation from its
 actual generated ZIP, in addition to the checkout-based installation checks.
 
-The next candidate integrates optional **source highlights** and preserves explicit
-public Vimeo player links. Local verification passed **652 tests and 32 subtests**;
-the separately frozen English/Greek highlights validation passed all four cases.
-Hosted results must be checked for the exact revision under review; these local
-results do not claim a new browser, platform or v1.0 approval.
+Optional **source highlights** and explicit public Vimeo player links are now
+integrated. The separately frozen English/Greek highlights validation passed all
+four cases. The follow-up candidate protects edits during asynchronous operations,
+declares the download transport previously installed only by provider QA, and
+tests aligned speech decoding against the retained late-dialogue regression.
+Hosted results must be checked for the exact revision under review; this remains
+a draft rather than a v1.0 approval.
 
 ## Features
 
@@ -32,6 +38,11 @@ results do not claim a new browser, platform or v1.0 approval.
 - **Exports**: TXT, SRT, VTT, JSON, ZIP, translated TXT/SRT/VTT/JSON, summary MD/JSON, and source highlights MD/JSON.
 
 No paid API keys are required for base transcription or the default public speaker backend. The optional legacy pyannote backend still requires authorized model access. Optional translation/summaries require their selected local model to be installed.
+
+The standard requirements include `curl-cffi` for the public-video transport
+used by yt-dlp's Dailymotion extractor. **Check setup** identifies a missing
+transport in an older installation. Transport availability does not override a
+provider's authentication, embedding or network restrictions.
 
 ## Quick start — Linux (Ubuntu)
 
@@ -97,7 +108,8 @@ hallucination from nonzero white noise.
 The current candidate keeps complete nonzero audio intact. If every returned
 nonblank ASR segment exceeds Faster Whisper's existing no-speech threshold, a
 separate whole-recording speech check must find some speech before the result
-is saved. It never crops audio or removes individual segments. In the
+is saved. That corroboration does not crop audio or filter individual decoder
+results. In the
 [paired actual comparison](docs/asr-speech-evidence-2026-11-26/README.md), the
 candidate rejected the same noise output that the baseline saved, while
 preserving identical text and timings for ordinary and 20 dB quieter Greek
@@ -111,6 +123,18 @@ noise, without claiming general ASR accuracy. The
 separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
 transcription accuracy or subtitle synchronization.
+
+The follow-up decoder candidate computes word alignment and enables Faster
+Whisper's two-second hallucination/silence heuristic while retaining the normal
+temperature fallback and supplying the whole recording without input VAD.
+This can suppress suspicious output around silence and change subtitle
+boundaries; it cannot establish that every remaining word is correct. The
+[Vimeo ASR investigation](docs/asr-vimeo-followup-2026-11-28/README.md) retains
+rejected deterministic and Turbo-only alternatives, the full-film candidate,
+ordinary/quiet English-Greek comparisons, word-alignment scope and local
+Dailymotion acquisition failures. The hosted follow-up must additionally retain
+the previously lost late dialogue from the exact Dailymotion recording. The
+version remains a candidate until that regression is verified.
 
 ## Optional source highlights
 

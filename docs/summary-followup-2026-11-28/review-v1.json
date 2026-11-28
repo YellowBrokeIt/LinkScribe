@@ -1,0 +1,70 @@
+{
+  "review_type": "Assistant source/output comparison of fixed development cases; not external or human certification",
+  "report": "development-pair-v1.json",
+  "release_decision": "Candidate v1 rejected; summary/chapters gate remains open",
+  "automatic_validation_interpretation": "Both candidate responses passed exact evidence and literal quantity checks. Those checks do not establish semantic correctness or completeness.",
+  "cases": [
+    {
+      "id": "summary-en-consent-and-roles",
+      "profile": "baseline",
+      "classification": "material error",
+      "findings": [
+        "The summary correctly gives €84.75, while its independent key point says €8:84.75. This fresh actual run reproduces the retained historical corruption.",
+        "The core owner/operator distinction, pending booking, publication checks and absence of completed interviews are substantially preserved.",
+        "The assigned future return of the recorder by Hana to Rowan is omitted from the delivered summary and points."
+      ],
+      "chapter_review": "Oral History Event Preparation is topical; start 0.5 is the actual first source time.",
+      "approved": false
+    },
+    {
+      "id": "summary-en-consent-and-roles",
+      "profile": "candidate",
+      "classification": "material error despite successful exact quote/quantity validation",
+      "findings": [
+        "The first statement says 'Beatrice owns the recorder lent by Rowan, who remains its owner'. This invents Beatrice's ownership and is internally inconsistent.",
+        "Its exact cited quote correctly says 'Rowan lends the recorder and remains its owner.' The existence of a correct source citation did not prevent the unsupported assertion.",
+        "The approved and replaced budget values are correctly rendered; the independent paragraph/key-point disagreement disappears because both are derived from the same statements.",
+        "Hana's planned return to Rowan remains omitted even though the final statement's exact evidence quote contains it.",
+        "Eight public quotations and four private recordings are given, but the explicit total of twelve is omitted. Ordinary compression can imply the total; it does not repair the ownership error or omitted assigned return."
+      ],
+      "chapter_review": "Oral History Event Planning is topical; start 0.5 is original.",
+      "approved": false
+    },
+    {
+      "id": "summary-el-workshop-counts",
+      "profile": "baseline",
+      "classification": "substantially faithful facts with minor language defects",
+      "findings": [
+        "Retains six examined, four ready and two awaiting cables, with distinct people and duties.",
+        "Retains the unplaced order, pending final quote, unpaid €39.60 total, supplier condition, and notification only after Peter's check.",
+        "Retains that the action was not cancelled and that four ready bicycles may be collected while two remain.",
+        "The conditional phrase 'παράδοση αναβληθεί' omits the expected future particle; there is also a missing accent in 'ελεγχθηκαν'. These reduce fluency without an observed material reversal of the stated facts."
+      ],
+      "chapter_review": "Εργαστήριο Επισκευής Ποδηλάτων is topical; start 0.5 is original.",
+      "approved_for_this_diagnostic_case": true,
+      "general_quality_approval": false
+    },
+    {
+      "id": "summary-el-workshop-counts",
+      "profile": "candidate",
+      "classification": "mostly faithful statements, incomplete declared coverage and weak presentation",
+      "findings": [
+        "All eight evidence quotes are exact source substrings, and the €39.60 total appears with the proposed, unpaid, total-not-unit conditions.",
+        "Preserves examined versus ready quantities, pending cables/order, supplier condition, separate roles and notification after the new check.",
+        "Omits the explicit statement that cancelling the whole event was not decided, which is part of the fixed important-facts criterion.",
+        "The model supplied eight statements without terminal punctuation; joining them with spaces creates one run-on paragraph. The separate point list remains more readable.",
+        "The delivered paragraph is 1513 UTF-8 bytes against 1584 source-text bytes: it offers little condensation on this case.",
+        "The actual candidate request took 219.057 seconds, compared with 101.087 for this baseline. This leaves little headroom inside the existing 240-second per-request limit on this host."
+      ],
+      "chapter_review": "Επισκευή ποδηλάτων: Προβλήματα και προγραμματισμός is consistent with the source; start 0.5 is original.",
+      "approved": false
+    }
+  ],
+  "next_experiment": "The predeclared candidate v2 makes one bounded source-first revision pass. Test English first; if a material error remains, stop before another expensive Greek run. Successful current development output would still not close long-source or held-out semantic gates.",
+  "unchanged_limits": [
+    "No unused frozen summary validation has been opened or evaluated.",
+    "The experiment uses exact owned text, not ASR or natural recordings.",
+    "No production summary file, persistence route, UI or exporter was changed.",
+    "Source highlights remain a separate feature and do not replace the failed AI summary gate."
+  ]
+}

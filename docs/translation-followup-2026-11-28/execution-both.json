@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T00:12:06.822747+00:00",
+  "plan_sha256": "3676f288bf26df09a1d8f30c85477b4b92c33d54e1d921cbd15ba23e49a77e80",
+  "runner_sha256": "f72d46069532fcf63cf44941ebf732ed28d4856e603911e0e912f77a099b1ada",
+  "ollama_binary_sha256": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+  "profiles": [
+    {
+      "name": "baseline",
+      "exit_code": 0,
+      "complete": true,
+      "counts": {
+        "pass": 3,
+        "review": 3,
+        "fail": 0,
+        "error": 0,
+        "incomplete": 0
+      },
+      "memory": {
+        "sample_count": 442,
+        "sample_interval_seconds": 0.2,
+        "pss_available_for_every_sample": true,
+        "errors": [],
+        "endpoint_verified": true,
+        "sampler_stopped": true,
+        "daemon_executable": "/workspace/scratch/94360995dd61/linkscribe-model-runtime/bin/ollama",
+        "daemon_subcommand": "serve",
+        "scope": "This app process and descendants plus the supplied Ollama daemon and descendants, deduplicated by PID.",
+        "excluded": "OS, browser, unrelated processes, and filesystem cache outside the measured process residency; this is not whole-VM memory.",
+        "rss_interpretation": "Concurrent summed RSS is an upper bound that can double-count shared pages.",
+        "pss_interpretation": "Linux PSS apportions shared pages; it is reported only for complete samples.",
+        "sampling_limit": "Samples scan processes sequentially and may miss transient peaks between scans.",
+        "ollama_daemon_pid": 5,
+        "app_pid": 2,
+        "peak_rss_sample": {
+          "at_seconds": 32.425,
+          "processes": [
+            {
+              "pid": 2,
+              "name": "python",
+              "rss_bytes": 19558400,
+              "pss_bytes": 18654208
+            },
+            {
+              "pid": 5,
+              "name": "ollama",
+              "rss_bytes": 38432768,
+              "pss_bytes": 37291008
+            },
+            {
+              "pid": 54,
+              "name": "llama-server",
+              "rss_bytes": 3834195968,
+              "pss_bytes": 3832936448
+            }
+          ],
+          "rss_bytes": 3892187136,
+          "pss_bytes": 3888881664
+        },
+        "peak_pss_sample": {
+          "at_seconds": 32.425,
+          "processes": [
+            {
+              "pid": 2,
+              "name": "python",
+              "rss_bytes": 19558400,
+              "pss_bytes": 18654208
+            },
+            {
+              "pid": 5,
+              "name": "ollama",
+              "rss_bytes": 38432768,
+              "pss_bytes": 37291008
+            },
+            {
+              "pid": 54,
+              "name": "llama-server",
+              "rss_bytes": 3834195968,
+              "pss_bytes": 3832936448
+            }
+          ],
+          "rss_bytes": 3892187136,
+          "pss_bytes": 3888881664
+        },
+        "api_endpoint": "http://127.0.0.1:11434",
+        "matching_listeners": [
+          {
+            "address": "127.0.0.1",
+            "port": 11434
+          }
+        ],
+        "measurement_complete": true,
+        "peak_combined_rss_mib": 3711.9,
+        "peak_combined_pss_mib": 3708.7
+      }
+    }
+  ],
+  "complete": false,
+  "semantic_quality": "unreviewed",
+  "runtime": {
+    "version": "0.40.12"
+  },
+  "model": {
+    "name": "qwen3:4b",
+    "model": "qwen3:4b",
+    "modified_at": "2026-11-28T02:03:44.11490224+02:00",
+    "size": 2497293931,
+    "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "4.0B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 2560,
+      "runner": "ggml"
+    },
+    "capabilities": [
+      "completion",
+      "tools",
+      "thinking"
+    ]
+  },
+  "host": {
+    "memory_total_mib": 9967.3,
+    "available_before_mib": 8378.4
+  }
+}

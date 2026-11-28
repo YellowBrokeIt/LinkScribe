@@ -23,7 +23,7 @@ def _module_available(name: str) -> bool:
 def report() -> dict[str, Any]:
     libraries = {name: _module_available(name)
                  for name in ("fastapi", "uvicorn", "faster_whisper", "av", "yt_dlp",
-                              "youtube_transcript_api", "ctranslate2", "sentencepiece")}
+                              "youtube_transcript_api", "ctranslate2", "sentencepiece", "curl_cffi")}
     # pyannote.core alone cannot run the optional audio diarization pipeline.
     libraries["pyannote"] = _module_available("pyannote.audio")
     for name in ("speechbrain", "torch", "torchaudio", "scipy", "onnxruntime"):
@@ -105,6 +105,8 @@ def report() -> dict[str, Any]:
     warnings: list[str] = []
     if not libraries["faster_whisper"] or not libraries["av"]:
         warnings.append("Install the core speech packages from requirements.txt.")
+    if not libraries["curl_cffi"]:
+        warnings.append("The public-video download transport is missing. Install requirements.txt to enable the supported Dailymotion transport.")
     if not js["supported"]:
         warnings.append("Deno 2.3+ or a security-patched Node.js is recommended for some YouTube videos.")
     if not ffmpeg:

@@ -274,6 +274,7 @@
  const views = {link:$("view-link"),upload:$("view-upload"),batch:$("view-batch"),library:$("view-library")};
  const form=$("job-form");
  let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0, editorDirty=false;
+ let editorSession=0, editorRevision=0, editorSaving=false;
  const perPage=30;
  function chooseTab(name) {
    tab=name;
@@ -344,7 +345,7 @@
    }
    if(highlights.warnings?.length){const warnings=document.createElement("p");warnings.className="input-note";warnings.textContent=highlights.warnings.join(" ");target.appendChild(warnings);}
  }
- function markEditorDirty(){editorDirty=true;$("editor-highlights").disabled=true;}
+ function markEditorDirty(){editorDirty=true;editorRevision++;$("editor-highlights").disabled=true;}
  $("edit-title").addEventListener("input",markEditorDirty);
  async function showResults(job, scroll=true) {
    resultJob=job;
@@ -493,6 +494,7 @@
        `JavaScript: ${info.js_runtime.runtime||"not available"} ${info.js_runtime.version||""}`,
        `Whisper: ${info.libraries.faster_whisper?"installed":"missing"}`,
        `FFmpeg: ${info.ffmpeg_available?"installed":"missing"}`,
+       `Public-video transport: ${info.libraries.curl_cffi?"installed":"missing"}`,
        `Ollama: ${info.ollama.available?"available":"not running"}`,
        `Speakers: ${info.speakers_configured?"configured":"optional setup required"}`,
        ...(info.warnings||[])].join("\n");}
@@ -522,62 +524,85 @@
  }
  async function openEditor(id,sourceIndex=0){
    if(editorDirty&&!confirm("Discard your unsaved edits and open the saved transcript?"))return;
+   const session=++editorSession,revision=editorRevision;
    try{
-     editing=await api(`/api/library/${encodeURIComponent(id)}`);
-     editorPage=Math.floor(Math.max(0,Math.min(sourceIndex,editing.segments.length-1))/perPage);editorDirty=false;$("editor-highlights").disabled=false;
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(session!==editorSession)return;
+     if(editing&&revision!==editorRevision){
+       $("editor-message").textContent="Newer edits were kept. Save or discard them before opening another transcript.";
+       return;
+     }
+     editing=saved;editorRevision=0;
+     editorPage=Math.floor(Math.max(0,Math.min(sourceIndex,editing.segments.length-1))/perPage);editorDirty=false;
+     $("editor-highlights").disabled=editorSaving;$("editor-save").disabled=editorSaving;
      $("edit-title").value=editing.title;
      $("editor-message").textContent="";
      $("editor").hidden=false;
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
      renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
-   }catch(e){showStatus("Cannot open transcript",e.message,true,false);}
+   }catch(e){if(session===editorSession)showStatus("Cannot open transcript",e.message,true,false);}
  }
  $("editor-prev").addEventListener("click",()=>{if(editorPage>0){editorPage--;showEditorPage();}});
  $("editor-next").addEventListener("click",()=>{if(editing&&(editorPage+1)*perPage<editing.segments.length){editorPage++;showEditorPage();}});
- $("editor-close").addEventListener("click",()=>{if(editorDirty&&!confirm("Discard your unsaved edits?"))return;$("editor").hidden=true;editing=null;editorDirty=false;});
+ $("editor-close").addEventListener("click",()=>{if(editorDirty&&!confirm("Discard your unsaved edits?"))return;editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;});
  $("editor-highlights").addEventListener("click",async()=>{
-   if(!editing||editorDirty)return;
-   const id=editing.id;$("editor-highlights").disabled=true;
+   if(!editing||editorDirty||editorSaving)return;
+   const id=editing.id,session=editorSession,revision=editorRevision;$("editor-highlights").disabled=true;
    try{
      const saved=await api(`/api/library/${encodeURIComponent(id)}/highlights`,{method:"POST"});
-     if(!editing||editing.id!==id)return;
-     if(editorDirty){$("editor-message").textContent="Highlights created for the saved transcript. Your unsaved edits are still here.";return;}
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     if(editorDirty||revision!==editorRevision){$("editor-message").textContent="Highlights created for the saved transcript. Your unsaved edits are still here.";return;}
      editing=saved;
+     showEditorPage();
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
      renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
      if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
-   }catch(e){if(editing?.id===id)$("editor-message").textContent="Could not create highlights: "+e.message;}
-   finally{if(editing?.id===id)$("editor-highlights").disabled=editorDirty;}
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Could not create highlights: "+e.message;}
+   finally{if(editing?.id===id&&session===editorSession)$("editor-highlights").disabled=editorDirty||editorSaving;}
  });
  $("editor-save").addEventListener("click",async()=>{
-   if(!editing)return;
+   if(!editing||editorSaving)return;
    const title=$("edit-title").value.trim();
    if(!title){$("editor-message").textContent="A title is required.";return;}
    if(editing.segments.some(s=>!s.text.trim())){$("editor-message").textContent="Every segment needs text.";return;}
+   const id=editing.id,session=editorSession,revision=editorRevision;
+   const body=JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))});
+   editorSaving=true;$("editor-save").disabled=true;$("editor-highlights").disabled=true;
+   $("editor-message").textContent="Saving...";
    try{
-     await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))})});
-     editing=await api(`/api/library/${encodeURIComponent(editing.id)}`);
-     editorDirty=false;$("editor-highlights").disabled=false;
-     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(editing.id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
-     renderHighlights($("editor-highlights-result"),editing.highlights,()=>{});
-     showEditorPage();if(tab==="library")loadLibrary();
-     if(!$("results").hidden && resultJob?.library_id===editing.id){
-       await showResults({...resultJob,title:editing.title,language:editing.language,method:editing.method,
-         segments:editing.segments.length,
-         preview:editing.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
-         extras:{...resultJob.extras,summary:!!editing.summary,highlights:!!editing.highlights,
-           translation_language:Object.keys(editing.translations||{})[0]||"",
-           speakers:editing.segments.some(s=>s.speaker)}},false);
+     await api(`/api/library/${encodeURIComponent(id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(tab==="library")loadLibrary();
+     if(!$("results").hidden && resultJob?.library_id===id){
+       await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
+         segments:saved.segments.length,
+         preview:saved.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
+         extras:{...resultJob.extras,summary:!!saved.summary,highlights:!!saved.highlights,
+           translation_language:Object.keys(saved.translations||{})[0]||"",
+           speakers:saved.segments.some(s=>s.speaker)}},false);
      }
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
+     if(revision!==editorRevision){
+       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;
+       $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
+       return;
+     }
+     editing=saved;editorDirty=false;showEditorPage();
      $("editor-message").textContent="Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.";
-   }catch(e){$("editor-message").textContent="Save failed: "+e.message;}
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Save failed: "+e.message;}
+   finally{editorSaving=false;$("editor-save").disabled=false;$("editor-highlights").disabled=editorDirty;}
  });
  $("editor-delete").addEventListener("click",async()=>{
    if(!editing||!confirm("Permanently delete this saved transcript?"))return;
-   try{await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"DELETE"});$("editor").hidden=true;editing=null;loadLibrary();}
-   catch(e){$("editor-message").textContent="Delete failed: "+e.message;}
+   const id=editing.id,session=editorSession;
+   try{await api(`/api/library/${encodeURIComponent(id)}`,{method:"DELETE"});
+     if(editing?.id===id&&session===editorSession){editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;}
+     loadLibrary();}
+   catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Delete failed: "+e.message;}
  });
 })();
 </script>

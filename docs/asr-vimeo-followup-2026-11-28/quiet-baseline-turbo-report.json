@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T00:13:23.100228+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "58ec637b906d60d5b759b650dc71cc32d061e326289748e9eaf623687b914203",
+  "manifest_path": "/tmp/linkscribe-asr-vimeo-quality/regression-inputs/manifest.json",
+  "dataset": null,
+  "selection": "Four exact-hash ordinary and −20dB English/Greek cases already used by the November26 speech guard regression; not new holdout data.",
+  "source_sha256": {
+    "app.py": "86d9765a3e03d08953cbd118ee921eef8e630f4b61fc3e7c38de04adae279955",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0",
+      "onnxruntime": "1.32.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": "large-v3-turbo",
+    "effective_model": "large-v3-turbo",
+    "language_mode": "auto",
+    "default_upload_language": "auto",
+    "language_form_field_omitted": true,
+    "model_form_field_omitted": false,
+    "model_provenance": {
+      "model": "large-v3-turbo",
+      "path": "/workspace/scratch/94360995dd61/asr-followup-model-cache/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+      "elapsed_seconds": 41.91054777900035,
+      "files": {
+        "vocabulary.json": {
+          "bytes": 1068114,
+          "sha256": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1"
+        },
+        "config.json": {
+          "bytes": 2263,
+          "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e"
+        },
+        "model.bin": {
+          "bytes": 1617884929,
+          "sha256": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+        },
+        "preprocessor_config.json": {
+          "bytes": 340,
+          "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+        },
+        "tokenizer.json": {
+          "bytes": 2710337,
+          "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd"
+        }
+      }
+    },
+    "HF_HOME": "/workspace/scratch/94360995dd61/asr-followup-model-cache",
+    "offline": true,
+    "telemetry_opt_out": {
+      "ORT_DISABLE_TELEMETRY": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "onnxruntime_disable_telemetry_events_called": true
+    },
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:\n    try:\n        from faster_whisper.audio import decode_audio\n        audio = decode_audio(str(path), sampling_rate=16000)\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if len(audio) > 16000 * MAX_SECONDS:\n        raise ReadableError(\"The recording exceeds the 2-hour limit.\")\n    # Digital silence has no speech to recognize. This exact-zero check keeps\n    # every nonzero sample, including arbitrarily quiet speech; it is not VAD.\n    if not audio.any():\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            audio,\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            # Quiet speech mixed with effects can be lost before recognition if\n            # VAD removes it. Preserve the complete recording for ASR.\n            vad_filter=False,\n            no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,\n            condition_on_previous_text=False,\n            **({\"word_timestamps\": True} if word_timestamps else {}),\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = []\n        all_marked_no_speech = True\n        for segment in segments:\n            if not segment.text.strip():\n                continue\n            probability = getattr(segment, \"no_speech_prob\", None)\n            all_marked_no_speech = all_marked_no_speech and (\n                isinstance(probability, (int, float))\n                and math.isfinite(probability)\n                and probability > ASR_NO_SPEECH_THRESHOLD\n            )\n            item = {\"start\": round(float(segment.start), 3), \"end\": round(float(segment.end), 3),\n                    \"text\": segment.text.strip()}\n            if word_timestamps:\n                item[\"_words\"] = [{\"start\": float(word.start), \"end\": float(word.end), \"word\": word.word}\n                                  for word in (getattr(segment, \"words\", None) or [])]\n            output.append(item)\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    if all_marked_no_speech:\n        # Corroborate only a complete output that ASR itself marks as no speech.\n        # Never crop the audio or filter individual segments: one speech anchor\n        # preserves the entire transcript, including quiet dialogue and tails.\n        try:\n            from faster_whisper.vad import get_speech_timestamps\n            speech = get_speech_timestamps(audio, sampling_rate=16000)\n        except Exception as exc:\n            raise ReadableError(\"Speech detection could not verify this recording. Try again or choose another speech model.\") from exc\n        if not speech:\n            raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "model_factory_source": "@lru_cache(maxsize=1)\ndef _whisper_model(size: str):\n    import onnxruntime\n    onnxruntime.disable_telemetry_events()\n    from faster_whisper import WhisperModel\n    device = os.getenv(\"LINKSCRIBE_DEVICE\", \"cpu\").lower()\n    if device not in {\"cpu\", \"cuda\"}:\n        device = \"cpu\"\n    return WhisperModel(size, device=device, compute_type=\"int8\" if device == \"cpu\" else \"float16\")\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Peak RSS is the maximum resident set of this QA process, including loaded model and application. It excludes other processes and is not a whole-machine or combined ASR/translation memory measurement.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "artifacts_directory": "/tmp/linkscribe-asr-vimeo-quality/quiet-results/baseline-turbo-artifacts-6d205537",
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "media": {
+        "duration_seconds": 6.66,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "review_criteria": [],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "129c6215d9bb489aaac55e40181be265",
+      "job_result": {
+        "id": "129c6215d9bb489aaac55e40181be265",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "129c6215d9bb489aaac55e40181be265"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.7,
+          "text": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά."
+        }
+      ],
+      "hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικούσ",
+            "hypothesis": "κατασκηνοτικούσ"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικουσ",
+            "hypothesis": "κατασκηνοτικουσ"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 168,
+          "sha256": "e991f0797a15ee28fb1adff127a534fc2a14dfc006dcfee0be184dd53eee2f2a"
+        },
+        "srt": {
+          "bytes": 200,
+          "sha256": "b06df98fe074eb34f5f215206965d63d1c70594af3f64993ab1eebee3bbf32cd"
+        },
+        "vtt": {
+          "bytes": 206,
+          "sha256": "a3412d2a5b406a9fb94a2f2edc26681e259d972b96b4511303b830ecc4f964b4"
+        },
+        "json": {
+          "bytes": 564,
+          "sha256": "19006bb909e2b9810d0ef86ef276304e8931c053a1a7c7dc8a989fd693cb9ab2"
+        },
+        "zip": {
+          "bytes": 1187,
+          "sha256": "94db024b594444522f711243a54317b8272ed34d35ce5fb7923198c1fa816708"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 18.963,
+      "process_peak_rss_bytes_so_far": 1779310592
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+      "language": "el",
+      "audio_sha256": "c0394dc391282d03b7e50d2ff4d37fe7b3d67500ae6fc7b88e74021111b1bc02",
+      "media": {
+        "duration_seconds": 6.66,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "review_criteria": [],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "0f9f2bbc5c904900b74fac71f05ec2c6",
+      "job_result": {
+        "id": "0f9f2bbc5c904900b74fac71f05ec2c6",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528-quiet-minus20db.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "0f9f2bbc5c904900b74fac71f05ec2c6"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.68,
+          "text": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά."
+        }
+      ],
+      "hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικούσ",
+            "hypothesis": "κατασκηνοτικούσ"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικουσ",
+            "hypothesis": "κατασκηνοτικουσ"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 168,
+          "sha256": "e991f0797a15ee28fb1adff127a534fc2a14dfc006dcfee0be184dd53eee2f2a"
+        },
+        "srt": {
+          "bytes": 200,
+          "sha256": "ec8bbf99b443bece5f1e93cb0295b5d8a458949afbd6b0714c2e73985269c378"
+        },
+        "vtt": {
+          "bytes": 206,
+          "sha256": "601c3885c4de23db2ea1816f0cef3fa646a70b8093e13b904532298029fa17c0"
+        },
+        "json": {
+          "bytes": 597,
+          "sha256": "ca1a5ef9e0d755168de4b051a74d3d3ebd357b8de9e9d0b915f21b2ebb9f2842"
+        },
+        "zip": {
+          "bytes": 1201,
+          "sha256": "51074c45a396a106431071583f3d7ffee99699b33acecf8b138927922337fddf"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 13.198,
+      "process_peak_rss_bytes_so_far": 1779310592
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "en",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "media": {
+        "duration_seconds": 6.54,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "review_criteria": [],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "90c170862de141a7be1c30b6d70c6c0b",
+      "job_result": {
+        "id": "90c170862de141a7be1c30b6d70c6c0b",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-0-1548.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "90c170862de141a7be1c30b6d70c6c0b"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.0,
+          "text": "When you call someone who is thousands of miles away, you are using a satellite."
+        }
+      ],
+      "hypothesis": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "exports": {
+        "txt": {
+          "bytes": 81,
+          "sha256": "b7bb912726495b0f60aa9ba77982cd0a72107eaea41bfb8387bc74104e9eaec0"
+        },
+        "srt": {
+          "bytes": 113,
+          "sha256": "f1a76d27a27fc379a4701fbd87e5635a84fb917948e792aa0bb5c5d938feede8"
+        },
+        "vtt": {
+          "bytes": 119,
+          "sha256": "64d695b1a7b950aa64c19a27fa109357ac486390681653d0b635d60e8bf897e8"
+        },
+        "json": {
+          "bytes": 477,
+          "sha256": "e714b320641910974717d60ce45aaa04ac7fba7d4cac28711d1a32004b679494"
+        },
+        "zip": {
+          "bytes": 977,
+          "sha256": "1dbaa9d3a14e4b98ae5b9f342bffcbd6c4d5a69ceb78b2bb9ea67da74e1e73f7"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 13.18,
+      "process_peak_rss_bytes_so_far": 1779310592
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+      "language": "en",
+      "audio_sha256": "99664e80b659bfa9e2675efd38949e7d233787f1862c775dd9ba59eba6670f44",
+      "media": {
+        "duration_seconds": 6.54,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "review_criteria": [],
+      "requested_language": "auto",
+      "language_form_field_omitted": true,
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "c760292824d7413e9dbfc94f2d98d552",
+      "job_result": {
+        "id": "c760292824d7413e9dbfc94f2d98d552",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-0-1548-quiet-minus20db.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "c760292824d7413e9dbfc94f2d98d552"
+      },
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.0,
+          "text": "When you call someone who is thousands of miles away, you are using a satellite."
+        }
+      ],
+      "hypothesis": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "exports": {
+        "txt": {
+          "bytes": 81,
+          "sha256": "b7bb912726495b0f60aa9ba77982cd0a72107eaea41bfb8387bc74104e9eaec0"
+        },
+        "srt": {
+          "bytes": 113,
+          "sha256": "f1a76d27a27fc379a4701fbd87e5635a84fb917948e792aa0bb5c5d938feede8"
+        },
+        "vtt": {
+          "bytes": 119,
+          "sha256": "64d695b1a7b950aa64c19a27fa109357ac486390681653d0b635d60e8bf897e8"
+        },
+        "json": {
+          "bytes": 509,
+          "sha256": "59e678535ce5f602a7e7cba327a337fcaed10f023ade858482c71933a101ffbc"
+        },
+        "zip": {
+          "bytes": 989,
+          "sha256": "b4924d8fee069c3e11a81fc430dd02207f529f706e83f5d52c7286f67b46ca97"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 12.985,
+      "process_peak_rss_bytes_so_far": 1779310592
+    }
+  ],
+  "followup_protocol": {
+    "qa_random_seed": 1729,
+    "seed_scope": "Reset immediately before each actual recognition call in its worker thread.",
+    "source_root": "/tmp/linkscribe-provider-source-002d8fc",
+    "wrapper_sha256": "3f33a2e4c6878710268b986816b4ea77c305cd3c13644102fc884a0b5b498ce3",
+    "production_options_changed_by_wrapper": false,
+    "actual_model_resolutions": [
+      {
+        "kind": "asr_model_resolved",
+        "job_id": "paired_quiet_regression",
+        "requested_model": "large-v3-turbo",
+        "requested_revision": null,
+        "local_files_only": false,
+        "resolved_directory": "/workspace/scratch/94360995dd61/asr-followup-model-cache/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+        "resolved_revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+        "files": {
+          "config.json": {
+            "bytes": 2263,
+            "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e"
+          },
+          "model.bin": {
+            "bytes": 1617884929,
+            "sha256": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+          },
+          "preprocessor_config.json": {
+            "bytes": 340,
+            "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+          },
+          "tokenizer.json": {
+            "bytes": 2710337,
+            "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd"
+          },
+          "vocabulary.json": {
+            "bytes": 1068114,
+            "sha256": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1"
+          }
+        },
+        "identity_complete": true,
+        "evidence_errors": []
+      }
+    ]
+  },
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "86d9765a3e03d08953cbd118ee921eef8e630f4b61fc3e7c38de04adae279955",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "pass": 4
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 2,
+      "reference_words": 22,
+      "word_errors": 2,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": 0.09090909090909091
+    },
+    "en": {
+      "cases": 2,
+      "reference_words": 30,
+      "word_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": 0.0
+    }
+  },
+  "finished_at": "2026-11-28T00:14:21.507238+00:00",
+  "elapsed_seconds": 58.404,
+  "process_peak_rss_bytes": 1779310592
+}

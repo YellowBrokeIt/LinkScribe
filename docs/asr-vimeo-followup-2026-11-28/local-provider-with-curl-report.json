@@ -1,0 +1,1854 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T00:20:54.568177+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "small",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "7b092ba23bbfb00f0de38409187d163f656525772f6b11e824e1270c49b4466c",
+    "sources.py": "267312e614eaf04e1ff918d46716274ea15634d31cd82286fcf04ce2b548cfde",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764"
+  },
+  "fixture_licenses": {
+    "dailymotion_tears_of_steel": {
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "provider": "dailymotion",
+      "title_contains": "Tears of Steel",
+      "public_title": "\u0641\u064a\u0644\u0645 \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "uploader": "MixTube",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://www.dailymotion.com/video/xbvubxi",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Repost with an Arabic title; the public description names the film and licence."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": true,
+  "fixtures": [
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "fail",
+      "started_at": "2026-11-28T00:20:55.423299+00:00",
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "job_id": "f162cfde582b4c1f883d4a1f263ff74c",
+      "poll_count": 43,
+      "transitions": [
+        {
+          "at": "2026-11-28T00:20:55.431964+00:00",
+          "id": "f162cfde582b4c1f883d4a1f263ff74c",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-28T00:21:17.156045+00:00",
+          "id": "f162cfde582b4c1f883d4a1f263ff74c",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "f162cfde582b4c1f883d4a1f263ff74c",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Dailymotion xbvubxi",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_hallucination/tests/smoke_real_links.py\", line 857, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-28T00:20:55.429158+00:00",
+          "pid": 6,
+          "kind": "acquisition_start",
+          "job_id": "f162cfde582b4c1f883d4a1f263ff74c",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-28T00:21:16.654243+00:00",
+          "pid": 6,
+          "kind": "acquisition_failed",
+          "job_id": "f162cfde582b4c1f883d4a1f263ff74c",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+            }
+          ],
+          "elapsed_seconds": 21.225
+        }
+      ],
+      "elapsed_seconds": 21.738
+    }
+  ],
+  "mixed_batch": {
+    "status": "not_exercised",
+    "reason": "Requires one actual successful and one actually failing licensed fixture."
+  },
+  "restart": {
+    "status": "not_exercised",
+    "verified_record_ids": []
+  },
+  "tail_diagnostic": {
+    "status": "not_requested",
+    "included_in_normal_pipeline_output": false
+  },
+  "nonspeech": {
+    "status": "pass",
+    "scope": "Two owned generated 32-second fixtures: exact-zero rejection before inference and actual nonzero-noise ASR; no general silence/music/noise guarantee.",
+    "cases": [
+      {
+        "kind": "silence",
+        "status": "pass",
+        "started_at": "2026-11-28T00:21:17.163395+00:00",
+        "input": {
+          "kind": "silence",
+          "expected_speech": "none_by_construction",
+          "recipe": "Signed 16-bit PCM zeros",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "7b331c02e313c7599d5a90212e17e6d3cb729bd2e1c9b873c302a63c95a2f9bf",
+          "wav_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "job_id": "f1831ffa09c94bb1858a0e5f56767ce5",
+        "poll_count": 2,
+        "transitions": [
+          {
+            "at": "2026-11-28T00:21:17.195018+00:00",
+            "id": "f1831ffa09c94bb1858a0e5f56767ce5",
+            "status": "working",
+            "stage": "Checking media file...",
+            "title": "owned-silence.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-28T00:21:17.698575+00:00",
+            "id": "f1831ffa09c94bb1858a0e5f56767ce5",
+            "status": "error",
+            "stage": "Unable to transcribe",
+            "title": "owned-silence.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "No spoken words were detected in this recording.",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          }
+        ],
+        "final_job": {
+          "id": "f1831ffa09c94bb1858a0e5f56767ce5",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "owned-silence.wav",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "No spoken words were detected in this recording.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        "recognition_evidence": {
+          "processing_path": "exact_digital_silence_rejected_before_inference",
+          "decoded_duration_seconds": 32.0,
+          "decoded_array": {
+            "array_identity": "0x7fa719502850",
+            "shape": [
+              512000
+            ],
+            "dtype": "<f4",
+            "sample_count": 512000,
+            "nonzero_sample_count": 0,
+            "pcm_sha256": "e09534d59390e996d03db62710722cd319f787613231ec0ab6b4d53b0837c94f"
+          },
+          "inference_attempted": false
+        },
+        "library_record_absent": true,
+        "input_audio_cleaned": true,
+        "events": [
+          {
+            "at": "2026-11-28T00:21:17.204774+00:00",
+            "pid": 6,
+            "kind": "recognition_start",
+            "job_id": "f1831ffa09c94bb1858a0e5f56767ce5",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142"
+          },
+          {
+            "at": "2026-11-28T00:21:17.268420+00:00",
+            "pid": 6,
+            "kind": "audio_decoded",
+            "job_id": "f1831ffa09c94bb1858a0e5f56767ce5",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              512000
+            ],
+            "decoded_arrays": [
+              {
+                "array_identity": "0x7fa719502850",
+                "shape": [
+                  512000
+                ],
+                "dtype": "<f4",
+                "sample_count": 512000,
+                "nonzero_sample_count": 0,
+                "pcm_sha256": "e09534d59390e996d03db62710722cd319f787613231ec0ab6b4d53b0837c94f"
+              }
+            ],
+            "decoded_duration_seconds": 32.0
+          },
+          {
+            "at": "2026-11-28T00:21:17.268623+00:00",
+            "pid": 6,
+            "kind": "recognition_failed",
+            "job_id": "f1831ffa09c94bb1858a0e5f56767ce5",
+            "errors": [
+              {
+                "type": "ReadableError",
+                "message": "No spoken words were detected in this recording."
+              }
+            ],
+            "elapsed_seconds": 0.065
+          }
+        ],
+        "elapsed_seconds": 0.537
+      },
+      {
+        "kind": "white_noise",
+        "status": "pass",
+        "started_at": "2026-11-28T00:21:17.702254+00:00",
+        "input": {
+          "kind": "white_noise",
+          "expected_speech": "none_by_construction",
+          "recipe": "Python random.Random(20261126); one randint(-3276,3276) per signed 16-bit PCM sample",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "3ca60d7681e809cee6c5127685f2c837ab010d11694f1f0b46f85e2f7468c094",
+          "wav_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+        "poll_count": 68,
+        "transitions": [
+          {
+            "at": "2026-11-28T00:21:17.881039+00:00",
+            "id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "status": "working",
+            "stage": "Checking media file...",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-28T00:21:18.401684+00:00",
+            "id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "status": "working",
+            "stage": "Recognizing speech locally...",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          },
+          {
+            "at": "2026-11-28T00:21:51.684989+00:00",
+            "id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "status": "error",
+            "stage": "Unable to transcribe",
+            "title": "owned-white_noise.wav",
+            "language": "",
+            "method": "",
+            "preview": "",
+            "error": "No spoken words were detected in this recording.",
+            "segments": 0,
+            "warnings": [],
+            "extras": {},
+            "library_id": ""
+          }
+        ],
+        "final_job": {
+          "id": "b62fbbfb88df4c7a8b26027cf505175b",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "owned-white_noise.wav",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "No spoken words were detected in this recording.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        "recognition_evidence": {
+          "processing_path": "actual_nonzero_audio_inference",
+          "decoded_duration_seconds": 32.0,
+          "normal_vad_filter": false,
+          "decoded_array": {
+            "array_identity": "0x7fa719501110",
+            "shape": [
+              512000
+            ],
+            "dtype": "<f4",
+            "sample_count": 512000,
+            "nonzero_sample_count": 511922,
+            "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+          },
+          "same_decoded_array_passed_to_asr": true,
+          "normal_explicit_transcribe_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "word_timestamps": true,
+            "hallucination_silence_threshold": 2.0
+          },
+          "normal_transcribe_info": {
+            "language": "nn",
+            "language_probability": 0.5869624614715576,
+            "duration": 32.0,
+            "duration_after_vad": 32.0,
+            "all_language_probs": [
+              [
+                "nn",
+                0.5869624614715576
+              ],
+              [
+                "en",
+                0.09479717910289764
+              ],
+              [
+                "cy",
+                0.08962813764810562
+              ],
+              [
+                "ja",
+                0.0596090629696846
+              ],
+              [
+                "zh",
+                0.03662216290831566
+              ],
+              [
+                "fr",
+                0.031172551214694977
+              ],
+              [
+                "ko",
+                0.015506326220929623
+              ],
+              [
+                "es",
+                0.009478754363954067
+              ],
+              [
+                "pl",
+                0.007474002428352833
+              ],
+              [
+                "tr",
+                0.00678139366209507
+              ],
+              [
+                "ru",
+                0.006300786044448614
+              ],
+              [
+                "pt",
+                0.005949833896011114
+              ],
+              [
+                "la",
+                0.0051256450824439526
+              ],
+              [
+                "de",
+                0.004717185627669096
+              ],
+              [
+                "vi",
+                0.004583307076245546
+              ],
+              [
+                "jw",
+                0.00365485274232924
+              ],
+              [
+                "ar",
+                0.0034890947863459587
+              ],
+              [
+                "ml",
+                0.0032009489368647337
+              ],
+              [
+                "it",
+                0.002985149621963501
+              ],
+              [
+                "hi",
+                0.002646868349984288
+              ],
+              [
+                "km",
+                0.0018097094725817442
+              ],
+              [
+                "haw",
+                0.001726069487631321
+              ],
+              [
+                "ms",
+                0.0014848378486931324
+              ],
+              [
+                "id",
+                0.0013911643764004111
+              ],
+              [
+                "el",
+                0.0013277152320370078
+              ],
+              [
+                "hu",
+                0.0013186587020754814
+              ],
+              [
+                "sn",
+                0.0012058219872415066
+              ],
+              [
+                "sv",
+                0.001137537881731987
+              ],
+              [
+                "th",
+                0.000914702657610178
+              ],
+              [
+                "nl",
+                0.0008161590667441487
+              ],
+              [
+                "br",
+                0.0007885215454734862
+              ],
+              [
+                "ta",
+                0.0006042080349288881
+              ],
+              [
+                "cs",
+                0.0005948361358605325
+              ],
+              [
+                "tl",
+                0.0005052263149991632
+              ],
+              [
+                "mi",
+                0.00044056575279682875
+              ],
+              [
+                "fa",
+                0.0004130976158194244
+              ],
+              [
+                "te",
+                0.0004039120685774833
+              ],
+              [
+                "ro",
+                0.0003487745998427272
+              ],
+              [
+                "ur",
+                0.0003059151931665838
+              ],
+              [
+                "fi",
+                0.0002829900768119842
+              ],
+              [
+                "he",
+                0.00019123720994684845
+              ],
+              [
+                "si",
+                0.000170362793141976
+              ],
+              [
+                "yo",
+                0.0001560066157253459
+              ],
+              [
+                "uk",
+                0.00014574709348380566
+              ],
+              [
+                "gl",
+                0.00012410266208462417
+              ],
+              [
+                "sa",
+                8.548507321393117e-05
+              ],
+              [
+                "bn",
+                6.63889295537956e-05
+              ],
+              [
+                "no",
+                6.137443415354937e-05
+              ],
+              [
+                "bg",
+                5.949714613961987e-05
+              ],
+              [
+                "da",
+                5.109782432555221e-05
+              ],
+              [
+                "mn",
+                4.9337286327499896e-05
+              ],
+              [
+                "sw",
+                4.103703759028576e-05
+              ],
+              [
+                "eu",
+                3.93705049646087e-05
+              ],
+              [
+                "my",
+                3.5654582461575046e-05
+              ],
+              [
+                "ca",
+                3.3545878977747634e-05
+              ],
+              [
+                "fo",
+                3.07749469357077e-05
+              ],
+              [
+                "oc",
+                1.8854017980629578e-05
+              ],
+              [
+                "hr",
+                1.7238635336980224e-05
+              ],
+              [
+                "bs",
+                1.5399680705741048e-05
+              ],
+              [
+                "ht",
+                1.4571422070730478e-05
+              ],
+              [
+                "sl",
+                1.0387847396486904e-05
+              ],
+              [
+                "be",
+                8.231354513554834e-06
+              ],
+              [
+                "ne",
+                8.03207603894407e-06
+              ],
+              [
+                "sk",
+                7.863639439165127e-06
+              ],
+              [
+                "bo",
+                5.740993856306886e-06
+              ],
+              [
+                "hy",
+                5.663210686179809e-06
+              ],
+              [
+                "yi",
+                5.465232334245229e-06
+              ],
+              [
+                "af",
+                5.462329681904521e-06
+              ],
+              [
+                "sd",
+                4.725399776361883e-06
+              ],
+              [
+                "ps",
+                3.825993644568371e-06
+              ],
+              [
+                "lo",
+                3.7350664570112713e-06
+              ],
+              [
+                "az",
+                3.4725746900221566e-06
+              ],
+              [
+                "mr",
+                2.3552881884825183e-06
+              ],
+              [
+                "is",
+                1.8540827113611158e-06
+              ],
+              [
+                "lt",
+                1.453362415304582e-06
+              ],
+              [
+                "et",
+                1.15540899514599e-06
+              ],
+              [
+                "sq",
+                1.0233661669190042e-06
+              ],
+              [
+                "kn",
+                9.383810493091005e-07
+              ],
+              [
+                "lv",
+                9.322014875579043e-07
+              ],
+              [
+                "as",
+                8.1890925685002e-07
+              ],
+              [
+                "pa",
+                7.823183523214539e-07
+              ],
+              [
+                "sr",
+                7.562853170384187e-07
+              ],
+              [
+                "mk",
+                4.399575459501648e-07
+              ],
+              [
+                "ka",
+                4.19138785900941e-07
+              ],
+              [
+                "kk",
+                3.622866699970473e-07
+              ],
+              [
+                "ln",
+                3.215248796095693e-07
+              ],
+              [
+                "mt",
+                2.839794035480736e-07
+              ],
+              [
+                "gu",
+                1.1314691050756664e-07
+              ],
+              [
+                "am",
+                1.1029401036921627e-07
+              ],
+              [
+                "so",
+                2.1431690200302e-08
+              ],
+              [
+                "su",
+                1.69603939781382e-08
+              ],
+              [
+                "tg",
+                8.963414011020632e-09
+              ],
+              [
+                "lb",
+                4.105480400085071e-09
+              ],
+              [
+                "ha",
+                1.982060737759639e-09
+              ],
+              [
+                "tk",
+                1.010630246156552e-09
+              ],
+              [
+                "tt",
+                9.174080939367002e-10
+              ],
+              [
+                "ba",
+                7.060572682071609e-10
+              ],
+              [
+                "mg",
+                2.809567856143502e-10
+              ],
+              [
+                "uz",
+                2.1861873422679423e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": true,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": 2.0,
+              "hotwords": null
+            },
+            "vad_options": null
+          },
+          "whole_recording_speech_checks": [
+            {
+              "at": "2026-11-28T00:21:51.438586+00:00",
+              "pid": 6,
+              "kind": "whole_recording_speech_check",
+              "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+              "input_array_before": {
+                "array_identity": "0x7fa719501110",
+                "shape": [
+                  512000
+                ],
+                "dtype": "<f4",
+                "sample_count": 512000,
+                "nonzero_sample_count": 511922,
+                "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+              },
+              "input_array_after": {
+                "array_identity": "0x7fa719501110",
+                "shape": [
+                  512000
+                ],
+                "dtype": "<f4",
+                "sample_count": 512000,
+                "nonzero_sample_count": 511922,
+                "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+              },
+              "sampling_rate_hz": 16000,
+              "explicit_kwargs": {
+                "sampling_rate": 16000
+              },
+              "vad_options": {
+                "threshold": 0.5,
+                "neg_threshold": null,
+                "min_speech_duration_ms": 0,
+                "max_speech_duration_s": {
+                  "nonfinite_float": "inf"
+                },
+                "min_silence_duration_ms": 2000,
+                "speech_pad_ms": 400
+              },
+              "intervals": []
+            }
+          ],
+          "whole_recording_speech_check_failures": [],
+          "raw_segment_constructions": [
+            {
+              "id": 1,
+              "seek": 3000,
+              "start": 30.540000000000003,
+              "end": 31.94,
+              "text": " \u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+              "tokens": [
+                50364,
+                21879,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                50464
+              ],
+              "avg_logprob": -0.42299195491906366,
+              "compression_ratio": 2.142857142857143,
+              "no_speech_prob": 0.8953099250793457,
+              "words": [
+                {
+                  "start": 30.540000000000003,
+                  "end": 31.94,
+                  "word": " \u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+                  "probability": 0.7654456208149593
+                }
+              ],
+              "temperature": 0.0
+            }
+          ],
+          "last_vad_kept_end_seconds": null,
+          "post_vad_duration_seconds": 32.0
+        },
+        "library_record_absent": true,
+        "input_audio_cleaned": true,
+        "events": [
+          {
+            "at": "2026-11-28T00:21:17.883986+00:00",
+            "pid": 6,
+            "kind": "recognition_start",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b"
+          },
+          {
+            "at": "2026-11-28T00:21:17.925094+00:00",
+            "pid": 6,
+            "kind": "audio_decoded",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              512000
+            ],
+            "decoded_arrays": [
+              {
+                "array_identity": "0x7fa719501110",
+                "shape": [
+                  512000
+                ],
+                "dtype": "<f4",
+                "sample_count": 512000,
+                "nonzero_sample_count": 511922,
+                "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+              }
+            ],
+            "decoded_duration_seconds": 32.0
+          },
+          {
+            "at": "2026-11-28T00:21:18.417703+00:00",
+            "pid": 6,
+            "kind": "asr_model_resolved",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "requested_model": "small",
+            "requested_revision": null,
+            "local_files_only": false,
+            "resolved_directory": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+            "resolved_revision": "536b0662742c02347bc0e980a01041f333bce120",
+            "files": {
+              "config.json": {
+                "bytes": 2370,
+                "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+              },
+              "model.bin": {
+                "bytes": 483546902,
+                "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+              },
+              "tokenizer.json": {
+                "bytes": 2203239,
+                "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+              },
+              "vocabulary.txt": {
+                "bytes": 459861,
+                "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+              }
+            },
+            "identity_complete": true,
+            "evidence_errors": []
+          },
+          {
+            "at": "2026-11-28T00:21:20.499670+00:00",
+            "pid": 6,
+            "kind": "transcribe_request",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "explicit_kwargs": {
+              "language": null,
+              "beam_size": 5,
+              "vad_filter": false,
+              "no_speech_threshold": 0.6,
+              "condition_on_previous_text": false,
+              "word_timestamps": true,
+              "hallucination_silence_threshold": 2.0
+            },
+            "resolved_options": {
+              "language": null,
+              "task": "transcribe",
+              "log_progress": false,
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "temperature": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "compression_ratio_threshold": 2.4,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                -1
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": true,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "vad_filter": false,
+              "vad_parameters": null,
+              "max_new_tokens": null,
+              "chunk_length": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": 2.0,
+              "hotwords": null,
+              "language_detection_threshold": 0.5,
+              "language_detection_segments": 1
+            },
+            "audio_array": {
+              "array_identity": "0x7fa719501110",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 511922,
+              "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+            }
+          },
+          {
+            "at": "2026-11-28T00:21:21.692822+00:00",
+            "pid": 6,
+            "kind": "transcribe_info",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "info": {
+              "language": "nn",
+              "language_probability": 0.5869624614715576,
+              "duration": 32.0,
+              "duration_after_vad": 32.0,
+              "all_language_probs": [
+                [
+                  "nn",
+                  0.5869624614715576
+                ],
+                [
+                  "en",
+                  0.09479717910289764
+                ],
+                [
+                  "cy",
+                  0.08962813764810562
+                ],
+                [
+                  "ja",
+                  0.0596090629696846
+                ],
+                [
+                  "zh",
+                  0.03662216290831566
+                ],
+                [
+                  "fr",
+                  0.031172551214694977
+                ],
+                [
+                  "ko",
+                  0.015506326220929623
+                ],
+                [
+                  "es",
+                  0.009478754363954067
+                ],
+                [
+                  "pl",
+                  0.007474002428352833
+                ],
+                [
+                  "tr",
+                  0.00678139366209507
+                ],
+                [
+                  "ru",
+                  0.006300786044448614
+                ],
+                [
+                  "pt",
+                  0.005949833896011114
+                ],
+                [
+                  "la",
+                  0.0051256450824439526
+                ],
+                [
+                  "de",
+                  0.004717185627669096
+                ],
+                [
+                  "vi",
+                  0.004583307076245546
+                ],
+                [
+                  "jw",
+                  0.00365485274232924
+                ],
+                [
+                  "ar",
+                  0.0034890947863459587
+                ],
+                [
+                  "ml",
+                  0.0032009489368647337
+                ],
+                [
+                  "it",
+                  0.002985149621963501
+                ],
+                [
+                  "hi",
+                  0.002646868349984288
+                ],
+                [
+                  "km",
+                  0.0018097094725817442
+                ],
+                [
+                  "haw",
+                  0.001726069487631321
+                ],
+                [
+                  "ms",
+                  0.0014848378486931324
+                ],
+                [
+                  "id",
+                  0.0013911643764004111
+                ],
+                [
+                  "el",
+                  0.0013277152320370078
+                ],
+                [
+                  "hu",
+                  0.0013186587020754814
+                ],
+                [
+                  "sn",
+                  0.0012058219872415066
+                ],
+                [
+                  "sv",
+                  0.001137537881731987
+                ],
+                [
+                  "th",
+                  0.000914702657610178
+                ],
+                [
+                  "nl",
+                  0.0008161590667441487
+                ],
+                [
+                  "br",
+                  0.0007885215454734862
+                ],
+                [
+                  "ta",
+                  0.0006042080349288881
+                ],
+                [
+                  "cs",
+                  0.0005948361358605325
+                ],
+                [
+                  "tl",
+                  0.0005052263149991632
+                ],
+                [
+                  "mi",
+                  0.00044056575279682875
+                ],
+                [
+                  "fa",
+                  0.0004130976158194244
+                ],
+                [
+                  "te",
+                  0.0004039120685774833
+                ],
+                [
+                  "ro",
+                  0.0003487745998427272
+                ],
+                [
+                  "ur",
+                  0.0003059151931665838
+                ],
+                [
+                  "fi",
+                  0.0002829900768119842
+                ],
+                [
+                  "he",
+                  0.00019123720994684845
+                ],
+                [
+                  "si",
+                  0.000170362793141976
+                ],
+                [
+                  "yo",
+                  0.0001560066157253459
+                ],
+                [
+                  "uk",
+                  0.00014574709348380566
+                ],
+                [
+                  "gl",
+                  0.00012410266208462417
+                ],
+                [
+                  "sa",
+                  8.548507321393117e-05
+                ],
+                [
+                  "bn",
+                  6.63889295537956e-05
+                ],
+                [
+                  "no",
+                  6.137443415354937e-05
+                ],
+                [
+                  "bg",
+                  5.949714613961987e-05
+                ],
+                [
+                  "da",
+                  5.109782432555221e-05
+                ],
+                [
+                  "mn",
+                  4.9337286327499896e-05
+                ],
+                [
+                  "sw",
+                  4.103703759028576e-05
+                ],
+                [
+                  "eu",
+                  3.93705049646087e-05
+                ],
+                [
+                  "my",
+                  3.5654582461575046e-05
+                ],
+                [
+                  "ca",
+                  3.3545878977747634e-05
+                ],
+                [
+                  "fo",
+                  3.07749469357077e-05
+                ],
+                [
+                  "oc",
+                  1.8854017980629578e-05
+                ],
+                [
+                  "hr",
+                  1.7238635336980224e-05
+                ],
+                [
+                  "bs",
+                  1.5399680705741048e-05
+                ],
+                [
+                  "ht",
+                  1.4571422070730478e-05
+                ],
+                [
+                  "sl",
+                  1.0387847396486904e-05
+                ],
+                [
+                  "be",
+                  8.231354513554834e-06
+                ],
+                [
+                  "ne",
+                  8.03207603894407e-06
+                ],
+                [
+                  "sk",
+                  7.863639439165127e-06
+                ],
+                [
+                  "bo",
+                  5.740993856306886e-06
+                ],
+                [
+                  "hy",
+                  5.663210686179809e-06
+                ],
+                [
+                  "yi",
+                  5.465232334245229e-06
+                ],
+                [
+                  "af",
+                  5.462329681904521e-06
+                ],
+                [
+                  "sd",
+                  4.725399776361883e-06
+                ],
+                [
+                  "ps",
+                  3.825993644568371e-06
+                ],
+                [
+                  "lo",
+                  3.7350664570112713e-06
+                ],
+                [
+                  "az",
+                  3.4725746900221566e-06
+                ],
+                [
+                  "mr",
+                  2.3552881884825183e-06
+                ],
+                [
+                  "is",
+                  1.8540827113611158e-06
+                ],
+                [
+                  "lt",
+                  1.453362415304582e-06
+                ],
+                [
+                  "et",
+                  1.15540899514599e-06
+                ],
+                [
+                  "sq",
+                  1.0233661669190042e-06
+                ],
+                [
+                  "kn",
+                  9.383810493091005e-07
+                ],
+                [
+                  "lv",
+                  9.322014875579043e-07
+                ],
+                [
+                  "as",
+                  8.1890925685002e-07
+                ],
+                [
+                  "pa",
+                  7.823183523214539e-07
+                ],
+                [
+                  "sr",
+                  7.562853170384187e-07
+                ],
+                [
+                  "mk",
+                  4.399575459501648e-07
+                ],
+                [
+                  "ka",
+                  4.19138785900941e-07
+                ],
+                [
+                  "kk",
+                  3.622866699970473e-07
+                ],
+                [
+                  "ln",
+                  3.215248796095693e-07
+                ],
+                [
+                  "mt",
+                  2.839794035480736e-07
+                ],
+                [
+                  "gu",
+                  1.1314691050756664e-07
+                ],
+                [
+                  "am",
+                  1.1029401036921627e-07
+                ],
+                [
+                  "so",
+                  2.1431690200302e-08
+                ],
+                [
+                  "su",
+                  1.69603939781382e-08
+                ],
+                [
+                  "tg",
+                  8.963414011020632e-09
+                ],
+                [
+                  "lb",
+                  4.105480400085071e-09
+                ],
+                [
+                  "ha",
+                  1.982060737759639e-09
+                ],
+                [
+                  "tk",
+                  1.010630246156552e-09
+                ],
+                [
+                  "tt",
+                  9.174080939367002e-10
+                ],
+                [
+                  "ba",
+                  7.060572682071609e-10
+                ],
+                [
+                  "mg",
+                  2.809567856143502e-10
+                ],
+                [
+                  "uz",
+                  2.1861873422679423e-10
+                ]
+              ],
+              "transcription_options": {
+                "beam_size": 5,
+                "best_of": 5,
+                "patience": 1,
+                "length_penalty": 1,
+                "repetition_penalty": 1,
+                "no_repeat_ngram_size": 0,
+                "log_prob_threshold": -1.0,
+                "no_speech_threshold": 0.6,
+                "compression_ratio_threshold": 2.4,
+                "condition_on_previous_text": false,
+                "prompt_reset_on_temperature": 0.5,
+                "temperatures": [
+                  0.0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  1.0
+                ],
+                "initial_prompt": null,
+                "prefix": null,
+                "suppress_blank": true,
+                "suppress_tokens": [
+                  1,
+                  2,
+                  7,
+                  8,
+                  9,
+                  10,
+                  14,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  31,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63,
+                  90,
+                  91,
+                  92,
+                  93,
+                  359,
+                  503,
+                  522,
+                  542,
+                  873,
+                  893,
+                  902,
+                  918,
+                  922,
+                  931,
+                  1350,
+                  1853,
+                  1982,
+                  2460,
+                  2627,
+                  3246,
+                  3253,
+                  3268,
+                  3536,
+                  3846,
+                  3961,
+                  4183,
+                  4667,
+                  6585,
+                  6647,
+                  7273,
+                  9061,
+                  9383,
+                  10428,
+                  10929,
+                  11938,
+                  12033,
+                  12331,
+                  12562,
+                  13793,
+                  14157,
+                  14635,
+                  15265,
+                  15618,
+                  16553,
+                  16604,
+                  18362,
+                  18956,
+                  20075,
+                  21675,
+                  22520,
+                  26130,
+                  26161,
+                  26435,
+                  28279,
+                  29464,
+                  31650,
+                  32302,
+                  32470,
+                  36865,
+                  42863,
+                  47425,
+                  49870,
+                  50254,
+                  50258,
+                  50358,
+                  50359,
+                  50360,
+                  50361,
+                  50362
+                ],
+                "without_timestamps": false,
+                "max_initial_timestamp": 1.0,
+                "word_timestamps": true,
+                "prepend_punctuations": "\"'\u201c\u00bf([{-",
+                "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+                "multilingual": false,
+                "max_new_tokens": null,
+                "clip_timestamps": "0",
+                "hallucination_silence_threshold": 2.0,
+                "hotwords": null
+              },
+              "vad_options": null
+            }
+          },
+          {
+            "at": "2026-11-28T00:21:51.356562+00:00",
+            "pid": 6,
+            "kind": "asr_segment_created",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "segment": {
+              "id": 1,
+              "seek": 3000,
+              "start": 30.540000000000003,
+              "end": 31.94,
+              "text": " \u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+              "tokens": [
+                50364,
+                21879,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                157,
+                225,
+                248,
+                50464
+              ],
+              "avg_logprob": -0.42299195491906366,
+              "compression_ratio": 2.142857142857143,
+              "no_speech_prob": 0.8953099250793457,
+              "words": [
+                {
+                  "start": 30.540000000000003,
+                  "end": 31.94,
+                  "word": " \u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+                  "probability": 0.7654456208149593
+                }
+              ],
+              "temperature": 0.0
+            }
+          },
+          {
+            "at": "2026-11-28T00:21:51.438586+00:00",
+            "pid": 6,
+            "kind": "whole_recording_speech_check",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "input_array_before": {
+              "array_identity": "0x7fa719501110",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 511922,
+              "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+            },
+            "input_array_after": {
+              "array_identity": "0x7fa719501110",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 511922,
+              "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+            },
+            "sampling_rate_hz": 16000,
+            "explicit_kwargs": {
+              "sampling_rate": 16000
+            },
+            "vad_options": {
+              "threshold": 0.5,
+              "neg_threshold": null,
+              "min_speech_duration_ms": 0,
+              "max_speech_duration_s": {
+                "nonfinite_float": "inf"
+              },
+              "min_silence_duration_ms": 2000,
+              "speech_pad_ms": 400
+            },
+            "intervals": []
+          },
+          {
+            "at": "2026-11-28T00:21:51.438695+00:00",
+            "pid": 6,
+            "kind": "recognition_failed",
+            "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+            "errors": [
+              {
+                "type": "ReadableError",
+                "message": "No spoken words were detected in this recording."
+              }
+            ],
+            "elapsed_seconds": 33.555
+          }
+        ],
+        "elapsed_seconds": 33.985
+      }
+    ]
+  },
+  "initial_server_pid": 6,
+  "restarted_server_pid": 47,
+  "source_sha256_after": {
+    "app.py": "7b092ba23bbfb00f0de38409187d163f656525772f6b11e824e1270c49b4466c",
+    "sources.py": "267312e614eaf04e1ff918d46716274ea15634d31cd82286fcf04ce2b548cfde",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764"
+  },
+  "source_files_unchanged": true,
+  "asr_model_resolutions": [
+    {
+      "at": "2026-11-28T00:21:18.417703+00:00",
+      "pid": 6,
+      "kind": "asr_model_resolved",
+      "job_id": "b62fbbfb88df4c7a8b26027cf505175b",
+      "requested_model": "small",
+      "requested_revision": null,
+      "local_files_only": false,
+      "resolved_directory": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+      "resolved_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "files": {
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      },
+      "identity_complete": true,
+      "evidence_errors": []
+    }
+  ],
+  "asr_model_identity_complete": true,
+  "finished_at": "2026-11-28T00:21:53.242109+00:00",
+  "all_selected_providers_passed": false
+}
