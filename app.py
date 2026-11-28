@@ -1232,9 +1232,16 @@ def download(job_id: str,file_type: str):
 
 
 @app.get("/api/library")
-def list_library(q: str = "", limit: int = 50):
+def list_library(q: str = "", limit: int = 50, before_created_at: float | None = None,
+                 before_id: str | None = None):
     if len(q) > 200: raise HTTPException(400,"Search query is too long.")
-    return {"items":library.list_items(q,limit)}
+    before = None
+    if before_created_at is not None or before_id is not None:
+        if (before_created_at is None or not math.isfinite(before_created_at) or
+                before_id is None or not JOB_ID_RE.fullmatch(before_id)):
+            raise HTTPException(400, "Invalid library page cursor.")
+        before = (before_created_at, before_id)
+    return library.list_page(q, limit, before=before)
 
 
 @app.get("/api/library/backup")

@@ -214,6 +214,8 @@
             <pre id="setup-info" class="setup-info" hidden></pre>
           </div>
           <div id="library-items" class="library-items" aria-live="polite">Open Library to load saved transcripts.</div>
+          <button type="button" id="library-more" class="copy" hidden style="margin-top:12px">Load more transcripts</button>
+          <p id="library-page-message" class="library-feedback" role="status"></p>
           <div class="library-tools">
             <h3>Recent batches (available after restart)</h3>
             <div id="saved-batches" class="saved-batches" aria-live="polite">Checking saved batches...</div>
@@ -450,12 +452,23 @@
      else {currentJob=result.id;await trackJob(result.id);}
    }catch(e){showStatus("Could not start",e.message,true,false);setWorking(false);}
  });
- async function loadLibrary(){
+ let libraryQuery="", libraryCursor=null, libraryRequest=0;
+ function loadLibrary(){return loadLibraryPage(false);}
+ async function loadLibraryPage(append){
    const query=$("library-search").value.trim();
+   if(append && query!==libraryQuery)append=false;
+   if(append && !libraryCursor)return;
+   const request=++libraryRequest;
+   const more=$("library-more"), container=$("library-items");
+   if(!append){libraryQuery=query;libraryCursor=null;container.textContent="Loading saved transcripts…";more.hidden=true;}
+   more.disabled=true;
+   const params=new URLSearchParams({q:query});
+   if(append){params.set("before_created_at",String(libraryCursor.created_at));params.set("before_id",libraryCursor.id);}
    try{
-     const data=await api("/api/library?q="+encodeURIComponent(query));
-     const container=$("library-items");container.replaceChildren();
-     if(!data.items.length){container.textContent="No saved transcripts found yet.";return;}
+     const data=await api("/api/library?"+params.toString());
+     if(request!==libraryRequest)return;
+     if(!append)container.replaceChildren();
+     if(!data.items.length && !append)container.textContent="No saved transcripts found yet.";
      for(const item of data.items){
        const row=document.createElement("div");row.className="library-item";
        const text=document.createElement("div");const title=document.createElement("strong");title.textContent=item.title;
@@ -463,7 +476,14 @@
        text.append(title,meta);row.appendChild(text);
        addButton(row,"Open / edit",()=>openEditor(item.id));container.appendChild(row);
      }
-   }catch(e){$("library-items").textContent="Could not load library: "+e.message;}
+     libraryCursor=data.next_cursor||null;
+     more.hidden=!libraryCursor;
+     $("library-page-message").textContent="";
+   }catch(e){
+     if(request!==libraryRequest)return;
+     if(append)$("library-page-message").textContent="Could not load more transcripts: "+e.message;
+     else {container.textContent="Could not load library: "+e.message;$("library-page-message").textContent="";}
+   }finally{if(request===libraryRequest)more.disabled=false;}
  }
  async function loadSavedBatches(){
    const target=$("saved-batches");
@@ -509,6 +529,7 @@
    catch(e){$("setup-info").textContent="Diagnostics unavailable: "+e.message;}
  });
  $("library-refresh").addEventListener("click",loadLibrary);
+ $("library-more").addEventListener("click",()=>loadLibraryPage(true));
  $("library-search").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loadLibrary();}});
  function showEditorPage(){
    const rows=$("editor-rows");rows.replaceChildren();

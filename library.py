@@ -201,21 +201,34 @@ def _search_key(value: str) -> str:
     return unicodedata.normalize("NFC", unicodedata.normalize("NFD", value).casefold())
 
 
-def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
+def list_page(query: str = "", limit: int = 50, *, before: tuple[float, str] | None = None) -> dict[str, Any]:
+    """Seek through a stable descending order, including equal creation times."""
     limit = min(max(int(limit), 1), 100)
+    clauses = []
+    parameters = []
     with _connect() as connection:
         if query:
-            # SQLite LIKE folds ASCII only. instr treats %, _ and backslashes
-            # literally and lets Python normalize Greek and other Unicode text.
+            # SQLite LIKE folds ASCII only; preserve literal Unicode search.
             connection.create_function("linkscribe_search_key", 1, _search_key, deterministic=True)
             term = _search_key(query)
-            rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
-                 created_at,updated_at FROM transcripts WHERE instr(linkscribe_search_key(title), ?) > 0 OR
-                 instr(linkscribe_search_key(plain_text), ?) > 0 ORDER BY created_at DESC LIMIT ?""", (term,term,limit)).fetchall()
-        else:
-            rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
-                created_at,updated_at FROM transcripts ORDER BY created_at DESC LIMIT ?""", (limit,)).fetchall()
-    return [dict(row) for row in rows]
+            clauses.append("(instr(linkscribe_search_key(title), ?) > 0 OR instr(linkscribe_search_key(plain_text), ?) > 0)")
+            parameters.extend((term, term))
+        if before is not None:
+            clauses.append("(created_at, id) < (?, ?)")
+            parameters.extend(before)
+        where = " WHERE " + " AND ".join(clauses) if clauses else ""
+        rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
+                created_at,updated_at FROM transcripts""" + where +
+                " ORDER BY created_at DESC, id DESC LIMIT ?", (*parameters, limit + 1)).fetchall()
+    items = [dict(row) for row in rows[:limit]]
+    cursor = None
+    if len(rows) > limit:
+        cursor = {"created_at": items[-1]["created_at"], "id": items[-1]["id"]}
+    return {"items": items, "next_cursor": cursor}
+
+
+def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
+    return list_page(query, limit)["items"]
 
 
 class EditConflict(ValueError):
