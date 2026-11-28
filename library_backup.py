@@ -22,6 +22,7 @@ VERSION = 2
 SUPPORTED_VERSIONS = {1, 2}
 MAX_ARCHIVE_BYTES = 50 * 1024 * 1024
 MAX_JSON_BYTES = 100 * 1024 * 1024
+MAX_RECORDS = 200000
 HEX_ID = re.compile(r"[a-f0-9]{32}\Z")
 
 
@@ -108,27 +109,42 @@ def _validate_summary(summary: Any) -> None:
 
 
 def make_backup() -> tuple[bytes, int]:
-    """Snapshot all transcript rows in one SQLite read transaction."""
+    """Snapshot rows in one read transaction without retaining the entire library."""
+    buff = io.BytesIO()
+    digest = hashlib.sha256()
+    size = count = 0
     conn = library._connect()
     try:
         conn.execute("BEGIN")
-        records = [library._row(row) for row in conn.execute("SELECT * FROM transcripts ORDER BY id")]
+        with zipfile.ZipFile(buff, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zipout:
+            with zipout.open("transcripts.json", "w") as member:
+                def write(chunk: bytes) -> None:
+                    nonlocal size
+                    size += len(chunk)
+                    if size > MAX_JSON_BYTES:
+                        raise BackupError("Library is too large for a browser backup; use the local SQLite backup procedure.")
+                    digest.update(chunk)
+                    member.write(chunk)
+
+                write(_encode({"format": FORMAT, "version": VERSION, "records": []})[:-2])
+                for row in conn.execute("SELECT * FROM transcripts ORDER BY id"):
+                    if count >= MAX_RECORDS:
+                        raise BackupError("Library has too many records for a browser backup; use the local SQLite backup procedure.")
+                    if count:
+                        write(b",")
+                    write(_encode(library._row(row)))
+                    count += 1
+                write(b"]}")
+            meta = {"format": FORMAT, "version": VERSION, "records": count,
+                    "sha256": digest.hexdigest()}
+            zipout.writestr("manifest.json", _encode(meta))
         conn.rollback()
     finally:
         conn.close()
-    contents = _encode({"format": FORMAT, "version": VERSION, "records": records})
-    if len(contents) > MAX_JSON_BYTES:
-        raise BackupError("Library is too large for a browser backup; use the local SQLite backup procedure.")
-    meta = {"format": FORMAT, "version": VERSION, "records": len(records),
-            "sha256": hashlib.sha256(contents).hexdigest()}
-    buff = io.BytesIO()
-    with zipfile.ZipFile(buff, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zipout:
-        zipout.writestr("manifest.json", _encode(meta))
-        zipout.writestr("transcripts.json", contents)
     archive_bytes = buff.getvalue()
     if len(archive_bytes) > MAX_ARCHIVE_BYTES:
         raise BackupError("Library backup exceeds the 50 MB restore limit; use the local SQLite backup procedure.")
-    return archive_bytes, len(records)
+    return archive_bytes, count
 
 
 def _validated_record(record: Any) -> tuple:
@@ -207,7 +223,7 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
             not isinstance(data.get("records"), list) or
             len(data["records"]) != manifest.get("records")):
         raise BackupError("Backup manifest does not match its records.")
-    if len(data["records"]) > 200000:
+    if len(data["records"]) > MAX_RECORDS:
         raise BackupError("Backup contains too many records.")
     if data["version"] == 1 and any(isinstance(record, dict) and record.get("highlights") is not None
                                      for record in data["records"]):
