@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "result": "diagnostic_only_not_a_replacement_gate",
+  "created_at_utc": "2026-11-28T04:46:23.431084+00:00",
+  "source_commit": "7a53991da60c9e052be9a72299218b291b364c8d",
+  "source_report": {
+    "path": "original-artifact/provider-report.json",
+    "bytes": 291262,
+    "sha256": "e72f3b954b4c65ba7564a51ae98eeb873c5f8701bad9f0fd785f01b0b5364cab"
+  },
+  "original_gate": {
+    "path": "original-artifact/dailymotion-tail-check.json",
+    "bytes": 5409,
+    "sha256": "5fb12f102036e8aeb96d98838476e95dea82ed3d8a0a27a4379987b61aec19eb"
+  },
+  "original_gate_status": "fail",
+  "original_gate_checks": {
+    "passed": 27,
+    "total": 28,
+    "failed": [
+      "late_dialogue_world_changed"
+    ]
+  },
+  "method": "Use the unchanged frozen lexical patterns to observe text retention separately from the unchanged full-containment check. No output, timestamp, window, pattern or historical result is modified.",
+  "anchors": [
+    {
+      "anchor": "world_changed",
+      "unchanged_window_seconds": [
+        510.0,
+        529.0
+      ],
+      "unchanged_pattern": "\\bworld(?:s| has)? changed\\b",
+      "lexical_match_somewhere_in_saved_transcript": true,
+      "matching_saved_segments_without_time_filter": [
+        {
+          "start": 509.18,
+          "end": 520.18,
+          "text": "The world's changed Celia."
+        }
+      ],
+      "previous_f12_matching_saved_segments": [
+        {
+          "start": 518.28,
+          "end": 520.28,
+          "text": "The world's changed Celia."
+        }
+      ],
+      "original_full_containment_matching_text": "Yeah",
+      "original_full_containment_result": false
+    },
+    {
+      "anchor": "maybe_we_can",
+      "unchanged_window_seconds": [
+        528.0,
+        545.0
+      ],
+      "unchanged_pattern": "\\bmaybe we can too\\b",
+      "lexical_match_somewhere_in_saved_transcript": true,
+      "matching_saved_segments_without_time_filter": [
+        {
+          "start": 534.78,
+          "end": 539.26,
+          "text": "Maybe we can too memory over I complete"
+        }
+      ],
+      "previous_f12_matching_saved_segments": [
+        {
+          "start": 534.28,
+          "end": 536.28,
+          "text": "Maybe we can too."
+        }
+      ],
+      "original_full_containment_matching_text": "Maybe we can too memory over I complete",
+      "original_full_containment_result": true
+    },
+    {
+      "anchor": "lesson_learned",
+      "unchanged_window_seconds": [
+        545.0,
+        574.0
+      ],
+      "unchanged_pattern": "\\blesson to be (?:learned|learnt) from this\\b",
+      "lexical_match_somewhere_in_saved_transcript": true,
+      "matching_saved_segments_without_time_filter": [
+        {
+          "start": 550.18,
+          "end": 564.18,
+          "text": "You know, there's a lesson to be learned from this."
+        }
+      ],
+      "previous_f12_matching_saved_segments": [
+        {
+          "start": 548.28,
+          "end": 566.28,
+          "text": "You know, there's a lesson to be learned from this."
+        }
+      ],
+      "original_full_containment_matching_text": "You know, there's a lesson to be learned from this. Could have gone worse.",
+      "original_full_containment_result": true
+    },
+    {
+      "anchor": "could_have_gone_worse",
+      "unchanged_window_seconds": [
+        558.0,
+        577.0
+      ],
+      "unchanged_pattern": "\\bcould(?: have|ve) (?:gone|been) worse\\b",
+      "lexical_match_somewhere_in_saved_transcript": true,
+      "matching_saved_segments_without_time_filter": [
+        {
+          "start": 564.18,
+          "end": 567.18,
+          "text": "Could have gone worse."
+        }
+      ],
+      "previous_f12_matching_saved_segments": [
+        {
+          "start": 566.28,
+          "end": 568.28,
+          "text": "Could have gone worse."
+        }
+      ],
+      "original_full_containment_matching_text": "Could have gone worse.",
+      "original_full_containment_result": true
+    }
+  ],
+  "world_change": {
+    "raw_native_segment": {
+      "id": 64,
+      "seek": 50218,
+      "start": 509.18,
+      "end": 520.1800000000001,
+      "text": " The world's changed Celia.",
+      "tokens": [
+        50714,
+        440,
+        1002,
+        311,
+        3105,
+        19967,
+        654,
+        13,
+        51264
+      ],
+      "avg_logprob": -0.8067277789115905,
+      "compression_ratio": 0.8688524590163934,
+      "no_speech_prob": 0.0726904347538948,
+      "words": null,
+      "temperature": 0.0
+    },
+    "saved_segment": {
+      "start": 509.18,
+      "end": 520.18,
+      "text": "The world's changed Celia."
+    },
+    "previous_raw_native_segment": {
+      "id": 58,
+      "seek": 51828,
+      "start": 518.28,
+      "end": 520.28,
+      "text": " The world's changed Celia.",
+      "tokens": [
+        50364,
+        440,
+        1002,
+        311,
+        3105,
+        19967,
+        654,
+        13,
+        50464
+      ],
+      "avg_logprob": -0.3366281182869621,
+      "compression_ratio": 0.9459459459459459,
+      "no_speech_prob": 0.047999799251556396,
+      "words": null,
+      "temperature": 0.0
+    },
+    "start_before_frozen_window_seconds": 0.82,
+    "new_start_minus_old_native_start_seconds": -9.1,
+    "publisher_reference_cue": {
+      "id": 71,
+      "start": 518.0,
+      "end": 520.0,
+      "text": "The world's changed, Celia...",
+      "source": {
+        "path": "comparison-inputs/publisher-TOS-en.srt",
+        "bytes": 4764,
+        "sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe"
+      },
+      "scope": "Separately published subtitle cue, not manual acoustic onset measurement for this Dailymotion rendition."
+    }
+  },
+  "persistence": {
+    "all_74_native_segments_match_saved_after_existing_round_strip": true,
+    "all_saved_logical_SQLite_columns_match": true,
+    "json_export_all_segments_match": true,
+    "txt_srt_vtt_phrase_retained": true,
+    "zip_members_match_all_four_exports": true,
+    "srt_cue": "64\n00:08:29,180 --> 00:08:40,180\nThe world's changed Celia.",
+    "vtt_cue": "00:08:29.180 --> 00:08:40.180\nThe world's changed Celia."
+  },
+  "window_provenance": {
+    "original_document": {
+      "path": "comparison-inputs/frozen-anchor-README.md",
+      "bytes": 17515,
+      "sha256": "b6290a7e7dda65e0b292e68848fe592653ee8695c488158f81366eb69f7e1a0f"
+    },
+    "original_description": "expected broad time windows; world-change exchange around 518 s",
+    "prior_baseline_segment": [
+      518.28,
+      520.28
+    ],
+    "classification": "Broad localization anchor, not an exact measured acoustic speech interval.",
+    "frozen_rule": "lo <= segment.start <= segment.end <= hi for ordinary-policy baseline mode"
+  },
+  "not_claimed": [
+    "A passed frozen tail gate",
+    "Accurate acoustic start/end times",
+    "All dialogue words retained or correct",
+    "Stable v1 quality",
+    "A production or model-policy repair"
+  ]
+}

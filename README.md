@@ -2,19 +2,19 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `00567db`** passed **753 tests and
+The published **0.3.0 integration checkpoint `7a53991`** passed **757 tests and
 54 subtests** on Ubuntu and independent Python 3.11/3.13 configurations. Windows
-and macOS each passed 749 tests and 54 subtests, with four Linux-only process-group
+and macOS each passed 753 tests and 54 subtests, with four Linux-only process-group
 harness controls skipped. Fresh Linux installation, installation from the actual
 candidate archive and an actual audio-upload workflow passed. Chromium passed all
-**34 checks**, including preservation
+**35 checks**, including persisted processing warnings across a server restart, preservation
 of corrections during saves and navigation, highlights after editing, and backups
 containing saved highlights. The
 [integration record](docs/integration-2026-11-28/README.md) retains the preceding
 31/32 and 33/34 harness failures, their corrections and actual editor fixes.
 Generated meaning still requires approval. Provider access and speech-quality
 regressions also leave release gates open. The
-[exact hosted record](docs/integration-2026-11-28/hosted-00567db/checkpoint.json)
+[exact hosted record](docs/integration-2026-11-28/hosted-7a53991/checkpoint.json)
 records the tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
 The downloaded source archive also passed a fresh local installation during
@@ -53,7 +53,7 @@ formats, and retains the warning in saved and batch results. Eight retained
 recordings passed actual decoding, export, SQLite and backup-restoration replay;
 no recognition was repeated. The combined local suite passed **753 tests and
 54 subtests**, and the ordinary hosted application checks at `00567db` passed.
-All six provider acquisitions failed before speech recognition; generated-text
+At `00567db`, all six provider acquisitions failed before speech recognition; generated-text
 execution completed but speech, translation and summary meaning gates remain open.
 
 The subsequent [warning-visibility fix](docs/processing-warnings-2026-11-28/README.md)
@@ -61,7 +61,22 @@ recovers saved processing notes after restart, shows a separate completed-with-w
 count in batch detail/history, and displays the notes in the transcript editor.
 Controlled 20-item and fresh-process checks preserve every successful source
 transcript. The combined local suite passes **757 tests and 54 subtests**;
-the new browser restart/visibility case awaits hosted Chromium verification.
+the [hosted review](docs/processing-warnings-hosted-2026-11-28/README.md)
+confirms all 35 browser checks, including the new actual-restart case and its
+desktop/mobile views. One complete Dailymotion recording passed the current
+pipeline and restart recovery, but its subsequent batch acquisition failed.
+The [source diagnosis](docs/live-source-diagnosis-7a53991-2026-11-28/README.md)
+also preserves a failed timing-localization anchor: the words are present, but
+their native segment starts before the fixed containment window. Provider
+reliability and timing accuracy remain open.
+
+The [provider metadata repair](docs/provider-metadata-reuse-2026-11-28/README.md)
+downloads the exact resolved video information that passed validation, avoiding a
+second extraction. Extra-result and unresolved-result guards prevent that route
+from dispatching another extractor. Independent review, 104 focused checks and
+the combined **777-test, 54-subtest** local suite passed. Hosted verification of
+this revision is still required; this repair does not establish that intermittent
+provider access failures are resolved.
 
 ## Features
 

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "reviewed_app_sha256": "6214c317c59047e3191af0ebf4cd1c3eb3f56b286dceb1cce0ac16d0e366cff2",
+  "reviewed_new_tests_sha256": "e3a91a1775e9212302ae5962fa26269e18f2bab4fe7df78677ff28a75cb2e50c",
+  "finding": "The native resolved-video branch follows nonempty additional_urls by calling extract_info again. A resolved-video type check alone does not preclude this branch.",
+  "correction": "Reject nonempty additional_urls and additional_entries alongside playlist/multiple-entry metadata before transfer, with two explicit regression cases.",
+  "scope": "No such field is observed in the actual incident. This correction closes the in-memory single-video contract; it does not claim an extractor performs one HTTP request or cannot resolve references during its initial download=False phase."
+}

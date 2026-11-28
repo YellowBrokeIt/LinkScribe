@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "upstream": "yt-dlp/yt-dlp",
+  "version": "2026.11.23",
+  "official_source_url": "https://raw.githubusercontent.com/yt-dlp/yt-dlp/2026.11.23/yt_dlp/YoutubeDL.py",
+  "bytes": 218917,
+  "sha256": "1e6e127e8b03e987dfe81dc83e8de1217145339280e043feb867de168aef3e21",
+  "retrieval": "GitHub connector; exact official source bytes matched the installed module",
+  "scratch_original": "/workspace/scratch/94360995dd61/provider-metadata-reuse-preparation-2026-11-28/upstream-YoutubeDL-2026.11.23.py",
+  "observations": {
+    "download": "Invokes extract_info for each URL through its download wrapper.",
+    "process_ie_result": "Processes an already extracted result and downloads it when download=True. The video branch calls process_video_result; unresolved URL branches and nonempty additional_urls can extract again.",
+    "download_with_info_file": "Uses process_ie_result for stored metadata, but may fall back to the original webpage URL on failure. That fallback is not used by this change.",
+    "app_route": "Call process_ie_result(info, download=True) only after the returned type is a resolved video, additional URLs/entries are absent, and all existing metadata validations pass."
+  },
+  "offline_contract": "Actual installed YoutubeDL processing with an owned fake InfoExtractor, intercepted media transfer, and urlopen forbidden; one extractor invocation and one transfer observed.",
+  "limits": [
+    "No live provider request or download occurred.",
+    "One app-level extraction call does not mean one HTTP request or forbid the initial provider extractor's own reference resolution.",
+    "This verifies the API route on the recorded runtime, not every future upstream version.",
+    "This does not identify which extraction pass failed in the preserved 7a53991 incident or prove that the incident is fixed."
+  ]
+}

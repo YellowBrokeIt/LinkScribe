@@ -321,8 +321,11 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
             info = ydl.extract_info(video_url, download=False)
             if not info:
                 raise ReadableError("YouTube did not return video details.")
-            if info.get("_type") in {"playlist", "multi_video"} or info.get("entries"):
+            if (info.get("_type") in {"playlist", "multi_video"} or info.get("entries")
+                    or info.get("additional_urls") or info.get("additional_entries")):
                 raise ReadableError("Only one video per link is allowed, not playlists.")
+            if info.get("_type", "video") != "video":
+                raise ReadableError("The source did not return a resolved video to download.")
             length = info.get("duration")
             if length and length > MAX_SECONDS:
                 raise ReadableError("The video exceeds the 2-hour limit for this starter app.")
@@ -330,7 +333,8 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
             if expected_size and expected_size > MAX_BYTES:
                 raise ReadableError("The audio exceeds the 150 MB input limit.")
             title = str(info.get("title") or f"{source.provider} video")[:180]
-            ydl.download([video_url])
+            # Download the metadata we validated; download(url) extracts it again.
+            ydl.process_ie_result(info, download=True)
     except ReadableError:
         raise
     except Exception as exc:

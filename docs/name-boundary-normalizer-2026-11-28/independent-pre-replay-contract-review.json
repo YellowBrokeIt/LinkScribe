@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:39:54.791337+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Read-only review before generic controls or retained-output replay. AST parsing and exact small-file hashing only; no import/execution of normalizer, control runner, replay, tokenizer, model or translation.",
+  "decision": "no_protocol_blocker_for_one_already_authorized_offline_source_boundary_replay",
+  "semantic_approval": false,
+  "plan_sha256": "9d708e04ac952039e332314e098ab6befa90dd6b75d07842772aeb9992d41b76",
+  "verified_files": [
+    {
+      "path": "docs/name-span-protection-research-2026-11-28/original-six-source-only.json",
+      "bytes": 3609,
+      "sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-transcript-terminology.json",
+      "bytes": 16740,
+      "sha256": "7de6b381a15d12c2eeb57340a7495c7faa1a4a4a698ec10f1e07f16c656ef0f7"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-people-and-roles.json",
+      "bytes": 23447,
+      "sha256": "f8afa403c0b7934c3390080f63627d9c5a5d16baa53e722ad9cbe6da70ca3ef8"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "bytes": 20068,
+      "sha256": "977267f4ed054507821680a6491fe79f6ee000185ee965c69e4b306987558c2c"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-negation-scope.json",
+      "bytes": 20516,
+      "sha256": "fac59b5111e989e40a05d7bc322bdb39cd28de52d8cd83429f15aa586eb3d20e"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-conditional-publication.json",
+      "bytes": 16027,
+      "sha256": "aa1805fe0eec96111f0ee771a3d0bdc416adf20981d46354b6b01b5589fd8db9"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-uncertain-question.json",
+      "bytes": 20345,
+      "sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/evidence-manifest.json",
+      "bytes": 13161,
+      "sha256": "b6a13b115182b84c1bcc8e20a6e37c30c69afd3e2c5a9a04cd1c065e5423b5e2"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/independent-output-review.json",
+      "bytes": 13343,
+      "sha256": "6c42cc925456fdd3b827ab86d34da01c773f50d125f6da0787ba9a212fc8206b"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/proposal.md",
+      "bytes": 6746,
+      "sha256": "3b397f5f508cb49891d69a5de578b6b9e3d62bcf13e86440734ae731f8476e13"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py",
+      "bytes": 8299,
+      "sha256": "fd91e0c9c944f5c37cf3ec39780c08b459d27c38bc66bb63b36c75e7c1206be0"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/edge-cases.json",
+      "bytes": 33939,
+      "sha256": "1baad8b028f848dc29b3aad97fc97b5f9a17b0f5592a464c35dc2585c2bed337"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/check_controls.py",
+      "bytes": 4157,
+      "sha256": "58a22d97b46f20b195e33ebab7518dac73775bce7c091bf0abb6104fb4fa7c16"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/replay.py",
+      "bytes": 5170,
+      "sha256": "6ff71a38531b6dfc20f2e5e9cd029c0b3d74ae2fe2c48e55d3d9329594a7f090"
+    }
+  ],
+  "source_person_annotation_sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+  "unchanged_judgment": "Compare all six proposal sets to exactly the original 13 person mentions with exact source boundaries; exclude articles and ordinary prose. No annotation, source, translation criterion or raw detector result is regraded.",
+  "pre_execution_observation": {
+    "control_results_absent": true,
+    "replay_execution_absent": true,
+    "generic_control_count": 50,
+    "declared_semantic_counterexample_count": 4
+  },
+  "reviewed_mechanics": {
+    "whole_input_validation": "Raw span list is fully validated before proposals: exact native schema, integer half-open offsets, grapheme boundaries, exact source text, same-segment containment, PERSON label, finite score in original range and no overlap. Invalid data yields no partial return.",
+    "source_preservation": "Complete source segments and metadata are copied unchanged. The original joined source is never normalized or rewritten. NFC plus casefold applies solely to the fixed article comparison. Before/after JSON equality checks input mutation.",
+    "boundary_operation": "Declared Greek only; exact whole first token, at most one leading article plus horizontal separator. Only start moves; end remains identical. Removed prefix plus retained slice must reconstruct the complete raw span. The article and whitespace remain ordinary source text.",
+    "unchanged_inputs": "Non-Greek sources and raw single-token predictions stay unchanged. Article substrings, accents, Latin confusables and attached punctuation do not match. Punctuation-led suffixes, stacked article-like tokens, outer whitespace, nonhorizontal separators and inspected inside-word/name-prefix starts are retained for review.",
+    "metadata_and_score": "Raw entity records and confidence values remain unchanged and explicitly apply only to the original model span. No score is invented for the proposed boundary. Every result, including unchanged ones, requires independent review and rejects automatic semantic certification.",
+    "single_token_distinction": "A raw single-token entity is not trimmed. A valid multi-token raw prediction can yield one remaining name token; this is explicitly declared before replay.",
+    "replay_binding": "Replay uses only the six complete source-only cases, matching raw report IDs/languages/segments/full text/hashes, plus frozen code. It invokes the pure normalizer once per case and writes separate exclusive-create results; original inputs/reports are rehashed afterward. The runner does not load annotation or translation-reference content.",
+    "execution_scope": "No model, tokenizer, placeholders, source substitution or translation. The intended existing interpreter uses regex only; commands suppress bytecode writes. Four-CPU affinity, CPU/address-space/wall controls are configured for the small offline process. Actual execution and resource outcome remain to be recorded.",
+    "freeze_requirement": "Before replay, its already-planned execution freeze must bind this review, exact current plan/code, raw inputs and the actual control-results artifact. The private annotation bytes remain outside worker inputs."
+  },
+  "grammar_verification": {
+    "article_inventory": [
+      "ο",
+      "η",
+      "το",
+      "του",
+      "της",
+      "τον",
+      "την",
+      "τη",
+      "οι",
+      "τα",
+      "των",
+      "τους",
+      "τις"
+    ],
+    "method": "Both linked primary grammar pages were independently opened and their definite-article inflection tables checked. The inventory matches the distinct published forms, including τη/την. This validates the token inventory, not grammatical identity in an arbitrary sentence.",
+    "sources": [
+      {
+        "url": "https://ebooks.edu.gr/ebooks/v/html/8547/2009/Grammatiki_D-EDimotikou_html-apli/index_C5d.html",
+        "publisher": "Greek official school ebooks",
+        "retrieved_ref": "turn559784289view0",
+        "table_scope": "Definite article, nominative/genitive/accusative, singular/plural."
+      },
+      {
+        "url": "https://www.greek-language.gr/digitalResources/modern_greek/tools/lexica/glossology_edu/iframe.html?heading=4&id=110",
+        "publisher": "Centre for the Greek Language",
+        "retrieved_ref": "turn559784289view1",
+        "table_scope": "Definite-article inflection forms, including τη(ν)."
+      }
+    ]
+  },
+  "semantic_limits_fixed_before_replay": [
+    {
+      "id": "raw-single-article-like-name",
+      "semantic_counterexample": "A raw single-token prediction stays unchanged, even when its spelling is article-like; this does not establish whether it is a name.",
+      "expected": [
+        {
+          "status": "unchanged",
+          "text": "Η",
+          "start": 0,
+          "removed": null,
+          "reason": "raw_single_token_span"
+        }
+      ]
+    },
+    {
+      "id": "legitimate-article-like-name-component",
+      "semantic_counterexample": "Constructed counterexample: if the full personal name is written Τον Λι, the lexical proposal loses its first name component. Exact source matching cannot distinguish that intended identity from grammatical τον. Mechanical conformance is not semantic acceptance.",
+      "expected": [
+        {
+          "status": "proposed_remove_definite_article",
+          "text": "Λι",
+          "start": 4,
+          "removed": "Τον "
+        }
+      ]
+    },
+    {
+      "id": "undotted-leading-initial",
+      "semantic_counterexample": "Constructed counterexample: Η can be an undotted first-name initial. The rule then removes identity-bearing source text from the proposed protection. This ambiguity cannot be settled from the prefix alone.",
+      "expected": [
+        {
+          "status": "proposed_remove_definite_article",
+          "text": "Παπαδάκη",
+          "start": 2,
+          "removed": "Η "
+        }
+      ]
+    },
+    {
+      "id": "ordinary-prose-overextension",
+      "semantic_counterexample": "Constructed counterexample: removing the article leaves the ordinary adjective αγαπητή in the proposed PERSON span. This rule does not repair other detector overextensions or certify every retained word as a name.",
+      "expected": [
+        {
+          "status": "proposed_remove_definite_article",
+          "text": "αγαπητή Δανάη",
+          "start": 2,
+          "removed": "η "
+        }
+      ]
+    }
+  ],
+  "interpretation_of_controls": "The 50 controls test mechanical conformance, rejection paths and explicit limitations. The thirteen article-inventory cases are token-rule probes, not evidence of grammatical gender/case agreement or person identity. A mechanical pass on the four declared semantic counterexamples does not make their proposed spans semantically acceptable.",
+  "remaining_limits": [
+    "The lexically identical article/name/undotted-initial ambiguity cannot be resolved by this rule. A one-token remainder is not proof of correct identity.",
+    "Ordinary adjective or other prose inside a raw entity can remain in a proposed protected span. The rule does not solve all detector boundary errors, omissions, coreference or name inflection in translation.",
+    "The six source/output pairs are already exposed development data. Even exact agreement on all thirteen mentions would establish only this narrow development result, not general or unattended name safety.",
+    "The raw detector remains rejected at 5/6 cases and 12/13 exact mentions. Separate proposal success cannot rewrite that decision.",
+    "No production change, fresh validation, v2/v3 expansion, detector call, masking or translation is approved by this review."
+  ]
+}

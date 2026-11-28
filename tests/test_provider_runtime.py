@@ -525,10 +525,11 @@ def test_system_certificate_store_requires_explicit_opt_in_without_disabling_tls
 
         def extract_info(self, url, download):
             assert url == source.url and download is False
-            return {"title": "Owned mocked downloader fixture", "duration": 1}
+            self.info = {"title": "Owned mocked downloader fixture", "duration": 1}
+            return self.info
 
-        def download(self, urls):
-            assert urls == [source.url]
+        def process_ie_result(self, info, download=True):
+            assert info is self.info and download is True
             (tmp_path / "audio.wav").write_bytes(b"Mocked transport output; no live media request.")
 
     monkeypatch.setattr(yt_dlp, "YoutubeDL", Downloader)

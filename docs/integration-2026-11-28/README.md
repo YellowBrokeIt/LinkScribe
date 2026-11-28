@@ -324,3 +324,57 @@ and the exact clean-record title. A local Chromium startup attempt ran zero
 checks because the wrapper target executable was absent. That failure remains
 recorded; no browser download was attempted. The new real-server-restart case
 must pass in hosted Chromium alongside the prior 34 checks.
+
+
+## Completed warning checkpoint `7a53991`
+
+The [exact completed record](hosted-7a53991/checkpoint.json) binds commit
+`7a53991da60c9e052be9a72299218b291b364c8d` and tree
+`07ceac544ca6da271cede39d409a0281b9cad5fd` to actual artifacts, source identities
+and test log lines. All ordinary hosted workflows passed: Ubuntu/Python3.11/Python3.13
+757 plus 54; Windows/macOS 753 plus 54 with four Linux-only harness skips;
+fresh Linux checkout, actual ZIP installation and actual Tiny upload. Default
+Ollama completed twelve cases with five automatic passes/seven review flags and
+zero execution errors; semantic meaning remains unreviewed.
+
+[Independent browser review](../processing-warnings-hosted-2026-11-28/README.md)
+verified 35/35 checks, all preceding 34 names in order, actual server PID change,
+warning preservation in the downloaded backup, clean-record clearing and mobile
+width without overflow. The retained selection includes all non-image artifact
+files plus the four relevant screenshots; its manifest explicitly distinguishes
+that selection from the complete original reviewer bundle.
+
+One of six individual provider fixtures succeeded: the full 734.15-second
+Dailymotion recording passed normal Small recognition, persistence, exports,
+cleanup and restart. The other five acquisitions failed. The later mixed batch
+failed both acquisitions, including the previously successful Dailymotion URL,
+with no ASR event for that repeated item. The [separate frozen diagnosis](../live-source-diagnosis-7a53991-2026-11-28/README.md)
+retains the exact error chain and finds no proven batch-specific cause.
+
+The original restored-tail checker remains failed at 27/28. Its world-change
+phrase is present raw and saved at 509.18–520.18 seconds; full containment inside
+the unchanged 510–529 window fails. The publisher cue is at 518–520 seconds,
+so the native interval begins well before that cue. A separate lexical diagnostic
+finds all four phrases, without changing or approving the failed timing check.
+Measured input/model/decoder/runtime identities match the earlier baseline;
+output differences are already native, before application normalization.
+This evidence does not establish a production ASR repair or general quality.
+
+## Validated provider metadata: combined local result
+
+The [provider adapter repair](../provider-metadata-reuse-2026-11-28/README.md)
+passes its checked resolved result directly to the installed downloader's
+processing API. Review found and corrected the API's additional-URL branch;
+extra entries and unresolved results are rejected before transfer. The final
+104 focused checks include native processing with an owned extractor and no
+network access. Existing duration, size, provider transport, output and cleanup
+contracts are preserved.
+
+The root combined run passed **777 tests and 54 subtests in 11.04 seconds**.
+[run.json](provider-metadata-local/run.json) records the command and unchanged
+before/after source hashes, and [pytest.txt](provider-metadata-local/pytest.txt)
+retains the complete output. The repaired app hash is
+`b0ea2cf313a15697369a61beab15ae7017251476fc25ea7c77bdcbafe527dd47`.
+This run makes no live-provider or language/speech-model calls. Hosted checks
+are still required for the next published revision. Neither intermittent source
+availability nor the historical native timing failure is regraded by this fix.

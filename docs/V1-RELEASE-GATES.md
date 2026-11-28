@@ -193,6 +193,34 @@ repeating source or model work. Independent source review passed; the combined
 local suite passed **757 tests and 54 subtests**. Actual hosted execution of the
 new browser restart case is still required.
 
+The [completed `7a53991` record](integration-2026-11-28/hosted-7a53991/checkpoint.json)
+now verifies all ordinary workflows for that warning repair. Ubuntu and Python
+3.11/3.13 passed 757 tests plus 54 subtests; Windows/macOS passed 753 plus 54 with
+four Linux-only harness skips. All 35 browser checks passed, with the original
+34 retained, actual server restart and independently inspected desktop/mobile
+warnings. Fresh checkout, actual source ZIP, actual upload and default Ollama
+execution passed. The twelve language cases remain five automatic passes and
+seven review flags, with meaning unreviewed.
+
+Of six individual provider fixtures, the complete 734.15-second Dailymotion
+recording passed download, normal Small recognition, SQLite, exports, cleanup
+and restart recovery. The other five failed acquisition. A subsequent actual
+mixed batch could not reacquire Dailymotion and also failed its YouTube item.
+The [independent diagnosis](live-source-diagnosis-7a53991-2026-11-28/README.md)
+separates that acquisition failure from application batch logic. It also confirms
+that the world-changed phrase exists in raw and saved output at 509.18–520.18 s,
+while the unchanged broad 510–529 s full-containment anchor fails. The original
+checker remains 27/28; a separate diagnostic reports four lexical matches without
+regrading timing. No production timestamp shift or ASR repair is established.
+
+The [next provider repair](provider-metadata-reuse-2026-11-28/README.md)
+reuses the resolved metadata that passed the single-video, duration and size
+checks, avoiding a second extraction. It rejects unresolved results and extra
+URLs/entries before download. Independent review and 104 focused tests passed,
+including the installed yt-dlp processing route with network access forbidden.
+The combined local suite passed 777 tests plus 54 subtests with unchanged source
+hashes. Hosted verification is required; no live-provider recovery is claimed.
+
 The [source-name detector screen](name-span-detector-screen-2026-11-28/README.md)
 tested one pinned multilingual PERSON detector on the original six development
 sources, without translation or masking. All six calls completed in 17.558 seconds
@@ -203,20 +231,29 @@ rejected for masking. Its full inputs, raw outputs and pre-inference harness
 corrections are preserved. This does not approve a translation candidate or
 change production defaults; fresh validation remains unused.
 
+The separate [source-boundary follow-up](name-boundary-normalizer-2026-11-28/README.md)
+passed its limited offline development comparison: six sources and all thirteen
+person mentions match the same pre-output annotations, with only the oversized
+article/name span adjusted. All fifty mechanical controls and unchanged-source
+checks passed. Four semantic ambiguity/limitation examples remain explicitly
+unaccepted as safety claims; this is not approval of unattended name protection.
+No detector rerun, masking, translation or production change occurred in that
+follow-up. The raw detector rejection and earlier Krikri failures remain unchanged.
+
 ## Acceptance gates
 
 | Area | Required evidence | Current position |
 | --- | --- | --- |
-| Installation | Fresh installation, actual launcher, health and homepage; supported-platform checks | At `00567db`, Ubuntu and independent Python 3.11/3.13 passed 753 tests and 54 subtests; Windows/macOS passed 749 tests and 54 subtests with four Linux-only harness controls skipped. Fresh Linux checkout and all six actual candidate ZIP installation/startup checks passed. Ordinary requirements provide both the public-video transport and SOCKS dependency. |
+| Installation | Fresh installation, actual launcher, health and homepage; supported-platform checks | At `7a53991`, Ubuntu and independent Python 3.11/3.13 passed 757 tests and 54 subtests; Windows/macOS passed 753 tests and 54 subtests with four Linux-only harness controls skipped. Fresh Linux checkout and all six actual candidate ZIP installation/startup checks passed. Ordinary requirements provide both the public-video transport and SOCKS dependency. |
 | English and Greek ASR | Real licensed speech through upload, reviewed words/names/numbers, ordered timestamps, persistence and exports | Native development and fresh Auto/Turbo recordings passed integrated checks with retained word errors. Small VAD-off development remains two acceptable, three minor, three major; default Auto/Small also passed two Greek app workflows without changing those hypotheses. A seven-input paired comparison now rejects the identical noise hallucination while preserving all four ordinary/20 dB quieter English/Greek transcripts and timings. Quiet English genuinely exercised the second speech detector. Later Parakeet profiles retained four major errors each; native Qwen retained six major errors; full large-v3 retained four major, one minor and three acceptable results. None is adopted. These are development regressions, not an accuracy guarantee. |
-| Translation | Faithful actors, quantities, negation and conditions on frozen validation passages; original preserved on failure | No new default is approved. At `00567db`, the actual default model completed all 12 hosted corpus cases with five automatic passes/seven review flags, no execution errors, and semantic quality explicitly unreviewed. Whole-result identity detection prevents copied English from being advertised as Greek; the new script guard rejects newly introduced unsupported writing systems while preserving the original transcript. Neither guard verifies meaning. The retained Hy-MT3, Qwen, M2M100 and expanded Gemma candidates all have material meaning failures. Fresh v3 validation remains unused in the published evidence. |
+| Translation | Faithful actors, quantities, negation and conditions on frozen validation passages; original preserved on failure | No new default is approved. At `7a53991`, the actual default model completed all 12 hosted corpus cases with five automatic passes/seven review flags, no execution errors, and semantic quality explicitly unreviewed. Whole-result identity detection prevents copied English from being advertised as Greek; the new script guard rejects newly introduced unsupported writing systems while preserving the original transcript. Neither guard verifies meaning. The retained Hy-MT3, Qwen, M2M100 and expanded Gemma candidates all have material meaning failures. Fresh v3 validation remains unused in the published evidence. |
 | Summaries and chapters | Actual model, factual source-grounded content, valid chapter times, complete storage/export path | The eight-point prompt/schema/local contract passes two actual final/direct checks, with five earlier English map/reduction responses explicitly replayed. English long output was acceptable, but the direct consent output contained a malformed amount. A fully live Greek long run failed with HTTP500/runner EOF during prompt-cache saving after repeated weak reductions. The next actual run still misstated the consent amount and changed planned returns/feedback to completed actions. Its strict 700/399-character note experiment was rejected: Greek notes also end midword despite valid JSON/stop. Published source retains the model-lifetime fix. Hosted text runs completed but do not approve meaning. This gate remains separate from source highlights. |
-| Source highlights | Verbatim text/time fidelity, useful selection on frozen English/Greek sources, complete storage/edit/export/backup path | Rebuilt selector passed six development cases (25/25 declared coverage goals) and four previously unseen frozen cases (18/18 goals), preserving original words/times with no declared context omissions. Both failed development iterations remain retained. At `00567db`, actual-upload and saved-highlight generation, source navigation, edits/regeneration and nonnull-highlight backup/restore passed Chromium. Short sources are explicitly uncondensed. These internal fixtures do not establish arbitrary-recording coverage, ASR accuracy or speaker attribution. |
+| Source highlights | Verbatim text/time fidelity, useful selection on frozen English/Greek sources, complete storage/edit/export/backup path | Rebuilt selector passed six development cases (25/25 declared coverage goals) and four previously unseen frozen cases (18/18 goals), preserving original words/times with no declared context omissions. Both failed development iterations remain retained. At `7a53991`, actual-upload and saved-highlight generation, source navigation, edits/regeneration and nonnull-highlight backup/restore passed Chromium. Short sources are explicitly uncondensed. These internal fixtures do not establish arbitrary-recording coverage, ASR accuracy or speaker attribution. |
 | Speaker labeling | Actual acoustic inference on repeated and distinct voices, silence, short and mixed turns; anonymous labels and honest uncertainty | Public-model inference passed fresh one-/two-/three-reader checks. Actual two-reader upload through Small ASR, conservative word alignment, SQLite and all exports passed; uncertain words retain warnings. Greek/noisy/overlapping-meeting accuracy is not established. |
-| Sources | Actual link-to-transcript processing for advertised providers, recognizable content, persistence, exports and cleanup | At `dc0985d`, unseeded hosted processing of the complete 734.15-second Dailymotion film passed storage/export/recovery checks; silence and actual white noise were correctly rejected. Original YouTube/Vimeo access failures remain retained. A separate official YouTube full-film follow-up obtained metadata but media download failed HTTP403 locally. Preserving an explicitly supplied public Vimeo player route fixed an application rewrite bug; an 888.07-second permitted recording passed download/full Small ASR/SQLite/exports/cleanup/restart on frozen `002d8fc` plus that parser correction. Suspicious repeated phrases and low language confidence leave semantic accuracy open. At `00567db`, all six acquisitions again failed before ASR; the provider gate remains open. |
+| Sources | Actual link-to-transcript processing for advertised providers, recognizable content, persistence, exports and cleanup | At `dc0985d`, unseeded hosted processing of the complete 734.15-second Dailymotion film passed storage/export/recovery checks; silence and actual white noise were correctly rejected. Original YouTube/Vimeo access failures remain retained. A separate official YouTube full-film follow-up obtained metadata but media download failed HTTP403 locally. Preserving an explicitly supplied public Vimeo player route fixed an application rewrite bug; an 888.07-second permitted recording passed download/full Small ASR/SQLite/exports/cleanup/restart on frozen `002d8fc` plus that parser correction. Suspicious repeated phrases and low language confidence leave semantic accuracy open. At `7a53991`, one complete Dailymotion fixture passed the normal pipeline and restart; five other single-source fixtures failed acquisition, and Dailymotion could not be reacquired inside a later mixed batch. The provider gate remains open. |
 | Batch recovery | Continued processing after one failed item; persistence and restart without duplicating saved work; correct batch downloads | At `dc0985d`, deterministic process-interruption tests and the actual hosted Dailymotion-success/YouTube-failure batch passed. Stored transcripts and batch ZIP contents survived a fresh-process restart. |
-| Library and backups | Browser search/edit/download/delete, invalidation of stale AI output, backup/restore and malformed-backup handling | Hosted integration covers source-hash validation, atomic rejection of fabricated excerpts, stale-data invalidation, damaged optional highlights, version2 backups and legacy version1 imports. At `00567db`, actual Chromium verified corrections after generation, preservation during saves/opens, saving to the original record while leaving another record unchanged, and backup/restore with actual nonnull highlights. |
-| Browser usability | Desktop and mobile layout, consent/errors, job polling, result display, downloads and setup diagnostics | At `00567db`, hosted Chromium passed 34/34 checks with actual speech recognition and no JavaScript page errors, including 1440/390/320-pixel layouts. All eight recorded source hashes match the checkpoint. The unchanged interface's representative `929cf2d` screenshots were independently reviewed. Prior 31/32 and 33/34 failures remain retained and their corrections were rerun. Link/batch UI fixtures remain controlled and separate from actual provider evidence. |
+| Library and backups | Browser search/edit/download/delete, invalidation of stale AI output, backup/restore and malformed-backup handling | Hosted integration covers source-hash validation, atomic rejection of fabricated excerpts, stale-data invalidation, damaged optional highlights, version2 backups and legacy version1 imports. At `7a53991`, actual Chromium verified corrections after generation, preservation during saves/opens, saving to the original record while leaving another record unchanged, and backup/restore with actual nonnull highlights. The additional actual-restart case preserves processing warnings in batches, editors and downloaded backups. |
+| Browser usability | Desktop and mobile layout, consent/errors, job polling, result display, downloads and setup diagnostics | At `7a53991`, hosted Chromium passed 35/35 checks with actual speech recognition and no JavaScript page errors, including 1440/390/320-pixel layouts. Persisted warning visibility and clean-record clearing after a real server restart also passed. All eight recorded source hashes match the checkpoint. The unchanged interface's representative `929cf2d` screenshots were independently reviewed. Prior 31/32 and 33/34 failures remain retained and their corrections were rerun. Link/batch UI fixtures remain controlled and separate from actual provider evidence. |
 | Resource use | Measured CPU/memory for the default speech model plus optional enhancements on a modest machine | Actual 34.635-second Small/public-speaker/default-Qwen workflow at `a3b8652` completed in 59.202 seconds, peaking at 4584.3 MiB concurrent RSS / 4576.3 MiB PSS. It passed a 6144 MiB process budget on a 9967.3 MiB host, with OS/browser headroom excluded; generated-text quality failed. The published long-summary recorder measures the two-response unload policy and available OOM counters; a later reported approximately 4.2 GiB highlights workflow has not been recovered and verified here. Earlier cache-save EOF is not a proven OOM kill; whole-machine 7.3 GiB fit and long-recording resource approval remain open. |
 
 ## Evidence rules
@@ -262,6 +299,10 @@ change production defaults; fresh validation remains unused.
 - [Durable batch and saved-editor processing warnings](processing-warnings-2026-11-28/README.md)
 - [Source-name detector research and frozen plan](name-span-protection-research-2026-11-28/README.md)
 - [Rejected raw name-detector screen and independent exact-span review](name-span-detector-screen-2026-11-28/README.md)
+- [Limited source-boundary follow-up and explicit ambiguity limits](name-boundary-normalizer-2026-11-28/README.md)
+- [Hosted processing-warning behavior and selected screenshots](processing-warnings-hosted-2026-11-28/README.md)
+- [Current full-source diagnosis without regrading its failed timing check](live-source-diagnosis-7a53991-2026-11-28/README.md)
+- [Reuse of validated provider metadata and independent contract review](provider-metadata-reuse-2026-11-28/README.md)
 - [Translation writing-system corruption guard and retained-output replay](translation-script-guard-2026-11-28/README.md)
 - [Published evaluation and limitations](evaluation-2026-11-26/README.md)
 - [Real native speech evidence](asr-2026-11-26/README.md)

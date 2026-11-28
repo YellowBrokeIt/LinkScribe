@@ -177,16 +177,18 @@ def test_qa_provider_download_uses_canonical_only(qa, monkeypatch):
         def __exit__(self,*args): pass
         def extract_info(self,url,download=False):
             calls.append(('extract',url,download))
-            return {'title':'Example','duration':10,'filesize':300}
-        def download(self,urls):
-            calls.append(('download',urls))
+            self.info={'title':'Example','duration':10,'filesize':300}
+            return self.info
+        def process_ie_result(self,info,download=True):
+            assert info is self.info and download is True
+            calls.append(('process',info,download))
             Path(self.options['outtmpl'].replace('%(ext)s','webm')).write_bytes(b'webm fake')
     monkeypatch.setitem(sys.modules,'yt_dlp',SimpleNamespace(YoutubeDL=StubDownloader))
     job=app._new_job('https://vimeo.com/1234567')
     audio,title=app._download_source_audio(job.id,parse_source('http://www.vimeo.com/1234567?stuff=ignored'))
     assert title=='Example' and audio.is_file()
     assert ('extract','https://vimeo.com/1234567',False) in calls
-    assert ('download',['https://vimeo.com/1234567']) in calls
+    assert ('process',{'title':'Example','duration':10,'filesize':300},True) in calls
 
 
 def test_qa_provider_rejects_oversized_and_long(qa, monkeypatch):
@@ -197,7 +199,7 @@ def test_qa_provider_rejects_oversized_and_long(qa, monkeypatch):
             def __enter__(self):return self
             def __exit__(self,*args):pass
             def extract_info(self,url,download=False):return {field:value,'title':'Huge'}
-            def download(self,urls):raise AssertionError('must not download oversized media')
+            def process_ie_result(self,info,download=True):raise AssertionError('must not download oversized media')
         monkeypatch.setitem(sys.modules,'yt_dlp',SimpleNamespace(YoutubeDL=Downloader))
         job=app._new_job('https://vimeo.com/1234567')
         with pytest.raises(app.ReadableError):app._download_source_audio(job.id,parse_source('https://vimeo.com/1234567'))

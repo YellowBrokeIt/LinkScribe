@@ -67,10 +67,12 @@ def test_download_uses_the_explicit_player_endpoint(monkeypatch, tmp_path):
 
         def extract_info(self, url, download=False):
             calls.append(("metadata", url, download))
-            return {"title": "Public source", "duration": 12, "filesize": 10}
+            self.info = {"title": "Public source", "duration": 12, "filesize": 10}
+            return self.info
 
-        def download(self, urls):
-            calls.append(("download", urls))
+        def process_ie_result(self, info, download=True):
+            assert info is self.info and download is True
+            calls.append(("download_validated", info))
             Path(self.options["outtmpl"].replace("%(ext)s", "mp4")).write_bytes(b"fixture")
 
     monkeypatch.setattr(app, "DATA_DIR", tmp_path)
@@ -81,7 +83,8 @@ def test_download_uses_the_explicit_player_endpoint(monkeypatch, tmp_path):
         audio, title = app._download_source_audio(job.id, source)
         assert title == "Public source" and audio.read_bytes() == b"fixture"
         assert job.source == PLAYER
-        assert calls == [("metadata", PLAYER, False), ("download", [PLAYER])]
+        assert calls == [("metadata", PLAYER, False),
+                         ("download_validated", {"title": "Public source", "duration": 12, "filesize": 10})]
     finally:
         app._cleanup_job_inputs(job)
         app.jobs.pop(job.id, None)
@@ -105,7 +108,7 @@ def test_embed_restriction_remains_a_failure_without_alternate_route(monkeypatch
             calls.append(url)
             raise denied
 
-        def download(self, urls):
+        def process_ie_result(self, info, download=True):
             raise AssertionError("Restricted media must not be downloaded.")
 
     monkeypatch.setattr(app, "DATA_DIR", tmp_path)
