@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "action": "cleanup",
+  "started_at": "2026-11-28T02:53:24.789445+00:00",
+  "plan_sha256": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+  "complete": true,
+  "generation_calls": 0,
+  "process_check": {
+    "prior_owned_supervisor_exit_evidence": [
+      {
+        "report": "docs/gemma4-screen-2026-11-28/prepare-resources.json",
+        "sha256": "138c54ad54868677b6ae4304e696d77b69590d907db2edbda02eae07a5903f7a",
+        "owned_process_group_stopped": true,
+        "worker_exit_code": 0
+      },
+      {
+        "report": "docs/gemma4-screen-2026-11-28/infer-resources.json",
+        "sha256": "e9001374bf432abee8dab6bcfb401920a6e3d2070d5cfc30fb6d27f8c8c84ede",
+        "owned_process_group_stopped": true,
+        "worker_exit_code": 0
+      },
+      {
+        "report": "docs/gemma4-exposed-v2-2026-11-28/resources.json",
+        "sha256": "35274fd5b2305a4a9e1388af7bc99f81c0c33a51daac7ec7202e4deee1f76a6b",
+        "owned_process_group_stopped": true,
+        "worker_exit_code": 0
+      },
+      {
+        "report": "docs/gemma4-thinking-ablation-2026-11-28/resources.json",
+        "sha256": "796a799afc297d5b77024435e49ba3a74f66a1374cd1c9f4c83e30b0d15864ef",
+        "owned_process_group_stopped": true,
+        "worker_exit_code": 0
+      }
+    ],
+    "accessible_namespace_conflicts": [],
+    "scope": "Prior owned sessions exited and their supervisors confirm cleanup; current accessible PID namespace also checked. Other PID namespaces are not claimed visible.",
+    "coordination": "Root reserved the local model slot; no other owned Gemma inference is queued."
+  },
+  "space_before_bytes": 3043209216,
+  "payload_before": {
+    "path": "/workspace/scratch/94360995dd61/linkscribe-gemma4-runtime/models/blobs/sha256-676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+    "bytes": 5154941280,
+    "allocated_bytes": 5154947072,
+    "inode": 683126,
+    "device": 65040,
+    "hardlinks": 1
+  },
+  "verified_full_sha256": "676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+  "ready_for_exact_unlink": true,
+  "unlinked_exact_path": "/workspace/scratch/94360995dd61/linkscribe-gemma4-runtime/models/blobs/sha256-676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+  "path_absent_after": true,
+  "space_after_bytes": 8198156288,
+  "free_bytes_change": 5154947072,
+  "preserved": "Every evidence/template/config/manifest/script file and every shared runtime/model cache; only this authorized payload path was unlinked.",
+  "finished_at": "2026-11-28T02:53:28.667067+00:00",
+  "frozen_inputs_unchanged": true
+}

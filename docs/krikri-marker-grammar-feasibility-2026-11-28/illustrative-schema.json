@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "translations": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "pattern": "^(?:(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*<x0/>(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*<x1/>(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*|(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*<x1/>(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*<x0/>(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*$"
+        }
+      ]
+    }
+  },
+  "required": [
+    "translations"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,88 @@
+{
+  "scope": "Independent read-only review of completed Qwen experimental-workflow retirement; no model or test rerun",
+  "decision": "No blocker. The completed rejected experiment is retired without weakening ordinary application gates or its historical contract tests.",
+  "files": [
+    {
+      "path": "docs/qwen3-asr-workflow-retirement-2026-11-28/completed-hosted-workflow.yml",
+      "bytes": 3459,
+      "sha256": "1ef312a65ff80a8000ef29733f69ed34520ef2e930bdfa014cf060a0a9ed3c42"
+    },
+    {
+      "path": "docs/qwen3-asr-workflow-retirement-2026-11-28/historical-unit.py",
+      "bytes": 8485,
+      "sha256": "8d6e71458e7d3343ce19d794eaadc50a920c347840a389b227e03f48dba940ed"
+    },
+    {
+      "path": "tests/test_qwen3_asr_candidate_qa.py",
+      "bytes": 9722,
+      "sha256": "d3ec87f55319b6c10d70fdeec4067a37979bf13ae49285c64eea15662872fc12"
+    },
+    {
+      "path": "docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json",
+      "bytes": 9239,
+      "sha256": "a46131a56018ad24f70faa76cea1d206407358271ff60fab1dbe1afd6bb72380"
+    },
+    {
+      "path": "tests/qa_qwen3_asr_candidate.py",
+      "bytes": 38701,
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f"
+    },
+    {
+      "path": "docs/qwen3-asr-workflow-retirement-2026-11-28/README.md",
+      "bytes": 2170,
+      "sha256": "e5fa33f4f3edd55b69e03f852ebd465e0d47a62f570fc2c24a7e3c74516fd180"
+    }
+  ],
+  "archive_exactly_matches_corrected_plan": true,
+  "archive_matches_completed_7ee0c7f2_git_object": true,
+  "live_Qwen_workflow_removed": true,
+  "ordinary_workflows_verified_unchanged": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "600d149a362d181b959880c7e29a6181378e7540e87b18e7f907a27e05ed0503",
+      "byte_identical_to_HEAD": true
+    },
+    {
+      "path": ".github/workflows/browser-qa.yml",
+      "sha256": "9479f6aa05b81cf82c8873883ae0c3f2b7931fac315fb5678d54ce4256423b7a",
+      "byte_identical_to_HEAD": true
+    },
+    {
+      "path": ".github/workflows/candidate-artifacts.yml",
+      "sha256": "f84c97300347bd0469f18a68239314f3e171327bb04ab6256254147a5be59aeb",
+      "byte_identical_to_HEAD": true
+    },
+    {
+      "path": ".github/workflows/independent-qa.yml",
+      "sha256": "c9744be73a1eaee69445a2f2ad3834cb92752b819edff98b89938c19b4319688",
+      "byte_identical_to_HEAD": true
+    },
+    {
+      "path": ".github/workflows/live-source-qa.yml",
+      "sha256": "74a07a2142b934373b22160a680010cc4b3164b42787b59e884155254c83a56f",
+      "byte_identical_to_HEAD": true
+    }
+  ],
+  "historical_test_review": {
+    "all_original_test_names_retained": 14,
+    "test_functions_AST_identical": 13,
+    "only_changed_test_function": "No-ML-import subprocess now runs the exact copied historical helper; its validation and forbidden-import assertions are unchanged.",
+    "new_setup_verifies_original_size_and_SHA_for_every_source_file": true,
+    "archived_workflow_restored_to_original_relative_path_only_in_temporary_historical_view": true,
+    "qa_ROOT_restored_before_temporary_directory_cleanup": true,
+    "positive_mutation_token_completion_raw_text_path_download_affinity_cleanup_assertions_preserved": true,
+    "frozen_runner_and_original_corrected_plans_unchanged": true,
+    "source_checkout_LF_rules_present": true
+  },
+  "scope_clarity": {
+    "historical_rejected_Qwen_outputs_not_regraded": true,
+    "current_application_accuracy_not_claimed_by_historical_tests": true,
+    "ordinary_test_browser_upload_installation_package_and_Ollama_gates_retained": true,
+    "large_v3_workflow_push_scope_remains_qa_large_v3_branches_not_feature_pushes": true
+  },
+  "parent_reported_combined_suite": "753 tests plus 54 subtests passed in 8.74 seconds; not independently rerun as part of this read-only review.",
+  "limitations": [
+    "This validates archive/test/source semantics, not a new hosted workflow execution.",
+    "The published QA commit retains the original reproduction path; the frozen execution plan intentionally rejects the retired live workflow checkout."
+  ]
+}

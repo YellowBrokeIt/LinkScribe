@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T03:51:02.320082+00:00",
+  "status": "conditionally_authorized_by_parent_pending_frozen_plan_and_independent_protocol_review",
+  "decision_scope": "One native source-only PERSON detector screen on the six original exposed development sources; no translation or name replacement in this stage.",
+  "preparation_completed": "Public metadata/source inspection and interpreter/wheel metadata compatibility only; no model, SentencePiece payload, or wheel downloaded; no detector library imported or model loaded.",
+  "model": {
+    "repository": "urchade/gliner_multi-v2.1",
+    "revision": "443d26d654e0324125a96bebd8e796c14ff2efe6",
+    "filename": "model.safetensors",
+    "bytes": 1155830112,
+    "sha256": "2100142f31627531497850659dcb3821c99d5e71c08a8e01a98e4b11ef32a199",
+    "url": "https://huggingface.co/urchade/gliner_multi-v2.1/resolve/443d26d654e0324125a96bebd8e796c14ff2efe6/model.safetensors",
+    "public": true,
+    "gated": false,
+    "declared_license": "Apache-2.0",
+    "api_reported_f32_parameters": 288949504
+  },
+  "backbone_tokenizer_payload": {
+    "repository": "microsoft/mdeberta-v3-base",
+    "revision": "a0484667b22365f84929a935b5e50a51f71f159d",
+    "filename": "spm.model",
+    "bytes": 4305025,
+    "sha256": "13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3",
+    "url": "https://huggingface.co/microsoft/mdeberta-v3-base/resolve/a0484667b22365f84929a935b5e50a51f71f159d/spm.model",
+    "declared_license": "MIT"
+  },
+  "source_support_files": [
+    {
+      "runtime_name": "gliner_config.json",
+      "evidence_name": "proposed-runtime-gliner-config.json",
+      "sha256": "625525b0b198d3fe75ac027c22920b541e7fb8f72f41e9594e549e4bd7a66383",
+      "derivation": "Original GLiNER values unchanged except model_name is the fixed local directory and encoder_config embeds the exact official pinned base config. No architectural, span, dropout, vocabulary, or pooling setting changed."
+    },
+    {
+      "runtime_name": "config.json",
+      "evidence_name": "mdeberta-base-config.json",
+      "sha256": "bcffcd343dc5efa5ef2d5a58d2b405eed108f01cc45b48d0a907b333ec41801f",
+      "derivation": "Byte-identical pinned official base config."
+    },
+    {
+      "runtime_name": "tokenizer_config.json",
+      "evidence_name": "mdeberta-tokenizer-config.json",
+      "sha256": "3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d",
+      "derivation": "Byte-identical pinned official base tokenizer config."
+    }
+  ],
+  "runtime": {
+    "python": "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+    "python_version": "3.12.14",
+    "owned_root": "/workspace/scratch/94360995dd61/linkscribe-name-span-runtime",
+    "owned_package_target": "/workspace/scratch/94360995dd61/linkscribe-name-span-runtime/packages",
+    "existing_environment_is_read_only": true,
+    "new_wheels": [
+      {
+        "package": "gliner",
+        "version": "0.2.24",
+        "license": "Apache-2.0",
+        "filename": "gliner-0.2.24-py3-none-any.whl",
+        "bytes": 151880,
+        "sha256": "efe614e05b31d06d848373aef8270f567e34fe1b4e96f816a8c70cef24908a6c",
+        "url": "https://files.pythonhosted.org/packages/f1/50/6aae23929bd019300ef13fb79d60609215c53d4541963eaffc438e62f77e/gliner-0.2.24-py3-none-any.whl",
+        "wheel_compatible_with_existing_interpreter": true,
+        "requires_dist": [
+          "torch>=2.0.0",
+          "transformers>=4.57.3",
+          "huggingface_hub>=0.21.4",
+          "tqdm",
+          "onnxruntime",
+          "sentencepiece",
+          "onnxruntime-gpu; extra == \"gpu\"",
+          "langdetect; extra == \"tokenizers\"",
+          "python-mecab-ko; extra == \"tokenizers\"",
+          "janome; extra == \"tokenizers\"",
+          "jieba3; extra == \"tokenizers\"",
+          "camel_tools; extra == \"tokenizers\"",
+          "indic-nlp-library; extra == \"tokenizers\"",
+          "spacy; extra == \"tokenizers\"",
+          "stanza; extra == \"tokenizers\"",
+          "accelerate; extra == \"training\"",
+          "stanza; extra == \"stanza\"",
+          "langdetect; extra == \"stanza\""
+        ]
+      },
+      {
+        "package": "onnxruntime",
+        "version": "1.32.0",
+        "license": "MIT License",
+        "filename": "onnxruntime-1.32.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "bytes": 27780211,
+        "sha256": "99e1074c4b2197accd5073052a465361be17b89c093b8ffb6e6bd8f986c52df8",
+        "url": "https://files.pythonhosted.org/packages/a3/81/55845186c20cba59f614991f4065dea148e48eeb9749893768c85ce64327/onnxruntime-1.32.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "wheel_compatible_with_existing_interpreter": true,
+        "requires_dist": [
+          "flatbuffers",
+          "numpy>=1.21.6",
+          "packaging",
+          "protobuf>=4.25.8",
+          "sympy; extra == \"symbolic\"",
+          "ml_dtypes; extra == \"quantization\""
+        ]
+      },
+      {
+        "package": "protobuf",
+        "version": "7.36.2",
+        "license": "3-Clause BSD License",
+        "filename": "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "bytes": 343223,
+        "sha256": "89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2",
+        "url": "https://files.pythonhosted.org/packages/db/f3/3996583dd2906297a637af12114deddf7658af6e683fedb83be061983fb5/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "wheel_compatible_with_existing_interpreter": true,
+        "requires_dist": null
+      },
+      {
+        "package": "flatbuffers",
+        "version": "25.12.19",
+        "license": "Apache 2.0",
+        "filename": "flatbuffers-25.12.19-py2.py3-none-any.whl",
+        "bytes": 26661,
+        "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+        "url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+        "wheel_compatible_with_existing_interpreter": true,
+        "requires_dist": null
+      }
+    ],
+    "wheel_download_bytes": 28301975,
+    "existing_packages": {
+      "torch": {
+        "version": "2.11.0+cpu",
+        "metadata_sha256": "b194361876402328c2bd744f4341369f687290e2c8e26a7079e6c2aeb676a473",
+        "record_sha256": "80334ec5466833788248d1403a55d776c327f735e58d2dee6e8d6716c7d1a976"
+      },
+      "transformers": {
+        "version": "4.57.6",
+        "metadata_sha256": "91601044a74fe02571a825356754dbbaa9e1d3e3dd3c2237254c15e903e421e3",
+        "record_sha256": "c073b3a9b713c8c033cc07795ea6359c69e8aba67f7d90c997295d3b45e06733"
+      },
+      "tokenizers": {
+        "version": "0.22.2",
+        "metadata_sha256": "15a5ddaf489f592b77e0a934c0eeb46b51130a94064ca129232afdb0a3868efc",
+        "record_sha256": "178ffd35bf3a545090986d464eea76be9a045187fc6b126a452ec27f8e2bcdff"
+      },
+      "huggingface-hub": {
+        "version": "0.36.2",
+        "metadata_sha256": "4dc2b0a3fb27bcba8b091f98bccff4b94369d269c9768aeaecd0b99d970665d9",
+        "record_sha256": "52ac672ccf5309df057f17499ff341e08430b4a8f177152d6cd6c0f763fed069"
+      },
+      "sentencepiece": {
+        "version": "0.2.1",
+        "metadata_sha256": "ce0a2e9c599cd060a7bc3dffb18be5cfc3d5f293533e3ee4e870eaef0a5500fd",
+        "record_sha256": "b45f9b2005df1bcb12677a2f0d91d4afc8ece06da15dc171e1fb3597e1bd712b"
+      },
+      "numpy": {
+        "version": "2.5.5",
+        "metadata_sha256": "b184c8d5951f32a8b8b080ff80744e0b80523783061402446a5dcaf52dc40bff",
+        "record_sha256": "c6464e2130e925069d91577a8266487a1db6534b4bd3c6cb35a83fecbbb9dc73"
+      },
+      "sympy": {
+        "version": "1.14.0",
+        "metadata_sha256": "b756c2fbfd5be05ac5bdb0ebca61f55618f30f633ed92d88a5687429313a7595",
+        "record_sha256": "32bdb4b4729b41e8b7b221dec0b6331083cfd78b221520ba99e30b1856256ae7"
+      },
+      "packaging": {
+        "version": "26.4",
+        "metadata_sha256": "f2fe7a3440ed0e67f703ec9cf0275c9f9b27be0eae3844258606caa7b0c56d62",
+        "record_sha256": "838b520963f2bc62c658a0ef710de4942c9b5d53a19da8ddb72a766d1936c4b5"
+      },
+      "tqdm": {
+        "version": "4.70.1",
+        "metadata_sha256": "a5da70b966afea3a759716041bad7187f2ece02c22348cf9e7c0a512bbf15f57",
+        "record_sha256": "29df9f56bac7501274008e503f535ade2b98ed56bbaa8df1571e7016a7748c22"
+      },
+      "safetensors": {
+        "version": "0.8.0",
+        "metadata_sha256": "645be7b8d55e91534f991d144dc9e279581ea8dbea1a8c5b0be14e529d01e345",
+        "record_sha256": "a079c2a8ae36932c3266d90ad11ed241f5acdbb0b2605d3562a3178d4e2f4da6"
+      },
+      "regex": {
+        "version": "2026.11.25",
+        "metadata_sha256": "43efea5bbbb34363dfac8376b568f819c4f7f99a9344949bcab8367574baffb9",
+        "record_sha256": "b8095fc8b1067cd330be1fd3ed4ec038e77b34ceddf1312ba4646b4230cd0682"
+      },
+      "gliner": null,
+      "onnxruntime": null,
+      "protobuf": null,
+      "flatbuffers": null,
+      "flashdeberta": null,
+      "llm2vec": null,
+      "peft": null,
+      "turbot5": null
+    },
+    "installation": "After authorization only, download each exact wheel once, verify size and SHA256, install using the existing interpreter with --no-deps --no-index --target into the new owned package directory. No core/app dependency change. No torch/backbone weight download.",
+    "library_source_revision": "4610b5527e4bcdb37358ce80ef7c5cc0d16c1860",
+    "library_version": "0.2.24",
+    "device": "cpu",
+    "dtype": "float32",
+    "intraop_threads": 4,
+    "interop_threads": 1,
+    "cpu_affinity": "four available logical CPUs",
+    "environment": {
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "PYTHONNOUSERSITE": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "OMP_NUM_THREADS": "4",
+      "MKL_NUM_THREADS": "4",
+      "OPENBLAS_NUM_THREADS": "4",
+      "CUDA_VISIBLE_DEVICES": ""
+    },
+    "owned_cache_only": true,
+    "load_protocol": [
+      "Freeze runner and external observer identities after isolated installation and before any detector forward. Verify installed wheel source files against retained source inspection and record exact installed versions.",
+      "Use the explicit local model directory with model.safetensors only. Do not call snapshot_download or remote GLiNER.from_pretrained; no pytorch_model.bin duplicate or separate base-encoder weights.",
+      "Use the native GLiNER loader with local_files_only=True, map_location=cpu, strict=True, native tokenizer/embedding resize enabled, compile_torch_model=False, load_onnx_model=False and no max_length/max_width override.",
+      "Require the supplied built-in DebertaV2Config and the actual standard Transformers DebertaV2Model class. Optional flashdeberta/llm2vec/peft/turbot5 packages must remain absent. No auto_map, adapter configuration, custom model code, or remote-code branch is allowed.",
+      "Load tokenizer only from the pinned local config plus spm.model; preflight AutoTokenizer with trust_remote_code=False and local_files_only=True. The native loader local-tokenizer path must resolve to the same built-in tokenizer identity and vocabulary. Record special tokens including native <<ENT>> and <<SEP>>.",
+      "Use native eval plus torch.inference_mode, full strict checkpoint binding, no missing/unexpected state keys, no autocast, quantization, ONNX conversion, accelerator, compile, or model fitting. Record actual parameter shapes/count/dtypes and tokenizer size."
+    ],
+    "unproven_compatibility": "Wheel tags and declared package versions are compatible. Actual native import, strict state load, fast tokenizer conversion and offline behavior have not been executed and must fail closed if incompatible."
+  },
+  "input": {
+    "original_corpus": "docs/krikri-screen-2026-11-28/development-cases.json",
+    "original_corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "worker_input": "original-six-source-only.json",
+    "worker_input_sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482",
+    "allowed_case_fields": [
+      "id",
+      "source_language",
+      "target_language",
+      "segments"
+    ],
+    "references_criteria_expected_names_and_translations_excluded_from_worker": true,
+    "case_order": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "text_assembly": "Exactly LF.join of every original segment text in each case; retain original complete segment dictionaries and codepoint offset map. No normalization, stripping, cropping or sentence splitting.",
+    "full_source_preflight": [
+      "Validate exact original source-only snapshot hash, all segment dictionaries, joined-text hashes and source offset mappings before model use.",
+      "Run the pinned native word splitter on the complete joined text and compare every word/string/offset with its exact source slice. Require all words and the first/last source characters to remain represented in the retained source mapping. Preserve whitespace in original text even though it is not a word token.",
+      "Require no more than 384 source word tokens. Current metadata-only regex counts are 30,30,42,29,26,31; actual native tokens must match.",
+      "Construct the native entity-prefix word sequence with exactly labels=[person], including <<ENT>>, person and <<SEP>>. Tokenize that whole sequence with truncation=False, native special tokens and is_split_into_words=True; retain IDs, attention mask, word IDs and source word map.",
+      "Require no more than 512 complete encoded tokens, including entity prefix and special tokens. Subtoken counts are not yet measured. Reject before forward if any source exceeds the cap; no windows, cropping or max-length changes in this screen.",
+      "Observe the actual native model forward input and compare input_ids, attention_mask and full source words_mask with the uncropped preflight. Every original source word must be represented; any truncation warning, tensor mismatch or missing source word aborts before inference.",
+      "Record actual tokenizer/encoder configs and input IDs/word masks per case. The native helper internally requests truncation=True, so a successful equality check is mandatory rather than assuming the helper preserved the source."
+    ]
+  },
+  "native_detection_profile": {
+    "labels": [
+      "person"
+    ],
+    "threshold": 0.5,
+    "flat_ner": true,
+    "multi_label": false,
+    "batch_size": 1,
+    "packing_config": null,
+    "require_instance_inference_packing_config_is_none": true,
+    "calls_per_case": 1,
+    "case_count": 6,
+    "native_method": "predict_entities(full_text, labels=[person], flat_ner=True, threshold=0.5, multi_label=False, batch_size=1, packing_config=None)",
+    "threshold_or_label_sweeps": false,
+    "manual_entity_insertion_or_boundary_correction": false
+  },
+  "output_contract": [
+    "Preserve the complete native raw entity list once, including scores and native ordering, before structural or independent semantic review.",
+    "Require each returned entity to have person label, integer valid half-open character bounds, exact source substring equality, finite score in [0,1] meeting the unchanged threshold, and full Unicode grapheme boundaries.",
+    "Require nonoverlapping flat spans after deterministic offset sorting. A predicted span crossing the artificial LF separator or two original segment intervals is a boundary failure; do not move text between segments or repair it.",
+    "Retain both joined-source offsets and exact segment-local offsets, original segment metadata, hashes and preflight identities. No marker masking, translated text, source mutation, or generated name appears in this detector-only output."
+  ],
+  "evaluation": {
+    "reviewer": "Independent source-only annotation/review, separated from detector worker input.",
+    "pre_output_rule": "Every personal-name mention in the original source must be detected with its exact full spelling/mention boundary; ordinary prose, titles standing alone, pronouns, organizations and non-person terms must not be protected. Record any genuinely ambiguous mention before viewing output.",
+    "counting": "Report exact-span true positives, missed mentions, false positives, boundary errors and per-case full coverage; retain all failures. Repeated mentions count separately. Reference translations and fixture-name lexicons are never used by the detector.",
+    "gate_for_proposing_translation": "All six full-source execution/strict-load/resource checks pass, every actual person mention is covered, and no ordinary prose/incorrect span is protected. This supports only a later separately reviewed protected-translation proposal, not production acceptance or general Greek NER accuracy.",
+    "no_regrading": "Both rejected Krikri baseline and generic instruction results remain rejected and immutable; original translation semantic criteria remain unchanged.",
+    "unused_validation": "v3 remains unopened; v2 is not used by this detector screen."
+  },
+  "limits": {
+    "process_tree_rss_bytes": 6442450944,
+    "external_sample_interval_seconds": 0.1,
+    "initialization_seconds": 180,
+    "per_case_seconds": 60,
+    "aggregate_worker_seconds": 600,
+    "download_stage_seconds": 1800,
+    "dependency_install_seconds": 180,
+    "attempts_per_artifact_download": 1,
+    "attempts_per_case": 1,
+    "stop_on_first_execution_or_resource_failure": true,
+    "retry_or_fallback": false,
+    "resource_scope": "Entire owned detector process tree from spawn through imports, initialization, six forwards and exit; record RSS/PSS/CPU and system memory separately. No claim that sampling catches every instantaneous peak. No concurrent local LLM/ASR worker."
+  },
+  "storage": {
+    "observed_free_bytes": 3089633280,
+    "minimum_free_reserve_bytes": 1073741824,
+    "model_bytes": 1155830112,
+    "spm_bytes": 4305025,
+    "allowance_for_wheels_unpacked_packages_configs_and_reports_bytes": 268435456,
+    "maximum_new_allocated_bytes": 1428570593,
+    "minimum_free_before_start_bytes": 2502312417,
+    "projected_free_after_allocation_bytes": 1661062687,
+    "reserve_feasible_at_inspection": true,
+    "protocol": "Recheck disk before each phase; stream directly into one owned content-addressed file, verify full size/SHA before atomic activation, use hardlinks for model layout and no second physical weight copy. Stop if the stage allowance or 1 GiB reserve would be breached. No cache deletion or shared-file replacement."
+  },
+  "shutdown": "Detector process exits completely and external observer verifies no owned child remains before releasing the slot. A future Krikri stage, if separately approved, starts only afterward; recognizer memory must not remain resident.",
+  "future_protection_design": "proposal.md; design only, explicitly excluded from the detector-only execution scope",
+  "authorization_boundary": "Parent conditionally authorized one artifact download/setup/detector stage after this concrete plan is frozen and independent protocol review has no blocker. No additional parent confirmation is needed inside that scope after review. Independent setup review precedes model inference. Translation, masking, v2/v3, summaries, core dependencies and production defaults remain outside scope.",
+  "bound_research_files": {
+    "flatbuffers-package-metadata.json": {
+      "bytes": 2562,
+      "sha256": "3800bcba3177624044bb53f06f4a588061c10034f93467a0d163549b0928045a"
+    },
+    "gliner-code-config.py": {
+      "bytes": 14135,
+      "sha256": "7d83d5f5e7c1fddb190a5e50a214a16337f54f5519854cf12bd91e63eaad15b4"
+    },
+    "gliner-code-encoder.py": {
+      "bytes": 40639,
+      "sha256": "68f1a0aa64937646c1cfcf5d1550163a73b9c77bf39c3801583138dd73de6913"
+    },
+    "gliner-code-model.py": {
+      "bytes": 113162,
+      "sha256": "d946f8e803114df1d7c69deb93159bc6fbb460a4eec279a775e64cc08ecfbdb1"
+    },
+    "gliner-code-processor.py": {
+      "bytes": 67478,
+      "sha256": "2b9bc33b8c37f4c26109b1a6e62dd47c5750d9c6d82b40d55ed97fa11deb7899"
+    },
+    "gliner-code-tokenizer.py": {
+      "bytes": 19117,
+      "sha256": "2dd8c7762ae6cd8fcd8dbf062e16f5441d44814373611d7b6be3a87ed08c5d9a"
+    },
+    "gliner-github-tags.json": {
+      "bytes": 17225,
+      "sha256": "d83deec107a8893f2000784cfb8917162dc2b3d384c9251e2149512f770dcb84"
+    },
+    "gliner-license.txt": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "gliner-model-api.json": {
+      "bytes": 2822,
+      "sha256": "edb90c67c8440b767330f0534217973604c7cf5e6b52e48dbe3d6a2337e4eeff"
+    },
+    "gliner-model-card.md": {
+      "bytes": 4770,
+      "sha256": "820125f2ea897716cc38645d94f73f390ec9dfd392980c436be1d25c2e106b55"
+    },
+    "gliner-model-config.json": {
+      "bytes": 477,
+      "sha256": "e25f61d91620df84aae8076811ee592e926e94d341b82e7bc1be359718f83017"
+    },
+    "gliner-package-metadata.json": {
+      "bytes": 12904,
+      "sha256": "48b050d238517a98ff2289d1b1c779461ea0fb3e6939acb2dfbb961f738e35d7"
+    },
+    "independent-criteria-and-design-review.json": {
+      "bytes": 6700,
+      "sha256": "06b0d55b216b2ab0bbafb41e45e0879da2f248072e391d1330f6426e89a5d637"
+    },
+    "local-feasibility-audit.json": {
+      "bytes": 1975,
+      "sha256": "1262c1f5c3e3bd197e84e71d69155055786bd7e294c62ca48bd231e0e7f2379e"
+    },
+    "mdeberta-base-api.json": {
+      "bytes": 3756,
+      "sha256": "d7d69dac44983a72f182e7ff48d9c56a54fbf4eadd700cb8435e2ea05b10f93c"
+    },
+    "mdeberta-base-card.md": {
+      "bytes": 3667,
+      "sha256": "90d5e535e04fc9ac4f39336ed33c1adc7d0136b8ce3bbe211c18a0d47b72342f"
+    },
+    "mdeberta-base-config.json": {
+      "bytes": 579,
+      "sha256": "bcffcd343dc5efa5ef2d5a58d2b405eed108f01cc45b48d0a907b333ec41801f"
+    },
+    "mdeberta-tokenizer-config.json": {
+      "bytes": 52,
+      "sha256": "3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d"
+    },
+    "metadata-acquisition.json": {
+      "bytes": 1102,
+      "sha256": "489e2773f54c20b440a8e14755b9183b01a9c6941df2f572f506564aad13b0c2"
+    },
+    "onnxruntime-package-metadata.json": {
+      "bytes": 26865,
+      "sha256": "6f7c26d60b6aa8e2903adec283d5b3657c0f6b6f262ea4c6963e520927d825c1"
+    },
+    "original-six-source-only.json": {
+      "bytes": 3609,
+      "sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482"
+    },
+    "prior-evidence-immutability.json": {
+      "bytes": 543,
+      "sha256": "380bb00e257e0daa802f9b6f210b0e1ed4ef179f896922b55c1f1acd8e0dc00e"
+    },
+    "proposed-runtime-gliner-config.json": {
+      "bytes": 1161,
+      "sha256": "625525b0b198d3fe75ac027c22920b541e7fb8f72f41e9594e549e4bd7a66383"
+    },
+    "protobuf-package-metadata.json": {
+      "bytes": 7940,
+      "sha256": "38d5c8ef9f0bc79403979baa746281979abdebeeb72fc180194731d71e3d87a4"
+    },
+    "runtime-dependencies.json": {
+      "bytes": 6355,
+      "sha256": "18fa3e04a9b166efe26bc41c68b3d39cdfb0feeeae902ef8cc91e5f159d572f0"
+    },
+    "source-acquisition.json": {
+      "bytes": 3318,
+      "sha256": "19a4140b8369d8a68844cd98e68fa36cc742c4dbb49b888c68855555e18dfc1a"
+    },
+    "source-screen-shape.json": {
+      "bytes": 5574,
+      "sha256": "3bd28a946f187646db6600bded5a78797bce880dba52269d0d91132efcdbf6d7"
+    },
+    "proposal.md": {
+      "bytes": 17667,
+      "sha256": "e0089b519df667051efc843562efed539a3968b62d2e47c5a5c9b15cca465601"
+    },
+    "root-conditional-authorization.json": {
+      "bytes": 1325,
+      "sha256": "be7928a35188d362ef182d1fbb9ead92d194ca11b647e6ae0b2b3356011cd57c"
+    }
+  }
+}

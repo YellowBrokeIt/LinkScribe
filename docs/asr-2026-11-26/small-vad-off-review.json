@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T20:00:59.853161+00:00",
+  "reviewer": "assistant",
+  "complete": true,
+  "semantic_quality_approved": false,
+  "scope": "Additional VAD-off regression on the eight already exposed native-speech development clips; not fresh validation or independent human listening review.",
+  "classification_definitions": {
+    "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+    "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+    "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+    "not_evaluable": "No completed aligned transcript is available."
+  },
+  "reports": [
+    {
+      "report_file": "small-vad-off-regression.json",
+      "report_sha256": "b39fe8cc5d2009810f2a4d23bf7a5108896bbfe593b2b61fc26af16990e392c9",
+      "evaluation_role": "preserved_setup_failure",
+      "complete": true,
+      "structural_counts": {
+        "error": 8
+      },
+      "classification_counts": {
+        "not_evaluable": 8
+      },
+      "reason": "All uploads failed before a completed transcript. The captured terminal diagnostic identified missing optional socksio support during Hugging Face/httpx initialization with the inherited SOCKS proxy. The report itself retains the app’s generic processing error, not that traceback. This is a setup failure and is not ASR quality evidence.",
+      "recovery": "Reran in the existing speaker-QA virtual environment with socksio 1.0.0. Proxy variables, TLS verification, offline mode and model cache were preserved. No production code or expected transcript was changed to recover.",
+      "cases": [
+        {
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-5-1515",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-6-1577",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-7-1598",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-11-1590",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-en_us-validation-2-1510",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        },
+        {
+          "case_id": "fleurs-en_us-validation-3-1578",
+          "classification": "not_evaluable",
+          "structural_status": "error",
+          "error": {
+            "type": "AssertionError",
+            "message": "Processing failed. Check the terminal for details, or try an uploaded file."
+          }
+        }
+      ]
+    },
+    {
+      "report_file": "small-vad-off-regression-replay.json",
+      "report_sha256": "7eeaa2620569d83ad9d1eb4684a219be7195c9c5c9712c1c5a9c621e05d367b8",
+      "evaluation_role": "exposed_development_regression_after_default_vad_disabled",
+      "complete": true,
+      "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+      "model": "small",
+      "model_repository": "Systran/faster-whisper-small",
+      "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "model_form_field_omitted": true,
+      "source_language_mode": "explicit el/en",
+      "vad_filter": false,
+      "reference_supplied_to_decoder": false,
+      "source_sha256": {
+        "app.py": "dca39c5465709d6cead0fead343dc0b5f2d3eeb170cf5a43264dfc7ec1ed809d",
+        "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+      },
+      "source_files_unchanged": true,
+      "structural_counts": {
+        "pass": 8
+      },
+      "classification_counts": {
+        "acceptable": 2,
+        "minor_issue": 3,
+        "major_error": 3
+      },
+      "elapsed_seconds": 18.583,
+      "process_peak_rss_bytes": 689057792,
+      "telemetry_opt_out": {
+        "ORT_DISABLE_TELEMETRY": "1",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "onnxruntime_disable_telemetry_events_called": true
+      },
+      "cases": [
+        {
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The family camping-area proposition remains recognizable. ειδικούς is misspelled as ιδικούς, κατασκηνωτικούς as κατασκοινωτικούς, and οικογένειες as οικογένεις. The previous extra οι is gone, but this is still an imperfect transcript.",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+          "previous_small_hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "The proper name Μαρτελί is captured as Μαρτεή, leaving identification unreliable. Fifth and four years are preserved; 4 is a valid representation of τέσσερα, not a numerical error.",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια.",
+          "previous_small_hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια.",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "Both complete negations survive. δίκαιο becomes δίκιο, a nearby colloquial form; the intended not-fair/not-right sense remains recoverable. This is unchanged from the prior Small output.",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+          "previous_small_hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+          "text_identical_to_prior_small": true,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "classification": "major_error",
+          "reason": "Μολονότι (although) becomes Μόνο ότι (only that), losing the concessive relationship. πρόσκρουση (collision) becomes πρόσκληση (invitation), a material word-sense error that was absent from the prior Small output. τραυματίστηκε is malformed as τραγματίσκε. The count τρεις equals 3 and δεν ... κανείς remains negative, so no count or clean negation reversal is claimed.",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκληση του αυτοκινήτου δεν τραγματίσκε κανείς.",
+          "previous_small_hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς.",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "classification": "minor_issue",
+          "reason": "The two product names are recognizable as number one and μάντα, with the negated complexity description intact. Μάντα is a legitimate Greek rendering of Manta. κύριε, μπήρα, ευχάριστο and δροσητική need spelling or agreement correction, but the central comparison remains recoverable.",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα. Είναι όμως ευχάριστο και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+          "previous_small_hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The entire distant-call conditional and satellite claim match the reference. This assesses what was said, not the factual validity of the satellite claim. The previous contraction you’re is now you are.",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "hypothesis": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "previous_small_hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "classification": "acceptable",
+          "reason": "The U.N. attribution, hoped-for fund and intended help for affected countries are intact. UN versus U.N. is harmless punctuation; the text is identical to the previous Small output.",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "previous_small_hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "text_identical_to_prior_small": true,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        },
+        {
+          "case_id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "classification": "major_error",
+          "reason": "Lakkha Singh becomes Lakas sing, took the lead in becomes to the lead and, and bhajans becomes basjams. The named person, action grammar and music term are not faithfully recognized. The previous pashams changes to another incorrect form; this is not a quality recovery.",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "hypothesis": "Then Lakas sing to the lead and singing the basjams",
+          "previous_small_hypothesis": "Then Lakas sing to the lead and singing the pashams",
+          "text_identical_to_prior_small": false,
+          "structural_status": "pass",
+          "reference_audio_sha256_unchanged": true
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "previous_report_file": "small-development-rss-replay.json",
+    "previous_report_sha256": "d4efdfebef241b8de71c38107969c0bd5190eac223cc635dd3c594f2c5f3df1f",
+    "manifest_and_audio_unchanged": true,
+    "same_recorded_core_package_versions": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0",
+      "onnxruntime": "1.32.0"
+    },
+    "same_recorded_python": "3.12.14",
+    "same_model_revision_and_weight_hashes": true,
+    "same_explicit_source_languages": true,
+    "text_identical_cases": 2,
+    "text_changed_cases": 6,
+    "previous_vad_filter": true,
+    "current_vad_filter": false,
+    "previous_classification_counts": {
+      "acceptable": 2,
+      "minor_issue": 3,
+      "major_error": 3
+    },
+    "current_classification_counts": {
+      "acceptable": 2,
+      "minor_issue": 3,
+      "major_error": 3
+    },
+    "previous_word_metrics": {
+      "el": {
+        "cases": 5,
+        "reference_words": 73,
+        "word_errors": 18,
+        "substitutions": 15,
+        "deletions": 0,
+        "insertions": 3,
+        "word_error_rate": 0.2465753424657534
+      },
+      "en": {
+        "cases": 3,
+        "reference_words": 45,
+        "word_errors": 7,
+        "substitutions": 6,
+        "deletions": 1,
+        "insertions": 0,
+        "word_error_rate": 0.15555555555555556
+      }
+    },
+    "current_word_metrics": {
+      "el": {
+        "cases": 5,
+        "reference_words": 73,
+        "word_errors": 18,
+        "substitutions": 17,
+        "deletions": 0,
+        "insertions": 1,
+        "word_error_rate": 0.2465753424657534
+      },
+      "en": {
+        "cases": 3,
+        "reference_words": 45,
+        "word_errors": 5,
+        "substitutions": 5,
+        "deletions": 0,
+        "insertions": 0,
+        "word_error_rate": 0.1111111111111111
+      }
+    },
+    "previous_elapsed_seconds": 19.956,
+    "previous_process_peak_rss_bytes": 694067200,
+    "interpretation": "No overall semantic-classification improvement or deterioration on these eight short clips. One already-major collision case now additionally changes collision to invitation; another word (car) is repaired. The two acceptable English cases remain acceptable. Greek normalized word edits remain 18/73; English falls from 7/45 to 5/45 largely because you are now matches the reference instead of you’re. Numeric words/digits and Manta/μάντα are equivalent despite literal edit flags.",
+    "limitations": "The replay uses a different QA virtual-environment path with matching recorded core versions and the same weights, but not a full package-lock or machine-state identity check. Production app/cache-lifecycle source has also changed since the old run. Elapsed values include model loading and exports and are not a controlled VAD-only speed benchmark. These clips contain short read speech; they cannot validate long-film completeness, exact silence rejection, noisy speech or default Auto detection."
+  },
+  "pipeline_assessment": {
+    "all_eight_actual_uploads_and_recognition": true,
+    "exact_sqlite_and_five_exports": true,
+    "job_eviction_and_fresh_interpreter_readback": true,
+    "finite_ordered_timestamps": true,
+    "timing_accuracy_approved": false,
+    "timing_note": "All eight outputs are single cues. VAD-off changes their start/end boundaries, including starts at zero; the harness accepts a limited duration tolerance. No independently annotated timing reference is present, so finite ordered bounds do not approve word alignment."
+  },
+  "decision": "The VAD-off change preserves the real upload/storage/export workflow on these exposed native clips, while existing Small-model semantic limits remain. Use these outputs as editable drafts with review of names, content words, numbers and negation. This regression does not by itself establish a global accuracy guarantee or validate exact-zero audio behavior.",
+  "archive_provenance": {
+    "raw_file": "small-vad-off-review.json",
+    "raw_sha256": "4d3f97311ecf6cc0e33c645cadf81c10c5c05064c898bb3deb25c96b464e6cf9",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local model-cache and generated-artifact paths and made manifest paths relative. Source references, hypotheses, judgments, measured results and all source/model hashes are unchanged."
+  }
+}

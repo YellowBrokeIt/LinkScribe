@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T07:06:48.267915+00:00",
+  "decision": "Technically supported as a bounded source-level candidate: exact positional tuple schemas plus anchored lookaround-free marker patterns. Not yet validated on the actual emitted grammar or model output.",
+  "scope": "One source-only feasibility question; no new runtime profile executed.",
+  "ollama_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+  "ollama_version": "0.40.12",
+  "llama_cpp_tag": "b11901",
+  "llama_cpp_commit": "5320c87ff0d994845b44ce7976f10055ec697447",
+  "existing_llama_server_sha256": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/LLAMA_CPP_VERSION",
+      "git_blob_sha1": "98bc1f1660e3264d1df83952b9e8a452e22a6088",
+      "finding": "Pinned Ollama source selects llama.cpp b11901; GitHub tag metadata resolves to commit5320c87ff0d994845b44ce7976f10055ec697447."
+    },
+    {
+      "id": "S2",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/llm/llama_server.go",
+      "git_blob_sha1": "5805edd64d99f17dc979cc17f480f87509db926d",
+      "retained_local_sha256": "58bd9f051b96d6a01f7029632751fb7a80fc13c4d91d05aaf36d51340d83ea24",
+      "finding": "Lines1712–1738 pass a format object to native json_schema; lines2452–2478 wrap it as response_format.json_schema.schema on the chat path. Lines1480–1540 describe a zero-evaluation/zero-generation native grammar query; it was not called."
+    },
+    {
+      "id": "S3",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/common/json-schema.cpp",
+      "git_blob_sha1": "eb57a524a6050b8220cf42690c016cacf406e371",
+      "finding": "Lines186–206 parse an items array into a fixed tuple, with items taking precedence over prefixItems. Lines209–220 preserve the string pattern. Do not rely on modern prefixItems plus items:false."
+    },
+    {
+      "id": "S4",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/common/json-schema-to-grammar.cpp",
+      "git_blob_sha1": "6f3ecc992113dcfcce7cb48d22da8e8eafdabcde",
+      "finding": "Lines944–954 emit one required grammar child per tuple position; lines965–982 use pattern before string length constraints. Lines414–655 implement anchored patterns, groups/alternation/classes/repetition/hex escapes; unsupported lookarounds or other syntax fall back to any string with a warning. No added minLength guarantee is credited when pattern is present."
+    },
+    {
+      "id": "S5",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/tests/test-json-schema.cpp",
+      "git_blob_sha1": "fb8cee18b9fbbf583492f354326d868f8c44df03",
+      "finding": "Lines169–174 retain an explicit items-as-array tuple test. These upstream test sources were read, not executed."
+    },
+    {
+      "id": "S6",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/grammars/README.md",
+      "git_blob_sha1": "f005fc2522b84265172098e465c6dde1e4c328b1",
+      "finding": "Lines203–223 document silently skipped unsupported features, prefixItems limitations, anchored-pattern requirements and unsupported uniqueItems/contains/not. Exact source branches take precedence over assuming complete JSON Schema support."
+    },
+    {
+      "id": "S7",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/common/sampling.cpp",
+      "git_blob_sha1": "564fa9c4dbf4aac5a4d3dcc68a9259e804ac7f4b",
+      "finding": "Lines268–279 initialize or reject grammar; lines643–681 apply the grammar mask before sampling or resample an invalid candidate under it. This is decoding-time enforcement, not text repair."
+    },
+    {
+      "id": "S8",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/tools/server/server-schema.cpp",
+      "git_blob_sha1": "0a14a9620961ff627348952112b4a9a6a0513c43",
+      "finding": "Lines270–284 route supplied json_schema through json_schema_to_grammar."
+    },
+    {
+      "id": "S9",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/common/chat.cpp",
+      "git_blob_sha1": "22762176134ce93ef602629328f797f6ec783b47",
+      "finding": "Line1585 converts the supplied chat JSON schema to a grammar."
+    },
+    {
+      "id": "S10",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/5320c87ff0d994845b44ce7976f10055ec697447/CMakeLists.txt",
+      "git_blob_sha1": "d091a1411bf7091bbf821e2cfcfa7c9bec310575",
+      "finding": "Line147 defaults LLAMA_LLGUIDANCE to OFF. Actual emitted grammar of the already verified binary must still be observed before any enforcement claim; source inspection does not substitute for that future gate."
+    }
+  ],
+  "proposed_single_change": "Replace only the per-request translations item schema with fixed positional items-array string patterns derived from existing source-bound compact markers. Retain the complete source-spelling messages, model, sampling/context/output/resource settings and output guards.",
+  "proposed_pattern": {
+    "json_serialization_gap": "(?:[^\\x00-\\x1F\\x22\\x5C\\x3C]|\\x5C[\\x22\\x5C/bfnrt])*",
+    "ordinary_prose": "Model-generated literal Unicode and JSON short escapes. No ordinary facts or names are supplied by the grammar.",
+    "exact_markers": "Each alternative includes each source segment marker exactly once; gaps cannot introduce literal < or a Unicode escape that decodes to it.",
+    "order": "Enumerate all permutations of distinct occurrence tags within each segment; never force source word order.",
+    "bounded_scope": "Existing original-six only; at most3 markers per segment (at most6 alternatives), otherwise refuse. No chunking/cropping/fallback syntax.",
+    "illustrative_schema_is_unexecuted": true
+  },
+  "original_six_marker_counts": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "markers_per_source_segment": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "markers_per_source_segment": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "markers_per_source_segment": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "markers_per_source_segment": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "markers_per_source_segment": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "markers_per_source_segment": [
+        1,
+        0
+      ]
+    }
+  ],
+  "required_before_generation": [
+    "Freeze actual six schemas derived only from exact source marker sets; no names, genders, roles or reference answers in schema.",
+    "Obtain the exact native converter output for each schema under a separately authorized measured zero-generation phase. Reject unsupported-pattern warnings, generic-string fallback, absent positional rules or any unexpected grammar path.",
+    "Independently check emitted grammar with positive/negative strings: every allowed order, missing/duplicate/unknown/cross-entry tags, extra/missing entries, JSON quotes/backslashes/short escapes, hidden Unicode-escaped tags, truncation and repeated ordinary prose. A standard JSON validator or Python regex alone is not proof of this native converter.",
+    "Reconfirm full actual prompt/token/source/context binding and the unchanged resource caps before any separately authorized one-shot translation case.",
+    "Preserve unchanged raw marker/schema/source/metadata/script checks and independent full meaning review; no restoration of missing tags or name repair."
+  ],
+  "remaining_limits": [
+    "Markers alone do not require meaningful surrounding prose, correct pronouns/roles, quantity/negation/condition preservation or completeness. A tag-only response or added ordinary name can still meet grammar and fail meaning.",
+    "No generic guarantee covers translated marker position within a segment; all permutations deliberately remain available.",
+    "Arbitrary many markers require factorial alternatives; the bounded original-six proposal refuses sources above3 markers per segment.",
+    "The proposed gap excludes raw < and all Unicode JSON escapes, while allowing literal Unicode and standard short escapes. Literal angle-bracket prose needs a separate source contract and is not silently transformed.",
+    "Canonical namespace-equivalent Unicode prefixes may still trigger the existing post-generation guard. The grammar does not replace that stricter normalization-aware rejection.",
+    "Pattern constraints take precedence over minLength in this converter; adding minLength would not establish prose content.",
+    "Unsupported regex constructs may weaken to unrestricted strings, so actual emitted grammar must be independently verified before generated output is trusted.",
+    "Decoding constraints can increase latency, cause length-limited output, or shift other errors; native memory/time/normal-stop/semantic gates remain unchanged."
+  ],
+  "new_model_native_tokenizer_detector_calls": 0,
+  "converter_or_validator_executed": false,
+  "new_software_or_weights_downloaded": false,
+  "official_primary_text_reads_only": true,
+  "web_search_open_disabled_fallback": "Used read-only GitHub connector for official pinned source text; no checkout or native API calls.",
+  "production_edits": false,
+  "fresh_validation_opened": false,
+  "prior_stage_manifest_sha256": "6e1f3d40163fbe1f2eb589fd5687b9a502174d8b8dd42f68f9b3bbab088c4401",
+  "execution_authorized": false
+}

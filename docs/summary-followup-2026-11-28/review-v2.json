@@ -1,0 +1,33 @@
+{
+  "review_type": "Assistant source/output comparison against unchanged development criteria",
+  "report": "development-repair-v2-en.json",
+  "candidate": "candidate_v2.py",
+  "decision": "Rejected for material omissions; do not expand to the expensive Greek repair run",
+  "case": "summary-en-consent-and-roles",
+  "actual_execution": {
+    "inference_calls": 2,
+    "replayed_responses": 0,
+    "wall_seconds": 104.034,
+    "peak_process_pss_mib": 3764.5,
+    "revision_input_bytes": 1580,
+    "generated_tokens_by_call": [436, 482],
+    "both_calls_done_reason": "stop",
+    "exact_quote_and_quantity_validation_errors": []
+  },
+  "improvements_observed": [
+    "The regenerated first draft reproduced the v1 invented Beatrice ownership. The source-first revision removed that false claim and correctly states Rowan is the owner.",
+    "The final statements explicitly distinguish edited public quotations, private recordings only, and no permission to publish a full recording.",
+    "The correct approved and rejected monetary values, conditional Friday booking and absence of completed interviews survive."
+  ],
+  "failures_observed": [
+    "The final output omits Beatrice's assigned action to obtain room confirmation.",
+    "It omits checking each quotation with its speaker before publication. This source condition was present in the first draft and was lost during the supposed repair.",
+    "It still omits Hana's future return of the recorder to Rowan.",
+    "Beatrice's organiser role is no longer stated. The explicit twelve-interview total is absent, although eight plus four still implies that count.",
+    "Statements without terminal punctuation are joined as a run-on paragraph."
+  ],
+  "chapter_review": "Event Preparation and Permissions is topical and starts at the actual original time 0.5.",
+  "semantic_interpretation": "A revision can correct a local falsehood while reducing coverage elsewhere. Exact evidence matching, numerical token checks, normal stops and a second model pass do not prove a useful complete summary.",
+  "stop_rule": "The predeclared English-first screen failed unchanged coverage criteria. Greek and remaining cases were not run; they are unevaluated, not counted as passes or failures.",
+  "release_scope": "No production change, no long-source replacement and no frozen-validation exposure. Summary/chapters quality remains open."
+}

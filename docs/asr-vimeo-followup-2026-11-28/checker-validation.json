@@ -1,0 +1,16 @@
+{
+  "recorded_at": "2026-11-28T00:40:14.433781+00:00",
+  "scope": "Focused artifact-checker tests and the historical baseline review. These do not run ASR or approve the aligned candidate.",
+  "command": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python -m pytest -q tests/test_asr_dailymotion_tail_followup.py",
+  "pytest_passed": 26,
+  "pytest_failed": 0,
+  "elapsed_seconds": 0.03,
+  "test_sha256": "5de65a426b5e85ce722f291e302466a9824c960fbbb93be3b84898b70d93868e",
+  "checker_sha256": "c308462b92e2051a44f5b48b8078064322ffbac15915ea484c18d843105cbe3f",
+  "actual_baseline_review": "dailymotion-baseline-tail-check.json",
+  "candidate_inference_done_by_checker": false,
+  "internally_consistent_negative_controls": [
+    "Missing final dialogue updates raw segment events, saved record and completion count; only its required late-anchor check fails.",
+    "All segment and word timestamps shifted 500 seconds earlier with durations and ordering preserved; only the four late-anchor checks fail."
+  ]
+}

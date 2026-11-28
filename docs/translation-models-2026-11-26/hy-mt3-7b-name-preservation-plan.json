@@ -1,0 +1,31 @@
+{
+  "experiment": "One generic personal-name preservation instruction for the existing native Hy-MT3 7B adapter; isolated prototype, not adopted.",
+  "base_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "model": "linkscribe-hy-mt3:7b",
+  "corpus": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/hy-name-preservation-prototype/tests/fixtures/translation_quality_cases.json",
+  "corpus_sha256": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626",
+  "selected_case_ids": [
+    "dev-en-el-transcript-terminology",
+    "dev-el-en-people-and-roles",
+    "dev-en-el-bitcoin-amounts",
+    "dev-el-en-negation-scope",
+    "dev-en-el-conditional-publication",
+    "dev-el-en-uncertain-question"
+  ],
+  "known_development_failures": "The prior native7B development trial collapsed distinct personal names (Elena/Eleni), despite three acceptable and two minor results on the other cases. See the unchanged published prior model review.",
+  "change": "Only add: Preserve personal names exactly as written in the source. No example names, references, response repair, context additions, sampling change or source modification.",
+  "input_budget_bytes": 1600,
+  "options": {
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 4
+  },
+  "timeout_seconds": 240,
+  "prototype_enhancements_sha256": "d447ca69bf28e48d9747d7d75e5c8fdfe79c00f01eed25cb2646147e573892b9",
+  "production_enhancements_sha256": "ce11a18e22f4649db465cad6107783f540e028759db28556cdcdcf018ec63cf5",
+  "patch_sha256": "2de0bfab1bd41b72f650377e269e5158dca146ed7c9405112270d841a67dfcf0",
+  "fresh_validation": "translation_quality_validation_v3.json remains unused. Only proceed to it if source/output review finds no material regression or unresolved material development error.",
+  "acceptance": "Structural completion is insufficient. Review actors, names, amounts, negation, conditions, terminology and quoted commands. Reject the prototype if material errors remain or new ones appear. No model-default change or resource claim without a separate actual workflow/resource check.",
+  "inference_status": "not_started; waiting for exclusive local inference slot"
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T08:02:54.381834+00:00",
+  "complete": false,
+  "passed": false,
+  "limits": {
+    "rss_bytes": 268435456,
+    "total_seconds": 5,
+    "initialization_seconds": 10,
+    "case_seconds": 10
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "events": [],
+  "measurement_errors": [],
+  "scope": "Owned monitor plus worker and descendants, deduplicated by PID, from spawn through exit.",
+  "rss_scope": "Summed process RSS can double-count shared pages; excludes OS/browser/unrelated processes.",
+  "pss_scope": "PSS apportions shared pages. System available memory is a separate uncontrolled observation.",
+  "sampling_limit": "Sequential scans at 0.1-second intervals can miss transient peaks.",
+  "control": "disk-limit",
+  "harmless_python_program": "from pathlib import Path; import time; Path('/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-2026-11-28/control-results/toy/grown.bin').write_bytes(b'x'*65536); time.sleep(5)",
+  "stop_reason": "storage_policy_limit",
+  "worker_exit_code": 0,
+  "owned_processes_stopped": true,
+  "owned_process_identities": [
+    {
+      "pid": 12,
+      "created": 1795852973.64
+    }
+  ],
+  "sample_count": 2,
+  "sample_interval_seconds": 0.1,
+  "peak_rss_sample": {
+    "elapsed_seconds": 0.102195,
+    "rss_bytes": 25350144,
+    "pss_bytes": 20946944,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 16691200,
+        "pss_bytes": 14485504,
+        "cpu_user_seconds": 0.06,
+        "cpu_system_seconds": 0.06,
+        "threads": 1
+      },
+      {
+        "pid": 12,
+        "name": "python",
+        "rss_bytes": 8658944,
+        "pss_bytes": 6461440,
+        "cpu_user_seconds": 0.01,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8642531328,
+    "system_total_bytes": 10451427328,
+    "active_case": null,
+    "storage": {
+      "free_bytes": 1610551296,
+      "reserve_bytes": 0,
+      "tree_bytes": 65540,
+      "file_count": 2,
+      "largest_file_bytes": 65536,
+      "maximum_tree_bytes": 1024,
+      "maximum_file_bytes": 16777216,
+      "violation": "owned_tree_size_limit",
+      "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+    }
+  },
+  "peak_pss_sample": {
+    "elapsed_seconds": 0.102195,
+    "rss_bytes": 25350144,
+    "pss_bytes": 20946944,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 16691200,
+        "pss_bytes": 14485504,
+        "cpu_user_seconds": 0.06,
+        "cpu_system_seconds": 0.06,
+        "threads": 1
+      },
+      {
+        "pid": 12,
+        "name": "python",
+        "rss_bytes": 8658944,
+        "pss_bytes": 6461440,
+        "cpu_user_seconds": 0.01,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8642531328,
+    "system_total_bytes": 10451427328,
+    "active_case": null,
+    "storage": {
+      "free_bytes": 1610551296,
+      "reserve_bytes": 0,
+      "tree_bytes": 65540,
+      "file_count": 2,
+      "largest_file_bytes": 65536,
+      "maximum_tree_bytes": 1024,
+      "maximum_file_bytes": 16777216,
+      "violation": "owned_tree_size_limit",
+      "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+    }
+  },
+  "peak_rss_mib": 24.2,
+  "peak_pss_mib": 20.0,
+  "minimum_system_available_bytes": 8642531328,
+  "measurement_complete": true,
+  "samples_file": "observer-disk-limit-samples.jsonl",
+  "samples_sha256": "b46fca0aafdc640cff0bd7379a650f88fcb4c18d3d49411073bde0d38625f2e2",
+  "elapsed_seconds": 0.104718,
+  "finished_at": "2026-11-28T08:02:54.486586+00:00",
+  "storage_after_cleanup": {
+    "free_bytes": 1610551296,
+    "reserve_bytes": 0,
+    "tree_bytes": 65540,
+    "file_count": 2,
+    "largest_file_bytes": 65536,
+    "maximum_tree_bytes": 1024,
+    "maximum_file_bytes": 16777216,
+    "violation": "owned_tree_size_limit",
+    "sampling_scope": "Owned build tree; free disk includes unrelated filesystem users."
+  }
+}

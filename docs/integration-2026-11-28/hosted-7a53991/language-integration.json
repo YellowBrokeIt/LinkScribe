@@ -1,0 +1,292 @@
+{
+  "result": "PASS",
+  "ollama_version": "0.40.12",
+  "model": "qwen3:4b",
+  "models": {
+    "summary": {
+      "configured_model": "qwen3:4b",
+      "model": {
+        "name": "qwen3:4b",
+        "model": "qwen3:4b",
+        "modified_at": "2026-11-28T04:30:13.83655871Z",
+        "size": 2497293931,
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "4.0B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 262144,
+          "embedding_length": 2560,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking"
+        ]
+      },
+      "profile": "json"
+    },
+    "translation": {
+      "configured_model": "qwen3:4b",
+      "model": {
+        "name": "qwen3:4b",
+        "model": "qwen3:4b",
+        "modified_at": "2026-11-28T04:30:13.83655871Z",
+        "size": 2497293931,
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "4.0B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 262144,
+          "embedding_length": 2560,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking"
+        ]
+      },
+      "profile": "json"
+    }
+  },
+  "semantic_quality": "unreviewed",
+  "examples": [
+    {
+      "source": "en",
+      "target": "el",
+      "elapsed_seconds": 38.56,
+      "translation": [
+        "Maria \u03ad\u03b3\u03c1\u03b1\u03c8\u03b5 3 \u03c3\u03cd\u03bd\u03c4\u03bf\u03bc\u03b1 \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03c3\u03c4\u03b7\u03bd \u0391\u03b8\u03ae\u03bd\u03b1.",
+        "\u03a4\u03b1 \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03b5\u03be\u03b7\u03b3\u03bf\u03cd\u03bd \u03c0\u03ce\u03c2 \u03bd\u03b1 \u03b1\u03c0\u03bf\u03b8\u03b7\u03ba\u03b5\u03cd\u03b5\u03c4\u03b5 \u03ba\u03b1\u03b9 \u03bd\u03b1 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03b6\u03b5\u03c4\u03b5 \u03ad\u03bd\u03b1 transcript."
+      ],
+      "summary": {
+        "summary": "Maria recorded 3 short videos in Athens that explain how to save and translate a transcript.",
+        "key_points": [
+          "Maria recorded 3 short videos in Athens",
+          "The videos explain how to save a transcript",
+          "The videos explain how to translate a transcript"
+        ],
+        "chapters": [
+          {
+            "start": 0.5,
+            "title": "Transcript Handling Videos"
+          }
+        ]
+      },
+      "inference_requests": [
+        {
+          "kind": "inference",
+          "task": "translation",
+          "model": "qwen3:4b",
+          "options": {
+            "temperature": 0,
+            "num_ctx": 8192,
+            "num_predict": 2048,
+            "num_thread": 4
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "translations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "required": [
+              "translations"
+            ],
+            "additionalProperties": false
+          },
+          "think": false
+        },
+        {
+          "kind": "inference",
+          "task": "summary",
+          "model": "qwen3:4b",
+          "options": {
+            "temperature": 0,
+            "num_ctx": 8192,
+            "num_predict": 2048,
+            "num_thread": 4
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key_points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "chapter_title": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "chapter_title"
+            ],
+            "additionalProperties": false
+          },
+          "think": false
+        }
+      ],
+      "control_requests": [
+        {
+          "kind": "control",
+          "task": "translation",
+          "model": "qwen3:4b",
+          "options": {},
+          "format": null,
+          "think": null
+        },
+        {
+          "kind": "control",
+          "task": "summary",
+          "model": "qwen3:4b",
+          "options": {},
+          "format": null,
+          "think": null
+        }
+      ]
+    },
+    {
+      "source": "el",
+      "target": "en",
+      "elapsed_seconds": 49.67,
+      "translation": [
+        "The Nikos has 2 books for Bitcoin.",
+        "Today he reads at home and keeps notes in Greek."
+      ],
+      "summary": {
+        "summary": "\u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c7\u03b5\u03b9 2 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1 \u03b3\u03b9\u03b1 \u03c4\u03bf Bitcoin \u03ba\u03b1\u03b9 \u03c3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03b4\u03b9\u03b1\u03b2\u03ac\u03b6\u03b5\u03b9 \u03c3\u03c4\u03bf \u03c3\u03c0\u03af\u03c4\u03b9, \u03ba\u03c1\u03b1\u03c4\u03ce\u03bd\u03c4\u03b1\u03c2 \u03c3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac.",
+        "key_points": [
+          "\u039d\u03af\u03ba\u03bf: 2 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1 \u03b3\u03b9\u03b1 \u03c4\u03bf Bitcoin",
+          "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03b4\u03b9\u03b1\u03b2\u03ac\u03b6\u03b5\u03b9 \u03c3\u03c4\u03bf \u03c3\u03c0\u03af\u03c4\u03b9",
+          "\u039a\u03c1\u03b1\u03c4\u03ac \u03c3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+        ],
+        "chapters": [
+          {
+            "start": 1.0,
+            "title": "\u0392\u03b9\u03b2\u03bb\u03af\u03b1 \u03ba\u03b1\u03b9 \u03c3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2 \u03b3\u03b9\u03b1 \u03c4\u03bf Bitcoin"
+          }
+        ]
+      },
+      "inference_requests": [
+        {
+          "kind": "inference",
+          "task": "translation",
+          "model": "qwen3:4b",
+          "options": {
+            "temperature": 0,
+            "num_ctx": 8192,
+            "num_predict": 2048,
+            "num_thread": 4
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "translations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "required": [
+              "translations"
+            ],
+            "additionalProperties": false
+          },
+          "think": false
+        },
+        {
+          "kind": "inference",
+          "task": "summary",
+          "model": "qwen3:4b",
+          "options": {
+            "temperature": 0,
+            "num_ctx": 8192,
+            "num_predict": 2048,
+            "num_thread": 4
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key_points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "chapter_title": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "chapter_title"
+            ],
+            "additionalProperties": false
+          },
+          "think": false
+        }
+      ],
+      "control_requests": [
+        {
+          "kind": "control",
+          "task": "translation",
+          "model": "qwen3:4b",
+          "options": {},
+          "format": null,
+          "think": null
+        },
+        {
+          "kind": "control",
+          "task": "summary",
+          "model": "qwen3:4b",
+          "options": {},
+          "format": null,
+          "think": null
+        }
+      ]
+    }
+  ]
+}

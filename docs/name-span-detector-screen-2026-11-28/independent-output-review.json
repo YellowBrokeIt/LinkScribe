@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:20:19.701336+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "All six completed raw detector outputs against exact source-only annotations frozen before output; no translation, masking, new inference, threshold changes, boundary repair or unused validation access.",
+  "decision": "reject_original_raw_detector_profile_for_protected_translation",
+  "criterion_binding": {
+    "annotation_sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+    "annotation_file": "source-person-annotations-before-output.json",
+    "source_only_sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482",
+    "plan_sha256": "1a56796eb75a709c9231354ff17ca7b9f23be9988e3ddbc30ba0492433b2b9d5",
+    "inference_freeze_sha256": "7d8717e10fe81fcf3a2d215996b33913f7c7134886af83362354d54268d4c545",
+    "criterion": "Every complete exact personal-name mention must be selected and ordinary prose, including Greek articles, must remain outside the protected span. All cases and occurrences are required.",
+    "annotation_exposure": "The annotation remained independent and private until this completed output review. Only its digest was bound to the pre-inference freeze; its contents were not worker input."
+  },
+  "execution_binding": {
+    "execution_sha256": "092e961b523e9ed063232f1d6f58310094c8bf7c9b040b10fbbd6856d6e3c843",
+    "resources_sha256": "42bf94ea849d550fee84a46e64b03fa845fd9d2aed97db463f19208b0697485c",
+    "samples_sha256": "575cf6a47f30239662283f6cab256202476448cc3f50b7a92d758eccd82a6921",
+    "protocol_audit_sha256": "0b7c2399bc4678d6fb1cd4858aa6654bb979b18314e0e8907d808708bfe4ffe3",
+    "audit_script_sha256": "5c1d1f9b0df796b1875892337e07f7af6b2ce7426661ddd43df42a0ea9246f78",
+    "protocol_passed": true,
+    "one_detector_call_per_case": true,
+    "zero_translation_calls": true,
+    "raw_outputs_preserved": true
+  },
+  "counts": {
+    "cases": 6,
+    "fully_correct_cases": 5,
+    "boundary_failure_cases": 1,
+    "annotated_mentions": 13,
+    "returned_mentions": 13,
+    "exact_matched_mentions": 12,
+    "oversized_boundary_predictions": 1,
+    "completely_uncovered_person_mentions": 0,
+    "disjoint_non_person_predictions": 0,
+    "exact_span_false_positive": 1,
+    "exact_span_false_negative": 1,
+    "exact_span_count_note": "The false-positive and false-negative counts describe the same single boundary error, not two separate semantic failures."
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report_sha256": "7de6b381a15d12c2eeb57340a7495c7faa1a4a4a698ec10f1e07f16c656ef0f7",
+      "source_text_sha256": "4872fa97eb447f9c4026fc8fc214008eb809d8a35ea0fb12818d2ada81ad5eac",
+      "raw_entities_canonical_sha256": "93af3d01364cac91985291e1f7198401286ec84844a0e07df20ceca353d791f4",
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 5,
+          "text": "Maria",
+          "label": "person",
+          "score": 0.9671903252601624
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 5,
+          "joined_start": 0,
+          "joined_end": 5,
+          "text": "Maria",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 1,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "classification": "exact_span_pass",
+      "judgment": "The sole personal name Maria is selected exactly. The passage remains complete in both native forward observations."
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "report_sha256": "f8afa403c0b7934c3390080f63627d9c5a5d16baa53e722ad9cbe6da70ca3ef8",
+      "source_text_sha256": "c3a7267c28e91201e57e80ef96a9b4e2509da584d3257119559223de5694362c",
+      "raw_entities_canonical_sha256": "b9223fd5836916b9ba6fd2a0206b57142ea60e538fac4f80f83bc887ab50ff98",
+      "raw_entities": [
+        {
+          "start": 2,
+          "end": 7,
+          "text": "Νίκος",
+          "label": "person",
+          "score": 0.9689485430717468
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "text": "Ελένη",
+          "label": "person",
+          "score": 0.9833521246910095
+        },
+        {
+          "start": 48,
+          "end": 53,
+          "text": "Έλενα",
+          "label": "person",
+          "score": 0.9727272391319275
+        },
+        {
+          "start": 57,
+          "end": 62,
+          "text": "Ελένη",
+          "label": "person",
+          "score": 0.9802303910255432
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "text": "Νίκος",
+          "label": "person",
+          "score": 0.9446330666542053
+        },
+        {
+          "start": 120,
+          "end": 125,
+          "text": "Έλενα",
+          "label": "person",
+          "score": 0.9639445543289185
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 32,
+          "joined_end": 37,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 48,
+          "segment_end": 53,
+          "joined_start": 48,
+          "joined_end": 53,
+          "text": "Έλενα",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 57,
+          "joined_end": 62,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 87,
+          "joined_end": 92,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 65,
+          "segment_end": 70,
+          "joined_start": 120,
+          "joined_end": 125,
+          "text": "Έλενα",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 6,
+      "expected_mentions": 6,
+      "returned_mentions": 6,
+      "classification": "exact_span_pass",
+      "judgment": "All six repeated Nikos, Eleni and Elena mentions have their original exact boundaries and spellings. Greek articles and role nouns are excluded."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "report_sha256": "977267f4ed054507821680a6491fe79f6ee000185ee965c69e4b306987558c2c",
+      "source_text_sha256": "7aa39d2d3bceb35a99f609d5239afbb2693eaba2c4f3578fc01edf7cd98efdb8",
+      "raw_entities_canonical_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "raw_entities": [],
+      "expected_exact_mentions": [],
+      "exact_matches": 0,
+      "expected_mentions": 0,
+      "returned_mentions": 0,
+      "classification": "exact_span_pass",
+      "judgment": "Correctly returns no person spans; Bitcoin, numbers, currencies and unit words are not protected."
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "report_sha256": "fac59b5111e989e40a05d7bc322bdb39cd28de52d8cd83429f15aa586eb3d20e",
+      "source_text_sha256": "79a6f7f1ac4e5b9189c100a7e2425645e7332d5ec7ea0a98de1d4c5207394ee0",
+      "raw_entities_canonical_sha256": "6e286e9c44a601291c6090d7ba2023f85055ed2f76c25221732cd882d428585f",
+      "raw_entities": [
+        {
+          "start": 15,
+          "end": 19,
+          "text": "Άννα",
+          "label": "person",
+          "score": 0.9273728728294373
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 15,
+          "segment_end": 19,
+          "joined_start": 15,
+          "joined_end": 19,
+          "text": "Άννα",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 1,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "classification": "exact_span_pass",
+      "judgment": "The sole personal name Άννα is selected exactly, without its preceding article or the negation/propositional text."
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "report_sha256": "aa1805fe0eec96111f0ee771a3d0bdc416adf20981d46354b6b01b5589fd8db9",
+      "source_text_sha256": "2a756157850a60007b31c6abf7a2628ff8f83becd3a2d5598227de2e50da375e",
+      "raw_entities_canonical_sha256": "1402867e01ce1721e975e7a13e831788c39cdd249fdcfcc0ef604eb1256b7902",
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 4,
+          "text": "Anna",
+          "label": "person",
+          "score": 0.9955421090126038
+        },
+        {
+          "start": 36,
+          "end": 43,
+          "text": "Giannis",
+          "label": "person",
+          "score": 0.9794137477874756
+        },
+        {
+          "start": 66,
+          "end": 73,
+          "text": "Giannis",
+          "label": "person",
+          "score": 0.9836648106575012
+        },
+        {
+          "start": 101,
+          "end": 105,
+          "text": "Anna",
+          "label": "person",
+          "score": 0.9942373037338257
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 4,
+          "joined_start": 0,
+          "joined_end": 4,
+          "text": "Anna",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 36,
+          "segment_end": 43,
+          "joined_start": 36,
+          "joined_end": 43,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 3,
+          "segment_end": 10,
+          "joined_start": 66,
+          "joined_end": 73,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 38,
+          "segment_end": 42,
+          "joined_start": 101,
+          "joined_end": 105,
+          "text": "Anna",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 4,
+      "expected_mentions": 4,
+      "returned_mentions": 4,
+      "classification": "exact_span_pass",
+      "judgment": "Both Anna and Giannis occurrences are selected exactly. Friday, Monday and the conditional/publication prose are excluded."
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "report_sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8",
+      "source_text_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9",
+      "raw_entities_canonical_sha256": "29be773c5f8b6008d2fa1bd15c0ba12034bd23473514a9dbc7eb1b1b7e7f107c",
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 7,
+          "text": "Η Μαρία",
+          "label": "person",
+          "score": 0.9357870817184448
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Μαρία",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 0,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "classification": "boundary_failure",
+      "judgment": "Boundary failure: raw [0,7) Η Μαρία includes the ordinary Greek nominative article Η and its following space. The pre-output annotation is [2,7) Μαρία. This is a single oversized person prediction, not a missed identity or altered source string. Masking this entire span would protect ordinary source prose contrary to the frozen boundary criterion."
+    }
+  ],
+  "resources": {
+    "complete_samples": 169,
+    "sample_sums_and_peaks_verified": true,
+    "peak_rss_bytes": 2613256192,
+    "peak_pss_bytes": 2582496256,
+    "controller_seconds": 17.557703,
+    "worker_seconds": 15.942,
+    "initialization_observed_seconds": 14.275842,
+    "worker_exit_code": 0,
+    "owned_processes_stopped": true,
+    "scope_limit": "External 100 ms sampling of the owned process tree; not an OS high-water or whole-app memory approval."
+  },
+  "limits_of_inference": [
+    "The original raw profile failed the fixed detector gate despite passing all execution and full-input checks.",
+    "No case has been translated or masked with these spans; no downstream name protection, actor fidelity, or complete prose quality is established.",
+    "A future source-only boundary policy would be a separately declared candidate with independent criteria and unchanged original output evidence, not a retrospective correction or regrading.",
+    "Six exposed development sources cannot establish general entity-recognition accuracy; sampling cannot prove every instantaneous resource peak or full-app resource fit."
+  ],
+  "transport_note": "A polling transport reset was reported by the owner; retained completed worker, per-case, event and external resource artifacts consistently bind the single run. No rerun was performed or required for this read-only audit."
+}

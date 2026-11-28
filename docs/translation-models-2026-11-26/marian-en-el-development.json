@@ -1,0 +1,497 @@
+{
+  "backend": "marian-ctranslate2",
+  "production_integration": false,
+  "semantic_quality": "unreviewed",
+  "source_corpus_sha256": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626",
+  "model": {
+    "source": {
+      "repository": "Helsinki-NLP/opus-mt-tc-big-en-el",
+      "revision": "bb9aa4d8929451dd2396f399f7aa184c788d565b",
+      "license": "cc-by-4.0",
+      "original_archives": [
+        "https://object.pouta.csc.fi/Tatoeba-MT-models/eng-ell/opusTCv20210807+bt_transformer-big_2022-03-13.zip"
+      ],
+      "archive_bytes": 878914486,
+      "archive_sha256": "7e72c7407c86b68582571ba45ec77799b54ffd3bc5b3ffb8cbbf92d0644c7829",
+      "members": [
+        {
+          "name": "README.md",
+          "bytes": 1055,
+          "compressed_bytes": 369
+        },
+        {
+          "name": "LICENSE",
+          "bytes": 18652,
+          "compressed_bytes": 5916
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.model1.npz.best-perplexity.npz",
+          "bytes": 946677790,
+          "compressed_bytes": 877691280
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.model1.npz.best-perplexity.yml",
+          "bytes": 1130,
+          "compressed_bytes": 483
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.vocab.yml",
+          "bytes": 1181971,
+          "compressed_bytes": 358721
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.valid1.log",
+          "bytes": 2149,
+          "compressed_bytes": 419
+        },
+        {
+          "name": "opusTCv20210807+bt.spm32k-spm32k.transformer-big.train1.log",
+          "bytes": 59594,
+          "compressed_bytes": 8411
+        },
+        {
+          "name": "source.spm",
+          "bytes": 798543,
+          "compressed_bytes": 405381
+        },
+        {
+          "name": "target.spm",
+          "bytes": 1003064,
+          "compressed_bytes": 439707
+        },
+        {
+          "name": "decoder.yml",
+          "bytes": 305,
+          "compressed_bytes": 160
+        },
+        {
+          "name": "preprocess.sh",
+          "bytes": 1413,
+          "compressed_bytes": 633
+        },
+        {
+          "name": "postprocess.sh",
+          "bytes": 80,
+          "compressed_bytes": 78
+        },
+        {
+          "name": "opusTCv20210807+bt.transformer-big.mk",
+          "bytes": 805,
+          "compressed_bytes": 384
+        }
+      ]
+    },
+    "conversion": {
+      "ctranslate2": "4.9.1",
+      "sentencepiece": "0.2.1",
+      "quantization": "int8",
+      "elapsed_seconds": 3.509
+    },
+    "files": {
+      "model.bin": {
+        "bytes": 246602285,
+        "sha256": "9e3c1f85a1c3f180544d831f626dbe03f74eeb1c78089900d0ddf21fa0c5bd8f"
+      },
+      "config.json": {
+        "bytes": 221,
+        "sha256": "152eb448f1020eb55f90971d7b95f61896abee8415d555ca51ae7897ac0a0e68"
+      },
+      "target.spm": {
+        "bytes": 1003064,
+        "sha256": "6274798c1831a98a55cf0c5b6809f8444f4d0bc3ca35f571895280e27bc1ab9b"
+      },
+      "LICENSE": {
+        "bytes": 18652,
+        "sha256": "945fbcb37deca05bccd7c3ca0e261679f1f5373515504fdbad68f6f3cf6f49b9"
+      },
+      "source.spm": {
+        "bytes": 798543,
+        "sha256": "88b64b8dedc045a78ff259f0910ec8970b042f2210ed2575e9a37ea440fb8307"
+      },
+      "README.md": {
+        "bytes": 1055,
+        "sha256": "6ea1cc89d5b0070bda8f9664f3b7e2f7a0cb835705bd32b20f142baccd83f679"
+      },
+      "shared_vocabulary.json": {
+        "bytes": 1977376,
+        "sha256": "de77938983aa10bc06e52ed06ab217e25e4545b61b04341034c0d3f0b6efcea7"
+      }
+    }
+  },
+  "settings": {
+    "device": "cpu",
+    "compute_type": "int8",
+    "beam_size": 4,
+    "length_penalty": 1.0,
+    "max_decoding_length": 512,
+    "max_input_length": 0,
+    "inter_threads": 1,
+    "intra_threads": 4,
+    "tokenizer": "SentencePiece directly; no additional text normalization in this development prototype"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "Η Μαρία αποθήκευσε το κείμενο της απομαγνητοφώνησης ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+        "Η απομαγνητοφώνηση διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as Μαρία."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁Maria",
+          "▁saved",
+          "▁the",
+          "▁transcript",
+          "▁as",
+          "▁a",
+          "▁text",
+          "▁file",
+          ";",
+          "▁she",
+          "▁did",
+          "▁not",
+          "▁save",
+          "▁the",
+          "▁original",
+          "▁recording",
+          "."
+        ],
+        [
+          "▁Tran",
+          "scription",
+          "▁took",
+          "▁12",
+          "▁minutes",
+          ".",
+          "▁Translation",
+          "▁into",
+          "▁Greek",
+          "▁has",
+          "▁not",
+          "▁started",
+          "▁yet",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁Η",
+          "▁Μαρία",
+          "▁έσωσε",
+          "▁τη",
+          "▁μετα",
+          "γραφή",
+          "▁ως",
+          "▁αρχείο",
+          "▁κειμένου",
+          "·",
+          "▁δεν",
+          "▁έσωσε",
+          "▁την",
+          "▁αρχική",
+          "▁εγγραφή",
+          "."
+        ],
+        [
+          "▁Η",
+          "▁μετα",
+          "γραφή",
+          "▁κράτησε",
+          "▁12",
+          "▁λεπτά",
+          ".",
+          "▁Η",
+          "▁μετάφραση",
+          "▁στα",
+          "▁Ελληνικά",
+          "▁δεν",
+          "▁έχει",
+          "▁ξεκινήσει",
+          "▁ακόμα",
+          "."
+        ]
+      ],
+      "translations": [
+        "Η Μαρία έσωσε τη μεταγραφή ως αρχείο κειμένου· δεν έσωσε την αρχική εγγραφή.",
+        "Η μεταγραφή κράτησε 12 λεπτά. Η μετάφραση στα Ελληνικά δεν έχει ξεκινήσει ακόμα."
+      ],
+      "scores": [
+        -0.3889845609664917,
+        -0.348397821187973
+      ],
+      "elapsed_seconds": 0.356,
+      "semantic_quality": "unreviewed"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "Η απόδειξη γράφει €12.50 για 2 είδη. Η ξεχωριστή μεταφορά είναι 5,000 sats, όχι 500 sats.",
+        "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁The",
+          "▁receipt",
+          "▁shows",
+          "▁€1",
+          "2.50",
+          "▁for",
+          "▁2",
+          "▁items",
+          ".",
+          "▁The",
+          "▁separate",
+          "▁transfer",
+          "▁is",
+          "▁5,000",
+          "▁sat",
+          "s",
+          ",",
+          "▁not",
+          "▁500",
+          "▁sat",
+          "s",
+          "."
+        ],
+        [
+          "▁The",
+          "▁note",
+          "▁mentions",
+          "▁Bitcoin",
+          ".",
+          "▁It",
+          "▁does",
+          "▁not",
+          "▁say",
+          "▁that",
+          "▁euros",
+          "▁and",
+          "▁sat",
+          "s",
+          "▁are",
+          "▁the",
+          "▁same",
+          "▁unit",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁Η",
+          "▁απόδειξη",
+          "▁δείχνει",
+          "▁12",
+          ",",
+          "50",
+          "▁€",
+          "▁για",
+          "▁2",
+          "▁αντικείμενα",
+          ".",
+          "▁Η",
+          "▁ξεχωριστή",
+          "▁μεταφορά",
+          "▁είναι",
+          "▁5.000",
+          "▁s",
+          "at",
+          ",",
+          "▁όχι",
+          "▁500",
+          "▁s",
+          "at",
+          "."
+        ],
+        [
+          "▁Το",
+          "▁σημείωμα",
+          "▁αναφέρει",
+          "▁το",
+          "▁Bitcoin",
+          ".",
+          "▁Δεν",
+          "▁αναφέρει",
+          "▁ότι",
+          "▁τα",
+          "▁ευρώ",
+          "▁και",
+          "▁τα",
+          "▁s",
+          "at",
+          "▁είναι",
+          "▁η",
+          "▁ίδια",
+          "▁μονάδα",
+          "."
+        ]
+      ],
+      "translations": [
+        "Η απόδειξη δείχνει 12,50 € για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 sat, όχι 500 sat.",
+        "Το σημείωμα αναφέρει το Bitcoin. Δεν αναφέρει ότι τα ευρώ και τα sat είναι η ίδια μονάδα."
+      ],
+      "scores": [
+        -0.3468213677406311,
+        -0.4248875081539154
+      ],
+      "elapsed_seconds": 0.425,
+      "semantic_quality": "unreviewed"
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+        "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "actual_source_tokens": [
+        [
+          "▁Anna",
+          "▁will",
+          "▁publish",
+          "▁the",
+          "▁video",
+          "▁only",
+          "▁if",
+          "▁Gianni",
+          "s",
+          "▁approve",
+          "s",
+          "▁the",
+          "▁text",
+          "."
+        ],
+        [
+          "▁If",
+          "▁Gianni",
+          "s",
+          "▁does",
+          "▁not",
+          "▁answer",
+          "▁by",
+          "▁Friday",
+          ",",
+          "▁Anna",
+          "▁will",
+          "▁wait",
+          "▁until",
+          "▁Monday",
+          "."
+        ]
+      ],
+      "actual_target_tokens": [
+        [
+          "▁Η",
+          "▁Άννα",
+          "▁θα",
+          "▁δημοσιεύσει",
+          "▁το",
+          "▁βίντεο",
+          "▁μόνο",
+          "▁αν",
+          "▁ο",
+          "▁Γιάννης",
+          "▁εγκρίνει",
+          "▁το",
+          "▁κείμενο",
+          "."
+        ],
+        [
+          "▁Αν",
+          "▁ο",
+          "▁Γιάννης",
+          "▁δεν",
+          "▁απαντήσει",
+          "▁μέχρι",
+          "▁την",
+          "▁Παρασκευή",
+          ",",
+          "▁η",
+          "▁Άννα",
+          "▁θα",
+          "▁περιμένει",
+          "▁μέχρι",
+          "▁τη",
+          "▁Δευτέρα",
+          "."
+        ]
+      ],
+      "translations": [
+        "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+        "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα."
+      ],
+      "scores": [
+        -0.21422335505485535,
+        -0.21212036907672882
+      ],
+      "elapsed_seconds": 0.249,
+      "semantic_quality": "unreviewed"
+    }
+  ],
+  "elapsed_seconds": 1.03,
+  "peak_rss_bytes": 335740928
+}

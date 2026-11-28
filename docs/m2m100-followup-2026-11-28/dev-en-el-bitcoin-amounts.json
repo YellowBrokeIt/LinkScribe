@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "model": {
+    "repository": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "weights_file": "pytorch_model.bin",
+    "weights_bytes": 1935796948,
+    "weights_sha256": "d907ea45e4e4b9db163382a6674f6218b3c59566fe06d77f4055c208b4e87ed1",
+    "license": "MIT",
+    "license_evidence": "Pinned official model card plus retained originating Fairseq MIT license text.",
+    "conversion_quantization": "float32",
+    "compute_type": "float32",
+    "trust_remote_code": false
+  },
+  "plan_sha256": "f89aa5300a047429c8bc136ab60527d7c45ef4956219358249869438bd529f94",
+  "inference_freeze_sha256": "ec186e54596808d1dd7664b28fbf044b794aa6b9bef4ef13d967236902dbbc81",
+  "cases": [
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "numbers",
+        "decimals",
+        "grouped_amounts",
+        "bitcoin",
+        "negation"
+      ],
+      "segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b5\u03af\u03b4\u03b7. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5,000 sats, \u03cc\u03c7\u03b9 500 sats.",
+        "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sats \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Bitcoin",
+            "alternatives": [
+              "Bitcoin",
+              "\u039c\u03c0\u03af\u03c4\u03ba\u03bf\u03ca\u03bd"
+            ]
+          },
+          {
+            "label": "sats unit",
+            "alternatives": [
+              "sats",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12.50",
+          "2",
+          "5,000",
+          "500"
+        ]
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "\u0397 \u03c0\u03b1\u03c1\u03b1\u03bb\u03b1\u03b2\u03ae \u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1. \u03b7 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5.000 sats, \u03cc\u03c7\u03b9 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "\u03a4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03bf \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03c4\u03b1\u03b9 \u03c3\u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03c3\u03b7\u03bc\u03b1\u03af\u03bd\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03c3\u03ac\u03c4 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__en__",
+            "\u2581The",
+            "\u2581rece",
+            "ipt",
+            "\u2581shows",
+            "\u2581\u20ac",
+            "12.",
+            "50",
+            "\u2581for",
+            "\u25812",
+            "\u2581items",
+            ".",
+            "\u2581The",
+            "\u2581separate",
+            "\u2581transfer",
+            "\u2581is",
+            "\u25815,000",
+            "\u2581sats",
+            ",",
+            "\u2581not",
+            "\u2581500",
+            "\u2581sats",
+            ".",
+            "</s>"
+          ],
+          [
+            "__en__",
+            "\u2581The",
+            "\u2581note",
+            "\u2581men",
+            "tions",
+            "\u2581Bitcoin",
+            ".",
+            "\u2581It",
+            "\u2581does",
+            "\u2581not",
+            "\u2581say",
+            "\u2581that",
+            "\u2581euros",
+            "\u2581and",
+            "\u2581sats",
+            "\u2581are",
+            "\u2581the",
+            "\u2581same",
+            "\u2581unit",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__el__"
+          ],
+          [
+            "__el__"
+          ]
+        ],
+        "source_texts": [
+          "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:35.296792+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u03c0\u03b1\u03c1\u03b1",
+              "\u03bb\u03b1",
+              "\u03b2",
+              "\u03ae",
+              "\u2581\u03b4\u03b5\u03af\u03c7\u03bd",
+              "\u03b5\u03b9",
+              "\u2581\u20ac",
+              "12.",
+              "50",
+              "\u2581\u03b3\u03b9\u03b1",
+              "\u25812",
+              "\u2581\u03b1\u03bd\u03c4\u03b9\u03ba",
+              "\u03b5\u03af",
+              "\u03bc\u03b5\u03bd\u03b1",
+              ".",
+              "\u2581\u03b7",
+              "\u2581\u03be\u03b5",
+              "\u03c7\u03c9",
+              "\u03c1\u03b9\u03c3",
+              "\u03c4\u03ae",
+              "\u2581\u03bc\u03b5\u03c4\u03b1",
+              "\u03c6\u03bf\u03c1\u03ac",
+              "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+              "\u25815.000",
+              "\u2581sats",
+              ",",
+              "\u2581\u03cc\u03c7\u03b9",
+              "\u2581500",
+              "\u2581sats",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4537648558616638
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u03a4\u03bf",
+              "\u2581\u03c3\u03b7\u03bc\u03b5\u03b9",
+              "\u03c9\u03bc\u03b1",
+              "\u03c4\u03ac",
+              "\u03c1\u03b9\u03bf",
+              "\u2581\u03b1\u03bd\u03b1",
+              "\u03c6\u03ad",
+              "\u03c1\u03b5\u03c4\u03b1\u03b9",
+              "\u2581\u03c3\u03c4\u03bf",
+              "\u2581Bitcoin",
+              ".",
+              "\u2581\u0394\u03b5\u03bd",
+              "\u2581\u03c3\u03b7\u03bc\u03b1\u03af\u03bd\u03b5\u03b9",
+              "\u2581\u03cc\u03c4\u03b9",
+              "\u2581\u03c4\u03b1",
+              "\u2581\u03b5\u03c5\u03c1\u03ce",
+              "\u2581\u03ba\u03b1\u03b9",
+              "\u2581\u03c4\u03b1",
+              "\u2581\u03c3",
+              "\u03ac",
+              "\u03c4",
+              "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+              "\u2581\u03b7",
+              "\u2581\u03af\u03b4\u03b9\u03b1",
+              "\u2581\u03bc\u03bf\u03bd\u03ac",
+              "\u03b4\u03b1",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4967554807662964
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 3.057,
+      "finished_at": "2026-11-28T01:31:38.354350+00:00"
+    }
+  ]
+}

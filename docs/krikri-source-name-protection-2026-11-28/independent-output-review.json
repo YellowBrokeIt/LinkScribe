@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T05:06:48.710253+00:00",
+  "decision": "Rejected exact source-name-protection development profile. One restored case has only a minor fluency issue; the second native response fails exact marker preservation; four cases were not run under the frozen stop rule.",
+  "candidate_accepted": false,
+  "scope": "Independent actual raw and restored output review against the unchanged original-six source and global meaning criteria. No fresh validation, retuning, retry, new inference or production integration.",
+  "criteria_binding": {
+    "sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+    "source_and_criteria_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "native_contract_review_sha256": "d60bb2a5a14d25bea2b3eeb0e51e5d20bd1948407d883dbbb4f524fc728d0682",
+    "unused_v3_accessed": false
+  },
+  "execution_bindings": {
+    "plan_sha256": "d8b4c2e29998cd650be1f2d5bf232d47c6a8b478f831102f71bed0e2b3581bf4",
+    "inference_freeze_sha256": "43fd6abd4ae20c30d205048269c92cfb45457ade8cb10b1df2ed7b163d696416",
+    "execution_sha256": "c424551ca73724955468406c7cace70bba46876ed9e0db29dd66ff055070349c",
+    "resource_report_sha256": "4abc1c807bbd252903449446a7919c3ec07fbea985aef8e839894e0373e1c7ac",
+    "resource_samples_sha256": "c73d1b7a0d0711e3ca40bd7aeba06b7dbf23d8a1e1ae56911406b565123839ef"
+  },
+  "counts": {
+    "fixed_cases": 6,
+    "native_responses": 2,
+    "accepted_restored_results": 1,
+    "acceptable_without_notable_issue": 0,
+    "minor_error_restored_results": 1,
+    "major_error_accepted_restored_results": 0,
+    "protocol_rejected_native_results": 1,
+    "not_run": 4
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "execution_status": "completed_and_restored",
+      "semantic_classification": "minor_error",
+      "material_meaning_error": false,
+      "source_text": [
+        "Maria saved the transcript as a text file; she did not save the original recording.",
+        "Transcription took 12 minutes. Translation into Greek has not started yet."
+      ],
+      "actual_restored_text": [
+        "Maria αποθήκευσε τη μεταγραφή ως αρχείο κειμένου, δεν αποθήκευσε όμως την αρχική ηχογράφηση.",
+        "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+      ],
+      "raw_final_content": "{\n  \"translations\": [\n    \"__LSNP_4ab3d45b3c75f0c9_0000_0000__ αποθήκευσε τη μεταγραφή ως αρχείο κειμένου, δεν αποθήκευσε όμως την αρχική ηχογράφηση.\",\n    \"Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.\"\n  ]\n}",
+      "original_review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as Μαρία."
+      ],
+      "criterion_findings": [
+        "Transcript text is rendered as μεταγραφή and explicitly saved as a text file; the original recording remains a separate object.",
+        "The first proposition preserves saving the text and not saving the original recording. The added όμως is a natural contrast and does not alter this relationship.",
+        "The second segment attributes the12-minute duration to transcription and explicitly says translation into Greek has not begun.",
+        "Maria is restored in its exact source spelling, which the original case explicitly permits; no person substitution or actor change occurs."
+      ],
+      "minor_fluency_issue": {
+        "actual": "Maria αποθήκευσε τη μεταγραφή…",
+        "explanation": "The subject name lacks the customary Greek definite article in this ordinary narrative sentence. This is a minor recoverable phrasing defect; it does not change the identity, actor, objects, negation or chronology. Retaining Latin-script Maria itself is expressly allowed."
+      },
+      "ordinary_prose_translated": true,
+      "source_metadata_preserved": true,
+      "marker_integrity_and_post_restoration_guard": "passed",
+      "output_bindings": {
+        "id": "dev-en-el-transcript-terminology",
+        "report_sha256": "c0acb692b23caaff56b26f4764ec092788b2e4b3764f63a899e25b15a4646e38",
+        "preflight_sha256": "75b9981f0a3ae0eea7821cdc5f341b332bb111ddbe6dae96466c7be8148ef9be",
+        "protection_sha256": "33e732ae13d2658bdb16bf2c157079f77ca1ffcc918a0eb9fded292605c3da6b",
+        "raw_response_json_utf8_sha256": "e12fcd31d96d4efd0a9c0e33c42bfd4ebd6191adf535afbebfad2be0cfcd6327",
+        "raw_final_content_utf8_sha256": "56176952f00c9612d4722ae243dc50e18b9b71262ff06a4855de2756da5c0813",
+        "raw_translation_string_utf8_sha256": [
+          "e47ba77beb0e85b2ae36d22ec55cb1fd1418a6bef3c95ed3fc5e42f28e3f697c",
+          "33af1a172dc86553a7151ede7dc43c8fb82ac9587ed1e0da13bfd7c1a43a8e2c"
+        ],
+        "restored_translation_string_utf8_sha256": [
+          "e524dbcb681aa2cb166972aeabaae191843aab5686927adc8431761d5862aa2d",
+          "33af1a172dc86553a7151ede7dc43c8fb82ac9587ed1e0da13bfd7c1a43a8e2c"
+        ],
+        "actual_prompt_tokens": 229,
+        "output_tokens": 78,
+        "exact_expected_marker_counts": [
+          1
+        ],
+        "observed_corrupt_markers": [],
+        "one_normal_generation_and_acknowledged_unload": true,
+        "post_restoration_accepted": true
+      }
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "execution_status": "completed_native_response_rejected_by_exact_marker_guard",
+      "semantic_classification": "not_accepted_protocol_failure",
+      "material_meaning_error": null,
+      "source_text": [
+        "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+        "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους."
+      ],
+      "actual_restored_text": null,
+      "raw_final_content": "{\n  \"translations\": [\n    \"Person 60565918d7affc7b_0000_0000_ sent the text to person 60565918d7affc7b_0000_0001_, not to person 60565918d7affc7b_0000_0002_.\",\n    \"Person 60565918d7affc7b_0001_0003_ is the translator. Person 60565918d7affc7b_0001_0004_ is doing the recording and person 60565918d7affc7b_0001_0005_ is checking the subtitles.\"\n  ]\n}",
+      "original_review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "failure": "All six exact source-derived markers are absent. The native model rewrites each as Person/person plus its nonce/segment/occurrence suffix. This violates the frozen exact-marker contract; restoration and post-restoration guard acceptance never occur.",
+      "criterion_findings": [
+        "No final translation preserving the actual personal names is produced. This case cannot pass the name/identity criteria or count as a usable translation.",
+        "The raw ordinary English prose retains the sending-to-one-person/not-the-other structure and the translator/recording/subtitle-checking clauses. The retained numeric suffixes appear in their intended local positions, so this review does not falsely claim that the native output reverses the actor roles.",
+        "Those surviving suffixes are malformed markers, not an authorized name restoration. They are retained unchanged; no fuzzy matching, marker repair, dictionary or second request was used.",
+        "The schema and two-entry structure are valid and the response stops normally below the output cap, but those mechanical successes do not override the exact marker rejection."
+      ],
+      "raw_output_if_presented_as_translation": "Unusable identity placeholders remain instead of the source names; not a minor stylistic variation.",
+      "source_metadata_preserved_in_rejected_masked_result": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "output_bindings": {
+        "id": "dev-el-en-people-and-roles",
+        "report_sha256": "8215f0dfee6e00b0e191381338fd5f386fb368d7069634ad2ac7b586e00f885f",
+        "preflight_sha256": "7e998a5a8a009148eae6792949c5e5c7d6e3a5f5915ac9cee0ee1bfdb89c1641",
+        "protection_sha256": "a770ddcac1da14eb999c2cc13cba052f52d61c8947c6d9c67c931c7deada3632",
+        "raw_response_json_utf8_sha256": "de0af7980b976fc348b4a6557e41c4a32d4a9c37d8d5a2e0d9c87e926aac2fe8",
+        "raw_final_content_utf8_sha256": "f80cc63937e656772604d9696c37e633cac475e6a4bde7f67edbacac54e66da2",
+        "raw_translation_string_utf8_sha256": [
+          "4b64188a20b0e9e87bf8f07fc94875613db3f69a70c01d0ac9b851b430657cbc",
+          "980294665d3ef4a9294c1525f2dd0bc9b42abdcfe1d87cb9c86803b16c232eb7"
+        ],
+        "restored_translation_string_utf8_sha256": null,
+        "actual_prompt_tokens": 323,
+        "output_tokens": 147,
+        "exact_expected_marker_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "observed_corrupt_markers": [
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0000_0000__",
+            "source_name": "Νίκος",
+            "segment_index": 0,
+            "observed_corrupt_text": "Person 60565918d7affc7b_0000_0000_"
+          },
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0000_0001__",
+            "source_name": "Ελένη",
+            "segment_index": 0,
+            "observed_corrupt_text": "person 60565918d7affc7b_0000_0001_"
+          },
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0000_0002__",
+            "source_name": "Έλενα",
+            "segment_index": 0,
+            "observed_corrupt_text": "person 60565918d7affc7b_0000_0002_"
+          },
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0001_0003__",
+            "source_name": "Ελένη",
+            "segment_index": 1,
+            "observed_corrupt_text": "Person 60565918d7affc7b_0001_0003_"
+          },
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0001_0004__",
+            "source_name": "Νίκος",
+            "segment_index": 1,
+            "observed_corrupt_text": "Person 60565918d7affc7b_0001_0004_"
+          },
+          {
+            "original_exact_marker": "__LSNP_60565918d7affc7b_0001_0005__",
+            "source_name": "Έλενα",
+            "segment_index": 1,
+            "observed_corrupt_text": "person 60565918d7affc7b_0001_0005_"
+          }
+        ],
+        "one_normal_generation_and_acknowledged_unload": true,
+        "post_restoration_accepted": false
+      }
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "execution_status": "not_run",
+      "semantic_classification": "not_reviewed_no_output",
+      "reason": "Frozen first-operational-failure stop after people-and-roles marker corruption. No native call, preflight-case report, protection report or translation result exists for this case in the stage.",
+      "original_review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ]
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "execution_status": "not_run",
+      "semantic_classification": "not_reviewed_no_output",
+      "reason": "Frozen first-operational-failure stop after people-and-roles marker corruption. No native call, preflight-case report, protection report or translation result exists for this case in the stage.",
+      "original_review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ]
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "execution_status": "not_run",
+      "semantic_classification": "not_reviewed_no_output",
+      "reason": "Frozen first-operational-failure stop after people-and-roles marker corruption. No native call, preflight-case report, protection report or translation result exists for this case in the stage.",
+      "original_review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ]
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "execution_status": "not_run",
+      "semantic_classification": "not_reviewed_no_output",
+      "reason": "Frozen first-operational-failure stop after people-and-roles marker corruption. No native call, preflight-case report, protection report or translation result exists for this case in the stage.",
+      "original_review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ]
+    }
+  ],
+  "protocol_and_resource_review": {
+    "audit_path": "completed-output-protocol-audit.json",
+    "audit_sha256": "797c28bfb8a05f294cc6111d5f784643eab3f67d1cc42f28d7a940f6b1962d80",
+    "audit_script_sha256": "2b4d9137dfb287d1bb400051c8002a4e66cc99c2c9d38a3cf14608e29254f44b",
+    "audit_complete": true,
+    "frozen_files_verified": 70,
+    "actual_prompt_counts": [
+      229,
+      323
+    ],
+    "generated_output_counts": [
+      78,
+      147
+    ],
+    "two_exact_single_requests": true,
+    "both_normal_stops_no_reasoning": true,
+    "both_full_native_counts_match": true,
+    "both_acknowledged_unload_and_empty_resident_lists": true,
+    "stage_complete": false,
+    "supervisor_passed": false,
+    "failure_scope": "Marker-validation rejection, not a context, timeout, memory, download, initialization or native-protocol failure.",
+    "measurement": {
+      "elapsed_seconds": 65.989885,
+      "sample_count": 507,
+      "peak_rss_bytes": 5833158656,
+      "peak_pss_bytes": 5823792128,
+      "worker_exit_code": 1,
+      "owned_processes_stopped": true,
+      "resource_limit_hit": false
+    },
+    "all507_sample_sums_and_peak_records_verified": true,
+    "honest_failure_preservation": "Worker exit1 and supervisor passed:false are retained. The evaluator complete:true on each individual report means its single requested evaluation finished; it does not mean the rejected output or the full six-case stage passed."
+  },
+  "limits_of_conclusion": [
+    "The guard prevented malformed person placeholders from being restored or accepted. That correct rejection does not establish a successful name-protection translation route.",
+    "Within-segment role correctness remains a separate semantic requirement even when marker accounting succeeds. The first observed case contains only one personal-name mention; the multi-person case failed the marker prerequisite.",
+    "The four unrun cases provide no quality evidence for this profile. Prior baseline and generic-instruction failures remain rejected; no historical result has been regraded.",
+    "No marker-repair rule, threshold change, response retry, additional model run, reference answer or name dictionary was used.",
+    "Memory peaks are sampled owned-process observations. The stage stayed below the declared6144MiB cap and cleaned up, but this is not whole-app or long-source resource approval."
+  ],
+  "reviewer_actions": {
+    "model_loads": 0,
+    "inference_calls": 0,
+    "provider_calls": 0,
+    "production_edits": 0,
+    "frozen_peer_evidence_edits": 0,
+    "standard_library_read_only_audit": true
+  }
+}

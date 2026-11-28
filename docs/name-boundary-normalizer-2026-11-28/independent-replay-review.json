@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:42:07.427653+00:00",
+  "scope": "Independent read-only all-six comparison against unchanged pre-output annotations, plus exact provenance/source/raw-score/offset audit and inspection of all 50 saved mechanical control outcomes. No algorithm, detector, masking or translation reexecution.",
+  "decision": "pass_six_case_exact_span_development_review_only",
+  "automatic_name_protection_approved": false,
+  "production_or_translation_execution_approved_by_this_review": false,
+  "bindings": {
+    "plan_sha256": "9d708e04ac952039e332314e098ab6befa90dd6b75d07842772aeb9992d41b76",
+    "pre_replay_review_sha256": "6281f49eaee8c7dc6602b68feb27076176eb38c584e41198e99d1727007d6f1a",
+    "execution_freeze_sha256": "a8c0f8da54d4d4e793edeef1fcac331ebc91340351418b46a8d23dded3d6f3e7",
+    "execution_sha256": "5f492ce712532ab4be96a0c2a743c7046165d8751e0971bf2c3546e03c1be4b8",
+    "control_results_sha256": "adf049c3b5c6fd0dc015f59cc5748be1a4a6770e6f55e0fbe12685d096c6a075",
+    "control_cases_sha256": "1baad8b028f848dc29b3aad97fc97b5f9a17b0f5592a464c35dc2585c2bed337",
+    "unchanged_annotations_sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+    "raw_detector_manifest_sha256": "b6a13b115182b84c1bcc8e20a6e37c30c69afd3e2c5a9a04cd1c065e5423b5e2"
+  },
+  "counts": {
+    "cases_passed": 6,
+    "cases_total": 6,
+    "exact_person_mentions": 13,
+    "expected_person_mentions": 13,
+    "changed_predictions": 1,
+    "unchanged_predictions": 12,
+    "extra_or_missing_person_spans": 0
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report_sha256": "f5197e3b79a72e29dc5623efb55c22da0d0f02cb98dd24607fa00773fabc1b4f",
+      "raw_report_sha256": "7de6b381a15d12c2eeb57340a7495c7faa1a4a4a698ec10f1e07f16c656ef0f7",
+      "source_text_sha256": "4872fa97eb447f9c4026fc8fc214008eb809d8a35ea0fb12818d2ada81ad5eac",
+      "expected_mentions": 1,
+      "exact_matches": 1,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": [
+        {
+          "start": 0,
+          "end": 5,
+          "text": "Maria",
+          "segment_start": 0,
+          "segment_end": 5
+        }
+      ]
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "report_sha256": "afabfc80afa907ed5ece2200ccbe12a9b6964773a383674e4d0802032b1167d9",
+      "raw_report_sha256": "f8afa403c0b7934c3390080f63627d9c5a5d16baa53e722ad9cbe6da70ca3ef8",
+      "source_text_sha256": "c3a7267c28e91201e57e80ef96a9b4e2509da584d3257119559223de5694362c",
+      "expected_mentions": 6,
+      "exact_matches": 6,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": [
+        {
+          "start": 2,
+          "end": 7,
+          "text": "Νίκος",
+          "segment_start": 2,
+          "segment_end": 7
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "text": "Ελένη",
+          "segment_start": 32,
+          "segment_end": 37
+        },
+        {
+          "start": 48,
+          "end": 53,
+          "text": "Έλενα",
+          "segment_start": 48,
+          "segment_end": 53
+        },
+        {
+          "start": 57,
+          "end": 62,
+          "text": "Ελένη",
+          "segment_start": 2,
+          "segment_end": 7
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "text": "Νίκος",
+          "segment_start": 32,
+          "segment_end": 37
+        },
+        {
+          "start": 120,
+          "end": 125,
+          "text": "Έλενα",
+          "segment_start": 65,
+          "segment_end": 70
+        }
+      ]
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "report_sha256": "3fedd37875f66dab4d841b98af9410d1975824a1f1a24143b68b926ef94c11cb",
+      "raw_report_sha256": "977267f4ed054507821680a6491fe79f6ee000185ee965c69e4b306987558c2c",
+      "source_text_sha256": "7aa39d2d3bceb35a99f609d5239afbb2693eaba2c4f3578fc01edf7cd98efdb8",
+      "expected_mentions": 0,
+      "exact_matches": 0,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": []
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "report_sha256": "0b35534a2dfdd4d702971b4552392c3efdd0004eaf322f0eda6990b809d56737",
+      "raw_report_sha256": "fac59b5111e989e40a05d7bc322bdb39cd28de52d8cd83429f15aa586eb3d20e",
+      "source_text_sha256": "79a6f7f1ac4e5b9189c100a7e2425645e7332d5ec7ea0a98de1d4c5207394ee0",
+      "expected_mentions": 1,
+      "exact_matches": 1,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": [
+        {
+          "start": 15,
+          "end": 19,
+          "text": "Άννα",
+          "segment_start": 15,
+          "segment_end": 19
+        }
+      ]
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "report_sha256": "6dc8f78cb68f46f97466d443872956c6b8aa922d06e5bbad275b608285e58b7f",
+      "raw_report_sha256": "aa1805fe0eec96111f0ee771a3d0bdc416adf20981d46354b6b01b5589fd8db9",
+      "source_text_sha256": "2a756157850a60007b31c6abf7a2628ff8f83becd3a2d5598227de2e50da375e",
+      "expected_mentions": 4,
+      "exact_matches": 4,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": [
+        {
+          "start": 0,
+          "end": 4,
+          "text": "Anna",
+          "segment_start": 0,
+          "segment_end": 4
+        },
+        {
+          "start": 36,
+          "end": 43,
+          "text": "Giannis",
+          "segment_start": 36,
+          "segment_end": 43
+        },
+        {
+          "start": 66,
+          "end": 73,
+          "text": "Giannis",
+          "segment_start": 3,
+          "segment_end": 10
+        },
+        {
+          "start": 101,
+          "end": 105,
+          "text": "Anna",
+          "segment_start": 38,
+          "segment_end": 42
+        }
+      ]
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "report_sha256": "4fbc223a20d84786c4b4cdd6f621979724d6d3bf3b941bf0670848f65e0d14d1",
+      "raw_report_sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8",
+      "source_text_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9",
+      "expected_mentions": 1,
+      "exact_matches": 1,
+      "case_passed": true,
+      "source_and_all_metadata_unchanged": true,
+      "raw_records_and_scores_preserved": true,
+      "actual_proposed_spans": [
+        {
+          "start": 2,
+          "end": 7,
+          "text": "Μαρία",
+          "segment_start": 2,
+          "segment_end": 7
+        }
+      ]
+    }
+  ],
+  "exact_change": {
+    "case": "dev-el-en-uncertain-question",
+    "raw": {
+      "start": 0,
+      "end": 7,
+      "text": "Η Μαρία",
+      "label": "person",
+      "score": 0.9357870817184448
+    },
+    "proposal": {
+      "start": 2,
+      "end": 7,
+      "text": "Μαρία",
+      "segment_start": 2,
+      "segment_end": 7
+    },
+    "removed_from_protection": {
+      "start": 0,
+      "end": 2,
+      "text": "Η ",
+      "remains_ordinary_source_text": true
+    }
+  },
+  "semantic_judgment": "In the actual complete source Η Μαρία ρώτησε, Η is the ordinary nominative article and Μαρία is the full personal name. The new proposal excludes exactly the article and its space, leaves both in the unchanged original text, and selects exactly the pre-output name annotation. All other twelve existing name occurrences retain their exact original spans; the no-person passage remains empty.",
+  "controls": {
+    "mechanical_conformance_passes": 50,
+    "expected_invalid_input_rejections": 9,
+    "known_semantic_limit_cases": [
+      {
+        "id": "raw-single-article-like-name",
+        "limitation": "A raw single-token prediction stays unchanged, even when its spelling is article-like; this does not establish whether it is a name.",
+        "actual_output_proposals": [
+          {
+            "raw": {
+              "start": 0,
+              "end": 1,
+              "text": "Η",
+              "label": "person",
+              "score": 0.91
+            },
+            "segment_index": 0,
+            "proposed_span": {
+              "start": 0,
+              "end": 1,
+              "text": "Η",
+              "segment_start": 0,
+              "segment_end": 1
+            },
+            "raw_score": 0.91,
+            "score_scope": "original model span; no normalized-span score",
+            "status": "unchanged",
+            "reason": "raw_single_token_span",
+            "removed_from_protection": null,
+            "requires_independent_boundary_review": true
+          }
+        ]
+      },
+      {
+        "id": "legitimate-article-like-name-component",
+        "limitation": "Constructed counterexample: if the full personal name is written Τον Λι, the lexical proposal loses its first name component. Exact source matching cannot distinguish that intended identity from grammatical τον. Mechanical conformance is not semantic acceptance.",
+        "actual_output_proposals": [
+          {
+            "raw": {
+              "start": 0,
+              "end": 6,
+              "text": "Τον Λι",
+              "label": "person",
+              "score": 0.91
+            },
+            "segment_index": 0,
+            "proposed_span": {
+              "start": 4,
+              "end": 6,
+              "text": "Λι",
+              "segment_start": 4,
+              "segment_end": 6
+            },
+            "raw_score": 0.91,
+            "score_scope": "original model span; no normalized-span score",
+            "status": "proposed_remove_definite_article",
+            "reason": "exact_article_form_and_horizontal_separator",
+            "removed_from_protection": {
+              "start": 0,
+              "end": 4,
+              "text": "Τον ",
+              "remains_ordinary_source_text": true
+            },
+            "requires_independent_boundary_review": true,
+            "semantic_limit": "Article-like names and undotted initials remain ambiguous; proposal does not certify name identity."
+          }
+        ]
+      },
+      {
+        "id": "undotted-leading-initial",
+        "limitation": "Constructed counterexample: Η can be an undotted first-name initial. The rule then removes identity-bearing source text from the proposed protection. This ambiguity cannot be settled from the prefix alone.",
+        "actual_output_proposals": [
+          {
+            "raw": {
+              "start": 0,
+              "end": 10,
+              "text": "Η Παπαδάκη",
+              "label": "person",
+              "score": 0.91
+            },
+            "segment_index": 0,
+            "proposed_span": {
+              "start": 2,
+              "end": 10,
+              "text": "Παπαδάκη",
+              "segment_start": 2,
+              "segment_end": 10
+            },
+            "raw_score": 0.91,
+            "score_scope": "original model span; no normalized-span score",
+            "status": "proposed_remove_definite_article",
+            "reason": "exact_article_form_and_horizontal_separator",
+            "removed_from_protection": {
+              "start": 0,
+              "end": 2,
+              "text": "Η ",
+              "remains_ordinary_source_text": true
+            },
+            "requires_independent_boundary_review": true,
+            "semantic_limit": "Article-like names and undotted initials remain ambiguous; proposal does not certify name identity."
+          }
+        ]
+      },
+      {
+        "id": "ordinary-prose-overextension",
+        "limitation": "Constructed counterexample: removing the article leaves the ordinary adjective αγαπητή in the proposed PERSON span. This rule does not repair other detector overextensions or certify every retained word as a name.",
+        "actual_output_proposals": [
+          {
+            "raw": {
+              "start": 0,
+              "end": 15,
+              "text": "η αγαπητή Δανάη",
+              "label": "person",
+              "score": 0.91
+            },
+            "segment_index": 0,
+            "proposed_span": {
+              "start": 2,
+              "end": 15,
+              "text": "αγαπητή Δανάη",
+              "segment_start": 2,
+              "segment_end": 15
+            },
+            "raw_score": 0.91,
+            "score_scope": "original model span; no normalized-span score",
+            "status": "proposed_remove_definite_article",
+            "reason": "exact_article_form_and_horizontal_separator",
+            "removed_from_protection": {
+              "start": 0,
+              "end": 2,
+              "text": "η ",
+              "remains_ordinary_source_text": true
+            },
+            "requires_independent_boundary_review": true,
+            "semantic_limit": "Article-like names and undotted initials remain ambiguous; proposal does not certify name identity."
+          }
+        ]
+      }
+    ],
+    "all_declared_limits_remain_unapproved": true,
+    "interpretation": "A mechanical pass on a declared wrong or ambiguous boundary is specification conformance only. It does not make the undotted-initial, article-like name component or adjective-overextension proposals semantically correct."
+  },
+  "observed_execution": {
+    "elapsed_seconds": 0.005695239000488073,
+    "process_peak_rss_mib": 12.69140625,
+    "affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "exit_code": 0,
+    "normalizer_calls": 6,
+    "detector_calls": 0,
+    "translation_calls": 0,
+    "masking_calls": 0,
+    "child_processes_created": 0,
+    "sources_and_prior_reports_hash_verified_unchanged": true,
+    "resource_scope": "Tiny offline replay process using self-reported elapsed time and OS process high-water RSS; no model or full-app resource claim."
+  },
+  "data_flow_wording_correction": {
+    "frozen_records_preserved": true,
+    "observed_fact": "The replay checksum-verifies the previous independent raw-output review, whose bytes include expected-span annotations. It reads those bytes for hashing without JSON-parsing or passing their content to the algorithm.",
+    "precise_supported_claim": "The pure normalizer receives only complete source segments, raw detector entities and source language. No annotation/reference data is parsed or supplied to it.",
+    "overbroad_statement": "The literal broader claim that the process read no annotation-containing bytes is too strong; the owner acknowledged a transparent README correction without altering frozen reports.",
+    "impact": "No hidden input or reference-conditioned branch exists in the reviewed deterministic algorithm. This is a provenance wording qualification, not a changed score or output."
+  },
+  "limitations": [
+    "This is an exposed six-source development replay, not fresh validation or a general accuracy guarantee.",
+    "The raw detector remains rejected at five of six cases and twelve of thirteen exact mentions; this separate proposal result does not regrade it.",
+    "Known ambiguity cases prevent unattended source-name protection approval. Independent source review remains required for every proposed span.",
+    "No target prose, marker integrity, actor/number/negation preservation or downstream translation quality was tested here. A later protected-translation candidate requires its own reviewed contract and actual output review.",
+    "Unused validation v3 was not accessed and no source/reference criteria were changed."
+  ]
+}

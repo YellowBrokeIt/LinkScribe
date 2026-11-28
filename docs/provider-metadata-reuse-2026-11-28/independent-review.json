@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:56:43.248931+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Bounded read-only native-source, patch and retained-test review. No provider/media/network requests, model calls, downloads, imports of the model stack, source edits or test reruns.",
+  "decision": "no_remaining_source_or_native_contract_blocker_after_additional_result_rejection",
+  "baseline_commit": "7a53991da60c9e052be9a72299218b291b364c8d",
+  "final_sources_sha256": {
+    "app.py": "b0ea2cf313a15697369a61beab15ae7017251476fc25ea7c77bdcbafe527dd47",
+    "tests/test_provider_metadata_reuse.py": "1e0dd63dbbbab7957b56a2dd445120b111cdc63e2effba7a4f3bf071a1cfd894",
+    "tests/test_independent_qa.py": "cc77610664193459066006e4cd7ca7ec1a43e71269d824d1a7a2a4625fc69809",
+    "tests/test_vimeo_player_sources.py": "ff050924de8efd376ecae0620266b1fc5505beaae32ba9f67bb3e028761000b1",
+    "tests/test_provider_runtime.py": "46fb3f8a842571c8cfabc0e76b172034fb2574a2b0fa9cf3e5a562de7673b84e"
+  },
+  "upstream_native_source": {
+    "url": "https://github.com/yt-dlp/yt-dlp/blob/2026.11.23/yt_dlp/YoutubeDL.py",
+    "sha256": "1e6e127e8b03e987dfe81dc83e8de1217145339280e043feb867de168aef3e21",
+    "installed_source_matches_exact_bytes": true,
+    "methods_read": [
+      "extract_info",
+      "process_ie_result",
+      "process_video_result",
+      "download",
+      "__download_wrapper"
+    ]
+  },
+  "findings": [
+    {
+      "id": "video_result_additional_url_dispatch",
+      "status": "corrected_and_verified",
+      "finding": "The native video branch can follow additional_urls with extract_info even when _type is video. The first patch rejected unresolved URL and playlist types but left this separate dispatch path open.",
+      "correction": "Nonempty additional_urls and additional_entries now join the existing multiple-video rejection before transfer; two new regression cases require no download.",
+      "scope": "No such field was observed in the hosted Dailymotion incident. This is a native contract correction, not an attribution of that incident.",
+      "minimal_change_verified": "Removing only the added metadata guard terms reconstructs the initial reviewed app hash; removing exactly two new test rows reconstructs the initial 18-case test hash."
+    }
+  ],
+  "verified_contracts": {
+    "reuse": "The same object returned by one application-level extract_info(video_url, download=False) call passes duration, declared-size and single-video validation, then is supplied to process_ie_result(info, download=True). Native download([url]) performs a fresh extraction, so replacing it removes that explicit duplicate call.",
+    "native_route": "With accepted resolved-video metadata, the inspected API dispatches to normal process_video_result and process_info using the same YoutubeDL instance/options. Unresolved URL, url_transparent, playlist, multi_video, other non-video types and nonempty additional URL/entry metadata are rejected before transfer.",
+    "initial_extraction_scope": "This is one application-level extraction, not one HTTP request. The initial native extractor may resolve its own metadata references. No claim forbids ordinary manifest/fragment/transfer requests.",
+    "validation_and_limits": "Canonical source selection, 2-hour duration rejection, declared/approximate input-size rejection, max_filesize transport cap, accepted output suffixes, missing-file error and actual final file-size check remain unchanged.",
+    "transport": "Format selection, workdir output template, noplaylist, socket timeout, retries, no-overwrite behavior, YouTube JS-runtime selection and explicit system-certificate opt-in remain unchanged. No alternate endpoint, credential use or new retry loop was introduced.",
+    "error_and_cleanup": "Readable validation errors remain specific. Native acquisition/transfer exceptions retain the public access message and original cause. The existing guarded-worker finally path still removes audio intermediates; a failed-transfer regression asserts unrelated files survive.",
+    "native_test_quality": "The native contract case executes installed yt-dlp result processing with an owned fake extractor and intercepted media transfer. urlopen raises on network attempts, the extractor asserts it is invoked once, and selected id/title/duration/format/media URL are checked. It is a real native processing contract test, not a live-provider or actual transfer test.",
+    "production_scope": "AST comparison confirms every other module-level statement/function is unchanged from HEAD; only _download_source_audio differs."
+  },
+  "retained_verification": {
+    "final_focused_tests_sha256": "4ae8229f1487567bfe5221f74aac68af3f2f79c26b531ff94e6fc6111ff4e837",
+    "final_pytest_output_sha256": "4aa1b4efc6b167248464a49258fb60d43f2b523c73dfd86d8fdea89b21bda062",
+    "passed": 104,
+    "new_cases": 20,
+    "seconds": 2.08,
+    "initial_focused_tests_sha256": "d22e75b1b5ae60fee6ada524d00364f8e0c2fd02c0d9c68e486907d26d8f395f",
+    "initial_passed": 102,
+    "initial_new_cases": 18,
+    "independently_rerun": false,
+    "owner_result_source_binding_verified": true
+  },
+  "remaining_limits": [
+    "The live Dailymotion no-video-formats incident remains a failure. Existing logs do not identify whether the old first or second extraction failed, and this offline change does not prove provider availability is restored.",
+    "The historical ASR anchor failure remains unchanged: retained sentence starts before its frozen containment window. No decoder, timing window or speech output changes belong to this patch.",
+    "The native API contract was inspected against exact yt-dlp 2026.11.23 bytes. Normal future dependency validation still applies; no broad compatibility or provider-success claim is made."
+  ]
+}

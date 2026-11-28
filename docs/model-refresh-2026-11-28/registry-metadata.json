@@ -1,0 +1,67 @@
+{
+  "retrieved_at": "2026-11-28T00:58:15.630799+00:00",
+  "manifest_url": "https://registry.ollama.ai/v2/library/qwen3/manifests/4b-instruct-2507-q4_K_M",
+  "manifest_sha256": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+  "metadata": [
+    {
+      "url": "https://registry.ollama.ai/v2/library/qwen3/blobs/sha256:b72accf9724e93698c57cbd3b1af2d3341b3d05ec2089d86d273d97964853cd2",
+      "mediaType": "application/vnd.docker.container.image.v1+json",
+      "digest": "sha256:b72accf9724e93698c57cbd3b1af2d3341b3d05ec2089d86d273d97964853cd2",
+      "size": 487,
+      "verified_sha256": "b72accf9724e93698c57cbd3b1af2d3341b3d05ec2089d86d273d97964853cd2",
+      "content": {
+        "model_format": "gguf",
+        "model_family": "qwen3",
+        "model_families": [
+          "qwen3"
+        ],
+        "model_type": "4.0B",
+        "file_type": "Q4_K_M",
+        "architecture": "amd64",
+        "os": "linux",
+        "rootfs": {
+          "type": "layers",
+          "diff_ids": [
+            "sha256:85e4a5b7b8ef0e48af0e8658f5aaab9c2324c76c1641493f4d1e25fce54b18b9",
+            "sha256:636353bf6b2f3a81788e1e2d83a31e934123695d53aa0406273298c9b1b6a3d5",
+            "sha256:d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+            "sha256:0914c7781e001948488d937994217538375b4fd8c1466c5e7a625221abd3ea7a"
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://registry.ollama.ai/v2/library/qwen3/blobs/sha256:eade0a07cac7712787bbce23d12f9306adb4781d873d1df6e16f7840fa37afec",
+      "mediaType": "application/vnd.ollama.image.template",
+      "digest": "sha256:eade0a07cac7712787bbce23d12f9306adb4781d873d1df6e16f7840fa37afec",
+      "size": 1379,
+      "verified_sha256": "eade0a07cac7712787bbce23d12f9306adb4781d873d1df6e16f7840fa37afec",
+      "content": "{{- $lastUserIdx := -1 -}}\n{{- range $idx, $msg := .Messages -}}\n{{- if eq $msg.Role \"user\" }}{{ $lastUserIdx = $idx }}{{ end -}}\n{{- end }}\n{{- if or .System .Tools }}<|im_start|>system\n{{ if .System }}{{ .System }}\n\n{{ end }}\n{{- if .Tools }}# Tools\n\nYou may call one or more functions to assist with the user query.\n\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>\n{{- range .Tools }}\n{\"type\": \"function\", \"function\": {{ .Function }}}\n{{- end }}\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{\"name\": <function-name>, \"arguments\": <args-json-object>}\n</tool_call>\n{{- end -}}\n<|im_end|>\n{{ end }}\n{{- range $i, $_ := .Messages }}\n{{- $last := eq (len (slice $.Messages $i)) 1 -}}\n{{- if eq .Role \"user\" }}<|im_start|>user\n{{ .Content }}<|im_end|>\n{{ else if eq .Role \"assistant\" }}<|im_start|>assistant\n{{ if .Content }}{{ .Content }}{{ end }}\n{{- if .ToolCalls }}\n{{- range .ToolCalls }}\n<tool_call>\n{\"name\": \"{{ .Function.Name }}\", \"arguments\": {{ .Function.Arguments }}}\n</tool_call>\n{{- end }}\n{{- end }}{{ if not $last }}<|im_end|>\n{{ end }}\n{{- else if eq .Role \"tool\" }}<|im_start|>user\n<tool_response>\n{{ .Content }}\n</tool_response><|im_end|>\n{{ end }}\n{{- if and (ne .Role \"assistant\") $last }}<|im_start|>assistant\n{{ end }}\n{{- end }}"
+    },
+    {
+      "url": "https://registry.ollama.ai/v2/library/qwen3/blobs/sha256:d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+      "mediaType": "application/vnd.ollama.image.license",
+      "digest": "sha256:d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+      "size": 11338,
+      "verified_sha256": "d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+      "license": "Apache-2.0"
+    },
+    {
+      "url": "https://registry.ollama.ai/v2/library/qwen3/blobs/sha256:0914c7781e001948488d937994217538375b4fd8c1466c5e7a625221abd3ea7a",
+      "mediaType": "application/vnd.ollama.image.params",
+      "digest": "sha256:0914c7781e001948488d937994217538375b4fd8c1466c5e7a625221abd3ea7a",
+      "size": 119,
+      "verified_sha256": "0914c7781e001948488d937994217538375b4fd8c1466c5e7a625221abd3ea7a",
+      "content": {
+        "repeat_penalty": 1,
+        "stop": [
+          "<|im_start|>",
+          "<|im_end|>"
+        ],
+        "temperature": 0.7,
+        "top_k": 20,
+        "top_p": 0.8
+      }
+    }
+  ]
+}

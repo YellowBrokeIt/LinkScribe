@@ -1,0 +1,20 @@
+--- production-enhancements.py
++++ isolated-thinking-enhancements.py
+@@ -168,7 +168,7 @@
+ 
+ def ollama_inference_options() -> dict[str, Any]:
+     """Keep the model defaults reproducible; allow a CPU thread limit."""
+-    options: dict[str, Any] = {"temperature": 0, "num_ctx": 8192, "num_predict": 2048}
++    options: dict[str, Any] = {"temperature": 0.6, "top_p": 0.95, "top_k": 20, "min_p": 0, "seed": 0, "num_ctx": 8192, "num_predict": 2048}
+     threads = os.getenv("LINKSCRIBE_OLLAMA_THREADS", "").strip()
+     if threads:
+         try:
+@@ -194,7 +194,7 @@
+     }
+     if not plain_text:
+         body["format"] = payload.get("response_schema", "json")
+-        body["think"] = False
++        body["think"] = True
+     try:
+         phase = _OLLAMA_PHASE.get()
+         if phase is not None and phase["task"] == task:

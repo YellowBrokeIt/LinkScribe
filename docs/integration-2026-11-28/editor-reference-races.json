@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-28T00:35:30.705Z",
+  "observer_sha256": "b9e131f68bb362105747b4c4848c47ae6511d22c23790d133c6db6c4b6dd1034",
+  "scope": "Actual inline editor logic with controlled DOM and transport; not Chromium, HTTP or SQLite evidence.",
+  "comparisons": [
+    {
+      "file": "docs/integration-2026-11-28/editor-reference-before.html",
+      "sha256": "7366cca195cbf747554663abfc72ce874e10294e9a54dc45071849acc6b80206",
+      "edit_after_highlight_generation": {
+        "before_save": {
+          "displayed": "New correction after highlights.",
+          "model": "Original A."
+        },
+        "persisted": "Original A.",
+        "displayed_after_save": "Original A.",
+        "notice": "Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.",
+        "passes": false
+      },
+      "edit_during_pending_open": {
+        "editor_after_response": {
+          "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "text": "Original B.",
+          "dirty": false
+        },
+        "notice": "",
+        "confirmations": 0,
+        "saved_target_ids": [
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ],
+        "persisted_original": "Original A.",
+        "other_record_unchanged": true,
+        "passes": false
+      },
+      "confirmed_discard_without_further_typing": {
+        "editor": {
+          "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "text": "Original B.",
+          "dirty": false
+        },
+        "confirmations": 1,
+        "passes": true
+      },
+      "all_expected_behaviors_hold": false
+    },
+    {
+      "file": "docs/integration-2026-11-28/editor-reference-after.html",
+      "sha256": "e03c0ec36d6a1e25fcb98f25350eced1846b998ac75bb2e4e6bfe73ba7d245f8",
+      "edit_after_highlight_generation": {
+        "before_save": {
+          "displayed": "New correction after highlights.",
+          "model": "New correction after highlights."
+        },
+        "persisted": "New correction after highlights.",
+        "displayed_after_save": "New correction after highlights.",
+        "notice": "Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.",
+        "passes": true
+      },
+      "edit_during_pending_open": {
+        "editor_after_response": {
+          "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "text": "Correction typed while B loads.",
+          "dirty": true
+        },
+        "notice": "Newer edits were kept. Save or discard them before opening another transcript.",
+        "confirmations": 0,
+        "saved_target_ids": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ],
+        "persisted_original": "Correction typed while B loads.",
+        "other_record_unchanged": true,
+        "passes": true
+      },
+      "confirmed_discard_without_further_typing": {
+        "editor": {
+          "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "text": "Original B.",
+          "dirty": false
+        },
+        "confirmations": 1,
+        "passes": true
+      },
+      "all_expected_behaviors_hold": true
+    }
+  ],
+  "snapshot_provenance": {
+    "before": "Recovered by reversing the two editor fixes and the separate added public-video diagnostic line. Its hash matches the prior candidate fingerprint observed in editor-save-race.json during independent review; that parent-owned report was subsequently refreshed.",
+    "before_previously_observed_sha256": "7366cca195cbf747554663abfc72ce874e10294e9a54dc45071849acc6b80206",
+    "after": "Exact static/index.html bytes observed during this verification.",
+    "production_files_modified_by_probe": false
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "scope": "Pre-output review of initial GLiNER native worker/observer after acquisition but before tokenizer preparation, entity model construction or detector forward.",
+  "decision": "Two concrete blockers require narrow implementation correction; original plan, sources, labels, threshold and criteria remain fixed.",
+  "plan_sha256": "1a56796eb75a709c9231354ff17ca7b9f23be9988e3ddbc30ba0492433b2b9d5",
+  "initial_worker_sha256": "d20d3b4a974fa8450463fde6716080b1e551ed05247952e79b01d0bfc3bb5b5a",
+  "initial_observer_sha256": "1d2bede2325d21f0b318aa5c50da293f5828cdad3e13a1cb0c246b514c5d24f6",
+  "findings": [
+    {
+      "id": "owned-child-after-leader-exit",
+      "severity": "blocking protocol false pass",
+      "confirmed": "Actual harmless subprocess control returned monitor passed=true/owned_processes_stopped=true while a live child remained in the worker process group. The probe killed its child and verified cleanup.",
+      "required_fix": "Discover and account for live owned group/session plus retained identities after leader exit; signal and reap owned children regardless of leader status; verify no live survivors before passing."
+    },
+    {
+      "id": "native-shared-class-mapping",
+      "severity": "blocking predictable pre-forward execution failure",
+      "confirmed": "Exact pinned pure native collation code returns dict {1: person} for entity_types=[person], while worker guard requires a list containing that dict.",
+      "required_fix": "Bind the guard to the exact native shared dictionary without relaxing label or mapping content."
+    }
+  ],
+  "additional_evidence_order_note": "Persist actual tensor/token/class observations before rejecting a mismatch, retaining the failed native input for audit.",
+  "probe_bindings": [
+    {
+      "path": "/workspace/scratch/94360995dd61/name-span-independent-review-2026-11-28/observer-leader-exit-probe/probe-result.json",
+      "sha256": "1d3e70db019964430517199641064a1bc403ebfe2e553dfc99030da8d18a9d43"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/name-span-independent-review-2026-11-28/observer-leader-exit-probe/resource-report.json",
+      "sha256": "da4dba84b41beab19dbd5af1ca079ee509e0c0dc55f49870cb010434cfb2368b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/name-span-independent-review-2026-11-28/observer-leader-exit-probe/initial-run_phase.py",
+      "sha256": "1d2bede2325d21f0b318aa5c50da293f5828cdad3e13a1cb0c246b514c5d24f6"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/name-span-independent-review-2026-11-28/class-mapping-probe.json",
+      "sha256": "99efa86faae4d71e7a6bd966b62e5cb4483094f37bc0d15716340f4fd3aab436"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/name-span-independent-review-2026-11-28/initial-native-worker.py",
+      "sha256": "d20d3b4a974fa8450463fde6716080b1e551ed05247952e79b01d0bfc3bb5b5a"
+    }
+  ],
+  "models_imported_or_constructed": false,
+  "detector_or_translation_calls": 0,
+  "independent_source_annotations_remain_unseen_by_worker": true
+}

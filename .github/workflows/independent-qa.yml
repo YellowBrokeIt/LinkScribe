@@ -1,0 +1,189 @@
+name: Independent LinkScribe QA
+
+on:
+  push:
+    branches: ['qa/**', 'feature/linkscribe-v03-reliability']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  api-test-matrix:
+    name: API and regressions / Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install real app dependencies and test tools
+        run: python -m pip install -r requirements.txt pytest httpx 'pyannote.core==6.1.0' 'scipy>=1.15,<2'
+      - name: All unit/API and independent tests
+        run: python -m pytest -q
+      - name: Verify packaging and shell scripts
+        run: |
+          python -m compileall -q app.py asr_timing.py library.py sources.py source_highlights.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py
+          python -m pip check
+          bash -n start_linux.sh launch.sh
+
+  real-speech-integration:
+    name: Real file upload / PyAV / Whisper / SQLite / exports
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: api-test-matrix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install synthesis tool and media dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg
+          python -m pip install -r requirements.txt pytest httpx
+      - name: Generate owned sample speech locally
+        run: |
+          espeak-ng -v en -s 125 -a 170 -w /tmp/linkscr-qa-voice.wav 'Hello. This is an independent speech recognition test. I am speaking these words for the LinkScribe app.'
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 /tmp/linkscr-qa-voice.wav
+      - name: Exercise full actual audio pipeline (downloads open-source Whisper tiny model)
+        env:
+          LINKSCRIBE_DEVICE: cpu
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          LINKSCRIBE_QA_AUDIO: /tmp/linkscr-qa-voice.wav
+        run: PYTHONPATH=. python tests/smoke_real_speech.py
+
+  fresh-linux-install:
+    name: Fresh Linux installation and health endpoint
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run the actual Linux launcher from a fresh checkout
+        run: |
+          set -euo pipefail
+          bash start_linux.sh > /tmp/linkscr-smoke.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          healthy=0
+          for attempt in $(seq 1 120); do
+            if curl --fail --silent http://127.0.0.1:8765/health > /tmp/linkscr-health.json; then
+              healthy=1
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat /tmp/linkscr-smoke.log
+              exit 1
+            fi
+            sleep 1
+          done
+          if [[ "$healthy" != 1 ]]; then
+            cat /tmp/linkscr-smoke.log
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from urllib.request import urlopen
+          health=json.load(open('/tmp/linkscr-health.json'))
+          assert health['status']=='ok',health
+          assert health['service']=='LinkScribe',health
+          assert 'js_runtime' in health,health
+          with urlopen('http://127.0.0.1:8765/api/diagnostics') as response:
+              check=json.load(response)
+              assert check['app']=='LinkScribe' and 'libraries' in check,check
+          with urlopen('http://127.0.0.1:8765/') as response:
+              html=response.read().decode('utf-8')
+              assert '<title>LinkScribe' in html
+          with urlopen('http://127.0.0.1:8765/api/library') as response:
+              saved=json.load(response)
+              assert saved=={'items':[],'next_cursor':None},saved
+          print('Fresh Ubuntu clone, start_linux.sh, /health, homepage, library endpoint: PASS')
+          PY
+
+  real-ollama-integration:
+    name: Real local Ollama / English-Greek / summaries / exports
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    needs: api-test-matrix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install application dependencies
+        run: python -m pip install -r requirements.txt httpx
+      - name: Download and verify the tested Ollama runtime
+        run: |
+          set -euo pipefail
+          runtime_dir="$RUNNER_TEMP/linkscr-ollama"
+          archive="$RUNNER_TEMP/linkscr-ollama.tar.zst"
+          mkdir -p "$runtime_dir"
+          curl --fail --location --retry 2 --max-time 300 \
+            https://github.com/ollama/ollama/releases/download/v0.40.12/ollama-linux-amd64.tar.zst \
+            --output "$archive"
+          printf '%s  %s\n' f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba "$archive" | sha256sum --check
+          tar --zstd -xf "$archive" -C "$runtime_dir" \
+            --exclude='lib/ollama/cuda_v12' --exclude='lib/ollama/cuda_v13' --exclude='lib/ollama/vulkan'
+      - name: Test the actual default model on owned bilingual text
+        env:
+          OLLAMA_HOST: 127.0.0.1:11434
+          OLLAMA_NO_CLOUD: '1'
+          OLLAMA_NUM_PARALLEL: '1'
+          OLLAMA_MAX_LOADED_MODELS: '1'
+          OLLAMA_CONTEXT_LENGTH: '8192'
+          OLLAMA_KEEP_ALIVE: 1m
+          LINKSCRIBE_OLLAMA_MODEL: qwen3:4b
+          LINKSCRIBE_OLLAMA_THREADS: '4'
+        run: |
+          set -euo pipefail
+          export OLLAMA_MODELS="$RUNNER_TEMP/linkscr-ollama-models"
+          "$RUNNER_TEMP/linkscr-ollama/bin/ollama" serve > "$RUNNER_TEMP/linkscr-ollama.log" 2>&1 &
+          ollama_pid=$!
+          trap 'kill "$ollama_pid" 2>/dev/null || true' EXIT
+          python - <<'PY'
+          import json
+          import time
+          import urllib.request
+          opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+          for attempt in range(60):
+              try:
+                  with opener.open('http://127.0.0.1:11434/api/version', timeout=2) as response:
+                      print('Ollama:', json.load(response))
+                  break
+              except OSError:
+                  time.sleep(0.5)
+          else:
+              raise AssertionError('Local Ollama did not start')
+          request = urllib.request.Request('http://127.0.0.1:11434/api/pull',
+              json.dumps({'model': 'qwen3:4b', 'stream': False}).encode(),
+              {'Content-Type': 'application/json'})
+          with opener.open(request, timeout=600) as response:
+              result = json.load(response)
+              assert result.get('status') == 'success', result
+          PY
+          mkdir -p "$RUNNER_TEMP/linkscr-language-qa"
+          qa_status=0
+          PYTHONPATH=. python tests/smoke_real_ollama.py \
+            > "$RUNNER_TEMP/linkscr-language-qa/integration.json" || qa_status=$?
+          PYTHONPATH=. python tests/evaluate_translation_quality.py \
+            --output "$RUNNER_TEMP/linkscr-language-qa/translation-evaluation.json" || qa_status=$?
+          exit "$qa_status"
+      - name: Preserve exact language-evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-language-qa-${{ github.sha }}
+          path: ${{ runner.temp }}/linkscr-language-qa/*.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,9 @@
+{
+  "created_at": "2026-11-28T01:44:18.914310+00:00",
+  "initial_checker_sha256": "720b3a54f72ec23908f884c9f25cee2e6fed1b7a3e3d5dc2e29e803c54d19fff",
+  "initial_outcome": "Stopped at assertion comparing the original float32 WAV payload byte-for-byte with the prepared float32 NumPy payload.",
+  "cause": "Reviewer assumed byte-identical source float32 values. The pre-existing README and prepare_arrays.py instead declare normal faster_whisper.audio.decode_audio conversion, which passes through signed 16-bit PCM before normalized float32 output.",
+  "resolution": "Verify every original WAV sample against the complete expected nearest-integer/clipped signed-16-bit conversion, then independently verify the prepared array at the actual frontend. All eight complete arrays match this transformation exactly. No audio/candidate/criteria/model/output bytes changed.",
+  "maximum_observed_absolute_sample_difference": 1.52587890625e-05,
+  "classification": "Reviewer audit-assumption correction, not a recognition retry or output correction."
+}

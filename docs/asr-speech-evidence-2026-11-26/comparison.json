@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "role": "fixed_seed_development_regression",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "baseline_sha256": "421459c6051549da645109ca2a1c4aa5c39c657de4cbebba2a6a75557d0383ac",
+  "candidate_sha256": "3e53e5d8a9c8c3ac16fdc3251cbdd06f65746a06f328a2203bdfd81ed85f26dd",
+  "model_resolution_identical": true,
+  "actual_model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+  "actual_model_files": {
+    "model.bin": {
+      "bytes": 483546902,
+      "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+    },
+    "config.json": {
+      "bytes": 2370,
+      "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+    },
+    "tokenizer.json": {
+      "bytes": 2203239,
+      "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+    },
+    "vocabulary.txt": {
+      "bytes": 459861,
+      "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+    }
+  },
+  "runtime_versions_identical": true,
+  "raw_asr_segments_all_identical": true,
+  "positive_saved_segments_all_identical": true,
+  "cases": [
+    {
+      "id": "silence",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 0,
+      "candidate_speech_intervals": [],
+      "candidate_record_present": false,
+      "candidate_export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "white_noise",
+      "baseline_gate": "fail",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": false,
+      "candidate_corroboration_calls": 1,
+      "candidate_speech_intervals": [
+        []
+      ],
+      "candidate_record_present": false,
+      "candidate_export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "owned_440hz_tone",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 0,
+      "candidate_speech_intervals": [],
+      "candidate_record_present": false,
+      "candidate_export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 0,
+      "candidate_speech_intervals": [],
+      "candidate_record_present": true,
+      "candidate_export_statuses": null,
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 0,
+      "candidate_speech_intervals": [],
+      "candidate_record_present": true,
+      "candidate_export_statuses": null,
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 0,
+      "candidate_speech_intervals": [],
+      "candidate_record_present": true,
+      "candidate_export_statuses": null,
+      "candidate_input_cleaned": true
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+      "baseline_gate": "pass",
+      "candidate_gate": "pass",
+      "raw_asr_segments_identical": true,
+      "saved_segments_identical": true,
+      "candidate_corroboration_calls": 1,
+      "candidate_speech_intervals": [
+        [
+          {
+            "start": 14592,
+            "end": 104640
+          }
+        ]
+      ],
+      "candidate_record_present": true,
+      "candidate_export_statuses": null,
+      "candidate_input_cleaned": true
+    }
+  ],
+  "scope_limits": [
+    "Fixed QA seed is not the unseeded production path.",
+    "Existing development speech cases plus fixed attenuated copies are not fresh population accuracy validation.",
+    "One noise and one tone do not prove general non-speech rejection.",
+    "Full-film hosted preservation and unseeded noise checks remain pending.",
+    "The first baseline attempt failed on missing optional socksio before model inference; preserved separately."
+  ]
+}

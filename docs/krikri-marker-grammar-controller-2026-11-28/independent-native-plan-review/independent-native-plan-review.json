@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "decision": "No concrete source-level feasibility blocker identified in this minimal build and zero-generation plan. This is not authorization to acquire, compile or run it.",
+  "plan_sha256": "ddc3b28c5539fb14486634ac022951e3235c3326508713debb044c0660629761",
+  "manifest_sha256": "f908dfea603b2b7dc8ff11da1c3ea268c925e795256f36544934ee4b76151811",
+  "binding_audit": {
+    "path": "source-and-file-binding-audit.json",
+    "sha256": "4e84478f3a993fcc85180570e0252614808ff29260d7ec70e34df8b5e630e7e9"
+  },
+  "header_audit": {
+    "path": "header-source-audit.json",
+    "sha256": "a3cc62c2d2b683ec11f3576bf13db0833896a567fb5f4828ee78666fd4055833",
+    "quoted_include_edges": [
+      {
+        "from": "src/llama-grammar.h",
+        "include": "llama.h",
+        "resolved": "include/llama.h"
+      },
+      {
+        "from": "include/llama.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      },
+      {
+        "from": "include/llama.h",
+        "include": "ggml-cpu.h",
+        "resolved": "ggml/include/ggml-cpu.h"
+      },
+      {
+        "from": "include/llama.h",
+        "include": "ggml-backend.h",
+        "resolved": "ggml/include/ggml-backend.h"
+      },
+      {
+        "from": "include/llama.h",
+        "include": "ggml-opt.h",
+        "resolved": "ggml/include/ggml-opt.h"
+      },
+      {
+        "from": "include/llama.h",
+        "include": "gguf.h",
+        "resolved": "ggml/include/gguf.h"
+      },
+      {
+        "from": "ggml/include/ggml-backend.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      },
+      {
+        "from": "ggml/include/ggml-backend.h",
+        "include": "ggml-alloc.h",
+        "resolved": "ggml/include/ggml-alloc.h"
+      },
+      {
+        "from": "ggml/include/ggml-cpu.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      },
+      {
+        "from": "ggml/include/ggml-cpu.h",
+        "include": "ggml-backend.h",
+        "resolved": "ggml/include/ggml-backend.h"
+      },
+      {
+        "from": "ggml/include/ggml-opt.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      },
+      {
+        "from": "ggml/include/ggml-opt.h",
+        "include": "ggml-backend.h",
+        "resolved": "ggml/include/ggml-backend.h"
+      },
+      {
+        "from": "ggml/include/gguf.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      },
+      {
+        "from": "ggml/include/ggml-alloc.h",
+        "include": "ggml.h",
+        "resolved": "ggml/include/ggml.h"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "area": "Minimal official source closure",
+      "finding": "All29 plan bindings and17 manifest files verify. Independently retrieved primary text for all nine headers at the exact pinned commit; each Git blob and UTF8 byte count matches the allowlist. Every quoted non-system header include resolves within the declared original paths and three include roots. Together with the unchanged3402-byte validator and MIT LICENSE, the declared11 files total289300 bytes. No model/tokenizer/vocabulary or full runtime source build is required by this program."
+    },
+    {
+      "area": "Retained library/ABI feasibility",
+      "finding": "All14 declared compiler/frontend/assembler/linker/core/system files match their actual size, resolved path and SHA256. The three required runtime SONAME links resolve to the pinned core files. Header signatures match the recorded six exported native grammar/Unicode symbols; _GLIBCXX_USE_CXX11_ABI=1 matches the recorded C++11 string exports. The exact private header/parser revision and compatibility-patch scope are explicit. This supports feasibility, not proof that a new link/run succeeds."
+    },
+    {
+      "area": "Build command",
+      "finding": "The exact single G++14.2 C++17 command compiles only the official validator, targets baseline x86-64 for new code, specifies one output/dependency file and directly links the three pinned retained libraries with explicit rpath/rpath-link. A restricted PATH/locale/owned TMPDIR avoids ambient include/loader overrides. Actual emitted ELF/dependency closure and every compiler header dependency are required before acceptance. No package install, full runtime/backend build, alternative flags or fallback is allowed."
+    },
+    {
+      "area": "Validator behavior/status",
+      "finding": "The previously independently read official program initializes the grammar parser with a null vocabulary, accepts raw UTF8 characters, and returns0 for both valid and invalid inputs. The prepared parser requires the entire exact success stdout; a rejection must have the correct first line/error/input structure. Nonzero exit, any stderr, absent/ambiguous/truncated status or oversized capture becomes operational failure. The three frozen model-free sanity inputs cover complete acceptance, wrong text and premature end. Status controls are still declared unexecuted; they were inspected, not run in this review."
+    },
+    {
+      "area": "Phase/stop contract",
+      "finding": "Four phases sum to900seconds:120 acquisition/256MiB,120 build+sanity/512MiB,600 native preparation/6144MiB with180s initialization,60 emitted-grammar validation/256MiB and2s per probe. Each uses at most four CPUs. Disk reserve remains1GiB, owned build tree64MiB/per-file16MiB; validator capture64KiB. Required complete group measurements, surviving-child cleanup and one-attempt failure retention carry forward. A concrete controller still must implement and independently demonstrate these bounds."
+    },
+    {
+      "area": "Actual grammar gate",
+      "finding": "Exact six schemas plus one unsupported sentinel remain frozen. Empty-prompt/n_predict0 requests must retain actual grammar and converter diagnostics; real unsupported warnings, unrestricted fallback, wrong backend or missing grammar reject. All285 predeclared candidate raw strings must match native validator results after model unload and group cleanup. The sentinel either closes at conversion error or proves the enforcement gate rejects a weakened grammar. No profile revision/retry is authorized on failure."
+    },
+    {
+      "area": "Source/meaning preservation",
+      "finding": "All six prior full messages, source-spelling context, model/template,4096 context,2048 output+terminal reserve and original meaning rules remain unchanged. Real native rendering/counts must be checked again. No translation generation authority follows from mechanical success; original semantic and detector-boundary failures remain separate."
+    }
+  ],
+  "execution_boundary": {
+    "concrete_controller_not_yet_reviewed": true,
+    "root_phase_receipts_required_before_acquire_build_or_native": true,
+    "actual_link_or_validator_sanity_unobserved": true,
+    "actual_emitted_grammar_unobserved": true,
+    "actual_full_native_prompt_checks_unobserved_for_this_plan": true,
+    "generation_authorized": false
+  },
+  "scope_limits": [
+    "Private native C++ APIs are acceptable only for this exact pinned local parser/header combination; this is not a portable or stable external ABI promise.",
+    "Existing runtime libraries may use their own instruction profile; generic flags apply to new validator code only, as the plan states.",
+    "File/symbol metadata does not replace actual bounded link/dependency/sanity results.",
+    "The controller must retain raw status bytes and distinguish accepted/rejected exact receipts; exit0 or the substring valid is insufficient.",
+    "Resource/disk/acquisition controls are proposed contracts until implemented and observed.",
+    "No fresh translation source, criterion or expected answer was inspected or supplied."
+  ],
+  "actions": {
+    "read_only_source_and_file_metadata": true,
+    "build_directory_created": false,
+    "compiler_linker_validator_converter_tokenizer_model_called": false,
+    "candidate_or_frozen_file_edits": false,
+    "git_mutations": false
+  }
+}

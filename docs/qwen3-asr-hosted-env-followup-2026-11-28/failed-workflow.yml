@@ -1,0 +1,75 @@
+name: Qwen3 ASR native CPU candidate QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feature/**', 'qa/**']
+    paths:
+      - 'tests/qa_qwen3_asr_candidate.py'
+      - 'docs/qwen3-asr-screen-2026-11-28/plan.json'
+      - 'docs/qwen3-asr-screen-2026-11-28/model-files.json'
+      - 'docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt'
+      - '.github/workflows/qwen3-asr-candidate-qa.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qwen3-asr-candidate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  native-cpu-screen:
+    name: Exposed English/Greek clips / native FP32 / 6 GiB bound
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      QWEN_QA_ROOT: ${{ runner.temp }}/linkscribe-qwen3-asr-candidate
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen declarations without ML imports
+        run: >-
+          python tests/qa_qwen3_asr_candidate.py --action validate
+          --evidence "$QWEN_QA_ROOT/evidence"
+      - name: Install isolated pinned CPU runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$QWEN_QA_ROOT/runtime"
+          "$QWEN_QA_ROOT/runtime/bin/python" -m pip install --no-cache-dir \
+            --report "$QWEN_QA_ROOT/evidence/runtime-install.json" \
+            -r docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt \
+            2>&1 | tee "$QWEN_QA_ROOT/evidence/runtime-install.log"
+          "$QWEN_QA_ROOT/runtime/bin/python" -m pip freeze > "$QWEN_QA_ROOT/evidence/installed-packages.txt"
+          "$QWEN_QA_ROOT/runtime/bin/python" -m pip check | tee "$QWEN_QA_ROOT/evidence/pip-check.txt"
+      - name: Recover exact original recordings and complete PCM arrays
+        run: >-
+          "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py
+          --action prepare-inputs --work "$QWEN_QA_ROOT/work"
+          --evidence "$QWEN_QA_ROOT/evidence"
+      - name: Download and verify only the pinned public native model
+        run: >-
+          "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py
+          --action download-model --work "$QWEN_QA_ROOT/work"
+          --evidence "$QWEN_QA_ROOT/evidence"
+      - name: Run one bounded offline native recognition per full clip
+        run: >-
+          "$QWEN_QA_ROOT/runtime/bin/python" tests/qa_qwen3_asr_candidate.py
+          --action execute --work "$QWEN_QA_ROOT/work"
+          --evidence "$QWEN_QA_ROOT/evidence"
+      - name: Preserve raw successes, failures, tokens, inputs and resource records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-asr-native-fp32-${{ github.sha }}
+          path: ${{ runner.temp }}/linkscribe-qwen3-asr-candidate/evidence/**
+          if-no-files-found: warn
+          retention-days: 30

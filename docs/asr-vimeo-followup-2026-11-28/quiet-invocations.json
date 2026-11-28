@@ -1,0 +1,74 @@
+[
+  {
+    "arm": "baseline-small",
+    "returncode": 0,
+    "command": [
+      "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+      "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_quiet_followup.py",
+      "--source-root",
+      "/tmp/linkscribe-provider-source-002d8fc",
+      "--qa-seed",
+      "1729",
+      "--manifest",
+      "/tmp/linkscribe-asr-vimeo-quality/regression-inputs/manifest.json",
+      "--output",
+      "/tmp/linkscribe-asr-vimeo-quality/quiet-results/baseline-small.json",
+      "--model",
+      "small",
+      "--model-provenance",
+      "/tmp/linkscribe-asr-vimeo-quality/small-model-provenance.json",
+      "--language-mode",
+      "auto",
+      "--timeout",
+      "180"
+    ]
+  },
+  {
+    "arm": "aligned-small",
+    "returncode": 0,
+    "command": [
+      "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+      "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_quiet_followup.py",
+      "--source-root",
+      "/tmp/linkscribe-asr-vimeo-quality/aligned_hallucination",
+      "--qa-seed",
+      "1729",
+      "--manifest",
+      "/tmp/linkscribe-asr-vimeo-quality/regression-inputs/manifest.json",
+      "--output",
+      "/tmp/linkscribe-asr-vimeo-quality/quiet-results/aligned-small.json",
+      "--model",
+      "small",
+      "--model-provenance",
+      "/tmp/linkscribe-asr-vimeo-quality/small-model-provenance.json",
+      "--language-mode",
+      "auto",
+      "--timeout",
+      "180"
+    ]
+  },
+  {
+    "arm": "baseline-turbo",
+    "returncode": 0,
+    "command": [
+      "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+      "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_quiet_followup.py",
+      "--source-root",
+      "/tmp/linkscribe-provider-source-002d8fc",
+      "--qa-seed",
+      "1729",
+      "--manifest",
+      "/tmp/linkscribe-asr-vimeo-quality/regression-inputs/manifest.json",
+      "--output",
+      "/tmp/linkscribe-asr-vimeo-quality/quiet-results/baseline-turbo.json",
+      "--model",
+      "large-v3-turbo",
+      "--model-provenance",
+      "/tmp/linkscribe-asr-vimeo-quality/turbo-model-provenance.json",
+      "--language-mode",
+      "auto",
+      "--timeout",
+      "180"
+    ]
+  }
+]

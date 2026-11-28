@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "model": {
+    "repository": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "weights_file": "pytorch_model.bin",
+    "weights_bytes": 1935796948,
+    "weights_sha256": "d907ea45e4e4b9db163382a6674f6218b3c59566fe06d77f4055c208b4e87ed1",
+    "license": "MIT",
+    "license_evidence": "Pinned official model card plus retained originating Fairseq MIT license text.",
+    "conversion_quantization": "float32",
+    "compute_type": "float32",
+    "trust_remote_code": false
+  },
+  "plan_sha256": "f89aa5300a047429c8bc136ab60527d7c45ef4956219358249869438bd529f94",
+  "inference_freeze_sha256": "ec186e54596808d1dd7664b28fbf044b794aa6b9bef4ef13d967236902dbbc81",
+  "cases": [
+    {
+      "id": "dev-el-en-people-and-roles",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "names",
+        "roles",
+        "relationships"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Nikos",
+            "alternatives": [
+              "Nikos",
+              "Nicos",
+              "Niko"
+            ]
+          },
+          {
+            "label": "Eleni",
+            "alternatives": [
+              "Eleni",
+              "Elen\u0113"
+            ]
+          },
+          {
+            "label": "Elena",
+            "alternatives": [
+              "Elena"
+            ]
+          },
+          {
+            "label": "translator",
+            "alternatives": [
+              "translator"
+            ]
+          },
+          {
+            "label": "subtitles",
+            "alternatives": [
+              "subtitle",
+              "caption"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nick sent the text to Elena, not to Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Nicos makes the recording and Elena controls the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "Eleni",
+          "alternatives": [
+            "Eleni",
+            "Elen\u0113"
+          ]
+        },
+        {
+          "kind": "term_not_observed",
+          "label": "translator",
+          "alternatives": [
+            "translator"
+          ]
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__el__",
+            "\u2581\u039f",
+            "\u2581\u039d",
+            "\u03af\u03ba",
+            "\u03bf\u03c2",
+            "\u2581\u03ad\u03c3",
+            "\u03c4\u03b5\u03b9",
+            "\u03bb\u03b5",
+            "\u2581\u03c4\u03bf",
+            "\u2581\u03ba",
+            "\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+            "\u2581\u03c3\u03c4\u03b7\u03bd",
+            "\u2581\u0395",
+            "\u03bb\u03ad",
+            "\u03bd\u03b7",
+            ",",
+            "\u2581\u03cc\u03c7\u03b9",
+            "\u2581\u03c3\u03c4\u03b7\u03bd",
+            "\u2581\u0388",
+            "\u03bb\u03b5",
+            "\u03bd\u03b1",
+            ".",
+            "</s>"
+          ],
+          [
+            "__el__",
+            "\u2581\u0397",
+            "\u2581\u0395",
+            "\u03bb\u03ad",
+            "\u03bd\u03b7",
+            "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+            "\u2581\u03b7",
+            "\u2581\u03bc\u03b5\u03c4\u03b1",
+            "\u03c6\u03c1\u03ac",
+            "\u03c3\u03c4",
+            "\u03c1\u03b9\u03b1",
+            ".",
+            "\u2581\u039f",
+            "\u2581\u039d",
+            "\u03af\u03ba",
+            "\u03bf\u03c2",
+            "\u2581\u03ba\u03ac\u03bd\u03b5\u03b9",
+            "\u2581\u03c4\u03b7\u03bd",
+            "\u2581\u03b7",
+            "\u03c7\u03bf",
+            "\u03b3\u03c1\u03ac\u03c6",
+            "\u03b7\u03c3\u03b7",
+            "\u2581\u03ba\u03b1\u03b9",
+            "\u2581\u03b7",
+            "\u2581\u0388",
+            "\u03bb\u03b5",
+            "\u03bd\u03b1",
+            "\u2581\u03b5\u03bb\u03ad\u03b3",
+            "\u03c7\u03b5\u03b9",
+            "\u2581\u03c4\u03bf\u03c5\u03c2",
+            "\u2581\u03c5\u03c0\u03cc",
+            "\u03c4\u03b9",
+            "\u03c4",
+            "\u03bb\u03bf\u03c5\u03c2",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__en__"
+          ],
+          [
+            "__en__"
+          ]
+        ],
+        "source_texts": [
+          "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:33.205518+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581Nick",
+              "\u2581sent",
+              "\u2581the",
+              "\u2581text",
+              "\u2581to",
+              "\u2581Elena",
+              ",",
+              "\u2581not",
+              "\u2581to",
+              "\u2581Elena",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.44613000750541687
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581N",
+              "icos",
+              "\u2581makes",
+              "\u2581the",
+              "\u2581record",
+              "ing",
+              "\u2581and",
+              "\u2581Elena",
+              "\u2581control",
+              "s",
+              "\u2581the",
+              "\u2581sub",
+              "tit",
+              "les",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.37812352180480957
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 2.089,
+      "finished_at": "2026-11-28T01:31:35.295997+00:00"
+    }
+  ]
+}

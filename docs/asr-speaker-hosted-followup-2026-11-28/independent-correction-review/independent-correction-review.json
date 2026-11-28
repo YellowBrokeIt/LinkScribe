@@ -1,0 +1,103 @@
+{
+  "review_type": "Independent read-only source contract review of the hosted speaker-cache preparation correction",
+  "decision": "No concrete source-level blocker in the frozen correction. This is readiness for the separately authorized hosted preparation and pipeline, not a claim that the new preparation or speaker inference has succeeded.",
+  "candidate_identities": {
+    "docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json",
+      "bytes": 12687,
+      "sha256": "30e723794e53facc18bd88675c81d402ae8bce846aca38d5338ff5065459abec"
+    },
+    "tests/qa_speaker_integration.py": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/tests/qa_speaker_integration.py",
+      "bytes": 28056,
+      "sha256": "9473330e6f56b58d3ae673103129f737da17e50b86cb33f79e1bcfdd66162560"
+    },
+    ".github/workflows/speaker-integration-qa.yml": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/.github/workflows/speaker-integration-qa.yml",
+      "bytes": 3187,
+      "sha256": "46bd5db12008244930c11f794c7e32aab6997f09ba5f732bd61d1d8031bb2bd5"
+    },
+    "tests/test_speaker_hosted_qa.py": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/tests/test_speaker_hosted_qa.py",
+      "bytes": 22736,
+      "sha256": "2cc7d67a6a0e15b12d37fff3f111412efd9156ac18e324803b4c8b148601d449"
+    }
+  },
+  "parent_failed_run": {
+    "head_sha": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+    "run_id": 46121980993,
+    "job_id": 140908265951,
+    "artifact_id": 15254385257,
+    "independent_failure_review": {
+      "path": "/workspace/scratch/94360995dd61/speaker-cache-failure-independent-review-2026-11-28/independent-failure-review.json",
+      "sha256": "3778da411d9625c4fe9bce3d7caaeecbd37a4487a1c03d7e7f5478981c13d217"
+    }
+  },
+  "source_contract_findings": [
+    {
+      "topic": "Remote source filename and local cache filename",
+      "finding": "The same SHA-pinned YAML is transferred and retained before any ECAPA checkpoint transfer. PyYAML compose inspects tags/nodes only. Exactly the existing four loadables and their explicit paths must exist, with the exact repository base; source names derive from those paths while local filenames remain <loadable>.ckpt. No remote label filename is guessed."
+    },
+    {
+      "topic": "Safe source paths and exact content identity",
+      "finding": "The pinned common.safe_filename permits only one relative ASCII component beginning with a letter/digit and followed by letters/digits/underscore/dot/hyphen. Slash/traversal, URL syntax, query/fragment, backslash, encoded delimiters, whitespace and nested references reject. Duplicate remote names and conflict with hyperparams.yaml reject before checkpoint transfers. All original local expected SHA256 and size caps remain unchanged."
+    },
+    {
+      "topic": "SpeechBrain and HF cache semantics",
+      "finding": "The retained SpeechBrain v1.1.2 Pretrainer.collect_files uses a configured remote filename separately from save_filename=name+.ckpt. The corrected savedir therefore keeps local names, and the HF snapshot hardlinks each verified payload under its actual remote source name. The exact repository and revision are unchanged."
+    },
+    {
+      "topic": "Failure evidence",
+      "finding": "A pending transfer receipt records family, remote/local filename, exact query-free URL and expected digest before each attempt. Verified YAML and the resolved mapping are saved before checkpoint transfer. Early runtime_identity stage is initialized before version queries; original failures are preserved with stage and optional active transfer, and HTTP status is recorded. There is no retry."
+    },
+    {
+      "topic": "Scope and historical preservation",
+      "finding": "Only the two existing preparation functions, extracted prepare_model_files, urllib.error import and default follow-up plan reference change. Nine other helper functions are AST-identical. The workflow differs only in the plan path. Original d62 helper/controls/workflow/plan are copied byte-for-byte; original failure and earlier review remain immutable."
+    }
+  ],
+  "validation": {
+    "independent_binding_audit": {
+      "file": "correction-binding-audit.json",
+      "sha256": "c743b62dfeb9fb0bd681d5b1a3d9064319cac54b6478a588a38c46a91ae8f76c",
+      "checks": 50,
+      "errors": []
+    },
+    "all_21_source_bindings_verified": true,
+    "other_19_execution_sources_identical": true,
+    "unchanged_policy_blocks": [
+      "protocol",
+      "attempts",
+      "maximum_cpus",
+      "rss_limit_bytes",
+      "total_worker_seconds",
+      "phase_seconds",
+      "worker_environment",
+      "fixture",
+      "models",
+      "recognition_contract",
+      "controlled_fixture_criteria",
+      "runtime_packages",
+      "measurement_contract",
+      "limitations"
+    ],
+    "owner_model_free_controls": {
+      "count": 30,
+      "elapsed_seconds": 0.48,
+      "log_sha256": "a0b8545c374654d5d8a2690986f3e8f1fd97d6ce2c108124f006b799ddf7dcf1",
+      "review_method": "Read exact test changes and bound retained successful log; did not rerun the same controls."
+    },
+    "meaningful_new_controls": [
+      "A synthetic declared .txt remote name maps to unchanged .ckpt savedir and actual remote-name HF snapshot.",
+      "Verified YAML, resolved map and failed request receipt survive the first synthetic checkpoint HTTP404, with no retry.",
+      "Unsafe, external, duplicate, nested and unresolvable paths reject before checkpoint transfer.",
+      "Unexpected loadables reject without construction.",
+      "A runtime metadata failure preserves its original exception and initial stage."
+    ]
+  },
+  "remaining_observation_limits": [
+    "Exact pinned ECAPA YAML bytes and its actual remote label filename were unavailable locally; no previously rejected metadata fetch was retried. The actual hosted preparation must supply these observations before inference.",
+    "Model payload identities in the first failed artifact are transfer receipts; the downloaded artifact does not contain the weights.",
+    "No model/provider/native/tokenizer work, new download, Git mutation, production change, test rerun, new corpus or criterion change was performed by this review.",
+    "This setup correction does not establish speaker accuracy, timestamp quality, or resource success for the eventual application run."
+  ]
+}

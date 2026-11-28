@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T17:55:53.095080+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "5bf650e47b252914fa0a944de2ec208418dee2beaeae3262341ca96c65b4db6b",
+  "manifest_path": "derived-fixtures.json",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "All five fixed Greek fixtures concatenated in their original manifest order; created after the first run solely to exercise multisegment persistence/export ordering.",
+    "evaluation_role": "derived_technical_regression_not_untouched_quality_validation"
+  },
+  "source_sha256": {
+    "app.py": "adb7e4a266dc5a79c98388b595344cb005ee48c15ff8d57be36ecb8754d3457d",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "86fbee393eee7956bd6e8044f8291ff568c2b159acc9f5b8b5696c6aefa2bfb2"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": null,
+    "effective_model": "small",
+    "model_form_field_omitted": true,
+    "model_provenance": {
+      "model": "small",
+      "repository": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "downloaded_at": "2026-11-26T17:50:45.132099+00:00",
+      "files": {
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      }
+    },
+    "offline": true,
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, Any]], str]:\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            str(path),\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            vad_filter=True,\n            condition_on_previous_text=False,\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = [\n            {\"start\": round(float(s.start), 3), \"end\": round(float(s.end), 3), \"text\": s.text.strip()}\n            for s in segments if s.text.strip()\n        ]\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "cases": [
+    {
+      "id": "derived-greek-five-clips-in-source-order",
+      "language": "el",
+      "audio_sha256": "bf69f9c727742c47fe45b069374c911ba8f4441ef7584071b3bf04a1af9d380e",
+      "media": {
+        "duration_seconds": 36.84,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 2
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά. Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια. Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο. Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς. Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "review_criteria": [
+        "Exercise multiple genuine recognition segments and ordered export cues across a recording exceeding 30 seconds.",
+        "All five selected Greek source references remain in source order, without synthetic speech or reference-conditioned decoding.",
+        "This assembled mixed-topic clip is a technical regression sample, not a naturally continuous speech benchmark."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "dce0481ce6794774b8743357fbce89e3",
+      "job_result": {
+        "id": "dce0481ce6794774b8743357fbce89e3",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "derived-greek-five-clips-in-source-order.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Κάποια θεστιβάλοι παρέχουν ειδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.\nΕίναι το 5ο προσωρινό εκλογικό συμβούλιο του Μαρτέλη μέσα σε 4 χρόνια.\nΑυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.\nΜόλον ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκουση του αυτοκινήτου, δεν δραματήσει και κανείς.\nΗ κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα. Είναι όμως ευχάριστο και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+        "error": "",
+        "segments": 5,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "dce0481ce6794774b8743357fbce89e3"
+      },
+      "segments": [
+        {
+          "start": 0.75,
+          "end": 5.75,
+          "text": "Κάποια θεστιβάλοι παρέχουν ειδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά."
+        },
+        {
+          "start": 8.32,
+          "end": 12.32,
+          "text": "Είναι το 5ο προσωρινό εκλογικό συμβούλιο του Μαρτέλη μέσα σε 4 χρόνια."
+        },
+        {
+          "start": 14.6,
+          "end": 17.6,
+          "text": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο."
+        },
+        {
+          "start": 20.17,
+          "end": 25.17,
+          "text": "Μόλον ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκουση του αυτοκινήτου, δεν δραματήσει και κανείς."
+        },
+        {
+          "start": 25.17,
+          "end": 36.12,
+          "text": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα. Είναι όμως ευχάριστο και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα."
+        }
+      ],
+      "hypothesis": "Κάποια θεστιβάλοι παρέχουν ειδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά. Είναι το 5ο προσωρινό εκλογικό συμβούλιο του Μαρτέλη μέσα σε 4 χρόνια. Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο. Μόλον ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκουση του αυτοκινήτου, δεν δραματήσει και κανείς. Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα. Είναι όμως ευχάριστο και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+      "word_metrics": {
+        "reference_words": 73,
+        "hypothesis_words": 76,
+        "substitutions": 17,
+        "deletions": 0,
+        "insertions": 3,
+        "word_errors": 20,
+        "word_error_rate": 0.273972602739726,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "φεστιβάλ",
+            "hypothesis": "θεστιβάλοι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικούσ",
+            "hypothesis": "κατασκοινωτικούσ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "οι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "πέμπτο",
+            "hypothesis": "5ο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μαρτελί",
+            "hypothesis": "μαρτέλη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τέσσερα",
+            "hypothesis": "4"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "δίκιο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δίκαιο",
+            "hypothesis": "μόλον"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολονότι",
+            "hypothesis": "ότι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "3",
+            "hypothesis": "τρεισ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "πρόσκρουση",
+            "hypothesis": "πρόσκουση"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "δραματήσει"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τραυματίστηκε",
+            "hypothesis": "και"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κύρια",
+            "hypothesis": "κύριε"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπίρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπύρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ευχάριστη",
+            "hypothesis": "ευχάριστο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δροσιστική",
+            "hypothesis": "δροσητική"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπίρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "manta",
+            "hypothesis": "μάντα"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 73,
+        "hypothesis_words": 76,
+        "substitutions": 17,
+        "deletions": 0,
+        "insertions": 3,
+        "word_errors": 20,
+        "word_error_rate": 0.273972602739726,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "φεστιβαλ",
+            "hypothesis": "θεστιβαλοι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικουσ",
+            "hypothesis": "κατασκοινωτικουσ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "οι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "πεμπτο",
+            "hypothesis": "5ο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μαρτελι",
+            "hypothesis": "μαρτελη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τεσσερα",
+            "hypothesis": "4"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "δικιο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δικαιο",
+            "hypothesis": "μολον"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολονοτι",
+            "hypothesis": "οτι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "3",
+            "hypothesis": "τρεισ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "προσκρουση",
+            "hypothesis": "προσκουση"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "δραματησει"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τραυματιστηκε",
+            "hypothesis": "και"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κυρια",
+            "hypothesis": "κυριε"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπιρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπυρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ευχαριστη",
+            "hypothesis": "ευχαριστο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δροσιστικη",
+            "hypothesis": "δροσητικη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπιρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "manta",
+            "hypothesis": "μαντα"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 888,
+          "sha256": "93ab30477acd1b8d54a691fcbda16603a65e6bff8138ca85994a688cd8b7d8c3"
+        },
+        "srt": {
+          "bytes": 1052,
+          "sha256": "4be8c16cacb62bfa49f3042f0c82f255c7a3ccb500c362529de99d4ac454c51b"
+        },
+        "vtt": {
+          "bytes": 1050,
+          "sha256": "d2bdbdd48b65b9d47ac5453f6b7351cf8cdca107d75b906acbd82a0a599031b4"
+        },
+        "json": {
+          "bytes": 1438,
+          "sha256": "02f4011242a30354375fb3ecbe683786ef8ca0a6e600514d2cec9fc43c153e87"
+        },
+        "zip": {
+          "bytes": 2609,
+          "sha256": "19d9e7a765d0ddd0ba4f83b0b2f34293b753e200e6359191223c3ae9ffdedbb4"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 10.894
+    }
+  ],
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "adb7e4a266dc5a79c98388b595344cb005ee48c15ff8d57be36ecb8754d3457d",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "86fbee393eee7956bd6e8044f8291ff568c2b159acc9f5b8b5696c6aefa2bfb2"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "pass": 1
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 1,
+      "reference_words": 73,
+      "word_errors": 20,
+      "substitutions": 17,
+      "deletions": 0,
+      "insertions": 3,
+      "word_error_rate": 0.273972602739726
+    },
+    "en": {
+      "cases": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "word_error_rate": null
+    }
+  },
+  "finished_at": "2026-11-26T17:56:04.070062+00:00",
+  "elapsed_seconds": 10.974,
+  "archive_provenance": {
+    "raw_file": "small-derived-result.json",
+    "raw_sha256": "69e2d29285ec1762bf6ece483f64a7aeedc1f34ea362e11e1c5781bc16ba3364",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

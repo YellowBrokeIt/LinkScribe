@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "scope": "Offline correction of one constructor assertion on the retained actual hosted result",
+  "binding_sha256": "54d39b7bd80f84fe3cd62cd75a44dcf1894e3f340e54a6bc83f11fd4d15e2c1d",
+  "head_sha": "f2ebd0433976ed62478b67e98c4515e3d78afaa5",
+  "run_id": 46123086352,
+  "original_github_conclusion": "failure",
+  "original_execution_rewritten": false,
+  "corrected_constructor_and_pipeline_contract_pass": true,
+  "constructor_cpu_threads": 0,
+  "thread_limit_evidence": {
+    "source_enforced_launch_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "source_set_OMP_NUM_THREADS": "4",
+    "source_set_MKL_NUM_THREADS": "4",
+    "native_zero_meaning": "Use OMP_NUM_THREADS, otherwise native default min(4, hardware_concurrency)",
+    "inference_side_affinity_readback_recorded": false,
+    "effective_thread_count_measured": false
+  },
+  "resource_sample_count": 111,
+  "sampled_group_peak_rss_bytes": 1078747136,
+  "process_high_water_bytes": 1215311872,
+  "worker_seconds": 11.144198072999998,
+  "controller_seconds": 11.71869195699999,
+  "owned_cleanup_pass": true,
+  "controlled_fixture_acoustic_assessment": {
+    "status": "passed",
+    "expected_speakers_for_scoring_only": 2,
+    "reported_speakers": 2,
+    "core_samples": 258,
+    "assigned_core_fraction": 0.8566,
+    "permutation_matched_label_purity": 1.0,
+    "correctly_attributed_core_fraction": 0.8566,
+    "mapping_for_scoring_only": {
+      "Speaker 1": "2961",
+      "Speaker 2": "8455"
+    },
+    "per_interval": [
+      {
+        "reference": {
+          "start": 0.5,
+          "end": 8.5,
+          "speaker": "2961",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 1": 65
+        }
+      },
+      {
+        "reference": {
+          "start": 9.1,
+          "end": 16.835,
+          "speaker": "8455",
+          "short": false
+        },
+        "core_samples": 63,
+        "label_counts": {
+          "Speaker 2": 50,
+          "None": 13
+        }
+      },
+      {
+        "reference": {
+          "start": 17.435,
+          "end": 25.435,
+          "speaker": "2961",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 1": 55,
+          "None": 10
+        }
+      },
+      {
+        "reference": {
+          "start": 26.035,
+          "end": 34.035,
+          "speaker": "8455",
+          "short": false
+        },
+        "core_samples": 65,
+        "label_counts": {
+          "Speaker 2": 51,
+          "None": 14
+        }
+      }
+    ]
+  },
+  "broader_speaker_or_word_timing_accuracy_approved": false,
+  "new_model_initializations_or_inference": 0,
+  "limitations": [
+    "The original GitHub run remains failed; no historical status or artifact is rewritten.",
+    "Four-CPU scope is a source-enforced launch constraint, not a measured native thread count or worker-side affinity readback.",
+    "This controlled English fixture has inserted gaps and is not Greek, natural-meeting, overlapping-speech or general word-timing validation.",
+    "37/258 reference-core samples are unassigned; uncertain groups retain their warnings.",
+    "No recognition, alignment, speaker model, provider, network request or new hypothesis occurs during this offline audit.",
+    "Export and SQLite byte/row consistency are reviewed independently from this constructor correction."
+  ]
+}

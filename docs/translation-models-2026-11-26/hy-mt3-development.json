@@ -1,0 +1,958 @@
+{
+  "schema_version": 1,
+  "run_id": "c282cb66-cf93-4c8b-a8ad-9bcc59c568b6",
+  "created_at": "2026-11-26T17:38:11.078956+00:00",
+  "corpus_version": "2026-11-26-v1",
+  "source": {
+    "sha256": {
+      "enhancements.py": "8baf60b7f211a13229772db4f5df1e8a25aec05074f7f3f4ac67055a2a9aa2ea",
+      "tests/evaluate_translation_quality.py": "f545b7d93f71cb19002a8149eadf752c7e0cf4ea2e49462635b6044de835d304",
+      "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+    },
+    "git_commit": "d841d044dd00e58ab2ced4cd8ec26cae40f42ea8",
+    "git_dirty": true
+  },
+  "interpretation": "Indicators only identify outputs needing review. Indicator pass does not approve meaning, names, numerical relationships, negation, completeness or fluency. Complete describes the requested selection; corpus_complete identifies full coverage. Compare exact outputs with the references and review criteria separately.",
+  "semantic_quality": "unreviewed",
+  "complete": true,
+  "corpus_complete": false,
+  "automatic_status": "review",
+  "requested_cases": 6,
+  "completed_cases": 6,
+  "selection": {
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "corpus_cases": 12,
+    "split_counts": {
+      "development": 6
+    }
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:11434",
+    "ollama_version": "0.40.12",
+    "configured_model": "linkscribe-hy-mt3:1.8b",
+    "model": {
+      "name": "linkscribe-hy-mt3:1.8b",
+      "model": "linkscribe-hy-mt3:1.8b",
+      "modified_at": "2026-11-26T19:38:00.384193905+02:00",
+      "size": 1348432898,
+      "digest": "0ebcd1caaca0a468c0f8563085d3cdf16dcd12f1162eb798c56cac3243440201",
+      "details": {
+        "parent_model": "hf.co/tencent/Hy-MT3-1.8B-GGUF:Q4_K_M",
+        "format": "gguf",
+        "family": "hunyuan-dense",
+        "families": [
+          "hunyuan-dense"
+        ],
+        "parameter_size": "1.79B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 262144,
+        "embedding_length": 2048,
+        "runner": "llamacpp"
+      },
+      "capabilities": [
+        "completion"
+      ]
+    },
+    "task": "translation",
+    "translation_profile": "hy-mt3"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "terminology",
+        "names",
+        "chronology"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c4\u03b7\u03c2 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7\u03c2 \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7.",
+        "\u0397 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7 \u03b4\u03b9\u03ae\u03c1\u03ba\u03b5\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7."
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as \u039c\u03b1\u03c1\u03af\u03b1."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria",
+              "\u039c\u03b1\u03c1\u03af\u03b1"
+            ]
+          },
+          {
+            "label": "transcription terminology",
+            "alternatives": [
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd",
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd",
+              "\u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6"
+            ]
+          },
+          {
+            "label": "translation",
+            "alternatives": [
+              "\u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3",
+              "\u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03b1\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12"
+        ]
+      },
+      "automatic_status": "review",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nMaria saved the transcript as a text file; she did not save the original recording."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 401,
+          "started_at": "2026-11-26T17:38:11.103252+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:21.476655315Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u039c\\u03b1\\u03c1\\u03af\\u03b1 \\u03b1\\u03c0\\u03bf\\u03b8\\u03ae\\u03ba\\u03b5\\u03c8\\u03b5 \\u03c4\\u03bf \\u03b1\\u03bd\\u03c4\\u03af\\u03b3\\u03c1\\u03b1\\u03c6\\u03bf \\u03c9\\u03c2 \\u03b1\\u03c1\\u03c7\\u03b5\\u03af\\u03bf \\u03ba\\u03b5\\u03b9\\u03bc\\u03ad\\u03bd\\u03bf\\u03c5\\u00b7 \\u03b4\\u03b5\\u03bd \\u03b1\\u03c0\\u03bf\\u03b8\\u03ae\\u03ba\\u03b5\\u03c8\\u03b5 \\u03c4\\u03b7\\u03bd \\u03b1\\u03c1\\u03c7\\u03b9\\u03ba\\u03ae \\u03b7\\u03c7\\u03bf\\u03b3\\u03c1\\u03ac\\u03c6\\u03b7\\u03c3\\u03b7.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 10371332132, \"load_duration\": 7890116416, \"prompt_eval_count\": 41, \"prompt_eval_cached_count\": 0, \"prompt_eval_duration\": 378716000, \"eval_count\": 58, \"eval_duration\": 2089364000}",
+          "elapsed_seconds": 10.375
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nTranscription took 12 minutes. Translation into Greek has not started yet."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 392,
+          "started_at": "2026-11-26T17:38:21.481923+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:23.599735881Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u03b1\\u03bd\\u03ac\\u03c4\\u03c5\\u03c0\\u03bf\\u03c2 \\u03b4\\u03b9\\u03ae\\u03c1\\u03ba\\u03b5\\u03c3\\u03b5 12 \\u03bb\\u03b5\\u03c0\\u03c4\\u03ac. \\u0397 \\u03bc\\u03b5\\u03c4\\u03ac\\u03c6\\u03c1\\u03b1\\u03c3\\u03b7 \\u03c3\\u03c4\\u03b1 \\u03b5\\u03bb\\u03bb\\u03b7\\u03bd\\u03b9\\u03ba\\u03ac \\u03b4\\u03b5\\u03bd \\u03ad\\u03c7\\u03b5\\u03b9 \\u03b1\\u03ba\\u03cc\\u03bc\\u03b7 \\u03be\\u03b5\\u03ba\\u03b9\\u03bd\\u03ae\\u03c3\\u03b5\\u03b9.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2114581742, \"load_duration\": 984728, \"prompt_eval_count\": 39, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 165709000, \"eval_count\": 59, \"eval_duration\": 1942905000}",
+          "elapsed_seconds": 2.119
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "\u039c\u03b1\u03c1\u03af\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c8\u03b5 \u03c4\u03bf \u03b1\u03bd\u03c4\u03af\u03b3\u03c1\u03b1\u03c6\u03bf \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c8\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "\u0397 \u03b1\u03bd\u03ac\u03c4\u03c5\u03c0\u03bf\u03c2 \u03b4\u03b9\u03ae\u03c1\u03ba\u03b5\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "transcription terminology",
+          "alternatives": [
+            "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd",
+            "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd",
+            "\u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6"
+          ]
+        }
+      ],
+      "elapsed_seconds": 12.505,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "names",
+        "roles",
+        "relationships"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Nikos",
+            "alternatives": [
+              "Nikos",
+              "Nicos",
+              "Niko"
+            ]
+          },
+          {
+            "label": "Eleni",
+            "alternatives": [
+              "Eleni",
+              "Elen\u0113"
+            ]
+          },
+          {
+            "label": "Elena",
+            "alternatives": [
+              "Elena"
+            ]
+          },
+          {
+            "label": "translator",
+            "alternatives": [
+              "translator"
+            ]
+          },
+          {
+            "label": "subtitles",
+            "alternatives": [
+              "subtitle",
+              "caption"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 589,
+          "started_at": "2026-11-26T17:38:23.609553+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:24.504986736Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Nikos sent the text to Eleni, not Elena.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 892640207, \"load_duration\": 7276493, \"prompt_eval_count\": 60, \"prompt_eval_cached_count\": 7, \"prompt_eval_duration\": 417319000, \"eval_count\": 13, \"eval_duration\": 460807000}",
+          "elapsed_seconds": 0.895
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 805,
+          "started_at": "2026-11-26T17:38:24.508289+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:25.587031457Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Eleni is the translator. Nikos does the recording, and Elena checks the subtitles.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 1076236906, \"load_duration\": 679897, \"prompt_eval_count\": 87, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 455128000, \"eval_count\": 20, \"eval_duration\": 615140000}",
+          "elapsed_seconds": 1.078
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nikos sent the text to Eleni, not Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 1.982,
+      "request_count": 2
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "numbers",
+        "decimals",
+        "grouped_amounts",
+        "bitcoin",
+        "negation"
+      ],
+      "segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b5\u03af\u03b4\u03b7. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5,000 sats, \u03cc\u03c7\u03b9 500 sats.",
+        "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sats \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Bitcoin",
+            "alternatives": [
+              "Bitcoin",
+              "\u039c\u03c0\u03af\u03c4\u03ba\u03bf\u03ca\u03bd"
+            ]
+          },
+          {
+            "label": "sats unit",
+            "alternatives": [
+              "sats",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12.50",
+          "2",
+          "5,000",
+          "500"
+        ]
+      },
+      "automatic_status": "review",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nThe receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 411,
+          "started_at": "2026-11-26T17:38:25.592668+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:28.48143019Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u03a4\\u03bf \\u03b5\\u03ba\\u03c7\\u03ce\\u03c1\\u03b7\\u03c3\\u03b7\\u03c2 \\u03b4\\u03b5\\u03af\\u03c7\\u03bd\\u03b5\\u03b9 12,50 \\u03b5\\u03c5\\u03c1\\u03ce \\u03b3\\u03b9\\u03b1 2 \\u03b1\\u03bd\\u03c4\\u03b9\\u03ba\\u03b5\\u03af\\u03bc\\u03b5\\u03bd\\u03b1. \\u0397 \\u03be\\u03b5\\u03c7\\u03c9\\u03c1\\u03b9\\u03c3\\u03c4\\u03ae \\u03bc\\u03b5\\u03c4\\u03b1\\u03c6\\u03bf\\u03c1\\u03ac \\u03b5\\u03af\\u03bd\\u03b1\\u03b9 5.000 \\u03c3\\u03ac\\u03c4\\u03c2, \\u03cc\\u03c7\\u03b9 500 \\u03c3\\u03ac\\u03c4\\u03c2.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2886125674, \"load_duration\": 1085680, \"prompt_eval_count\": 53, \"prompt_eval_cached_count\": 7, \"prompt_eval_duration\": 398653000, \"eval_count\": 75, \"eval_duration\": 2479308000}",
+          "elapsed_seconds": 2.888
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nThe note mentions Bitcoin. It does not say that euros and sats are the same unit."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 399,
+          "started_at": "2026-11-26T17:38:28.484298+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:30.216951676Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 \\u03c3\\u03b7\\u03bc\\u03b5\\u03af\\u03c9\\u03c3\\u03b7 \\u03b1\\u03bd\\u03b1\\u03c6\\u03ad\\u03c1\\u03b5\\u03b9 \\u03c4\\u03bf Bitcoin. \\u0394\\u03b5\\u03bd \\u03bb\\u03ad\\u03b5\\u03b9 \\u03cc\\u03c4\\u03b9 \\u03bf\\u03b9 \\u03b5\\u03c5\\u03c1\\u03ce \\u03ba\\u03b1\\u03b9 \\u03c4\\u03b1 sat \\u03b5\\u03af\\u03bd\\u03b1\\u03b9 \\u03b7 \\u03af\\u03b4\\u03b9\\u03b1 \\u03bc\\u03bf\\u03bd\\u03ac\\u03b4\\u03b1.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 1728655879, \"load_duration\": 719342, \"prompt_eval_count\": 43, \"prompt_eval_cached_count\": 24, \"prompt_eval_duration\": 190537000, \"eval_count\": 49, \"eval_duration\": 1527445000}",
+          "elapsed_seconds": 1.732
+        }
+      ],
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "\u03a4\u03bf \u03b5\u03ba\u03c7\u03ce\u03c1\u03b7\u03c3\u03b7\u03c2 \u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9 12,50 \u03b5\u03c5\u03c1\u03ce \u03b3\u03b9\u03b1 2 \u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5.000 \u03c3\u03ac\u03c4\u03c2, \u03cc\u03c7\u03b9 500 \u03c3\u03ac\u03c4\u03c2.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03bf\u03b9 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sat \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "sats unit",
+          "alternatives": [
+            "sats",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3"
+          ]
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "12.50",
+          "expected_count": 1,
+          "observed_count": 0
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "elapsed_seconds": 4.631,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "negation",
+        "scope",
+        "uncertainty",
+        "time"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "reference_translations": [
+        "I did not say that Anna sold all the books. I said that she did not sell any yesterday.",
+        "She may sell one today, but that has not been decided."
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "Anna"
+            ]
+          },
+          {
+            "label": "yesterday",
+            "alternatives": [
+              "yesterday"
+            ]
+          },
+          {
+            "label": "today",
+            "alternatives": [
+              "today"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 696,
+          "started_at": "2026-11-26T17:38:30.225646+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:31.412211747Z\", \"message\": {\"role\": \"assistant\", \"content\": \"I didn\\u2019t say that Anna sold all the books. I said she didn\\u2019t sell any yesterday.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 1183233131, \"load_duration\": 1134224, \"prompt_eval_count\": 77, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 446607000, \"eval_count\": 23, \"eval_duration\": 728164000}",
+          "elapsed_seconds": 1.186
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 637,
+          "started_at": "2026-11-26T17:38:31.415054+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:32.141209865Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Today it may sell one, but that has not been decided.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 723346900, \"load_duration\": 748381, \"prompt_eval_count\": 63, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 360918000, \"eval_count\": 14, \"eval_duration\": 357764000}",
+          "elapsed_seconds": 0.725
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn\u2019t say that Anna sold all the books. I said she didn\u2019t sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today it may sell one, but that has not been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 1.921,
+      "request_count": 2
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "conditions",
+        "negation",
+        "names",
+        "roles"
+      ],
+      "segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+        "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "\u0386\u03bd\u03bd\u03b1",
+              "Anna"
+            ]
+          },
+          {
+            "label": "Giannis",
+            "alternatives": [
+              "\u0393\u03b9\u03ac\u03bd\u03bd\u03b7",
+              "Giannis",
+              "Yannis",
+              "Yiannis"
+            ]
+          },
+          {
+            "label": "only if",
+            "alternatives": [
+              "\u03bc\u03cc\u03bd\u03bf \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03c6\u03cc\u03c3\u03bf\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b5\u03ac\u03bd"
+            ]
+          },
+          {
+            "label": "Friday",
+            "alternatives": [
+              "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5"
+            ]
+          },
+          {
+            "label": "Monday",
+            "alternatives": [
+              "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nAnna will publish the video only if Giannis approves the text."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 380,
+          "started_at": "2026-11-26T17:38:32.148641+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:34.084437818Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0397 Anna \\u03b8\\u03b1 \\u03b4\\u03b7\\u03bc\\u03bf\\u03c3\\u03b9\\u03b5\\u03cd\\u03c3\\u03b5\\u03b9 \\u03c4\\u03bf \\u03b2\\u03af\\u03bd\\u03c4\\u03b5\\u03bf \\u03bc\\u03cc\\u03bd\\u03bf \\u03b1\\u03bd \\u03bf \\u0393\\u03b9\\u03ac\\u03bd\\u03bd\\u03b7\\u03c2 \\u03b5\\u03b3\\u03ba\\u03c1\\u03af\\u03bd\\u03b5\\u03b9 \\u03c4\\u03bf \\u03ba\\u03b5\\u03af\\u03bc\\u03b5\\u03bd\\u03bf.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 1932238841, \"load_duration\": 759748, \"prompt_eval_count\": 38, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 216383000, \"eval_count\": 47, \"eval_duration\": 1706221000}",
+          "elapsed_seconds": 1.942
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into Greek. Note that you should only output the translated result without any additional explanation:\nIf Giannis does not answer by Friday, Anna will wait until Monday."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 384,
+          "started_at": "2026-11-26T17:38:34.096421+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:36.843651426Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\\u0391\\u03bd \\u03bf \\u0393\\u03b9\\u03ac\\u03bd\\u03bd\\u03b7\\u03c2 \\u03b4\\u03b5\\u03bd \\u03b1\\u03c0\\u03b1\\u03bd\\u03c4\\u03ae\\u03c3\\u03b5\\u03b9 \\u03bc\\u03ad\\u03c7\\u03c1\\u03b9 \\u03c4\\u03b7\\u03bd \\u03a0\\u03b1\\u03c1\\u03b1\\u03c3\\u03ba\\u03b5\\u03c5\\u03ae, \\u03b7 \\u0386\\u03bd\\u03bd\\u03b1 \\u03b8\\u03b1 \\u03c0\\u03b5\\u03c1\\u03b9\\u03bc\\u03ad\\u03bd\\u03b5\\u03b9 \\u03bc\\u03ad\\u03c7\\u03c1\\u03b9 \\u03c4\\u03b7 \\u0394\\u03b5\\u03c5\\u03c4\\u03ad\\u03c1\\u03b1.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 2743567431, \"load_duration\": 3222143, \"prompt_eval_count\": 39, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 207717000, \"eval_count\": 58, \"eval_duration\": 2521831000}",
+          "elapsed_seconds": 2.746
+        }
+      ],
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "\u0397 Anna \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 4.7,
+      "request_count": 2
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "questions",
+        "uncertainty",
+        "numbers",
+        "quotation"
+      ],
+      "segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria"
+            ]
+          },
+          {
+            "label": "chapters",
+            "alternatives": [
+              "chapter"
+            ]
+          },
+          {
+            "label": "title",
+            "alternatives": [
+              "title"
+            ]
+          }
+        ],
+        "numbers": [
+          "12",
+          "21"
+        ]
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb"
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 545,
+          "started_at": "2026-11-26T17:38:36.850332+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:37.793960308Z\", \"message\": {\"role\": \"assistant\", \"content\": \"Maria asked: \\\"Does the file have 12 chapters or 21?\\\"\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 940794381, \"load_duration\": 788386, \"prompt_eval_count\": 60, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 292945000, \"eval_count\": 16, \"eval_duration\": 636253000}",
+          "elapsed_seconds": 0.943
+        },
+        {
+          "request": {
+            "model": "linkscribe-hy-mt3:1.8b",
+            "stream": false,
+            "messages": [
+              {
+                "role": "user",
+                "content": "Translate the following text into English. Note that you should only output the translated result without any additional explanation:\n\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5."
+              }
+            ],
+            "options": {
+              "temperature": 0,
+              "num_ctx": 8192,
+              "num_predict": 2048,
+              "num_thread": 4
+            }
+          },
+          "timeout_seconds": 240,
+          "request_bytes_utf8": 768,
+          "started_at": "2026-11-26T17:38:37.797257+00:00",
+          "raw_evidence_available": true,
+          "response_json": "{\"model\": \"linkscribe-hy-mt3:1.8b\", \"created_at\": \"2026-11-26T17:38:38.9160977Z\", \"message\": {\"role\": \"assistant\", \"content\": \"We still do not know the answer. The title alone is not enough to confirm it.\"}, \"done\": true, \"done_reason\": \"stop\", \"total_duration\": 1116073951, \"load_duration\": 860690, \"prompt_eval_count\": 81, \"prompt_eval_cached_count\": 23, \"prompt_eval_duration\": 464602000, \"eval_count\": 19, \"eval_duration\": 646739000}",
+          "elapsed_seconds": 1.118
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Maria asked: \"Does the file have 12 chapters or 21?\"",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We still do not know the answer. The title alone is not enough to confirm it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 2.071,
+      "request_count": 2
+    }
+  ],
+  "counts": {
+    "pass": 4,
+    "review": 2,
+    "fail": 0,
+    "error": 0,
+    "incomplete": 0
+  },
+  "finished_at": "2026-11-26T17:38:38.921197+00:00",
+  "elapsed_seconds": 27.831
+}

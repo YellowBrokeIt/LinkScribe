@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/package_verification",
+  "observed_at_utc": "2026-11-28T02:37:08.286134+00:00",
+  "scope": "One official ILSP candidate; access/license/native-format metadata only. No weights or weight ranges, tokenizer vocabulary, model construction, inference, resource measurement, production change or unused validation access.",
+  "candidate": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+    "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+    "bytes": 5041147264,
+    "sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "hash_provenance": "Published Hugging Face LFS object identity, not an independently downloaded weight hash.",
+    "resolve_url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+    "private": false,
+    "gated": false,
+    "family": "Llama 3.1-derived Greek/English instruction model; distinct from previously tested Qwen/Gemma/HyMT/Marian/M2M families."
+  },
+  "access": {
+    "unauthenticated_metadata_and_small_files_accessible": true,
+    "notes": "Both official base and GGUF repositories report private:false and gated:false. No token or account agreement was needed for the small-file reads. This is public access evidence, not a completed multi-gigabyte transfer."
+  },
+  "license": {
+    "identifier": "llama3.1",
+    "label": "Llama 3.1 Community License Agreement",
+    "summary": "Custom community license permits use, modification and distribution subject to its terms. Redistribution/product distribution has agreement-copy and Built with Llama display requirements; copies retain the specified Notice attribution. Distributed derivative models have a Llama naming condition. Applicable law and the incorporated acceptable-use policy apply. A separate Meta license is required for entities meeting the agreement’s greater-than-700-million monthly-active-user threshold at the stated release-date test. Public access does not make this Apache/MIT or remove these obligations.",
+    "actual_files_present_in_ilsp_repository": false,
+    "upstream_license_sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+    "upstream_use_policy_sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+    "legal_scope": "Source-term inventory for feasibility, not a product-specific legal opinion."
+  },
+  "revision_comparison": {
+    "base-at-gguf-upload-metadata.json": {
+      "added": [
+        "KriKri_Logo-eng_54307d80-ee25-49f9-9204-0ce774499fbc.svg",
+        "arena_hard_el.png",
+        "arena_hard_en.png"
+      ],
+      "removed": [],
+      "changed": [
+        ".gitattributes",
+        "README.md"
+      ],
+      "current_weight_lfs_same": true,
+      "runtime_files_same": true
+    },
+    "base-at-last-gguf-revision-metadata.json": {
+      "added": [],
+      "removed": [],
+      "changed": [
+        "README.md"
+      ],
+      "current_weight_lfs_same": true,
+      "runtime_files_same": true
+    },
+    "q4_blob_unchanged_since_first_upload": true,
+    "api_template_exactly_equals_base_tokenizer_template": true,
+    "template_sha256": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "api_reported_totalFileSize": 4127911296
+  },
+  "revision_conclusion": "The 2026 base repository revision is documentation-only relative to its 2025-10-29 state. All published model shard identities and runtime/config/tokenizer identities match the February 9 model upload that predates the official Q4 upload. The Q4 LFS object itself is unchanged since first upload. This resolves the newer-README ambiguity; quantization was not numerically reproduced.",
+  "native_format": {
+    "official_quantization": true,
+    "format": "GGUF",
+    "architecture": "llama",
+    "published_parameter_count": 8202227776,
+    "base_tokenizer_template_sha256": "e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65",
+    "template_reported_by_gguf_api_matches_base": true,
+    "api_reported_total_file_size": 4127911296,
+    "template_scope_caveat": "Repository-level GGUF metadata currently reports totalFileSize of the Q3 file. It establishes the publisher’s native template; the chosen Q4 embedded header/template was not fetched or independently inspected. A future authorized import must bind its actual embedded template and runtime rendering before output.",
+    "published_template": "Llama 3.1 Jinja with BOS, system/user/assistant headers, end-of-turn markers, fixed default date and system framing. Production system/user text can be checked against this native renderer without inventing a prompt.",
+    "publisher_default_params": {
+      "num_ctx": 131072,
+      "stop": [
+        "<|start_header_id|>",
+        "<|end_header_id|>",
+        "<|eot_id|>"
+      ],
+      "temperature": 0.5,
+      "top_p": 0.95
+    },
+    "publisher_system_sha256": "f810f7e385556575d3603991c47e690b2f9b24a8a91b154518fcfc09fcdc9e3e",
+    "publisher_system_description": "Greek helpful-assistant persona; requests the same language as user unless otherwise instructed.",
+    "future_setup_requirements": [
+      "Use the immutable official Q4 file and verify full LFS hash only if download is separately authorized.",
+      "Explicitly freeze context 4096 and temperature 0 rather than inherit publisher context 131072 or sampling defaults.",
+      "Verify the effective native prompt contains the intended production system/user messages; bind any imported system and stop layers.",
+      "Measure a single owned process group under the existing 6 GiB/4-CPU limits; weight size alone is not process RAM or speed evidence.",
+      "Keep original source/criteria and rejection rules unchanged; no quality promotion from metadata."
+    ]
+  },
+  "sources": {
+    "official_gguf_card": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/blob/3c1ce101a3e0d783a0f2223f212ccc35b4657532/README.md",
+    "official_base_card": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct/blob/5b6f2625e9b329ec70ab8cb6cbea7a06629b431f/README.md",
+    "official_gguf_api": "https://huggingface.co/api/models/ilsp/Llama-Krikri-8B-Instruct-GGUF/revision/3c1ce101a3e0d783a0f2223f212ccc35b4657532?blobs=true",
+    "official_tokenizer_config": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct/resolve/5b6f2625e9b329ec70ab8cb6cbea7a06629b431f/tokenizer_config.json",
+    "official_gguf_params": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/params",
+    "official_gguf_system": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/system",
+    "upstream_license": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE",
+    "upstream_use_policy": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/USE_POLICY.md"
+  },
+  "evidence_files": [
+    {
+      "path": "base-README.md",
+      "bytes": 13173,
+      "sha256": "34cfdf20b5437e91950ec2ce0ec9c3f4843cdf42d5480ea6411d94d423b3ad4d"
+    },
+    {
+      "path": "base-at-gguf-upload-metadata.json",
+      "bytes": 8216,
+      "sha256": "1113f5ce60e88f261af5891e6b13bddd4d8104b3bebff9de309cce795e60215c"
+    },
+    {
+      "path": "base-at-last-gguf-revision-metadata.json",
+      "bytes": 8590,
+      "sha256": "5358ee71500bf47c0efb3501d6315a08f1a09edb516ef1e3f6004af1a91c0157"
+    },
+    {
+      "path": "base-commits.json",
+      "bytes": 12706,
+      "sha256": "819782ea2d756c84088b05981842342b770d3048a551d975dbf96d97c0cf8446"
+    },
+    {
+      "path": "base-generation_config.json",
+      "bytes": 184,
+      "sha256": "46650402223e517e09ac32797ba8cff47cf4cfea248aed800a76a0c50ba4e92d"
+    },
+    {
+      "path": "base-metadata.json",
+      "bytes": 8590,
+      "sha256": "834927709f60d1a12bcf36726c2807d6022be38a3bb2f90d0f4e877c9a03fc45"
+    },
+    {
+      "path": "base-tokenizer_config.json",
+      "bytes": 55495,
+      "sha256": "7870abea342b65881d6eff454c06de05457505fd22d20f42fa43303ce03d7e11"
+    },
+    {
+      "path": "gguf-README.md",
+      "bytes": 13035,
+      "sha256": "375b0bb1a3be10e0787cfc478f59230984fb8f9322c376f00c1f6e6ea7ccfa9f"
+    },
+    {
+      "path": "gguf-at-q4-upload-metadata.json",
+      "bytes": 6658,
+      "sha256": "bf1fde59bf937724a0637529ba5792cc563e1d8b2f407ea5a28b7a9def0ed20e"
+    },
+    {
+      "path": "gguf-commits.json",
+      "bytes": 4320,
+      "sha256": "0857c43c4db0ab6be30ccf99068e04cefda4eab6a41727dab3e7afa4a36383f5"
+    },
+    {
+      "path": "gguf-metadata.json",
+      "bytes": 8048,
+      "sha256": "973c3a4d099de9f12497b2406a039c311853a3e740853e790ede936edea0a328"
+    },
+    {
+      "path": "gguf-params.json",
+      "bytes": 170,
+      "sha256": "837ac4de5a981faabe04d28e6035d10e6838a07cd896ced1a3c8de1d5038f5b3"
+    },
+    {
+      "path": "gguf-system.txt",
+      "bytes": 1907,
+      "sha256": "f810f7e385556575d3603991c47e690b2f9b24a8a91b154518fcfc09fcdc9e3e"
+    },
+    {
+      "path": "history-provenance.json",
+      "bytes": 904,
+      "sha256": "f4e0fe1d48d30e7fb2b6e02d1ddcc5b904fdb4b9c378d594153a94724e6bcf4d"
+    },
+    {
+      "path": "meta-llama31-LICENSE.txt",
+      "bytes": 7680,
+      "sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712"
+    },
+    {
+      "path": "meta-llama31-USE_POLICY.md",
+      "bytes": 4673,
+      "sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735"
+    },
+    {
+      "path": "revision-template-comparison.json",
+      "bytes": 786,
+      "sha256": "9ea6e58b600338c57de63c583af378144e9f092ebc47e8927b30405a31be7834"
+    },
+    {
+      "path": "small-files-provenance.json",
+      "bytes": 2164,
+      "sha256": "06de4df1bf4e8b3333832b89bc82bd191394dcf83f7d7b48ade36770a0fcec8d"
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T04:03:02.221858+00:00",
+  "scope": "Production audio-duration bounds and honest timed exports, tested with original retained outputs. No new speech inference, model adoption, release approval, or hosted-current-source verification is claimed.",
+  "historical_native_run": {
+    "commit": "73b75b45bf6715627fac94d087ec4be8b93d353b",
+    "run_id": 46102019808,
+    "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46102019808"
+  },
+  "source_hash_scope": "Exact Linux preparation bytes observed for this reviewed change; historical policy tests compare semantic AST identities and do not require Linux app.py byte identity on Windows.",
+  "current_source_files": [
+    {
+      "path": "app.py",
+      "bytes": 60730,
+      "sha256": "5a5732ffcb420d2ca7dde87008168b91d67d8cabfd5f54a13a43436f087c0d4d"
+    },
+    {
+      "path": "tests/test_asr_timing_bounds.py",
+      "bytes": 10083,
+      "sha256": "91654df125a67672aabf6b92580639fd6390b0c79662b9ac2afc360f68f7152b"
+    },
+    {
+      "path": "tests/test_asr_vad_policy.py",
+      "bytes": 6992,
+      "sha256": "79b4dd578b15bc5013d1567939b8f01ef7b82ac48d8f6f58e3e72a1c8c350144"
+    },
+    {
+      "path": "tests/test_asr_speech_evidence.py",
+      "bytes": 5983,
+      "sha256": "077e4f784e767d63dd6b782ec3ee149cdd29bfccbaf4e32e188eaa17a2e58069"
+    },
+    {
+      "path": "tests/test_large_v3_candidate_qa.py",
+      "bytes": 6941,
+      "sha256": "e3417767c39b1db6fb15b2bb31c81c1fecffacf5ba0b50a3d53b6c79de255bcc"
+    },
+    {
+      "path": "tests/replay_asr_timing_bounds.py",
+      "bytes": 7673,
+      "sha256": "0fa5de3854f0ac44300d5e28df88ba7a7e03fab22e82a1e6e78992a0dfd0ceba"
+    }
+  ],
+  "unchanged_historical_dependencies": [
+    {
+      "path": "tests/qa_large_v3_candidate.py",
+      "bytes": 30634,
+      "sha256": "cd7f933b27fc297fcdd0f1901657306ee90d17211ceae16dd0c4d9d23200c451"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/plan.json",
+      "bytes": 7018,
+      "sha256": "b9b779a48cb265e28c060fbf433d40e54058bb86290decc042e620ec363851f2"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/production-policy.json",
+      "bytes": 4007,
+      "sha256": "2f0d178461fa195e81b7d31731adac92045b6d8ee77020ccbd5a461102208724"
+    },
+    {
+      "path": "docs/large-v3-hosted-results-2026-11-28/artifact/recognizer-report.json",
+      "bytes": 271241,
+      "sha256": "26098ab9a14bc328d7c9aea77e43defadbec57d1055f8190976ecd492fc6485f"
+    },
+    {
+      "path": "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json",
+      "bytes": 291807,
+      "sha256": "abf6ad93ec75a2a3c95138e3e8c2d9181e2daf52b01edc7a9c8eb5b57a384f17"
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8909,
+      "sha256": "c2ffd56a7846e08760e94e67472093d3e7140c4cbae52889992a01a9384b9d3c"
+    },
+    {
+      "path": "first-combined-failure-reproduction.txt",
+      "bytes": 29204,
+      "sha256": "49eb673fc7fb2aa2767d5a08f8d9afa914de799eb5ece1003b87f5813d2dc512"
+    },
+    {
+      "path": "fixture-correction-supplement.json",
+      "bytes": 1991,
+      "sha256": "fab7aeac82649a0591899dd8418f5876f4165475325df6573ce6b5ec5d9ba860"
+    },
+    {
+      "path": "focused-tests.json",
+      "bytes": 1310,
+      "sha256": "ae5cbb0aac93ed5f89603b4db1a2d9a4fe7a3ab3f90903eed5d3fcad0e7eb2ac"
+    },
+    {
+      "path": "focused-tests.txt",
+      "bytes": 99,
+      "sha256": "e9bd64450cadb0a92b0ce8f9fba58e67809d093f82a3fa44270351c2d1547e1e"
+    },
+    {
+      "path": "historical-current-policy-rejection.json",
+      "bytes": 709,
+      "sha256": "b16c5b219e2e19272096b965a94a1f272c904118423c270ccc3e1815d21e3b9b"
+    },
+    {
+      "path": "historical-large-v3-unit.py",
+      "bytes": 4976,
+      "sha256": "b383028077a6d81ace6ee5c76d04827b4f519ac9722310ef114c9fbdaba69bcd"
+    },
+    {
+      "path": "historical-speech-evidence-unit.py",
+      "bytes": 5858,
+      "sha256": "9900e1dbb7a7b160f45ae13466d17a2abd25981c50d4ed58632a904b195ec443"
+    },
+    {
+      "path": "implementation-review.json",
+      "bytes": 11499,
+      "sha256": "d61ebe751fdd9816a38886a7777c95cbbac80bd856457d01f2c083578ce5bbc8"
+    },
+    {
+      "path": "proposal-edge-case-review.json",
+      "bytes": 8651,
+      "sha256": "e7773aff5675251bcb4eb9ec218602afaf51a464fdf33404512c33ebe72f3048"
+    },
+    {
+      "path": "replay-execution.json",
+      "bytes": 606,
+      "sha256": "946900958f339fbbf048a2f88b259342dddf56f872e7c7b93dbf8b7f5490aa93"
+    },
+    {
+      "path": "retained-output-replay/backup.zip",
+      "bytes": 1842,
+      "sha256": "57efa932a65c2a1eab12920115c942acecf23eb7434ba866336849378eb6aa90"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-11-1590/transcript.json",
+      "bytes": 736,
+      "sha256": "d3a4eb02ea59d49867ebf8d600c8fc07d8c765571e5982aac8552fa375e7efba"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-11-1590/transcript.srt",
+      "bytes": 326,
+      "sha256": "ed6fd51f2801a293ce357b2b35e7792c3ca62dec4ec1c6a3cf989ddf2458d359"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-11-1590/transcript.txt",
+      "bytes": 261,
+      "sha256": "9a98ee013ab0341f2d75a2b582671124993b24e73d818a6ddf6f4a7ca93266e9"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-11-1590/transcript.vtt",
+      "bytes": 330,
+      "sha256": "a3899d58c0dfbb8c7a03a2fa32207e6e389b45f05f1a2ae38e292a5169685a4e"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-11-1590/transcript.zip",
+      "bytes": 1435,
+      "sha256": "3eae9056e0003d086beb2338a78576b192be900b27c3ceb8bfd74db2e9e2d628"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-2-1528/transcript.json",
+      "bytes": 572,
+      "sha256": "a09bc29bb4958f2f6fa6371e068bd22e335e523dab077eaed51c2dc1468b4f87"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-2-1528/transcript.srt",
+      "bytes": 200,
+      "sha256": "ec8bbf99b443bece5f1e93cb0295b5d8a458949afbd6b0714c2e73985269c378"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-2-1528/transcript.txt",
+      "bytes": 168,
+      "sha256": "e991f0797a15ee28fb1adff127a534fc2a14dfc006dcfee0be184dd53eee2f2a"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-2-1528/transcript.vtt",
+      "bytes": 206,
+      "sha256": "601c3885c4de23db2ea1816f0cef3fa646a70b8093e13b904532298029fa17c0"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-2-1528/transcript.zip",
+      "bytes": 1193,
+      "sha256": "ad75ad2a63c1adb77589d20cf68734da6118a086129be18fa357ba1dcda53359"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-5-1515/transcript.json",
+      "bytes": 551,
+      "sha256": "d4fd25f89e7954fc04dff7d98a1363c32770fbd46d6dec44837d732c12719a23"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-5-1515/transcript.srt",
+      "bytes": 179,
+      "sha256": "195ca7f0a91e35ed5fabd0068616964113fd173f8cb7286d388cb79498833c03"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-5-1515/transcript.txt",
+      "bytes": 147,
+      "sha256": "ce279ea3c4dc4572325d188e451aaf87718984c3a591d46985e09fa9f89f7008"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-5-1515/transcript.vtt",
+      "bytes": 185,
+      "sha256": "870f9f27ae0a8202ef768703747f63a28fac25ea2064847f65cd149232a4bc5d"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-5-1515/transcript.zip",
+      "bytes": 1180,
+      "sha256": "d815ec5e721d05fde599ec3c87ac47b2342cf7ab208b79b85d0d10cff2b898a8"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-6-1577/transcript.json",
+      "bytes": 515,
+      "sha256": "ba258137fa176668e5c82d1e09fe67b905a9ccfa427b3fa34beac24d3898b1b7"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-6-1577/transcript.srt",
+      "bytes": 143,
+      "sha256": "f54a965b44a09ca55a3d446108b52e461edcd2446d4a31d2b4ef974282efd549"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-6-1577/transcript.txt",
+      "bytes": 111,
+      "sha256": "920abc3ce484928790b536c9e2a68f203d2fe4ea4f89e7a710cb26e4e9adf655"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-6-1577/transcript.vtt",
+      "bytes": 149,
+      "sha256": "431d7b8382b7ec9eaf573d0b3ab0b5860041ca280986535564b792b7259c06fd"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-6-1577/transcript.zip",
+      "bytes": 1105,
+      "sha256": "a13fb132563bdfe88a96103045af5b001e79c27b9ea7ee1ea3397142257f4fb7"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-7-1598/transcript.json",
+      "bytes": 615,
+      "sha256": "43f64c971cdd2222e3496ad479a917474f4072edb110336c59120b1b72a0f0d1"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-7-1598/transcript.srt",
+      "bytes": 243,
+      "sha256": "26a5b583d59bbb72eec218578399df334543b84d7de345aafea52271514cca10"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-7-1598/transcript.txt",
+      "bytes": 211,
+      "sha256": "34a4cb62ca8f4d0166bd8e9029f67219f4709035683c4cd0bd45f07f23f6b27a"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-7-1598/transcript.vtt",
+      "bytes": 249,
+      "sha256": "b397e7ff73fdba790aba260f7a6f5f14dbe3705e545e4b2b78196f834aa56d93"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-el_gr-validation-7-1598/transcript.zip",
+      "bytes": 1279,
+      "sha256": "a74a6f27efde286555339e84c762d1e0e906d0ac20914fb60de70ffa8a79d2bd"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-0-1548/transcript.json",
+      "bytes": 485,
+      "sha256": "12e76fa83465b701082a51c163bff326e505a7f5837d8a698b1f3593777a9dc7"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-0-1548/transcript.srt",
+      "bytes": 113,
+      "sha256": "b165f12fb71fd995b4fb697d8d4363507339e05334b1b12f083d2028142eb157"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-0-1548/transcript.txt",
+      "bytes": 81,
+      "sha256": "b7bb912726495b0f60aa9ba77982cd0a72107eaea41bfb8387bc74104e9eaec0"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-0-1548/transcript.vtt",
+      "bytes": 119,
+      "sha256": "28457b5018b0a1865e2d92119e7010351b0518b39fb7616f50b7464c179012d8"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-0-1548/transcript.zip",
+      "bytes": 994,
+      "sha256": "85afd5cffcf91582a2d1dc8a4cef93479aaca2656528df12b3e2050ecc56aa5e"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-2-1510/transcript.json",
+      "bytes": 511,
+      "sha256": "94cd930b88486d660623ddd6ea51870be2a2a326ff3bd7f88c16065581975970"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-2-1510/transcript.srt",
+      "bytes": 140,
+      "sha256": "54836161e7bb204fbf26495f2e3ad18e7a9dc6d10d7f45413801a1c0c07bf952"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-2-1510/transcript.txt",
+      "bytes": 108,
+      "sha256": "14b23feb6e117b761082117f5e202887db78460f42b5abdb99b5c48c603c61a3"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-2-1510/transcript.vtt",
+      "bytes": 146,
+      "sha256": "dfe8376093623cd74d9567dec2657d89d32738784ead515c509b58749082a5c5"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-2-1510/transcript.zip",
+      "bytes": 1067,
+      "sha256": "44ff7e04dee3ed5b04530a2e4b17459be3a4d55bd17b8c2dfc35cceba390f6f5"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-3-1578/transcript.json",
+      "bytes": 457,
+      "sha256": "4a56bf84abb7f991d6a7f5247d2722d133644d2fa1fbe6c277a1e8b5a53c41ca"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-3-1578/transcript.srt",
+      "bytes": 86,
+      "sha256": "cfb7a8041d821651be3ce3c012e23b189a58b3c57389e1df64da3f1803534445"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-3-1578/transcript.txt",
+      "bytes": 54,
+      "sha256": "522782cc89d6a9d716b73aeb35e0573e1a619f4d6142926b9afd475700d2ff79"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-3-1578/transcript.vtt",
+      "bytes": 92,
+      "sha256": "8f1b4c08c1425a34ed6787267c62d25e547463bb0ec4f7623f37d198bfdc2e93"
+    },
+    {
+      "path": "retained-output-replay/cases/fleurs-en_us-validation-3-1578/transcript.zip",
+      "bytes": 902,
+      "sha256": "24f347046def2ea9084d26cd4da941e1e43aae08a017e165e767be33467d2253"
+    },
+    {
+      "path": "retained-output-replay/replay-library.sqlite3",
+      "bytes": 24576,
+      "sha256": "f3e82dbb358c5bd4dea3986a8c4b4e499d061e426bb0216396eebeb2fcd2fb7f"
+    },
+    {
+      "path": "retained-output-replay/replay-report.json",
+      "bytes": 16669,
+      "sha256": "32e4d2a838f9f0da5cfba0554540c110ee96858c992dc0a590fe203bb64a5789"
+    },
+    {
+      "path": "retained-output-replay/restored-library.sqlite3",
+      "bytes": 24576,
+      "sha256": "892668c3c44e5449472a052403b339f8990ff576a21206a9837682b68e0bb3cf"
+    },
+    {
+      "path": "retained-replay-audit.json",
+      "bytes": 8820,
+      "sha256": "83f7fa3ab7640cd4715af8e8bf8d6cfce48928aae459721d07558fd4c03149b1"
+    },
+    {
+      "path": "speech-fixture-correction.json",
+      "bytes": 1574,
+      "sha256": "77884f5745f2dbfb4c609cac49f095e8bbce14165594f55fb20ddaf66819cc66"
+    },
+    {
+      "path": "speech-fixture-targeted-tests.txt",
+      "bytes": 99,
+      "sha256": "78dc13551d6b06082326ca92ba6327163964f1f7046daf03c6c4fe1b54c23d15"
+    },
+    {
+      "path": "validation-summary.json",
+      "bytes": 1270,
+      "sha256": "1a4cb22eea14de5c53a4fbd0989c44591b7393ba5766a3797c27c22d3abffbf1"
+    }
+  ],
+  "file_count_excluding_manifest": 59,
+  "total_bytes_excluding_manifest": 170882,
+  "manifest_self_included": false,
+  "validation": {
+    "retained_cases": 8,
+    "exports": 40,
+    "restored_records": 8,
+    "new_model_loads": 0,
+    "new_acoustic_inference": 0,
+    "related_tests_passed": 121,
+    "independent_focused_tests_passed": 48,
+    "fixture_only_followup_tests_passed": 17,
+    "first_combined_failure_preserved": true,
+    "parent_combined_followup": "Parent owns the new combined run and subsequent publication; no future result is inferred here."
+  }
+}

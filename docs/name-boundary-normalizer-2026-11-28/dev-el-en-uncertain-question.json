@@ -1,0 +1,64 @@
+{
+  "complete": true,
+  "id": "dev-el-en-uncertain-question",
+  "plan_sha256": "9d708e04ac952039e332314e098ab6befa90dd6b75d07842772aeb9992d41b76",
+  "execution_freeze_sha256": "a8c0f8da54d4d4e793edeef1fcac331ebc91340351418b46a8d23dded3d6f3e7",
+  "raw_report_sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8",
+  "source_only_sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482",
+  "normalizer_calls": 1,
+  "semantic_decision": "awaiting_independent_original_annotation_review",
+  "result": {
+    "version": 1,
+    "source_language": "el",
+    "source_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9",
+    "source_segments": [
+      {
+        "start": 0.25,
+        "end": 5.0,
+        "text": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+        "speaker": "Speaker 2"
+      },
+      {
+        "start": 5.0,
+        "end": 9.5,
+        "text": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+        "speaker": "Speaker 2"
+      }
+    ],
+    "source_unchanged": true,
+    "raw_entity_count": 1,
+    "proposals": [
+      {
+        "raw": {
+          "start": 0,
+          "end": 7,
+          "text": "Η Μαρία",
+          "label": "person",
+          "score": 0.9357870817184448
+        },
+        "segment_index": 0,
+        "proposed_span": {
+          "start": 2,
+          "end": 7,
+          "text": "Μαρία",
+          "segment_start": 2,
+          "segment_end": 7
+        },
+        "raw_score": 0.9357870817184448,
+        "score_scope": "original model span; no normalized-span score",
+        "status": "proposed_remove_definite_article",
+        "reason": "exact_article_form_and_horizontal_separator",
+        "removed_from_protection": {
+          "start": 0,
+          "end": 2,
+          "text": "Η ",
+          "remains_ordinary_source_text": true
+        },
+        "requires_independent_boundary_review": true,
+        "semantic_limit": "Article-like names and undotted initials remain ambiguous; proposal does not certify name identity."
+      }
+    ],
+    "automatic_name_safety_certified": false,
+    "translation_or_masking_performed": false
+  }
+}

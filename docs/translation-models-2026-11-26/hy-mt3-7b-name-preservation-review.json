@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T20:44:41.305807+00:00",
+  "reviewer": "assistant",
+  "review_method": "Read every actual source/output pair against the frozen development criteria. This is not blinded human validation or an accuracy estimate. References were not model inputs.",
+  "decision": "rejected_not_integrated",
+  "decision_reason": "Three material development errors remain or appear. No fresh v3 validation, default change or memory-fit claim was made.",
+  "raw_report": "hy-mt3-7b-name-preservation-development.json",
+  "raw_report_sha256": "51be9981d66a5e0626f41beee07bf11dc2ad8c6a1cbd2ba0ee5d93b71135c7da",
+  "base_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "source_sha256": {
+    "enhancements.py": "d447ca69bf28e48d9747d7d75e5c8fdfe79c00f01eed25cb2646147e573892b9",
+    "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+    "tests/evaluate_translation_quality.py": "412265b53e0dfb9333b90acdf117f84764acd2fcbe73568c122882ed669980f4",
+    "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+  },
+  "model_digest": "5cd558f1a3f813d2a75755e3b51daadabec1252e9c4b6fde3b836f58fe85aa61",
+  "elapsed_seconds": 138.097,
+  "execution": {
+    "completed_cases": 6,
+    "inference_requests": 12,
+    "unload_controls": 6,
+    "failures": 0,
+    "automatic_counts": {
+      "pass": 4,
+      "review": 2,
+      "fail": 0,
+      "error": 0,
+      "incomplete": 0
+    }
+  },
+  "semantic_counts": {
+    "acceptable": 3,
+    "minor_issue": 0,
+    "major_error": 3
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "rating": "major_error",
+      "reason": "The second sentence changes transcription into copying (αντιγραφή). The first sentence uses απόδοση (rendering) for transcript, leaving the intended transcript/process distinction unclear. Saving the original recording is correctly negated and the twelve-minute quantity survives; these do not repair the changed process.",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Η Μαρία αποθήκευσε την απόδοση ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Η αντιγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as Μαρία."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "rating": "major_error",
+      "reason": "The first sentence correctly distinguishes Eleni from Elena, but the second assigns Elena’s subtitle-checking role to Eleni. The generic name instruction did not fix the known material actor error.",
+      "source_segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nikos sent the text to Eleni, not to Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Eleni is the translator. Nikos does the recording, and Eleni checks the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "rating": "acceptable",
+      "reason": "The receipt, two items, localized €12.50, 5,000 versus 500 sats, separate transfer and non-equivalence of currencies are retained. Localized separators and σατς are acceptable; lexical indicator flags are not material errors here.",
+      "source_segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "Η απόδειξη δείχνει 12,50 ευρώ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 σατς, όχι 500 σατς.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "Η σημείωση αναφέρει το Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "rating": "major_error",
+      "reason": "The first sentence correctly refers to Anna as she and preserves the scope of negation. The next sentence changes the implicit same actor to he. The unmade decision survives, but the person continuity is materially changed.",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today he may sell one, but this has not been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "rating": "acceptable",
+      "reason": "Publication remains conditional on Giannis approving the text; no Friday answer still leads Anna to wait until Monday. Mixed Latin/Greek spellings of the same names preserve identity.",
+      "source_segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Η Anna θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "rating": "acceptable",
+      "reason": "The 12-or-21 chapter question stays quoted and unresolved. The following sentence preserves both uncertainty and the insufficiency of the title as evidence.",
+      "source_segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Maria asked: \"Does the file have 12 chapters or 21?\"",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We do not yet know the answer. The title alone is not enough for us to determine that.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    }
+  ],
+  "limitations": [
+    "Six exposed development cases; the separate fresh validation corpus was not used.",
+    "Only the one generic name-preservation instruction changed. No output repair, special names/examples, seed search or model options change.",
+    "The app transmits individual original segments through this native adapter; the pronoun-continuity failure concerns the configured pipeline, not an isolated whole-context model benchmark.",
+    "No memory sampler was used for this isolated language trial; elapsed execution does not certify that the complete app fits a 7.3 GiB machine.",
+    "The preserved plan was written before inference and retains its original not_started field; the completed raw report records execution."
+  ]
+}

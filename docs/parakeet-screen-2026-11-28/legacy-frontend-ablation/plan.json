@@ -1,0 +1,778 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-11-28T01:54:58.568155+00:00",
+  "execution_status": "not_started",
+  "requires_root_model_slot_release": true,
+  "scope": "recognizer_only_published_legacy_frontend_sensitivity_ablation",
+  "app_integration_exercised": false,
+  "fresh_validation": false,
+  "model_id": "istupakov/parakeet-tdt-0.6b-v3-onnx",
+  "model_revision": "8f23f0c03c8761650bdb5b40aaf3e40d2c15f1ce",
+  "upstream_model_id": "nvidia/parakeet-tdt-0.6b-v3",
+  "model_license": "CC-BY-4.0",
+  "model_directory": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model",
+  "python_executable": "/workspace/scratch/94360995dd61/parakeet-screen-venv/bin/python",
+  "helper_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/legacy-frontend-ablation/run_screen.py",
+  "helper_sha256": "411bcc94bc3776f3a727be480b8b5bf569b289c7e543697f778f158caabe7a72",
+  "runtime_versions": {
+    "onnx-asr": "0.12.0",
+    "onnxruntime": "1.32.0",
+    "numpy": "2.5.5",
+    "huggingface-hub": "2.5.0",
+    "socksio": "1.0.0"
+  },
+  "pinned_files": [
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/README.md",
+      "bytes": 1207,
+      "sha256": "95d330fef1070f22cc4d4e380fbf5913253b44f7b71fabae997f6cdf65fe1714"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/config.json",
+      "bytes": 97,
+      "sha256": "666903c76b9798caf2c210afd4f6cd60b08a8dbf9800ec8d7a3bc0d2148ac466"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/decoder_joint-model.int8.onnx",
+      "bytes": 18202004,
+      "sha256": "eea7483ee3d1a30375daedc8ed83e3960c91b098812127a0d99d1c8977667a70"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/encoder-model.int8.onnx",
+      "bytes": 652183999,
+      "sha256": "6139d2fa7e1b086097b277c7149725edbab89cc7c7ae64b23c741be4055aff09"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/nemo128.onnx",
+      "bytes": 139764,
+      "sha256": "a9fde1486ebfcc08f328d75ad4610c67835fea58c73ba57e3209a6f6cf019e9f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/vocab.txt",
+      "bytes": 93939,
+      "sha256": "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-11-1590.wav",
+      "bytes": 641338,
+      "sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-2-1528.wav",
+      "bytes": 426298,
+      "sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-5-1515.wav",
+      "bytes": 384058,
+      "sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-6-1577.wav",
+      "bytes": 268858,
+      "sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-7-1598.wav",
+      "bytes": 445498,
+      "sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-0-1548.wav",
+      "bytes": 418618,
+      "sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-2-1510.wav",
+      "bytes": 506938,
+      "sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-3-1578.wav",
+      "bytes": 265018,
+      "sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-11-1590.npy",
+      "bytes": 641408,
+      "sha256": "cc75526eece38bdc17090e4bf36769618335bc4dd3b82247a49c983bf155e9ba"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-2-1528.npy",
+      "bytes": 426368,
+      "sha256": "a5e38c6b760a06d5132fe4806904b005a998ab60fd39174727a884a0bff1480c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-5-1515.npy",
+      "bytes": 384128,
+      "sha256": "34b697dcc03bc2020b9f54c34f525eb29ad00342bda4aa77bc072f5aab8acff1"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-6-1577.npy",
+      "bytes": 268928,
+      "sha256": "24488d58992d0b4c7a922dd1a18e17f8d259c4df985b72ab917eeb02bdcd1482"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-7-1598.npy",
+      "bytes": 445568,
+      "sha256": "f3e925954c97008ec339e7fa5718b8aeec60d3ba9367d76437567e19865cab9e"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-0-1548.npy",
+      "bytes": 418688,
+      "sha256": "c28e046e8d1391abc69614a6c81f8a409a9897a29c240138a4586720e39ea9c4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-2-1510.npy",
+      "bytes": 507008,
+      "sha256": "4ca922f5773d3318fca12c7e7157522b7bb71f258fe3e70aba82a442e937951f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-3-1578.npy",
+      "bytes": 265088,
+      "sha256": "bd2bbaf768eeca10034b8607d020decc9882329a7ed041b013a8bdc1454b05b8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/__init__.py",
+      "bytes": 255,
+      "sha256": "9af0ebdf708c69e2a9dc2fea76f71276fa4e9ebe428678a58985167f155fae8b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/adapters.py",
+      "bytes": 9153,
+      "sha256": "cdb4f8f6cee303aa2addc2aa14c77254d9541381ff461986afd5b10cf7e51a22"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/asr.py",
+      "bytes": 8272,
+      "sha256": "90d79832a9f5073270e604dc19308a56927cecabcf29815de97825e19187a862"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/cli.py",
+      "bytes": 1974,
+      "sha256": "85759b7750524c64a7c66a90d575594dc75436ee998c4b796880aa0c28336333"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/loader.py",
+      "bytes": 16190,
+      "sha256": "ef4782a1f466ca29bf912c1b59a2e9bee6f2e95e47997c566cb1525a54288237"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/__init__.py",
+      "bytes": 41,
+      "sha256": "d140e50fe66c11415c419c18c95d6e8d1d3dfe4f5e32c2c7d38b1e489cadd47c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/gigaam.py",
+      "bytes": 6637,
+      "sha256": "15879d724aab4fc71bd65bd14a38a5070ddc5788160a7a628d0766d53f51ba33"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/kaldi.py",
+      "bytes": 3433,
+      "sha256": "e48155d8e197c9ef5fb7c7d52418718ffb8da667b8184ddd28862d49fe08f24c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/nemo.py",
+      "bytes": 11002,
+      "sha256": "646fac0da96b4fea153113a5536202182816269478ad5f3d6dab854b50bb0a69"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/pyannote.py",
+      "bytes": 9369,
+      "sha256": "a54a2391ec83aa62a71b0dae600626115ac054d8f7367cfb11d6b275ac7f6569"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/silero.py",
+      "bytes": 4045,
+      "sha256": "4c795298c59367488ff6bd88323a90cfca537f824c8b7ff47eb2266027d868a9"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/tone.py",
+      "bytes": 3313,
+      "sha256": "1a6f682626a5899109eceeef7c5a3e966b5934a047fb0c9f3bd0ad195665696e"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/wespeaker.py",
+      "bytes": 1709,
+      "sha256": "fdd697d1357986d29794a653311541f57ce4f0dd00870b095d0381842c1814df"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/models/whisper.py",
+      "bytes": 9229,
+      "sha256": "cd51aac50037065c6187f669ac8c03d46e3d606d8de4adb33d72dad23aca3fdb"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/onnx.py",
+      "bytes": 5174,
+      "sha256": "a4c686f9caf2a680a1bb2c3f941fa99bf734d09751e0c0fe611f32ecdc5fb790"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/__init__.py",
+      "bytes": 40,
+      "sha256": "bba6cfc6052d77d782f3c2f57ef7762c11cd98a2bdb3387524ae7faf571f2cde"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/fbanks.npz",
+      "bytes": 19576,
+      "sha256": "7f3e3bd26f90946c5f91a3f60af6f4c5c2b07a94f2fb2da91bb325b9d26feb73"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/gigaam_v2.onnx",
+      "bytes": 54913,
+      "sha256": "abc06381785bc6c4b76db6bf99803388edca7d44efa5a181eb1c2b894f3ff2f8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/gigaam_v2_conv.onnx",
+      "bytes": 697157,
+      "sha256": "c9b61866d25f7564c7183a3ceebcb85aedc2d56a983cd534237439e5d4d8224b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/gigaam_v3.onnx",
+      "bytes": 44430,
+      "sha256": "919c3bc8a434b6e733e5fe5dcd247974d0a7b1f2bc5b6995b6ad55f7225e014d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/gigaam_v3_conv.onnx",
+      "bytes": 455904,
+      "sha256": "547ddbaf3a639c12c1a94b7cab1c9fb246045d48c439f1a54b189714376b1a38"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/kaldi.onnx",
+      "bytes": 92902,
+      "sha256": "7d0f04ed3aa0775ac690c5bb3680cdef3e68807ee3ce415f0ca47deeeefc9bce"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/kaldi_conv.onnx",
+      "bytes": 1144094,
+      "sha256": "172f8ace71421c5209ffd4939d578b336b89b9fbbcd4137f6e6ba38a8849dc2d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/nemo128.onnx",
+      "bytes": 138824,
+      "sha256": "5b4a84c52eeaa615dc46d781cc7e4598f9b432184831d57493c48adcd01371a9"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/nemo128_conv.onnx",
+      "bytes": 1190298,
+      "sha256": "5bbdc98847c3153c54e7b58f2c8668d0c19a22d07ed16204a058d26880985c6c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/nemo80.onnx",
+      "bytes": 89473,
+      "sha256": "7ab6b0d1f57832e56f59aa7cab4289de50df7f8d5296cdfd281d9c9b7b8d73e0"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/nemo80_conv.onnx",
+      "bytes": 1140933,
+      "sha256": "1566e840c72d032dfb31166b924d96fe2a6c8a6c29393da8e83c19d99de0eb76"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_11_16.onnx",
+      "bytes": 10040,
+      "sha256": "f2e90792f65753b0b79ec73829f21352b230a8fa06f3c115dce3feba2ec3d46c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_11_8.onnx",
+      "bytes": 8775,
+      "sha256": "a4d456e81734c49e827b26eb594a3b3a540d346203f13963501310835716c6f2"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_16_8.onnx",
+      "bytes": 3704,
+      "sha256": "94f3e99e62a6415dea3d10119a0eefa124b3fd0bb8ba49c85e996ba27b302722"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_22_16.onnx",
+      "bytes": 8776,
+      "sha256": "09e29ba5d6c21fc2df326b6103db824d6e50f5ba392f9816650d97899d48817b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_22_8.onnx",
+      "bytes": 8199,
+      "sha256": "e5dac94ea5fe39782f3d9a44c4c78b7e958520cc01de98df28cc068eb6445ea8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_24_16.onnx",
+      "bytes": 4029,
+      "sha256": "6e924a97e41ef3ceac2e0f80a8d834ade1049d1fa8b2a8e5c31f925031f475b9"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_24_8.onnx",
+      "bytes": 3757,
+      "sha256": "73f3efafff4a6619a4a344fb928c52a6a586926817afb4fe04b8e0662e3aee18"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_32_16.onnx",
+      "bytes": 3705,
+      "sha256": "aa0624578edd8730d5dbc9eeff573f477f32dfd2c8b4f70242cf4ee4f03c6a40"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_32_8.onnx",
+      "bytes": 3809,
+      "sha256": "c5d485fb1a0851dad003cc944350d8e1938d722bd50b67bd480f88c1d138b5b4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_44_16.onnx",
+      "bytes": 8200,
+      "sha256": "edce58a900588cf95b0e853511fbfc32ad88264a2f32e0787b3d29d75987f0eb"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_44_8.onnx",
+      "bytes": 7753,
+      "sha256": "0eaefd3585f2d6622ad0458b2729f6398c9b50a76435bb34336f203b387de64a"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_48_16.onnx",
+      "bytes": 3758,
+      "sha256": "25791c6e65504d7be9717dd814937d2e757b7b49a1ef51da32cfb1fa6627264d"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_48_8.onnx",
+      "bytes": 3913,
+      "sha256": "b9e3c44135a4e8a92dcb479042defcf5973a946dc1ed0d45fd8b8f37fb295bf4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/resample_8_16.onnx",
+      "bytes": 3727,
+      "sha256": "5aaaef8508880c639ccc4bcd2662a894c9015ddfff22b6c352ee33e03b8c2414"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/wespeaker.onnx",
+      "bytes": 89222,
+      "sha256": "4fcc0d9897bf960a304615cdb95ea2831f26dd409fcd1971b4ea831c49256cfd"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/whisper128.onnx",
+      "bytes": 107349,
+      "sha256": "ab730292c17d34ad46cd28b99a30e70b878b602827c29e12d6a87ea4a6698942"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/whisper128_conv.onnx",
+      "bytes": 749529,
+      "sha256": "d1f232e477ca8452a78a4ceeb672a87831d7452ff59262e9f6cd263d564f2f05"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/whisper80.onnx",
+      "bytes": 68750,
+      "sha256": "8161c22a310df637a56029c037c79c9eb52a211a36b20935a1d0ba32bdb43d8f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/data/whisper80_conv.onnx",
+      "bytes": 710923,
+      "sha256": "ee6096f815911e76b21e90b6ee126a99127efeadcc870805e2f5967f65af28da"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/numpy_preprocessor.py",
+      "bytes": 8985,
+      "sha256": "215b10e9549843feb5961f9a5c03bfa79270b5c08f7bfdd34388bce3f6f0a83f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/preprocessor.py",
+      "bytes": 3232,
+      "sha256": "cde18fdcb0a38e44ec3bc1d7b7dc1039294d27e985adf285821d062daef21f6f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/preprocessors/resampler.py",
+      "bytes": 2295,
+      "sha256": "ca59d0528d229628fef721e157849187d3f1cc2f04a69242b7395a2241dc6e23"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/py.typed",
+      "bytes": 41,
+      "sha256": "444d0f5ec8932d531342dd21a6f72ef59d989d1241303f1280091ca26b4b021a"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/resolver.py",
+      "bytes": 6604,
+      "sha256": "3f74011bbaeac97e79b471a751aacdd35a7ade40713302167f4bd72b43e05bfc"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/se.py",
+      "bytes": 486,
+      "sha256": "5a7533f8ecc39e79afe1968e14a757ee062e5bb5332d788e97714d3d5d3ddef8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/utils.py",
+      "bytes": 6966,
+      "sha256": "336943996cfa18c7d1f1e5e4948bfe427c2e49fc7a46e5259974183084a2ee4e"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnx_asr/vad.py",
+      "bytes": 4216,
+      "sha256": "371627953da997dbc7929cb826c8d5a1724e811d67f8dbb6aa4e6741b2297ad4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime.so.1.32.0",
+      "bytes": 34824680,
+      "sha256": "6c1585d1bbf45b0712ea4a21b705c5fcb4ba04ff2e30f1fbf81a49faf658638f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_providers_shared.so",
+      "bytes": 14632,
+      "sha256": "8ef51f6bf2c621fc129f625b22241fa6f9a5870bc08eaf2fdd279169ec40d09a"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/parakeet-screen-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-312-x86_64-linux-gnu.so",
+      "bytes": 36644168,
+      "sha256": "1ca3cb099256894edeedbce570fd7c2450608c1cdec5ca5bc56db4b8a240be53"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+      "bytes": 4109,
+      "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/development-fixtures-original.json",
+      "bytes": 14073,
+      "sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/legacy-frontend-ablation/run_screen.py",
+      "bytes": 20003,
+      "sha256": "411bcc94bc3776f3a727be480b8b5bf569b289c7e543697f778f158caabe7a72"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/legacy-frontend-ablation/helper.diff",
+      "bytes": 6140,
+      "sha256": "2c361a3c4307cfa0183fb85b2058a19c850ff874e5bf662f890ee622d0f9b3d6"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/plan.json",
+      "bytes": 32328,
+      "sha256": "3a828ee4eb972a62b7f985ea1566c1cba6bca8bbcdcacc43a2211066c84cec2c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/int8-results/recognizer-report.json",
+      "bytes": 82701,
+      "sha256": "6c4d06ec6dec4c68d3774f8274c5007b9d7da0ba5ddacb3c3d074b44ff620e1c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/plan.json",
+      "bytes": 24747,
+      "sha256": "52a9ca579d96d8cb8d496925ce0917e0028135d04c212884aaa08667954b32c1"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/report.json",
+      "bytes": 79823,
+      "sha256": "99e28bd4d4a8758ad87be43290de88c94cb925ccdbd565a2b4f791e03863ab0f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-2-1528.npz",
+      "bytes": 626388,
+      "sha256": "77b7af17a7729fc8085ec863f5dcc3650399b734c29bc6b3c9798121a0365a24"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-5-1515.npz",
+      "bytes": 564083,
+      "sha256": "02530123cac8e81f5e7521f9e2e9c4002b47857896f248dc98907fdc8b02b19b"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-6-1577.npz",
+      "bytes": 390701,
+      "sha256": "292d18bc04e3341e97b442dd90a986668dcf82dbdb284ee3dd4a0b9698b302b6"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-7-1598.npz",
+      "bytes": 649696,
+      "sha256": "9c3c42b7b1422981a577d1ac6f5685bd4dbecdda1552accc9911288e56b4d9ff"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-11-1590.npz",
+      "bytes": 933042,
+      "sha256": "59b48f1dc6cfaa662f6115700fda6067906331a7d60fa6a84372e2f086b37d30"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-0-1548.npz",
+      "bytes": 616818,
+      "sha256": "c16baf186aab149dac7b1c2424818e7cdf34e5256859537dc7ad47394d9b1836"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-2-1510.npz",
+      "bytes": 731066,
+      "sha256": "f258e4e8fa3401dc4b8bb16f257512706d5c974bd3d72bcab054ccddf842c441"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-3-1578.npz",
+      "bytes": 381638,
+      "sha256": "721f3728870ec51cf98c84b0ee1ea6ecfb178ac566b4e1839097eb55cb954935"
+    }
+  ],
+  "output_directory": "/workspace/scratch/94360995dd61/parakeet-legacy-frontend-ablation-2026-11-28/results",
+  "qa_random_seed": 1729,
+  "attempts_per_case": 1,
+  "model_initializations": 1,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "onnx_intra_op_threads": 4,
+  "onnx_inter_op_threads": 1,
+  "onnx_execution_mode": "ORT_SEQUENTIAL",
+  "cpu_execution_provider_only": true,
+  "numpy_blas_threads": 1,
+  "preprocessor_workers": 1,
+  "initialization_wall_seconds": 90,
+  "per_case_wall_seconds": 30,
+  "total_wall_seconds": 300,
+  "rss_limit_bytes": 2684354560,
+  "memory_measurement": "Sample owned process-group RSS every 0.1 s; terminate at observed limit. Also reject recorded ru_maxrss above limit. No whole-machine or unsampled-peak guarantee.",
+  "vad": false,
+  "source_language_argument": null,
+  "target_language_argument": null,
+  "references_in_decoder": false,
+  "text_prompts_or_corrections": false,
+  "chunking_or_cropping": false,
+  "source_language_handling": "NemoConformerTdt has no language-conditioning or translation interface; language/target_language options are documented for other model classes only. No such options will be passed. Expected language remains evaluation metadata; runtime returns no detected-language field.",
+  "timestamp_handling": "Unmodified runtime greedy TDT decoder; token emission frame indices multiplied by 0.01*8=0.08s. Output tokens/logprobs retained; no word end times or forced alignments invented.",
+  "frontend_handling": "Initialize normal pinned model/runtime without recognition, then replace only uncalled NumPy frontend with a direct adapter over model-supplied nemo128.onnx. Exact file,4 intra/1 inter ORT threads; no pre/post feature edits. This tests frontend-version sensitivity and does not fix a proven bug.",
+  "semantic_criteria_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+  "semantic_criteria_sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9",
+  "original_fixtures_sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c",
+  "case_inputs": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-2-1528.wav",
+      "original_audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-2-1528.npy",
+      "array_sha256": "a5e38c6b760a06d5132fe4806904b005a998ab60fd39174727a884a0bff1480c",
+      "dtype": "<f4",
+      "shape": [
+        106560
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 106560,
+      "duration_seconds": 6.66,
+      "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-5-1515.wav",
+      "original_audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-5-1515.npy",
+      "array_sha256": "34b697dcc03bc2020b9f54c34f525eb29ad00342bda4aa77bc072f5aab8acff1",
+      "dtype": "<f4",
+      "shape": [
+        96000
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 96000,
+      "duration_seconds": 6.0,
+      "pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-6-1577.wav",
+      "original_audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-6-1577.npy",
+      "array_sha256": "24488d58992d0b4c7a922dd1a18e17f8d259c4df985b72ab917eeb02bdcd1482",
+      "dtype": "<f4",
+      "shape": [
+        67200
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 67200,
+      "duration_seconds": 4.2,
+      "pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-7-1598.wav",
+      "original_audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-7-1598.npy",
+      "array_sha256": "f3e925954c97008ec339e7fa5718b8aeec60d3ba9367d76437567e19865cab9e",
+      "dtype": "<f4",
+      "shape": [
+        111360
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 111360,
+      "duration_seconds": 6.96,
+      "pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-11-1590.wav",
+      "original_audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-11-1590.npy",
+      "array_sha256": "cc75526eece38bdc17090e4bf36769618335bc4dd3b82247a49c983bf155e9ba",
+      "dtype": "<f4",
+      "shape": [
+        160320
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 160320,
+      "duration_seconds": 10.02,
+      "pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-0-1548.wav",
+      "original_audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-0-1548.npy",
+      "array_sha256": "c28e046e8d1391abc69614a6c81f8a409a9897a29c240138a4586720e39ea9c4",
+      "dtype": "<f4",
+      "shape": [
+        104640
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 104640,
+      "duration_seconds": 6.54,
+      "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-2-1510.wav",
+      "original_audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-2-1510.npy",
+      "array_sha256": "4ca922f5773d3318fca12c7e7157522b7bb71f258fe3e70aba82a442e937951f",
+      "dtype": "<f4",
+      "shape": [
+        126720
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 126720,
+      "duration_seconds": 7.92,
+      "pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-3-1578.wav",
+      "original_audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-3-1578.npy",
+      "array_sha256": "bd2bbaf768eeca10034b8607d020decc9882329a7ed041b013a8bdc1454b05b8",
+      "dtype": "<f4",
+      "shape": [
+        66240
+      ],
+      "sample_rate_hz": 16000,
+      "sample_count": 66240,
+      "duration_seconds": 4.14,
+      "pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb",
+      "full_untrimmed_recording": true,
+      "vad_applied": false
+    }
+  ],
+  "total_audio_seconds": 52.44,
+  "environment": {
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "ORT_DISABLE_TELEMETRY": "1",
+    "DO_NOT_TRACK": "1",
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "PYTHONHASHSEED": "1729"
+  },
+  "offline_scope": "Existing local model directory; HF offline; ORT telemetry disabled by API before session construction; Python socket connect/DNS denied in worker. Not a network-capture claim.",
+  "comparison_reports": [
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-2026-11-26/small-vad-off-regression-replay.json",
+      "sha256": "cda3a30b4ae7d4f8911abae64cdf94540983a3aab64dec1615ac57255116d46d",
+      "role": "completed_prior_small_vad_off_raw_output"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-2026-11-26/small-vad-off-review.json",
+      "sha256": "9d45b293200fa4c64a2e5ec1e8b90dff5bd9d075f94b775f5c3aa3e99802e011",
+      "role": "independent_original_small_vad_off_review"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-2026-11-26/turbo-development-result.json",
+      "sha256": "2eba74730d5d534e61b3f1afa2af44100c2ad37d2f6733c19f21c6420e7cb030",
+      "role": "completed_prior_turbo_development_raw_output"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-2026-11-26/small-vad-off-regression.json",
+      "sha256": "c336ddede6ad8f47b6fe49d48ba0ade8ce0c6e68fb00f8d3a1f2b2efd1e2801b",
+      "role": "historical_failed_socks_setup_context_only"
+    }
+  ],
+  "comparison_limits": "Actual completed Small VAD-off replay and Turbo development runs used explicit source language and normal app upload. The original Small VAD-off file records SOCKS setup failures and is context only. This auto-language Parakeet recognizer-only prototype does not claim a matched benchmark or app workflow approval.",
+  "decision_rule": "Review all eight original semantic criteria and all raw outputs; preserve major failures, minor lexical errors and unchanged successes. Structural or token-edit scores alone never approve release, general ASR accuracy, or timestamps. No retry or tuned correction after observing outputs.",
+  "tokenizer": {
+    "type": "Frozen vocabulary plus unmodified onnx-asr0.12.0 detokenization",
+    "vocabulary_entries": 8193,
+    "blank_id": 8192,
+    "normal_max_tokens_per_step": 10,
+    "emission_frame_seconds": 0.08,
+    "decoding": "Unmodified greedy TDT token and duration argmax; no external language model or custom corrections."
+  },
+  "original_plan_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/plan.json",
+  "original_plan_sha256": "3a828ee4eb972a62b7f985ea1566c1cba6bca8bbcdcacc43a2211066c84cec2c",
+  "original_int8_report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/int8-results/recognizer-report.json",
+  "original_int8_report_sha256": "6c4d06ec6dec4c68d3774f8274c5007b9d7da0ba5ddacb3c3d074b44ff620e1c",
+  "legacy_frontend_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/model/nemo128.onnx",
+  "legacy_frontend_sha256": "a9fde1486ebfcc08f328d75ad4610c67835fea58c73ba57e3209a6f6cf019e9f",
+  "reference_for_correct_frontend": "Unknown exact NeMo/PyTorch export/training versions; no implementation treated as ground truth",
+  "published_frontend_features": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-2-1528.npz",
+      "sha256": "77b7af17a7729fc8085ec863f5dcc3650399b734c29bc6b3c9798121a0365a24"
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-5-1515.npz",
+      "sha256": "02530123cac8e81f5e7521f9e2e9c4002b47857896f248dc98907fdc8b02b19b"
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-6-1577.npz",
+      "sha256": "292d18bc04e3341e97b442dd90a986668dcf82dbdb284ee3dd4a0b9698b302b6"
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-7-1598.npz",
+      "sha256": "9c3c42b7b1422981a577d1ac6f5685bd4dbecdda1552accc9911288e56b4d9ff"
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-el_gr-validation-11-1590.npz",
+      "sha256": "59b48f1dc6cfaa662f6115700fda6067906331a7d60fa6a84372e2f086b37d30"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-0-1548.npz",
+      "sha256": "c16baf186aab149dac7b1c2424818e7cdf34e5256859537dc7ad47394d9b1836"
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-2-1510.npz",
+      "sha256": "f258e4e8fa3401dc4b8bb16f257512706d5c974bd3d72bcab054ccddf842c441"
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/parakeet-screen-2026-11-28/frontend-parity/results/fleurs-en_us-validation-3-1578.npz",
+      "sha256": "721f3728870ec51cf98c84b0ee1ea6ecfb178ac566b4e1839097eb55cb954935"
+    }
+  ],
+  "frontend_binding_tolerance": {
+    "atol": 0.0005,
+    "rtol": 0.0001,
+    "equal_nan": false
+  },
+  "frontend_binding_tolerance_source": "https://github.com/istupakov/onnx-asr/blob/b9e0ce0ae3223b3d24ce5a22a5e701a726ca35fc/tests/preprocessors/test_nemo.py",
+  "frontend_binding_note": "Compare each actual feature tensor with retained matching ONNX graph output from frontend-only experiment; existing parity used1 thread, ASR preserves4 threads. No cached feature substitution.",
+  "requires_language_agent_model_slot_release": true,
+  "production_promotion_authorized": false,
+  "weights_downloaded_for_ablation": false
+}

@@ -1,0 +1,53 @@
+{
+  "review_kind": "assistant assessment, not human approval",
+  "profile": "thinking",
+  "semantic_quality_approved": false,
+  "decision": "rejected_operationally_under_fixed_limits",
+  "cases": [
+    {
+      "case_id": "dev-en-el-transcript-terminology",
+      "state": "execution_error",
+      "accepted_translation": false,
+      "reason": "Reasoning consumed all 2048 output tokens with no final content; production rejected done_reason:length."
+    },
+    {
+      "case_id": "dev-el-en-people-and-roles",
+      "state": "execution_error",
+      "accepted_translation": false,
+      "reason": "Reasoning consumed all 2048 output tokens with no final content; production rejected done_reason:length."
+    },
+    {
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "state": "interrupted",
+      "accepted_translation": false,
+      "reason": "An inference request had started, but the owned exec session was externally stopped before a response was captured."
+    },
+    {
+      "case_id": "dev-el-en-negation-scope",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    },
+    {
+      "case_id": "dev-en-el-conditional-publication",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    },
+    {
+      "case_id": "dev-el-en-uncertain-question",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    }
+  ],
+  "completed_requests_with_accepted_translation": 0,
+  "meaning_quality": "Not assessable: completed requests returned no final translation. Reasoning text is not accepted translation output.",
+  "comparison": "Baseline reproduces three major semantic failures among six exposed development cases. This candidate produces no evidence that those meaning errors are repaired.",
+  "limits": [
+    "The whole six-case candidate selection is incomplete.",
+    "Only this exact combined thinking/sampling profile under a 2048-token response bound was tested.",
+    "The changes jointly alter thinking and sampling, so results do not isolate either factor.",
+    "No fresh validation was inspected or run."
+  ]
+}

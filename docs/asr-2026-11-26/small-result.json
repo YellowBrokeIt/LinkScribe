@@ -1,0 +1,1160 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T17:53:36.897541+00:00",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+  "manifest_path": "fixtures.json",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "Fixed before recognition: five Greek and three English validation rows selected for ordinary vocabulary, names, numbers and negation from the first twelve Greek and first six English rows. No recognition outputs were used for selection.",
+    "representativeness": "Small diagnostic sample of read speech, not a representative population benchmark or conversational/noisy-speech acceptance."
+  },
+  "source_sha256": {
+    "app.py": "adb7e4a266dc5a79c98388b595344cb005ee48c15ff8d57be36ecb8754d3457d",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "86fbee393eee7956bd6e8044f8291ff568c2b159acc9f5b8b5696c6aefa2bfb2"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "fastapi": "0.165.0",
+      "starlette": "1.10.0",
+      "huggingface-hub": "2.5.0"
+    },
+    "device": "cpu",
+    "default_upload_model": "small",
+    "model_override": null,
+    "effective_model": "small",
+    "model_form_field_omitted": true,
+    "model_provenance": {
+      "model": "small",
+      "repository": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "downloaded_at": "2026-11-26T17:50:45.132099+00:00",
+      "files": {
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      }
+    },
+    "offline": true,
+    "recognizer_source": "def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, Any]], str]:\n    engine = _whisper_model(model)\n    try:\n        segments, info = engine.transcribe(\n            str(path),\n            language=None if language == \"auto\" else language,\n            beam_size=5,\n            vad_filter=True,\n            condition_on_previous_text=False,\n        )\n        # transcribe() returns a generator, which must be consumed.\n        output = [\n            {\"start\": round(float(s.start), 3), \"end\": round(float(s.end), 3), \"text\": s.text.strip()}\n            for s in segments if s.text.strip()\n        ]\n    except Exception as exc:\n        raise ReadableError(\"The speech model could not decode this file. Try another recording or a smaller model.\") from exc\n    if not output:\n        raise ReadableError(\"No spoken words were detected in this recording.\")\n    return output, str(info.language or language)\n",
+    "reference_supplied_to_decoder": false
+  },
+  "measurement_notes": [
+    "Actual upload-to-export elapsed time includes initial model loading and polling; other QA may contend for CPU. This is not a controlled latency benchmark.",
+    "WER uses NFKC, casefold, punctuation/symbol deletion and whitespace tokens; a second score removes diacritics. Numeric words versus digits remain different tokens.",
+    "Word-edit counts and structural pass do not approve semantic fidelity, proper names, numerical values or negation. Review exact source references and uncorrected hypotheses separately.",
+    "Timestamp ordering/range is checked; no independently annotated word-timing reference is available.",
+    "Persistence checks query a new SQLite connection and evict in-memory jobs. A separate interpreter checks the final stored records; this is not a full browser/server-restart test."
+  ],
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "media": {
+        "duration_seconds": 6.66,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "9e3af513475d4b658db2dfe7c50969b6",
+      "job_result": {
+        "id": "9e3af513475d4b658db2dfe7c50969b6",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "9e3af513475d4b658db2dfe7c50969b6"
+      },
+      "segments": [
+        {
+          "start": 0.75,
+          "end": 5.75,
+          "text": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά."
+        }
+      ],
+      "hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οι οικογένειες με μικρά παιδιά.",
+      "word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 12,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 3,
+        "word_error_rate": 0.2727272727272727,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "ειδικούσ",
+            "hypothesis": "ιδικούσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικούσ",
+            "hypothesis": "κατασκοινωτικούσ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "οι"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 12,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 1,
+        "word_errors": 3,
+        "word_error_rate": 0.2727272727272727,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "ειδικουσ",
+            "hypothesis": "ιδικουσ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "κατασκηνωτικουσ",
+            "hypothesis": "κατασκοινωτικουσ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "οι"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 173,
+          "sha256": "1912276f95fc60ca6223f26e569c6efed2d8c2f49f9b368ba1cf16c38d388daf"
+        },
+        "srt": {
+          "bytes": 205,
+          "sha256": "570077b131fb7f4c55da5b7da3ef4a73af9fe28428384c9dea65491f4f4d7e14"
+        },
+        "vtt": {
+          "bytes": 211,
+          "sha256": "c2322a891136a4da78447511f004097cff26a09a4c02806c44bf5f50ee27b346"
+        },
+        "json": {
+          "bytes": 422,
+          "sha256": "aa60600df2c3b02ce7d597fb4af22a5d53ffa9d25a8018a7738eff57500a9f21"
+        },
+        "zip": {
+          "bytes": 1108,
+          "sha256": "b289d03b2fb6c28cd623387e26a615002a6e9e0d6c672cc68895dfa2db07538e"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 5.02
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "language": "el",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "media": {
+        "duration_seconds": 6.0,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "b766c89e238c4b60b99cdf93b0a34e87",
+      "job_result": {
+        "id": "b766c89e238c4b60b99cdf93b0a34e87",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-5-1515.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "b766c89e238c4b60b99cdf93b0a34e87"
+      },
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.5,
+          "text": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια."
+        }
+      ],
+      "hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτέη μέσα σε τέσσερα χρόνια.",
+      "word_metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.08333333333333333,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "μαρτελί",
+            "hypothesis": "μαρτέη"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.08333333333333333,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "μαρτελι",
+            "hypothesis": "μαρτεη"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 147,
+          "sha256": "d361a35e3a7f8b735626d5ecddf16f2b8144301fb1d18a556a6239cc5f053bb1"
+        },
+        "srt": {
+          "bytes": 179,
+          "sha256": "37c02c855805e31c0dd7dbe2178b2cdbf49c3d7b938a2c622fe46b57c27ec843"
+        },
+        "vtt": {
+          "bytes": 185,
+          "sha256": "da4e607e5cbe1682e94a75b2d8f2a92af34b8fb9f9e49928d28b0da240d4893e"
+        },
+        "json": {
+          "bytes": 394,
+          "sha256": "889b92331fc853e06c0bc150c03bd4db364e52825726fdf75ebdc5a436faf6d6"
+        },
+        "zip": {
+          "bytes": 1087,
+          "sha256": "73fd6ff1a1980f4a1fcf0f3cf3132547b655fe9637dd9f4d23a88267a4ef1272"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 2.104
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "language": "el",
+      "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "media": {
+        "duration_seconds": 4.2,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "review_criteria": [
+        "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "88f949d9d4954c1e8f1055f615d21017",
+      "job_result": {
+        "id": "88f949d9d4954c1e8f1055f615d21017",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-6-1577.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "88f949d9d4954c1e8f1055f615d21017"
+      },
+      "segments": [
+        {
+          "start": 0.21,
+          "end": 3.71,
+          "text": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο."
+        }
+      ],
+      "hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+      "word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "δίκαιο",
+            "hypothesis": "δίκιο"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 11,
+        "hypothesis_words": 11,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 1,
+        "word_error_rate": 0.09090909090909091,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "δικαιο",
+            "hypothesis": "δικιο"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 109,
+          "sha256": "bb1816c207581a8dddaf2c66fc707bd63fcdfd74d231cdd2bd06d0077ae32db9"
+        },
+        "srt": {
+          "bytes": 141,
+          "sha256": "3eeb8ea45b2f4be12dbcd71dfc7b28cdc063956fed4ed992a5f92269072ee775"
+        },
+        "vtt": {
+          "bytes": 147,
+          "sha256": "895d77d73b885b8e7fe423c4cb23585c4926cbe52c839342ba2c52d131d93847"
+        },
+        "json": {
+          "bytes": 358,
+          "sha256": "95017668a0948ff2a066ef497414187d983cebd692cedf57714889a48dc9f56c"
+        },
+        "zip": {
+          "bytes": 1018,
+          "sha256": "4714ae5900c3121b4943620dddea5d9bc53f593783ccd040261f6dce917e4a1a"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 1.799
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "language": "el",
+      "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "media": {
+        "duration_seconds": 6.96,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+      "review_criteria": [
+        "Preserve the count of three people and the claim that nobody was injured despite the collision."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "a5f9645d17ff400099316ffc500618f9",
+      "job_result": {
+        "id": "a5f9645d17ff400099316ffc500618f9",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-7-1598.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "a5f9645d17ff400099316ffc500618f9"
+      },
+      "segments": [
+        {
+          "start": 0.46,
+          "end": 5.96,
+          "text": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς."
+        }
+      ],
+      "hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκοινή του δεν τραμματίσκε κανείς.",
+      "word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 17,
+        "substitutions": 4,
+        "deletions": 0,
+        "insertions": 2,
+        "word_errors": 6,
+        "word_error_rate": 0.4,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "μόνο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολονότι",
+            "hypothesis": "ότι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "3",
+            "hypothesis": "τρεισ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "αυτοκοινή"
+          },
+          {
+            "operation": "substitution",
+            "reference": "αυτοκινήτου",
+            "hypothesis": "του"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τραυματίστηκε",
+            "hypothesis": "τραμματίσκε"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 17,
+        "substitutions": 4,
+        "deletions": 0,
+        "insertions": 2,
+        "word_errors": 6,
+        "word_error_rate": 0.4,
+        "edits": [
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "μονο"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μολονοτι",
+            "hypothesis": "οτι"
+          },
+          {
+            "operation": "substitution",
+            "reference": "3",
+            "hypothesis": "τρεισ"
+          },
+          {
+            "operation": "insertion",
+            "reference": "",
+            "hypothesis": "αυτοκοινη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "αυτοκινητου",
+            "hypothesis": "του"
+          },
+          {
+            "operation": "substitution",
+            "reference": "τραυματιστηκε",
+            "hypothesis": "τραμματισκε"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 206,
+          "sha256": "41a713d41568a4dc103f47f2e3bfcae71022a59f5ccaf5769971001c73e8da5f"
+        },
+        "srt": {
+          "bytes": 238,
+          "sha256": "f11dee4426fa4e5e49479a1a620697ce79e44d206e58ca8d0116caa751cc5bf2"
+        },
+        "vtt": {
+          "bytes": 244,
+          "sha256": "11af8d34d9683e1bca54dae4b0b741840095f4fbafcfc3a8bb88a79285e7bdb9"
+        },
+        "json": {
+          "bytes": 455,
+          "sha256": "d3a0dfa7a0755dc70598d4dc53d044b8b317f87d113d09dfb8a1bed0c4d71c48"
+        },
+        "zip": {
+          "bytes": 1188,
+          "sha256": "ec61a2d39aa8f072b2f9aed8899e77a46815b9961791c034771c01d44b2b8ceb"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 2.052
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "language": "el",
+      "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "media": {
+        "duration_seconds": 10.02,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "review_criteria": [
+        "Preserve the two product names Number One and Manta and the negated description of the first beer."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "ad36354620764330b22107e95425703b",
+      "job_result": {
+        "id": "ad36354620764330b22107e95425703b",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-11-1590.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "ad36354620764330b22107e95425703b"
+      },
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 9.1,
+          "text": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα."
+        }
+      ],
+      "hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα, είναι όμως ευχάρις και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+      "word_metrics": {
+        "reference_words": 24,
+        "hypothesis_words": 24,
+        "substitutions": 7,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 7,
+        "word_error_rate": 0.2916666666666667,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κύρια",
+            "hypothesis": "κύριε"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπίρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπύρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ευχάριστη",
+            "hypothesis": "ευχάρισ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δροσιστική",
+            "hypothesis": "δροσητική"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπίρα",
+            "hypothesis": "μπήρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "manta",
+            "hypothesis": "μάντα"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 24,
+        "hypothesis_words": 24,
+        "substitutions": 7,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 7,
+        "word_error_rate": 0.2916666666666667,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "κυρια",
+            "hypothesis": "κυριε"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπιρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπυρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "ευχαριστη",
+            "hypothesis": "ευχαρισ"
+          },
+          {
+            "operation": "substitution",
+            "reference": "δροσιστικη",
+            "hypothesis": "δροσητικη"
+          },
+          {
+            "operation": "substitution",
+            "reference": "μπιρα",
+            "hypothesis": "μπηρα"
+          },
+          {
+            "operation": "substitution",
+            "reference": "manta",
+            "hypothesis": "μαντα"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 260,
+          "sha256": "f20735a0da2d5d900082c42c620cec4370f03baeb39ac11e085769adc1459d30"
+        },
+        "srt": {
+          "bytes": 292,
+          "sha256": "30c4d9410894fb277ed5f2d87432b58ac119f3c545ad9ae4940a73a8cdc7012c"
+        },
+        "vtt": {
+          "bytes": 298,
+          "sha256": "49eaa7fdf96556d3f4646a8ff9106b82e4757601eae0ab346290c1b90a944f0d"
+        },
+        "json": {
+          "bytes": 509,
+          "sha256": "21ac8cb948a62d0ea6910694385cdcf85fbbf3358fc3b407ce0920d83f060f21"
+        },
+        "zip": {
+          "bytes": 1297,
+          "sha256": "103bba7d404fc519db19d968ea9a7bb946ecedf2dd044ff8ceb0eba29fdc1f7b"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 2.607
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "en",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "media": {
+        "duration_seconds": 6.54,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "review_criteria": [
+        "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "ebcf8b47e18347409454bde1d54d2497",
+      "job_result": {
+        "id": "ebcf8b47e18347409454bde1d54d2497",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-0-1548.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "When you call someone who is thousands of miles away, you're using a satellite.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "ebcf8b47e18347409454bde1d54d2497"
+      },
+      "segments": [
+        {
+          "start": 0.78,
+          "end": 5.78,
+          "text": "When you call someone who is thousands of miles away, you're using a satellite."
+        }
+      ],
+      "hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 14,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "word_errors": 2,
+        "word_error_rate": 0.13333333333333333,
+        "edits": [
+          {
+            "operation": "deletion",
+            "reference": "you",
+            "hypothesis": ""
+          },
+          {
+            "operation": "substitution",
+            "reference": "are",
+            "hypothesis": "youre"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 14,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "word_errors": 2,
+        "word_error_rate": 0.13333333333333333,
+        "edits": [
+          {
+            "operation": "deletion",
+            "reference": "you",
+            "hypothesis": ""
+          },
+          {
+            "operation": "substitution",
+            "reference": "are",
+            "hypothesis": "youre"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 80,
+          "sha256": "81e44bbf04f2c479ac86f0381ef5f7d8f94a0d225f08315bf415d41e0d06169b"
+        },
+        "srt": {
+          "bytes": 112,
+          "sha256": "7ca5315145e9593afead781c17c63592993f93a603e56d646f01252fd6275e52"
+        },
+        "vtt": {
+          "bytes": 118,
+          "sha256": "399e980bd42d4e93f879877d9d9730374b707fc571bf69fb74ee94d0f6adce93"
+        },
+        "json": {
+          "bytes": 329,
+          "sha256": "87242ac2befe12e0dcdfa5c6d350e0c2a98d09dbde2b1d4d92301807e401c838"
+        },
+        "zip": {
+          "bytes": 915,
+          "sha256": "a3fdd48b2f1b9a55e700e336bcd0962b78a5b964628fbac1b09b9ef1783e627f"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 1.614
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "language": "en",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "media": {
+        "duration_seconds": 7.92,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "review_criteria": [
+        "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "4490986e8aeb40f3bce48c0841bc412e",
+      "job_result": {
+        "id": "4490986e8aeb40f3bce48c0841bc412e",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-2-1510.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "4490986e8aeb40f3bce48c0841bc412e"
+      },
+      "segments": [
+        {
+          "start": 0.43,
+          "end": 7.43,
+          "text": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts."
+        }
+      ],
+      "hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "word_metrics": {
+        "reference_words": 20,
+        "hypothesis_words": 20,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 20,
+        "hypothesis_words": 20,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 0,
+        "word_error_rate": 0.0,
+        "edits": []
+      },
+      "exports": {
+        "txt": {
+          "bytes": 108,
+          "sha256": "14b23feb6e117b761082117f5e202887db78460f42b5abdb99b5c48c603c61a3"
+        },
+        "srt": {
+          "bytes": 140,
+          "sha256": "ba468993cbd2468c6aede55d08a4344cc56475abaa74ae7e5dff8bcc3be2a6d2"
+        },
+        "vtt": {
+          "bytes": 146,
+          "sha256": "ea3cdae8eca9451bdbc07b24df4ed018f78cf9837800221e087ec638ab2aae54"
+        },
+        "json": {
+          "bytes": 357,
+          "sha256": "842d88ee2268d93c59864fedae158f921e7ca57ee3bd18e4bb4a989239b9c7ce"
+        },
+        "zip": {
+          "bytes": 992,
+          "sha256": "7788d2ad8efd28ca9868350cf49118010fb222a0e380dbb3151e6088fe5bd74f"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 1.563
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "language": "en",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "media": {
+        "duration_seconds": 4.14,
+        "container": "wav",
+        "codec": "pcm_f32le",
+        "sample_rate": 16000,
+        "channels": 1
+      },
+      "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+      "review_criteria": [
+        "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+      ],
+      "semantic_quality": "unreviewed",
+      "structural_status": "pass",
+      "job_id": "0db8f1b8d0da4beb9666ec7928fb5518",
+      "job_result": {
+        "id": "0db8f1b8d0da4beb9666ec7928fb5518",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-3-1578.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "Then Lakas sing to the lead and singing the pashams",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "0db8f1b8d0da4beb9666ec7928fb5518"
+      },
+      "segments": [
+        {
+          "start": 0.05,
+          "end": 3.49,
+          "text": "Then Lakas sing to the lead and singing the pashams"
+        }
+      ],
+      "hypothesis": "Then Lakas sing to the lead and singing the pashams",
+      "word_metrics": {
+        "reference_words": 10,
+        "hypothesis_words": 10,
+        "substitutions": 5,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 5,
+        "word_error_rate": 0.5,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "lakkha",
+            "hypothesis": "lakas"
+          },
+          {
+            "operation": "substitution",
+            "reference": "singh",
+            "hypothesis": "sing"
+          },
+          {
+            "operation": "substitution",
+            "reference": "took",
+            "hypothesis": "to"
+          },
+          {
+            "operation": "substitution",
+            "reference": "in",
+            "hypothesis": "and"
+          },
+          {
+            "operation": "substitution",
+            "reference": "bhajans",
+            "hypothesis": "pashams"
+          }
+        ]
+      },
+      "diacritic_insensitive_word_metrics": {
+        "reference_words": 10,
+        "hypothesis_words": 10,
+        "substitutions": 5,
+        "deletions": 0,
+        "insertions": 0,
+        "word_errors": 5,
+        "word_error_rate": 0.5,
+        "edits": [
+          {
+            "operation": "substitution",
+            "reference": "lakkha",
+            "hypothesis": "lakas"
+          },
+          {
+            "operation": "substitution",
+            "reference": "singh",
+            "hypothesis": "sing"
+          },
+          {
+            "operation": "substitution",
+            "reference": "took",
+            "hypothesis": "to"
+          },
+          {
+            "operation": "substitution",
+            "reference": "in",
+            "hypothesis": "and"
+          },
+          {
+            "operation": "substitution",
+            "reference": "bhajans",
+            "hypothesis": "pashams"
+          }
+        ]
+      },
+      "exports": {
+        "txt": {
+          "bytes": 52,
+          "sha256": "d217e4b40e3ed6736d92792026fbe792945f21c2e1fda51dd6be05ecc72d5c7d"
+        },
+        "srt": {
+          "bytes": 84,
+          "sha256": "14c2489c70c62f42e3cdb291949778406d81b0266531ea1d29ce9a0ab825c68f"
+        },
+        "vtt": {
+          "bytes": 90,
+          "sha256": "49830f4435a3a672b2aaf9e9bd47a10838c5e367c6cfa9551a38807bf6385d54"
+        },
+        "json": {
+          "bytes": 301,
+          "sha256": "65d72b966bc2eef6c40c8abda0032400acb3a95b16ca9482db5b7010acfb867d"
+        },
+        "zip": {
+          "bytes": 813,
+          "sha256": "80a1d094da164b134824b6837d90a55861e9023a60b04b4209d3bc52a005ff62"
+        }
+      },
+      "checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "elapsed_seconds": 1.297
+    }
+  ],
+  "separate_process_sqlite_matches": true,
+  "source_sha256_after": {
+    "app.py": "adb7e4a266dc5a79c98388b595344cb005ee48c15ff8d57be36ecb8754d3457d",
+    "library.py": "1fb2c605c4b767175efd3927062fc87918168e2d4c2e29e59fc0e07c8ed9e6f5",
+    "batch_store.py": "13ca2e581e872b91bc3ebbd02ddad3d11be820da2c87f22e9cc67a32cb0b06e9",
+    "tests/smoke_real_asr_quality.py": "86fbee393eee7956bd6e8044f8291ff568c2b159acc9f5b8b5696c6aefa2bfb2"
+  },
+  "source_files_unchanged_during_run": true,
+  "counts": {
+    "pass": 8
+  },
+  "metrics_by_language": {
+    "el": {
+      "cases": 5,
+      "reference_words": 73,
+      "word_errors": 18,
+      "substitutions": 15,
+      "deletions": 0,
+      "insertions": 3,
+      "word_error_rate": 0.2465753424657534
+    },
+    "en": {
+      "cases": 3,
+      "reference_words": 45,
+      "word_errors": 7,
+      "substitutions": 6,
+      "deletions": 1,
+      "insertions": 0,
+      "word_error_rate": 0.15555555555555556
+    }
+  },
+  "finished_at": "2026-11-26T17:53:55.080298+00:00",
+  "elapsed_seconds": 18.182,
+  "archive_provenance": {
+    "raw_file": "small-result.json",
+    "raw_sha256": "961c542db46321d7b01ed93f42a332c3187c1fbe505ffc57eec0b671e3ca26f4",
+    "sanitized": true,
+    "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+    "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "source": "/workspace/scratch/94360995dd61/LinkScribe/docs/large-v3-hosted-results-2026-11-28/artifact/recognizer-report.json",
+  "source_sha256": "26098ab9a14bc328d7c9aea77e43defadbec57d1055f8190976ecd492fc6485f",
+  "observations": [
+    {
+      "path": "/model_constructor_arguments",
+      "value": {
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "local_files_only": true
+      }
+    },
+    {
+      "path": "/actual_model",
+      "value": {
+        "device": "cpu",
+        "compute_type": "int8_float32",
+        "cpu_threads_requested": 4,
+        "num_workers_requested": 1,
+        "num_workers_observed": 1,
+        "multilingual": true,
+        "max_length": 448,
+        "n_mels": 128,
+        "loaded": true
+      }
+    }
+  ],
+  "correction": "Keep requested int8 and accept the same native CPU int8/int8_float32 type set as the prior reviewed helper; record actual type. No model execution."
+}

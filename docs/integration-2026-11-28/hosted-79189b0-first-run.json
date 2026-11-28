@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "source_commit": "79189b013732fb95c1e685e1639b1b7891899729",
+  "record_type": "Checkpoint observations before corrected browser rerun",
+  "v1_approved": false,
+  "platform_suites": [
+    {
+      "job_id": 140807069319,
+      "platform": "Ubuntu / Python 3.11",
+      "passed": 678,
+      "subtests_passed": 32,
+      "seconds": 14.03
+    },
+    {
+      "job_id": 140807069516,
+      "platform": "Windows / Python 3.11",
+      "passed": 678,
+      "subtests_passed": 32,
+      "seconds": 28.52
+    },
+    {
+      "job_id": 140807069741,
+      "platform": "macOS / Python 3.11",
+      "passed": 678,
+      "subtests_passed": 32,
+      "seconds": 48.05
+    },
+    {
+      "job_id": 140807069760,
+      "platform": "independent Python 3.11",
+      "passed": 678,
+      "subtests_passed": 32,
+      "seconds": 7.91
+    },
+    {
+      "job_id": 140807069803,
+      "platform": "independent Python 3.13",
+      "passed": 678,
+      "subtests_passed": 32,
+      "seconds": 9.68
+    }
+  ],
+  "fresh_checkout": {
+    "run_id": 46089571683,
+    "job_id": 140807069475,
+    "result": "pass"
+  },
+  "real_upload": {
+    "run_id": 46089571683,
+    "job_id": 140807290102,
+    "result": "pass",
+    "scope": "Actual owned audio / PyAV / Whisper Tiny / SQLite / exports"
+  },
+  "actual_candidate_archive": {
+    "run_id": 46089571789,
+    "build_job_id": 140807069596,
+    "install_job_id": 140807107890,
+    "result": "pass",
+    "checks_passed": 6,
+    "transport": "curl-cffi 0.17.0 installed through the archive's requirements.txt"
+  },
+  "browser": {
+    "run_id": 46089571685,
+    "job_id": 140807069359,
+    "pass": 33,
+    "fail": 1,
+    "actual_asr": true,
+    "failed_check": "new_edits_survive_inflight_open",
+    "error": "Locator expected to have Value ''",
+    "actual_title": "Edited owned fixture — English and Ελληνικά",
+    "diagnosis": "The test captured the hidden title input's initial empty value before the first editor GET rendered. The prior 'Newer edits were kept' assertion passed. The application retained the expected original title; subsequent original-record-save and other-record-unchanged assertions were not reached.",
+    "followup": "Wait for the original editor to be visible and its unique expected title before capturing old_title. Preserve all remaining assertions and rerun actual Chromium."
+  },
+  "providers": {
+    "run_id": 46089571749,
+    "main_job_id": 140807070097,
+    "main_artifact_id": 15240048790,
+    "main_archive_sha256": "0e947b1b195c570158707ddea2ae52c663970376a773a7aa7ce6814fa5615aa9",
+    "dailymotion": {
+      "status": "acquisition_failed",
+      "error": "No video formats found!",
+      "asr_executed": false,
+      "candidate_tail_verified": false
+    },
+    "tail_checker": "Failed closed on absent acquisition/model/raw/saved/word evidence; this is an unexercised candidate tail, not observed deletion of recognized speech.",
+    "nonspeech": {
+      "digital_silence": "pass",
+      "actual_white_noise": "pass"
+    },
+    "followup_job_id": 140807069689,
+    "followup_artifact_id": 15239734727,
+    "followup_archive_sha256": "126af6b2c3f97f02de249283114b63aebd85d1d04de109cd60a41a06bc575917",
+    "youtube_followup": "Video unavailable. This content isn't available.",
+    "vimeo_followup": "HTTP401 from player.vimeo.com; Server: cloudflare",
+    "provider_gate": "open"
+  },
+  "local_ollama": {
+    "run_id": 46089571683,
+    "job_id": 140807290055,
+    "status": "Awaiting final observation in this record",
+    "meaning_approved": false
+  }
+}

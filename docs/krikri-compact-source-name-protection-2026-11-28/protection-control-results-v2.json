@@ -1,0 +1,272 @@
+{
+  "complete": true,
+  "mechanical_passed": true,
+  "controls": 29,
+  "results": [
+    {
+      "id": "exact-roundtrip-repeated-mentions-and-metadata",
+      "mechanical_passed": true,
+      "observed": {
+        "metadata_and_text_exact": true,
+        "distinct_markers_for_repeated_name": true,
+        "article_unmasked": true
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "missing-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "duplicate-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "marker-case-change",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "split-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "cross-segment-marker-move",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "unknown-well-formed-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A protected marker is missing, duplicated, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "unknown-malformed-prefix",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "extra-closing-tag-after-valid-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "extra-spaced-closing-tag-after-valid-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-marker-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-closing-tag-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-spaced-opening-tag-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "compatibility-marker-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-map-corruption",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Protection map or masked source changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-metadata-corruption",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source metadata changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "translated-metadata-change",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated segment metadata/schema changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inflection-and-unicode-not-repaired",
+      "mechanical_passed": true,
+      "observed": {
+        "exact_decomposed_inflection_retained": true
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "empty-entity-list",
+      "mechanical_passed": true,
+      "observed": true,
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-valid",
+      "mechanical_passed": true,
+      "observed": [
+        "one",
+        "two"
+      ],
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-extra-property",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native JSON must contain only the translations property."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-duplicate-property",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation JSON repeats a property."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-wrong-count",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation array has an invalid count or text value."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-wrong-type",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation array has an invalid count or text value."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-prose-wrapper",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "JSONDecodeError",
+        "message": "Expecting value: line 1 column 1 (char 0)"
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "restored-production-script-guard",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "EnhancementError",
+        "message": "The translation introduced text in an unexpected writing system. It was not saved as a completed translation; the original transcript remains available."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "restored-production-copy-guard",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "EnhancementError",
+        "message": "No separate English translation was generated because the model returned the original text unchanged. The original transcript remains available."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "within-segment-role-order-not-certified",
+      "mechanical_passed": true,
+      "observed": {
+        "markers_each_once_in_same_entry": true,
+        "meaning_not_certified": true,
+        "restored_text": "Πέτρο spoke to Δανάη."
+      },
+      "semantic_limit": "Once-only marker accounting cannot certify who acts on whom; independent meaning review remains mandatory."
+    },
+    {
+      "id": "request-local-tags-external-source-map-binding",
+      "mechanical_passed": true,
+      "observed": {
+        "tags_are_request_local": true,
+        "source_map_identity_bound_outside_tag": true,
+        "cross_request_semantic_identity_not_certified_by_tag_alone": true
+      },
+      "semantic_limit": "Compact occurrence tags can repeat across requests; the wrapper must bind each actual request to its exact source/map. Marker strings alone do not authenticate cross-request meaning."
+    }
+  ],
+  "detector_calls": 0,
+  "translation_calls": 0,
+  "model_calls": 0,
+  "meaning_or_automatic_name_safety_certified": false,
+  "runner_sha256": "3d134f3e281e69becfc04777d15b3641352d7b35e05e0b984dc5bc393caa3e54"
+}

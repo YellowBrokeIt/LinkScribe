@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:19:52.791639+00:00",
+  "method": "Independent standard-library audit of retained JSON, full source, both actual forward observations, sample sums, frozen hashes and private pre-output annotation. No model imports, reruns or production changes.",
+  "files_sha256": {
+    "inference-freeze.json": "7d8717e10fe81fcf3a2d215996b33913f7c7134886af83362354d54268d4c545",
+    "execution.json": "092e961b523e9ed063232f1d6f58310094c8bf7c9b040b10fbbd6856d6e3c843",
+    "infer-resources.json": "42bf94ea849d550fee84a46e64b03fa845fd9d2aed97db463f19208b0697485c",
+    "infer-samples.jsonl": "575cf6a47f30239662283f6cab256202476448cc3f50b7a92d758eccd82a6921",
+    "prepare.json": "e9241cb52c8f6ac67f272237470884a6fd4a3171b401ab5f702f14b8adf8074b",
+    "native_worker.py": "62f117b684c6a68dfdf6a21cb26e0e4b1881eb93a52852bb0656558a9cea8a31",
+    "run_phase.py": "b50b4bdc73d69c83b471806019a8e3cd7787ab5c4c3ffc8217bd906f33ace45b"
+  },
+  "independent_annotation_sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+  "all_frozen_file_hashes_verified": 22,
+  "protocol_passed": true,
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report_sha256": "7de6b381a15d12c2eeb57340a7495c7faa1a4a4a698ec10f1e07f16c656ef0f7",
+      "source_text_sha256": "4872fa97eb447f9c4026fc8fc214008eb809d8a35ea0fb12818d2ada81ad5eac",
+      "raw_entities_canonical_sha256": "93af3d01364cac91985291e1f7198401286ec84844a0e07df20ceca353d791f4",
+      "source_words": 30,
+      "encoded_tokens": 47,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 5,
+          "text": "Maria",
+          "label": "person",
+          "score": 0.9671903252601624
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 5,
+          "joined_start": 0,
+          "joined_end": 5,
+          "text": "Maria",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 1,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "missing_exact_spans": [],
+      "unexpected_exact_spans": [],
+      "exact_span_case_passed": true,
+      "worker_case_seconds": 0.328
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "report_sha256": "f8afa403c0b7934c3390080f63627d9c5a5d16baa53e722ad9cbe6da70ca3ef8",
+      "source_text_sha256": "c3a7267c28e91201e57e80ef96a9b4e2509da584d3257119559223de5694362c",
+      "raw_entities_canonical_sha256": "b9223fd5836916b9ba6fd2a0206b57142ea60e538fac4f80f83bc887ab50ff98",
+      "source_words": 30,
+      "encoded_tokens": 70,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [
+        {
+          "start": 2,
+          "end": 7,
+          "text": "Νίκος",
+          "label": "person",
+          "score": 0.9689485430717468
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "text": "Ελένη",
+          "label": "person",
+          "score": 0.9833521246910095
+        },
+        {
+          "start": 48,
+          "end": 53,
+          "text": "Έλενα",
+          "label": "person",
+          "score": 0.9727272391319275
+        },
+        {
+          "start": 57,
+          "end": 62,
+          "text": "Ελένη",
+          "label": "person",
+          "score": 0.9802303910255432
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "text": "Νίκος",
+          "label": "person",
+          "score": 0.9446330666542053
+        },
+        {
+          "start": 120,
+          "end": 125,
+          "text": "Έλενα",
+          "label": "person",
+          "score": 0.9639445543289185
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 32,
+          "joined_end": 37,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 48,
+          "segment_end": 53,
+          "joined_start": 48,
+          "joined_end": 53,
+          "text": "Έλενα",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 57,
+          "joined_end": 62,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 87,
+          "joined_end": 92,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 65,
+          "segment_end": 70,
+          "joined_start": 120,
+          "joined_end": 125,
+          "text": "Έλενα",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 6,
+      "expected_mentions": 6,
+      "returned_mentions": 6,
+      "missing_exact_spans": [],
+      "unexpected_exact_spans": [],
+      "exact_span_case_passed": true,
+      "worker_case_seconds": 0.282
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "report_sha256": "977267f4ed054507821680a6491fe79f6ee000185ee965c69e4b306987558c2c",
+      "source_text_sha256": "7aa39d2d3bceb35a99f609d5239afbb2693eaba2c4f3578fc01edf7cd98efdb8",
+      "raw_entities_canonical_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source_words": 42,
+      "encoded_tokens": 59,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [],
+      "expected_exact_mentions": [],
+      "exact_matches": 0,
+      "expected_mentions": 0,
+      "returned_mentions": 0,
+      "missing_exact_spans": [],
+      "unexpected_exact_spans": [],
+      "exact_span_case_passed": true,
+      "worker_case_seconds": 0.207
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "report_sha256": "fac59b5111e989e40a05d7bc322bdb39cd28de52d8cd83429f15aa586eb3d20e",
+      "source_text_sha256": "79a6f7f1ac4e5b9189c100a7e2425645e7332d5ec7ea0a98de1d4c5207394ee0",
+      "raw_entities_canonical_sha256": "6e286e9c44a601291c6090d7ba2023f85055ed2f76c25221732cd882d428585f",
+      "source_words": 29,
+      "encoded_tokens": 65,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [
+        {
+          "start": 15,
+          "end": 19,
+          "text": "Άννα",
+          "label": "person",
+          "score": 0.9273728728294373
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 15,
+          "segment_end": 19,
+          "joined_start": 15,
+          "joined_end": 19,
+          "text": "Άννα",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 1,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "missing_exact_spans": [],
+      "unexpected_exact_spans": [],
+      "exact_span_case_passed": true,
+      "worker_case_seconds": 0.264
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "report_sha256": "aa1805fe0eec96111f0ee771a3d0bdc416adf20981d46354b6b01b5589fd8db9",
+      "source_text_sha256": "2a756157850a60007b31c6abf7a2628ff8f83becd3a2d5598227de2e50da375e",
+      "raw_entities_canonical_sha256": "1402867e01ce1721e975e7a13e831788c39cdd249fdcfcc0ef604eb1256b7902",
+      "source_words": 26,
+      "encoded_tokens": 41,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 4,
+          "text": "Anna",
+          "label": "person",
+          "score": 0.9955421090126038
+        },
+        {
+          "start": 36,
+          "end": 43,
+          "text": "Giannis",
+          "label": "person",
+          "score": 0.9794137477874756
+        },
+        {
+          "start": 66,
+          "end": 73,
+          "text": "Giannis",
+          "label": "person",
+          "score": 0.9836648106575012
+        },
+        {
+          "start": 101,
+          "end": 105,
+          "text": "Anna",
+          "label": "person",
+          "score": 0.9942373037338257
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 4,
+          "joined_start": 0,
+          "joined_end": 4,
+          "text": "Anna",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 36,
+          "segment_end": 43,
+          "joined_start": 36,
+          "joined_end": 43,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 3,
+          "segment_end": 10,
+          "joined_start": 66,
+          "joined_end": 73,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 38,
+          "segment_end": 42,
+          "joined_start": 101,
+          "joined_end": 105,
+          "text": "Anna",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 4,
+      "expected_mentions": 4,
+      "returned_mentions": 4,
+      "missing_exact_spans": [],
+      "unexpected_exact_spans": [],
+      "exact_span_case_passed": true,
+      "worker_case_seconds": 0.188
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "report_sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8",
+      "source_text_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9",
+      "raw_entities_canonical_sha256": "29be773c5f8b6008d2fa1bd15c0ba12034bd23473514a9dbc7eb1b1b7e7f107c",
+      "source_words": 31,
+      "encoded_tokens": 63,
+      "native_span_forwards": 1,
+      "actual_encoder_forwards": 1,
+      "full_input_and_protocol_checks_passed": true,
+      "raw_entities": [
+        {
+          "start": 0,
+          "end": 7,
+          "text": "Η Μαρία",
+          "label": "person",
+          "score": 0.9357870817184448
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Μαρία",
+          "label": "person"
+        }
+      ],
+      "exact_matches": 0,
+      "expected_mentions": 1,
+      "returned_mentions": 1,
+      "missing_exact_spans": [
+        [
+          2,
+          7,
+          "Μαρία",
+          "person"
+        ]
+      ],
+      "unexpected_exact_spans": [
+        [
+          0,
+          7,
+          "Η Μαρία",
+          "person"
+        ]
+      ],
+      "exact_span_case_passed": false,
+      "worker_case_seconds": 0.271
+    }
+  ],
+  "resource_audit": {
+    "complete_samples": 169,
+    "sample_sums_and_peaks_verified": true,
+    "peak_rss_bytes": 2613256192,
+    "peak_pss_bytes": 2582496256,
+    "controller_seconds": 17.557703,
+    "worker_seconds": 15.942,
+    "initialization_observed_seconds": 14.275842,
+    "worker_exit_code": 0,
+    "owned_processes_stopped": true,
+    "scope_limit": "External 100 ms sampling of the owned process tree; not an OS high-water or whole-app memory approval."
+  },
+  "translation_calls": 0,
+  "unused_validation_accessed": false,
+  "exact_span_case_passes": 5,
+  "exact_span_matches": 12,
+  "required_mentions": 13,
+  "semantic_gate_passed": false
+}

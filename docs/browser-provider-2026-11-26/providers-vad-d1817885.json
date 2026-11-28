@@ -1,0 +1,1264 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-26T19:14:35.068178+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "small",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "04decd723aedfbbf2a7865e9b55ffcb0d0d350b3633746a021bbf59cbee1db16",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "762825acfd2107261a7ca86995313a2b68152bd80a10ea12e9185338870c1cc4",
+    "tests/smoke_real_links.py": "32738fa70ab311faacffc55482f80735a85f17977db5fd8986a6c4cafd252e46"
+  },
+  "fixture_licenses": {
+    "youtube_sintel_trailer": {
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "provider": "youtube",
+      "title_contains": "Sintel",
+      "public_title": "\"Sintel\" Trailer, Durian Open Movie Project",
+      "uploader": "Blender",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://durian.blender.org/news/sintel-teaser/",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org"
+    },
+    "youtube_tears_of_steel_teaser": {
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "provider": "youtube",
+      "title_contains": "Tears of Steel",
+      "public_title": "Tears of Steel - Teaser",
+      "uploader": "MangoOpenMovie",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://mango.blender.org/production/tears-of-steel-teaser/",
+      "attribution": "(CC) Blender Foundation | mango.blender.org"
+    },
+    "vimeo_sintel_trailer": {
+      "url": "https://vimeo.com/11721242",
+      "provider": "vimeo",
+      "title_contains": "Sintel",
+      "public_title": "Sintel trailer!",
+      "uploader": "Dykam",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://vimeo.com/11721242",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org",
+      "note": "Uploader identifies this as a reupload of the licensed original trailer."
+    },
+    "dailymotion_tears_of_steel": {
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "provider": "dailymotion",
+      "title_contains": "Tears of Steel",
+      "public_title": "\u0641\u064a\u0644\u0645 \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "uploader": "MixTube",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://www.dailymotion.com/video/xbvubxi",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Repost with an Arabic title; the public description names the film and licence."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": false,
+  "fixtures": [
+    {
+      "fixture": "youtube_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T19:14:36.093232+00:00",
+      "url": "https://www.youtube.com/watch?v=HOfdboHvshg",
+      "job_id": "969aaccea6634aac98aab2a8a4d60030",
+      "poll_count": 4,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:14:36.099382+00:00",
+          "id": "969aaccea6634aac98aab2a8a4d60030",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:14:37.606009+00:00",
+          "id": "969aaccea6634aac98aab2a8a4d60030",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube HOfdboHvshg",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "969aaccea6634aac98aab2a8a4d60030",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube HOfdboHvshg",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 606, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:14:36.096462+00:00",
+          "pid": 4320,
+          "kind": "acquisition_start",
+          "job_id": "969aaccea6634aac98aab2a8a4d60030",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=HOfdboHvshg"
+        },
+        {
+          "at": "2026-11-26T19:14:37.426114+00:00",
+          "pid": 4320,
+          "kind": "acquisition_failed",
+          "job_id": "969aaccea6634aac98aab2a8a4d60030",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [youtube] HOfdboHvshg: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[youtube] HOfdboHvshg: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            }
+          ],
+          "elapsed_seconds": 1.33
+        }
+      ],
+      "elapsed_seconds": 1.514
+    },
+    {
+      "fixture": "youtube_tears_of_steel_teaser",
+      "status": "fail",
+      "started_at": "2026-11-26T19:14:37.607705+00:00",
+      "url": "https://www.youtube.com/watch?v=WwHux5QZfC8",
+      "job_id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+      "poll_count": 3,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:14:37.611631+00:00",
+          "id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:14:38.615866+00:00",
+          "id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube WwHux5QZfC8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube WwHux5QZfC8",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 606, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:14:37.609671+00:00",
+          "pid": 4320,
+          "kind": "acquisition_start",
+          "job_id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=WwHux5QZfC8"
+        },
+        {
+          "at": "2026-11-26T19:14:38.534861+00:00",
+          "pid": 4320,
+          "kind": "acquisition_failed",
+          "job_id": "3ddb8ed6774d4e89a3f3e9fe2761ca81",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [youtube] WwHux5QZfC8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[youtube] WwHux5QZfC8: Sign in to confirm you\u2019re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            }
+          ],
+          "elapsed_seconds": 0.925
+        }
+      ],
+      "elapsed_seconds": 1.009
+    },
+    {
+      "fixture": "vimeo_sintel_trailer",
+      "status": "fail",
+      "started_at": "2026-11-26T19:14:38.617401+00:00",
+      "url": "https://vimeo.com/11721242",
+      "job_id": "5eee06817d6d4517b03e39852c73d5a1",
+      "poll_count": 3,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:14:38.661534+00:00",
+          "id": "5eee06817d6d4517b03e39852c73d5a1",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:14:39.666004+00:00",
+          "id": "5eee06817d6d4517b03e39852c73d5a1",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Vimeo 11721242",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "5eee06817d6d4517b03e39852c73d5a1",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Vimeo 11721242",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 606, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-26T19:14:38.619336+00:00",
+          "pid": 4320,
+          "kind": "acquisition_start",
+          "job_id": "5eee06817d6d4517b03e39852c73d5a1",
+          "provider": "vimeo",
+          "url": "https://vimeo.com/11721242"
+        },
+        {
+          "at": "2026-11-26T19:14:39.542836+00:00",
+          "pid": 4320,
+          "kind": "acquisition_failed",
+          "job_id": "5eee06817d6d4517b03e39852c73d5a1",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[vimeo] 11721242: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies"
+            }
+          ],
+          "elapsed_seconds": 0.923
+        }
+      ],
+      "elapsed_seconds": 1.049
+    },
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "pass",
+      "started_at": "2026-11-26T19:14:39.667875+00:00",
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "job_id": "851944b1f0a547c093ff7e293181f784",
+      "poll_count": 159,
+      "transitions": [
+        {
+          "at": "2026-11-26T19:14:39.713082+00:00",
+          "id": "851944b1f0a547c093ff7e293181f784",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Dailymotion xbvubxi",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:15:27.890468+00:00",
+          "id": "851944b1f0a547c093ff7e293181f784",
+          "status": "working",
+          "stage": "Recognizing speech locally...",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-26T19:15:59.100455+00:00",
+          "id": "851944b1f0a547c093ff7e293181f784",
+          "status": "done",
+          "stage": "Ready to download",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "language": "en",
+          "method": "local_audio_ai",
+          "preview": "We have main engine start, four, three, two, one.\nDirk, Tom.\nLook, Celia, we have to follow our passions.\nYou have your robotics and I just want to be awesome in space.\nWhy don't you just admit that you're freaked out by my robot hand?\nI'm not freaked out, but it's...\nAll right, fine. I'm freaked out.\nI'm having nightmares that I'm being chased by this giant robotic class.\nWhat have we done?\nWe're done!\nRobot's memory synced and locked.\nThis is pretty freaky.\nCould you be down there?\nI heard you guys talking last night.\nIt's not my fault, you know?\nOf course you're ready. You're a rockstar.\nHow's it looking, Barley?\nWe should have about ten minutes.\nWell, that's perfect.\nWe're only one.\nAll systems, go!\nYeah, you, go!\nGo!\nThat's nice. Nothing to worry about. Tom, she's your passion. Be tender to her. Be honest.\nRemind her what love is.\nRight in progress. You're a jerk, Tom.\nOh, I'm sorry. Sorry.\nLook Celia, we have to follow our passions. You have your robotics. I just want to be awesome in space.\nGet her coming. Two minutes left.\nSteal her up, son!\nLeave her to Celia!\nWhy don't you just admit that you're freaked out by my robot hand?\nThis is Celia. I was young.\nAnd a dick. But there's no reason to destroy the world.\nWhy does she do this?\nWe already tried that one.\nYou broke my heart. You forgot me on Earth.\nI know.\nI should just crush you!\nI'm gonna crush you!\nWho'd that lip?\nGot my ball!\nThis time.",
+          "error": "",
+          "segments": 43,
+          "warnings": [],
+          "extras": {
+            "translation_language": "",
+            "summary": false,
+            "speakers": false
+          },
+          "library_id": "851944b1f0a547c093ff7e293181f784"
+        }
+      ],
+      "final_job": {
+        "id": "851944b1f0a547c093ff7e293181f784",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "We have main engine start, four, three, two, one.\nDirk, Tom.\nLook, Celia, we have to follow our passions.\nYou have your robotics and I just want to be awesome in space.\nWhy don't you just admit that you're freaked out by my robot hand?\nI'm not freaked out, but it's...\nAll right, fine. I'm freaked out.\nI'm having nightmares that I'm being chased by this giant robotic class.\nWhat have we done?\nWe're done!\nRobot's memory synced and locked.\nThis is pretty freaky.\nCould you be down there?\nI heard you guys talking last night.\nIt's not my fault, you know?\nOf course you're ready. You're a rockstar.\nHow's it looking, Barley?\nWe should have about ten minutes.\nWell, that's perfect.\nWe're only one.\nAll systems, go!\nYeah, you, go!\nGo!\nThat's nice. Nothing to worry about. Tom, she's your passion. Be tender to her. Be honest.\nRemind her what love is.\nRight in progress. You're a jerk, Tom.\nOh, I'm sorry. Sorry.\nLook Celia, we have to follow our passions. You have your robotics. I just want to be awesome in space.\nGet her coming. Two minutes left.\nSteal her up, son!\nLeave her to Celia!\nWhy don't you just admit that you're freaked out by my robot hand?\nThis is Celia. I was young.\nAnd a dick. But there's no reason to destroy the world.\nWhy does she do this?\nWe already tried that one.\nYou broke my heart. You forgot me on Earth.\nI know.\nI should just crush you!\nI'm gonna crush you!\nWho'd that lip?\nGot my ball!\nThis time.",
+        "error": "",
+        "segments": 43,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "851944b1f0a547c093ff7e293181f784"
+      },
+      "verification": {
+        "id": "851944b1f0a547c093ff7e293181f784",
+        "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+        "language": "en",
+        "segment_count": 43,
+        "events": [
+          {
+            "at": "2026-11-26T19:14:39.669975+00:00",
+            "pid": 4320,
+            "kind": "acquisition_start",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "provider": "dailymotion",
+            "url": "https://www.dailymotion.com/video/xbvubxi"
+          },
+          {
+            "at": "2026-11-26T19:15:27.780848+00:00",
+            "pid": 4320,
+            "kind": "acquisition_done",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "bytes": 11919385,
+            "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+            "duration_seconds": 734.191746,
+            "audio_streams": 1,
+            "elapsed_seconds": 48.111
+          },
+          {
+            "at": "2026-11-26T19:15:27.789377+00:00",
+            "pid": 4320,
+            "kind": "recognition_start",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "model": "small",
+            "requested_language": "auto",
+            "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+          },
+          {
+            "at": "2026-11-26T19:15:31.669818+00:00",
+            "pid": 4320,
+            "kind": "audio_decoded",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "sampling_rate_hz": 16000,
+            "channel_sample_counts": [
+              11746325
+            ],
+            "decoded_duration_seconds": 734.1453125
+          },
+          {
+            "at": "2026-11-26T19:15:33.050082+00:00",
+            "pid": 4320,
+            "kind": "vad_speech_intervals",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "sampling_rate_hz": 16000,
+            "input_sample_count": 11746325,
+            "intervals": [
+              {
+                "start_sample": 34048,
+                "end_sample": 187136
+              },
+              {
+                "start_sample": 379136,
+                "end_sample": 729344
+              },
+              {
+                "start_sample": 796928,
+                "end_sample": 863488
+              },
+              {
+                "start_sample": 971520,
+                "end_sample": 1000192
+              },
+              {
+                "start_sample": 1884416,
+                "end_sample": 1904384
+              },
+              {
+                "start_sample": 2099456,
+                "end_sample": 2131712
+              },
+              {
+                "start_sample": 2180352,
+                "end_sample": 2203392
+              },
+              {
+                "start_sample": 3078912,
+                "end_sample": 3120896
+              },
+              {
+                "start_sample": 3150592,
+                "end_sample": 3340544
+              },
+              {
+                "start_sample": 3561216,
+                "end_sample": 3621120
+              },
+              {
+                "start_sample": 3797760,
+                "end_sample": 3884800
+              },
+              {
+                "start_sample": 3926784,
+                "end_sample": 3970304
+              },
+              {
+                "start_sample": 4759808,
+                "end_sample": 4873984
+              },
+              {
+                "start_sample": 5055232,
+                "end_sample": 5171456
+              },
+              {
+                "start_sample": 5208832,
+                "end_sample": 5250816
+              },
+              {
+                "start_sample": 5425408,
+                "end_sample": 5463808
+              },
+              {
+                "start_sample": 5485312,
+                "end_sample": 5605632
+              },
+              {
+                "start_sample": 5704960,
+                "end_sample": 5815040
+              },
+              {
+                "start_sample": 5835520,
+                "end_sample": 5902080
+              },
+              {
+                "start_sample": 6061824,
+                "end_sample": 6080256
+              },
+              {
+                "start_sample": 6131968,
+                "end_sample": 6163712
+              },
+              {
+                "start_sample": 6192896,
+                "end_sample": 6286592
+              },
+              {
+                "start_sample": 6565632,
+                "end_sample": 6582528
+              },
+              {
+                "start_sample": 6707456,
+                "end_sample": 6726912
+              },
+              {
+                "start_sample": 6755584,
+                "end_sample": 6770944
+              }
+            ],
+            "kept_sample_count": 1899520,
+            "last_kept_end_seconds": 423.184,
+            "vad_options": {
+              "threshold": 0.5,
+              "neg_threshold": null,
+              "min_speech_duration_ms": 0,
+              "max_speech_duration_s": {
+                "nonfinite_float": "inf"
+              },
+              "min_silence_duration_ms": 2000,
+              "speech_pad_ms": 400
+            },
+            "additional_options": {}
+          },
+          {
+            "at": "2026-11-26T19:15:33.055817+00:00",
+            "pid": 4320,
+            "kind": "post_vad_audio",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "sampling_rate_hz": 16000,
+            "collected_chunk_sample_counts": [
+              1899520
+            ],
+            "sample_count": 1899520,
+            "duration_seconds": 118.72,
+            "maximum_chunk_duration": {
+              "nonfinite_float": "inf"
+            }
+          },
+          {
+            "at": "2026-11-26T19:15:58.977498+00:00",
+            "pid": 4320,
+            "kind": "recognition_done",
+            "job_id": "851944b1f0a547c093ff7e293181f784",
+            "model": "small",
+            "language": "en",
+            "segment_count": 43,
+            "elapsed_seconds": 31.197
+          }
+        ],
+        "decoded_duration_seconds": 734.1453125,
+        "last_segment_end_seconds": 423.46,
+        "maximum_segment_duration_seconds": 56.72,
+        "last_vad_kept_end_seconds": 423.184,
+        "post_vad_duration_seconds": 118.72,
+        "exports": {
+          "txt": {
+            "bytes": 1424,
+            "sha256": "78833c0a71d4834767d6c4f1737dfb71a12c8192b34d872c79a88986580b970b"
+          },
+          "srt": {
+            "bytes": 2876,
+            "sha256": "bb53fb1911ae811b813c959c305082140f33706523fd67f4f9cff9ce60dd3894"
+          },
+          "vtt": {
+            "bytes": 2764,
+            "sha256": "66df729591d0bddd2c3407e6d8e386c24f8dc94ca0ff6a3e140c659a5ed5387f"
+          },
+          "json": {
+            "bytes": 4873,
+            "sha256": "d62870496c65bc2c107174394bcc3cef43746183ae8931adcd02b2a69d003c25"
+          },
+          "zip": {
+            "bytes": 4784,
+            "sha256": "fe0856bf8702ff71e682f9f4d61da0b8674b1201199987dfc723fac120f627b7"
+          }
+        },
+        "sqlite_matches_saved_segments": true,
+        "input_audio_cleaned": true,
+        "export_text_order_preserved": true,
+        "subtitle_time_accuracy": "not_evaluated"
+      },
+      "events": [
+        {
+          "at": "2026-11-26T19:14:39.669975+00:00",
+          "pid": 4320,
+          "kind": "acquisition_start",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-26T19:15:27.780848+00:00",
+          "pid": 4320,
+          "kind": "acquisition_done",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "bytes": 11919385,
+          "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+          "duration_seconds": 734.191746,
+          "audio_streams": 1,
+          "elapsed_seconds": 48.111
+        },
+        {
+          "at": "2026-11-26T19:15:27.789377+00:00",
+          "pid": 4320,
+          "kind": "recognition_start",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "model": "small",
+          "requested_language": "auto",
+          "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+        },
+        {
+          "at": "2026-11-26T19:15:31.669818+00:00",
+          "pid": 4320,
+          "kind": "audio_decoded",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            11746325
+          ],
+          "decoded_duration_seconds": 734.1453125
+        },
+        {
+          "at": "2026-11-26T19:15:33.050082+00:00",
+          "pid": 4320,
+          "kind": "vad_speech_intervals",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "sampling_rate_hz": 16000,
+          "input_sample_count": 11746325,
+          "intervals": [
+            {
+              "start_sample": 34048,
+              "end_sample": 187136
+            },
+            {
+              "start_sample": 379136,
+              "end_sample": 729344
+            },
+            {
+              "start_sample": 796928,
+              "end_sample": 863488
+            },
+            {
+              "start_sample": 971520,
+              "end_sample": 1000192
+            },
+            {
+              "start_sample": 1884416,
+              "end_sample": 1904384
+            },
+            {
+              "start_sample": 2099456,
+              "end_sample": 2131712
+            },
+            {
+              "start_sample": 2180352,
+              "end_sample": 2203392
+            },
+            {
+              "start_sample": 3078912,
+              "end_sample": 3120896
+            },
+            {
+              "start_sample": 3150592,
+              "end_sample": 3340544
+            },
+            {
+              "start_sample": 3561216,
+              "end_sample": 3621120
+            },
+            {
+              "start_sample": 3797760,
+              "end_sample": 3884800
+            },
+            {
+              "start_sample": 3926784,
+              "end_sample": 3970304
+            },
+            {
+              "start_sample": 4759808,
+              "end_sample": 4873984
+            },
+            {
+              "start_sample": 5055232,
+              "end_sample": 5171456
+            },
+            {
+              "start_sample": 5208832,
+              "end_sample": 5250816
+            },
+            {
+              "start_sample": 5425408,
+              "end_sample": 5463808
+            },
+            {
+              "start_sample": 5485312,
+              "end_sample": 5605632
+            },
+            {
+              "start_sample": 5704960,
+              "end_sample": 5815040
+            },
+            {
+              "start_sample": 5835520,
+              "end_sample": 5902080
+            },
+            {
+              "start_sample": 6061824,
+              "end_sample": 6080256
+            },
+            {
+              "start_sample": 6131968,
+              "end_sample": 6163712
+            },
+            {
+              "start_sample": 6192896,
+              "end_sample": 6286592
+            },
+            {
+              "start_sample": 6565632,
+              "end_sample": 6582528
+            },
+            {
+              "start_sample": 6707456,
+              "end_sample": 6726912
+            },
+            {
+              "start_sample": 6755584,
+              "end_sample": 6770944
+            }
+          ],
+          "kept_sample_count": 1899520,
+          "last_kept_end_seconds": 423.184,
+          "vad_options": {
+            "threshold": 0.5,
+            "neg_threshold": null,
+            "min_speech_duration_ms": 0,
+            "max_speech_duration_s": {
+              "nonfinite_float": "inf"
+            },
+            "min_silence_duration_ms": 2000,
+            "speech_pad_ms": 400
+          },
+          "additional_options": {}
+        },
+        {
+          "at": "2026-11-26T19:15:33.055817+00:00",
+          "pid": 4320,
+          "kind": "post_vad_audio",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "sampling_rate_hz": 16000,
+          "collected_chunk_sample_counts": [
+            1899520
+          ],
+          "sample_count": 1899520,
+          "duration_seconds": 118.72,
+          "maximum_chunk_duration": {
+            "nonfinite_float": "inf"
+          }
+        },
+        {
+          "at": "2026-11-26T19:15:58.977498+00:00",
+          "pid": 4320,
+          "kind": "recognition_done",
+          "job_id": "851944b1f0a547c093ff7e293181f784",
+          "model": "small",
+          "language": "en",
+          "segment_count": 43,
+          "elapsed_seconds": 31.197
+        }
+      ],
+      "elapsed_seconds": 79.76
+    }
+  ],
+  "mixed_batch": {
+    "status": "pass",
+    "fixtures": [
+      "dailymotion_tears_of_steel",
+      "youtube_sintel_trailer"
+    ],
+    "id": "f0f124969f6c4796a58a87b51ba03533",
+    "poll_count": 73,
+    "transitions": [
+      {
+        "at": "2026-11-26T19:16:06.205968+00:00",
+        "id": "f0f124969f6c4796a58a87b51ba03533",
+        "status": "working",
+        "stage": "Processing 1 of 2: dailymotion",
+        "total": 2,
+        "completed": 0,
+        "failed": 0,
+        "jobs": [
+          {
+            "id": "c580a5b506b744e7a60f137cf40e6755",
+            "title": "Dailymotion xbvubxi",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "queued",
+            "stage": "Waiting for batch...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          },
+          {
+            "id": "db0dfebe968346f1a3a0d05261ce09e3",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "queued",
+            "stage": "Waiting for batch...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      },
+      {
+        "at": "2026-11-26T19:16:42.013689+00:00",
+        "id": "f0f124969f6c4796a58a87b51ba03533",
+        "status": "working",
+        "stage": "Processing 2 of 2: youtube",
+        "total": 2,
+        "completed": 1,
+        "failed": 0,
+        "jobs": [
+          {
+            "id": "c580a5b506b744e7a60f137cf40e6755",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "done",
+            "stage": "Ready to download",
+            "error": "",
+            "warnings": [],
+            "library_id": "c580a5b506b744e7a60f137cf40e6755"
+          },
+          {
+            "id": "db0dfebe968346f1a3a0d05261ce09e3",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "working",
+            "stage": "Fetching the video's audio...",
+            "error": "",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      },
+      {
+        "at": "2026-11-26T19:16:42.517336+00:00",
+        "id": "f0f124969f6c4796a58a87b51ba03533",
+        "status": "done",
+        "stage": "Batch complete",
+        "total": 2,
+        "completed": 2,
+        "failed": 1,
+        "jobs": [
+          {
+            "id": "c580a5b506b744e7a60f137cf40e6755",
+            "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+            "source": "https://www.dailymotion.com/video/xbvubxi",
+            "status": "done",
+            "stage": "Ready to download",
+            "error": "",
+            "warnings": [],
+            "library_id": "c580a5b506b744e7a60f137cf40e6755"
+          },
+          {
+            "id": "db0dfebe968346f1a3a0d05261ce09e3",
+            "title": "Youtube HOfdboHvshg",
+            "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+            "status": "error",
+            "stage": "Unable to transcribe",
+            "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+            "warnings": [],
+            "library_id": ""
+          }
+        ]
+      }
+    ],
+    "final_batch": {
+      "id": "f0f124969f6c4796a58a87b51ba03533",
+      "status": "done",
+      "stage": "Batch complete",
+      "total": 2,
+      "completed": 2,
+      "failed": 1,
+      "jobs": [
+        {
+          "id": "c580a5b506b744e7a60f137cf40e6755",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "source": "https://www.dailymotion.com/video/xbvubxi",
+          "status": "done",
+          "stage": "Ready to download",
+          "error": "",
+          "warnings": [],
+          "library_id": "c580a5b506b744e7a60f137cf40e6755"
+        },
+        {
+          "id": "db0dfebe968346f1a3a0d05261ce09e3",
+          "title": "Youtube HOfdboHvshg",
+          "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "warnings": [],
+          "library_id": ""
+        }
+      ]
+    },
+    "successful_job": {
+      "id": "c580a5b506b744e7a60f137cf40e6755",
+      "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "language": "en",
+      "segment_count": 43,
+      "events": [
+        {
+          "at": "2026-11-26T19:16:06.206775+00:00",
+          "pid": 4320,
+          "kind": "acquisition_start",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "provider": "dailymotion",
+          "url": "https://www.dailymotion.com/video/xbvubxi"
+        },
+        {
+          "at": "2026-11-26T19:16:13.628063+00:00",
+          "pid": 4320,
+          "kind": "acquisition_done",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "bytes": 11919385,
+          "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+          "duration_seconds": 734.191746,
+          "audio_streams": 1,
+          "elapsed_seconds": 7.421
+        },
+        {
+          "at": "2026-11-26T19:16:13.636634+00:00",
+          "pid": 4320,
+          "kind": "recognition_start",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "model": "small",
+          "requested_language": "auto",
+          "audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0"
+        },
+        {
+          "at": "2026-11-26T19:16:14.367019+00:00",
+          "pid": 4320,
+          "kind": "audio_decoded",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            11746325
+          ],
+          "decoded_duration_seconds": 734.1453125
+        },
+        {
+          "at": "2026-11-26T19:16:15.734249+00:00",
+          "pid": 4320,
+          "kind": "vad_speech_intervals",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "sampling_rate_hz": 16000,
+          "input_sample_count": 11746325,
+          "intervals": [
+            {
+              "start_sample": 34048,
+              "end_sample": 187136
+            },
+            {
+              "start_sample": 379136,
+              "end_sample": 729344
+            },
+            {
+              "start_sample": 796928,
+              "end_sample": 863488
+            },
+            {
+              "start_sample": 971520,
+              "end_sample": 1000192
+            },
+            {
+              "start_sample": 1884416,
+              "end_sample": 1904384
+            },
+            {
+              "start_sample": 2099456,
+              "end_sample": 2131712
+            },
+            {
+              "start_sample": 2180352,
+              "end_sample": 2203392
+            },
+            {
+              "start_sample": 3078912,
+              "end_sample": 3120896
+            },
+            {
+              "start_sample": 3150592,
+              "end_sample": 3340544
+            },
+            {
+              "start_sample": 3561216,
+              "end_sample": 3621120
+            },
+            {
+              "start_sample": 3797760,
+              "end_sample": 3884800
+            },
+            {
+              "start_sample": 3926784,
+              "end_sample": 3970304
+            },
+            {
+              "start_sample": 4759808,
+              "end_sample": 4873984
+            },
+            {
+              "start_sample": 5055232,
+              "end_sample": 5171456
+            },
+            {
+              "start_sample": 5208832,
+              "end_sample": 5250816
+            },
+            {
+              "start_sample": 5425408,
+              "end_sample": 5463808
+            },
+            {
+              "start_sample": 5485312,
+              "end_sample": 5605632
+            },
+            {
+              "start_sample": 5704960,
+              "end_sample": 5815040
+            },
+            {
+              "start_sample": 5835520,
+              "end_sample": 5902080
+            },
+            {
+              "start_sample": 6061824,
+              "end_sample": 6080256
+            },
+            {
+              "start_sample": 6131968,
+              "end_sample": 6163712
+            },
+            {
+              "start_sample": 6192896,
+              "end_sample": 6286592
+            },
+            {
+              "start_sample": 6565632,
+              "end_sample": 6582528
+            },
+            {
+              "start_sample": 6707456,
+              "end_sample": 6726912
+            },
+            {
+              "start_sample": 6755584,
+              "end_sample": 6770944
+            }
+          ],
+          "kept_sample_count": 1899520,
+          "last_kept_end_seconds": 423.184,
+          "vad_options": {
+            "threshold": 0.5,
+            "neg_threshold": null,
+            "min_speech_duration_ms": 0,
+            "max_speech_duration_s": {
+              "nonfinite_float": "inf"
+            },
+            "min_silence_duration_ms": 2000,
+            "speech_pad_ms": 400
+          },
+          "additional_options": {}
+        },
+        {
+          "at": "2026-11-26T19:16:15.739812+00:00",
+          "pid": 4320,
+          "kind": "post_vad_audio",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "sampling_rate_hz": 16000,
+          "collected_chunk_sample_counts": [
+            1899520
+          ],
+          "sample_count": 1899520,
+          "duration_seconds": 118.72,
+          "maximum_chunk_duration": {
+            "nonfinite_float": "inf"
+          }
+        },
+        {
+          "at": "2026-11-26T19:16:41.535708+00:00",
+          "pid": 4320,
+          "kind": "recognition_done",
+          "job_id": "c580a5b506b744e7a60f137cf40e6755",
+          "model": "small",
+          "language": "en",
+          "segment_count": 43,
+          "elapsed_seconds": 27.908
+        }
+      ],
+      "decoded_duration_seconds": 734.1453125,
+      "last_segment_end_seconds": 423.46,
+      "maximum_segment_duration_seconds": 56.72,
+      "last_vad_kept_end_seconds": 423.184,
+      "post_vad_duration_seconds": 118.72,
+      "exports": {
+        "txt": {
+          "bytes": 1424,
+          "sha256": "78833c0a71d4834767d6c4f1737dfb71a12c8192b34d872c79a88986580b970b"
+        },
+        "srt": {
+          "bytes": 2876,
+          "sha256": "bb53fb1911ae811b813c959c305082140f33706523fd67f4f9cff9ce60dd3894"
+        },
+        "vtt": {
+          "bytes": 2764,
+          "sha256": "66df729591d0bddd2c3407e6d8e386c24f8dc94ca0ff6a3e140c659a5ed5387f"
+        },
+        "json": {
+          "bytes": 4873,
+          "sha256": "d62870496c65bc2c107174394bcc3cef43746183ae8931adcd02b2a69d003c25"
+        },
+        "zip": {
+          "bytes": 4784,
+          "sha256": "7b9ca4e4bfe32d73d18ac0f7759da84608c142b60fda4516d0a1856faeb4993c"
+        }
+      },
+      "sqlite_matches_saved_segments": true,
+      "input_audio_cleaned": true,
+      "export_text_order_preserved": true,
+      "subtitle_time_accuracy": "not_evaluated"
+    },
+    "manifest": {
+      "batch_id": "f0f124969f6c4796a58a87b51ba03533",
+      "total": 2,
+      "completed": 2,
+      "failed": 1,
+      "items": [
+        {
+          "number": 1,
+          "source": "https://www.dailymotion.com/video/xbvubxi",
+          "status": "done",
+          "title": "\u0641\u064a\u0644\u0645  \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+          "error": "",
+          "warnings": [],
+          "library_id": "c580a5b506b744e7a60f137cf40e6755"
+        },
+        {
+          "number": 2,
+          "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+          "status": "error",
+          "title": "Youtube HOfdboHvshg",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "warnings": [],
+          "library_id": null
+        }
+      ]
+    }
+  },
+  "restart": {
+    "status": "pass",
+    "completed_batch_history_and_exports_preserved": true,
+    "verified_record_ids": [
+      "851944b1f0a547c093ff7e293181f784",
+      "c580a5b506b744e7a60f137cf40e6755"
+    ]
+  },
+  "tail_diagnostic": {
+    "status": "completed",
+    "included_in_normal_pipeline_output": false,
+    "report": "tail-diagnostic-851944b1f0a547c093ff7e293181f784.json",
+    "normal_record_unchanged": true,
+    "semantic_quality": "unreviewed"
+  },
+  "initial_server_pid": 4320,
+  "restarted_server_pid": 4399,
+  "source_sha256_after": {
+    "app.py": "04decd723aedfbbf2a7865e9b55ffcb0d0d350b3633746a021bbf59cbee1db16",
+    "sources.py": "db29b527eb57fb8f55bcc022a3f30e09d6036a0e787a9c5e5c9a097332b82d4d",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "762825acfd2107261a7ca86995313a2b68152bd80a10ea12e9185338870c1cc4",
+    "tests/smoke_real_links.py": "32738fa70ab311faacffc55482f80735a85f17977db5fd8986a6c4cafd252e46"
+  },
+  "source_files_unchanged": true,
+  "finished_at": "2026-11-26T19:16:44.013841+00:00",
+  "all_selected_providers_passed": false
+}

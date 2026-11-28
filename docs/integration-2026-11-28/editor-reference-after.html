@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>LinkScribe — transcribe, translate, and organize</title>
+  <style>
+    :root { color-scheme:dark; --bg:#0b1020; --surface:#151d31; --surface2:#1b263e; --stroke:#34415c; --text:#f4f6ff; --muted:#a8b5cf; --accent:#9c8aff; --accent2:#6dd9cf; --red:#ffb5bc; }
+    * { box-sizing:border-box; }
+    html { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; scroll-behavior:smooth; }
+    body { min-height:100vh; margin:0; background:radial-gradient(900px 580px at 7% -7%,#293068 0%,transparent 60%),radial-gradient(920px 650px at 94% 1%,#113e4b 0%,transparent 55%),var(--bg); color:var(--text); }
+    .page { width:min(1080px,calc(100% - 36px)); margin:0 auto; }
+    header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; font-size:19px; }
+    .mark { width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(130deg,var(--accent),#6ee0d3); color:#0e1630; font-size:21px; font-weight:900; }
+    .locally { max-width:100%; font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; }
+    .hero { max-width:810px; margin:0 auto 33px; text-align:center; }
+    .eyebrow { letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:850; color:#b6acf9; margin-bottom:15px; }
+    h1 { font-size:clamp(36px,6vw,66px); line-height:1.08; letter-spacing:-.065em; font-weight:820; margin:0 0 17px; }
+    .hgrad { background:linear-gradient(110deg,#a79aff 20%,#b59df8 45%,#66ddd7 85%); background-clip:text; -webkit-background-clip:text; color:transparent; }
+    .lead { margin:0 auto; max-width:650px; line-height:1.7; color:var(--muted); font-size:16px; }
+    .panel { max-width:850px; margin:auto; background:linear-gradient(140deg,#192339,#11192c); border:1px solid #34435f; border-radius:23px; box-shadow:0 24px 90px #0005; overflow:hidden; }
+    .tabs { display:flex; background:#111a2e; border-bottom:1px solid var(--stroke); padding:13px 18px 0; gap:8px; }
+    .tab { font:inherit; background:transparent; border:0; border-radius:10px 10px 0 0; color:var(--muted); padding:12px 22px; cursor:pointer; font-weight:700; }
+    .tab[aria-selected="true"] { background:#202b44; color:#fff; box-shadow:inset 0 -2px #a18eff; }
+    .content { padding:26px; }
+    .input-title { display:block; font-size:14px; font-weight:750; margin:0 0 11px; }
+    .input-note { color:var(--muted); font-size:12px; margin:8px 0 0; line-height:1.6; }
+    input[type="url"], select, input[type="file"] { font:inherit; width:100%; color:#f4f6ff; background:#0e1729; border:1px solid #495671; border-radius:11px; outline:none; }
+    input[type="url"] { height:54px; padding:14px 17px; }
+    input[type="url"]::placeholder { color:#73809c; }
+    input[type="url"]:focus, select:focus, input[type="file"]:focus { border-color:#a798ff; box-shadow:0 0 0 3px #8472fa40; }
+    select { height:47px; padding:8px 12px; }
+    .upload-area { display:block; padding:30px 20px; background:#0e1729; border:1.5px dashed #657394; border-radius:14px; text-align:center; cursor:pointer; }
+    .upload-area:focus-within, .upload-area.dragging { border-color:#a798ff; background:#25254c; }
+    input[type="file"] { display:block; width:100%; margin:15px auto 0; border:0; max-width:430px; font-size:13px; }
+    input[type="file"]::file-selector-button { border-radius:8px; border:1px solid #64729c; color:#fff; padding:10px; background:#283653; cursor:pointer; margin-right:12px; }
+    .drop-head { font-weight:800; margin:0 0 5px; }
+    .drop-sub { font-size:12px; color:var(--muted); margin:0; }
+    .settings { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:15px; margin-top:24px; }
+    .setting label { display:block; font-size:12px; margin-bottom:8px; font-weight:750; color:#cfdaef; }
+    .setting p { font-size:11px; line-height:1.5; color:var(--muted); margin:6px 0 0; }
+    .consent { display:flex; align-items:flex-start; gap:10px; margin:24px 0 19px; color:#b6c2db; font-size:13px; line-height:1.5; cursor:pointer; }
+    .consent input { margin-top:2px; accent-color:#a796ff; width:16px; height:16px; flex-shrink:0; }
+    .submit { min-height:54px; display:flex; gap:12px; align-items:center; justify-content:center; width:100%; border-radius:12px; border:0; background:linear-gradient(100deg,#a391ff,#8cbbff); color:#10152d; font:inherit; font-size:15px; font-weight:850; cursor:pointer; transition:filter .2s,transform .2s; }
+    .submit:not(:disabled):hover { filter:brightness(1.11); transform:translateY(-1px); }
+    .submit:disabled { opacity:.55; cursor:wait; }
+    .status { margin-top:18px; background:#0f1d32; border:1px solid #465474; border-radius:12px; padding:15px; }
+    .statushead { display:flex; gap:10px; align-items:center; font-weight:700; }
+    .spin { width:18px; height:18px; border:2px solid #56637c; border-top-color:#b8abff; border-radius:50%; animation:turn 1s linear infinite; }
+    @keyframes turn { to { transform:rotate(360deg) } }
+    .status p { color:var(--muted); margin:8px 0 0; font-size:13px; line-height:1.65; }
+    .status.error { border-color:#8e4854; background:#31212d; }
+    .status.error .statushead { color:var(--red); }
+    .results { max-width:850px; margin:24px auto 0; background:var(--surface); border:1px solid var(--stroke); border-radius:20px; padding:24px; }
+    .result-title { font-size:23px; letter-spacing:-.035em; margin:0 0 7px; }
+    .result-meta { color:var(--muted); font-size:13px; line-height:1.6; overflow-wrap:anywhere; }
+    .downloads { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0; }
+    .downloads a { border:1px solid #576582; border-radius:10px; background:#223149; color:#f4f6ff; padding:11px 14px; text-decoration:none; font-size:13px; font-weight:750; }
+    .downloads a:hover { border-color:#a698ff; }
+    .downloads a:first-child { background:#384567; border-color:#998df2; }
+    .preview-title { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
+    .copy { border:1px solid #576582; color:var(--muted); border-radius:8px; background:transparent; font:inherit; padding:7px 10px; cursor:pointer; }
+    .transcript { margin:0; padding:18px; max-height:330px; overflow:auto; background:#0c1425; border:1px solid #35445e; border-radius:12px; color:#dce5f9; white-space:pre-wrap; font:13px/1.9 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace; overflow-wrap:anywhere; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; max-width:850px; margin:30px auto 60px; }
+    .feature { padding:20px; background:#11192c90; border:1px solid #303c55; border-radius:15px; }
+    .feature .symbol { font-size:23px; margin-bottom:10px; }
+    .feature strong { font-size:13px; display:block; margin-bottom:6px; }
+    .feature p { font-size:12px; line-height:1.7; color:var(--muted); margin:0; }
+    footer { text-align:center; color:#7885a2; font-size:12px; padding:0 12px 35px; line-height:1.7; }
+    [hidden] { display:none !important; }
+    @media(max-width:650px){header{padding:20px 0 38px}.hero{margin-bottom:25px}.lead{font-size:14px}.content{padding:19px}.settings{grid-template-columns:1fr}.features{grid-template-columns:1fr}.features{margin-bottom:35px}.tab{padding:12px 15px}.results{padding:18px}.locally{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.spin{animation:none}html{scroll-behavior:auto}}
+    .tabs {flex-wrap:wrap; padding-bottom:7px}
+    .tab {border-radius:9px; padding:11px 16px}
+    .tab[aria-selected="true"] {box-shadow:inset 0 -2px #a18eff}
+    .batch-input, .library-toolbar input, .edit-title, .segment-row input, .segment-row textarea {width:100%; border:1px solid #495671; border-radius:10px; background:#0e1729; color:#f4f6ff; font:inherit; padding:11px 13px}
+    .batch-input {resize:vertical; min-height:140px; line-height:1.6}
+    .enhancements {display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; padding:15px; margin-top:22px; border:1px solid #334563; border-radius:13px; background:#101b30}
+    .extra-option {display:flex; gap:8px; align-items:flex-start; font-size:13px; cursor:pointer}
+    .extra-option input {accent-color:#a796ff; margin-top:4px}
+    .extra-option strong {display:block; margin-bottom:5px}
+    .extra-option small {display:block; color:var(--muted); line-height:1.55; font-size:11px}
+    .library-toolbar {display:flex; gap:10px; margin-bottom:16px}
+    .library-toolbar input {flex:1; min-width:0}
+    .library-items {display:grid; gap:10px}
+    .library-tools {margin:18px 0; padding:17px; border:1px solid #35445e; border-radius:12px; background:#10192b}
+    .library-tools h3 {font-size:15px; margin:0 0 7px}
+    .library-tools .input-note {margin-bottom:12px}
+    .backup-actions {display:flex; flex-wrap:wrap; align-items:center; gap:9px}
+    .backup-actions input {max-width:235px; color:var(--muted);font-size:12px}
+    .backup-actions a {color:#fff; text-decoration:none; display:inline-flex; align-items:center}
+    .library-feedback {color:var(--muted);font-size:12px; margin:12px 0 0; overflow-wrap:anywhere; line-height:1.6}
+    .saved-batches {display:grid; gap:8px; margin-top:12px}
+    .saved-batches .batch-item a {color:#c4bbff; text-decoration:none;white-space:nowrap}
+    .setup-info {white-space:pre-wrap; font:12px/1.65 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;max-height:180px;overflow:auto}
+
+    .library-item {display:flex; justify-content:space-between; gap:14px; padding:14px; border:1px solid #394761; border-radius:12px; background:#131f34; align-items:center}
+    .library-item strong {display:block; word-break:break-word; font-size:14px}
+    .library-item small {display:block; color:var(--muted); margin-top:6px; font-size:11px; overflow-wrap:anywhere}
+    .library-item button {flex-shrink:0}
+    .secondary-actions, .editor-actions {display:flex; flex-wrap:wrap; gap:12px; margin-top:13px; align-items:center}
+    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap}
+    .summary-result {border-top:1px solid var(--stroke); padding-top:14px; margin-top:16px; white-space:pre-wrap; color:var(--muted); line-height:1.7}
+    .highlights-result {border-top:1px solid var(--stroke);padding-top:16px;margin-top:18px;min-width:0}
+    .highlight-excerpt {border-left:3px solid var(--accent);padding:0 0 0 12px;margin:18px 0;min-width:0}
+    .highlight-excerpt pre {white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.65;color:var(--text)}
+    .highlight-excerpt .copy {max-width:100%;white-space:normal}
+    .batch-list {display:grid; gap:9px; margin-top:15px}
+    .batch-item {display:flex; justify-content:space-between; gap:12px; border:1px solid #35445e; border-radius:10px; padding:12px; font-size:12px}
+    .batch-item strong {overflow-wrap:anywhere}
+    .batch-item small {display:block; color:var(--muted); margin-top:4px}
+    .editor-rows {display:grid; gap:10px; margin-top:17px}
+    .segment-row {border:1px solid #35445e; background:#101a2d; border-radius:10px; padding:11px; display:grid; grid-template-columns:125px 130px minmax(0,1fr); gap:10px; align-items:start}
+    .segment-row label {color:var(--muted); font-size:12px}
+    .segment-row input,.segment-row textarea {font-size:13px}
+    .segment-row textarea {min-height:61px; resize:vertical}
+    .editor-paging {display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap:6px; color:var(--muted); font-size:12px}
+    .editor-actions .submit {width:auto; padding:0 27px}
+    .danger {color:#ffb5bc; border-color:#9c5960}
+    @media(max-width:650px) {.enhancements{grid-template-columns:1fr}.segment-row{grid-template-columns:1fr}.library-item{align-items:flex-start;flex-wrap:wrap}.library-item>div{flex-basis:100%;min-width:0}.library-toolbar{flex-wrap:wrap}.editor-paging{display:grid;grid-template-columns:1fr 1fr}.editor-paging span{grid-column:1 / -1;grid-row:1;text-align:center}.editor-actions .submit{flex:1}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand"><div class="mark" aria-hidden="true">L</div><span>LinkScribe</span></div>
+    <div class="locally">● Local AI · personal transcript library</div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">Your words. Your files.</div>
+    <h1>Turn video into<br><span class="hgrad">useful knowledge.</span></h1>
+    <p class="lead">Paste video links, process up to 20 at once, identify speakers, translate between English and Greek, generate summaries, and organize every transcript locally.</p>
+  </section>
+  <main>
+    <section class="panel" aria-label="Create a transcript">
+      <div class="tabs" role="tablist" aria-label="Choose a source">
+        <button type="button" class="tab" id="tab-link" role="tab" aria-selected="true" aria-controls="view-link">↗ &nbsp; Video link</button>
+        <button type="button" class="tab" id="tab-upload" role="tab" aria-selected="false" aria-controls="view-upload">↑ &nbsp; Upload file</button>
+        <button type="button" class="tab" id="tab-batch" role="tab" aria-selected="false" aria-controls="view-batch">☷ &nbsp; Batch links</button>
+        <button type="button" class="tab" id="tab-library" role="tab" aria-selected="false" aria-controls="view-library">▤ &nbsp; Library</button>
+      </div>
+      <div class="content">
+        <form id="job-form">
+          <div id="view-link" role="tabpanel" aria-labelledby="tab-link">
+            <label class="input-title" for="url">Paste a video link</label>
+            <input type="url" id="url" name="url" placeholder="https://www.youtube.com/watch?v=..." spellcheck="false" autocomplete="url">
+            <p class="input-note">Individual YouTube, Vimeo and Dailymotion videos are supported. Access restrictions still apply.</p>
+          </div>
+          <div id="view-upload" role="tabpanel" aria-labelledby="tab-upload" hidden>
+            <label class="input-title" for="file">Upload a media file</label>
+            <div class="upload-area" id="dropzone">
+              <p class="drop-head">Drop a recording here or select a file</p>
+              <p class="drop-sub">MP3, WAV, M4A, MP4, WebM and more · max 150 MB</p>
+              <input type="file" id="file" accept="audio/*,video/*,.mkv,.opus,.flac,.aac">
+            </div>
+          </div>
+          <div id="view-batch" role="tabpanel" aria-labelledby="tab-batch" hidden>
+            <label class="input-title" for="batch-urls">Batch transcription: one video URL per line</label>
+            <textarea class="batch-input" id="batch-urls" placeholder="https://www.youtube.com/watch?v=...&#10;https://vimeo.com/123456789" rows="7" spellcheck="false"></textarea>
+            <p class="input-note"><span id="batch-count">0</span> of 20 links · Runs sequentially in one worker · Download all completed transcripts in one ZIP</p>
+          </div>
+          <div class="settings">
+            <div class="setting" id="mode-block">
+              <label for="mode">Transcription method</label>
+              <select id="mode">
+                <option value="smart">Smart: captions first, then AI</option>
+                <option value="audio">Audio AI: listen to the recording</option>
+                <option value="captions">Captions only: fastest</option>
+              </select>
+              <p>Captions-only is YouTube-only. Speaker labels force audio recognition.</p>
+            </div>
+            <div class="setting">
+              <label for="language">Language</label>
+              <select id="language">
+                <option value="auto">Auto-detect</option><option value="en">English</option><option value="el">Greek</option>
+                <option value="es">Spanish</option><option value="fr">French</option><option value="de">German</option>
+                <option value="it">Italian</option><option value="pt">Portuguese</option><option value="ja">Japanese</option>
+                <option value="ko">Korean</option><option value="zh">Chinese</option><option value="ar">Arabic</option>
+              </select>
+            </div>
+            <div class="setting">
+              <label for="model">Local AI model</label>
+              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option><option value="large-v3-turbo">Large Turbo · more memory</option></select>
+              <p>Used when audio AI is needed.</p>
+            </div>
+          </div>
+          <div class="enhancements" id="enhancements">
+            <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Optional public CPU model setup; no access token needed. Uses audio mode.</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="highlights"><span><strong>Source highlights</strong><small>Selected original excerpts with timestamps. Works locally without an extra AI model; may omit important context.</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters · draft</strong><small>Local Ollama; check facts and conditions against the source</small></span></label>
+            <div class="setting"><label for="target-language">Translate transcript · experimental</label>
+              <select id="target-language"><option value="none">No translation</option><option value="el">To Greek 🇬🇷</option><option value="en">To English 🇬🇧</option></select>
+            </div>
+          </div>
+          <label class="consent"><input id="consent" type="checkbox" required><span>I have permission to download and transcribe this media and understand that some platforms restrict access.</span></label>
+          <button type="submit" class="submit" id="submit">✧ &nbsp; Generate transcript →</button>
+        </form>
+        <div id="view-library" role="tabpanel" aria-labelledby="tab-library" hidden>
+          <label class="input-title" for="library-search">Search your saved transcripts</label>
+          <div class="library-toolbar"><input id="library-search" type="search" placeholder="Search titles or spoken words"><button type="button" id="library-refresh" class="copy">Search</button></div>
+          <div class="library-tools" aria-label="Transcript backup and restore">
+            <h3>Keep a copy of your transcript library</h3>
+            <p class="input-note">Backup saves transcripts, edits, translations, summaries and source highlights into a ZIP. Restoring imports missing records without overwriting existing ones; no audio or access tokens are included.</p>
+            <div class="backup-actions">
+              <a class="copy" href="/api/library/backup" download="linkscr-library-backup.zip">↓ Download backup</a>
+              <input id="library-restore-file" type="file" accept=".zip,application/zip" aria-label="Select library backup ZIP">
+              <button id="library-restore-btn" class="copy" type="button">Restore backup</button>
+              <button id="diagnostics-btn" class="copy" type="button">Check setup</button>
+            </div>
+            <p class="library-feedback" id="library-feedback" role="status" aria-live="polite"></p>
+            <pre id="setup-info" class="setup-info" hidden></pre>
+          </div>
+          <div id="library-items" class="library-items" aria-live="polite">Open Library to load saved transcripts.</div>
+          <div class="library-tools">
+            <h3>Recent batches (available after restart)</h3>
+            <div id="saved-batches" class="saved-batches" aria-live="polite">Checking saved batches...</div>
+          </div>
+          <p class="input-note">Stored in SQLite on this machine, not in your GitHub repository. Saved text remains until you delete it.</p>
+        </div>
+        <div id="status-box" class="status" role="status" aria-live="polite" hidden>
+          <div class="statushead"><span class="spin" id="status-spinner"></span><span id="status-title">Working...</span></div>
+          <p id="status-detail"></p>
+        </div>
+      </div>
+    </section>
+    <section class="results" id="results" aria-label="Transcript results" hidden>
+      <h2 class="result-title">✓ &nbsp;Your transcript is ready</h2>
+      <div class="result-meta" id="result-meta"></div>
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
+      <div class="warnings" id="result-warnings" hidden></div>
+      <div class="secondary-actions" id="result-actions"></div>
+      <nav class="downloads" id="downloads" aria-label="Download transcript formats"></nav>
+      <div class="preview-title"><span>Transcript preview</span><button class="copy" id="copy" type="button">Copy preview</button></div>
+      <pre class="transcript" id="preview"></pre>
+      <div class="summary-result" id="summary-result" hidden></div>
+      <section class="highlights-result" id="highlights-result" aria-label="Source highlights" hidden></section>
+      <p class="input-note">Transcripts are also saved to your local library. Temporary job download files expire, but your library text persists.</p>
+    </section>
+    <section id="batch-results" class="results" aria-label="Batch results" hidden>
+      <h2 class="result-title">Batch transcription</h2>
+      <p class="result-meta" id="batch-progress"></p>
+      <div id="batch-list" class="batch-list"></div>
+      <div id="batch-download" class="downloads"></div>
+    </section>
+    <section id="editor" class="results" aria-label="Transcript editor" hidden>
+      <div class="preview-title"><h2 class="result-title">Edit saved transcript</h2><button type="button" id="editor-close" class="copy">Close</button></div>
+      <label class="input-title" for="edit-title">Title</label><input id="edit-title" class="edit-title" maxlength="180">
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
+      <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving clears older translations, summaries and source highlights.</p>
+      <div class="downloads" id="editor-downloads"></div>
+      <button class="copy" id="editor-highlights" type="button">Create source highlights</button>
+      <p class="input-note" id="editor-highlights-note">Uses the saved transcript. Save your edits before creating highlights.</p>
+      <section class="highlights-result" id="editor-highlights-result" aria-label="Saved source highlights" hidden></section>
+      <div id="editor-rows" class="editor-rows"></div>
+      <div class="editor-paging"><button class="copy" id="editor-prev" type="button">← Previous</button><span id="editor-page-label"></span><button class="copy" id="editor-next" type="button">Next →</button></div>
+      <div class="editor-actions"><button type="button" class="submit" id="editor-save">Save changes</button><button type="button" class="copy danger" id="editor-delete">Delete transcript</button></div>
+      <p class="input-note" id="editor-message" aria-live="polite"></p>
+    </section>
+  </main>
+  <section class="features" aria-label="Features">
+    <div class="feature"><div class="symbol">⚡</div><strong>Single and batch links</strong><p>Process eligible YouTube, Vimeo and Dailymotion videos, up to 20 in a batch.</p></div>
+    <div class="feature"><div class="symbol">◉</div><strong>Local audio and language AI</strong><p>Whisper and optional local Ollama translate and summarize without a paid cloud speech API.</p></div>
+    <div class="feature"><div class="symbol">⇩</div><strong>Searchable transcript library</strong><p>Save and edit transcripts, label speakers, search, or export files any time.</p></div>
+  </section>
+  <footer>Local-only personal application — do not expose directly to the public internet. Generated speech, diarization, translations, and summaries may contain errors. Verify important results.</footer>
+</div>
+<script>
+(() => {
+ "use strict";
+ const $ = id => document.getElementById(id);
+ const tabs = {link:$("tab-link"),upload:$("tab-upload"),batch:$("tab-batch"),library:$("tab-library")};
+ const views = {link:$("view-link"),upload:$("view-upload"),batch:$("view-batch"),library:$("view-library")};
+ const form=$("job-form");
+ let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0, editorDirty=false;
+ let editorSession=0, editorRevision=0, editorSaving=false;
+ const perPage=30;
+ function chooseTab(name) {
+   tab=name;
+   for (const key in tabs) {
+     tabs[key].setAttribute("aria-selected",String(key===name));
+     views[key].hidden=key!==name;
+   }
+   form.hidden=name==="library";
+   $("mode-block").hidden=name==="upload" || name==="library";
+   $("enhancements").hidden=name==="library";
+   $("url").required=false; $("file").required=false;
+   $("url").disabled=name!=="link";
+   $("file").disabled=name!=="upload";
+   $("batch-urls").disabled=name!=="batch";
+   $("consent").required=name!=="library";
+   $("submit").hidden=name==="library";
+   if(name==="library") {
+     $("status-box").hidden=true;
+     loadLibrary();
+     loadSavedBatches();
+   }
+ }
+ for(const key in tabs) tabs[key].addEventListener("click",()=>chooseTab(key));
+ chooseTab("link");
+ const dropzone=$("dropzone");
+ dropzone.addEventListener("dragover",e=>{e.preventDefault();dropzone.classList.add("dragging");});
+ dropzone.addEventListener("dragleave",()=>dropzone.classList.remove("dragging"));
+ dropzone.addEventListener("drop",e=>{e.preventDefault();dropzone.classList.remove("dragging");if(e.dataTransfer?.files.length) $("file").files=e.dataTransfer.files;});
+ $("batch-urls").addEventListener("input",()=>{$("batch-count").textContent=$("batch-urls").value.split(/\r?\n/).filter(s=>s.trim()).length;});
+ $("url").addEventListener("drop",e=>{const dropped=e.dataTransfer?.getData("text/uri-list")||e.dataTransfer?.getData("text/plain");if(dropped){e.preventDefault();$("url").value=dropped.split("\n")[0].trim();}});
+ function showStatus(title,detail="",error=false,spinning=true) {
+   $("status-box").hidden=false;
+   $("status-box").classList.toggle("error",error);
+   $("status-title").textContent=title;
+   $("status-detail").textContent=detail;
+   $("status-spinner").hidden=!spinning;
+ }
+ function setWorking(flag){$("submit").disabled=flag;}
+ async function readError(response){try{const data=await response.json();return typeof data.detail==="string"?data.detail:`HTTP ${response.status}`;}catch(_){return `HTTP ${response.status}`;}}
+ async function api(url,options){const response=await fetch(url,{cache:"no-store",...options});if(!response.ok)throw Error(await readError(response));return response.json();}
+ const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ function addDownload(nav,root,code,label){const a=document.createElement("a");a.href=root+"/download/"+code;a.textContent=label;nav.appendChild(a);}
+ function renderDownloads(nav,root,record) {
+   nav.replaceChildren();
+   for(const [code,label] of [["txt","↓ TXT"],["srt","↓ SRT"],["vtt","↓ VTT"],["json","↓ JSON"],["zip","↓ All files ZIP"]]) addDownload(nav,root,code,label);
+   if(record.summary){addDownload(nav,root,"summary_md","↓ Summary MD");addDownload(nav,root,"summary_json","↓ Summary JSON");}
+   if(record.highlights){addDownload(nav,root,"highlights_md","↓ Highlights MD");addDownload(nav,root,"highlights_json","↓ Highlights JSON");}
+   if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
+ }
+ function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
+ function sourceTime(value){const total=Math.floor(value);return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");}
+ function renderHighlights(target,highlights,onSource){
+   target.replaceChildren();target.hidden=!highlights;
+   if(!highlights)return;
+   const heading=document.createElement("h3");heading.textContent="Source highlights";
+   const note=document.createElement("p");note.className="input-note";
+   const coverage=highlights.selected_segment_count===highlights.source_segment_count
+     ? `All ${highlights.source_segment_count} source segments are included; no condensation was made.`
+     : `${highlights.selected_segment_count} of ${highlights.source_segment_count} segments selected.`;
+   note.textContent=`${coverage} These are original transcript excerpts, not a complete summary. Excerpts may span speakers; open the source for speaker labels and context.`;
+   target.append(heading,note);
+   for(const excerpt of highlights.excerpts){
+     const block=document.createElement("article");block.className="highlight-excerpt";
+     const first=excerpt.segment_indices[0],last=excerpt.segment_indices[excerpt.segment_indices.length-1];
+     const label=sourceTime(excerpt.start)+"–"+sourceTime(excerpt.end)+` · View source segments ${first+1}–${last+1}`;
+     addButton(block,label,()=>onSource(first));
+     const text=document.createElement("pre");text.textContent=excerpt.text;block.appendChild(text);target.appendChild(block);
+   }
+   if(highlights.warnings?.length){const warnings=document.createElement("p");warnings.className="input-note";warnings.textContent=highlights.warnings.join(" ");target.appendChild(warnings);}
+ }
+ function markEditorDirty(){editorDirty=true;editorRevision++;$("editor-highlights").disabled=true;}
+ $("edit-title").addEventListener("input",markEditorDirty);
+ async function showResults(job, scroll=true) {
+   resultJob=job;
+   const root=$("results");
+   $("result-meta").textContent=`${job.title} · ${job.language} · ${job.method.replaceAll("_"," ")} · ${job.segments} segments`;
+   $("preview").textContent=job.preview||"(Empty preview)";
+   const details=job.extras||{};
+   renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language,highlights:details.highlights});
+   $("result-warnings").hidden=!(job.warnings||[]).length;
+   $("result-warnings").textContent=(job.warnings||[]).join("\n");
+   $("result-actions").replaceChildren();
+   if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
+   $("summary-result").hidden=true;$("summary-result").textContent="";
+   renderHighlights($("highlights-result"),null,()=>{});
+   if((details.summary||details.highlights) && job.library_id){
+     try {
+       const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
+       renderHighlights($("highlights-result"),record.highlights,index=>openEditor(job.library_id,index));
+       if(record.summary){const summary=record.summary;
+         $("summary-result").textContent="SUMMARY DRAFT\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
+         $("summary-result").hidden=false;
+       }
+     }catch(_){}
+   }
+   root.hidden=false;if(scroll)root.scrollIntoView({behavior:"smooth",block:"start"});
+ }
+ async function trackJob(jobId){
+   while(jobId===currentJob){
+     try{
+       const job=await api(`/api/jobs/${encodeURIComponent(jobId)}`);
+       if(job.status==="done"){showStatus("Transcript created","Saved to your local library.",false,false);await showResults(job);setWorking(false);return;}
+       if(job.status==="error"){showStatus("Unable to transcribe",job.error,true,false);setWorking(false);return;}
+       showStatus("Processing your recording",job.stage||"Working...");
+     }catch(e){showStatus("Connection interrupted",e.message,true,false);setWorking(false);return;}
+     await delay(1600);
+   }
+ }
+ function renderBatch(batch){
+   $("batch-results").hidden=false;
+   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.stage}`;
+   const list=$("batch-list");list.replaceChildren();
+   for(const item of batch.jobs){
+     const row=document.createElement("div");row.className="batch-item";
+     const group=document.createElement("div");const name=document.createElement("strong");name.textContent=item.title;
+     const meta=document.createElement("small");meta.textContent=`${item.status} · ${item.error||item.stage}`;
+     group.append(name,meta);row.appendChild(group);
+     if(item.library_id) addButton(row,"Open",()=>openEditor(item.library_id));
+     list.appendChild(row);
+   }
+   $("batch-download").replaceChildren();
+   if(batch.status==="done"){
+     const a=document.createElement("a");a.href=`/api/batches/${encodeURIComponent(batch.id)}/download`;a.textContent="↓ Download completed transcripts (ZIP)";$("batch-download").appendChild(a);
+   }
+ }
+ async function trackBatch(batchId){
+   while(batchId===currentBatch){
+     try{
+       const batch=await api(`/api/batches/${encodeURIComponent(batchId)}`);
+       renderBatch(batch);
+       if(batch.status==="done"||batch.status==="error"){
+         showStatus(batch.status==="done"?"Batch complete":"Batch failed",batch.stage,batch.status==="error",false);
+         setWorking(false);return;
+       }
+       showStatus("Batch in progress",batch.stage);
+     }catch(e){showStatus("Connection interrupted",e.message,true,false);setWorking(false);return;}
+     await delay(1700);
+   }
+ }
+ $("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("preview").textContent);$("copy").textContent="Copied!";setTimeout(()=>$("copy").textContent="Copy preview",1500);}catch(_){$("copy").textContent="Select and copy the text";}});
+ form.addEventListener("submit",async event=>{
+   event.preventDefault();
+   if(tab==="library")return;
+   if(!$("consent").checked){showStatus("Permission required","Confirm you may process this media.",true,false);return;}
+   const data=new FormData();data.set("language",$("language").value);data.set("model",$("model").value);
+   data.set("consent","true");data.set("speakers",String($("speakers").checked));data.set("summary",String($("summary").checked));data.set("highlights",String($("highlights").checked));
+   data.set("target_language",$("target-language").value);
+   const submittedTab=tab;
+   let endpoint;
+   if(submittedTab==="link"){
+     if(!$("url").value.trim()){showStatus("Link required","Paste a video link.",true,false);return;}
+     data.set("url",$("url").value.trim());data.set("mode",$("mode").value);endpoint="/api/link";
+   } else if(submittedTab==="upload"){
+     if(!$("file").files.length){showStatus("File required","Choose a file.",true,false);return;}
+     data.set("file",$("file").files[0]);endpoint="/api/upload";
+   } else if(submittedTab==="batch"){
+     if(!$("batch-urls").value.trim()){showStatus("Links required","Enter 1–20 links, one per line.",true,false);return;}
+     data.set("urls",$("batch-urls").value.trim());data.set("mode",$("mode").value);endpoint="/api/batch";
+   } else return;
+   $("results").hidden=true;$("batch-results").hidden=true;
+   setWorking(true);showStatus("Queuing work","Model downloads and longer recordings may take time.");
+   try{
+     const result=await api(endpoint,{method:"POST",body:data});
+     if(submittedTab==="batch") {currentBatch=result.id;await trackBatch(result.id);}
+     else {currentJob=result.id;await trackJob(result.id);}
+   }catch(e){showStatus("Could not start",e.message,true,false);setWorking(false);}
+ });
+ async function loadLibrary(){
+   const query=$("library-search").value.trim();
+   try{
+     const data=await api("/api/library?q="+encodeURIComponent(query));
+     const container=$("library-items");container.replaceChildren();
+     if(!data.items.length){container.textContent="No saved transcripts found yet.";return;}
+     for(const item of data.items){
+       const row=document.createElement("div");row.className="library-item";
+       const text=document.createElement("div");const title=document.createElement("strong");title.textContent=item.title;
+       const meta=document.createElement("small");meta.textContent=`${item.language} · ${new Date(item.created_at*1000).toLocaleString()} · ${item.preview||""}`;
+       text.append(title,meta);row.appendChild(text);
+       addButton(row,"Open / edit",()=>openEditor(item.id));container.appendChild(row);
+     }
+   }catch(e){$("library-items").textContent="Could not load library: "+e.message;}
+ }
+ async function loadSavedBatches(){
+   const target=$("saved-batches");
+   try{
+     const response=await api("/api/batches");
+     target.replaceChildren();
+     if(!response.items.length){target.textContent="No previous batches yet.";return;}
+     for(const item of response.items.slice(0,20)){
+       const box=document.createElement("div");box.className="batch-item";
+       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.status}`;
+       const button=addButton(box,"View",async()=>{
+         try{const batch=await api(`/api/batches/${encodeURIComponent(item.id)}`);renderBatch(batch);
+           if(batch.status==="working"||batch.status==="queued"){currentBatch=batch.id;trackBatch(batch.id);}
+           $("batch-results").scrollIntoView({behavior:"smooth",block:"start"});}
+         catch(e){$("library-feedback").textContent=e.message;}
+       });
+       box.insertBefore(title,button);target.appendChild(box);
+     }
+   }catch(e){target.textContent="Could not read batch history: "+e.message;}
+ }
+ $("library-restore-btn").addEventListener("click",async()=>{
+   const file=$("library-restore-file").files[0];
+   if(!file){$("library-feedback").textContent="Select a LinkScribe backup ZIP first.";return;}
+   if(!confirm("Import missing transcripts from this backup? Existing transcripts and edits will not be changed."))return;
+   $("library-feedback").textContent="Validating the backup...";
+   const body=new FormData();body.set("file",file);
+   try{const result=await api("/api/library/restore",{method:"POST",body});
+     $("library-feedback").textContent=`Restore complete: ${result.imported} imported; ${result.already_present} already in your library.`;
+     $("library-restore-file").value="";await loadLibrary();}
+   catch(e){$("library-feedback").textContent="Restore rejected: "+e.message;}
+ });
+ $("diagnostics-btn").addEventListener("click",async()=>{
+   $("setup-info").hidden=false;$("setup-info").textContent="Checking local installation...";
+   try{const info=await api("/api/diagnostics");
+     $("setup-info").textContent=[`Python ${info.python}`,
+       `JavaScript: ${info.js_runtime.runtime||"not available"} ${info.js_runtime.version||""}`,
+       `Whisper: ${info.libraries.faster_whisper?"installed":"missing"}`,
+       `FFmpeg: ${info.ffmpeg_available?"installed":"missing"}`,
+       `Public-video transport: ${info.libraries.curl_cffi?"installed":"missing"}`,
+       `Ollama: ${info.ollama.available?"available":"not running"}`,
+       `Speakers: ${info.speakers_configured?"configured":"optional setup required"}`,
+       ...(info.warnings||[])].join("\n");}
+   catch(e){$("setup-info").textContent="Diagnostics unavailable: "+e.message;}
+ });
+ $("library-refresh").addEventListener("click",loadLibrary);
+ $("library-search").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loadLibrary();}});
+ function showEditorPage(){
+   const rows=$("editor-rows");rows.replaceChildren();
+   if(!editing)return;
+   const first=editorPage*perPage,last=Math.min(editing.segments.length,first+perPage);
+   for(let i=first;i<last;i++){
+     const segment=editing.segments[i];
+     const row=document.createElement("div");row.className="segment-row";
+     const timer=document.createElement("label");timer.textContent=`#${i+1} · ${segment.start.toFixed(1)}–${segment.end.toFixed(1)}s`;
+     const speaker=document.createElement("input");speaker.placeholder="Speaker (optional)";speaker.maxLength=80;speaker.value=segment.speaker||"";
+     speaker.setAttribute("aria-label",`Speaker of segment ${i+1}`);
+     speaker.addEventListener("input",()=>{segment.speaker=speaker.value;markEditorDirty();});
+     const spoken=document.createElement("textarea");spoken.value=segment.text;spoken.maxLength=5000;
+     spoken.setAttribute("aria-label",`Text of segment ${i+1}`);
+     spoken.addEventListener("input",()=>{segment.text=spoken.value;markEditorDirty();});
+     row.append(timer,speaker,spoken);rows.appendChild(row);
+   }
+   $("editor-page-label").textContent=`Segments ${first+1}–${last} of ${editing.segments.length}`;
+   $("editor-prev").disabled=editorPage===0;
+   $("editor-next").disabled=last>=editing.segments.length;
+ }
+ async function openEditor(id,sourceIndex=0){
+   if(editorDirty&&!confirm("Discard your unsaved edits and open the saved transcript?"))return;
+   const session=++editorSession,revision=editorRevision;
+   try{
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(session!==editorSession)return;
+     if(editing&&revision!==editorRevision){
+       $("editor-message").textContent="Newer edits were kept. Save or discard them before opening another transcript.";
+       return;
+     }
+     editing=saved;editorRevision=0;
+     editorPage=Math.floor(Math.max(0,Math.min(sourceIndex,editing.segments.length-1))/perPage);editorDirty=false;
+     $("editor-highlights").disabled=editorSaving;$("editor-save").disabled=editorSaving;
+     $("edit-title").value=editing.title;
+     $("editor-message").textContent="";
+     $("editor").hidden=false;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
+     renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+     showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
+   }catch(e){if(session===editorSession)showStatus("Cannot open transcript",e.message,true,false);}
+ }
+ $("editor-prev").addEventListener("click",()=>{if(editorPage>0){editorPage--;showEditorPage();}});
+ $("editor-next").addEventListener("click",()=>{if(editing&&(editorPage+1)*perPage<editing.segments.length){editorPage++;showEditorPage();}});
+ $("editor-close").addEventListener("click",()=>{if(editorDirty&&!confirm("Discard your unsaved edits?"))return;editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;});
+ $("editor-highlights").addEventListener("click",async()=>{
+   if(!editing||editorDirty||editorSaving)return;
+   const id=editing.id,session=editorSession,revision=editorRevision;$("editor-highlights").disabled=true;
+   try{
+     const saved=await api(`/api/library/${encodeURIComponent(id)}/highlights`,{method:"POST"});
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     if(editorDirty||revision!==editorRevision){$("editor-message").textContent="Highlights created for the saved transcript. Your unsaved edits are still here.";return;}
+     editing=saved;
+     showEditorPage();
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+     $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
+     if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Could not create highlights: "+e.message;}
+   finally{if(editing?.id===id&&session===editorSession)$("editor-highlights").disabled=editorDirty||editorSaving;}
+ });
+ $("editor-save").addEventListener("click",async()=>{
+   if(!editing||editorSaving)return;
+   const title=$("edit-title").value.trim();
+   if(!title){$("editor-message").textContent="A title is required.";return;}
+   if(editing.segments.some(s=>!s.text.trim())){$("editor-message").textContent="Every segment needs text.";return;}
+   const id=editing.id,session=editorSession,revision=editorRevision;
+   const body=JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))});
+   editorSaving=true;$("editor-save").disabled=true;$("editor-highlights").disabled=true;
+   $("editor-message").textContent="Saving...";
+   try{
+     await api(`/api/library/${encodeURIComponent(id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(tab==="library")loadLibrary();
+     if(!$("results").hidden && resultJob?.library_id===id){
+       await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
+         segments:saved.segments.length,
+         preview:saved.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
+         extras:{...resultJob.extras,summary:!!saved.summary,highlights:!!saved.highlights,
+           translation_language:Object.keys(saved.translations||{})[0]||"",
+           speakers:saved.segments.some(s=>s.speaker)}},false);
+     }
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
+     if(revision!==editorRevision){
+       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;
+       $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
+       return;
+     }
+     editing=saved;editorDirty=false;showEditorPage();
+     $("editor-message").textContent="Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.";
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Save failed: "+e.message;}
+   finally{editorSaving=false;$("editor-save").disabled=false;$("editor-highlights").disabled=editorDirty;}
+ });
+ $("editor-delete").addEventListener("click",async()=>{
+   if(!editing||!confirm("Permanently delete this saved transcript?"))return;
+   const id=editing.id,session=editorSession;
+   try{await api(`/api/library/${encodeURIComponent(id)}`,{method:"DELETE"});
+     if(editing?.id===id&&session===editorSession){editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;}
+     loadLibrary();}
+   catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Delete failed: "+e.message;}
+ });
+})();
+</script>
+</body>
+</html>

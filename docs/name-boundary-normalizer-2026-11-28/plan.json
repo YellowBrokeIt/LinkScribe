@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T04:37:31.953056+00:00",
+  "status": "frozen_proposal_pending_independent_protocol_review_no_execution",
+  "scope": "one_offline_source_boundary_replay",
+  "mechanism": "exact_standalone_leading_Greek_definite_article_boundary_proposal",
+  "source_only_input": {
+    "path": "docs/name-span-protection-research-2026-11-28/original-six-source-only.json",
+    "bytes": 3609,
+    "sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482"
+  },
+  "raw_reports": [
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-transcript-terminology.json",
+      "bytes": 16740,
+      "sha256": "7de6b381a15d12c2eeb57340a7495c7faa1a4a4a698ec10f1e07f16c656ef0f7"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-people-and-roles.json",
+      "bytes": 23447,
+      "sha256": "f8afa403c0b7934c3390080f63627d9c5a5d16baa53e722ad9cbe6da70ca3ef8"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "bytes": 20068,
+      "sha256": "977267f4ed054507821680a6491fe79f6ee000185ee965c69e4b306987558c2c"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-negation-scope.json",
+      "bytes": 20516,
+      "sha256": "fac59b5111e989e40a05d7bc322bdb39cd28de52d8cd83429f15aa586eb3d20e"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-en-el-conditional-publication.json",
+      "bytes": 16027,
+      "sha256": "aa1805fe0eec96111f0ee771a3d0bdc416adf20981d46354b6b01b5589fd8db9"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/dev-el-en-uncertain-question.json",
+      "bytes": 20345,
+      "sha256": "4cfc6e6357a3b74187c24db9eab5f62dc1b0f4cdfc5282a013b249cec4b165b8"
+    }
+  ],
+  "prior_raw_screen_manifest": {
+    "path": "docs/name-span-detector-screen-2026-11-28/evidence-manifest.json",
+    "bytes": 13161,
+    "sha256": "b6a13b115182b84c1bcc8e20a6e37c30c69afd3e2c5a9a04cd1c065e5423b5e2"
+  },
+  "prior_raw_screen_independent_review": {
+    "path": "docs/name-span-detector-screen-2026-11-28/independent-output-review.json",
+    "bytes": 13343,
+    "sha256": "6c42cc925456fdd3b827ab86d34da01c773f50d125f6da0787ba9a212fc8206b"
+  },
+  "unchanged_annotations_reviewer_only": {
+    "sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+    "not_a_worker_input": true
+  },
+  "unchanged_translation_criteria": {
+    "original_six_corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "not_a_worker_input": true
+  },
+  "raw_detector_decision_unchanged": "rejected_5_of_6_cases_12_of_13_exact_mentions_one_article_overextension",
+  "algorithm_inputs": [
+    "complete_original_source_segments_with_metadata",
+    "original_raw_person_entities_with_scores",
+    "declared_source_language"
+  ],
+  "comparison": "NFC plus casefold on whole first token and fixed grammatical inventory only; source remains exact",
+  "article_forms": [
+    "ο",
+    "η",
+    "το",
+    "του",
+    "της",
+    "τον",
+    "την",
+    "τη",
+    "οι",
+    "τα",
+    "των",
+    "τους",
+    "τις"
+  ],
+  "rules": {
+    "raw_single_token_unchanged": true,
+    "one_token_result_after_valid_trim_allowed": true,
+    "strip_at_most_one_article_token": true,
+    "no_empty_proposed_name": true,
+    "same_original_segment": true,
+    "end_offset_unchanged": true,
+    "article_and_whitespace_remain_ordinary_unmasked_source": true,
+    "no_name_letters_or_punctuation_repair": true,
+    "all_proposals_require_independent_source_review": true,
+    "score_retains_original_span_scope": true
+  },
+  "limits": {
+    "wall_seconds": 30,
+    "cpu_seconds": 10,
+    "maximum_cpu_affinity": 4,
+    "address_space_mib": 512,
+    "replays_per_case": 1,
+    "case_count": 6,
+    "detector_calls": 0,
+    "translation_calls": 0,
+    "masking_calls": 0,
+    "new_downloads": 0
+  },
+  "runtime": {
+    "python": "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+    "regex_distribution": "2026.11.25",
+    "python_bytecode_writes": false,
+    "model_or_tokenizer_imports": false
+  },
+  "planned_commands": [
+    "PYTHONDONTWRITEBYTECODE=1 /workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python docs/name-boundary-normalizer-2026-11-28/check_controls.py",
+    "PYTHONDONTWRITEBYTECODE=1 /workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python docs/name-boundary-normalizer-2026-11-28/replay.py --execution-freeze docs/name-boundary-normalizer-2026-11-28/execution-freeze.json"
+  ],
+  "candidate_files": [
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/proposal.md",
+      "bytes": 6746,
+      "sha256": "3b397f5f508cb49891d69a5de578b6b9e3d62bcf13e86440734ae731f8476e13"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py",
+      "bytes": 8299,
+      "sha256": "fd91e0c9c944f5c37cf3ec39780c08b459d27c38bc66bb63b36c75e7c1206be0"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/edge-cases.json",
+      "bytes": 33939,
+      "sha256": "1baad8b028f848dc29b3aad97fc97b5f9a17b0f5592a464c35dc2585c2bed337"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/check_controls.py",
+      "bytes": 4157,
+      "sha256": "58a22d97b46f20b195e33ebab7518dac73775bce7c091bf0abb6104fb4fa7c16"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/replay.py",
+      "bytes": 5170,
+      "sha256": "6ff71a38531b6dfc20f2e5e9cd029c0b3d74ae2fe2c48e55d3d9329594a7f090"
+    }
+  ],
+  "controls": {
+    "count": 50,
+    "semantic_counterexamples": 4,
+    "automatic_semantic_acceptance": false,
+    "run_before_replay_after_independent_review": true
+  },
+  "primary_grammar_sources": [
+    {
+      "url": "https://ebooks.edu.gr/ebooks/v/html/8547/2009/Grammatiki_D-EDimotikou_html-apli/index_C5d.html",
+      "publisher": "Greek official school ebooks",
+      "fact_used": "Modern Greek definite-article paradigm, including τη(ν)."
+    },
+    {
+      "url": "https://www.greek-language.gr/digitalResources/modern_greek/tools/lexica/glossology_edu/iframe.html?heading=4&id=110",
+      "publisher": "Centre for the Greek Language",
+      "fact_used": "Definite articles and their number, gender and case forms."
+    }
+  ],
+  "criteria": {
+    "mechanical": "Every source, raw span, score and metadata binding stays exact; generic declared outcomes and input rejections match.",
+    "development_semantic": "Independent reviewer uses unchanged pre-output source PERSON annotations on all six resulting proposals.",
+    "automatic_semantic_certification": false,
+    "ambiguities_do_not_become_acceptance_exceptions": true,
+    "no_regrading_raw_detector": true
+  },
+  "unused_validation_opened": false,
+  "production_changes": false,
+  "next_action": "Independent protocol and counterexample review before controls or retained-output replay."
+}

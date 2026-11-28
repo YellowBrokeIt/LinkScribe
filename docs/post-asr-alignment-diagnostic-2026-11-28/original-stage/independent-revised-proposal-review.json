@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T05:28:22.594171+00:00",
+  "decision": "No remaining blocking defect or excessive result claim found in the corrected revised proposal. A separately frozen helper and executable contract still require review; no speech-model run or production change is authorized by this review.",
+  "scope": "Fresh review of the materially changed post-recognition timing policy. The earlier raw-alignment-only feasibility review is not reused as approval.",
+  "bindings": {
+    "POSTPASS-PROPOSAL.md": "59a50145cc7a1d9cd1b16a382a731c30529ac298ca353d7c4d72032675c6aa9c",
+    "revised-protocol-source.json": "d9e83c7045734d9c882d628eaea0b4bfe5197b836f1271e24e31cdbecd192b6c",
+    "native-contract-check.json": "ffcca673dd5aaccbe72e84472d1ae69f600a942d83eaf82e7b9da8d1a643a30d",
+    "check_native_contract.py": "650620d8ae889d5ee3b8c7f09d2ec004e9e8426a8ba4e7ce652f0648cf0bdd67",
+    "native-contract/inventory.json": "97beece623b60f7e5dd320d97f107177bf50876497c22d8ed4905b4241960960",
+    "native-contract/upstream-word-timing-source.txt": "7a85ab152b5aa413c310257ccce3f1772a8fd87de315d3fcb16196c0b47723d9",
+    "preparation-history/postpass-proposal-before-state-review.md": "fe39753bbbeb71a8d6088c7294964fa38d22b0cb38240d1cde80a96eaffb25d7",
+    "preparation-history/revised-protocol-source-before-state-review.json": "dcfc209b87203c1ff6e8f927dc9b1451f852ac81f161e4adb6c463d9ff596ff1"
+  },
+  "primary_source_identity_checks": {
+    "four_CTranslate2_files_sha256_and_git_blob_sha1_verified": true,
+    "ctranslate2_commit": "88e735ac42a2a97c7c10daec4e7ce9db49edf562",
+    "installed_faster_whisper_transcribe_file_verified": true,
+    "add_word_timestamps_and_merge_punctuations_exact_function_hashes_verified": true,
+    "get_end_utils_file_and_function_hashes_verified": true
+  },
+  "findings": [
+    {
+      "area": "Reason for protocol revision",
+      "judgment": "Pinned CTranslate2 creates N+1 alignment rows, with N text probabilities. Its finite DTW recurrence anchors the first text boundary at frame 0; find_alignment then uses that boundary as the first word start. The source deduction explains why the raw-only route cannot relocate the first phrases away from their original window starts. The four synthetic positive examples and seven rejection examples are correctly labeled as source-contract controls, not acoustic evidence."
+    },
+    {
+      "area": "Changed timing candidate",
+      "judgment": "The proposal explicitly adds the complete unmodified upstream add_word_timestamps transformations after recognition is finished: duration summaries, sentence-boundary handling, punctuation merging, pause/long-word adjustments, coarse boundary preferences and ordinary two-decimal timing. These can change coordinates without rerunning generation or advancing recognition seek. No subset or threshold is to be tuned after output."
+    },
+    {
+      "area": "Independent state-policy finding",
+      "judgment": "The initial revised draft incorrectly proposed carrying add_word_timestamps’s returned value. Pinned generate_segments ignores that return and later updates from get_end(current_segments), preferring the last actual word end. Segment and last-word ends can differ after the coarse-boundary branch. The corrected proposal now binds the actual get_end update on raw adjusted copies before fallback projections; the method return is diagnostic only. Initial draft/source record remain unchanged in preparation-history."
+    },
+    {
+      "area": "Fixed text and complete mapping",
+      "judgment": "Deep copies must preserve every original source string, native token array, order and original seek window. Candidate output must copy the original text rather than reconstruct it from altered word objects. Raw token paths, pre-heuristic word timings and complete adjusted results must be snapshotted from one actual alignment, since the upstream function mutates timing/punctuation structures."
+    },
+    {
+      "area": "Terminal and punctuation boundaries",
+      "judgment": "Native terminal row N remains required for the final endpoint and is not a generated text token. Mapping must retain complete original per-segment token spans. The upstream punctuation merger can move token ownership; an unassignable cross-segment word cannot be split or silently reassigned to manufacture coverage."
+    },
+    {
+      "area": "Fallback and sequential state",
+      "judgment": "The revised contract distinguishes structural input failure, invalid candidate segment intervals and unusable optional word evidence. It preserves the whole baseline text, timing fallback and warning, validates the global projected sequence, and never pads a zero-duration word. Raw adjusted get_end state must be finite and physically valid; downstream fallback cannot silently change the state used for later windows."
+    },
+    {
+      "area": "Input and result scope",
+      "judgment": "Five previously exposed retained inputs, the exact 19 official-film windows and four full ordinary/quiet clips remain bounded and meaningful for this diagnostic. Exact 7a Dailymotion audio is unavailable; the separate publisher rendition cannot regrade that result. Fixed phrase windows and broader reference review remain unchanged, while independent acoustic timing accuracy and ASR meaning approval remain outside the evidence."
+    },
+    {
+      "area": "Resource and execution scope",
+      "judgment": "One offline Small CPU/int8 initialization, bounded four-CPU resources, one attempt per input and full owned-process sample/cleanup retention remain prospective requirements. No model or aligner result exists yet; resource feasibility and timing quality are unmeasured."
+    }
+  ],
+  "unchanged_constraints": [
+    "No recognition, transcribe, generate, language redetection, VAD cropping, decoder fallback, seek update, hallucination-silence filtering, name repair or reference hints enter the worker.",
+    "Whole-recording native feature normalization precedes original-window slicing; full sample-derived PCM identity and frame counts remain required.",
+    "Keep raw native path/probabilities, pre-heuristic word results and all adjusted/fallback projections separately. Use actual bound/export source functions in the isolated view.",
+    "Current physical duration/end cap, inward subtitle quantization and text-preserving unavailable-subtitle behavior remain enforced.",
+    "No approval follows from broad-window containment alone, and source lexical errors/unsupported output remain unchanged."
+  ],
+  "reviewer_execution": {
+    "model": 0,
+    "tokenizer": 0,
+    "audio_decode": 0,
+    "frontend_or_align": 0,
+    "provider": 0,
+    "network": 0,
+    "synthetic_controls_rerun": 0,
+    "peer_or_production_edits": 0,
+    "read_only_source_and_hash_audit": true
+  }
+}

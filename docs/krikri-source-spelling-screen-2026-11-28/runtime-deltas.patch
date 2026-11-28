@@ -1,0 +1,127 @@
+--- compact/infer_native.py
++++ source-spelling/infer_native.py
+@@ -18,6 +18,8 @@
+ 
+ from context import HERE, ROOT, PRIVATE, common, read_plan, cache_identity, native_preflight, storage_reserve, stop_daemon
+ from protection import build_protection, restore_segments, strict_response_strings
++from source_context import source_context_payloads
++from execution_gate import authorize_phase
+ 
+ 
+ def verify_freeze():
+@@ -59,6 +61,9 @@
+                                                   "published_source_sha256": plan["published_production_sha256"],
+                                                   "only_code_changes": "num_ctx8192 to4096 plus generic marker instruction; source-only protection wrapper is separately bound",
+                                                   "current_foreign_script_guard_preserved": True}
++        value["source_spelling_projection"] = {"path": str(HERE / "source_context.py"),
++                                               "sha256": common.sha(HERE / "source_context.py"),
++                                               "scope": "Per-case reviewed source map projected before native request construction; no response rewrite."}
+         return value
+ 
+     qa.source_identity = identity
+@@ -66,14 +71,17 @@
+     expected = json.loads((HERE / "expected-requests.json").read_text())
+     protected_cases = json.loads((HERE / "protected-source-cases.json").read_text())["cases"]
+     protections = json.loads((HERE / "protection-inputs.json").read_text())["cases"]
++    context_maps = json.loads((HERE / "source-context-maps.json").read_text())["cases"]
++    if not len(cases) == len(expected) == len(protected_cases) == len(protections) == len(context_maps) == len(setup["prompts"]) == 6:
++        raise ValueError("The fixed original-six source/context/request/native layout changed.")
+     report["cases"] = []
+     original_transport = module.local_ollama_json
+     native_translate = module.translate_segments
+-    for case, protected_case, protection, request, prepared in zip(cases, protected_cases, protections, expected, setup["prompts"]):
++    for case, protected_case, protection, context_map, request, prepared in zip(cases, protected_cases, protections, context_maps, expected, setup["prompts"]):
+         case_started = time.monotonic()
+         report["free_disk_before_case_bytes"] = storage_reserve()
+         case_id = case["id"]
+-        if case_id != request["id"] or case_id != prepared["id"] or case_id != protected_case["id"] or case_id != protection["id"]:
++        if case_id != request["id"] or case_id != prepared["id"] or case_id != protected_case["id"] or case_id != protection["id"] or case_id != context_map["id"]:
+             raise ValueError("Frozen case/request/native prompt order changed.")
+         path = HERE / (case_id + ".json")
+         preflight_path = HERE / (case_id + "-preflight.json")
+@@ -93,6 +101,7 @@
+             raise ValueError("Refusing to repeat a protected translation case.")
+         protection_report = {"id": case_id, "complete": False, "plan_sha256": common.sha(HERE / "plan.json"),
+                              "source_protection_input_sha256": common.sha(HERE / "protection-inputs.json"),
++                             "source_context_maps_sha256": common.sha(HERE / "source-context-maps.json"),
+                              "source_segments": copy.deepcopy(case["segments"]),
+                              "bundle": copy.deepcopy(protection["bundle"]), "model_response_json": None,
+                              "exact_source_only_restoration": False, "post_restoration_guard_accepted": False}
+@@ -121,7 +130,9 @@
+                 if bundle != protection["bundle"] or bundle["masked_segments"] != protected_case["segments"]:
+                     raise ValueError("Actual source-derived protection differs from the frozen input representation.")
+                 masked_source = copy.deepcopy(bundle["masked_segments"])
+-                result = native_translate(masked_source, target, source_language=source_language)
++                with source_context_payloads(module, bundle, context_map, protection_report,
++                                             lambda: common.save(protected_path, protection_report)):
++                    result = native_translate(masked_source, target, source_language=source_language)
+                 protection_report["masked_app_result"] = copy.deepcopy(result)
+                 common.save(protected_path, protection_report)
+                 if masked_source != bundle["masked_segments"] or segments != bundle["source_segments"]:
+@@ -199,6 +210,7 @@
+ 
+ 
+ def main():
++    authorize_phase("infer")
+     verify_freeze()
+     plan = read_plan()
+     runtime = Path(plan["storage"]["owned_runtime_directory"])
+@@ -208,6 +220,7 @@
+     report = {"schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(), "complete": False,
+               "generation_calls": 0, "plan_sha256": common.sha(HERE / "plan.json"),
+               "inference_freeze_sha256": common.sha(HERE / "inference-freeze.json"),
++              "authorization_sha256": common.sha(HERE / "infer-authorization.json"),
+               "semantic_quality": "unreviewed", "unused_validation_opened": False}
+     common.save(output, report)
+     process = None
+--- compact/prepare_native.py
++++ source-spelling/prepare_native.py
+@@ -11,6 +11,7 @@
+ import subprocess
+ 
+ from context import BASE, HERE, ROOT, PRIVATE, common, read_plan, cache_identity, native_preflight, storage_reserve, stop_daemon
++from execution_gate import authorize_phase
+ 
+ 
+ def parameter_mapping(display):
+@@ -40,6 +41,7 @@
+ 
+ 
+ def main():
++    authorize_phase("prepare")
+     plan = read_plan()
+     runtime = Path(plan["storage"]["owned_runtime_directory"])
+     output = HERE / "prepare.json"
+@@ -47,6 +49,7 @@
+         raise ValueError("Refusing to repeat source-protection preparation.")
+     report = {"schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(), "complete": False,
+               "generation_calls": 0, "native_create_calls": 0, "model_downloads": 0,
++              "authorization_sha256": common.sha(HERE / "prepare-authorization.json"),
+               "plan_sha256": common.sha(HERE / "plan.json"), "baseline_manifest_sha256": common.sha(BASE / "evidence-manifest.json")}
+     common.save(output, report)
+     process = None
+--- compact/run_native.py
++++ source-spelling/run_native.py
+@@ -6,12 +6,14 @@
+ 
+ from context import HERE, PRIVATE, common, read_plan, storage_reserve
+ from resource_monitor import monitor
++from execution_gate import authorize_phase
+ 
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--phase", choices=("prepare", "infer"), required=True)
+     args = parser.parse_args()
++    authorize_phase(args.phase)
+     plan = read_plan()
+     free_before = storage_reserve()
+     output = HERE / (args.phase + "-resources.json")
+@@ -26,6 +28,7 @@
+     report = monitor([sys.executable, str(worker)], environment, PRIVATE / (args.phase + "-worker-private.log"),
+                      output, samples, limits,
+                      {"phase": args.phase, "plan_sha256": common.sha(HERE / "plan.json"),
++                      "authorization_sha256": common.sha(HERE / (args.phase + "-authorization.json")),
+                       "worker_sha256": common.sha(worker), "observer_sha256": common.sha(HERE / "resource_monitor.py"),
+                       "free_disk_before_bytes": free_before, "whole_app_resource_approval": False})
+     phase_output = HERE / ("prepare.json" if args.phase == "prepare" else "execution.json")

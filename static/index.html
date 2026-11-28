@@ -11,10 +11,10 @@
     html { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; scroll-behavior:smooth; }
     body { min-height:100vh; margin:0; background:radial-gradient(900px 580px at 7% -7%,#293068 0%,transparent 60%),radial-gradient(920px 650px at 94% 1%,#113e4b 0%,transparent 55%),var(--bg); color:var(--text); }
     .page { width:min(1080px,calc(100% - 36px)); margin:0 auto; }
-    header { display:flex; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
+    header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:31px 0 55px; gap:14px; }
     .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; font-size:19px; }
     .mark { width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(130deg,var(--accent),#6ee0d3); color:#0e1630; font-size:21px; font-weight:900; }
-    .locally { font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; white-space:nowrap; }
+    .locally { max-width:100%; font-size:12px; font-weight:650; padding:8px 12px; border-radius:100px; background:#122c36; color:#a6eee5; border:1px solid #2c5760; }
     .hero { max-width:810px; margin:0 auto 33px; text-align:center; }
     .eyebrow { letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:850; color:#b6acf9; margin-bottom:15px; }
     h1 { font-size:clamp(36px,6vw,66px); line-height:1.08; letter-spacing:-.065em; font-weight:820; margin:0 0 17px; }
@@ -60,7 +60,7 @@
     .downloads a { border:1px solid #576582; border-radius:10px; background:#223149; color:#f4f6ff; padding:11px 14px; text-decoration:none; font-size:13px; font-weight:750; }
     .downloads a:hover { border-color:#a698ff; }
     .downloads a:first-child { background:#384567; border-color:#998df2; }
-    .preview-title { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
+    .preview-title { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin:19px 0 10px; font-weight:750; }
     .copy { border:1px solid #576582; color:var(--muted); border-radius:8px; background:transparent; font:inherit; padding:7px 10px; cursor:pointer; }
     .transcript { margin:0; padding:18px; max-height:330px; overflow:auto; background:#0c1425; border:1px solid #35445e; border-radius:12px; color:#dce5f9; white-space:pre-wrap; font:13px/1.9 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace; overflow-wrap:anywhere; }
     .features { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; max-width:850px; margin:30px auto 60px; }
@@ -85,15 +85,31 @@
     .library-toolbar {display:flex; gap:10px; margin-bottom:16px}
     .library-toolbar input {flex:1; min-width:0}
     .library-items {display:grid; gap:10px}
+    .library-tools {margin:18px 0; padding:17px; border:1px solid #35445e; border-radius:12px; background:#10192b}
+    .library-tools h3 {font-size:15px; margin:0 0 7px}
+    .library-tools .input-note {margin-bottom:12px}
+    .backup-actions {display:flex; flex-wrap:wrap; align-items:center; gap:9px}
+    .backup-actions input {max-width:235px; color:var(--muted);font-size:12px}
+    .backup-actions a {color:#fff; text-decoration:none; display:inline-flex; align-items:center}
+    .library-feedback {color:var(--muted);font-size:12px; margin:12px 0 0; overflow-wrap:anywhere; line-height:1.6}
+    .saved-batches {display:grid; gap:8px; margin-top:12px}
+    .saved-batches .batch-item a {color:#c4bbff; text-decoration:none;white-space:nowrap}
+    .setup-info {white-space:pre-wrap; font:12px/1.65 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;max-height:180px;overflow:auto}
+
     .library-item {display:flex; justify-content:space-between; gap:14px; padding:14px; border:1px solid #394761; border-radius:12px; background:#131f34; align-items:center}
     .library-item strong {display:block; word-break:break-word; font-size:14px}
     .library-item small {display:block; color:var(--muted); margin-top:6px; font-size:11px; overflow-wrap:anywhere}
     .library-item button {flex-shrink:0}
     .secondary-actions, .editor-actions {display:flex; flex-wrap:wrap; gap:12px; margin-top:13px; align-items:center}
-    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap}
+    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap; overflow-wrap:anywhere}
     .summary-result {border-top:1px solid var(--stroke); padding-top:14px; margin-top:16px; white-space:pre-wrap; color:var(--muted); line-height:1.7}
+    .highlights-result {border-top:1px solid var(--stroke);padding-top:16px;margin-top:18px;min-width:0}
+    .highlight-excerpt {border-left:3px solid var(--accent);padding:0 0 0 12px;margin:18px 0;min-width:0}
+    .highlight-excerpt pre {white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.65;color:var(--text)}
+    .highlight-excerpt .copy {max-width:100%;white-space:normal}
     .batch-list {display:grid; gap:9px; margin-top:15px}
     .batch-item {display:flex; justify-content:space-between; gap:12px; border:1px solid #35445e; border-radius:10px; padding:12px; font-size:12px}
+    .batch-item > div {min-width:0; flex:1}
     .batch-item strong {overflow-wrap:anywhere}
     .batch-item small {display:block; color:var(--muted); margin-top:4px}
     .editor-rows {display:grid; gap:10px; margin-top:17px}
@@ -104,7 +120,7 @@
     .editor-paging {display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap:6px; color:var(--muted); font-size:12px}
     .editor-actions .submit {width:auto; padding:0 27px}
     .danger {color:#ffb5bc; border-color:#9c5960}
-    @media(max-width:650px) {.enhancements{grid-template-columns:1fr}.segment-row{grid-template-columns:1fr}.library-item{align-items:flex-start}.library-toolbar{flex-wrap:wrap}.editor-actions .submit{flex:1}}
+    @media(max-width:650px) {.enhancements{grid-template-columns:1fr}.segment-row{grid-template-columns:1fr}.library-item{align-items:flex-start;flex-wrap:wrap}.library-item>div{flex-basis:100%;min-width:0}.library-toolbar{flex-wrap:wrap}.editor-paging{display:grid;grid-template-columns:1fr 1fr}.editor-paging span{grid-column:1 / -1;grid-row:1;text-align:center}.editor-actions .submit{flex:1}}
   </style>
 </head>
 <body>
@@ -167,14 +183,15 @@
             </div>
             <div class="setting">
               <label for="model">Local AI model</label>
-              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option></select>
+              <select id="model"><option value="small">Small · balanced</option><option value="base">Base · faster</option><option value="tiny">Tiny · fastest</option><option value="large-v3-turbo">Large Turbo · more memory</option></select>
               <p>Used when audio AI is needed.</p>
             </div>
           </div>
           <div class="enhancements" id="enhancements">
-            <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Separate speakers (needs pyannote + HF_TOKEN; audio mode)</small></span></label>
-            <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters</strong><small>Uses locally installed Ollama model</small></span></label>
-            <div class="setting"><label for="target-language">Translate transcript (Ollama)</label>
+            <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Optional public CPU model setup; no access token needed. Uses audio mode.</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="highlights"><span><strong>Source highlights</strong><small>Selected original excerpts with timestamps. Works locally without an extra AI model; may omit important context.</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters · draft</strong><small>Local Ollama; check facts and conditions against the source</small></span></label>
+            <div class="setting"><label for="target-language">Translate transcript · experimental</label>
               <select id="target-language"><option value="none">No translation</option><option value="el">To Greek 🇬🇷</option><option value="en">To English 🇬🇧</option></select>
             </div>
           </div>
@@ -184,7 +201,25 @@
         <div id="view-library" role="tabpanel" aria-labelledby="tab-library" hidden>
           <label class="input-title" for="library-search">Search your saved transcripts</label>
           <div class="library-toolbar"><input id="library-search" type="search" placeholder="Search titles or spoken words"><button type="button" id="library-refresh" class="copy">Search</button></div>
+          <div class="library-tools" aria-label="Transcript backup and restore">
+            <h3>Keep a copy of your transcript library</h3>
+            <p class="input-note">Backup saves transcripts, edits, translations, summaries and source highlights into a ZIP. Restoring imports missing records without overwriting existing ones; no audio or access tokens are included.</p>
+            <div class="backup-actions">
+              <a class="copy" href="/api/library/backup" download="linkscr-library-backup.zip">↓ Download backup</a>
+              <input id="library-restore-file" type="file" accept=".zip,application/zip" aria-label="Select library backup ZIP">
+              <button id="library-restore-btn" class="copy" type="button">Restore backup</button>
+              <button id="diagnostics-btn" class="copy" type="button">Check setup</button>
+            </div>
+            <p class="library-feedback" id="library-feedback" role="status" aria-live="polite"></p>
+            <pre id="setup-info" class="setup-info" hidden></pre>
+          </div>
           <div id="library-items" class="library-items" aria-live="polite">Open Library to load saved transcripts.</div>
+          <button type="button" id="library-more" class="copy" hidden style="margin-top:12px">Load more transcripts</button>
+          <p id="library-page-message" class="library-feedback" role="status"></p>
+          <div class="library-tools">
+            <h3>Recent batches (available after restart)</h3>
+            <div id="saved-batches" class="saved-batches" aria-live="polite">Checking saved batches...</div>
+          </div>
           <p class="input-note">Stored in SQLite on this machine, not in your GitHub repository. Saved text remains until you delete it.</p>
         </div>
         <div id="status-box" class="status" role="status" aria-live="polite" hidden>
@@ -196,12 +231,14 @@
     <section class="results" id="results" aria-label="Transcript results" hidden>
       <h2 class="result-title">✓ &nbsp;Your transcript is ready</h2>
       <div class="result-meta" id="result-meta"></div>
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
       <div class="warnings" id="result-warnings" hidden></div>
       <div class="secondary-actions" id="result-actions"></div>
       <nav class="downloads" id="downloads" aria-label="Download transcript formats"></nav>
       <div class="preview-title"><span>Transcript preview</span><button class="copy" id="copy" type="button">Copy preview</button></div>
       <pre class="transcript" id="preview"></pre>
       <div class="summary-result" id="summary-result" hidden></div>
+      <section class="highlights-result" id="highlights-result" aria-label="Source highlights" hidden></section>
       <p class="input-note">Transcripts are also saved to your local library. Temporary job download files expire, but your library text persists.</p>
     </section>
     <section id="batch-results" class="results" aria-label="Batch results" hidden>
@@ -213,8 +250,13 @@
     <section id="editor" class="results" aria-label="Transcript editor" hidden>
       <div class="preview-title"><h2 class="result-title">Edit saved transcript</h2><button type="button" id="editor-close" class="copy">Close</button></div>
       <label class="input-title" for="edit-title">Title</label><input id="edit-title" class="edit-title" maxlength="180">
-      <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving invalidates any older translations and summaries.</p>
+      <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
+      <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving clears older translations, summaries and source highlights.</p>
       <div class="downloads" id="editor-downloads"></div>
+      <div class="warnings" id="editor-warnings" hidden></div>
+      <button class="copy" id="editor-highlights" type="button">Create source highlights</button>
+      <p class="input-note" id="editor-highlights-note">Uses the saved transcript. Save your edits before creating highlights.</p>
+      <section class="highlights-result" id="editor-highlights-result" aria-label="Saved source highlights" hidden></section>
       <div id="editor-rows" class="editor-rows"></div>
       <div class="editor-paging"><button class="copy" id="editor-prev" type="button">← Previous</button><span id="editor-page-label"></span><button class="copy" id="editor-next" type="button">Next →</button></div>
       <div class="editor-actions"><button type="button" class="submit" id="editor-save">Save changes</button><button type="button" class="copy danger" id="editor-delete">Delete transcript</button></div>
@@ -235,7 +277,8 @@
  const tabs = {link:$("tab-link"),upload:$("tab-upload"),batch:$("tab-batch"),library:$("tab-library")};
  const views = {link:$("view-link"),upload:$("view-upload"),batch:$("view-batch"),library:$("view-library")};
  const form=$("job-form");
- let tab="link", currentJob=null, currentBatch=null, editing=null, editorPage=0;
+ let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0, editorDirty=false;
+ let editorSession=0, editorRevision=0, editorSaving=false;
  const perPage=30;
  function chooseTab(name) {
    tab=name;
@@ -243,14 +286,19 @@
      tabs[key].setAttribute("aria-selected",String(key===name));
      views[key].hidden=key!==name;
    }
+   form.hidden=name==="library";
    $("mode-block").hidden=name==="upload" || name==="library";
    $("enhancements").hidden=name==="library";
    $("url").required=false; $("file").required=false;
+   $("url").disabled=name!=="link";
+   $("file").disabled=name!=="upload";
+   $("batch-urls").disabled=name!=="batch";
    $("consent").required=name!=="library";
    $("submit").hidden=name==="library";
    if(name==="library") {
      $("status-box").hidden=true;
      loadLibrary();
+     loadSavedBatches();
    }
  }
  for(const key in tabs) tabs[key].addEventListener("click",()=>chooseTab(key));
@@ -277,30 +325,62 @@
    nav.replaceChildren();
    for(const [code,label] of [["txt","↓ TXT"],["srt","↓ SRT"],["vtt","↓ VTT"],["json","↓ JSON"],["zip","↓ All files ZIP"]]) addDownload(nav,root,code,label);
    if(record.summary){addDownload(nav,root,"summary_md","↓ Summary MD");addDownload(nav,root,"summary_json","↓ Summary JSON");}
+   if(record.highlights){addDownload(nav,root,"highlights_md","↓ Highlights MD");addDownload(nav,root,"highlights_json","↓ Highlights JSON");}
    if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
  }
  function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
- async function showResults(job) {
+ function renderWarnings(target,warnings){
+   const lines=Array.isArray(warnings)?[...new Set(warnings.filter(w=>typeof w==="string"&&w.trim()))]:[];
+   target.hidden=!lines.length;
+   target.textContent=lines.length?"Processing warnings\n"+lines.join("\n"):"";
+ }
+ function sourceTime(value){const total=Math.floor(value);return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");}
+ function renderHighlights(target,highlights,onSource){
+   target.replaceChildren();target.hidden=!highlights;
+   if(!highlights)return;
+   const heading=document.createElement("h3");heading.textContent="Source highlights";
+   const note=document.createElement("p");note.className="input-note";
+   const coverage=highlights.selected_segment_count===highlights.source_segment_count
+     ? `All ${highlights.source_segment_count} source segments are included; no condensation was made.`
+     : `${highlights.selected_segment_count} of ${highlights.source_segment_count} segments selected.`;
+   note.textContent=`${coverage} These are original transcript excerpts, not a complete summary. Excerpts may span speakers; open the source for speaker labels and context.`;
+   target.append(heading,note);
+   for(const excerpt of highlights.excerpts){
+     const block=document.createElement("article");block.className="highlight-excerpt";
+     const first=excerpt.segment_indices[0],last=excerpt.segment_indices[excerpt.segment_indices.length-1];
+     const label=sourceTime(excerpt.start)+"–"+sourceTime(excerpt.end)+` · View source segments ${first+1}–${last+1}`;
+     addButton(block,label,()=>onSource(first));
+     const text=document.createElement("pre");text.textContent=excerpt.text;block.appendChild(text);target.appendChild(block);
+   }
+   if(highlights.warnings?.length){const warnings=document.createElement("p");warnings.className="input-note";warnings.textContent=highlights.warnings.join(" ");target.appendChild(warnings);}
+ }
+ function markEditorDirty(){editorDirty=true;editorRevision++;$("editor-highlights").disabled=true;}
+ $("edit-title").addEventListener("input",markEditorDirty);
+ async function showResults(job, scroll=true) {
+   resultJob=job;
    const root=$("results");
    $("result-meta").textContent=`${job.title} · ${job.language} · ${job.method.replaceAll("_"," ")} · ${job.segments} segments`;
    $("preview").textContent=job.preview||"(Empty preview)";
    const details=job.extras||{};
-   renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language});
-   $("result-warnings").hidden=!(job.warnings||[]).length;
-   $("result-warnings").textContent=(job.warnings||[]).join("\n");
+   renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language,highlights:details.highlights});
+   renderWarnings($("result-warnings"),job.warnings);
    $("result-actions").replaceChildren();
    if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
-   $("summary-result").hidden=true;
-   if(details.summary && job.library_id){
+   $("summary-result").hidden=true;$("summary-result").textContent="";
+   renderHighlights($("highlights-result"),null,()=>{});
+   if((details.summary||details.highlights) && job.library_id){
      try {
        const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
+       if(resultJob!==job)return;
+       renderHighlights($("highlights-result"),record.highlights,index=>openEditor(job.library_id,index));
        if(record.summary){const summary=record.summary;
-         $("summary-result").textContent="SUMMARY\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
+         $("summary-result").textContent="SUMMARY DRAFT\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
          $("summary-result").hidden=false;
        }
      }catch(_){}
    }
-   root.hidden=false;root.scrollIntoView({behavior:"smooth",block:"start"});
+   if(resultJob!==job)return;
+   root.hidden=false;if(scroll)root.scrollIntoView({behavior:"smooth",block:"start"});
  }
  async function trackJob(jobId){
    while(jobId===currentJob){
@@ -315,13 +395,15 @@
  }
  function renderBatch(batch){
    $("batch-results").hidden=false;
-   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.stage}`;
+   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.with_warnings||0} completed with warnings · ${batch.stage}`;
    const list=$("batch-list");list.replaceChildren();
    for(const item of batch.jobs){
      const row=document.createElement("div");row.className="batch-item";
      const group=document.createElement("div");const name=document.createElement("strong");name.textContent=item.title;
-     const meta=document.createElement("small");meta.textContent=`${item.status} · ${item.error||item.stage}`;
-     group.append(name,meta);row.appendChild(group);
+     const warned=item.status==="done"&&(item.warnings||[]).length;
+     const meta=document.createElement("small");meta.textContent=`${warned?"Transcript saved with warnings":item.status} · ${item.error||item.stage}`;
+     const warnings=document.createElement("div");warnings.className="warnings";renderWarnings(warnings,item.warnings);
+     group.append(name,meta,warnings);row.appendChild(group);
      if(item.library_id) addButton(row,"Open",()=>openEditor(item.library_id));
      list.appendChild(row);
    }
@@ -350,7 +432,7 @@
    if(tab==="library")return;
    if(!$("consent").checked){showStatus("Permission required","Confirm you may process this media.",true,false);return;}
    const data=new FormData();data.set("language",$("language").value);data.set("model",$("model").value);
-   data.set("consent","true");data.set("speakers",String($("speakers").checked));data.set("summary",String($("summary").checked));
+   data.set("consent","true");data.set("speakers",String($("speakers").checked));data.set("summary",String($("summary").checked));data.set("highlights",String($("highlights").checked));
    data.set("target_language",$("target-language").value);
    const submittedTab=tab;
    let endpoint;
@@ -372,12 +454,23 @@
      else {currentJob=result.id;await trackJob(result.id);}
    }catch(e){showStatus("Could not start",e.message,true,false);setWorking(false);}
  });
- async function loadLibrary(){
+ let libraryQuery="", libraryCursor=null, libraryRequest=0;
+ function loadLibrary(){return loadLibraryPage(false);}
+ async function loadLibraryPage(append){
    const query=$("library-search").value.trim();
+   if(append && query!==libraryQuery)append=false;
+   if(append && !libraryCursor)return;
+   const request=++libraryRequest;
+   const more=$("library-more"), container=$("library-items");
+   if(!append){libraryQuery=query;libraryCursor=null;container.textContent="Loading saved transcripts…";more.hidden=true;}
+   more.disabled=true;
+   const params=new URLSearchParams({q:query});
+   if(append){params.set("before_created_at",String(libraryCursor.created_at));params.set("before_id",libraryCursor.id);}
    try{
-     const data=await api("/api/library?q="+encodeURIComponent(query));
-     const container=$("library-items");container.replaceChildren();
-     if(!data.items.length){container.textContent="No saved transcripts found yet.";return;}
+     const data=await api("/api/library?"+params.toString());
+     if(request!==libraryRequest)return;
+     if(!append)container.replaceChildren();
+     if(!data.items.length && !append)container.textContent="No saved transcripts found yet.";
      for(const item of data.items){
        const row=document.createElement("div");row.className="library-item";
        const text=document.createElement("div");const title=document.createElement("strong");title.textContent=item.title;
@@ -385,9 +478,60 @@
        text.append(title,meta);row.appendChild(text);
        addButton(row,"Open / edit",()=>openEditor(item.id));container.appendChild(row);
      }
-   }catch(e){$("library-items").textContent="Could not load library: "+e.message;}
+     libraryCursor=data.next_cursor||null;
+     more.hidden=!libraryCursor;
+     $("library-page-message").textContent="";
+   }catch(e){
+     if(request!==libraryRequest)return;
+     if(append)$("library-page-message").textContent="Could not load more transcripts: "+e.message;
+     else {container.textContent="Could not load library: "+e.message;$("library-page-message").textContent="";}
+   }finally{if(request===libraryRequest)more.disabled=false;}
  }
+ async function loadSavedBatches(){
+   const target=$("saved-batches");
+   try{
+     const response=await api("/api/batches");
+     target.replaceChildren();
+     if(!response.items.length){target.textContent="No previous batches yet.";return;}
+     for(const item of response.items.slice(0,20)){
+       const box=document.createElement("div");box.className="batch-item";
+       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.with_warnings||0} completed with warnings · ${item.status}`;
+       const button=addButton(box,"View",async()=>{
+         try{const batch=await api(`/api/batches/${encodeURIComponent(item.id)}`);renderBatch(batch);
+           if(batch.status==="working"||batch.status==="queued"){currentBatch=batch.id;trackBatch(batch.id);}
+           $("batch-results").scrollIntoView({behavior:"smooth",block:"start"});}
+         catch(e){$("library-feedback").textContent=e.message;}
+       });
+       box.insertBefore(title,button);target.appendChild(box);
+     }
+   }catch(e){target.textContent="Could not read batch history: "+e.message;}
+ }
+ $("library-restore-btn").addEventListener("click",async()=>{
+   const file=$("library-restore-file").files[0];
+   if(!file){$("library-feedback").textContent="Select a LinkScribe backup ZIP first.";return;}
+   if(!confirm("Import missing transcripts from this backup? Existing transcripts and edits will not be changed."))return;
+   $("library-feedback").textContent="Validating the backup...";
+   const body=new FormData();body.set("file",file);
+   try{const result=await api("/api/library/restore",{method:"POST",body});
+     $("library-feedback").textContent=`Restore complete: ${result.imported} imported; ${result.already_present} already in your library.`;
+     $("library-restore-file").value="";await loadLibrary();}
+   catch(e){$("library-feedback").textContent="Restore rejected: "+e.message;}
+ });
+ $("diagnostics-btn").addEventListener("click",async()=>{
+   $("setup-info").hidden=false;$("setup-info").textContent="Checking local installation...";
+   try{const info=await api("/api/diagnostics");
+     $("setup-info").textContent=[`Python ${info.python}`,
+       `JavaScript: ${info.js_runtime.runtime||"not available"} ${info.js_runtime.version||""}`,
+       `Whisper: ${info.libraries.faster_whisper?"installed":"missing"}`,
+       `FFmpeg: ${info.ffmpeg_available?"installed":"missing"}`,
+       `Public-video transport: ${info.libraries.curl_cffi?"installed":"missing"}`,
+       `Ollama: ${info.ollama.available?"available":"not running"}`,
+       `Speakers: ${info.speakers_configured?"configured":"optional setup required"}`,
+       ...(info.warnings||[])].join("\n");}
+   catch(e){$("setup-info").textContent="Diagnostics unavailable: "+e.message;}
+ });
  $("library-refresh").addEventListener("click",loadLibrary);
+ $("library-more").addEventListener("click",()=>loadLibraryPage(true));
  $("library-search").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loadLibrary();}});
  function showEditorPage(){
    const rows=$("editor-rows");rows.replaceChildren();
@@ -399,47 +543,119 @@
      const timer=document.createElement("label");timer.textContent=`#${i+1} · ${segment.start.toFixed(1)}–${segment.end.toFixed(1)}s`;
      const speaker=document.createElement("input");speaker.placeholder="Speaker (optional)";speaker.maxLength=80;speaker.value=segment.speaker||"";
      speaker.setAttribute("aria-label",`Speaker of segment ${i+1}`);
-     speaker.addEventListener("input",()=>segment.speaker=speaker.value);
+     speaker.addEventListener("input",()=>{segment.speaker=speaker.value;markEditorDirty();});
      const spoken=document.createElement("textarea");spoken.value=segment.text;spoken.maxLength=5000;
      spoken.setAttribute("aria-label",`Text of segment ${i+1}`);
-     spoken.addEventListener("input",()=>segment.text=spoken.value);
+     spoken.addEventListener("input",()=>{segment.text=spoken.value;markEditorDirty();});
      row.append(timer,speaker,spoken);rows.appendChild(row);
    }
    $("editor-page-label").textContent=`Segments ${first+1}–${last} of ${editing.segments.length}`;
    $("editor-prev").disabled=editorPage===0;
    $("editor-next").disabled=last>=editing.segments.length;
  }
- async function openEditor(id){
+ async function openEditor(id,sourceIndex=0){
+   if(editorDirty&&!confirm("Discard your unsaved edits and open the saved transcript?"))return;
+   const session=++editorSession,revision=editorRevision;
    try{
-     editing=await api(`/api/library/${encodeURIComponent(id)}`);
-     editorPage=0;
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(session!==editorSession)return;
+     if(editing&&revision!==editorRevision){
+       $("editor-message").textContent="Newer edits were kept. Save or discard them before opening another transcript.";
+       return;
+     }
+     editing=saved;editorRevision=0;
+     editorPage=Math.floor(Math.max(0,Math.min(sourceIndex,editing.segments.length-1))/perPage);editorDirty=false;
+     $("editor-highlights").disabled=editorSaving;$("editor-save").disabled=editorSaving;
      $("edit-title").value=editing.title;
      $("editor-message").textContent="";
      $("editor").hidden=false;
-     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0});
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
+     renderWarnings($("editor-warnings"),editing.processing_metadata?.warnings);
+     renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
-   }catch(e){showStatus("Cannot open transcript",e.message,true,false);}
+   }catch(e){if(session===editorSession)showStatus("Cannot open transcript",e.message,true,false);}
  }
  $("editor-prev").addEventListener("click",()=>{if(editorPage>0){editorPage--;showEditorPage();}});
  $("editor-next").addEventListener("click",()=>{if(editing&&(editorPage+1)*perPage<editing.segments.length){editorPage++;showEditorPage();}});
- $("editor-close").addEventListener("click",()=>{$("editor").hidden=true;editing=null;});
+ $("editor-close").addEventListener("click",()=>{if(editorDirty&&!confirm("Discard your unsaved edits?"))return;editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;});
+ $("editor-highlights").addEventListener("click",async()=>{
+   if(!editing||editorDirty||editorSaving)return;
+   const id=editing.id,session=editorSession,revision=editorRevision;$("editor-highlights").disabled=true;
+   try{
+     const saved=await api(`/api/library/${encodeURIComponent(id)}/highlights`,{method:"POST"});
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     if(editorDirty||revision!==editorRevision){$("editor-message").textContent="Highlights created for the saved transcript. Your unsaved edits are still here.";return;}
+     editing=saved;
+     showEditorPage();
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
+     renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+     $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
+     if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Could not create highlights: "+e.message;}
+   finally{if(editing?.id===id&&session===editorSession)$("editor-highlights").disabled=editorDirty||editorSaving;}
+ });
  $("editor-save").addEventListener("click",async()=>{
-   if(!editing)return;
+   if(!editing||editorSaving)return;
    const title=$("edit-title").value.trim();
    if(!title){$("editor-message").textContent="A title is required.";return;}
    if(editing.segments.some(s=>!s.text.trim())){$("editor-message").textContent="Every segment needs text.";return;}
+   const id=editing.id,session=editorSession,revision=editorRevision;
+   const body=JSON.stringify({title,expected_updated_at:editing.updated_at,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))});
+   editorSaving=true;$("editor-save").disabled=true;$("editor-highlights").disabled=true;
+   $("editor-message").textContent="Saving...";
    try{
-     await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))})});
-     $("editor-message").textContent="Saved. Older translations and summaries were cleared; exported files now reflect your edits.";
-     editing=await api(`/api/library/${encodeURIComponent(editing.id)}`);
-     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(editing.id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0});
-     showEditorPage();if(tab==="library")loadLibrary();
-   }catch(e){$("editor-message").textContent="Save failed: "+e.message;}
+     const receipt=await api(`/api/library/${encodeURIComponent(id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+     const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(saved.updated_at!==receipt.updated_at){
+       if(editing?.id===id&&session===editorSession){
+         $("editor-message").textContent="Your earlier version was saved, but the library changed again. Copy any unsaved edits before reloading the saved transcript.";
+       }
+       return;
+     }
+     if(tab==="library")loadLibrary();
+     if(!$("results").hidden && resultJob?.library_id===id){
+       await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
+         warnings:saved.processing_metadata?.warnings||[],
+         segments:saved.segments.length,
+         preview:saved.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
+         extras:{...resultJob.extras,summary:!!saved.summary,highlights:!!saved.highlights,
+           translation_language:Object.keys(saved.translations||{})[0]||"",
+           speakers:saved.segments.some(s=>s.speaker)}},false);
+     }
+     if(!editing||editing.id!==id||session!==editorSession)return;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
+     renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
+     if(revision!==editorRevision){
+       editing.updated_at=saved.updated_at;editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;editing.processing_metadata=saved.processing_metadata;
+       $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
+       return;
+     }
+     editing=saved;editorDirty=false;showEditorPage();
+     $("editor-message").textContent="Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.";
+   }catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Save failed: "+e.message;}
+   finally{editorSaving=false;$("editor-save").disabled=false;$("editor-highlights").disabled=editorDirty;}
  });
  $("editor-delete").addEventListener("click",async()=>{
    if(!editing||!confirm("Permanently delete this saved transcript?"))return;
-   try{await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"DELETE"});$("editor").hidden=true;editing=null;loadLibrary();}
-   catch(e){$("editor-message").textContent="Delete failed: "+e.message;}
+   const id=editing.id,session=editorSession;
+   try{const receipt=await api(`/api/library/${encodeURIComponent(id)}`,{method:"DELETE"});
+     if(resultJob?.library_id===id){
+       resultJob=null;$("results").hidden=true;
+       for(const key of ["preview","result-meta","summary-result","result-warnings"])$(key).textContent="";
+       for(const key of ["downloads","result-actions","highlights-result"])$(key).replaceChildren();
+     }
+     if(editing?.id===id&&session===editorSession){
+       editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;
+       $("edit-title").value="";
+       for(const key of ["editor-rows","editor-downloads","editor-highlights-result"])$(key).replaceChildren();
+       for(const key of ["editor-warnings","editor-message","editor-page-label"])$(key).textContent="";
+     }
+     loadLibrary();loadSavedBatches();
+     if(receipt.cleanup_warning)showStatus("Temporary file cleanup incomplete",receipt.cleanup_warning,true,false);
+   }
+   catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Delete failed: "+e.message;}
  });
 })();
 </script>

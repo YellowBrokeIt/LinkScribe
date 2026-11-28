@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "decision": "clear_for_root_to_authorize_bounded_phases_under_existing_separate_receipts",
+  "unresolved_source_blockers": [],
+  "review_scope": "Independent static executable-source follow-up and retained harmless-control evidence; no candidate code imported/executed, no network/compiler/native library/parser/converter/tokenizer/model operations or control reruns.",
+  "plan": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/plan.json",
+    "sha256": "edc16c0a14699c38bb7cd1916f5118d6778958cd708f0fbca920720ebc0d8c00"
+  },
+  "evidence_manifest_sha256": "fa73c76c21084f1d713427d87cd7c55e979e1b15cfc6e8bca0089192cf5ff4e4",
+  "resource_monitor_sha256": "fac821f2f0c7a70d3b835981b5bc19dade8ed2991c802aef36dbc10be3d5d99b",
+  "prior_independent_review": {
+    "path": "/workspace/scratch/94360995dd61/krikri-grammar-controller-independent-review-2026-11-28/independent-source-review.json",
+    "sha256": "a8bc4707a19078a9ce6655e32023cdb4822a857c22637e251ad2a9451e6002c9"
+  },
+  "source_followup_audit": {
+    "path": "/workspace/scratch/94360995dd61/krikri-grammar-controller-v2-independent-review-2026-11-28/source-followup-audit.json",
+    "sha256": "fe85c8e7cc619e39bce48e769cb84ac3e10e85b4cfc8782f6125208f224a389f",
+    "passed_checks": 267
+  },
+  "resolved_finding": {
+    "id": "final_phase_elapsed_not_enforced",
+    "status": "resolved",
+    "exact_change": "Only the observer finalization changes. It measures unrounded elapsed after process cleanup and the final storage callback, records the rounded value, and makes complete false when the original phase limit is exceeded. setdefault retains an earlier failure reason; passed remains dependent on complete.",
+    "observed_regression": "The retained instant-exit Python-child control adds the same bounded 1.25-second delay after actual cleanup. V1 passed at 1.263372 seconds under a 1-second cap; V2 failed at 1.265617 seconds with phase_time_limit_exceeded=true. Both actual groups were cleaned. No native execution occurred.",
+    "paired_control_sha256": "b64b01e8eefe0602a0c2d8d1fc76265e2210b6e414e294913868aa6ee56fedf7"
+  },
+  "unchanged_contracts": [
+    "All non-monitor runtime files and the official source capsule are byte-identical to V1.",
+    "Exact six source/spelling requests, seven zero-output grammar queries, 285 native probes, semantic criteria, model/native identities, source inventory, compiler/link command and phase/aggregate budgets are unchanged.",
+    "Separate root receipts, review/plan/source/predecessor/sample binding, no-retry phase claim and actual parent/group checks remain required. No generation phase exists.",
+    "Bounded raw command/HTTP/grammar evidence, strict validator stdout status, all complete source/native render/token bindings and explicit unload/resident/group cleanup remain required."
+  ],
+  "retained_evidence_verification": {
+    "v2_source_bindings": 103,
+    "v2_manifest_files": 55,
+    "unchanged_v1_manifest_files": 57,
+    "source_controls_passed": 57,
+    "process_resource_records_verified": 7,
+    "measurement_complete_and_cleanup_verified": true
+  },
+  "limits_of_clearance": [
+    "This review does not itself authorize acquisition, compilation, native preparation, library calls or generation. Root must issue the exact per-phase receipts.",
+    "Actual include/ABI/link success and the three native parser sanity results remain unobserved until the separately authorized build.",
+    "Actual emitted grammars and all 285 native accept/reject outcomes remain unobserved. The unsupported-pattern sentinel is separate and cannot replace a candidate.",
+    "A future grammar pass cannot establish translation meaning, actor/role fidelity or production-model approval.",
+    "Memory accounting remains the explicitly declared sampled owned-process RSS/PSS scope; no whole-application fit claim is made."
+  ],
+  "reviewer_created_execution_authorizations": 0,
+  "prior_artifacts_or_candidate_sources_modified": false
+}

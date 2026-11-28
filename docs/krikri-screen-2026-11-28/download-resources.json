@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "phase": "download",
+  "started_at": "2026-11-28T02:53:49.421982+00:00",
+  "complete": true,
+  "passed": true,
+  "semantic_quality": "unreviewed",
+  "events": [
+    {
+      "event": "phase_complete",
+      "phase": "download",
+      "complete": true,
+      "error": null,
+      "observed_at_seconds": 146.301
+    }
+  ],
+  "limits": {
+    "process_budget_mib": 6144,
+    "phase_seconds": 900,
+    "initialization_seconds": 180,
+    "case_seconds": 600
+  },
+  "plan_sha256": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+  "runner_sha256": "ae07f7772e1114e9f8c9a9e8f65689bcb4437495e36cb3cfec6e80d551b7734e",
+  "worker_sha256": "4504aa96d1751f83dfe4537e453efe922a8a57529a0065d64f20298bb2d97ff2",
+  "whole_machine_resource_approval": false,
+  "host_observation": {
+    "total_mib": 9967.3,
+    "minimum_available_mib": 8221.0,
+    "scope": "Uncontrolled host observation; unrelated activity can affect it."
+  },
+  "memory": {
+    "sample_count": 727,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "rss_interpretation": "Concurrent summed RSS may double-count shared pages.",
+    "pss_interpretation": "PSS apportions shared memory and is available only for complete readable samples.",
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "peak_rss_sample": {
+      "at_seconds": 146.1,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17346560,
+          "pss_bytes": 13977600
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 27426816,
+          "pss_bytes": 24060928
+        }
+      ],
+      "rss_bytes": 44773376,
+      "pss_bytes": 38038528
+    },
+    "peak_pss_sample": {
+      "at_seconds": 146.1,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17346560,
+          "pss_bytes": 13977600
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 27426816,
+          "pss_bytes": 24060928
+        }
+      ],
+      "rss_bytes": 44773376,
+      "pss_bytes": 38038528
+    },
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 42.7,
+    "peak_combined_pss_mib": 36.3
+  },
+  "worker_exit_code": 0,
+  "owned_process_group_stopped": true,
+  "oom_counters": {
+    "before": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "after": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "deltas": {
+      "/proc/vmstat": {
+        "scope": "host_global",
+        "counters": {
+          "oom_kill": 0
+        },
+        "counter_reset_or_scope_change": false
+      }
+    }
+  },
+  "elapsed_seconds": 146.417,
+  "finished_at": "2026-11-28T02:56:15.839899+00:00",
+  "phase_report_sha256": "7adb755718a7c8ce1c0f764aba4b6fda1525941d5ecf67d3d4e952c5e2463345",
+  "frozen_inputs_unchanged": true
+}

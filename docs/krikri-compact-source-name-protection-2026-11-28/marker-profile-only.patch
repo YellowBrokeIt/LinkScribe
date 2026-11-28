@@ -1,0 +1,52 @@
+--- frozen-rejected-protection.py
++++ compact-tag-protection.py
+@@ -19,12 +19,9 @@
+ _normalizer = importlib.util.module_from_spec(_spec)
+ _spec.loader.exec_module(_normalizer)
+ 
+-PREFIX = "__LSNP_"
+-PATTERN = re.compile(r"__LSNP_[0-9a-f]{16}_[0-9]{4}_[0-9]{4}__")
+-INSTRUCTION = (" Tokens beginning with __LSNP_ are opaque placeholders for personal names. "
+-               "Copy every such token exactly once in the translation for its original input entry, "
+-               "without changing any character. Do not add, delete, split, or move a token to another entry. "
+-               "Translate all surrounding ordinary text.")
++PREFIX = "<x"
++PATTERN = re.compile(r"<x(?:0|[1-9][0-9]{0,3})/>")
++INSTRUCTION = ' Treat self-closing tags as opaque tokens. Copy every tag exactly once, character for character, into the translation for its original input entry. Translate all surrounding ordinary text. Do not add, remove, split, or move a tag to another entry.'
+ 
+ 
+ def canonical(value):
+@@ -39,7 +36,7 @@
+     # Comparison only. Preserve all source/output characters, including formats.
+     folded = "".join(c for c in unicodedata.normalize("NFKC", text).casefold()
+                      if unicodedata.category(c) != "Cf")
+-    return "__lsnp" in folded
++    return "<x" in folded
+ 
+ 
+ def build_protection(segments, raw_entities, source_language):
+@@ -55,12 +52,12 @@
+         raise ValueError("This source boundary requires unresolved review; no automatic protection.")
+     spans = [{"start": p["proposed_span"]["start"], "end": p["proposed_span"]["end"]}
+              for p in normalized["proposals"]]
+-    nonce = digest({"source": source, "spans": spans})[:16]
++    source_binding = digest({"source": source, "spans": spans})
+     markers = []
+     for occurrence, proposal in enumerate(normalized["proposals"]):
+         segment_index = proposal["segment_index"]
+         span = proposal["proposed_span"]
+-        marker = f"{PREFIX}{nonce}_{segment_index:04d}_{occurrence:04d}__"
++        marker = f"{PREFIX}{occurrence}/>"
+         if marker in source:
+             raise ValueError("Generated marker already occurs in the original source.")
+         markers.append({"marker": marker, "segment_index": segment_index,
+@@ -83,7 +80,8 @@
+     bundle = {"schema_version": 1, "source_language": source_language, "source_segments": original,
+               "source_segments_sha256": digest(original), "source_text_sha256": hashlib.sha256(source.encode()).hexdigest(),
+               "normalizer_result": normalized, "masked_segments": masked, "markers": markers,
+-              "nonce_derivation": "first16hex SHA256 canonical exact source text and normalized source offsets",
++              "source_binding_derivation": "SHA256 canonical exact source text and normalized source offsets; not sent inside tags",
++              "source_binding_sha256": source_binding,
+               "semantic_safety_certified": False, "independent_boundary_review_required": True}
+     bundle["protection_binding_sha256"] = digest({"source_segments_sha256": bundle["source_segments_sha256"],
+                                                   "masked_segments": masked, "markers": markers})

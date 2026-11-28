@@ -1,0 +1,126 @@
+{
+  "complete": false,
+  "model_constructed": false,
+  "sources": [
+    {
+      "id": "2961-960-0004",
+      "url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/501/audio/audio.flac",
+      "bytes": 157949,
+      "sha256": "c815b1d8d37cd643047430c39f790067c75ee3adb93fdfbbe3da493f71d44615"
+    },
+    {
+      "id": "8455-210777-0028",
+      "url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/1000/audio/audio.flac",
+      "bytes": 142649,
+      "sha256": "61e1697bdc0de5142e0cd76c4a14ed38086b66b9a0ab7722bd1c02aa3cebd261"
+    },
+    {
+      "id": "2961-960-0005",
+      "url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/502/audio/audio.flac",
+      "bytes": 193719,
+      "sha256": "0d0c423dc55c236b5f55ca2fc4ab87b39b85d5d2a34585573afe6038ebf3a091"
+    },
+    {
+      "id": "8455-210777-0030",
+      "url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/1002/audio/audio.flac",
+      "bytes": 233949,
+      "sha256": "4c1f5a6047a567c2ac3e7eb8b40444387b4f091f460ccd3cb6c052b202349555"
+    }
+  ],
+  "models": {
+    "recognizer": {
+      "config.json": {
+        "url_without_query": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/config.json",
+        "bytes": 2370,
+        "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+      },
+      "model.bin": {
+        "url_without_query": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/model.bin",
+        "bytes": 483546902,
+        "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+      },
+      "tokenizer.json": {
+        "url_without_query": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/tokenizer.json",
+        "bytes": 2203239,
+        "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+      },
+      "vocabulary.txt": {
+        "url_without_query": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/vocabulary.txt",
+        "bytes": 459861,
+        "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+      }
+    },
+    "speaker": {
+      "classifier.ckpt": {
+        "url_without_query": "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb/resolve/0f99f2d0ebe89ac095bcc5903c4dd8f72b367286/classifier.ckpt",
+        "bytes": 5534328,
+        "sha256": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535"
+      },
+      "hyperparams.yaml": {
+        "url_without_query": "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb/resolve/0f99f2d0ebe89ac095bcc5903c4dd8f72b367286/hyperparams.yaml",
+        "bytes": 1919,
+        "sha256": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41"
+      },
+      "mean_var_norm_emb.ckpt": {
+        "url_without_query": "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb/resolve/0f99f2d0ebe89ac095bcc5903c4dd8f72b367286/mean_var_norm_emb.ckpt",
+        "bytes": 1921,
+        "sha256": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33"
+      }
+    }
+  },
+  "runtime_packages": {
+    "torch": "2.11.0+cpu",
+    "torchaudio": "2.11.0+cpu",
+    "speechbrain": "1.1.2",
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "numpy": "2.5.5",
+    "av": "16.1.0",
+    "onnxruntime": "1.32.0",
+    "tokenizers": "0.23.3",
+    "huggingface-hub": "2.5.0",
+    "scipy": "1.18.1",
+    "httpx": "0.29.0",
+    "fastapi": "0.165.0",
+    "uvicorn": "0.54.0",
+    "python-multipart": "0.0.34",
+    "PyYAML": "6.0.4"
+  },
+  "fixture": {
+    "path": "/home/runner/work/_temp/linkscribe-speaker-pipeline/evidence/inputs/two_speakers_returning.wav",
+    "sha256": "dc977c1cb0af1a30946eeb0c59218039987412462d2e8c5a2d23990b559f087f",
+    "sample_count": 554160,
+    "reference_intervals": [
+      {
+        "start": 0.5,
+        "end": 8.5,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 9.1,
+        "end": 16.835,
+        "speaker": "8455",
+        "short": false
+      },
+      {
+        "start": 17.435,
+        "end": 25.435,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 26.035,
+        "end": 34.035,
+        "speaker": "8455",
+        "short": false
+      }
+    ],
+    "decoded_pcm_sha256": "70f602e7be70e59448259d311dad673459d551198cf274c3615a2649f513b194",
+    "references_for_evaluation_only": true
+  },
+  "failure": {
+    "type": "HTTPError",
+    "message": "HTTP Error 404: Not Found"
+  }
+}

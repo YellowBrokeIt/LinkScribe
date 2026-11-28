@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "one_narrow_final_phase_time_blocker; remaining reviewed source contract clear",
+  "scope": "Independent source-only review. No candidate import, controller/control execution, network, acquisition, compiler, library/parser, converter, tokenizer or model calls.",
+  "controller_plan": {
+    "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-2026-11-28/plan.json",
+    "sha256": "5d0a6a0f6361129bdaeebbb84de4f249d8e0c4d70467e81f2a9686ed3fe0b740"
+  },
+  "evidence_manifest_sha256": "e0ab08e556bd18aaeaa4fce0b51a9f97b4b3fd04697378c72800f6ba65f61968",
+  "source_contract_audit": {
+    "path": "/workspace/scratch/94360995dd61/krikri-grammar-controller-independent-review-2026-11-28/source-contract-audit.json",
+    "sha256": "073aee8b5266a5677f6c22a1a3ef699290b01a01e487b19205729fb7bb915921",
+    "passing_checks": 260
+  },
+  "findings": [
+    {
+      "id": "final_phase_elapsed_not_enforced",
+      "severity": "execution_contract_blocker",
+      "source": "resource_monitor.py monitor() finalization and run_stage.py main() final assessment",
+      "observed_source_behavior": "Elapsed is compared at the top of each monitoring loop. After the last comparison, stdout handling, process-exit detection and owned-process cleanup occur. Final elapsed_seconds is recorded before the final disk callback, but passed never compares this final elapsed to limits[total_seconds]. run_stage checks only the cumulative 900-second budget.",
+      "impact": "A successful worker and cleanup can produce a phase report whose own final elapsed exceeds the declared 120/600/60-second phase cap while still passing; the final disk callback is also excluded from recorded elapsed.",
+      "bounded_correction": "Measure final elapsed after owned cleanup and the final storage callback; reject complete/passed when this exceeds the unchanged phase total_seconds; preserve any earlier stop reason and the sealed initial version.",
+      "reviewer_reproduction": "Static control-flow finding only. No controller or probe was run. Owner acknowledged and is preparing a separate v2 with retained harmless delayed-finalization evidence."
+    }
+  ],
+  "reviewed_contract": {
+    "provenance": "All 79 current source bindings, native-plan bindings, 57 manifest files, exact source capsule Git blobs/byte totals and retained tool/library hashes verify. The official 11-object capsule totals 289300 bytes; no acquisition occurred.",
+    "authorization": "Four named phases only; each requires root receipt/hash, exact plan/review/source bindings and completed predecessor report/resource/sample hashes. Native phase additionally requires reserved model slot. Exclusive claim prevents repeated attempts; worker verifies actual controller PID/create-time and owned session.",
+    "acquire_build": "Exact source inventory; single frozen compiler argv/environment; retained raw bounded command receipts; linked ELF architecture/runtime path, library identities and compiler include closure inspected; three literal/incomplete-input validator sanity cases required. Actual compilation/linking remains unobserved.",
+    "native": "Only version/show, six complete original render-only requests and full native tokenizations, seven exact ordered empty-token-prompt n_predict0 grammar queries, and unload/resident checks are allowed. Generation/import/download endpoints unavailable. Actual owned PID, port, binary, context4096, four threads, GGUF/cache/header/template and one BOS/full2048 reserve remain required.",
+    "grammar": "Six schemas bind exact frozen request formats. All 285 raw JSON probes unchanged; native grammar bytes must be retained and every expectation checked. Unsupported-lookahead sentinel remains separate. Exit0 never alone establishes acceptance; strict exact stdout status and empty stderr required.",
+    "resources": "Four CPU launch affinity, strict RSS/PSS samples, 32-process ceiling, per-command timeout/capture, RLIMIT_FSIZE16MiB, owned-tree64MiB/free1GiB disk checks, and orphan-safe owned-group cleanup are present. Source review identified the final-phase elapsed gap separately.",
+    "controls": "Inspected, rehashed and checked retained 57-control result and five harmless-process resource/sample records. Did not reexecute controls or actual native probes.",
+    "semantic_limit": "Grammar acceptance does not establish correct actors, roles, negation, translation meaning or production quality. No generation authorization follows from this review."
+  },
+  "actual_phase_execution_authorized_by_this_record": false,
+  "prior_reviews_and_candidate_files_modified": false,
+  "owned_build_root_exists_at_audit": false,
+  "phase_receipts_present_at_audit": []
+}

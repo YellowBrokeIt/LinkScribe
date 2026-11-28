@@ -1,0 +1,12 @@
+# Public first-party Q4_K_M weights; Apache-2.0. No weights are bundled.
+# Native 7B protocol (different from the 1.8B protocol):
+# https://huggingface.co/tencent/Hy-MT3-7B/blob/38d6c3c31d6b4dbdfc208e0621b822ae7bf6aeb2/chat_template.jinja
+# Both documented end tokens are retained from generation_config.json.
+FROM hf.co/tencent/Hy-MT3-7B-GGUF:Q4_K_M
+
+TEMPLATE """{{ if .Messages }}{{ $hasHead := true }}{{ range $index, $message := .Messages }}{{ if and (eq $index 0) (eq .Content "") }}{{ $hasHead = false }}{{ end }}{{ if eq .Role "user" }}{{ if not (and (eq $index 1) $hasHead) }}<|startoftext|>{{ end }}{{ .Content }}<|extra_0|>{{ else if eq .Role "assistant" }}{{ .Content }}<|eos|>{{ else if and (eq $index 0) (eq .Role "system") .Content }}<|startoftext|>{{ .Content }}<|extra_4|>{{ else }}{{ .Content }}{{ end }}{{ end }}{{ else }}<|startoftext|>{{ if .System }}{{ .System }}<|extra_4|>{{ end }}{{ .Prompt }}<|extra_0|>{{ .Response }}{{ end }}"""
+PARAMETER stop "<|eos|>"
+PARAMETER stop "<|extra_5|>"
+PARAMETER temperature 0
+PARAMETER num_ctx 8192
+PARAMETER num_predict 2048

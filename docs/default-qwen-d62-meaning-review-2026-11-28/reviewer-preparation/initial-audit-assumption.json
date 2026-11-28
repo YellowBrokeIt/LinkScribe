@@ -1,0 +1,10 @@
+{
+  "issue": "Reviewer audit initially assumed one unload per original case and rejected long-case accounting before writing an audit result.",
+  "observed_counts": {
+    "short_cases": "1 inference / 1 unload each",
+    "long_en_el": "4 inferences / 2 unloads",
+    "long_el_en": "5 inferences / 3 unloads"
+  },
+  "source_basis": "Exact committed enhancements.py MAX_OLLAMA_RESIDENT_RESPONSES=2; _ollama unloads before further requests after two responses, and _ollama_phase unloads at phase end.",
+  "correction": "Validate at most two inference responses between acknowledged unloads and a final unload; no production, report or semantic criterion changed."
+}

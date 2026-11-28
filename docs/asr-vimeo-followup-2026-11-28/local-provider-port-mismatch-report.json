@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T00:15:10.935869+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "small",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "7b092ba23bbfb00f0de38409187d163f656525772f6b11e824e1270c49b4466c",
+    "sources.py": "267312e614eaf04e1ff918d46716274ea15634d31cd82286fcf04ce2b548cfde",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "d2c9bc1840dd944ca594a0deeac5600871927695a6ac74b2608caffa30f80606"
+  },
+  "fixture_licenses": {
+    "dailymotion_tears_of_steel": {
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "provider": "dailymotion",
+      "title_contains": "Tears of Steel",
+      "public_title": "\u0641\u064a\u0644\u0645 \ud83c\udfac Tears of Steel | \u0645\u0639\u0631\u0643\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0628\u062f\u0623\u062a",
+      "uploader": "MixTube",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://www.dailymotion.com/video/xbvubxi",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Repost with an Arabic title; the public description names the film and licence."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": true,
+  "fixtures": [
+    {
+      "fixture": "dailymotion_tears_of_steel",
+      "status": "fail",
+      "started_at": "2026-11-28T00:15:12.373806+00:00",
+      "url": "https://www.dailymotion.com/video/xbvubxi",
+      "errors": [
+        {
+          "type": "HTTPError",
+          "message": "HTTP Error 403: Forbidden"
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 851, in run\n    posted = request(\"/api/link\", {\"url\": fixture[\"url\"], \"mode\": \"audio\",\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 699, in request\n    with opener.open(urllib.request.Request(BASE_URL + path, data=body, headers=headers), timeout=30) as response:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 521, in open\n    response = meth(req, response)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 630, in http_response\n    response = self.parent.error(\n               ^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 559, in error\n    return self._call_chain(*args)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 639, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 403: Forbidden\n",
+      "elapsed_seconds": 0.004
+    }
+  ],
+  "mixed_batch": {
+    "status": "not_exercised",
+    "reason": "Requires one actual successful and one actually failing licensed fixture."
+  },
+  "restart": {
+    "status": "not_exercised",
+    "verified_record_ids": []
+  },
+  "tail_diagnostic": {
+    "status": "not_requested",
+    "included_in_normal_pipeline_output": false
+  },
+  "nonspeech": {
+    "status": "fail",
+    "scope": "Two owned generated 32-second fixtures: exact-zero rejection before inference and actual nonzero-noise ASR; no general silence/music/noise guarantee.",
+    "cases": [
+      {
+        "kind": "silence",
+        "status": "fail",
+        "started_at": "2026-11-28T00:15:12.378380+00:00",
+        "input": {
+          "kind": "silence",
+          "expected_speech": "none_by_construction",
+          "recipe": "Signed 16-bit PCM zeros",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "7b331c02e313c7599d5a90212e17e6d3cb729bd2e1c9b873c302a63c95a2f9bf",
+          "wav_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "errors": [
+          {
+            "type": "HTTPError",
+            "message": "HTTP Error 403: Forbidden"
+          }
+        ],
+        "traceback": "Traceback (most recent call last):\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 933, in run\n    posted = upload_owned_wav(\"owned-\" + item[\"kind\"] + \".wav\", payload)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 713, in upload_owned_wav\n    with opener.open(urllib.request.Request(BASE_URL + \"/api/upload\", data=b\"\".join(parts), headers=headers),\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 521, in open\n    response = meth(req, response)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 630, in http_response\n    response = self.parent.error(\n               ^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 559, in error\n    return self._call_chain(*args)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 639, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 403: Forbidden\n",
+        "elapsed_seconds": 0.019
+      },
+      {
+        "kind": "white_noise",
+        "status": "fail",
+        "started_at": "2026-11-28T00:15:12.397911+00:00",
+        "input": {
+          "kind": "white_noise",
+          "expected_speech": "none_by_construction",
+          "recipe": "Python random.Random(20261126); one randint(-3276,3276) per signed 16-bit PCM sample",
+          "duration_seconds": 32,
+          "sampling_rate_hz": 16000,
+          "channels": 1,
+          "sample_count": 512000,
+          "pcm_format": "signed_16_bit_little_endian",
+          "pcm_sha256": "3ca60d7681e809cee6c5127685f2c837ab010d11694f1f0b46f85e2f7468c094",
+          "wav_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+          "wav_bytes": 1024044,
+          "attribution": "Owned generated QA data; no external recording or reference text."
+        },
+        "errors": [
+          {
+            "type": "HTTPError",
+            "message": "HTTP Error 403: Forbidden"
+          }
+        ],
+        "traceback": "Traceback (most recent call last):\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 933, in run\n    posted = upload_owned_wav(\"owned-\" + item[\"kind\"] + \".wav\", payload)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/linkscribe-asr-vimeo-quality/aligned_provider/tests/smoke_real_links.py\", line 713, in upload_owned_wav\n    with opener.open(urllib.request.Request(BASE_URL + \"/api/upload\", data=b\"\".join(parts), headers=headers),\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 521, in open\n    response = meth(req, response)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 630, in http_response\n    response = self.parent.error(\n               ^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 559, in error\n    return self._call_chain(*args)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/urllib/request.py\", line 639, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 403: Forbidden\n",
+        "elapsed_seconds": 0.214
+      }
+    ]
+  },
+  "initial_server_pid": 6,
+  "restarted_server_pid": 18,
+  "source_sha256_after": {
+    "app.py": "7b092ba23bbfb00f0de38409187d163f656525772f6b11e824e1270c49b4466c",
+    "sources.py": "267312e614eaf04e1ff918d46716274ea15634d31cd82286fcf04ce2b548cfde",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "d2c9bc1840dd944ca594a0deeac5600871927695a6ac74b2608caffa30f80606"
+  },
+  "source_files_unchanged": true,
+  "asr_model_resolutions": [],
+  "asr_model_identity_complete": false,
+  "finished_at": "2026-11-28T00:15:13.567073+00:00",
+  "all_selected_providers_passed": false
+}

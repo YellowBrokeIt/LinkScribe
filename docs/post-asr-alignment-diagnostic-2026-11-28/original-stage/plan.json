@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "status": "prepared; no model execution",
+  "candidate": "fixed_text_complete_upstream_postpass_v2",
+  "source_commit": "6de3faddf88bb5da8ea35d985b33ad26e55e249f",
+  "input_cases_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/input-cases.json",
+  "case_order": [
+    "official-tears-of-steel-stereo-full",
+    "fleurs-el_gr-validation-2-1528",
+    "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+    "fleurs-en_us-validation-0-1548",
+    "fleurs-en_us-validation-0-1548-quiet-minus20db"
+  ],
+  "max_cpu_threads": 4,
+  "device": "cpu",
+  "compute_type": "int8",
+  "workers": 1,
+  "expected_effective_compute_types": [
+    "int8",
+    "int8_float32"
+  ],
+  "attempts_per_input": 1,
+  "model_initializations": 1,
+  "expected_window_calls": 23,
+  "limits": {
+    "rss_bytes": 2684354560,
+    "startup_seconds": 120,
+    "per_input_seconds": 240,
+    "total_seconds": 600
+  },
+  "reference_or_publisher_material_supplied": false,
+  "recognition_or_generation_allowed": false,
+  "frontend": {
+    "full_recording": true,
+    "sample_rate_hz": 16000,
+    "n_mels": 80,
+    "n_fft": 400,
+    "hop_length": 160,
+    "padding_samples": 160,
+    "max_window_frames": 3000,
+    "vad": false
+  },
+  "prepend_punctuations": "\"'“¿([{-",
+  "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+  "model": {
+    "path": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+    "repo": "Systran/faster-whisper-small",
+    "revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "files": {
+      "config.json": {
+        "bytes": 2370,
+        "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+      },
+      "model.bin": {
+        "bytes": 483546902,
+        "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+      },
+      "tokenizer.json": {
+        "bytes": 2203239,
+        "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+      },
+      "vocabulary.txt": {
+        "bytes": 459861,
+        "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+      }
+    }
+  },
+  "runtime_packages": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "numpy": "2.5.5",
+    "av": "16.1.0",
+    "tokenizers": "0.23.3",
+    "onnxruntime": "1.32.0",
+    "huggingface-hub": "2.5.0"
+  },
+  "monitor_path": "/workspace/scratch/94360995dd61/LinkScribe/tests/qa_qwen3_asr_candidate.py",
+  "pinned_files": [
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/run_postpass.py",
+      "bytes": 30358,
+      "sha256": "43d968c15bf80eba06b6c3744a5945db50bad57825845e2d8360dcefe6d48647"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/check_native_contract.py",
+      "bytes": 8061,
+      "sha256": "650620d8ae889d5ee3b8c7f09d2ec004e9e8426a8ba4e7ce652f0648cf0bdd67"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/input-cases.json",
+      "bytes": 93613,
+      "sha256": "5219ccd8ca12714e563e34fde2c66e9c2685aa621ba0f0e0c980817775801690"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/production-timing-view.json",
+      "bytes": 3348,
+      "sha256": "919fc32d79ce79001154b66be2036b13cf3e69344c274b5d8b2980f21606adf6"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/tests/qa_qwen3_asr_candidate.py",
+      "bytes": 38701,
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/app.py",
+      "bytes": 62018,
+      "sha256": "b0ea2cf313a15697369a61beab15ae7017251476fc25ea7c77bdcbafe527dd47"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/transcribe.py",
+      "bytes": 80403,
+      "sha256": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/tokenizer.py",
+      "bytes": 8429,
+      "sha256": "614a96b6a9660096e4f4e9fbe8860cd75ad250dce8e85a847998a3d6d48165d2"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/feature_extractor.py",
+      "bytes": 7592,
+      "sha256": "e403966dbc592a53695eea2aea24fa60bab50ef6755e0076b311f907be7a397c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/audio.py",
+      "bytes": 3506,
+      "sha256": "60a1d8638f718cbf6d245aed3e5a5aa61c1f822a0b0fe9b48a7c928d47c23909"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/utils.py",
+      "bytes": 4946,
+      "sha256": "5b36ceb9d0fd3961de8cfb144bd82f9a4ef3151b2e5958405a11efb4f3ac4f82"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/ctranslate2/_ext.cpython-312-x86_64-linux-gnu.so",
+      "bytes": 1781985,
+      "sha256": "a16fd23c7abc97db58a4baa30e9f5dde407635b2fd0ae1bab5d01b8a45310f43"
+    }
+  ],
+  "proposal_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/POSTPASS-PROPOSAL.md",
+  "proposal_sha256": "59a50145cc7a1d9cd1b16a382a731c30529ac298ca353d7c4d72032675c6aa9c",
+  "measurement_scope": "Owned worker process group sampled every 100 ms; controller/browser/OS headroom excluded and short peaks may be missed.",
+  "execution_scope": "Standalone timing postprocessor and frozen current timing/export view; not full application or acoustic speaker inference."
+}

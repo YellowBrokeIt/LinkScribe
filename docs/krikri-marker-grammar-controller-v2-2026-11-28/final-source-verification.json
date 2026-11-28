@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "plan_sha256": "edc16c0a14699c38bb7cd1916f5118d6778958cd708f0fbca920720ebc0d8c00",
+  "all_source_bindings_verified": 103,
+  "controls_sha256": "305e85121dfb92beacfc4dfab69fcc846f34a28c25572874278bc7b79ce48375",
+  "source_controls_passed": 57,
+  "late_finalization_control_sha256": "b64b01e8eefe0602a0c2d8d1fc76265e2210b6e414e294913868aa6ee56fedf7",
+  "v1_false_pass_reproduced": true,
+  "v2_rejects_same_late_finalization": true,
+  "all_seven_harmless_observer_runs": [
+    {
+      "path": "control-results/observer-disk-limit-resources.json",
+      "sha256": "548f444af2864ba01762838b5276515e994ccc582c28cd9a82dc139c45678097",
+      "samples_sha256": "357daaac52057c35492cf514384630dffbc8136c97f2fd70fc87c7d017a2c36e",
+      "sample_count": 2,
+      "passed_phase": false,
+      "stop_reason": "storage_policy_limit",
+      "elapsed_seconds": 0.103868,
+      "phase_seconds": 5,
+      "cleanup_complete": true,
+      "peak_rss_mib": 24.2
+    },
+    {
+      "path": "control-results/observer-memory-limit-resources.json",
+      "sha256": "bc5b6a2840c889c96e798fb2239a1c99c4864aed07e6ed5fc760f214d7c493f0",
+      "samples_sha256": "4a1a17ef7eb54bae23144f6560b442bafacd544f6bebe1fe97be9802a1fa580c",
+      "sample_count": 3,
+      "passed_phase": false,
+      "stop_reason": "process_tree_memory_limit",
+      "elapsed_seconds": 0.207476,
+      "phase_seconds": 5,
+      "cleanup_complete": true,
+      "peak_rss_mib": 93.5
+    },
+    {
+      "path": "control-results/observer-orphan-resources.json",
+      "sha256": "0eca6f189d851cb0d043bd2faa4a36afea92b3e20bebea9782a88a9b2d9b44ac",
+      "samples_sha256": "68b44a59767340b305bd5e0ecc4ac58af5d1d0488eeea1a254c224d4ee80bf4e",
+      "sample_count": 1,
+      "passed_phase": false,
+      "stop_reason": "owned_child_survived_worker_exit",
+      "elapsed_seconds": 0.026056,
+      "phase_seconds": 5,
+      "cleanup_complete": true,
+      "peak_rss_mib": 16.3
+    },
+    {
+      "path": "control-results/observer-success-resources.json",
+      "sha256": "8554a9103791c5be154ec2b4d07e8c1d08e71aa42903430b723a9b7e77f77422",
+      "samples_sha256": "d44f8499986385efb0c6c182cdc2b61fab75ad62d3fa2f6f38c7219fd0049b4a",
+      "sample_count": 4,
+      "passed_phase": true,
+      "stop_reason": null,
+      "elapsed_seconds": 0.269384,
+      "phase_seconds": 5,
+      "cleanup_complete": true,
+      "peak_rss_mib": 22.3
+    },
+    {
+      "path": "control-results/observer-time-limit-resources.json",
+      "sha256": "0fb298baf8bb564693293f539414a76c24bd25a549e225205c78198392dd6122",
+      "samples_sha256": "523d53f6500a38b6df3600925baea44ebaf212346649817d9b06901aa76350fb",
+      "sample_count": 5,
+      "passed_phase": false,
+      "stop_reason": "aggregate_time_limit",
+      "elapsed_seconds": 0.408072,
+      "phase_seconds": 0.35,
+      "cleanup_complete": true,
+      "peak_rss_mib": 22.3
+    },
+    {
+      "path": "late-finalization-control/v1-resources.json",
+      "sha256": "2d58b24fc849e8cdd7c821d88d8ae8e8c32aef1e0187e4b1e859cb7e2fdbd104",
+      "samples_sha256": "26b354134e516e6f211b622700927392c208ed16b8bdde7aaba87b02cde55c06",
+      "sample_count": 2,
+      "passed_phase": true,
+      "stop_reason": null,
+      "elapsed_seconds": 1.263372,
+      "phase_seconds": 1.0,
+      "cleanup_complete": true,
+      "peak_rss_mib": 19.7
+    },
+    {
+      "path": "late-finalization-control/v2-resources.json",
+      "sha256": "f4eeb602262e90abbb226b3ed9d0971eb08428022c070c2e09f370b42a993a9b",
+      "samples_sha256": "4a96ccb8b60a42dddba378d5157b0656f75eb8469ff8c6ebbdfa6b2ace600f54",
+      "sample_count": 2,
+      "passed_phase": false,
+      "stop_reason": "aggregate_time_limit",
+      "elapsed_seconds": 1.265617,
+      "phase_seconds": 1.0,
+      "cleanup_complete": true,
+      "peak_rss_mib": 20.5
+    }
+  ],
+  "original_controller_manifest_unchanged": "e0ab08e556bd18aaeaa4fce0b51a9f97b4b3fd04697378c72800f6ba65f61968",
+  "owned_build_root_exists": false,
+  "phase_receipts_created": 0,
+  "compiler_native_library_converter_tokenizer_model_network_calls": 0
+}

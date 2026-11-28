@@ -1,0 +1,213 @@
+{
+  "reviewed_at": "2026-11-27T23:52:47.958653+00:00",
+  "reviewer": "assistant",
+  "scope": "Owned diagnostic text selection only; no ASR, translation, app integration or independent human assessment.",
+  "runs": [
+    {
+      "report": "development-v1.json",
+      "report_sha256": "832b5f245aec6030d4d0c10f4158dfcfed1f598e78643a579482b520cd1c8b1f",
+      "selector_sha256": "e4f939bfd2db3c5282e8dac2290dcf6bcdf8e5a3719187c178e85ce98433f62f",
+      "cases": [
+        {
+          "id": "dev-en-equipment-loan",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-seed-register",
+          "classification": "acceptable_selection",
+          "finding": "The declared facts and applicable context companions are present in the delivered excerpts. No invented wording or contradictory replacement was observed in these controlled sources. This is a case-specific selection assessment, not a general quality guarantee.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-en-training-card",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-fragmented-turns",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-en-long-archive",
+          "classification": "acceptable_selection",
+          "finding": "The declared facts and applicable context companions are present in the delivered excerpts. No invented wording or contradictory replacement was observed in these controlled sources. This is a case-specific selection assessment, not a general quality guarantee.",
+          "mechanical_coverage": {
+            "covered": 5,
+            "total": 5
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-long-radio",
+          "classification": "coverage_gap",
+          "finding": "The delivered ending states eight functional stations, so the older twelve-station proposal is not left as the final quantity. The four-repair detail is missing, and repeated procedural filler occupies a large tail. Treat the automatic context flag as a review prompt, not proof of an invented contradiction.",
+          "mechanical_coverage": {
+            "covered": 3,
+            "total": 4
+          },
+          "automatic_flags": [
+            "Missing reference coverage: 8usable;4require repair.",
+            "Possible context loss: The original12-station proposal needs the measured8/4result."
+          ]
+        }
+      ]
+    },
+    {
+      "report": "development-v2.json",
+      "report_sha256": "b8ca72f43473706050fb4e47d2e7f8091aee5833d730660c943e7669135d416a",
+      "selector_sha256": "81dbc2060d3d8a7fe14fe8747deca3b50df04b1720f5612b7979e3cec57431d3",
+      "cases": [
+        {
+          "id": "dev-en-equipment-loan",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-seed-register",
+          "classification": "coverage_gap",
+          "finding": "The result retains nine of ten segments but omits the unapproved, unpaid €14.80 total quotation. The other stated constraints remain accurate. This small reduction loses useful information and is a regression from v1.",
+          "mechanical_coverage": {
+            "covered": 3,
+            "total": 4
+          },
+          "automatic_flags": [
+            "Missing reference coverage: €14.80 total offer, no order or payment."
+          ]
+        },
+        {
+          "id": "dev-en-training-card",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-fragmented-turns",
+          "classification": "full_source_preserved",
+          "finding": "All source segments are retained verbatim with original timing. This preserves the declared facts and conditions but provides no condensation; UI should identify a complete source excerpt.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-en-long-archive",
+          "classification": "acceptable_selection",
+          "finding": "The declared facts and applicable context companions are present in the delivered excerpts. No invented wording or contradictory replacement was observed in these controlled sources. This is a case-specific selection assessment, not a general quality guarantee.",
+          "mechanical_coverage": {
+            "covered": 5,
+            "total": 5
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-long-radio",
+          "classification": "acceptable_selection",
+          "finding": "The declared facts and applicable context companions are present in the delivered excerpts. No invented wording or contradictory replacement was observed in these controlled sources. This is a case-specific selection assessment, not a general quality guarantee.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        }
+      ]
+    },
+    {
+      "report": "development-v3.json",
+      "report_sha256": "65053e6482972abd078d8f3e36e65c21731ea1c91f3dd95cb0b61b303632ad5a",
+      "selector_sha256": "aeca9cd24343fa67ffdf00077ae0591846110ebcc71dc4c224181e57ff8cc17a",
+      "cases": [
+        {
+          "id": "dev-en-equipment-loan",
+          "classification": "full_source_preserved",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-seed-register",
+          "classification": "full_source_preserved",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-en-training-card",
+          "classification": "full_source_preserved",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-fragmented-turns",
+          "classification": "full_source_preserved",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-en-long-archive",
+          "classification": "acceptable_selection",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 5,
+            "total": 5
+          },
+          "automatic_flags": []
+        },
+        {
+          "id": "dev-el-long-radio",
+          "classification": "acceptable_selection",
+          "finding": "All predeclared facts and applicable context companions are retained. Full-source cases preserve context without condensation; long-source cases retain the declared late decisions and limits with less procedural filler. This is case-specific internal evidence.",
+          "mechanical_coverage": {
+            "covered": 4,
+            "total": 4
+          },
+          "automatic_flags": []
+        }
+      ]
+    }
+  ]
+}

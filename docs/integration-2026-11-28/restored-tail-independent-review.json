@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T01:24:19.680839+00:00",
+  "review_kind": "Bounded independent read-only restored-policy wrapper, tests, workflow and evidence-scope review",
+  "material_findings": [],
+  "source_hashes": {
+    "app.py": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "tests/check_asr_dailymotion_tail_followup.py": "c308462b92e2051a44f5b48b8078064322ffbac15915ea484c18d843105cbe3f",
+    "tests/check_asr_restored_tail_followup.py": "9fe5c4c629eb362ae902b5196b415c70165fe2d3040dfc2af6254ea4a8b8b9a3",
+    "tests/test_asr_restored_tail_followup.py": "477884198f99e65f429641864c8a04af70d8c17e63e641c19b5ecb244130e2a1",
+    ".github/workflows/live-source-qa.yml": "74a07a2142b934373b22160a680010cc4b3164b42787b59e884155254c83a56f",
+    "docs/integration-2026-11-28/restored-asr-retained-provider-check.json": "8f1ba8326c644865fb33570072f00b27782fe35965c17f80d4ba1f836e5caa8f"
+  },
+  "verified": {
+    "app_exact_f12_bytes": true,
+    "frozen_experimental_checker_exact_c308_hash": true,
+    "original_four_segment_anchor_windows_unchanged": true,
+    "full_frozen_input_model_event_persistence_checks_reused": true,
+    "expected_current_app_hash_checked": true,
+    "requested_resolved_and_effective_word_timestamps_strictly_false": true,
+    "requested_resolved_and_effective_heuristic_explicitly_none": true,
+    "raw_unrequested_word_evidence_rejected": true,
+    "rejected_alignment_and_word_accuracy_approval_flags_false": true,
+    "workflow_invokes_wrapper_after_full_actual_provider_harness_even_on_failure": true,
+    "historical_recheck_explicitly_labeled_not_fresh_acquisition_or_inference": true
+  },
+  "test_run": {
+    "command": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python -m pytest -q tests/test_asr_restored_tail_followup.py",
+    "exit_code": 0,
+    "passed": 7,
+    "elapsed_seconds": 0.02,
+    "scope": "One positive synthetic contract case plus six negatives: stale source, requested alignment, effective alignment, missing policy, unrequested words, missing tail. No model execution."
+  },
+  "retained_historical_check": {
+    "inspected_not_independently_reinferred": true,
+    "raw_report_sha256": "37be896a137d4fb2accf592b7e1cdb1627df203197c7ff03ebd49c32524fe2ee",
+    "record_sha256": "63a5ed8fd221ecd32b15272c3ab0f09678979da734a7a79899210f8be10af7b2",
+    "status": "pass",
+    "checks_passed": 28,
+    "actual_word_timing_required": false,
+    "restored_policy_tail_regression_passed": true,
+    "candidate_tail_regression_passed": false,
+    "rejected_alignment_candidate_approved": false,
+    "semantic_accuracy_approved": false
+  },
+  "limitations": "This checks the declared artifact contract and restored-source retention scope. It does not certify all-word accuracy, fresh provider availability, or rejected alignment quality. The full historical provider run was not rerun by this reviewer.",
+  "repository_edits_by_reviewer": false
+}

@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-11-28T02:27:15.735523+00:00",
+  "model_initialized": false,
+  "inference_performed": false,
+  "large_model_or_runtime_downloaded_locally": false,
+  "stdlib_tests": {
+    "command": "python -m unittest discover -s tests -p test_qwen3_asr_candidate_qa.py -v",
+    "tests_run": 14,
+    "failures": 0,
+    "errors": 0,
+    "elapsed_seconds": 0.198,
+    "scope": "Non-model contract, input mutation rejection, completion/EOS/raw-output preservation, path/download identity and owned-process cleanup."
+  },
+  "input_preparation": {
+    "command": "Existing application venv: qa_qwen3_asr_candidate.py --action prepare-inputs --local-audio <retained exact original WAV directory>",
+    "all_eight_original_wav_identities_match": true,
+    "all_eight_complete_pcm_hashes_match": true,
+    "reference_report": "local-input-preparation.json",
+    "reference_report_sha256": "7e92668d94c6ec08fbae4014d058016f3064150515ede54a77dbb49305439821",
+    "new_network_requests_for_audio": false,
+    "helper_sha256_at_execution": "2c6fc46699e528e091b4c97d580bfa1c798da6949f9ea699348a4e91f8349d16",
+    "decoder_function_source_unchanged_after_cleanup_fix": true,
+    "decoder_function_source_sha256": "ae2b4fbb1c496dcddfe5e6558f5c856b527af70b916151d536a3a2aa286fa229"
+  },
+  "python_sources_parse": true,
+  "helper_sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f",
+  "unit_tests_sha256": "daeec780e775f6395626ca2cf526acb0106e6a5cfc4791f954bd6f8297075fce",
+  "plan_sha256": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+  "hosted_execution_status": "not_started_by_this_agent",
+  "semantic_quality": "not_evaluated",
+  "workflow_yaml_parses": true,
+  "workflow_permissions": {
+    "contents": "read"
+  },
+  "workflow_shell_blocks_syntax_checked": 5,
+  "readme_relative_links_resolve": true,
+  "git_diff_whitespace_check_passed": true,
+  "checkout_portability": {
+    "all_plan_bound_paths_have_explicit_text_eol_lf": true,
+    "paths": {
+      "tests/qa_qwen3_asr_candidate.py": {
+        "text": "set",
+        "eol": "lf"
+      },
+      ".github/workflows/qwen3-asr-candidate-qa.yml": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/qwen3-asr-screen-2026-11-28/model-files.json": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/qwen3-asr-screen-2026-11-28/model-metadata-provenance.json": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/asr-2026-11-26/fixtures.json": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/parakeet-screen-2026-11-28/input-arrays.json": {
+        "text": "set",
+        "eol": "lf"
+      },
+      "docs/parakeet-screen-2026-11-28/semantic-criteria.json": {
+        "text": "set",
+        "eol": "lf"
+      }
+    },
+    "existing_fixture_filtered_with_core_autocrlf_true_matches_original_sha256": true,
+    "shared_index_mutated": false,
+    "probe_uses_git_read_only_check_attr_and_cat_file": true
+  },
+  "cleanup_regression": "An owned parent spawns a live child and exits zero; the updated cleanup must terminate the child and leave no live process-group member."
+}

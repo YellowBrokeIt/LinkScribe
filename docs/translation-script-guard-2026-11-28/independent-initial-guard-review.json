@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-11-28T02:17:50.226984+00:00",
+  "source_sha256": "ea0cb0db9979937fe492a7d12c88a89a0604dfb2c55e760e07833ab7760df0a2",
+  "method": "Read-only execution of the exact two pure guard function AST nodes; no model imports, inference, production edits or API calls.",
+  "cases": [
+    {
+      "id": "latin_modifier_apostrophe",
+      "source": "L'Hopital's rule applies.",
+      "output": "Ισχύει ο κανόνας του LʼHôpital.",
+      "observed": "rejected",
+      "error": "The translation introduced text in an unexpected writing system. It was not saved as a completed translation; the original transcript remains available.",
+      "normalized_runs": [
+        "Ισχύει",
+        "ο",
+        "κανόνας",
+        "του",
+        "LʼHôpital"
+      ]
+    },
+    {
+      "id": "math_aleph_symbol",
+      "source": "The cardinality of the natural numbers is aleph null.",
+      "output": "Η πληθικότητα των φυσικών αριθμών είναι ℵ₀.",
+      "observed": "rejected",
+      "error": "The translation introduced text in an unexpected writing system. It was not saved as a completed translation; the original transcript remains available.",
+      "normalized_runs": [
+        "Η",
+        "πληθικότητα",
+        "των",
+        "φυσικών",
+        "αριθμών",
+        "είναι",
+        "א"
+      ]
+    },
+    {
+      "id": "known_corruption",
+      "source": "A quotation needs permission.",
+      "output": "Η اقتباس χρειάζεται άδεια.",
+      "observed": "rejected",
+      "error": "The translation introduced text in an unexpected writing system. It was not saved as a completed translation; the original transcript remains available.",
+      "normalized_runs": [
+        "Η",
+        "اقتباس",
+        "χρειάζεται",
+        "άδεια"
+      ]
+    }
+  ],
+  "finding": "Two legitimate Latin/math outputs are rejected by the Unicode-name prefix test. U+02BC MODIFIER LETTER APOSTROPHE remains a letter after NFKC but is not named LATIN/GREEK; U+2135 ALEF SYMBOL compatibility-normalizes to a Hebrew letter. The known mixed-script corruption still rejects as intended."
+}

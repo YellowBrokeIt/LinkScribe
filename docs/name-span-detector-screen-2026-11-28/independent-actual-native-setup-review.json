@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:15:08.590988+00:00",
+  "scope": "Final pre-inference independent review of actual zero-forward tokenizer/config/collator preparation and corrected native observer/worker.",
+  "decision": "No blocker for the single already-authorized fixed six-source detector screen after its inference freeze binds these exact artifacts.",
+  "plan_sha256": "1a56796eb75a709c9231354ff17ca7b9f23be9988e3ddbc30ba0492433b2b9d5",
+  "bindings": {
+    "setup-freeze.json": "900c404f653fe00325f45e0c9e2dc0c9ee1c14464d64f44df8681bd5fdc27a13",
+    "prepare.json": "e9241cb52c8f6ac67f272237470884a6fd4a3171b401ab5f702f14b8adf8074b",
+    "prepare-resources.json": "9e921d36d7b82022bba1c1ea32e83f9e45e5213fc4cb676a96f1e98332bc3ec3",
+    "prepare-samples.jsonl": "34a9eb0be4fa017495527822ec153197ae5e32db3693ae4065c87a811d43515d",
+    "native_worker.py": "62f117b684c6a68dfdf6a21cb26e0e4b1881eb93a52852bb0656558a9cea8a31",
+    "run_phase.py": "b50b4bdc73d69c83b471806019a8e3cd7787ab5c4c3ffc8217bd906f33ace45b",
+    "common.py": "85df5e8ed97ad751fecedfb138a15eb678e1c1be70abb19420035cbc79fad613",
+    "verify_observer_v2.py": "bedb072f990ff41821248ce2445d50242ef373842bc8216045a3d718af762e84",
+    "protocol-corrections.json": "ff8680b2021b26df168af6eecf545b3671eca507cbc1846daf7678a4f3965085"
+  },
+  "source_cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 30,
+      "encoded_token_count": 47,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "4872fa97eb447f9c4026fc8fc214008eb809d8a35ea0fb12818d2ada81ad5eac"
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 30,
+      "encoded_token_count": 70,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "c3a7267c28e91201e57e80ef96a9b4e2509da584d3257119559223de5694362c"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 42,
+      "encoded_token_count": 59,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "7aa39d2d3bceb35a99f609d5239afbb2693eaba2c4f3578fc01edf7cd98efdb8"
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 29,
+      "encoded_token_count": 65,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "79a6f7f1ac4e5b9189c100a7e2425645e7332d5ec7ea0a98de1d4c5207394ee0"
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 26,
+      "encoded_token_count": 41,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "2a756157850a60007b31c6abf7a2628ff8f83becd3a2d5598227de2e50da375e"
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "original_segment_metadata_and_complete_text_match": true,
+      "source_word_count": 31,
+      "encoded_token_count": 63,
+      "independently_derived_word_mask_matches": true,
+      "actual_native_collator_arrays_match_uncropped_preflight": true,
+      "source_text_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9"
+    }
+  ],
+  "native_setup": {
+    "entity_model_constructed": false,
+    "detector_forward_count": 0,
+    "translation_call_count": 0,
+    "native_model_class": "UniEncoderSpanGLiNER",
+    "tokenizer": {
+      "class": "transformers.models.deberta_v2.tokenization_deberta_v2_fast.DebertaV2TokenizerFast",
+      "is_fast": true,
+      "vocabulary_size": 250105,
+      "vocabulary_sha256": "14e4181e2b4992492e187d4c1a86580b90dd7b1db24e1215e5acc9e61c8924ae",
+      "special_tokens_map": {
+        "bos_token": "[CLS]",
+        "eos_token": "[SEP]",
+        "unk_token": "[UNK]",
+        "sep_token": "[SEP]",
+        "pad_token": "[PAD]",
+        "cls_token": "[CLS]",
+        "mask_token": "[MASK]"
+      },
+      "all_special_ids": [
+        1,
+        2,
+        3,
+        0,
+        250101
+      ],
+      "model_max_length": 1000000000000000019884624838656
+    },
+    "native_added_tokens": [
+      "[FLERT]",
+      "<<ENT>>",
+      "<<SEP>>"
+    ],
+    "embedding_rows_match_actual_tokenizer_size": true,
+    "checkpoint_tensor_count": 224,
+    "checkpoint_F32_elements": 288949504,
+    "header_offsets_and_full_payload_bytes_consistent": true,
+    "same_native_class_mapping_and_collator_path_confirmed": true,
+    "strict_complete_model_load_still_required_by_frozen_worker_before_first_forward": true
+  },
+  "resources": {
+    "externally_measured_seconds": 9.580841,
+    "RSS_mib": 659.6,
+    "PSS_mib": 653.4,
+    "sample_count": 94,
+    "all_sample_sums_and_recorded_peaks_verified": true,
+    "worker_exit_code": 0,
+    "owned_processes_stopped": true,
+    "no_limit_failure": true,
+    "sampling_not_instantaneous_peak_proof": true
+  },
+  "pre_output_annotation_binding": {
+    "sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+    "kept_outside_worker_inputs": true,
+    "original_criteria_unchanged": true
+  },
+  "resolved_initial_protocol_failures_retained": true,
+  "revised_four_control_helper_now_reviewed_and_bound": true,
+  "reviewer_model_or_detector_calls": 0,
+  "limitations": [
+    "This preparation has not yet established that complete strict model initialization or any detector call succeeds under the limits. The frozen runner must stop and retain failures if either fails.",
+    "Exact native ID arrays were audited against their retained full-source word maps and actual collator records; this reviewer did not instantiate another tokenizer or model.",
+    "Detector accuracy and any later protected translation remain unproved; no v2/v3 or translation stage is approved by this setup review."
+  ]
+}

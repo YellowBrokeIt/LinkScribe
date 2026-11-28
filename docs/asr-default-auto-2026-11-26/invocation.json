@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-11-26T20:05:32.246660+00:00",
+  "status": "prepared_not_run_waiting_for_final_asr_source_freeze_and_exclusive_local_inference_slot",
+  "command": [
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/bin/python",
+    "tests/smoke_real_asr_quality.py",
+    "--manifest",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/fixtures.json",
+    "--output",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/small-auto-greek-result.json",
+    "--language-mode",
+    "auto",
+    "--model-provenance",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/model-provenance.json",
+    "--timeout",
+    "180"
+  ],
+  "cwd": "/workspace/scratch/88e3e0e8fa8f/LinkScribe",
+  "explicit_environment": {
+    "ORT_DISABLE_TELEMETRY": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HOME": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache",
+    "LINKSCRIBE_DEVICE": "cpu"
+  },
+  "environment_policy": "Inherit existing proxy and TLS settings unchanged; do not log their potentially sensitive values. No network download is allowed by the offline run.",
+  "model_form_field": "omitted; harness checks the actual app default is Small",
+  "language_form_field": "omitted by --language-mode auto; expected detected language el for each existing fixture",
+  "frozen_manifest": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/fixtures.json",
+  "frozen_manifest_sha256": "d7a54c7ec92d5bdd081a6b8fabe31c693b5d298b9ec0e75688d545a7796a8918",
+  "frozen_case_ids": [
+    "fleurs-el_gr-validation-2-1528",
+    "fleurs-el_gr-validation-5-1515"
+  ],
+  "model_provenance": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/model-provenance.json",
+  "model_provenance_sha256": "224bbd580cdda2c1a6eca2c33ec26e1022972ff5b189b2dcd398355a99781422",
+  "preparation_checks": {
+    "audio_sha256_verified": true,
+    "small_cache_files_present_and_sizes_match": true,
+    "no_inference_run": true,
+    "no_download_started": true
+  },
+  "runtime_python": "3.12.14",
+  "runtime_packages": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "av": "16.1.0",
+    "fastapi": "0.165.0",
+    "starlette": "1.10.0",
+    "huggingface-hub": "2.5.0",
+    "onnxruntime": "1.32.0",
+    "httpx": "0.29.0",
+    "socksio": "1.0.0"
+  },
+  "required_before_run": [
+    "Root confirms final app and harness source hashes and source freeze.",
+    "Bilingual summary inference has finished and root releases the local inference slot.",
+    "Verify frozen manifest and audio hashes remain unchanged, selected Small cache hashes match existing provenance, output path does not exist.",
+    "Record actual source/commit identity before execution; preserve all successes or failures without replacement."
+  ],
+  "acceptance": "Both actual default-Small/Auto jobs detect el and pass complete upload, finite ordered timing, exact SQLite and all five export checks, cleanup, eviction and separate-interpreter retrieval; source hashes remain unchanged.",
+  "quality_limit": "The already exposed references are diagnostic review data only and are never given to the decoder. Structural/automatic-language success does not approve names, meaning or ASR accuracy."
+}

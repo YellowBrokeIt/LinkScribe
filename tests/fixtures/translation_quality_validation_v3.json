@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "corpus_version": "2026-11-26-validation-v3",
+  "description": "Four new internally authored diagnostic cases frozen before the reviewer sees corrected Marian outputs: one quotation and one longer ordinary multi-paragraph passage per direction. No source or reference passage is copied or paraphrased from v1/v2. Lexical indicators are review hints, never semantic certification; references illustrate faithful meaning rather than mandatory wording. This small purposeful set is not an external benchmark or a population accuracy estimate.",
+  "cases": [
+    {
+      "id": "v3-holdout-en-el-handwriting-quotation",
+      "split": "holdout",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "quotation",
+        "negation",
+        "sentence_coverage",
+        "factual_state"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 11.5,
+          "text": "Edith copied this sentence from a handwriting exercise: \"Underline the street name. Do not copy the postcode onto the outer envelope.\"",
+          "speaker": "Speaker 8"
+        },
+        {
+          "start": 12.5,
+          "end": 23.5,
+          "text": "She was quoting the worksheet, not changing an address. The envelope was still blank when the lesson ended.",
+          "speaker": "Speaker 8"
+        }
+      ],
+      "reference_translations": [
+        "Η Έντιθ αντέγραψε αυτή την πρόταση από μια άσκηση γραφής: «Υπογράμμισε το όνομα της οδού. Μην αντιγράψεις τον ταχυδρομικό κώδικα στον εξωτερικό φάκελο».",
+        "Παρέθετε το κείμενο του φύλλου εργασίας, δεν άλλαζε μια διεύθυνση. Ο φάκελος ήταν ακόμη λευκός όταν τελείωσε το μάθημα."
+      ],
+      "review_criteria": [
+        "Translate both sentences inside the quotation, including the prohibition about the postcode; do not leave the quoted words in English.",
+        "The quoted text belongs to a handwriting worksheet. No address was actually changed, and the envelope remains blank at the end.",
+        "Keep the street name, postcode and outer envelope as distinct objects; retain every source sentence."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Edith",
+            "alternatives": [
+              "Edith",
+              "Έντιθ",
+              "Εδίθ"
+            ]
+          },
+          {
+            "label": "postcode",
+            "alternatives": [
+              "ταχυδρομικ"
+            ]
+          },
+          {
+            "label": "envelope",
+            "alternatives": [
+              "φάκελ",
+              "φακέλ"
+            ]
+          }
+        ],
+        "numbers": []
+      }
+    },
+    {
+      "id": "v3-holdout-el-en-paper-folding-quotation",
+      "split": "holdout",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "quotation",
+        "negation",
+        "completeness",
+        "actors"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 11.5,
+          "text": "Ο Μάξιμος διάβασε δυνατά μια οδηγία της κατασκευής: «Δίπλωσε το πράσινο χαρτί στη μέση και κράτησε το μικρό απόκομμα».",
+          "speaker": "Speaker 8"
+        },
+        {
+          "start": 12.5,
+          "end": 23.5,
+          "text": "Η Λυδία ζήτησε να μεταφραστούν και τα δύο βήματα. Δεν είπε ότι το χαρτί είχε ήδη διπλωθεί ή ότι το απόκομμα είχε πεταχτεί.",
+          "speaker": "Speaker 8"
+        }
+      ],
+      "reference_translations": [
+        "Maximos read aloud an instruction for the craft project: \"Fold the green paper in half and keep the small offcut.\"",
+        "Lydia asked for both steps to be translated. She did not say that the paper had already been folded or that the offcut had been thrown away."
+      ],
+      "review_criteria": [
+        "Both quoted actions are retained as source text: fold the green paper and keep the offcut.",
+        "Maximos reads and Lydia requests translation; do not reverse their roles.",
+        "Preserve both denied completed actions in the last sentence; do not claim that folding or disposal already happened.",
+        "Reasonable name forms such as Maximus/Maximos and offcut/scrap are valid when identity and objects remain clear."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maximos",
+            "alternatives": [
+              "Maximos",
+              "Maximus"
+            ]
+          },
+          {
+            "label": "Lydia",
+            "alternatives": [
+              "Lydia"
+            ]
+          },
+          {
+            "label": "offcut",
+            "alternatives": [
+              "offcut",
+              "scrap",
+              "cutting"
+            ]
+          }
+        ],
+        "numbers": []
+      }
+    },
+    {
+      "id": "v3-long-en-el-laundry-repairs",
+      "split": "long_form",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "long_form",
+        "sentence_coverage",
+        "ownership",
+        "numbers",
+        "conditions",
+        "negation",
+        "late_facts"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 220.0,
+          "text": "Vera staffed the repair counter at a neighbourhood laundry. Pavel brought three green bags containing 18 jackets. The delivery list said 21, but they counted the garments together and corrected the list before accepting them. The count referred to jackets, not to bags or loose buttons. Pavel kept a copy of the corrected list and left the original with Vera.\n\nJules inspected the fasteners and prepared an estimate of €62.30 for the proposed repairs, not €26.30. It was an estimate for the whole order, not a charge for each jacket. Vera had not yet issued a final invoice. Jules could replace broken zips, but the customer had asked her to keep the old metal buttons in a small tin rather than throw them away. The tin belonged with the customer's order.\n\nThe work would have stopped if the sewing machine had lost power. The electricity remained on, and no such interruption occurred. A separate lamp failed, so Vera moved it away from the workbench. That lamp failure did not mean that the machine had stopped. Jules continued checking the seams while Pavel collected empty packaging from the floor.\n\nThe washing service remained open while the repairs were being assessed. A notice gave Tuesday at 15:45 as the next time to discuss the estimate; it was not a promise that every repaired jacket would be delivered then. The customer had to approve any additional repair before Jules could add it to the order. Silence from the customer would not count as approval.\n\nAt closing time, 12 jackets were ready and 6 still needed replacement parts. None had been collected by the customer. Vera marked order RP-39 as partly complete and stored the finished and unfinished garments on separate rails. Pavel took away the empty green bags, but he did not take the jackets or the tin of old buttons. The next update would report the remaining repairs, not describe all 18 jackets as returned.",
+          "speaker": "Speaker 9"
+        }
+      ],
+      "reference_translations": [
+        "Η Βέρα στελέχωνε τον πάγκο επισκευών ενός συνοικιακού καθαριστηρίου. Ο Πάβελ έφερε τρεις πράσινες τσάντες που περιείχαν 18 σακάκια. Ο κατάλογος παράδοσης έγραφε 21, αλλά μέτρησαν μαζί τα ρούχα και διόρθωσαν τον κατάλογο πριν τα παραλάβουν. Ο αριθμός αφορούσε σακάκια, όχι τσάντες ή μεμονωμένα κουμπιά. Ο Πάβελ κράτησε αντίγραφο του διορθωμένου καταλόγου και άφησε το πρωτότυπο στη Βέρα.\n\nΗ Τζουλς έλεγξε τα κουμπώματα και ετοίμασε εκτίμηση κόστους €62.30 για τις προτεινόμενες επισκευές, όχι €26.30. Η εκτίμηση αφορούσε ολόκληρη την παραγγελία, όχι κάθε σακάκι χωριστά. Η Βέρα δεν είχε ακόμη εκδώσει τελικό τιμολόγιο. Η Τζουλς μπορούσε να αντικαταστήσει χαλασμένα φερμουάρ, αλλά ο πελάτης της είχε ζητήσει να κρατήσει τα παλιά μεταλλικά κουμπιά σε ένα μικρό τενεκεδένιο κουτί αντί να τα πετάξει. Το κουτί συνόδευε την παραγγελία του πελάτη.\n\nΗ εργασία θα είχε σταματήσει αν η ραπτομηχανή είχε χάσει την παροχή ρεύματος. Το ρεύμα δεν κόπηκε και δεν σημειώθηκε τέτοια διακοπή. Χάλασε μια ξεχωριστή λάμπα, οπότε η Βέρα την απομάκρυνε από τον πάγκο εργασίας. Η βλάβη της λάμπας δεν σήμαινε ότι είχε σταματήσει η μηχανή. Η Τζουλς συνέχισε να ελέγχει τις ραφές ενώ ο Πάβελ μάζευε τις άδειες συσκευασίες από το πάτωμα.\n\nΗ υπηρεσία πλυσίματος παρέμεινε ανοιχτή όσο αξιολογούνταν οι επισκευές. Μια ειδοποίηση όριζε την Τρίτη στις 15:45 ως την επόμενη ώρα συζήτησης της εκτίμησης· δεν ήταν υπόσχεση ότι όλα τα επισκευασμένα σακάκια θα παραδίδονταν τότε. Ο πελάτης έπρεπε να εγκρίνει κάθε πρόσθετη επισκευή πριν η Τζουλς μπορέσει να την προσθέσει στην παραγγελία. Η σιωπή του πελάτη δεν θα θεωρούνταν έγκριση.\n\nΤην ώρα του κλεισίματος, 12 σακάκια ήταν έτοιμα και 6 χρειάζονταν ακόμη ανταλλακτικά. Ο πελάτης δεν είχε παραλάβει κανένα. Η Βέρα χαρακτήρισε την παραγγελία RP-39 μερικώς ολοκληρωμένη και αποθήκευσε τα έτοιμα και τα υπόλοιπα ρούχα σε χωριστές κρεμάστρες. Ο Πάβελ πήρε τις άδειες πράσινες τσάντες, αλλά δεν πήρε τα σακάκια ή το κουτί με τα παλιά κουμπιά. Η επόμενη ενημέρωση θα ανέφερε τις επισκευές που απέμεναν και δεν θα παρουσίαζε και τα 18 σακάκια ως επιστραμμένα."
+      ],
+      "review_criteria": [
+        "Translate all five paragraphs and every sentence; the repaired/unrepaired distinction at the end must not replace or erase the middle sections.",
+        "There are three bags and 18 jackets; 21 is the incorrect list count, not another delivery.",
+        "The €62.30 estimate is for the order, not €26.30, not per jacket and not a final invoice. Valid decimal localization is acceptable.",
+        "Keep Vera at the counter/invoicing role, Jules doing the repair inspection and Pavel transporting packaging; the customer retains the old buttons.",
+        "The machine power failure is hypothetical; electricity stayed on. A separate lamp did fail, without stopping the machine.",
+        "Tuesday 15:45 is a discussion time, not a promised delivery. Further repairs require affirmative customer approval; silence does not grant it.",
+        "At the end RP-39 is partly complete: 12 ready and 6 awaiting parts, none collected. Only the empty bags leave; jackets and old buttons remain."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Vera",
+            "alternatives": [
+              "Vera",
+              "Βέρα"
+            ]
+          },
+          {
+            "label": "Pavel",
+            "alternatives": [
+              "Pavel",
+              "Πάβελ",
+              "Παύλος"
+            ]
+          },
+          {
+            "label": "Jules",
+            "alternatives": [
+              "Jules",
+              "Τζουλ",
+              "Ζυλ"
+            ]
+          },
+          {
+            "label": "order code",
+            "alternatives": [
+              "RP-39"
+            ]
+          }
+        ],
+        "numbers": [
+          "18",
+          "21",
+          "62.30",
+          "26.30",
+          "15:45",
+          "12",
+          "6"
+        ]
+      }
+    },
+    {
+      "id": "v3-long-el-en-furniture-transfer",
+      "split": "long_form",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "long_form",
+        "sentence_coverage",
+        "donation_vs_loan",
+        "dimensions",
+        "numbers",
+        "counterfactual",
+        "late_facts"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 220.0,
+          "text": "Η Αθηνά συντόνισε τη μεταφορά επίπλων σε μια αίθουσα της γειτονιάς. Η Γαλάτεια πρόσφερε οκτώ μικρά τραπέζια και δάνεισε πέντε καρέκλες για την πρώτη εκδήλωση. Οι καρέκλες έπρεπε να επιστραφούν μετά τη χρήση· δεν περιλαμβάνονταν στη δωρεά των τραπεζιών. Ο Παύλος οδηγούσε το φορτηγάκι και δεν αποφάσιζε ποια έπιπλα θα κρατούσε η αίθουσα.\n\nΠριν από τη φόρτωση, η Αθηνά μέτρησε ένα τραπέζι με ύψος 0.92 μέτρα. Η παλιά ετικέτα έγραφε 9.2 μέτρα και διορθώθηκε. Το έπιπλο δεν κόπηκε ούτε άλλαξε μέγεθος. Μια άλλη σημείωση έδινε πλάτος 1.05 μέτρα· το πλάτος και το ύψος έπρεπε να παραμείνουν σε ξεχωριστά πεδία του καταλόγου.\n\nΤο υλικό συσκευασίας κόστισε €73.40 συνολικά. Το ποσό αφορούσε προστατευτικά καλύμματα και ταινία, όχι την αγορά των επίπλων. Η Γαλάτεια δεν ζήτησε να πληρωθεί για τα τραπέζια. Ο Παύλος κράτησε την απόδειξη των υλικών ώστε η Αθηνά να καταγράψει τη σωστή δαπάνη, χωρίς να παρουσιάσει τη δωρεά ως αγορά.\n\nΑν δεν είχε φτάσει η φορητή ράμπα, θα χρησιμοποιούσαν την πίσω είσοδο. Η ράμπα όμως παραδόθηκε πριν από το φορτηγάκι, και η ομάδα μπήκε από την μπροστινή πόρτα. Η πίσω είσοδος δεν χρησιμοποιήθηκε για αυτή τη μεταφορά. Το προσωπικό κράτησε εκείνον τον διάδρομο ελεύθερο για τους επισκέπτες που θα έρχονταν αργότερα.\n\nΣτο τέλος της ημέρας, τα οκτώ τραπέζια είχαν αποθηκευτεί στην αίθουσα, ενώ οι πέντε καρέκλες παρέμεναν ασφαλισμένες μέσα στο φορτηγάκι. Δεν θεωρήθηκαν χαμένες ή παραδομένες οριστικά. Το δελτίο MV-26 ανέφερε ότι ο Παύλος θα επέστρεφε τις καρέκλες στη Γαλάτεια το επόμενο πρωί. Η Αθηνά θα έλεγχε ξανά τον κατάλογο αφού επιβεβαιωνόταν αυτή η επιστροφή.",
+          "speaker": "Speaker 9"
+        }
+      ],
+      "reference_translations": [
+        "Athena coordinated the transport of furniture to a neighbourhood hall. Galatea donated eight small tables and lent five chairs for the first event. The chairs had to be returned after use; they were not included in the donation of the tables. Pavlos drove the van and did not decide which furniture the hall would keep.\n\nBefore loading, Athena measured a table that was 0.92 metres high. The old label said 9.2 metres and was corrected. The furniture was not cut or resized. Another note gave a width of 1.05 metres; width and height had to remain in separate fields in the inventory.\n\nThe packing material cost €73.40 in total. The amount covered protective covers and tape, not the purchase of the furniture. Galatea did not ask to be paid for the tables. Pavlos kept the receipt for the materials so that Athena could record the correct expense without presenting the donation as a purchase.\n\nIf the portable ramp had not arrived, they would have used the rear entrance. However, the ramp was delivered before the van, and the team entered through the front door. The rear entrance was not used for this move. The staff kept that corridor clear for the visitors who would arrive later.\n\nAt the end of the day, the eight tables had been stored in the hall, while the five chairs remained secured inside the van. They were not considered lost or permanently delivered. Form MV-26 said that Pavlos would return the chairs to Galatea the next morning. Athena would check the inventory again after that return was confirmed."
+      ],
+      "review_criteria": [
+        "Translate all five paragraphs, including the final MV-26 return arrangement; no invented repetitive filler or omission is acceptable.",
+        "Eight tables are donated; five chairs are lent and must be returned. Pavlos drives and does not own or allocate the furniture.",
+        "0.92 metres is the corrected height, 9.2 is wrong, and 1.05 is a separate width. The label changes but the physical furniture does not.",
+        "€73.40 buys packaging materials, not furniture; Galatea receives no purchase payment for her donated tables.",
+        "Failure of the ramp to arrive is counterfactual. It arrives before the van; the front entrance is actually used and the rear entrance is not.",
+        "The final chairs are secured in the van, not lost, donated or finally delivered. Their return to Galatea is due the next morning, and Athena checks the inventory afterwards.",
+        "Conventional name forms such as Athena/Athina, Galatea/Galateia and Pavlos/Paul are acceptable when each person and role remains distinct."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Athena",
+            "alternatives": [
+              "Athena",
+              "Athina"
+            ]
+          },
+          {
+            "label": "Galatea",
+            "alternatives": [
+              "Galatea",
+              "Galateia"
+            ]
+          },
+          {
+            "label": "Pavlos",
+            "alternatives": [
+              "Pavlos",
+              "Paul"
+            ]
+          },
+          {
+            "label": "form code",
+            "alternatives": [
+              "MV-26"
+            ]
+          }
+        ],
+        "numbers": [
+          "0.92",
+          "9.2",
+          "1.05",
+          "73.40"
+        ]
+      }
+    }
+  ]
+}

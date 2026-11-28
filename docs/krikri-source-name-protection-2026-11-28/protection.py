@@ -1,0 +1,168 @@
+"""Source-derived PERSON protection for one bounded development experiment.
+
+No model, reference answer, personal-name lexicon or case ID is an input here.
+Exact marker accounting does not certify the translated roles or meaning.
+"""
+from __future__ import annotations
+
+import copy
+from collections import Counter
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import re
+import unicodedata
+
+NORMALIZER_PATH = Path(__file__).resolve().parents[1] / "name-boundary-normalizer-2026-11-28/boundary_normalizer.py"
+_spec = importlib.util.spec_from_file_location("frozen_source_boundary_normalizer", NORMALIZER_PATH)
+_normalizer = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_normalizer)
+
+PREFIX = "__LSNP_"
+PATTERN = re.compile(r"__LSNP_[0-9a-f]{16}_[0-9]{4}_[0-9]{4}__")
+INSTRUCTION = (" Tokens beginning with __LSNP_ are opaque placeholders for personal names. "
+               "Copy every such token exactly once in the translation for its original input entry, "
+               "without changing any character. Do not add, delete, split, or move a token to another entry. "
+               "Translate all surrounding ordinary text.")
+
+
+def canonical(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def digest(value):
+    return hashlib.sha256(canonical(value).encode("utf-8")).hexdigest()
+
+
+def reserved_present(text):
+    # Comparison only. Preserve all source/output characters, including formats.
+    folded = "".join(c for c in unicodedata.normalize("NFKC", text).casefold()
+                     if unicodedata.category(c) != "Cf")
+    return "__lsnp" in folded
+
+
+def build_protection(segments, raw_entities, source_language):
+    """Use exact actual raw source spans and the unchanged reviewed normalizer."""
+    original = copy.deepcopy(segments)
+    normalized = _normalizer.propose_person_boundaries(segments, raw_entities, source_language)
+    source = "\n".join(item["text"] for item in segments)
+    if any(reserved_present(item["text"]) for item in segments):
+        raise ValueError("Original source collides with the reserved marker namespace.")
+    if len(segments) > 9999 or len(normalized["proposals"]) > 9999:
+        raise ValueError("The bounded marker identifier space is exceeded.")
+    if any(item["status"] == "review_required_no_change" for item in normalized["proposals"]):
+        raise ValueError("This source boundary requires unresolved review; no automatic protection.")
+    spans = [{"start": p["proposed_span"]["start"], "end": p["proposed_span"]["end"]}
+             for p in normalized["proposals"]]
+    nonce = digest({"source": source, "spans": spans})[:16]
+    markers = []
+    for occurrence, proposal in enumerate(normalized["proposals"]):
+        segment_index = proposal["segment_index"]
+        span = proposal["proposed_span"]
+        marker = f"{PREFIX}{nonce}_{segment_index:04d}_{occurrence:04d}__"
+        if marker in source:
+            raise ValueError("Generated marker already occurs in the original source.")
+        markers.append({"marker": marker, "segment_index": segment_index,
+                        "start": span["segment_start"], "end": span["segment_end"],
+                        "source_text": span["text"], "global_start": span["start"],
+                        "global_end": span["end"], "raw": copy.deepcopy(proposal["raw"]),
+                        "normalizer_status": proposal["status"]})
+    masked = copy.deepcopy(segments)
+    for index, segment in enumerate(segments):
+        selected = sorted((m for m in markers if m["segment_index"] == index), key=lambda m: m["start"])
+        parts, cursor = [], 0
+        for item in selected:
+            start, end = item["start"], item["end"]
+            if not cursor <= start < end <= len(segment["text"]) or segment["text"][start:end] != item["source_text"]:
+                raise ValueError("Protected name is not an exact nonoverlapping original segment slice.")
+            parts.extend((segment["text"][cursor:start], item["marker"]))
+            cursor = end
+        parts.append(segment["text"][cursor:])
+        masked[index]["text"] = "".join(parts)
+    bundle = {"schema_version": 1, "source_language": source_language, "source_segments": original,
+              "source_segments_sha256": digest(original), "source_text_sha256": hashlib.sha256(source.encode()).hexdigest(),
+              "normalizer_result": normalized, "masked_segments": masked, "markers": markers,
+              "nonce_derivation": "first16hex SHA256 canonical exact source text and normalized source offsets",
+              "semantic_safety_certified": False, "independent_boundary_review_required": True}
+    bundle["protection_binding_sha256"] = digest({"source_segments_sha256": bundle["source_segments_sha256"],
+                                                  "masked_segments": masked, "markers": markers})
+    # Reversibility is an input-integrity check, not a translated response.
+    restored, _ = restore_segments(bundle, masked)
+    if restored != original or segments != original:
+        raise ValueError("Source-only masking fails exact text/metadata reversibility.")
+    bundle["full_source_roundtrip_exact"] = True
+    return bundle
+
+
+def strict_response_strings(content, count):
+    """Reject duplicate/extra properties and malformed native translation JSON."""
+    def object_pairs(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("Native translation JSON repeats a property.")
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ValueError("Nonstandard JSON constant: " + value)
+
+    if not isinstance(content, str):
+        raise ValueError("The native final content is not text.")
+    value = json.loads(content, object_pairs_hook=object_pairs, parse_constant=invalid_constant)
+    if not isinstance(value, dict) or set(value) != {"translations"}:
+        raise ValueError("Native JSON must contain only the translations property.")
+    strings = value["translations"]
+    if not isinstance(strings, list) or len(strings) != count or any(not isinstance(t, str) or not t.strip() for t in strings):
+        raise ValueError("Native translation array has an invalid count or text value.")
+    for text in strings:
+        text.encode("utf-8")
+    return strings
+
+
+def restore_segments(bundle, translated_segments):
+    """Require exact same-entry occurrences before source-only restoration."""
+    original = bundle["source_segments"]
+    if digest(original) != bundle["source_segments_sha256"]:
+        raise ValueError("Original source metadata changed before restoration.")
+    if digest({"source_segments_sha256": bundle["source_segments_sha256"],
+               "masked_segments": bundle["masked_segments"], "markers": bundle["markers"]}) != bundle["protection_binding_sha256"]:
+        raise ValueError("Protection map or masked source changed before restoration.")
+    if not isinstance(translated_segments, list) or len(translated_segments) != len(original):
+        raise ValueError("Translated segment count changed before restoration.")
+    all_markers = [item["marker"] for item in bundle["markers"]]
+    if len(set(all_markers)) != len(all_markers):
+        raise ValueError("Protection map contains duplicate markers.")
+    restored = []
+    audit = []
+    for index, (before, translated) in enumerate(zip(original, translated_segments)):
+        if (not isinstance(translated, dict) or not isinstance(translated.get("text"), str) or
+                {k: v for k, v in translated.items() if k != "text"} != {k: v for k, v in before.items() if k != "text"}):
+            raise ValueError("Translated segment metadata/schema changed before restoration.")
+        text = translated["text"]
+        expected = [item for item in bundle["markers"] if item["segment_index"] == index]
+        by_marker = {item["marker"]: item for item in expected}
+        observed = PATTERN.findall(text)
+        if Counter(observed) != Counter(by_marker.keys()):
+            raise ValueError("A protected marker is missing, duplicated, unknown or in the wrong source segment.")
+        residue = PATTERN.sub("", text)
+        if reserved_present(residue):
+            raise ValueError("Translated text contains a malformed or unrecognized marker prefix.")
+        replacements = []
+
+        def replace(match):
+            item = by_marker[match.group(0)]
+            if before["text"][item["start"]:item["end"]] != item["source_text"]:
+                raise ValueError("Restoration value no longer matches its exact source slice.")
+            replacements.append(item["marker"])
+            return item["source_text"]
+
+        value = PATTERN.sub(replace, text)
+        if Counter(replacements) != Counter(by_marker.keys()) or reserved_present(value):
+            raise ValueError("Restoration failed exact once-only marker accounting.")
+        restored.append({**copy.deepcopy(before), "text": value})
+        audit.append({"segment_index": index, "expected_markers": list(by_marker),
+                      "observed_markers": observed, "restored_markers": replacements,
+                      "exact_same_segment_once_only": True, "metadata_preserved": True})
+    return restored, audit

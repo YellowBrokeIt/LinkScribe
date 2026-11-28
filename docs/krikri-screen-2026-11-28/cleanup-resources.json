@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "phase": "cleanup",
+  "started_at": "2026-11-28T02:53:24.651262+00:00",
+  "complete": true,
+  "passed": true,
+  "semantic_quality": "unreviewed",
+  "events": [
+    {
+      "event": "phase_complete",
+      "phase": "cleanup",
+      "complete": true,
+      "error": null,
+      "observed_at_seconds": 3.837
+    }
+  ],
+  "limits": {
+    "process_budget_mib": 6144,
+    "phase_seconds": 120,
+    "initialization_seconds": 180,
+    "case_seconds": 600
+  },
+  "plan_sha256": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+  "runner_sha256": "ae07f7772e1114e9f8c9a9e8f65689bcb4437495e36cb3cfec6e80d551b7734e",
+  "worker_sha256": "4504aa96d1751f83dfe4537e453efe922a8a57529a0065d64f20298bb2d97ff2",
+  "whole_machine_resource_approval": false,
+  "host_observation": {
+    "total_mib": 9967.3,
+    "minimum_available_mib": 8296.4,
+    "scope": "Uncontrolled host observation; unrelated activity can affect it."
+  },
+  "memory": {
+    "sample_count": 21,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "rss_interpretation": "Concurrent summed RSS may double-count shared pages.",
+    "pss_interpretation": "PSS apportions shared memory and is available only for complete readable samples.",
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "peak_rss_sample": {
+      "at_seconds": 3.232,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17547264,
+          "pss_bytes": 14176256
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 25796608,
+          "pss_bytes": 22432768
+        }
+      ],
+      "rss_bytes": 43343872,
+      "pss_bytes": 36609024
+    },
+    "peak_pss_sample": {
+      "at_seconds": 3.232,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17547264,
+          "pss_bytes": 14176256
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 25796608,
+          "pss_bytes": 22432768
+        }
+      ],
+      "rss_bytes": 43343872,
+      "pss_bytes": 36609024
+    },
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 41.3,
+    "peak_combined_pss_mib": 34.9
+  },
+  "worker_exit_code": 0,
+  "owned_process_group_stopped": true,
+  "oom_counters": {
+    "before": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "after": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "deltas": {
+      "/proc/vmstat": {
+        "scope": "host_global",
+        "counters": {
+          "oom_kill": 0
+        },
+        "counter_reset_or_scope_change": false
+      }
+    }
+  },
+  "elapsed_seconds": 4.027,
+  "finished_at": "2026-11-28T02:53:28.679089+00:00",
+  "phase_report_sha256": "7f220d205c24fb66453b7cb72a74870dae49a232d6130e0caa65c0d63459332b",
+  "frozen_inputs_unchanged": true
+}

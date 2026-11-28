@@ -1,0 +1,50 @@
+{
+  "fixture": {
+    "id": "two_speakers_returning",
+    "kind": "clean",
+    "path": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/fixtures-fresh-holdout/two_speakers_returning.wav",
+    "sha256": "dc977c1cb0af1a30946eeb0c59218039987412462d2e8c5a2d23990b559f087f",
+    "duration": 34.635,
+    "expected_speakers": 2,
+    "reference_intervals": [
+      {
+        "start": 0.5,
+        "end": 8.5,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 9.1,
+        "end": 16.835,
+        "speaker": "8455",
+        "short": false
+      },
+      {
+        "start": 17.435,
+        "end": 25.435,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 26.035,
+        "end": 34.035,
+        "speaker": "8455",
+        "short": false
+      }
+    ]
+  },
+  "construction": "Real recorded utterances, capped at eight seconds; 0.6-second inserted gaps. Returning speakers use different utterances. No oracle count reaches inference.",
+  "source_manifest_sha256": "33362c31bba21c931970b4255394362f750df7f0141c8b2f6822a587f96f257a",
+  "dataset": "LibriSpeech test-clean, OpenSLR12",
+  "source_url": "https://huggingface.co/datasets/openslr/librispeech_asr",
+  "license": "CC BY4.0",
+  "license_url": "https://www.openslr.org/12",
+  "attribution": "LibriSpeech: Vassil Panayotov, Guoguo Chen, Daniel Povey and Sanjeev Khudanpur; speech derived from LibriVox audiobooks.",
+  "reference_usage": "Expected identity/count/time intervals were used only for post-inference assessment, never passed to diarization or language models.",
+  "limitations": [
+    "Read English speech, not natural meetings or Greek speech.",
+    "Concatenation gaps simplify speaker boundaries.",
+    "Source-clip interiors include natural pauses; metrics are controlled-fixture indicators, not DER.",
+    "Short-turn and overlap stress cases do not establish supported overlap accuracy."
+  ]
+}

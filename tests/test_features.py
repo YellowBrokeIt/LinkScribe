@@ -39,7 +39,7 @@ def client(monkeypatch):
     (VALID_YT,"youtube","https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
     ("youtube.com/shorts/dQw4w9WgXcQ","youtube","https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
     (VALID_VIMEO,"vimeo","https://vimeo.com/12345678"),
-    ("https://player.vimeo.com/video/12345678","vimeo","https://vimeo.com/12345678"),
+    ("https://player.vimeo.com/video/12345678","vimeo","https://player.vimeo.com/video/12345678"),
     (VALID_DAILY,"dailymotion","https://www.dailymotion.com/video/x8abcd9"),
     ("https://dai.ly/x8abcd9","dailymotion","https://www.dailymotion.com/video/x8abcd9"),
 ])
@@ -67,12 +67,12 @@ def fake_audio(job_id, source):
     return target,"Sample " + source.provider
 
 
-def fake_recognize(path, language, model):
-    return ([{"start":0.0,"end":2.2,"text":"Hello world"},
+def fake_recognize(path, language, model, **_kwargs):
+    return module.RecognitionResult([{"start":0.0,"end":2.2,"text":"Hello world"},
              {"start":2.2,"end":4.0,"text":"Welcome back"}],"en")
 
 
-def fake_summary(segments):
+def fake_summary(segments, source_language=None):
     return {"summary":"A test conversation", "key_points":["Introductions"],
             "chapters":[{"start":0,"title":"Welcome"}]}
 
@@ -80,8 +80,10 @@ def fake_summary(segments):
 def install_fake_models(monkeypatch):
     monkeypatch.setattr(module,"_download_source_audio",fake_audio)
     monkeypatch.setattr(module,"_recognize",fake_recognize)
-    monkeypatch.setattr(module,"assign_speakers",lambda path,segments:[{**s,"speaker":"Speaker 1"} for s in segments])
-    monkeypatch.setattr(module,"translate_segments",lambda segments,target:[{**s,"text":"Γειά σου"} for s in segments])
+    monkeypatch.setattr(module,"assign_speakers",lambda path,segments,include_report=False:{
+        "segments":[{**s,"speaker":"Speaker 1"} for s in segments], "warnings":[],
+        "provenance":{"backend":"test-double","model":{"id":"test-double"},"settings":{},"warnings":[]}})
+    monkeypatch.setattr(module,"translate_segments",lambda segments,target,source_language=None:[{**s,"text":"Γειά σου"} for s in segments])
     monkeypatch.setattr(module,"summarize_segments",fake_summary)
 
 
@@ -93,7 +95,7 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     job_id=result.json()["id"]
     details=client.get(f"/api/jobs/{job_id}").json()
     assert details["status"]=="done",details
-    assert details["extras"]=={"translation_language":"el","summary":True,"speakers":True}
+    assert details["extras"]=={"translation_language":"el","summary":True,"speakers":True,"highlights":False}
     assert details["library_id"]==job_id
     assert not (module.jobs[job_id].workdir/"audio.mp3").exists()
     transcript=client.get(f"/api/library/{job_id}").json()
@@ -113,6 +115,10 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     assert updated["segments"][0]["start"]==0
     assert updated["segments"][1]["speaker"]=="Bob"
     assert updated["translations"]=={} and updated["summary"] is None
+    current_job=client.get(f"/api/jobs/{job_id}").json()
+    assert current_job["title"]=="Edited sample"
+    assert current_job["preview"]=="Alice: Changed words\nBob: Other speaker"
+    assert current_job["extras"]=={"translation_language":"","summary":False,"speakers":True,"highlights":False}
     assert "Changed words" in client.get(f"/api/library/{job_id}/download/txt").text
     assert "Changed words" in client.get(f"/api/jobs/{job_id}/download/txt").text
     assert client.get(f"/api/library/{job_id}/download/summary_md").status_code==404
@@ -120,6 +126,45 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     assert "Changed words" in client.get(f"/api/library/{job_id}/download/txt").text
     assert client.delete(f"/api/library/{job_id}").status_code==200
     assert client.get(f"/api/library/{job_id}").status_code==404
+
+
+@pytest.mark.parametrize("failure, expected_warning", [
+    ("unchanged", "No separate Greek translation"),
+    ("unexpected_script", "unexpected writing system"),
+])
+def test_rejected_translation_keeps_original_library_and_exports_with_warning(
+        client, monkeypatch, failure, expected_warning):
+    monkeypatch.setattr(module, "_download_source_audio", fake_audio)
+    monkeypatch.setattr(module, "_recognize", fake_recognize)
+    monkeypatch.setattr(module, "translate_segments", enhancements.translate_segments)
+    for name in ("LINKSCRIBE_TRANSLATION_MODEL", "LINKSCRIBE_TRANSLATION_BACKEND", "LINKSCRIBE_OLLAMA_MODEL"):
+        monkeypatch.delenv(name, raising=False)
+
+    def unchanged_reply(payload):
+        encoded = payload["messages"][1]["content"].split("JSON input: ", 1)[1]
+        return {"translations": [item["text"] if failure == "unchanged"
+                                 else "Η اقتباس απαιτεί άδεια."
+                                 for item in json.loads(encoded)]}
+
+    monkeypatch.setattr(enhancements, "_ollama", unchanged_reply)
+    response = client.post("/api/link", data={"url": VALID_VIMEO, "mode": "audio",
+        "consent": "true", "target_language": "el"})
+    assert response.status_code == 200
+    job_id = response.json()["id"]
+    job = client.get(f"/api/jobs/{job_id}").json()
+    assert job["status"] == "done" and not job["extras"]["translation_language"]
+    assert any(expected_warning in warning for warning in job["warnings"])
+    record = client.get(f"/api/library/{job_id}").json()
+    assert record["translations"] == {} and record["segments"] == fake_recognize(None, None, None).segments
+    assert any(expected_warning in warning for warning in record["processing_metadata"]["warnings"])
+    assert client.get(f"/api/jobs/{job_id}/download/translation_txt").status_code == 404
+    archive = zipfile.ZipFile(io.BytesIO(client.get(f"/api/library/{job_id}/download/zip").content))
+    assert not any(name.startswith("translation_") for name in archive.namelist())
+    assert "Hello world" in archive.read("transcript.txt").decode()
+    assert not (module.jobs[job_id].workdir / "audio.mp3").exists()
+    module.jobs.clear()
+    assert client.get(f"/api/library/{job_id}").json()["translations"] == {}
+    assert "Hello world" in client.get(f"/api/library/{job_id}/download/txt").text
 
 
 def test_batch_is_one_queue_slot_and_continues_after_failure(client,monkeypatch):
@@ -154,7 +199,7 @@ def test_batch_validation_and_speaker_caption_constraints(client):
 
 def test_unavailable_ollama_preserves_transcript(client,monkeypatch):
     install_fake_models(monkeypatch)
-    def offline(*args):raise enhancements.EnhancementError("Local AI is not installed")
+    def offline(*args,**kwargs):raise enhancements.EnhancementError("Local AI is not installed")
     monkeypatch.setattr(module,"translate_segments",offline)
     monkeypatch.setattr(module,"summarize_segments",offline)
     result=client.post("/api/link",data={"url":VALID_VIMEO,"mode":"audio","consent":"true","target_language":"el","summary":"true"})
@@ -162,6 +207,62 @@ def test_unavailable_ollama_preserves_transcript(client,monkeypatch):
     assert job["status"]=="done" and len(job["warnings"])==2
     assert job["extras"]["translation_language"]=="" and not job["extras"]["summary"]
     assert client.get(f"/api/jobs/{job['id']}/download/txt").status_code==200
+
+
+@pytest.mark.parametrize("language,target", [("en", "el"), ("el-GR", "en")])
+def test_enhancement_pipeline_passes_detected_source_to_translation(client, monkeypatch, language, target):
+    calls = []
+    segments = [{"start": 0, "end": 2, "text": "Original transcript", "speaker": "Speaker 1"}]
+
+    def translate(source, selected_target, source_language=None):
+        calls.append((selected_target, source_language))
+        return [{**segment, "text": "Translated transcript"} for segment in source]
+
+    monkeypatch.setattr(module, "translate_segments", translate)
+    monkeypatch.setattr(module, "summarize_segments", fake_summary)
+    job = module._new_job("owned-test-text", title="Source-language forwarding")
+    module._enhance_and_save(job.id, segments, language, "owned_test_text", None, False, target, True)
+    assert calls == [(target, language)]
+    assert job.status == "done" and not job.warnings
+    record = client.get(f"/api/library/{job.id}").json()
+    assert record["segments"] == segments and record["summary"]["summary"] == "A test conversation"
+    assert record["translations"][target][0]["text"] == "Translated transcript"
+    assert client.get(f"/api/jobs/{job.id}/download/txt").status_code == 200
+
+
+@pytest.mark.parametrize("invalid_task", ["translation", "summary"])
+def test_invalid_task_model_does_not_discard_the_other_enhancement(client, monkeypatch, invalid_task):
+    monkeypatch.setenv("LINKSCRIBE_OLLAMA_MODEL", "" if invalid_task == "summary" else "qwen3:4b")
+    monkeypatch.setenv("LINKSCRIBE_TRANSLATION_MODEL", "" if invalid_task == "translation" else "translategemma:4b")
+    actual_models = []
+
+    def respond(path, payload, timeout):
+        if enhancements.is_ollama_control_request(payload):
+            return {"done": True, "done_reason": "unload"}
+        assert path == "/api/chat"
+        actual_models.append(payload["model"])
+        if payload["model"] == "translategemma:4b":
+            content = "Η Μαρία αποθήκευσε το κείμενο."
+        elif "excerpt" in payload["messages"][0]["content"]:
+            content = json.dumps({"notes": "Maria saved the text.", "chapter_title": "Saved text"})
+        else:
+            content = json.dumps({"summary": "Maria saved the text.", "key_points": ["Text saved"]})
+        return {"done": True, "message": {"content": content}}
+
+    monkeypatch.setattr(enhancements, "local_ollama_json", respond)
+    segments = [{"start": 0, "end": 2, "text": "Maria saved the text."}]
+    job = module._new_job("owned-test-text", title="Independent model configuration")
+    module._enhance_and_save(job.id, segments, "en", "owned_test_text", None, False, "el", True)
+    record = client.get(f"/api/library/{job.id}").json()
+    assert job.status == "done" and len(job.warnings) == 1
+    assert job.warnings[0].startswith(invalid_task.title() + ":")
+    assert record["segments"] == segments
+    if invalid_task == "translation":
+        assert record["translations"] == {} and record["summary"]["summary"] == "Maria saved the text."
+        assert actual_models == ["qwen3:4b"]
+    else:
+        assert record["summary"] is None and record["translations"]["el"][0]["text"] == "Η Μαρία αποθήκευσε το κείμενο."
+        assert actual_models == ["translategemma:4b"]
 
 
 def test_library_edit_rejects_invalid_and_markup_preserved(client,monkeypatch):
@@ -176,6 +277,7 @@ def test_library_edit_rejects_invalid_and_markup_preserved(client,monkeypatch):
 
 
 def test_speaker_overlap_with_pyannote_object(monkeypatch,tmp_path):
+    monkeypatch.setenv("LINKSCRIBE_SPEAKER_BACKEND", "pyannote")
     monkeypatch.setenv("HF_TOKEN","dummy-token")
     class Timeline:
         def itertracks(self,yield_label):
@@ -248,7 +350,7 @@ def test_runtime_prefers_supported_deno_and_falls_back_to_supported_node(monkeyp
     assert runtime_check.yt_dlp_js_options() == {"js_runtimes":{"node":{}}}
     installed(deno="deno 2.1.0\n",node="v20.0.0\n")
     assert runtime_check.runtime_details()["supported"] is False
-    assert runtime_check.yt_dlp_js_options() == {}
+    assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {}}
     installed(node="v26.12.1\n")
     assert runtime_check.runtime_details()["runtime"] == "node"
     installed(deno="deno 2.3.0\n")
@@ -275,7 +377,7 @@ def test_node_october_2026_patched_release_floors(monkeypatch):
     monkeypatch.setattr(runtime_check.shutil, "which", lambda name: f"/usr/bin/{name}")
     monkeypatch.setattr(runtime_check.subprocess, "run", lambda args, **kwargs: Result(versions[Path(args[0]).name]))
     assert runtime_check.runtime_details()["runtime"] is None
-    assert runtime_check.yt_dlp_js_options() == {}
+    assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {}}
     versions["node"] = "v24.22.1\n"
     assert runtime_check.runtime_details()["runtime"] == "node"
     assert runtime_check.yt_dlp_js_options() == {"js_runtimes": {"node": {}}}

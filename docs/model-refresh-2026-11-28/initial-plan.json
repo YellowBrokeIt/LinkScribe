@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T00:58:15.633757+00:00",
+  "status": "frozen before model setup and inference",
+  "purpose": "Screen one distinct native non-thinking-only checkpoint for English/Greek translation under the unchanged production protocol.",
+  "hypothesis": "The refreshed instruction-trained weights may improve fidelity within the existing output budget; generic multilingual support and benchmark gains are not evidence that these meaning errors are repaired.",
+  "base_commit": "929cf2d8bc70b97ebe5f53507f356e418987be90",
+  "source_sha256": {
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+    "tests/evaluate_translation_quality.py": "412265b53e0dfb9333b90acdf117f84764acd2fcbe73568c122882ed669980f4",
+    "tests/smoke_full_local_workflow.py": "bfac638d06e4fb747a3702668178b08b828bf3841748797ed94ac9622a73b5ce",
+    "tests/measure_summary_memory.py": "7e6eeb61349b42562169dbf598fc9e885e65967cf5170faebe77a178120f7412",
+    "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626",
+    "docs/translation-followup-2026-11-28/baseline-development.json": "24ff0a087191a112f8f7b778638d0a2c7df4b9518f2d243a35f976eef14824ba",
+    "docs/model-refresh-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/model-refresh-2026-11-28/official-manifest.json": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "docs/model-refresh-2026-11-28/registry-metadata.json": "6164f85d13a163e0c37540a6687f3b7498a6acff1bbaa6ff1396221c6febcb04"
+  },
+  "runner_sha256": "3022ca8ce764304a012d1b806a79d27d7e8babd16144adb9529110842e4645e3",
+  "setup_runner_sha256": "3afd1c6e3d743842847a8407f2a4bd49d392b86ffa5774d5ab231e32253fbb59",
+  "runtime": {
+    "version": "0.40.12",
+    "binary_sha256": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+    "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+    "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba"
+  },
+  "model": {
+    "tag": "qwen3:4b-instruct-2507-q4_K_M",
+    "manifest_url": "https://registry.ollama.ai/v2/library/qwen3/manifests/4b-instruct-2507-q4_K_M",
+    "manifest_sha256": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "model_blob_sha256": "85e4a5b7b8ef0e48af0e8658f5aaab9c2324c76c1641493f4d1e25fce54b18b9",
+    "model_blob_bytes": 2497280480,
+    "template_sha256": "eade0a07cac7712787bbce23d12f9306adb4781d873d1df6e16f7840fa37afec",
+    "license": "Apache-2.0",
+    "quantization": "Q4_K_M",
+    "native_non_thinking_only_publisher_claim": true
+  },
+  "request_profile": {
+    "think": false,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 4,
+    "schema": "unchanged production translations array schema",
+    "timeout_seconds": 240,
+    "retain_models": false,
+    "max_resident_responses_before_unload": 2,
+    "sampling_note": "Native template and model parameter defaults are part of this package. Explicit production temperature 0 overrides native temperature 0.7; no publisher sampling change or explicit seed is introduced."
+  },
+  "limits": {
+    "aggregate_seconds": 900,
+    "process_budget_mib": 6144,
+    "memory_scope": "Concurrent evaluator and owned Ollama process-tree RSS upper bound, with PSS also reported. Sampled at 0.2 s. Exceeding budget rejects and stops after the current case; this is not a kernel-enforced cap.",
+    "whole_machine_goal_gib": 7.3,
+    "whole_machine_approval": false
+  },
+  "evaluation": {
+    "corpus": "docs/model-refresh-2026-11-28/development-cases.json",
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "case_count": 6,
+    "split": "development",
+    "retained_baseline": "docs/translation-followup-2026-11-28/baseline-development.json",
+    "baseline_rerun": false,
+    "attempts_per_case": 1,
+    "order": "original exposed development corpus order"
+  },
+  "controls": [
+    "Execute unchanged production enhancements.py; source hashes must match before and after.",
+    "Use the official native package without custom prompt, glossary, source-specific substitution, adapter, or request retry.",
+    "Compare actual request bodies with retained production baseline after removing only model name.",
+    "Observe every request and preserve raw returned JSON, errors, source metadata, structural results, and lexical review flags.",
+    "Require normal completion, nonempty final content, empty reasoning, and explicit unload acknowledgement before another case.",
+    "Stop the suite on the first execution, structure, protocol, cleanup, or sampled resource failure. Lexical flags are review signals, not semantic judgments.",
+    "One owned loopback daemon; one model and request at a time. Private startup logs stay outside the repository.",
+    "No summary calls, unused validation reads, heldout inference, or automatic promotion."
+  ],
+  "semantic_review": {
+    "required_before_more_tasks": true,
+    "criteria": "Use every existing case-specific proposition criterion. Preserve people/roles, numbers and units, negation scope, uncertainty, actions/conditions, chronology, and complete content. Fluency does not compensate for material changes.",
+    "major_error_rule": "Any material omission, invention, role reversal, name substitution, quantity/relationship error, or changed condition blocks quality promotion.",
+    "interpretation": "Six exposed owned scenarios form a development screen, not a general benchmark or v1 quality gate."
+  },
+  "research_sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+      "supports": "Distinct refreshed 4B instruction checkpoint, Apache 2.0, native non-thinking-only design; generic multilingual and instruction gains, not Greek-specific quality proof."
+    },
+    {
+      "url": "https://ollama.com/library/qwen3:4b-instruct-2507-q4_K_M",
+      "supports": "Official exact Q4_K_M tag, 2.5 GB package, manifest prefix 0edcdef34593."
+    },
+    {
+      "url": "https://ollama.com/library/qwen3:4b-instruct-2507-q4_K_M/blobs/eade0a07cac7",
+      "supports": "Native template has ordinary assistant generation prefix without a thinking branch."
+    },
+    {
+      "url": "https://qwenlm.github.io/blog/qwen3/",
+      "supports": "Publisher family-level language list explicitly includes Greek and English; no claim of measured task fidelity."
+    }
+  ],
+  "candidate_selection_limits": "Qwen3.5 4B, TranslateGemma 4B, Hy-MT3 and Marian already have retained failed translation evidence. Official Qwen3.6 collection did not supply a verified small candidate within this budget. This checkpoint was absent from prior trial identities.",
+  "resource_expectation": "Same 4B Qwen architecture and quantization class as the measured baseline. At 8192 context, a theoretical F16 K/V cache is approximately 1.125 GiB before graph/runtime overhead. This is a fit hypothesis, not a measured resource pass.",
+  "coordination": "Parent approved controls and released the ASR inference slot at 00:56:21 UTC; actual inference begins only after verified pull-only setup and frozen-file preflight."
+}

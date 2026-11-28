@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T20:05:32.246660+00:00",
+  "dataset": {
+    "name": "google/fleurs",
+    "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+    "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+    "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+    "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+  },
+  "selection": {
+    "method": "First two Greek cases in the existing development manifest order, fixed by the review task before this new Auto/Small run. Prior development outputs are already exposed; no new inference informed this subset.",
+    "purpose": "Regression/default-route coverage of omitted model and omitted language form fields through actual upload, automatic Greek detection, SQLite, exports, cleanup and separate-interpreter retrieval.",
+    "representativeness": "Two previously exposed read-speech clips; not fresh semantic validation, an accuracy estimate or a broad retest.",
+    "source_manifest": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/fixtures.json",
+    "source_manifest_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+    "frozen_case_ids": [
+      "fleurs-el_gr-validation-2-1528",
+      "fleurs-el_gr-validation-5-1515"
+    ]
+  },
+  "audio_preparation": "Downloaded the dataset viewer audio renditions unchanged. These are native recorded speech, not synthesized speech. Viewer audio encoding may differ from the original dataset container; exact downloaded bytes are identified by SHA-256. No trimming, enhancement or reference-conditioned decoding is performed.",
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "audio_file": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/audio/fleurs-el_gr-validation-2-1528.wav",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "audio_bytes": 426298,
+      "audio_mime": "audio/wav",
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "dataset_normalized_reference": "κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 2,
+        "sentence_id": 1528,
+        "dataset_path": "/root/.cache/huggingface/datasets/downloads/extracted/5844c535a82f245e5b429361d811054b811529429ac0549b7a6a75254aa32c36/10339439174684919166.wav",
+        "dataset_num_samples": 106560,
+        "dataset_sample_rate": 16000,
+        "dataset_gender_label": 1,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/2/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=2&length=1"
+      },
+      "review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ]
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "language": "el",
+      "audio_file": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/audio/fleurs-el_gr-validation-5-1515.wav",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "audio_bytes": 384058,
+      "audio_mime": "audio/wav",
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "dataset_normalized_reference": "είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του μαρτελί μέσα σε τέσσερα χρόνια",
+      "provenance": {
+        "dataset": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "config": "el_gr",
+        "split": "validation",
+        "row_index": 5,
+        "sentence_id": 1515,
+        "dataset_path": "/root/.cache/huggingface/datasets/downloads/extracted/5844c535a82f245e5b429361d811054b811529429ac0549b7a6a75254aa32c36/10529921625374252632.wav",
+        "dataset_num_samples": 96000,
+        "dataset_sample_rate": 16000,
+        "dataset_gender_label": 1,
+        "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/5/audio/audio.wav",
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=5&length=1"
+      },
+      "review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ]
+    }
+  ]
+}

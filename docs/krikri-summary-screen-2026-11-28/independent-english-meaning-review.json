@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:18:58.541933+00:00",
+  "case_id": "summary-en-consent-and-roles",
+  "review_complete": true,
+  "independent_of_runner_author": true,
+  "decision": "Reject English summary; Greek remains unrun. Mechanical success does not approve factual content.",
+  "classification": "major_error",
+  "major_error_count": 2,
+  "original_criteria_satisfied": false,
+  "paragraph_points_and_chapter_reviewed": true,
+  "approved_to_run_greek": false,
+  "plan_sha256": "668f410ee4100ae2d195c7aeb061f56b2ed59cc24ca4edaaa773bcabfbb7c914",
+  "english_report_sha256": "26504d0a3bd1024afd48bf254a5c88c4916f4a09d13311f59d84709a48b82c26",
+  "english_resources_sha256": "e0b72730654c1292a2fe774927d617a367396be7dfd9b2f8737e8e75e348eb9b",
+  "original_review_criteria_sha256": "b551d2f89ea30e037d2ea42c058df4161aaa4479f24e84681b1ceacd23a1c9da",
+  "source_cases_sha256": "2b7edc5d44c92e1966e0c5637a524e2dce5d1e28f99ade3b2b83a193152c618b",
+  "before_output_criteria_record_sha256": "f6ea2d0ef587f2bc6c532acfa748d943431d3282eebb50eb5b9213a91712244b",
+  "sample_stream_sha256": "5982970965e944e53856040f41ae7d1e2c9387795417f996bcd40bdd65007cc6",
+  "frozen_authorization_bindings_verified": 82,
+  "actual_raw_summary": {
+    "chapter_title": "Organising a Local Oral History Event",
+    "key_points": [
+      "Beatrice organises an oral-history booth with Rowan lending the recorder (owner).",
+      "Hana operates the recorder during the event.",
+      "12 volunteer interviews are scheduled.",
+      "8 speakers allow edited public quotations, 4 allow only private recordings.",
+      "No full recording permission granted for publication.",
+      "Budget corrected from €847.50 to €84.75 for equipment.",
+      "Event room booking status is pending confirmation (Friday possibility).",
+      "Beatrice must confirm room booking and verify speaker permissions before publication. Hana returns recorder to Rowan post-event. No interviews completed yet."
+    ],
+    "summary": "concise factual summary"
+  },
+  "actual_application_result": {
+    "summary": "concise factual summary",
+    "key_points": [
+      "Beatrice organises an oral-history booth with Rowan lending the recorder (owner).",
+      "Hana operates the recorder during the event.",
+      "12 volunteer interviews are scheduled.",
+      "8 speakers allow edited public quotations, 4 allow only private recordings.",
+      "No full recording permission granted for publication.",
+      "Budget corrected from €847.50 to €84.75 for equipment.",
+      "Event room booking status is pending confirmation (Friday possibility).",
+      "Beatrice must confirm room booking and verify speaker permissions before publication. Hana returns recorder to Rowan post-event. No interviews completed yet."
+    ],
+    "chapters": [
+      {
+        "start": 0.5,
+        "title": "Organising a Local Oral History Event"
+      }
+    ]
+  },
+  "material_findings": [
+    {
+      "kind": "nonfactual_placeholder_in_required_summary_field",
+      "output": "concise factual summary",
+      "source": "The four complete transcript segments contain concrete event facts, responsibilities, permissions, corrected amount and pending actions.",
+      "reason": "The required summary paragraph contains no source facts and is an exact copy of the example JSON value in the actual system prompt. Real key points do not supply the missing paragraph."
+    },
+    {
+      "kind": "required_check_weakened",
+      "source": "Beatrice must check each quotation with its speaker before publication.",
+      "output": "Beatrice must confirm room booking and verify speaker permissions before publication. Hana returns recorder to Rowan post-event. No interviews completed yet.",
+      "reason": "Generic verification of speaker permissions does not preserve the stated requirement to check each individual quotation with its speaker. This necessary publication check was already in the unchanged source/review criterion."
+    }
+  ],
+  "preserved_facts": [
+    "Rowan remains recorder owner and lender; Hana operates and returns it; Beatrice organises and seeks confirmation.",
+    "Twelve scheduled interviews; eight allow edited public quotations, four private recording only, nobody full-recording publication.",
+    "Corrected equipment budget84.75 euros versus rejected847.50 euros.",
+    "Friday depends on pending room confirmation; no interviews have occurred."
+  ],
+  "additional_qualification": "Hana return timing is phrased post-event instead of after interviews; no role reversal or completed-action claim is attributed.",
+  "chapter_review": {
+    "start": 0.5,
+    "title": "Organising a Local Oral History Event",
+    "source_grounded_topic": true
+  },
+  "execution": {
+    "generation_calls": 1,
+    "normal_stop": true,
+    "prompt_tokens": 384,
+    "output_tokens": 135,
+    "samples": 387,
+    "elapsed_seconds": 47.67379,
+    "cumulative_model_stage_seconds": 67.93631099999999,
+    "peak_rss_bytes": 5849530368,
+    "peak_pss_bytes": 5840110592,
+    "owned_cleanup_passed": true,
+    "worker_exit_code": 0
+  },
+  "source_repair_or_retry": false,
+  "new_production_or_validation_approval": false,
+  "reviewer_native_model_network_calls": 0
+}

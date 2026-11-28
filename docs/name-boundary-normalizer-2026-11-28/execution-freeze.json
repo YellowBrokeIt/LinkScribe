@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-28T04:40:26.528163+00:00",
+  "approved_scope": "one_offline_source_boundary_replay",
+  "plan": {
+    "path": "docs/name-boundary-normalizer-2026-11-28/plan.json",
+    "bytes": 6948,
+    "sha256": "9d708e04ac952039e332314e098ab6befa90dd6b75d07842772aeb9992d41b76"
+  },
+  "files": [
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/proposal.md",
+      "bytes": 6746,
+      "sha256": "3b397f5f508cb49891d69a5de578b6b9e3d62bcf13e86440734ae731f8476e13"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py",
+      "bytes": 8299,
+      "sha256": "fd91e0c9c944f5c37cf3ec39780c08b459d27c38bc66bb63b36c75e7c1206be0"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/edge-cases.json",
+      "bytes": 33939,
+      "sha256": "1baad8b028f848dc29b3aad97fc97b5f9a17b0f5592a464c35dc2585c2bed337"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/check_controls.py",
+      "bytes": 4157,
+      "sha256": "58a22d97b46f20b195e33ebab7518dac73775bce7c091bf0abb6104fb4fa7c16"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/replay.py",
+      "bytes": 5170,
+      "sha256": "6ff71a38531b6dfc20f2e5e9cd029c0b3d74ae2fe2c48e55d3d9329594a7f090"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/independent-pre-replay-contract-review.json",
+      "bytes": 11176,
+      "sha256": "6281f49eaee8c7dc6602b68feb27076176eb38c584e41198e99d1727007d6f1a"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/control-invocation.json",
+      "bytes": 549,
+      "sha256": "5f407259ead432c3c4a1e2461be6677925be2dd9ed45d74f270318e907169490"
+    },
+    {
+      "path": "docs/name-boundary-normalizer-2026-11-28/control-results.json",
+      "bytes": 73520,
+      "sha256": "adf049c3b5c6fd0dc015f59cc5748be1a4a6770e6f55e0fbe12685d096c6a075"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/evidence-manifest.json",
+      "bytes": 13161,
+      "sha256": "b6a13b115182b84c1bcc8e20a6e37c30c69afd3e2c5a9a04cd1c065e5423b5e2"
+    },
+    {
+      "path": "docs/name-span-detector-screen-2026-11-28/independent-output-review.json",
+      "bytes": 13343,
+      "sha256": "6c42cc925456fdd3b827ab86d34da01c773f50d125f6da0787ba9a212fc8206b"
+    }
+  ],
+  "independent_contract_review_sha256": "6281f49eaee8c7dc6602b68feb27076176eb38c584e41198e99d1727007d6f1a",
+  "unchanged_annotation_sha256_reviewer_only": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+  "authorization": {
+    "source": "parent root messages and independent reviewer final contract acknowledgment",
+    "scope": "One replay of unchanged retained six detector outputs under the frozen generic rule; no detector, masking or translation execution.",
+    "reviewer_accepted": true
+  },
+  "raw_detector_profile_remains_rejected": true,
+  "automatic_semantic_acceptance": false,
+  "known_counterexamples_remain_semantic_limits": true,
+  "limits": {
+    "wall_seconds": 30,
+    "cpu_seconds": 10,
+    "maximum_cpu_affinity": 4,
+    "address_space_mib": 512,
+    "replays_per_case": 1,
+    "case_count": 6,
+    "detector_calls": 0,
+    "translation_calls": 0,
+    "masking_calls": 0,
+    "new_downloads": 0
+  },
+  "actual_command": [
+    "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+    "docs/name-boundary-normalizer-2026-11-28/replay.py",
+    "--execution-freeze",
+    "docs/name-boundary-normalizer-2026-11-28/execution-freeze.json"
+  ],
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

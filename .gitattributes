@@ -1,0 +1,194 @@
+# These QA declarations verify exact bytes on Linux, macOS and Windows.
+# Keep the recorded LF source identities through checkout; do not normalize hashes.
+.gitattributes text eol=lf
+pytest.ini text eol=lf
+tests/qa_qwen3_asr_candidate.py text eol=lf
+tests/test_qwen3_asr_candidate_qa.py text eol=lf
+.github/workflows/qwen3-asr-candidate-qa.yml text eol=lf
+docs/qwen3-asr-screen-2026-11-28/*.json text eol=lf
+docs/qwen3-asr-screen-2026-11-28/*.md text eol=lf
+docs/qwen3-asr-screen-2026-11-28/*.py text eol=lf
+docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt text eol=lf
+docs/qwen3-asr-hosted-env-followup-2026-11-28/*.json text eol=lf
+docs/qwen3-asr-hosted-env-followup-2026-11-28/*.md text eol=lf
+docs/qwen3-asr-hosted-env-followup-2026-11-28/*.yml text eol=lf
+docs/qwen3-asr-hosted-env-followup-2026-11-28/*.log text eol=lf
+docs/asr-2026-11-26/fixtures.json text eol=lf
+docs/parakeet-screen-2026-11-28/input-arrays.json text eol=lf
+docs/parakeet-screen-2026-11-28/semantic-criteria.json text eol=lf
+# Full large-v3 preparation and actual Qwen output records retain exact bytes.
+tests/qa_large_v3_candidate.py text eol=lf
+tests/test_large_v3_candidate_qa.py text eol=lf
+.github/workflows/large-v3-candidate-qa.yml text eol=lf
+docs/large-v3-screen-2026-11-28/**/*.json text eol=lf
+docs/large-v3-screen-2026-11-28/**/*.md text eol=lf
+docs/large-v3-screen-2026-11-28/**/*.py text eol=lf
+docs/large-v3-screen-2026-11-28/**/*.txt text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.json text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.jsonl text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.md text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.py text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.log text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.txt text eol=lf
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.wav -text
+docs/qwen3-asr-hosted-results-2026-11-28/**/*.npy -text
+
+# Preserve the exact frozen Greek-model source, protocol and review bytes.
+docs/greek-specialist-research-2026-11-28/**/*.json text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.jsonl text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.md text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.py text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.txt text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.log text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.jinja text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.patch text eol=lf
+docs/greek-specialist-research-2026-11-28/**/*.sha256 text eol=lf
+docs/krikri-screen-2026-11-28/**/*.json text eol=lf
+docs/krikri-screen-2026-11-28/**/*.jsonl text eol=lf
+docs/krikri-screen-2026-11-28/**/*.md text eol=lf
+docs/krikri-screen-2026-11-28/**/*.py text eol=lf
+docs/krikri-screen-2026-11-28/**/*.txt text eol=lf
+docs/krikri-screen-2026-11-28/**/*.log text eol=lf
+docs/krikri-screen-2026-11-28/**/*.jinja text eol=lf
+docs/krikri-screen-2026-11-28/**/*.patch text eol=lf
+docs/krikri-screen-2026-11-28/**/*.sha256 text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.json text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.jsonl text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.md text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.py text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.txt text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.log text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.jinja text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.patch text eol=lf
+docs/krikri-name-preservation-2026-11-28/**/*.sha256 text eol=lf
+
+# Retain exact bytes for the frozen full-large-v3 hosted result.
+docs/large-v3-hosted-results-2026-11-28/**/*.json text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.jsonl text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.md text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.py text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.txt text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.log text eol=lf
+docs/large-v3-hosted-results-2026-11-28/**/*.wav -text
+docs/large-v3-hosted-results-2026-11-28/**/*.npy -text
+
+# Physical-duration timing regressions retain their exact source evidence.
+docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json text eol=lf
+tests/test_processing_warnings.py text eol=lf
+docs/processing-warnings-2026-11-28/**/*.json text eol=lf
+docs/processing-warnings-2026-11-28/**/*.md text eol=lf
+docs/processing-warnings-2026-11-28/**/*.txt text eol=lf
+docs/processing-warnings-2026-11-28/**/*.log text eol=lf
+docs/name-span-protection-research-2026-11-28/**/*.json text eol=lf
+docs/name-span-protection-research-2026-11-28/**/*.md text eol=lf
+docs/name-span-protection-research-2026-11-28/**/*.py text eol=lf
+docs/name-span-protection-research-2026-11-28/**/*.txt text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.json text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.jsonl text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.md text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.py text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.txt text eol=lf
+docs/name-span-detector-screen-2026-11-28/**/*.sha256 text eol=lf
+tests/test_asr_timing_bounds.py text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.json text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.jsonl text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.md text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.py text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.txt text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.log text eol=lf
+docs/asr-timing-boundary-2026-11-28/**/*.patch text eol=lf
+tests/replay_asr_timing_bounds.py text eol=lf
+docs/qwen3-asr-workflow-retirement-2026-11-28/*.yml text eol=lf
+docs/qwen3-asr-workflow-retirement-2026-11-28/*.py text eol=lf
+docs/qwen3-asr-workflow-retirement-2026-11-28/*.json text eol=lf
+docs/qwen3-asr-workflow-retirement-2026-11-28/*.md text eol=lf
+docs/qwen3-asr-workflow-retirement-2026-11-28/*.txt text eol=lf
+
+# Preserve the current provider repair and its frozen supporting evidence.
+tests/test_provider_metadata_reuse.py text eol=lf
+docs/provider-metadata-reuse-2026-11-28/** text eol=lf
+docs/name-boundary-normalizer-2026-11-28/** text eol=lf
+docs/integration-2026-11-28/hosted-7a53991/** text eol=lf
+docs/integration-2026-11-28/provider-metadata-local/** text eol=lf
+docs/live-source-diagnosis-7a53991-2026-11-28/** text eol=lf
+docs/live-source-diagnosis-7a53991-2026-11-28/**/*.zip -text
+docs/live-source-diagnosis-7a53991-2026-11-28/comparison-inputs/publisher-TOS-en.srt -text
+docs/processing-warnings-hosted-2026-11-28/** text eol=lf
+docs/processing-warnings-hosted-2026-11-28/**/*.png -text
+docs/processing-warnings-hosted-2026-11-28/**/*.wav -text
+docs/processing-warnings-hosted-2026-11-28/**/*.zip -text
+
+# Completed provider and language evidence keeps its original identities.
+docs/integration-2026-11-28/hosted-6de3fad/** text eol=lf
+docs/default-qwen-meaning-review-2026-11-28/** text eol=lf
+docs/krikri-source-name-protection-2026-11-28/** text eol=lf
+
+# Completed compact-marker results and prospective summary evidence.
+docs/krikri-compact-source-name-protection-2026-11-28/** text eol=lf
+docs/krikri-compact-tag-screen-2026-11-28/** text eol=lf
+docs/krikri-summary-feasibility-2026-11-28/** text eol=lf
+docs/integration-2026-11-28/summary-feasibility-review.json text eol=lf
+
+# Completed fixed-text timing and rejected language stages preserve exact evidence.
+docs/krikri-visible-name-tag-preparation-2026-11-28/** text eol=lf
+docs/krikri-visible-name-tag-screen-2026-11-28/** text eol=lf
+docs/krikri-summary-screen-2026-11-28/** text eol=lf
+docs/post-asr-alignment-diagnostic-2026-11-28/** text eol=lf
+docs/post-asr-local-projection-2026-11-28/** text eol=lf
+
+# New fixed-text integration and sealed language follow-ups retain exact bytes.
+app.py text eol=lf
+asr_timing.py text eol=lf
+enhancements.py text eol=lf
+tests/test_asr_speaker_timing.py text eol=lf
+tests/smoke_real_speaker_app.py text eol=lf
+tests/qa_speaker_integration.py text eol=lf
+.github/workflows/speaker-integration-qa.yml text eol=lf
+docs/asr-speaker-timing-integration-2026-11-28/** text eol=lf
+docs/krikri-source-spelling-context-2026-11-28/** text eol=lf
+docs/krikri-source-spelling-screen-2026-11-28/** text eol=lf
+docs/krikri-summary-schema-prompt-2026-11-28/** text eol=lf
+docs/summary-action-preservation-feasibility-2026-11-28/** text eol=lf
+docs/summary-placeholder-production-fix-2026-11-28/** text eol=lf
+docs/asr-timing-packaging-review-2026-11-28/** text eol=lf
+
+# Preserve all exact source bindings used by the cross-platform plan validation.
+diarization.py text eol=lf
+library.py text eol=lf
+library_backup.py text eol=lf
+batch_store.py text eol=lf
+sources.py text eol=lf
+source_highlights.py text eol=lf
+runtime_check.py text eol=lf
+diagnostics.py text eol=lf
+requirements.txt text eol=lf
+requirements-speakers-free.txt text eol=lf
+tests/smoke_real_speakers.py text eol=lf
+docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt text eol=lf
+docs/speaker-evaluation-2026-11-26/selected_sources_fresh_holdout.json text eol=lf
+docs/speaker-evaluation-2026-11-26/speaker-app-initial.json text eol=lf
+
+# New source-only grammar plans and complete integration verification.
+docs/krikri-marker-grammar-feasibility-2026-11-28/** text eol=lf
+docs/krikri-marker-grammar-preparation-2026-11-28/** text eol=lf
+docs/integration-2026-11-28/speaker-timing-local/** text eol=lf
+docs/pytest-discovery-packaging-addendum-2026-11-28/** text eol=lf
+tests/test_speaker_hosted_qa.py text eol=lf
+tests/test_summary_prompt_contract.py text eol=lf
+tests/evaluate_summary_quality.py text eol=lf
+
+# Preserve the hosted preparation repair and original failure bytes.
+docs/asr-speaker-hosted-followup-2026-11-28/** text eol=lf
+docs/integration-2026-11-28/speaker-preparation-followup-review.json text eol=lf
+
+# Completed hosted artifacts retain their exact bytes on every platform.
+docs/hosted-d62df26-complete-2026-11-28/** -text
+docs/default-qwen-d62-meaning-review-2026-11-28/** -text
+docs/hosted-speaker-f2ebd04-2026-11-28/** -text
+docs/asr-speaker-constructor-followup-2026-11-28/** -text
+docs/speaker-next-stage-feasibility-2026-11-28/** -text
+docs/krikri-marker-grammar-native-plan-2026-11-28/** -text
+docs/krikri-marker-grammar-controller-2026-11-28/** -text
+docs/krikri-marker-grammar-controller-v2-2026-11-28/** -text
+docs/grammar-v2-retained-build-2026-11-28/** -text
+docs/f2ebd04-final-status-2026-11-28/** -text

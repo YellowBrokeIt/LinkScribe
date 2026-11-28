@@ -1,0 +1,65 @@
+{
+  "deadline": "2026-11-28T01:02:06.090348+00:00",
+  "arms": [
+    {
+      "arm": "baseline",
+      "status": "completed",
+      "returncode": 0,
+      "started_at": "2026-11-28T00:53:42.899731+00:00",
+      "finished_at": "2026-11-28T00:54:48.887641+00:00",
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_official_tail_followup.py",
+        "--source-root",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-source",
+        "--plan",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/plan.json",
+        "--arm",
+        "baseline",
+        "--manifest",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/fixtures.json",
+        "--output",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-report.json",
+        "--model",
+        "small",
+        "--model-provenance",
+        "/tmp/linkscribe-asr-vimeo-quality/small-model-provenance.json",
+        "--language-mode",
+        "auto",
+        "--timeout",
+        "240"
+      ],
+      "log": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-run.log"
+    },
+    {
+      "arm": "aligned",
+      "status": "completed",
+      "returncode": 0,
+      "started_at": "2026-11-28T00:54:48.888160+00:00",
+      "finished_at": "2026-11-28T00:56:21.501248+00:00",
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_official_tail_followup.py",
+        "--source-root",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-source",
+        "--plan",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/plan.json",
+        "--arm",
+        "aligned",
+        "--manifest",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/fixtures.json",
+        "--output",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-report.json",
+        "--model",
+        "small",
+        "--model-provenance",
+        "/tmp/linkscribe-asr-vimeo-quality/small-model-provenance.json",
+        "--language-mode",
+        "auto",
+        "--timeout",
+        "240"
+      ],
+      "log": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-run.log"
+    }
+  ]
+}

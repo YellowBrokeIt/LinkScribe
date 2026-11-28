@@ -1,0 +1,43 @@
+{
+  "scope": "Maintained model-free controls and source validation only",
+  "records": [
+    {
+      "name": "focused-controls",
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_speaker_hosted_qa.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.8190396669997426,
+      "output_sha256": "ad571a36799f859d1ad66bb6a8ec7dbaa318543cf8e10ccf12a8f6db6677d50d"
+    },
+    {
+      "name": "source-validation",
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "tests/qa_speaker_integration.py",
+        "--action",
+        "validate",
+        "--plan",
+        "docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json",
+        "--evidence",
+        "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-speaker-constructor-followup-2026-11-28/preflight"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.12659745599739836,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_sha256": {
+    "tests/qa_speaker_integration.py": "12979240cca0a486cee2d3a9063e179f25a2775fd0fcfb6fd4b8546ec1e224cc",
+    "tests/test_speaker_hosted_qa.py": "777a904b8fedcfdf7e337e81ae149b2cc630ae74e482e69a79e3c0ad81888bf7",
+    ".github/workflows/speaker-integration-qa.yml": "555f1b0a50873100e061b9fca81843537ff3bb0745876f093738c30a9a21300c",
+    "docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json": "3a613e540873888ffeb0007b4817d1dfabd8d8470033f8b935bb7e991ce4ecca"
+  },
+  "model_initializations": 0,
+  "inference_calls": 0,
+  "provider_calls": 0
+}

@@ -1,0 +1,1433 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T01:17:32.072747+00:00",
+  "review_kind": "Independent full-reference exploratory comparison of baseline, rejected 2-second policy, and alignment-only ablation",
+  "reviewer": "package_verification",
+  "plan_sha256": "b7c8a2be6c40a5add4b6cf2a738819039ecde5d96f485a0b807af757958d22b1",
+  "candidate_app_sha256": "736ff2e1080170701410807c5f0483cb4b09acb68da3e9169ebb376b16399b48",
+  "scope": {
+    "new_inference": false,
+    "production_edits": false,
+    "threshold_changes": false,
+    "audio_listening_performed": false,
+    "reference_cues_reviewed": {
+      "official_tears_of_steel": 76,
+      "vimeo_sintel": 26
+    },
+    "cue_context_indices": "Manually selected zero-based indices into the complete current saved segment list, including nearby wrong output for failed cues. They are not exact alignments or widened fixed-anchor windows."
+  },
+  "inputs": {
+    "official_tears_of_steel": {
+      "report_repo_path": "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json",
+      "report_sha256": "abf6ad93ec75a2a3c95138e3e8c2d9181e2daf52b01edc7a9c8eb5b57a384f17",
+      "source_sha256": {
+        "app.py": "736ff2e1080170701410807c5f0483cb4b09acb68da3e9169ebb376b16399b48",
+        "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+      },
+      "frozen_source_and_after_run_hashes_match": true,
+      "single_normal_inference_observed": true,
+      "explicit_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false,
+        "word_timestamps": true,
+        "hallucination_silence_threshold": null
+      },
+      "raw_segments": 74,
+      "raw_word_records": 361,
+      "raw_to_report_export_and_sqlite_exact_after_normal_rounding": true,
+      "independent_read_only_sqlite_check": true,
+      "saved_export_json_sha256": "6320f02be45786bd6bb25f8c46502e1df3b0986accf85dfe173f300cef60aa27",
+      "sqlite_sha256": "346888877890500f8f142157cdbf9a343b80d139aa3433c8cc52a26e15323e64",
+      "processing_metadata": {
+        "asr": {
+          "engine": "faster-whisper",
+          "model": "small",
+          "word_timestamps": true,
+          "word_timing_for_speakers": false,
+          "hallucination_silence_threshold_seconds": null,
+          "vad_filter": false
+        }
+      },
+      "all_harness_export_persistence_checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "pcm_sha256": "ce528ed4ac517abefcbfb90f9aedbb7313d246ad89f03eabb5ba69a104d3ae06",
+      "samples": 11744000,
+      "duration_seconds": 734.0,
+      "same_complete_pcm_passed_to_decoder": true,
+      "media_sha256_verified": "2ec70bfb31b70d4229d8a7c1ea1e759fd3d464c206d0c3a7ff15c7752c0b25ea",
+      "reference_sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+      "reference_supplied_to_decoder": false,
+      "wrapper_changed_options": false,
+      "qa_random_seed": 1729
+    },
+    "vimeo_sintel": {
+      "report_repo_path": "docs/asr-official-tail-2026-11-28/alignment-only-results/vimeo_sintel-report.json",
+      "report_sha256": "9427702a555170bc52d4c563ad1ff64f7d18d1701e06032ce9581b324e456a97",
+      "source_sha256": {
+        "app.py": "736ff2e1080170701410807c5f0483cb4b09acb68da3e9169ebb376b16399b48",
+        "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+      },
+      "frozen_source_and_after_run_hashes_match": true,
+      "single_normal_inference_observed": true,
+      "explicit_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false,
+        "word_timestamps": true,
+        "hallucination_silence_threshold": null
+      },
+      "raw_segments": 47,
+      "raw_word_records": 256,
+      "raw_to_report_export_and_sqlite_exact_after_normal_rounding": true,
+      "independent_read_only_sqlite_check": true,
+      "saved_export_json_sha256": "82f45d610e311c9f850cde388735b85da04ef5da92b2368a2b17ab6a2b402b47",
+      "sqlite_sha256": "c934c040b60004a093b14e78fa20cf17cb76dedfe32fe4d73bc4e2ad8d1d67ca",
+      "processing_metadata": {
+        "asr": {
+          "engine": "faster-whisper",
+          "model": "small",
+          "word_timestamps": true,
+          "word_timing_for_speakers": false,
+          "hallucination_silence_threshold_seconds": null,
+          "vad_filter": false
+        }
+      },
+      "all_harness_export_persistence_checks": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "pcm_sha256": "b4c6fe1672bd7448e91e8f48ce14b1161ae95883710f3cb0326e070d4e0b1615",
+      "samples": 14209126,
+      "duration_seconds": 888.070375,
+      "same_complete_pcm_passed_to_decoder": true,
+      "media_sha256_verified": "de4bf866b48858c8fe7b9448ecc3d4713dfd74f44c7ca87736bda6c558fc2364",
+      "reference_sha256": "4ed7e1f1bc5ff69fe33606960e4c048ba6766237bf33b132fef76e1a92cb64b2",
+      "reference_supplied_to_decoder": false,
+      "wrapper_changed_options": false,
+      "qa_random_seed": 20261128
+    }
+  },
+  "previous_report_hashes": {
+    "official_baseline": {
+      "path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-report.json",
+      "sha256": "44107e7cb63209366262efd754f9e1e86ec9327fe950ee16c92b329b72731111"
+    },
+    "official_rejected_2s": {
+      "path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-report.json",
+      "sha256": "89914a3b94daf0385d9d740ea3eea1fd47f33c1e6f4fbb443bca0f3fbe294825"
+    },
+    "sintel_original_unseeded": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-vimeo-followup-2026-11-28/original-small-evidence.json",
+      "sha256": "7487d3fdd53c205a717fb31dcfd70f28b037cdf2e89f6023b86571d1cc8395fc"
+    },
+    "sintel_rejected_2s": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-vimeo-followup-2026-11-28/aligned-hallucination-report.json",
+      "sha256": "aacf04051ddc7b1080e79014a24c17b203eac9aed4e24117c2b77ba4b7af8bd5"
+    }
+  },
+  "comparison_limits": [
+    "Official-film arms use matching media/model and seed1729.",
+    "Sintel rejected2-second and current runs share seed20261128; original provider baseline was unseeded and is contextual, not a controlled same-seed arm.",
+    "Published subtitles omit some audible material and contain some non-dialogue labels. This review is reference-based, not a complete acoustic transcript or word-boundary benchmark."
+  ],
+  "fixed_gate": {
+    "consistency_anchor_audit_sha256": "6c6a5ee755e3c04915351912fd5ac516489a1a100c9a0b0627eb827ebe57bab4",
+    "original_four_anchors_preserved": true,
+    "two_predeclared_commands_restored": true,
+    "frozen_windows_unchanged": true,
+    "broader_review_is_separate": true
+  },
+  "material_findings": [
+    {
+      "id": "tos-action-substitution",
+      "cue": 59,
+      "film": "official_tears_of_steel",
+      "candidate": [
+        {
+          "index": 58,
+          "start": 390.1,
+          "end": 392.06,
+          "text": "I should just brush you.",
+          "raw_words_sha256": "abbca0c9b6a39e07bc4d715e6cdb011b8c95d688157d2c8c02c1004d7a1e764d"
+        }
+      ],
+      "baseline_segment_indices_zero_based": [
+        63
+      ],
+      "rejected_2s_segment_indices_zero_based": [
+        51
+      ],
+      "decision": "New material action substitution versus both earlier arms."
+    },
+    {
+      "id": "sintel-command-and-name-loss",
+      "cue": 16,
+      "film": "vimeo_sintel",
+      "candidate": [
+        {
+          "index": 11,
+          "start": 249.88,
+          "end": 250.6,
+          "text": "Got him, fearless.",
+          "raw_words_sha256": "7c95f13d39687d31953156562ee7aca94263ee29a94b56755f84248cfe3d33b4"
+        },
+        {
+          "index": 12,
+          "start": 251.02,
+          "end": 252.32,
+          "text": "Come on, get him.",
+          "raw_words_sha256": "59a8efb81ceb837251107512d72a9e01bb2bc53bc2029cd9b2de782e01128b34"
+        }
+      ],
+      "baseline_segment_indices_zero_based": [
+        31,
+        32
+      ],
+      "rejected_2s_segment_indices_zero_based": [
+        14
+      ],
+      "decision": "New material command/name error versus both earlier arms."
+    },
+    {
+      "id": "tos-ad-lib-still-corrupt",
+      "cue": 62,
+      "film": "official_tears_of_steel",
+      "candidate": [
+        {
+          "index": 62,
+          "start": 409.72,
+          "end": 410.88,
+          "text": "Who'd that lip?",
+          "raw_words_sha256": "afcdaa45edbcb9acfcf4508455966fb4111131a0a63fee694bfefc3f52f9b324"
+        }
+      ],
+      "baseline_segment_indices_zero_based": [
+        66
+      ],
+      "rejected_2s_segment_indices_zero_based": [
+        53
+      ],
+      "decision": "The previously identified baseline regression remains; not repaired by this ablation."
+    },
+    {
+      "id": "sintel-name-regression",
+      "cue": 15,
+      "film": "vimeo_sintel",
+      "candidate": [
+        {
+          "index": 10,
+          "start": 226.96,
+          "end": 228.78,
+          "text": "Good night, Skills.",
+          "raw_words_sha256": "c74502459ba0ccdf6d1d78798808aa84f3492d57dc5e10c773237a8ed87f4299"
+        }
+      ],
+      "baseline_segment_indices_zero_based": [
+        29
+      ],
+      "rejected_2s_segment_indices_zero_based": [
+        13
+      ],
+      "decision": "Returns to baseline’s name misrecognition after the 2-second arm had recognized it correctly."
+    }
+  ],
+  "all_reference_cues": {
+    "official_tears_of_steel": [
+      {
+        "id": 1,
+        "start": 23.0,
+        "end": 24.5,
+        "candidate_context_indices_zero_based": [
+          1
+        ],
+        "assessment": "wording_variant",
+        "note": "The character name uses the same phonetic spelling variant as both prior arms."
+      },
+      {
+        "id": 2,
+        "start": 25.0,
+        "end": 27.0,
+        "candidate_context_indices_zero_based": [
+          2
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 3,
+        "start": 27.0,
+        "end": 30.5,
+        "candidate_context_indices_zero_based": [
+          3
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 4,
+        "start": 30.8,
+        "end": 34.0,
+        "candidate_context_indices_zero_based": [
+          4
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 5,
+        "start": 34.5,
+        "end": 36.0,
+        "candidate_context_indices_zero_based": [
+          5
+        ],
+        "assessment": "prior_wording_difference",
+        "note": "The interrupted connector differs from the subtitle in all three arms; the core denial remains."
+      },
+      {
+        "id": 6,
+        "start": 37.0,
+        "end": 38.0,
+        "candidate_context_indices_zero_based": [
+          6
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 7,
+        "start": 38.0,
+        "end": 41.0,
+        "candidate_context_indices_zero_based": [
+          6,
+          7
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 8,
+        "start": 41.0,
+        "end": 42.0,
+        "candidate_context_indices_zero_based": [
+          7
+        ],
+        "assessment": "prior_partial_omission",
+        "note": "The final qualifier on the robotic claws is omitted in all three arms."
+      },
+      {
+        "id": 9,
+        "start": 42.2,
+        "end": 45.0,
+        "candidate_context_indices_zero_based": [
+          8,
+          9
+        ],
+        "assessment": "prior_corruption_non_dialogue_reference",
+        "note": "The dismissal is garbled in all three arms, while the final breakup statement remains. The cue also contains a title card, so its full text is not an audio-only gold reference."
+      },
+      {
+        "id": 10,
+        "start": 50.0,
+        "end": 53.5,
+        "candidate_context_indices_zero_based": [
+          10
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 11,
+        "start": 61.0,
+        "end": 63.0,
+        "candidate_context_indices_zero_based": [
+          11
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 12,
+        "start": 117.0,
+        "end": 119.0,
+        "candidate_context_indices_zero_based": [
+          12
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 13,
+        "start": 131.0,
+        "end": 133.0,
+        "candidate_context_indices_zero_based": [
+          13
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 14,
+        "start": 136.0,
+        "end": 138.0,
+        "candidate_context_indices_zero_based": [
+          14
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 15,
+        "start": 191.0,
+        "end": 192.0,
+        "candidate_context_indices_zero_based": [
+          15
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 16,
+        "start": 193.0,
+        "end": 195.0,
+        "candidate_context_indices_zero_based": [
+          15
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 17,
+        "start": 197.0,
+        "end": 198.0,
+        "candidate_context_indices_zero_based": [
+          16
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 18,
+        "start": 199.0,
+        "end": 201.0,
+        "candidate_context_indices_zero_based": [
+          16
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 19,
+        "start": 201.5,
+        "end": 203.0,
+        "candidate_context_indices_zero_based": [
+          17
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 20,
+        "start": 203.5,
+        "end": 206.5,
+        "candidate_context_indices_zero_based": [
+          17
+        ],
+        "assessment": "prior_substitution",
+        "note": "The imminent production-start phrase is still misrecognized as a numerical identity; this predates the ablation. The surrounding launch instructions remain."
+      },
+      {
+        "id": 21,
+        "start": 208.0,
+        "end": 212.0,
+        "candidate_context_indices_zero_based": [
+          17
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 22,
+        "start": 213.0,
+        "end": 217.0,
+        "candidate_context_indices_zero_based": [
+          18
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 23,
+        "start": 223.0,
+        "end": 224.0,
+        "candidate_context_indices_zero_based": [
+          19
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 24,
+        "start": 224.5,
+        "end": 225.7,
+        "candidate_context_indices_zero_based": [
+          19
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 25,
+        "start": 226.0,
+        "end": 227.0,
+        "candidate_context_indices_zero_based": [
+          19
+        ],
+        "assessment": "wording_variant",
+        "note": "The same phonetic character-name spelling appears in all arms."
+      },
+      {
+        "id": 26,
+        "start": 231.0,
+        "end": 233.0,
+        "candidate_context_indices_zero_based": [
+          20
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 27,
+        "start": 233.5,
+        "end": 234.5,
+        "candidate_context_indices_zero_based": [
+          21
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 28,
+        "start": 235.0,
+        "end": 236.0,
+        "candidate_context_indices_zero_based": [
+          21
+        ],
+        "assessment": "preserved_improved_from_baseline",
+        "note": "The present-tense affection statement remains as in the 2-second arm; baseline had a future-tense variation."
+      },
+      {
+        "id": 29,
+        "start": 237.0,
+        "end": 238.5,
+        "candidate_context_indices_zero_based": [
+          22
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 30,
+        "start": 240.0,
+        "end": 241.0,
+        "candidate_context_indices_zero_based": [
+          23
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 31,
+        "start": 241.5,
+        "end": 244.5,
+        "candidate_context_indices_zero_based": [
+          24,
+          25
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 32,
+        "start": 245.0,
+        "end": 248.0,
+        "candidate_context_indices_zero_based": [
+          26
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 33,
+        "start": 292.0,
+        "end": 295.0,
+        "candidate_context_indices_zero_based": [
+          34
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 34,
+        "start": 296.5,
+        "end": 298.0,
+        "candidate_context_indices_zero_based": [
+          35
+        ],
+        "assessment": "prior_technical_substitution",
+        "note": "The memory-operation term is still changed from overwrite to override in all arms."
+      },
+      {
+        "id": 35,
+        "start": 299.0,
+        "end": 301.0,
+        "candidate_context_indices_zero_based": [
+          36
+        ],
+        "assessment": "wording_variant",
+        "note": "Same phonetic name spelling difference as the other character-address lines."
+      },
+      {
+        "id": 36,
+        "start": 302.5,
+        "end": 305.0,
+        "candidate_context_indices_zero_based": [
+          37,
+          38,
+          39
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 37,
+        "start": 316.0,
+        "end": 317.0,
+        "candidate_context_indices_zero_based": [
+          40
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 38,
+        "start": 318.0,
+        "end": 320.0,
+        "candidate_context_indices_zero_based": [
+          40
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 39,
+        "start": 321.0,
+        "end": 323.0,
+        "candidate_context_indices_zero_based": [
+          41
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 40,
+        "start": 325.0,
+        "end": 328.0,
+        "candidate_context_indices_zero_based": [
+          41
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 41,
+        "start": 339.0,
+        "end": 341.0,
+        "candidate_context_indices_zero_based": [
+          42,
+          43
+        ],
+        "assessment": "prior_substitution",
+        "note": "The arrival announcement remains garbled, while the two-minute limit remains. All three outputs have this problem."
+      },
+      {
+        "id": 42,
+        "start": 343.0,
+        "end": 344.0,
+        "candidate_context_indices_zero_based": [
+          44
+        ],
+        "assessment": "prior_partial_omission",
+        "note": "The acceleration command remains but the addressed character name is omitted in all arms."
+      },
+      {
+        "id": 43,
+        "start": 345.0,
+        "end": 346.0,
+        "candidate_context_indices_zero_based": [
+          45
+        ],
+        "assessment": "prior_substitution",
+        "note": "The Italian intensifier is replaced by another acceleration command, as in both earlier arms."
+      },
+      {
+        "id": 44,
+        "start": 347.0,
+        "end": 350.0,
+        "candidate_context_indices_zero_based": [
+          46
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 45,
+        "start": 356.0,
+        "end": 359.0,
+        "candidate_context_indices_zero_based": [
+          47
+        ],
+        "assessment": "prior_substitution",
+        "note": "The opening address is changed into an identity-like phrase in all three arms; the admission of youth remains."
+      },
+      {
+        "id": 46,
+        "start": 359.5,
+        "end": 361.0,
+        "candidate_context_indices_zero_based": [
+          47
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 47,
+        "start": 361.0,
+        "end": 363.0,
+        "candidate_context_indices_zero_based": [
+          47
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 48,
+        "start": 365.0,
+        "end": 366.0,
+        "candidate_context_indices_zero_based": [
+          48
+        ],
+        "assessment": "prior_actor_error",
+        "note": "The queried actor pronoun changes from male to female in all three outputs; baseline also varied the tense."
+      },
+      {
+        "id": 49,
+        "start": 366.5,
+        "end": 368.5,
+        "candidate_context_indices_zero_based": [
+          49
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 50,
+        "start": 371.5,
+        "end": 372.5,
+        "candidate_context_indices_zero_based": [
+          50
+        ],
+        "assessment": "prior_missing_command",
+        "note": "The production-abort command is not correctly represented at this point in any arm; a nearby urging phrase is not equivalent."
+      },
+      {
+        "id": 51,
+        "start": 373.0,
+        "end": 374.0,
+        "candidate_context_indices_zero_based": [
+          51
+        ],
+        "assessment": "different_incorrect_word",
+        "note": "This cut command is not faithfully represented in any arm. Current output instead emits an unrelated fireball word; no acoustic verification was performed."
+      },
+      {
+        "id": 52,
+        "start": 374.0,
+        "end": 375.0,
+        "candidate_context_indices_zero_based": [
+          52
+        ],
+        "assessment": "interjection_differs",
+        "note": "The exclamation is represented differently or shifted across arms; no claim of exact vocal transcription."
+      },
+      {
+        "id": 53,
+        "start": 379.0,
+        "end": 380.0,
+        "candidate_context_indices_zero_based": [
+          52,
+          53
+        ],
+        "assessment": "interjection_differs",
+        "note": "The exclamation differs in spelling/timing across arms; later negated cries are retained."
+      },
+      {
+        "id": 54,
+        "start": 381.0,
+        "end": 383.0,
+        "candidate_context_indices_zero_based": [
+          53
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 55,
+        "start": 383.0,
+        "end": 385.0,
+        "candidate_context_indices_zero_based": [
+          54
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 56,
+        "start": 386.0,
+        "end": 387.0,
+        "candidate_context_indices_zero_based": [
+          55
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 57,
+        "start": 387.0,
+        "end": 389.0,
+        "candidate_context_indices_zero_based": [
+          56
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 58,
+        "start": 389.0,
+        "end": 390.0,
+        "candidate_context_indices_zero_based": [
+          57
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 59,
+        "start": 390.5,
+        "end": 393.0,
+        "candidate_context_indices_zero_based": [
+          58
+        ],
+        "assessment": "new_material_substitution",
+        "note": "The physical threat changes from crushing to brushing in current output. Both baseline and the 2-second arm retained the source action."
+      },
+      {
+        "id": 60,
+        "start": 396.0,
+        "end": 397.0,
+        "candidate_context_indices_zero_based": [
+          60
+        ],
+        "assessment": "preserved_with_timing_difference",
+        "note": "The interrupted apology is retained, with a later current segment than the subtitle cue; no independent word-time reference exists."
+      },
+      {
+        "id": 61,
+        "start": 407.0,
+        "end": 408.0,
+        "candidate_context_indices_zero_based": [
+          61
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 62,
+        "start": 410.0,
+        "end": 411.0,
+        "candidate_context_indices_zero_based": [
+          62
+        ],
+        "assessment": "prior_baseline_regression_persists",
+        "note": "Baseline correctly recognized the ad-lib compliment. Both aligned arms garble it; disabling the heuristic does not recover it."
+      },
+      {
+        "id": 63,
+        "start": 419.0,
+        "end": 420.5,
+        "candidate_context_indices_zero_based": [
+          63
+        ],
+        "assessment": "prior_negation_and_wording_error",
+        "note": "The denial of responsibility is garbled in all arms, with different current wording. The source negation is not reliably retained."
+      },
+      {
+        "id": 64,
+        "start": 422.0,
+        "end": 423.0,
+        "candidate_context_indices_zero_based": [
+          64
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 65,
+        "start": 428.0,
+        "end": 429.5,
+        "candidate_context_indices_zero_based": [
+          65
+        ],
+        "assessment": "partial_output_recovery_still_wrong",
+        "note": "Unlike the 2-second omission, current output emits text here, but it is a question-like corruption of the set instruction. Baseline was also wrong."
+      },
+      {
+        "id": 66,
+        "start": 430.0,
+        "end": 431.0,
+        "candidate_context_indices_zero_based": [
+          66
+        ],
+        "assessment": "partial_recovery_with_repetition",
+        "note": "Current output retains the time-shortage idea but changes the subject and repeats it over a long segment. The 2-second arm omitted it; baseline was garbled and repetitive."
+      },
+      {
+        "id": 67,
+        "start": 493.0,
+        "end": 494.0,
+        "candidate_context_indices_zero_based": [],
+        "assessment": "prior_omission",
+        "note": "The later urging utterance is absent from all three retained hypotheses."
+      },
+      {
+        "id": 68,
+        "start": 502.0,
+        "end": 504.0,
+        "candidate_context_indices_zero_based": [],
+        "assessment": "untranscribed_nonlexical_vocal",
+        "note": "The published nonlexical shout is not represented as such. This is not classified as a newly lost complete lexical proposition."
+      },
+      {
+        "id": 69,
+        "start": 504.0,
+        "end": 505.0,
+        "candidate_context_indices_zero_based": [],
+        "assessment": "prior_omission",
+        "note": "The percentage progress announcement remains absent in all three outputs."
+      },
+      {
+        "id": 70,
+        "start": 506.0,
+        "end": 508.0,
+        "candidate_context_indices_zero_based": [
+          67
+        ],
+        "assessment": "restored_command",
+        "note": "The abort instruction returns with a segment near the published cue. Baseline had it with very broad timing; the 2-second arm omitted it."
+      },
+      {
+        "id": 71,
+        "start": 518.0,
+        "end": 520.0,
+        "candidate_context_indices_zero_based": [
+          68
+        ],
+        "assessment": "preserved_frozen_anchor",
+        "note": "The original fixed late anchor remains present; its frozen window is unchanged."
+      },
+      {
+        "id": 72,
+        "start": 534.0,
+        "end": 536.0,
+        "candidate_context_indices_zero_based": [
+          69
+        ],
+        "assessment": "preserved_frozen_anchor",
+        "note": "The original fixed late anchor remains present; its frozen window is unchanged."
+      },
+      {
+        "id": 73,
+        "start": 538.0,
+        "end": 539.0,
+        "candidate_context_indices_zero_based": [
+          70
+        ],
+        "assessment": "restored_command",
+        "note": "The memory-completion command returns, now using the reference operation term. Baseline had a lexical variation; the 2-second arm omitted the message."
+      },
+      {
+        "id": 74,
+        "start": 559.0,
+        "end": 560.0,
+        "candidate_context_indices_zero_based": [
+          71
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 75,
+        "start": 562.0,
+        "end": 564.0,
+        "candidate_context_indices_zero_based": [
+          71
+        ],
+        "assessment": "preserved_frozen_anchor",
+        "note": "The original fixed late anchor remains present; its frozen window is unchanged."
+      },
+      {
+        "id": 76,
+        "start": 566.0,
+        "end": 567.0,
+        "candidate_context_indices_zero_based": [
+          72
+        ],
+        "assessment": "preserved_frozen_anchor",
+        "note": "The original fixed late anchor remains present; its frozen window is unchanged."
+      }
+    ],
+    "vimeo_sintel": [
+      {
+        "id": 1,
+        "start": 107.25,
+        "end": 110.5,
+        "candidate_context_indices_zero_based": [
+          1
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 2,
+        "start": 111.8,
+        "end": 115.8,
+        "candidate_context_indices_zero_based": [
+          1
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 3,
+        "start": 118.0,
+        "end": 121.45,
+        "candidate_context_indices_zero_based": [
+          2
+        ],
+        "assessment": "preserved_merged",
+        "note": "The travel warning remains but is merged with the next cue."
+      },
+      {
+        "id": 4,
+        "start": 121.75,
+        "end": 124.8,
+        "candidate_context_indices_zero_based": [
+          2,
+          3
+        ],
+        "assessment": "preserved_merged",
+        "note": "The warning about survival remains across the merged segments."
+      },
+      {
+        "id": 5,
+        "start": 125.25,
+        "end": 126.3,
+        "candidate_context_indices_zero_based": [
+          3
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 6,
+        "start": 127.5,
+        "end": 129.0,
+        "candidate_context_indices_zero_based": [
+          3
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 7,
+        "start": 129.4,
+        "end": 133.8,
+        "candidate_context_indices_zero_based": [
+          3
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 8,
+        "start": 135.0,
+        "end": 137.5,
+        "candidate_context_indices_zero_based": [
+          4
+        ],
+        "assessment": "preserved_merged",
+        "note": "The search statement remains within a merged multi-speaker-looking span; speaker attribution was not evaluated."
+      },
+      {
+        "id": 9,
+        "start": 138.0,
+        "end": 142.2,
+        "candidate_context_indices_zero_based": [
+          4
+        ],
+        "assessment": "preserved_words_punctuation_lost",
+        "note": "Both short inquiry phrases remain, but the merged run lacks question punctuation."
+      },
+      {
+        "id": 10,
+        "start": 143.4,
+        "end": 145.0,
+        "candidate_context_indices_zero_based": [
+          4
+        ],
+        "assessment": "preserved_words_punctuation_lost",
+        "note": "The sought creature remains identified; punctuation differs across arms."
+      },
+      {
+        "id": 11,
+        "start": 148.85,
+        "end": 151.75,
+        "candidate_context_indices_zero_based": [
+          5
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 12,
+        "start": 152.95,
+        "end": 155.87,
+        "candidate_context_indices_zero_based": [
+          6
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 13,
+        "start": 207.25,
+        "end": 210.5,
+        "candidate_context_indices_zero_based": [
+          8
+        ],
+        "assessment": "preserved",
+        "note": "The completion reassurance remains with hush/interjection output; no long fixed-temperature repetition appears."
+      },
+      {
+        "id": 14,
+        "start": 210.75,
+        "end": 213.5,
+        "candidate_context_indices_zero_based": [
+          9
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 15,
+        "start": 228.25,
+        "end": 232.25,
+        "candidate_context_indices_zero_based": [
+          10
+        ],
+        "assessment": "name_regression_from_rejected_arm",
+        "note": "Current output returns to the baseline name error Skills. The 2-second arm had correctly recognized Scales."
+      },
+      {
+        "id": 16,
+        "start": 250.35,
+        "end": 253.85,
+        "candidate_context_indices_zero_based": [
+          11,
+          12
+        ],
+        "assessment": "new_material_command_and_name_error",
+        "note": "Current output changes an imperative to an accomplished-action phrase and replaces the addressed name with fearless. Both earlier arms retained the named instruction."
+      },
+      {
+        "id": 17,
+        "start": 265.25,
+        "end": 268.25,
+        "candidate_context_indices_zero_based": [
+          13
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 18,
+        "start": 304.0,
+        "end": 307.5,
+        "candidate_context_indices_zero_based": [
+          15,
+          16
+        ],
+        "assessment": "prior_partial_loss_different_interjections",
+        "note": "The brief encouragement is not faithfully captured in any arm. Current output has an affirmative followed by a boss-like word; the complete source encouragement is missing."
+      },
+      {
+        "id": 19,
+        "start": 338.75,
+        "end": 342.0,
+        "candidate_context_indices_zero_based": [
+          20
+        ],
+        "assessment": "prior_name_error",
+        "note": "Current repeats the 2-second arm’s unrelated urging phrase in place of the name call. Baseline also misrecognized the call."
+      },
+      {
+        "id": 20,
+        "start": 445.85,
+        "end": 447.5,
+        "candidate_context_indices_zero_based": [
+          23,
+          24
+        ],
+        "assessment": "preserved_improved_from_baseline",
+        "note": "The complete admission of failure remains as in the 2-second arm; original baseline had a one-word misrecognition."
+      },
+      {
+        "id": 21,
+        "start": 452.8,
+        "end": 456.5,
+        "candidate_context_indices_zero_based": [
+          25
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 22,
+        "start": 457.8,
+        "end": 460.5,
+        "candidate_context_indices_zero_based": [
+          26
+        ],
+        "assessment": "name_tokenization_corruption",
+        "note": "The statement about the location remains, but the character name is split into ordinary words. Both earlier arms used the proper name spelling."
+      },
+      {
+        "id": 23,
+        "start": 460.85,
+        "end": 464.0,
+        "candidate_context_indices_zero_based": [
+          26
+        ],
+        "assessment": "core_phrase_preserved",
+        "note": "Core subtitle-covered words and meaning remain represented; no conspicuous new loss relative to the two earlier outputs was observed. This is not exact timing or punctuation approval."
+      },
+      {
+        "id": 24,
+        "start": 557.6,
+        "end": 559.5,
+        "candidate_context_indices_zero_based": [
+          27
+        ],
+        "assessment": "preserved_near_reference",
+        "note": "The name call remains near the source cue; exact word-boundary accuracy was not established."
+      },
+      {
+        "id": 25,
+        "start": 621.6,
+        "end": 624.0,
+        "candidate_context_indices_zero_based": [
+          30
+        ],
+        "assessment": "preserved_near_reference",
+        "note": "The later name call remains near the source cue, with earlier segment boundaries."
+      },
+      {
+        "id": 26,
+        "start": 626.2,
+        "end": 629.8,
+        "candidate_context_indices_zero_based": [
+          31
+        ],
+        "assessment": "preserved_near_reference",
+        "note": "The final name call remains immediately before the nominal subtitle interval; an approximately 0.02-second boundary gap is not treated as lexical omission."
+      }
+    ]
+  },
+  "risk_window_review": [
+    {
+      "film": "official_tears_of_steel",
+      "window_seconds": [
+        260.3,
+        284.2
+      ],
+      "candidate_segment_indices_zero_based": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "candidate_text_sha256": "4cbfcc87ba3d4e7163339f4f12866dc1efaf571ff0b83d2204ac10c4daa2422a",
+      "observation": "Six new punctuation-only segments appear in a gap without published dialogue. This is an observable output-quality regression; lack of subtitles alone is not a listening-based proof of silence."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        177.84,
+        207.5
+      ],
+      "candidate_segment_indices_zero_based": [
+        7,
+        8
+      ],
+      "candidate_text_sha256": "e5a20be47323c1480c50a66e72dec980d4edd7b80f723eab9d689c5998edd91d",
+      "observation": "The original 15-line unsupported dialogue burst is absent. Current output includes hushing and the beginning of the next genuine subtitle-covered exchange, rather than that invented-looking exchange."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        207.25,
+        233.0
+      ],
+      "candidate_segment_indices_zero_based": [
+        8,
+        9,
+        10
+      ],
+      "candidate_text_sha256": "be425e103f05122b9cad735e6db68e77f3c0fe5a05fdf2281aad7f9fb9441f64",
+      "observation": "The two main dialogue cues remain. There is no long fixed-temperature hush loop; the goodnight line has a name error."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        338.0,
+        343.0
+      ],
+      "candidate_segment_indices_zero_based": [
+        20
+      ],
+      "candidate_text_sha256": "4455be73df06b0d173582d85f4e48a9d5ab9b02279c6d289e09f5c000e28ca29",
+      "observation": "The character-name call remains misrecognized as an urging phrase; this was also wrong in the earlier arms."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        445.0,
+        465.0
+      ],
+      "candidate_segment_indices_zero_based": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "candidate_text_sha256": "74c7baeed79e3ec4ceba4e32e0bb39a1fba24a69c47f83e2992de3ca00260be4",
+      "observation": "The failure admission and following reassurance remain. The place/character-name sentence is merged and the personal name is split into ordinary tokens."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        669.5,
+        691.5
+      ],
+      "candidate_segment_indices_zero_based": [],
+      "candidate_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observation": "No current segments occupy the earlier ellipsis interval; the original punctuation-only sequence stays absent."
+    },
+    {
+      "film": "vimeo_sintel",
+      "window_seconds": [
+        747.5,
+        880.06
+      ],
+      "candidate_segment_indices_zero_based": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "candidate_text_sha256": "e7a08cfa488d13af61c09b2a0366b3598c7029b328c15c72abd924ce31037e58",
+      "observation": "Sustained late vocal text is retained. Its presence is not exact lyric correctness: the first-verse question is truncated and later chorus wording differs from the published score and prior outputs."
+    }
+  ],
+  "late_singing": {
+    "composer_score_url": "https://www.janmorgenstern.com/sintel/I_Move_On-Sintels_Song.pdf",
+    "independent_reference_check": "Opened the composer-published score; it supports the existence and written structure of the song. It is not a timed acoustic annotation of this particular media file.",
+    "listening_gold_transcript_available": false,
+    "candidate_late_segment_indices_zero_based": [
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "current_late_output_count": 14,
+    "current_late_output_start": 746.4,
+    "current_late_output_end": 878.18,
+    "lyric_fidelity_approved": false,
+    "first_verse_truncation_segment_index": 34,
+    "first_verse_truncation_time": [
+      756.18,
+      769.42
+    ],
+    "first_verse_observation": "Current output stops the comparison question mid-clause. Original baseline retained both contrasting objects; rejected2-second output changed the latter object. This is reference/output evidence, not a new listening judgment.",
+    "copyright_note": "No complete lyrics copied into this review; full model output remains in the existing hashed raw reports."
+  },
+  "raw_failure_preservation": "All baseline, rejected and current raw report bytes remain unchanged; hashes bind this review. Every current segment was independently matched to raw decoder text/times, saved JSON, and a read-only SQLite record.",
+  "decision": {
+    "general_policy_adoption_approved": false,
+    "semantic_accuracy_approved": false,
+    "subtitle_accuracy_approved": false,
+    "reason": "The ablation restores both missing commands and retains the original four anchors, but introduces clear action/name losses, leaves ad-lib corruption, emits new punctuation-only output, and does not establish faithful sung or complete dialogue transcription."
+  }
+}

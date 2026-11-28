@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "reviewer": "assistant (root)",
+  "complete": true,
+  "semantic_quality_approved": false,
+  "scope": "Actual published Marian sentence/quotation production path on exposed v2 regression cases; not untouched validation.",
+  "source_report": "marian-sentences-production-regression.json",
+  "source_report_sha256": "9889f4ac179c20776899e36c57946e68eb5dcc623548832cc4061edb5d2aff88",
+  "elapsed_seconds": 21.604,
+  "all_source_fingerprints_matched_after_run": true,
+  "classification_definitions": {
+    "acceptable": "No material meaning error observed in this case; not general approval.",
+    "minor_issue": "Limited wording or precision issue without a demonstrated change to central propositions.",
+    "major_error": "Changed actors, role assignments, quantities, conditions, significant content or material object/action meaning."
+  },
+  "classification_counts": {
+    "acceptable": 2,
+    "minor_issue": 4,
+    "major_error": 6
+  },
+  "cases": [
+    {
+      "case_id": "v2-holdout-en-el-telescope-ownership",
+      "classification": "minor_issue",
+      "reason": "Owner/borrower, return obligation and hypothetical early completion survive. Brass becomes χάλκινο (copper/bronze) rather than ορειχάλκινο.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "brass telescope",
+        "output": "χάλκινο τηλεσκόπιο"
+      }
+    },
+    {
+      "case_id": "v2-holdout-el-en-ferry-counterfactual",
+      "classification": "acceptable",
+      "reason": "Counterfactual cancellation remains distinct from actual departure; discussing a contingency is not asserted as a real cancellation.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "case_id": "v2-holdout-en-el-measurement-readings",
+      "classification": "minor_issue",
+      "reason": "Quantities, rejected tenfold reading and volume-versus-weight distinction survive, including valid decimal localization. Digital scale becomes ψηφιακή κλίμακα rather than a natural weighing-scale term.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "digital scale",
+        "output": "ψηφιακή κλίμακα"
+      }
+    },
+    {
+      "case_id": "v2-holdout-el-en-alarm-evidence",
+      "classification": "acceptable",
+      "reason": "Non-confirmation of disabling, the actual no-sound observation and its inferential limit remain faithful.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      }
+    },
+    {
+      "case_id": "v2-holdout-en-el-questionnaire-permission",
+      "classification": "minor_issue",
+      "reason": "Actual refusal and the anonymous-quotation/photo permission boundary survive. πλήρη μορφή and επεξεργαστής are imprecise/unnatural for complete questionnaire form and editor.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "complete form",
+        "output": "πλήρη μορφή"
+      }
+    },
+    {
+      "case_id": "v2-holdout-el-en-pottery-transcript",
+      "classification": "major_error",
+      "reason": "Unlike the initial production run, the unchanged-recording sentence is now present, but the known female Nefeli becomes He in that sentence.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "Δεν άλλαξε την ηχογράφηση.",
+        "output": "He didn't change the recording."
+      }
+    },
+    {
+      "case_id": "v2-holdout-en-el-theatre-cue",
+      "classification": "major_error",
+      "reason": "The quoted instruction is translated as content and not executed, but Mute is changed to Shake/move, altering its requested action.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "Mute the audience channel",
+        "output": "Κούνησε το κανάλι του κοινού"
+      }
+    },
+    {
+      "case_id": "v2-holdout-el-en-maintenance-quotation",
+      "classification": "minor_issue",
+      "reason": "Both quoted operations and the translation-versus-execution contrast survive. The ending changes what the notice said into what he said, an imprecise referent.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "όσα έλεγε",
+        "output": "what he said"
+      }
+    },
+    {
+      "case_id": "v2-long-en-el-weather-station",
+      "classification": "major_error",
+      "reason": "All paragraphs and late details are retained, but the instrument/measurement origin relation is reversed and the canvas carrying bag becomes a canvas carrying the bag. Bracket and note word senses are also wrong.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "which measurement came from which instrument",
+        "output": "από ποια μέτρηση προήλθε το όργανο"
+      }
+    },
+    {
+      "case_id": "v2-long-en-el-textile-exhibition",
+      "classification": "major_error",
+      "reason": "Paragraph coverage, permission distinctions and final return arrangement improve, but early delivery of fabric becomes premature childbirth. This is a material event substitution.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "An early delivery",
+        "output": "Ένας πρόωρος τοκετός"
+      }
+    },
+    {
+      "case_id": "v2-long-el-en-model-railway",
+      "classification": "major_error",
+      "reason": "The catastrophic repetition is removed and the controller/return/counterfactual details survive. The last paragraph nevertheless changes Christos's refusal to publish his phone into She did not allow, assigning that permission decision to a female actor.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "Δεν επέτρεψε να δημοσιευτεί το προσωπικό του τηλέφωνο",
+        "output": "She did not allow his personal phone to be published"
+      }
+    },
+    {
+      "case_id": "v2-long-el-en-garden-audio-tour",
+      "classification": "major_error",
+      "reason": "Coverage and the hypothetical shelter distinction survive. Aris is rendered as Mars, Electra becomes He, and planned posting of a map becomes planned suspension, changing actors and the final action.",
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "example": {
+        "source": "προγραμματισμένη ανάρτηση του χάρτη",
+        "output": "planned suspension of the GR-95 map"
+      }
+    }
+  ],
+  "decision": "Not approved as the default translator. The general segmentation repair fixes major coverage/repetition failures but six cases still materially change meaning. No post-output text substitution or reference injection was performed. Translation v3 remains unexposed."
+}

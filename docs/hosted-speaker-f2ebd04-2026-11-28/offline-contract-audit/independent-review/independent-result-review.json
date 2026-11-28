@@ -1,0 +1,226 @@
+{
+  "review_type": "Independent actual speaker artifact and qualified constructor-gate review",
+  "decision": "The retained actual application result supports the original controlled-fixture pipeline/acoustic checks and a source-justified constructor-gate correction. Preserve original hosted failure; no broader speech/word-timing accuracy approval.",
+  "identity": {
+    "head_sha": "f2ebd0433976ed62478b67e98c4515e3d78afaa5",
+    "run_id": 46123086352,
+    "job_id": 140911610658,
+    "artifact_id": 15254526534,
+    "zip_sha256": "1321ed065fb87bcfa8eac3e408e876d2b25a498d3967f6bc187f0a914e36e7ca",
+    "worker_report_sha256": "aebd6acac5cb2ce461d985443a7d3a3bc1f958f632fe4b782e46372b1fdb5299",
+    "failed_execution_sha256": "7aad1b1f0c2fca37a6e4fcc4f44241cda9cac636d6801e8c4a3209ad372fa705"
+  },
+  "original_failure": {
+    "passed": false,
+    "message": "Unexpected native model runtime",
+    "cause": "The controller expected the constructor argument cpu_threads4; unchanged app omits it, and the recorded value after applying pinned faster-whisper defaults is0.",
+    "historical_gate_or_artifact_changed": false
+  },
+  "thread_contract": {
+    "production_override_present": false,
+    "faster_whisper_version": "1.2.1",
+    "constructor_cpu_threads": 0,
+    "num_workers": 1,
+    "actual_device": "cpu",
+    "actual_compute_type": "int8_float32",
+    "native_zero_semantics": "Pinned CTranslate2 v4.9.1 resolves zero from OMP_NUM_THREADS, otherwise min(4, hardware_concurrency), and applies it during replica initialization.",
+    "source_enforced_launch_cpu_set": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "source_set_omp_and_mkl_threads": 4,
+    "inference_side_affinity_readback_available": false,
+    "effective_native_thread_count_measured": false,
+    "qualification": "Successful preexec sched_setaffinity and frozen controller source establish the original launch constraint; the observer’s argument value is not a thread-count measurement."
+  },
+  "actual_pipeline": {
+    "full_sample_count": 554160,
+    "sample_rate": 16000,
+    "duration_seconds": 34.635,
+    "full_pcm_sha256": "70f602e7be70e59448259d311dad673459d551198cf274c3615a2649f513b194",
+    "transcribe_calls": 1,
+    "baseline_word_timestamps": false,
+    "baseline_generator_exhausted": true,
+    "new_timing_encode_calls": 2,
+    "new_timing_align_calls": 2,
+    "original_seek_windows": [
+      0,
+      2660
+    ],
+    "alignment_text_token_counts": [
+      71,
+      26
+    ],
+    "word_timed_segments": 8,
+    "timing_fallback_warnings": [],
+    "speaker_acoustic_analysis_calls": 1,
+    "saved_groups": 19,
+    "unknown_groups": 7,
+    "original_recognition_text_preserved": true,
+    "recognizer_weak_references_released_before_speakers": true,
+    "model_identities_match_pinned_payload_receipts": true
+  },
+  "acoustic_assessment": {
+    "method": "Extracted only the exact unchanged original label_at/score AST and applied it to the raw retained acoustic turns after model completion. No inference or reference-guided generation.",
+    "source_scorer_sha256": "7260c5506ce3f1c606c6a75c630f33614f2491d83c3c5dac59b530beda6f1165",
+    "thresholds": {
+      "minimum_assigned_core_fraction": 0.8,
+      "minimum_permutation_matched_label_purity": 0.95,
+      "expected_speakers": 2
+    },
+    "result": {
+      "status": "passed",
+      "expected_speakers_for_scoring_only": 2,
+      "reported_speakers": 2,
+      "core_samples": 258,
+      "assigned_core_fraction": 0.8566,
+      "permutation_matched_label_purity": 1.0,
+      "correctly_attributed_core_fraction": 0.8566,
+      "mapping_for_scoring_only": {
+        "Speaker 1": "2961",
+        "Speaker 2": "8455"
+      },
+      "per_interval": [
+        {
+          "reference": {
+            "start": 0.5,
+            "end": 8.5,
+            "speaker": "2961",
+            "short": false
+          },
+          "core_samples": 65,
+          "label_counts": {
+            "Speaker 1": 65
+          }
+        },
+        {
+          "reference": {
+            "start": 9.1,
+            "end": 16.835,
+            "speaker": "8455",
+            "short": false
+          },
+          "core_samples": 63,
+          "label_counts": {
+            "Speaker 2": 50,
+            "None": 13
+          }
+        },
+        {
+          "reference": {
+            "start": 17.435,
+            "end": 25.435,
+            "speaker": "2961",
+            "short": false
+          },
+          "core_samples": 65,
+          "label_counts": {
+            "Speaker 1": 55,
+            "None": 10
+          }
+        },
+        {
+          "reference": {
+            "start": 26.035,
+            "end": 34.035,
+            "speaker": "8455",
+            "short": false
+          },
+          "core_samples": 65,
+          "label_counts": {
+            "Speaker 2": 51,
+            "None": 14
+          }
+        }
+      ]
+    },
+    "assigned_core_samples": 221,
+    "unassigned_core_samples": 37,
+    "interpretation": "This one previously exposed concatenated English reading fixture passes its fixed acoustic thresholds. Label count alone is not the basis; correct mapping of the returning readers is checked."
+  },
+  "persistence": {
+    "sqlite_row_independently_reloaded_immutable": true,
+    "separate_worker_process_reload_agrees": true,
+    "saved_json_text_speaker_timing_and_metadata_preserved": true,
+    "private_word_metadata_not_persisted": true,
+    "all_19_srt_vtt_cues_positive_ordered_and_physically_bounded": true,
+    "subtitle_quantization_inward": true,
+    "txt_group_text_and_labels_exact": true,
+    "job_and_download_json_srt_vtt_txt_bytes_equal": true,
+    "job_and_download_zip_member_payloads_equal": true,
+    "zip_container_timestamp_difference_preserved": true,
+    "backup_exact_one_record_and_checksum_verified": true,
+    "four_warnings_preserved_in_saved_record_json_and_backup": true
+  },
+  "resources": {
+    "complete_samples": 111,
+    "sampled_group_peak_rss_bytes": 1078747136,
+    "worker_os_peak_rss_bytes": 1215311872,
+    "worker_elapsed_seconds": 11.144198072999998,
+    "controller_elapsed_seconds": 11.71869195699999,
+    "phase_seconds": [
+      {
+        "name": "initialization",
+        "started_monotonic": 65.278163711,
+        "elapsed_seconds": 1.9161886099999919
+      },
+      {
+        "name": "recognition",
+        "started_monotonic": 67.194352321,
+        "elapsed_seconds": 4.668117281000008
+      },
+      {
+        "name": "speaker_timing",
+        "started_monotonic": 71.862469602,
+        "elapsed_seconds": 1.8689293749999933
+      },
+      {
+        "name": "speakers",
+        "started_monotonic": 73.731398977,
+        "elapsed_seconds": 2.5203745379999987
+      },
+      {
+        "name": "persistence",
+        "started_monotonic": 76.251773515,
+        "elapsed_seconds": 0.16432106500000998
+      },
+      {
+        "name": "complete",
+        "started_monotonic": 76.41609458,
+        "elapsed_seconds": 0.006267764999989822
+      }
+    ],
+    "owned_group_cleanup_complete": true
+  },
+  "independent_audits": {
+    "retained_result": {
+      "file": "retained-result-audit.json",
+      "sha256": "dd1269a93b8e910b182adf23d8c9c7682de22abd1717e815ebeecef413240d8a",
+      "checks": 185,
+      "errors": []
+    },
+    "original_acoustic_score": {
+      "file": "original-acoustic-score.json",
+      "sha256": "fb81deccfc0b3a8400b7a9211b4585c50076374753d3760605fbbc1714b5acb0"
+    },
+    "constructor_correction": {
+      "file": "constructor-correction-review.json",
+      "sha256": "5dccbad7c100acf4be9493cff64dd6e64b58114f1495a0901d7225862c4b5093"
+    }
+  },
+  "reviewer_preparation_notes": [
+    "Initial mode=ro SQLite inspection created only WAL/SHM sidecars; all30 original artifact hashes remained unchanged. The generated sidecars were moved into reviewer-preparation and subsequent reads use mode=ro&immutable=1. Exact record retained.",
+    "Initial audit compared entire job/download ZIP bytes; observed container timestamps differ by2seconds while all uncompressed members are identical. Corrected comparison verifies exact member names/payloads and preserves both ZIP hashes. Neither change alters original artifacts or application criteria."
+  ],
+  "limitations": [
+    "No inference-side affinity readback or actual native thread-count measurement was captured.",
+    "This fixture includes inserted gaps and English reading speech; no Greek, natural-meeting, overlapping-speech or broad diarization approval follows.",
+    "No human word-timestamp annotation or audio-listening assessment was performed; optional alignment preservation is not proof of word timing accuracy or correct ASR lexical content.",
+    "Translation/summary were disabled, so actual recognizer release before speakers is observed but the audio-to-Ollama lifetime boundary is not exercised.",
+    "Full feature matrices were not retained; exact source/input/token/window/native-result bindings and observed feature hashes are checked without recomputing features.",
+    "The actual original workflow remains failed. A separate offline interpretation does not retroactively change GitHub status or certify new source bytes.",
+    "No new model/download/provider/native inference, source mutation, Git action, corpus or criterion change was performed."
+  ]
+}

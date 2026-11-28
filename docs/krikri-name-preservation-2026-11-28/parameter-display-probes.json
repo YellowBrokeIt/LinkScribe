@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-11-28T03:17:19.076485+00:00",
+  "helper_sha256": "127bac9fe6933191daa62907982be8d4540a1ad005236805f469e280ac3b389e",
+  "purpose": "Resolve observed map-order false rejection while preserving full mapping, duplicate singleton rejection and ordered stop equality.",
+  "results": [
+    {
+      "probe": "original_display",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "error": null
+    },
+    {
+      "probe": "observed_key_reordering",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "error": null
+    },
+    {
+      "probe": "missing_top_p",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": "ValueError: A required native parameter is missing."
+    },
+    {
+      "probe": "unexpected_key",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": "ValueError: Unexpected displayed native parameter: unexpected"
+    },
+    {
+      "probe": "duplicate_singleton",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": "ValueError: Duplicate singleton native parameter: temperature"
+    },
+    {
+      "probe": "wrong_context",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": null
+    },
+    {
+      "probe": "reversed_stop_order",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": null
+    },
+    {
+      "probe": "duplicate_stop",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": null
+    },
+    {
+      "probe": "boolean_temperature",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "error": "ValueError: Native numeric parameter has an unexpected type."
+    }
+  ],
+  "all_passed": true,
+  "generation_calls": 0
+}

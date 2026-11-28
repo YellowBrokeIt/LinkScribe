@@ -1,0 +1,25 @@
+--- sealed-v1/resource_monitor.py
++++ v2/resource_monitor.py
+@@ -234,8 +234,6 @@
+         report["measurement_complete"] = count > 0 and not report["measurement_errors"]
+         report["samples_file"] = samples_path.name
+         report["samples_sha256"] = sha(samples_path) if samples_path.exists() else None
+-        report["elapsed_seconds"] = round(time.monotonic() - started, 6)
+-        report["finished_at"] = utc()
+         if policy_check is not None:
+             try:
+                 report["storage_after_cleanup"] = policy_check()
+@@ -247,6 +245,13 @@
+                 report["measurement_complete"] = False
+                 report["complete"] = False
+                 report["stop_reason"] = "incomplete_storage_measurement"
++        final_elapsed = time.monotonic() - started
++        report["elapsed_seconds"] = round(final_elapsed, 6)
++        report["finished_at"] = utc()
++        report["phase_time_limit_exceeded"] = final_elapsed > limits["total_seconds"]
++        if report["phase_time_limit_exceeded"]:
++            report["complete"] = False
++            report.setdefault("stop_reason", "aggregate_time_limit")
+         report["passed"] = (report["complete"] and report["measurement_complete"]
+                             and report["owned_processes_stopped"] and not report.get("error"))
+         save(output, report)

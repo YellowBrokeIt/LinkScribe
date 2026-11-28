@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-11-28T04:37:37.964002+00:00",
+  "reviewer": "/root/linkscr_repo_status",
+  "result": "pass_for_warning_visibility_and_persistence_scope",
+  "blocking_findings": [],
+  "commit": "7a53991da60c9e052be9a72299218b291b364c8d",
+  "tree": "07ceac544ca6da271cede39d409a0281b9cad5fd",
+  "run": {
+    "id": 46107711847,
+    "job_id": 140864083983,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46107711847",
+    "job_url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46107711847/job/140864083983"
+  },
+  "artifact": {
+    "id": 15248073165,
+    "zip_sha256": "f12408d6eca1196493722eed48da5f07222d76caf715d2618b289ffa14852a24",
+    "bytes": 11939810,
+    "rehash_verified_files": 45
+  },
+  "bindings": [
+    {
+      "path": "artifact/browser-report.json",
+      "bytes": 16412,
+      "sha256": "7cd7fd81fe79181e8d6c2e0ef5002d0efdc2f3923f9f71ee9cb76db31ecff5e6"
+    },
+    {
+      "path": "retained-artifact-audit.json",
+      "bytes": 5390,
+      "sha256": "0c8be68ae8eef6daa066604da462a53d18ea45fadc3ba5b2612036b80fcc5202"
+    },
+    {
+      "path": "audit_hosted_browser.py",
+      "bytes": 8239,
+      "sha256": "430fcb04b309ee7717a4cbf8f371d191da8db949913d02a27846851d7f3a3dc1"
+    },
+    {
+      "path": "published-source-identities.json",
+      "bytes": 2156,
+      "sha256": "f71440de339654071907b940b2e6a3636923159a8f12b2d985f976fd3fc7d3a1"
+    },
+    {
+      "path": "prior-00567db-browser-report.json",
+      "bytes": 14529,
+      "sha256": "2cb08d9c90a6114a06c6f982795efc5802cc4183226a15a49ec1ec87c4579412"
+    }
+  ],
+  "execution_review": {
+    "current_pass_count": 35,
+    "previous_pass_count": 34,
+    "all_previous_names_and_order_retained": true,
+    "only_new_check": "batch_processing_warnings_persist",
+    "all_eight_report_source_hashes_match_immutable_published_sources": true,
+    "workflow_and_eight_sources_verified_against_published_git_blobs": true,
+    "real_tiny_upload_executed_before_warning_case": true,
+    "uncaught_page_errors": [],
+    "console_observation": "Five generic HTTP 400 resource messages are retained alongside deliberate invalid-input scenarios. No uncaught JavaScript page exception occurred; this review does not label the console empty or map each generic message to a unique request.",
+    "restart": {
+      "initial_server_pid": 4203,
+      "restarted_server_pid": 7097,
+      "same_data_root_in_published_harness": true,
+      "before_after_warnings_identical": true,
+      "source_record_equality_asserted_in_hosted_case": true
+    },
+    "clean_editor_assertion_review": "The immutable helper waits for the editor to be visible and for the exact clean fixture title before asserting the warning element is hidden; the earlier closed-editor false-pass is avoided.",
+    "subsequent_checks": "Library editing, source highlights, in-flight edit protection, backup restore, diagnostics and origin-guard checks pass after the actual server restart."
+  },
+  "persisted_backup_review": {
+    "sha256": "aa1bc9c8d62a538b876173506172b8aa1ce69231b10c248facc4e5501a882a75",
+    "record_count": 6,
+    "payload_sha256": "9fcd0aef0420faca306cf7c6cf461153a40aee7eb2f243972d3c343904920452",
+    "warned_records": [
+      {
+        "id": "2dd8de033b684a21bd904c831216c872",
+        "source": "https://www.youtube.com/watch?v=QaWarning01",
+        "source_segments_match_published_fixture": true,
+        "plain_text_preserved": true,
+        "warnings": [
+          "Translation: Set a valid LINKSCRIBE_TRANSLATION_MODEL.",
+          "Summary: Set a valid LINKSCRIBE_OLLAMA_MODEL."
+        ],
+        "translations": {},
+        "summary": null
+      },
+      {
+        "id": "e0fb3c3013074d9a869ca9a74812708d",
+        "source": "https://www.youtube.com/watch?v=QaWarning02",
+        "source_segments_match_published_fixture": true,
+        "plain_text_preserved": true,
+        "warnings": [
+          "Translation: Set a valid LINKSCRIBE_TRANSLATION_MODEL.",
+          "Summary: Set a valid LINKSCRIBE_OLLAMA_MODEL."
+        ],
+        "translations": {},
+        "summary": null
+      }
+    ]
+  },
+  "visual_review": [
+    {
+      "path": "artifact/screenshots/processing-warnings-desktop.png",
+      "bytes": 554530,
+      "sha256": "b3bae65adb348b7810db9916a32958147067a29e5f972718297467f88a62b770",
+      "image_pixels": {
+        "width": 1440,
+        "height": 3000
+      },
+      "inspection": "visually opened retained original screenshot",
+      "observations": [
+        "Batch heading shows 2/2 completed, 0 failed, and 2 completed with warnings.",
+        "Both completed rows explicitly say Transcript saved with warnings and show the Translation and Summary notes.",
+        "The saved editor displays both processing warnings while preserving visible source text and the TXT/SRT/VTT/JSON/ZIP controls.",
+        "No translation or summary download control is visible; no overlap or clipped warning text was observed."
+      ]
+    },
+    {
+      "path": "artifact/screenshots/processing-warnings-mobile.png",
+      "bytes": 425856,
+      "sha256": "6048a483c8c06b213e2d9b152c69bc48b66bb2758ea27bc7919494347cdc3bb1",
+      "image_pixels": {
+        "width": 320,
+        "height": 4768
+      },
+      "inspection": "visually opened retained original screenshot",
+      "observations": [
+        "At 320 CSS pixels wide, completed-with-warning counts, both row notes, Open controls, and saved-editor warnings remain visible.",
+        "Long environment-variable names wrap across lines; rows are tall but the warning content remains readable inside the viewport.",
+        "Source text, download controls and editor actions remain within the page; no blocking overlap or horizontal clipping was observed.",
+        "The retained execution report separately measures document width 320 with no overflowing elements."
+      ]
+    },
+    {
+      "path": "artifact/screenshots/processing-warnings-after-restart.png",
+      "bytes": 581390,
+      "sha256": "1b3e001911f85254e4d5432fe45f1ede800ed1de61b55a0fef4dec1077422223",
+      "image_pixels": {
+        "width": 1440,
+        "height": 3193
+      },
+      "inspection": "visually opened retained original screenshot",
+      "observations": [
+        "Recent batches distinguish the two-warning batch from the earlier batch with one fatal source failure.",
+        "Restored-from-disk batch rows and the open saved editor retain both processing warnings.",
+        "Original source captions, the earlier actual upload record, and the original editor fixture remain visible after restart."
+      ]
+    },
+    {
+      "path": "artifact/screenshots/library-edited-desktop.png",
+      "bytes": 699266,
+      "sha256": "688518263f3139fb90b13a78a6b066af3237ca7e6f445b76c1efdfd8ebd43384",
+      "image_pixels": {
+        "width": 1440,
+        "height": 4859
+      },
+      "inspection": "visually opened retained original screenshot",
+      "observations": [
+        "The subsequently edited clean fixture has no stale processing-warning panel.",
+        "Recent batch history still shows the separate two-warning batch, while the clean editor retains source download controls and editable text.",
+        "No blocking desktop layout defect was observed."
+      ]
+    },
+    {
+      "path": "artifact/screenshots/library-edited-mobile-320.png",
+      "bytes": 618219,
+      "sha256": "d9bbce3df3048e8bbe6f8bb5ac0e402ba47220f5b3f7f32008b9d9b4b3e14a27",
+      "image_pixels": {
+        "width": 320,
+        "height": 8388
+      },
+      "inspection": "visually opened retained original screenshot",
+      "observations": [
+        "The subsequently edited clean fixture has no stale processing-warning panel at 320 CSS pixels wide.",
+        "Text fields, exports, pagination, save and delete controls remain within the narrow page.",
+        "This later clean-editor screenshot corroborates clearing; the exact immediate warned-to-clean transition is established by the live title/visibility/hidden-note assertions, not by a dedicated transition screenshot."
+      ]
+    }
+  ],
+  "scope_limits": [
+    "The added warning case uses owned caption fixtures and deliberately invalid optional-enhancement settings; it makes no provider or translation/summary model request.",
+    "The report separately records a real Tiny upload in the full 35-check workflow. This is not an ASR semantic-quality or v1 release approval.",
+    "Backup bytes establish persisted exported metadata and transcript contents. The artifact contains no SQLite database for a separate direct database audit.",
+    "The immediate clean-record clearing assertion has no dedicated screenshot; later clean-editor screenshots provide visual corroboration.",
+    "The result is bound to commit 7a53991da60c9e052be9a72299218b291b364c8d and does not certify future working-tree edits.",
+    "No workflow rerun, live provider call, local browser installation, model inference, production edit, or Git mutation was performed during this artifact review."
+  ]
+}

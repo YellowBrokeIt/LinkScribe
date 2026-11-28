@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T07:29:02.502219+00:00",
+  "reviewer": "/root",
+  "decision": "Approve one source-bound hosted integration run after the reviewed source commit is published. This is not a release or quality approval.",
+  "hosted_plan_sha256": "ab8540dfd58584f5de43ae5019d7c4812a1a2b4762759fc390702e5ecb321faa",
+  "source_bindings_verified": 21,
+  "production_sha256": {
+    "app.py": "56f515e6943c49fa75565086e41b840816af3972909ceb5e95ed8d8a7fa99e3b",
+    "asr_timing.py": "7780261b5ebeba913fe82836547408e7b0562381a7cc616d01f76822ce00db5e",
+    "enhancements.py": "129d0f8c7dbbd5e621b8017d73c7aff204a40446d8ed59f7df8904c87efb579e"
+  },
+  "root_source_review": [
+    "Ordinary recognition remains one complete decoded-waveform pass with word_timestamps=False and the previous effective decoder settings.",
+    "Optional postpass receives independent copies of accepted text/native tokens/seek, recomputes the full frontend, uses the same native model sequentially, and cannot call recognition through its align-only adapter.",
+    "Candidate source strings/order and physical bounds are checked; localized timing conflict fallback retains original intervals and clears only unusable optional word evidence. A late optional failure preserves the full original baseline.",
+    "Speaker-backend failures cannot mutate the baseline; timing warnings and provenance persist while raw private words are discarded after alignment.",
+    "Production releases the cached recognizer before speaker inference and all audio caches before text inference; the actual hosted fixture observes the first boundary, while the second remains covered by source and weak-reference/order controls.",
+    "The native timing bridge is restricted to the inspected faster-whisper 1.2.1/CTranslate2 4.9.1 interface; other runtimes visibly fall back while ordinary recognition remains usable.",
+    "The summary AST differs from the prior production source in exactly three prompt-ending literals. No model/schema/context/point-count/grounding/chunking/unload change is included."
+  ],
+  "hosted_observation_review": [
+    "Original complete 34.635-second constructed recording, four source identities, native model files and post-inference voice annotations are pinned. References never reach model requests.",
+    "Actual one-pass recognition, same full PCM for timing, raw native alignment before validation, acoustic turns, cache lifetime, persistent/reloaded transcript and exports are retained.",
+    "New strict process-group measurements reject incomplete membership/RSS evidence; native/phase/overall limits and owned cleanup remain checked after exit.",
+    "Pinned ECAPA YAML declarations are checked without constructing objects during the separately authorized hosted recovery; current absent YAML was not claimed inspected."
+  ],
+  "local_complete_suite": {
+    "passed_tests": 834,
+    "passed_subtests": 54,
+    "elapsed_reported_seconds": 11.55,
+    "exit_code": 0,
+    "source_unchanged": true
+  },
+  "local_report_sha256": "a7f1deb5eb3ae013260980312174aec726ead7f75d523e62c9718f99ddc9b1c9",
+  "local_model_calls": 0,
+  "authorized_scope": {
+    "hosted_runtime_and_pinned_public_input_model_recovery": true,
+    "one_offline_speaker_pipeline": true,
+    "model_generation_retry": false,
+    "translation_or_summary_in_this_speaker_job": false,
+    "fresh_validation": false,
+    "v1_version_merge_or_release": false
+  },
+  "remaining_limits": [
+    "Controlled exposed English readings do not establish Greek, noisy, overlapping or natural-meeting speaker accuracy.",
+    "The prior six timing anchors and retained lexical errors do not establish general acoustic timing or ASR quality.",
+    "Sampled owned-process residency is not a kernel cap or whole-machine/long-recording resource approval.",
+    "Translation and summary meaning and reliable advertised-provider access remain open release gates."
+  ]
+}

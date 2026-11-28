@@ -1,0 +1,59 @@
+{
+  "review_type": "Assistant comparison of original paragraph and independently generated points against fixed source facts",
+  "report": "projection-results.json",
+  "execution": "Offline transformation only; zero model calls",
+  "decision": "Do not apply as a general replacement for existing point lists: important point-only information would be lost",
+  "mechanical_findings": {
+    "cases": 5,
+    "all_paragraphs_unchanged": true,
+    "all_chapters_unchanged": true,
+    "all_projected_points_reconstruct_complete_paragraph": true,
+    "all_projected_points_within_existing_count_and_length_bounds": true,
+    "meaningful_non_model_regressions_passed": 6
+  },
+  "cases": [
+    {
+      "id": "summary-en-consent-and-roles",
+      "origin": "Fresh production baseline from this follow-up",
+      "additional_required_information_lost": [],
+      "benefit": "The malformed €8:84.75 point disappears because the unchanged paragraph has €84.75 correctly.",
+      "remaining_source_coverage_limit": "Hana's assigned return was already absent from both paragraph and original points; projection does not restore it.",
+      "narrow_projection_check": "pass on this existing result only"
+    },
+    {
+      "id": "summary-el-workshop-counts",
+      "origin": "Fresh production baseline from this follow-up",
+      "additional_required_information_lost": [],
+      "benefit": "All original point content also appears in the paragraph, whose notification and non-cancellation details additionally survive in projected points.",
+      "remaining_source_coverage_limit": "Existing Greek grammar defects remain unchanged; no new model quality claim follows.",
+      "narrow_projection_check": "pass on this existing result only"
+    },
+    {
+      "id": "summary-en-quoted-command",
+      "origin": "Published older bounded-regression output; not a fresh current-contract run",
+      "additional_required_information_lost": [
+        "Original key points specify that the two pending bookings require written approval. The paragraph says pending approval without the written condition.",
+        "Original points name the two organisers as reminder recipients. The paragraph describes a reminder for the two pending bookings without those recipients."
+      ],
+      "narrow_projection_check": "fail: the paragraph is not a complete canonical representation of the original points"
+    },
+    {
+      "id": "summary-el-quotation-and-correction",
+      "origin": "Published older bounded-regression output; not a fresh current-contract run",
+      "additional_required_information_lost": [],
+      "remaining_source_coverage_limit": "The earlier room-A poster and explicit ordinal of the first meeting are already less specific in both original display fields. Projection does not restore those source details.",
+      "narrow_projection_check": "pass on this existing result only"
+    },
+    {
+      "id": "summary-long-en-board-game-day",
+      "origin": "Published mixed replay/live eight-point result used as an offline negative comparator",
+      "additional_required_information_lost": [
+        "Six confirmed volunteers versus four expressions of interest appears only in points.",
+        "Harun's responsibility to check the route and room before publishing access information appears only in points; the paragraph mentions generic access checks.",
+        "Separate permission for photographs showing recognizable visitors appears only in points; the paragraph mentions full recordings but not that photograph condition."
+      ],
+      "narrow_projection_check": "fail: multiple material constraints/actions would be removed"
+    }
+  ],
+  "recommendation": "The deterministic projection is bounded and prevents independent disagreement, but it is not safe to substitute for the current dual-field results globally. A future canonical-output model contract must first demonstrate that its one generated representation contains all required facts; source review remains necessary. No production patch is proposed from these results."
+}

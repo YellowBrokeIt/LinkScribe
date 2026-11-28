@@ -1,0 +1,4581 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-26T20:52:43.524537+00:00",
+  "arm": "base",
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "actual_asr": true,
+  "reference_supplied_to_decoder": false,
+  "manifest_sha256": "eb6f5091c709cdd152011428bd3c8624d5c42fa7ad85dc4f95222faaef55cf22",
+  "sources_before": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_links.py": "c1c24b47b5c9a5e749a10f734452de1585c3f850f5a179e9c59769de6ecce3dd",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "harness_sha256": "ab45dd0f1e82a65c20c458a65cb00df584a96cd78f37c89004f2aa814e2b802f",
+  "qa_random_seed": 1729,
+  "python_executable": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/bin/python",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "runtime_versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "av": "16.1.0",
+    "onnxruntime": "1.32.0",
+    "huggingface-hub": "2.5.0",
+    "socksio": "1.0.0"
+  },
+  "installed_source_hashes": {
+    "transcribe": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+    "vad": "37a9c774aefdd3162d936b896c8dcf5571b2ed938d65bffecfd631770049a18d",
+    "audio": "60a1d8638f718cbf6d245aed3e5a5aa61c1f822a0b0fe9b48a7c928d47c23909",
+    "utils": "5b36ceb9d0fd3961de8cfb144bd82f9a4ef3151b2e5958405a11efb4f3ac4f82"
+  },
+  "model_resolution": [
+    {
+      "requested_args": [
+        "small"
+      ],
+      "requested_kwargs": {
+        "local_files_only": false,
+        "cache_dir": null,
+        "revision": null,
+        "use_auth_token": null
+      },
+      "resolved_snapshot": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "files": {
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+        },
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "silence",
+      "expected": "no_speech",
+      "input_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+      "reference": null,
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "50f369f8fc8e4b3da912d6e0c380e8eb",
+      "job_result": {
+        "id": "50f369f8fc8e4b3da912d6e0c380e8eb",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "silence.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "No spoken words were detected in this recording.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:52:43.583230+00:00",
+          "kind": "recognize_start",
+          "case_id": "silence",
+          "job_id": "50f369f8fc8e4b3da912d6e0c380e8eb",
+          "input_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142"
+        },
+        {
+          "at": "2026-11-26T20:52:43.627484+00:00",
+          "kind": "audio_decoded",
+          "case_id": "silence",
+          "job_id": "50f369f8fc8e4b3da912d6e0c380e8eb",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            512000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe24c952d30",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 0,
+              "pcm_sha256": "e09534d59390e996d03db62710722cd319f787613231ec0ab6b4d53b0837c94f"
+            }
+          ],
+          "decoded_duration_seconds": 32.0
+        },
+        {
+          "at": "2026-11-26T20:52:43.627975+00:00",
+          "kind": "recognize_error",
+          "case_id": "silence",
+          "job_id": "50f369f8fc8e4b3da912d6e0c380e8eb",
+          "error": [
+            {
+              "type": "ReadableError",
+              "message": "No spoken words were detected in this recording."
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.262
+    },
+    {
+      "id": "white_noise",
+      "expected": "no_speech",
+      "input_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+      "reference": null,
+      "execution_status": "complete",
+      "gate_status": "fail",
+      "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+      "job_result": {
+        "id": "450c2b41d8f744d1adf439a8ef61dd2b",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "white_noise.wav",
+        "language": "nn",
+        "method": "local_audio_ai",
+        "preview": "\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "450c2b41d8f744d1adf439a8ef61dd2b"
+      },
+      "sqlite_record_present": true,
+      "segments": [
+        {
+          "start": 30.0,
+          "end": 32.0,
+          "text": "\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da"
+        }
+      ],
+      "hypothesis": "\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+      "exports": {
+        "txt": {
+          "bytes": 31,
+          "sha256": "0b20d521d4cb277625c79cef4f281fc01a45629ac619c7e079285724c62b94f5"
+        },
+        "srt": {
+          "bytes": 63,
+          "sha256": "692fbcc2f5af71748a1aae1dbcb56b3594f6ad526b120bd12498b3a0c3d11b2e"
+        },
+        "vtt": {
+          "bytes": 69,
+          "sha256": "cfe43c369098fd9c6003aa3c66cd677d1944023171d25098e8fed0aaff5023d8"
+        },
+        "json": {
+          "bytes": 382,
+          "sha256": "7d9b6836684c787353426720caa17b2d27a99c21f7f733ece25bda35fe37e5ef"
+        },
+        "zip": {
+          "bytes": 728,
+          "sha256": "eab50e4381eafa1e8c2b5e620efd5a702ca820e1ecd19f27b4cfd2a90456d901"
+        }
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:52:43.835424+00:00",
+          "kind": "recognize_start",
+          "case_id": "white_noise",
+          "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+          "input_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b"
+        },
+        {
+          "at": "2026-11-26T20:52:43.878668+00:00",
+          "kind": "audio_decoded",
+          "case_id": "white_noise",
+          "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            512000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe253852a90",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 511922,
+              "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+            }
+          ],
+          "decoded_duration_seconds": 32.0
+        },
+        {
+          "at": "2026-11-26T20:52:46.430955+00:00",
+          "kind": "transcribe_request",
+          "case_id": "white_noise",
+          "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe253852a90",
+            "shape": [
+              512000
+            ],
+            "dtype": "<f4",
+            "sample_count": 512000,
+            "nonzero_sample_count": 511922,
+            "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+          }
+        },
+        {
+          "at": "2026-11-26T20:52:47.600658+00:00",
+          "kind": "transcribe_info",
+          "case_id": "white_noise",
+          "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+          "info": {
+            "language": "nn",
+            "language_probability": 0.5869624614715576,
+            "duration": 32.0,
+            "duration_after_vad": 32.0,
+            "all_language_probs": [
+              [
+                "nn",
+                0.5869624614715576
+              ],
+              [
+                "en",
+                0.09479717910289764
+              ],
+              [
+                "cy",
+                0.08962813764810562
+              ],
+              [
+                "ja",
+                0.0596090629696846
+              ],
+              [
+                "zh",
+                0.03662216290831566
+              ],
+              [
+                "fr",
+                0.031172551214694977
+              ],
+              [
+                "ko",
+                0.015506326220929623
+              ],
+              [
+                "es",
+                0.009478754363954067
+              ],
+              [
+                "pl",
+                0.007474002428352833
+              ],
+              [
+                "tr",
+                0.00678139366209507
+              ],
+              [
+                "ru",
+                0.006300786044448614
+              ],
+              [
+                "pt",
+                0.005949833896011114
+              ],
+              [
+                "la",
+                0.0051256450824439526
+              ],
+              [
+                "de",
+                0.004717185627669096
+              ],
+              [
+                "vi",
+                0.004583307076245546
+              ],
+              [
+                "jw",
+                0.00365485274232924
+              ],
+              [
+                "ar",
+                0.0034890947863459587
+              ],
+              [
+                "ml",
+                0.0032009489368647337
+              ],
+              [
+                "it",
+                0.002985149621963501
+              ],
+              [
+                "hi",
+                0.002646868349984288
+              ],
+              [
+                "km",
+                0.0018097094725817442
+              ],
+              [
+                "haw",
+                0.001726069487631321
+              ],
+              [
+                "ms",
+                0.0014848378486931324
+              ],
+              [
+                "id",
+                0.0013911643764004111
+              ],
+              [
+                "el",
+                0.0013277152320370078
+              ],
+              [
+                "hu",
+                0.0013186587020754814
+              ],
+              [
+                "sn",
+                0.0012058219872415066
+              ],
+              [
+                "sv",
+                0.001137537881731987
+              ],
+              [
+                "th",
+                0.000914702657610178
+              ],
+              [
+                "nl",
+                0.0008161590667441487
+              ],
+              [
+                "br",
+                0.0007885215454734862
+              ],
+              [
+                "ta",
+                0.0006042080349288881
+              ],
+              [
+                "cs",
+                0.0005948361358605325
+              ],
+              [
+                "tl",
+                0.0005052263149991632
+              ],
+              [
+                "mi",
+                0.00044056575279682875
+              ],
+              [
+                "fa",
+                0.0004130976158194244
+              ],
+              [
+                "te",
+                0.0004039120685774833
+              ],
+              [
+                "ro",
+                0.0003487745998427272
+              ],
+              [
+                "ur",
+                0.0003059151931665838
+              ],
+              [
+                "fi",
+                0.0002829900768119842
+              ],
+              [
+                "he",
+                0.00019123720994684845
+              ],
+              [
+                "si",
+                0.000170362793141976
+              ],
+              [
+                "yo",
+                0.0001560066157253459
+              ],
+              [
+                "uk",
+                0.00014574709348380566
+              ],
+              [
+                "gl",
+                0.00012410266208462417
+              ],
+              [
+                "sa",
+                8.548507321393117e-05
+              ],
+              [
+                "bn",
+                6.63889295537956e-05
+              ],
+              [
+                "no",
+                6.137443415354937e-05
+              ],
+              [
+                "bg",
+                5.949714613961987e-05
+              ],
+              [
+                "da",
+                5.109782432555221e-05
+              ],
+              [
+                "mn",
+                4.9337286327499896e-05
+              ],
+              [
+                "sw",
+                4.103703759028576e-05
+              ],
+              [
+                "eu",
+                3.93705049646087e-05
+              ],
+              [
+                "my",
+                3.5654582461575046e-05
+              ],
+              [
+                "ca",
+                3.3545878977747634e-05
+              ],
+              [
+                "fo",
+                3.07749469357077e-05
+              ],
+              [
+                "oc",
+                1.8854017980629578e-05
+              ],
+              [
+                "hr",
+                1.7238635336980224e-05
+              ],
+              [
+                "bs",
+                1.5399680705741048e-05
+              ],
+              [
+                "ht",
+                1.4571422070730478e-05
+              ],
+              [
+                "sl",
+                1.0387847396486904e-05
+              ],
+              [
+                "be",
+                8.231354513554834e-06
+              ],
+              [
+                "ne",
+                8.03207603894407e-06
+              ],
+              [
+                "sk",
+                7.863639439165127e-06
+              ],
+              [
+                "bo",
+                5.740993856306886e-06
+              ],
+              [
+                "hy",
+                5.663210686179809e-06
+              ],
+              [
+                "yi",
+                5.465232334245229e-06
+              ],
+              [
+                "af",
+                5.462329681904521e-06
+              ],
+              [
+                "sd",
+                4.725399776361883e-06
+              ],
+              [
+                "ps",
+                3.825993644568371e-06
+              ],
+              [
+                "lo",
+                3.7350664570112713e-06
+              ],
+              [
+                "az",
+                3.4725746900221566e-06
+              ],
+              [
+                "mr",
+                2.3552881884825183e-06
+              ],
+              [
+                "is",
+                1.8540827113611158e-06
+              ],
+              [
+                "lt",
+                1.453362415304582e-06
+              ],
+              [
+                "et",
+                1.15540899514599e-06
+              ],
+              [
+                "sq",
+                1.0233661669190042e-06
+              ],
+              [
+                "kn",
+                9.383810493091005e-07
+              ],
+              [
+                "lv",
+                9.322014875579043e-07
+              ],
+              [
+                "as",
+                8.1890925685002e-07
+              ],
+              [
+                "pa",
+                7.823183523214539e-07
+              ],
+              [
+                "sr",
+                7.562853170384187e-07
+              ],
+              [
+                "mk",
+                4.399575459501648e-07
+              ],
+              [
+                "ka",
+                4.19138785900941e-07
+              ],
+              [
+                "kk",
+                3.622866699970473e-07
+              ],
+              [
+                "ln",
+                3.215248796095693e-07
+              ],
+              [
+                "mt",
+                2.839794035480736e-07
+              ],
+              [
+                "gu",
+                1.1314691050756664e-07
+              ],
+              [
+                "am",
+                1.1029401036921627e-07
+              ],
+              [
+                "so",
+                2.1431690200302e-08
+              ],
+              [
+                "su",
+                1.69603939781382e-08
+              ],
+              [
+                "tg",
+                8.963414011020632e-09
+              ],
+              [
+                "lb",
+                4.105480400085071e-09
+              ],
+              [
+                "ha",
+                1.982060737759639e-09
+              ],
+              [
+                "tk",
+                1.010630246156552e-09
+              ],
+              [
+                "tt",
+                9.174080939367002e-10
+              ],
+              [
+                "ba",
+                7.060572682071609e-10
+              ],
+              [
+                "mg",
+                2.809567856143502e-10
+              ],
+              [
+                "uz",
+                2.1861873422679423e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:21.640958+00:00",
+          "kind": "asr_segment_created",
+          "case_id": "white_noise",
+          "job_id": "450c2b41d8f744d1adf439a8ef61dd2b",
+          "segment": {
+            "id": 1,
+            "seek": 3000,
+            "start": 30.0,
+            "end": 32.0,
+            "text": " \u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da\u10da",
+            "tokens": [
+              50364,
+              21879,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              157,
+              225,
+              248,
+              50464
+            ],
+            "avg_logprob": -0.42299195491906366,
+            "compression_ratio": 2.142857142857143,
+            "no_speech_prob": 0.8953099250793457,
+            "words": null,
+            "temperature": 0.0
+          }
+        }
+      ],
+      "elapsed_seconds": 37.951
+    },
+    {
+      "id": "owned_440hz_tone",
+      "expected": "no_speech",
+      "input_sha256": "077e4ae8a47344e85166426f05163a89f645181f293c37ee0560335e1918cc14",
+      "reference": null,
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "6749edf025a64d3e908d7fabf5312351",
+      "job_result": {
+        "id": "6749edf025a64d3e908d7fabf5312351",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "owned_440hz_tone.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "No spoken words were detected in this recording.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:53:21.777487+00:00",
+          "kind": "recognize_start",
+          "case_id": "owned_440hz_tone",
+          "job_id": "6749edf025a64d3e908d7fabf5312351",
+          "input_sha256": "077e4ae8a47344e85166426f05163a89f645181f293c37ee0560335e1918cc14"
+        },
+        {
+          "at": "2026-11-26T20:53:21.817474+00:00",
+          "kind": "audio_decoded",
+          "case_id": "owned_440hz_tone",
+          "job_id": "6749edf025a64d3e908d7fabf5312351",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            256000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe24b586490",
+              "shape": [
+                256000
+              ],
+              "dtype": "<f4",
+              "sample_count": 256000,
+              "nonzero_sample_count": 254720,
+              "pcm_sha256": "a42ada02095acd85de87db33b7887e5ffbef8aa85f8a2e143be926aee212f562"
+            }
+          ],
+          "decoded_duration_seconds": 16.0
+        },
+        {
+          "at": "2026-11-26T20:53:21.818489+00:00",
+          "kind": "transcribe_request",
+          "case_id": "owned_440hz_tone",
+          "job_id": "6749edf025a64d3e908d7fabf5312351",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe24b586490",
+            "shape": [
+              256000
+            ],
+            "dtype": "<f4",
+            "sample_count": 256000,
+            "nonzero_sample_count": 254720,
+            "pcm_sha256": "a42ada02095acd85de87db33b7887e5ffbef8aa85f8a2e143be926aee212f562"
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:23.049671+00:00",
+          "kind": "transcribe_info",
+          "case_id": "owned_440hz_tone",
+          "job_id": "6749edf025a64d3e908d7fabf5312351",
+          "info": {
+            "language": "en",
+            "language_probability": 0.44654858112335205,
+            "duration": 16.0,
+            "duration_after_vad": 16.0,
+            "all_language_probs": [
+              [
+                "en",
+                0.44654858112335205
+              ],
+              [
+                "nn",
+                0.0855049341917038
+              ],
+              [
+                "ja",
+                0.08123882114887238
+              ],
+              [
+                "ko",
+                0.03368082270026207
+              ],
+              [
+                "fr",
+                0.030638938769698143
+              ],
+              [
+                "jw",
+                0.023946799337863922
+              ],
+              [
+                "zh",
+                0.023826997727155685
+              ],
+              [
+                "pt",
+                0.022652771323919296
+              ],
+              [
+                "ru",
+                0.021616807207465172
+              ],
+              [
+                "es",
+                0.020542800426483154
+              ],
+              [
+                "de",
+                0.020059866830706596
+              ],
+              [
+                "cy",
+                0.01865028403699398
+              ],
+              [
+                "tr",
+                0.01657242700457573
+              ],
+              [
+                "la",
+                0.013841063715517521
+              ],
+              [
+                "pl",
+                0.011954066343605518
+              ],
+              [
+                "vi",
+                0.01085665263235569
+              ],
+              [
+                "km",
+                0.010631355457007885
+              ],
+              [
+                "nl",
+                0.010435244999825954
+              ],
+              [
+                "ar",
+                0.009874824434518814
+              ],
+              [
+                "hi",
+                0.007879145443439484
+              ],
+              [
+                "id",
+                0.007394307758659124
+              ],
+              [
+                "th",
+                0.006146850995719433
+              ],
+              [
+                "ms",
+                0.005096472334116697
+              ],
+              [
+                "it",
+                0.004945746622979641
+              ],
+              [
+                "ta",
+                0.004052202682942152
+              ],
+              [
+                "ml",
+                0.003526972606778145
+              ],
+              [
+                "cs",
+                0.003221995895728469
+              ],
+              [
+                "haw",
+                0.003164833877235651
+              ],
+              [
+                "hu",
+                0.0029989201575517654
+              ],
+              [
+                "sv",
+                0.00299884588457644
+              ],
+              [
+                "br",
+                0.002817635890096426
+              ],
+              [
+                "fi",
+                0.0027443580329418182
+              ],
+              [
+                "el",
+                0.0027172269765287638
+              ],
+              [
+                "tl",
+                0.0021713697351515293
+              ],
+              [
+                "fa",
+                0.0018941913731396198
+              ],
+              [
+                "ro",
+                0.00186099240090698
+              ],
+              [
+                "te",
+                0.0018189180409535766
+              ],
+              [
+                "sn",
+                0.0015492660459131002
+              ],
+              [
+                "ur",
+                0.0014086655573919415
+              ],
+              [
+                "he",
+                0.0014078972162678838
+              ],
+              [
+                "uk",
+                0.0013284182641655207
+              ],
+              [
+                "si",
+                0.001307175843976438
+              ],
+              [
+                "gl",
+                0.0011259106686338782
+              ],
+              [
+                "sa",
+                0.0010915907332673669
+              ],
+              [
+                "mi",
+                0.0010805991478264332
+              ],
+              [
+                "no",
+                0.0010253392392769456
+              ],
+              [
+                "ca",
+                0.0009238976635970175
+              ],
+              [
+                "bn",
+                0.0008072869968600571
+              ],
+              [
+                "da",
+                0.0008062237175181508
+              ],
+              [
+                "bg",
+                0.0007385508506558836
+              ],
+              [
+                "yo",
+                0.0006630152347497642
+              ],
+              [
+                "hr",
+                0.00047391827683895826
+              ],
+              [
+                "mn",
+                0.0003537049051374197
+              ],
+              [
+                "my",
+                0.00032739382004365325
+              ],
+              [
+                "eu",
+                0.000284136418486014
+              ],
+              [
+                "sl",
+                0.00025287698372267187
+              ],
+              [
+                "sk",
+                0.000207500925171189
+              ],
+              [
+                "bs",
+                0.00018281112716067582
+              ],
+              [
+                "sw",
+                0.0001818075979826972
+              ],
+              [
+                "oc",
+                0.0001744008477544412
+              ],
+              [
+                "ne",
+                0.00017253133410122246
+              ],
+              [
+                "ht",
+                0.0001479034253861755
+              ],
+              [
+                "bo",
+                0.00010969112918246537
+              ],
+              [
+                "be",
+                0.00010928462870651856
+              ],
+              [
+                "hy",
+                0.00010275284148519859
+              ],
+              [
+                "lo",
+                9.634168236516416e-05
+              ],
+              [
+                "sr",
+                9.395612869411707e-05
+              ],
+              [
+                "sd",
+                8.825839904602617e-05
+              ],
+              [
+                "lv",
+                8.754818554734811e-05
+              ],
+              [
+                "az",
+                7.366350473603234e-05
+              ],
+              [
+                "is",
+                7.041655044304207e-05
+              ],
+              [
+                "ps",
+                6.859341374365613e-05
+              ],
+              [
+                "yi",
+                6.679658690700307e-05
+              ],
+              [
+                "et",
+                6.222297815838829e-05
+              ],
+              [
+                "fo",
+                6.191540887812153e-05
+              ],
+              [
+                "af",
+                5.846723433933221e-05
+              ],
+              [
+                "mr",
+                5.4051495681051165e-05
+              ],
+              [
+                "lt",
+                5.075615263194777e-05
+              ],
+              [
+                "sq",
+                3.079681846429594e-05
+              ],
+              [
+                "kk",
+                3.0349043299793266e-05
+              ],
+              [
+                "pa",
+                3.0165463613229804e-05
+              ],
+              [
+                "as",
+                3.001446384587325e-05
+              ],
+              [
+                "kn",
+                2.8042213671142235e-05
+              ],
+              [
+                "mk",
+                1.1812492630269844e-05
+              ],
+              [
+                "ka",
+                1.0727491826401092e-05
+              ],
+              [
+                "ln",
+                6.868128821224673e-06
+              ],
+              [
+                "gu",
+                6.2929220803198405e-06
+              ],
+              [
+                "mt",
+                5.992619662720244e-06
+              ],
+              [
+                "am",
+                3.93921527575003e-06
+              ],
+              [
+                "so",
+                1.6062818986029015e-06
+              ],
+              [
+                "su",
+                3.794440317506087e-07
+              ],
+              [
+                "tg",
+                2.0242632103872893e-07
+              ],
+              [
+                "lb",
+                1.1167066560346939e-07
+              ],
+              [
+                "tt",
+                5.64505526767789e-08
+              ],
+              [
+                "tk",
+                4.2876074246578355e-08
+              ],
+              [
+                "ba",
+                3.317228092214464e-08
+              ],
+              [
+                "ha",
+                2.872760340721925e-08
+              ],
+              [
+                "mg",
+                7.437256144271487e-09
+              ],
+              [
+                "uz",
+                5.1632342845664425e-09
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:24.124188+00:00",
+          "kind": "recognize_error",
+          "case_id": "owned_440hz_tone",
+          "job_id": "6749edf025a64d3e908d7fabf5312351",
+          "error": [
+            {
+              "type": "ReadableError",
+              "message": "No spoken words were detected in this recording."
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 2.464
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "expected": "speech",
+      "input_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "reference": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b5\u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03b7\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03b5\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+      "job_result": {
+        "id": "b632a8b4e2144dcb834797ae34a995ce",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "b632a8b4e2144dcb834797ae34a995ce"
+      },
+      "sqlite_record_present": true,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.0,
+          "text": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac."
+        }
+      ],
+      "hypothesis": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "exports": {
+        "txt": {
+          "bytes": 166,
+          "sha256": "6c12bcdf30a94b996ff50c25576ae55fcb5704048b68e0d69a96c3570eea2cd3"
+        },
+        "srt": {
+          "bytes": 198,
+          "sha256": "892c283fd000fbbd85e2265ea9daf3e152b65392ea7fea61ec03636cd206171c"
+        },
+        "vtt": {
+          "bytes": 204,
+          "sha256": "80d4b187d1868c2d100a948d8b0093c20a3e47ce35a10bba2f53fa536a480d82"
+        },
+        "json": {
+          "bytes": 553,
+          "sha256": "1b7497c0aca94cee12338808542d8f460c1a74b07c89c414744b1b6536249d08"
+        },
+        "zip": {
+          "bytes": 1172,
+          "sha256": "57ec548e2d73e45ec799c1bbc0b465e3f5f3373bb034f3aecf2a96c4ccfd60d3"
+        }
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:53:24.238932+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+          "input_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80"
+        },
+        {
+          "at": "2026-11-26T20:53:24.270249+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            106560
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe24c952bb0",
+              "shape": [
+                106560
+              ],
+              "dtype": "<f4",
+              "sample_count": 106560,
+              "nonzero_sample_count": 104219,
+              "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+            }
+          ],
+          "decoded_duration_seconds": 6.66
+        },
+        {
+          "at": "2026-11-26T20:53:24.270771+00:00",
+          "kind": "transcribe_request",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe24c952bb0",
+            "shape": [
+              106560
+            ],
+            "dtype": "<f4",
+            "sample_count": 106560,
+            "nonzero_sample_count": 104219,
+            "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:25.316850+00:00",
+          "kind": "transcribe_info",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+          "info": {
+            "language": "el",
+            "language_probability": 0.9604063630104065,
+            "duration": 6.66,
+            "duration_after_vad": 6.66,
+            "all_language_probs": [
+              [
+                "el",
+                0.9604063630104065
+              ],
+              [
+                "nn",
+                0.011141959577798843
+              ],
+              [
+                "cy",
+                0.004427580162882805
+              ],
+              [
+                "es",
+                0.0042273816652596
+              ],
+              [
+                "ru",
+                0.0029355473816394806
+              ],
+              [
+                "pl",
+                0.002872258424758911
+              ],
+              [
+                "en",
+                0.002533106366172433
+              ],
+              [
+                "ar",
+                0.0021253004670143127
+              ],
+              [
+                "la",
+                0.0012419534614309669
+              ],
+              [
+                "pt",
+                0.0008991212816908956
+              ],
+              [
+                "jw",
+                0.0007522591040469706
+              ],
+              [
+                "tr",
+                0.0007207203889265656
+              ],
+              [
+                "it",
+                0.000625164364464581
+              ],
+              [
+                "nl",
+                0.0005754606681875885
+              ],
+              [
+                "de",
+                0.0005730421980842948
+              ],
+              [
+                "hu",
+                0.0005180190782994032
+              ],
+              [
+                "gl",
+                0.00041943060932680964
+              ],
+              [
+                "fr",
+                0.00040568102849647403
+              ],
+              [
+                "he",
+                0.0003705986891873181
+              ],
+              [
+                "ro",
+                0.00029268019716255367
+              ],
+              [
+                "sv",
+                0.00028950083651579916
+              ],
+              [
+                "ca",
+                0.00025930150877684355
+              ],
+              [
+                "km",
+                0.00013622594997286797
+              ],
+              [
+                "sn",
+                0.00011732719576684758
+              ],
+              [
+                "vi",
+                0.00010752490925369784
+              ],
+              [
+                "cs",
+                9.689538273960352e-05
+              ],
+              [
+                "fi",
+                9.43998311413452e-05
+              ],
+              [
+                "uk",
+                8.076302037807181e-05
+              ],
+              [
+                "ja",
+                7.61513874749653e-05
+              ],
+              [
+                "ko",
+                6.17400582996197e-05
+              ],
+              [
+                "mi",
+                5.530644557438791e-05
+              ],
+              [
+                "id",
+                4.284458918846212e-05
+              ],
+              [
+                "haw",
+                3.7657100619981065e-05
+              ],
+              [
+                "hi",
+                3.5324093914823607e-05
+              ],
+              [
+                "br",
+                3.29680296999868e-05
+              ],
+              [
+                "zh",
+                3.094258136115968e-05
+              ],
+              [
+                "bs",
+                2.9848537451471202e-05
+              ],
+              [
+                "fa",
+                2.3147887986851856e-05
+              ],
+              [
+                "ms",
+                2.2216672732611187e-05
+              ],
+              [
+                "bg",
+                1.9758392227231525e-05
+              ],
+              [
+                "sw",
+                1.956426967808511e-05
+              ],
+              [
+                "eu",
+                1.9447503291303292e-05
+              ],
+              [
+                "tl",
+                1.827225241868291e-05
+              ],
+              [
+                "hr",
+                1.823489583330229e-05
+              ],
+              [
+                "da",
+                1.7380189092364162e-05
+              ],
+              [
+                "oc",
+                1.581788637849968e-05
+              ],
+              [
+                "is",
+                1.5165705008257646e-05
+              ],
+              [
+                "ur",
+                1.4399562132894062e-05
+              ],
+              [
+                "sl",
+                1.3955749636807013e-05
+              ],
+              [
+                "ml",
+                1.3196313375374302e-05
+              ],
+              [
+                "be",
+                1.2705896551779006e-05
+              ],
+              [
+                "ta",
+                1.2613753824552987e-05
+              ],
+              [
+                "sa",
+                1.1708871170412749e-05
+              ],
+              [
+                "yi",
+                8.43717953102896e-06
+              ],
+              [
+                "sq",
+                7.9492438089801e-06
+              ],
+              [
+                "sk",
+                6.343881977954879e-06
+              ],
+              [
+                "af",
+                6.117001248640008e-06
+              ],
+              [
+                "yo",
+                5.918327588005923e-06
+              ],
+              [
+                "si",
+                5.901481017644983e-06
+              ],
+              [
+                "th",
+                5.496967332874192e-06
+              ],
+              [
+                "sr",
+                3.857539468299365e-06
+              ],
+              [
+                "te",
+                3.755551460926654e-06
+              ],
+              [
+                "lv",
+                3.715987759278505e-06
+              ],
+              [
+                "az",
+                3.1586785098625114e-06
+              ],
+              [
+                "et",
+                2.5444944640184985e-06
+              ],
+              [
+                "fo",
+                2.3667901132284896e-06
+              ],
+              [
+                "bn",
+                2.3523975869466085e-06
+              ],
+              [
+                "mk",
+                2.180613819291466e-06
+              ],
+              [
+                "hy",
+                2.0171748928987654e-06
+              ],
+              [
+                "no",
+                1.8957194924951182e-06
+              ],
+              [
+                "mn",
+                1.70690032064158e-06
+              ],
+              [
+                "ht",
+                1.4293207186710788e-06
+              ],
+              [
+                "ps",
+                1.3501919511327287e-06
+              ],
+              [
+                "lt",
+                1.2606820973815047e-06
+              ],
+              [
+                "sd",
+                7.898714784460026e-07
+              ],
+              [
+                "mt",
+                6.331433723971713e-07
+              ],
+              [
+                "ne",
+                5.826074698234152e-07
+              ],
+              [
+                "ka",
+                5.168171810510103e-07
+              ],
+              [
+                "ln",
+                3.5521037489161245e-07
+              ],
+              [
+                "mr",
+                3.305989935142861e-07
+              ],
+              [
+                "lo",
+                2.417883706584689e-07
+              ],
+              [
+                "kk",
+                2.369026930182372e-07
+              ],
+              [
+                "my",
+                2.2738406357802887e-07
+              ],
+              [
+                "bo",
+                1.1354624263049118e-07
+              ],
+              [
+                "kn",
+                9.37141209078618e-08
+              ],
+              [
+                "am",
+                4.508389750412789e-08
+              ],
+              [
+                "as",
+                3.8647197442287506e-08
+              ],
+              [
+                "tg",
+                3.000921466878026e-08
+              ],
+              [
+                "pa",
+                2.713605518067652e-08
+              ],
+              [
+                "su",
+                2.0862481520111942e-08
+              ],
+              [
+                "so",
+                1.862422749354664e-08
+              ],
+              [
+                "tt",
+                1.3954356781198385e-08
+              ],
+              [
+                "lb",
+                1.1724195836393392e-08
+              ],
+              [
+                "gu",
+                6.162281795951685e-09
+              ],
+              [
+                "ba",
+                1.907766389308563e-09
+              ],
+              [
+                "tk",
+                1.4411567494931887e-09
+              ],
+              [
+                "ha",
+                8.17260426000388e-10
+              ],
+              [
+                "mg",
+                7.043169381049097e-10
+              ],
+              [
+                "uz",
+                2.1582219345006592e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:27.603933+00:00",
+          "kind": "asr_segment_created",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "b632a8b4e2144dcb834797ae34a995ce",
+          "segment": {
+            "id": 1,
+            "seek": 0,
+            "start": 0.0,
+            "end": 6.0,
+            "text": " \u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+            "tokens": [
+              50364,
+              19233,
+              3849,
+              11188,
+              8311,
+              17579,
+              2080,
+              3786,
+              13580,
+              14836,
+              39650,
+              23380,
+              28788,
+              7597,
+              20867,
+              47467,
+              8385,
+              10073,
+              14940,
+              3371,
+              14832,
+              9213,
+              3786,
+              4915,
+              19264,
+              2254,
+              5733,
+              25733,
+              14940,
+              3371,
+              17319,
+              8828,
+              2805,
+              29395,
+              17321,
+              11383,
+              10073,
+              1800,
+              6744,
+              5554,
+              2254,
+              6452,
+              3371,
+              13769,
+              5337,
+              10073,
+              17750,
+              4654,
+              5074,
+              8385,
+              26855,
+              13,
+              50664
+            ],
+            "avg_logprob": -0.19415369077965064,
+            "compression_ratio": 1.3983050847457628,
+            "no_speech_prob": 0.12667322158813477,
+            "words": null,
+            "temperature": 0.0
+          }
+        }
+      ],
+      "elapsed_seconds": 3.661
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+      "expected": "speech",
+      "input_sha256": "c0394dc391282d03b7e50d2ff4d37fe7b3d67500ae6fc7b88e74021111b1bc02",
+      "reference": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b5\u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03b7\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03b5\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+      "job_result": {
+        "id": "653206cca70e48e1ba85b20fdc78f3d0",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-el_gr-validation-2-1528-quiet-minus20db.wav",
+        "language": "el",
+        "method": "local_audio_ai",
+        "preview": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03b8\u03b5\u03c3\u03c4\u03b7\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "653206cca70e48e1ba85b20fdc78f3d0"
+      },
+      "sqlite_record_present": true,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.0,
+          "text": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03b8\u03b5\u03c3\u03c4\u03b7\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac."
+        }
+      ],
+      "hypothesis": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03b8\u03b5\u03c3\u03c4\u03b7\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "exports": {
+        "txt": {
+          "bytes": 166,
+          "sha256": "7ae22e8d5bc3101a2cb798c7008c441c49f450420e4061246b52d6cbb870464b"
+        },
+        "srt": {
+          "bytes": 198,
+          "sha256": "b546eee936cdf17c2aceedb11a74bf441ade3f90c766b1b408a484dac416977e"
+        },
+        "vtt": {
+          "bytes": 204,
+          "sha256": "e5314659557df7a129c7afbddc2f552bb5f7eb0551114104e15a6eb4244667ae"
+        },
+        "json": {
+          "bytes": 585,
+          "sha256": "60ac41b2125184a09e0d2b833e4e1e2cd401135c57b261bf040c307b187a3a71"
+        },
+        "zip": {
+          "bytes": 1186,
+          "sha256": "9378c6d4ab24eed9199748218927478a5e880d7134f4d2df56381dd71931d131"
+        }
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:53:27.910597+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+          "input_sha256": "c0394dc391282d03b7e50d2ff4d37fe7b3d67500ae6fc7b88e74021111b1bc02"
+        },
+        {
+          "at": "2026-11-26T20:53:27.988544+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            106560
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe24b5871b0",
+              "shape": [
+                106560
+              ],
+              "dtype": "<f4",
+              "sample_count": 106560,
+              "nonzero_sample_count": 88173,
+              "pcm_sha256": "412d5887db615edbdbd7ebb279c35c2d42adfd8a71f46f1f5feadabb6c1f9c2c"
+            }
+          ],
+          "decoded_duration_seconds": 6.66
+        },
+        {
+          "at": "2026-11-26T20:53:27.991271+00:00",
+          "kind": "transcribe_request",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe24b5871b0",
+            "shape": [
+              106560
+            ],
+            "dtype": "<f4",
+            "sample_count": 106560,
+            "nonzero_sample_count": 88173,
+            "pcm_sha256": "412d5887db615edbdbd7ebb279c35c2d42adfd8a71f46f1f5feadabb6c1f9c2c"
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:29.228759+00:00",
+          "kind": "transcribe_info",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+          "info": {
+            "language": "el",
+            "language_probability": 0.9271740317344666,
+            "duration": 6.66,
+            "duration_after_vad": 6.66,
+            "all_language_probs": [
+              [
+                "el",
+                0.9271740317344666
+              ],
+              [
+                "nn",
+                0.023704569786787033
+              ],
+              [
+                "cy",
+                0.013520865701138973
+              ],
+              [
+                "es",
+                0.005740523338317871
+              ],
+              [
+                "en",
+                0.004619595594704151
+              ],
+              [
+                "pl",
+                0.003701415378600359
+              ],
+              [
+                "la",
+                0.003496844321489334
+              ],
+              [
+                "ru",
+                0.0034478616435080767
+              ],
+              [
+                "jw",
+                0.0024424807634204626
+              ],
+              [
+                "ar",
+                0.0024304725229740143
+              ],
+              [
+                "pt",
+                0.0008307135431095958
+              ],
+              [
+                "it",
+                0.0008159617427736521
+              ],
+              [
+                "tr",
+                0.0007831775583326817
+              ],
+              [
+                "fr",
+                0.0006398329860530794
+              ],
+              [
+                "nl",
+                0.0006080123130232096
+              ],
+              [
+                "he",
+                0.0006073794211260974
+              ],
+              [
+                "ro",
+                0.0005635505076497793
+              ],
+              [
+                "km",
+                0.00045484848669730127
+              ],
+              [
+                "gl",
+                0.00044618197716772556
+              ],
+              [
+                "hu",
+                0.0004358752921689302
+              ],
+              [
+                "sn",
+                0.0003865041653625667
+              ],
+              [
+                "sv",
+                0.00032929121516644955
+              ],
+              [
+                "vi",
+                0.0003279364318586886
+              ],
+              [
+                "de",
+                0.0003097265725955367
+              ],
+              [
+                "cs",
+                0.00017690150707494467
+              ],
+              [
+                "ca",
+                0.00017480437236372381
+              ],
+              [
+                "haw",
+                0.0001725410984363407
+              ],
+              [
+                "mi",
+                0.00012958334991708398
+              ],
+              [
+                "uk",
+                0.00012642363435588777
+              ],
+              [
+                "br",
+                0.00011336746683809906
+              ],
+              [
+                "ko",
+                0.00010716610995586962
+              ],
+              [
+                "zh",
+                9.845535532804206e-05
+              ],
+              [
+                "id",
+                8.3612983871717e-05
+              ],
+              [
+                "ja",
+                7.679361442569643e-05
+              ],
+              [
+                "hi",
+                7.195259240688756e-05
+              ],
+              [
+                "fi",
+                6.78139622323215e-05
+              ],
+              [
+                "tl",
+                6.084789856686257e-05
+              ],
+              [
+                "ms",
+                5.423181937658228e-05
+              ],
+              [
+                "fa",
+                5.404476178227924e-05
+              ],
+              [
+                "bs",
+                4.671237547881901e-05
+              ],
+              [
+                "bg",
+                4.534117033472285e-05
+              ],
+              [
+                "ur",
+                4.271058787708171e-05
+              ],
+              [
+                "sl",
+                4.1988030716311187e-05
+              ],
+              [
+                "sw",
+                4.128529690206051e-05
+              ],
+              [
+                "sa",
+                3.296008435427211e-05
+              ],
+              [
+                "oc",
+                3.292954352218658e-05
+              ],
+              [
+                "hr",
+                3.1540632335236296e-05
+              ],
+              [
+                "ml",
+                2.4991224563564174e-05
+              ],
+              [
+                "eu",
+                2.477586895111017e-05
+              ],
+              [
+                "si",
+                2.257784035464283e-05
+              ],
+              [
+                "ta",
+                2.0525974832708016e-05
+              ],
+              [
+                "be",
+                1.998110383283347e-05
+              ],
+              [
+                "yo",
+                1.9919933038181625e-05
+              ],
+              [
+                "da",
+                1.931015503942035e-05
+              ],
+              [
+                "is",
+                1.9192380932508968e-05
+              ],
+              [
+                "yi",
+                1.730929761833977e-05
+              ],
+              [
+                "th",
+                1.6190822861972265e-05
+              ],
+              [
+                "sk",
+                1.3502006368071306e-05
+              ],
+              [
+                "sq",
+                1.0494424714124762e-05
+              ],
+              [
+                "af",
+                8.541082024748903e-06
+              ],
+              [
+                "te",
+                6.3199099713528994e-06
+              ],
+              [
+                "bn",
+                5.56508621230023e-06
+              ],
+              [
+                "fo",
+                4.7811304284550715e-06
+              ],
+              [
+                "sr",
+                4.566552433971083e-06
+              ],
+              [
+                "lv",
+                4.35441916124546e-06
+              ],
+              [
+                "ht",
+                4.145516413700534e-06
+              ],
+              [
+                "mk",
+                3.616966750996653e-06
+              ],
+              [
+                "mn",
+                3.3513324524392374e-06
+              ],
+              [
+                "az",
+                3.069562581003993e-06
+              ],
+              [
+                "ps",
+                2.6553630050329957e-06
+              ],
+              [
+                "sd",
+                2.5905908387358068e-06
+              ],
+              [
+                "hy",
+                2.4118517103488557e-06
+              ],
+              [
+                "no",
+                2.120921863024705e-06
+              ],
+              [
+                "et",
+                1.9898695882147877e-06
+              ],
+              [
+                "ne",
+                1.805229203455383e-06
+              ],
+              [
+                "lt",
+                1.7509049712316482e-06
+              ],
+              [
+                "ka",
+                1.1008571618731366e-06
+              ],
+              [
+                "mt",
+                1.0465885225130478e-06
+              ],
+              [
+                "my",
+                7.157739219110226e-07
+              ],
+              [
+                "ln",
+                7.01121450674691e-07
+              ],
+              [
+                "lo",
+                5.941982408330659e-07
+              ],
+              [
+                "mr",
+                5.523039590116241e-07
+              ],
+              [
+                "bo",
+                3.827960313174117e-07
+              ],
+              [
+                "kk",
+                3.7109293771209195e-07
+              ],
+              [
+                "kn",
+                2.4306993395839527e-07
+              ],
+              [
+                "as",
+                1.3995521896958962e-07
+              ],
+              [
+                "pa",
+                9.091647967807148e-08
+              ],
+              [
+                "am",
+                6.196796675794758e-08
+              ],
+              [
+                "tg",
+                3.8157192960852626e-08
+              ],
+              [
+                "so",
+                3.612181842527207e-08
+              ],
+              [
+                "su",
+                2.434498114212147e-08
+              ],
+              [
+                "gu",
+                1.7132657958995878e-08
+              ],
+              [
+                "tt",
+                1.0480396994694274e-08
+              ],
+              [
+                "lb",
+                6.423643839070792e-09
+              ],
+              [
+                "ba",
+                2.207849680857521e-09
+              ],
+              [
+                "tk",
+                1.9596202438521004e-09
+              ],
+              [
+                "ha",
+                1.1857053117125815e-09
+              ],
+              [
+                "mg",
+                9.256184152484082e-10
+              ],
+              [
+                "uz",
+                2.9456781458492287e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:31.074049+00:00",
+          "kind": "asr_segment_created",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "653206cca70e48e1ba85b20fdc78f3d0",
+          "segment": {
+            "id": 1,
+            "seek": 0,
+            "start": 0.0,
+            "end": 6.0,
+            "text": " \u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03b8\u03b5\u03c3\u03c4\u03b7\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03bf\u03b9\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+            "tokens": [
+              50364,
+              19233,
+              3849,
+              11188,
+              8311,
+              12622,
+              2080,
+              3786,
+              12942,
+              14836,
+              39650,
+              23380,
+              28788,
+              7597,
+              20867,
+              47467,
+              8385,
+              10073,
+              14940,
+              3371,
+              14832,
+              9213,
+              3786,
+              4915,
+              19264,
+              2254,
+              5733,
+              25733,
+              14940,
+              3371,
+              17319,
+              8828,
+              2805,
+              29395,
+              17321,
+              11383,
+              10073,
+              1800,
+              6744,
+              5554,
+              2254,
+              6452,
+              3371,
+              13769,
+              5337,
+              10073,
+              17750,
+              4654,
+              5074,
+              8385,
+              26855,
+              13,
+              50664
+            ],
+            "avg_logprob": -0.20379837574782195,
+            "compression_ratio": 1.3983050847457628,
+            "no_speech_prob": 0.20181787014007568,
+            "words": null,
+            "temperature": 0.0
+          }
+        }
+      ],
+      "elapsed_seconds": 3.389
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "expected": "speech",
+      "input_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+      "job_result": {
+        "id": "21e6d20a160c476aaca9a2f850c7e55f",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-0-1548.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "21e6d20a160c476aaca9a2f850c7e55f"
+      },
+      "sqlite_record_present": true,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.0,
+          "text": "When you call someone who is thousands of miles away, you are using a satellite."
+        }
+      ],
+      "hypothesis": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "exports": {
+        "txt": {
+          "bytes": 81,
+          "sha256": "b7bb912726495b0f60aa9ba77982cd0a72107eaea41bfb8387bc74104e9eaec0"
+        },
+        "srt": {
+          "bytes": 113,
+          "sha256": "f1a76d27a27fc379a4701fbd87e5635a84fb917948e792aa0bb5c5d938feede8"
+        },
+        "vtt": {
+          "bytes": 119,
+          "sha256": "64d695b1a7b950aa64c19a27fa109357ac486390681653d0b635d60e8bf897e8"
+        },
+        "json": {
+          "bytes": 468,
+          "sha256": "6c3be102f192354c7b6c87103796fe0adda9d746eb5d759b990ce92df3b473b4"
+        },
+        "zip": {
+          "bytes": 970,
+          "sha256": "820365e3f13e3612465df3870fba168c78d4be085b644ad6b1a685df89104a6d"
+        }
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:53:31.298677+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+          "input_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48"
+        },
+        {
+          "at": "2026-11-26T20:53:31.336850+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            104640
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe24b5870f0",
+              "shape": [
+                104640
+              ],
+              "dtype": "<f4",
+              "sample_count": 104640,
+              "nonzero_sample_count": 103116,
+              "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+            }
+          ],
+          "decoded_duration_seconds": 6.54
+        },
+        {
+          "at": "2026-11-26T20:53:31.337451+00:00",
+          "kind": "transcribe_request",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe24b5870f0",
+            "shape": [
+              104640
+            ],
+            "dtype": "<f4",
+            "sample_count": 104640,
+            "nonzero_sample_count": 103116,
+            "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:32.654411+00:00",
+          "kind": "transcribe_info",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+          "info": {
+            "language": "en",
+            "language_probability": 0.9741377234458923,
+            "duration": 6.54,
+            "duration_after_vad": 6.54,
+            "all_language_probs": [
+              [
+                "en",
+                0.9741377234458923
+              ],
+              [
+                "nn",
+                0.0148891257122159
+              ],
+              [
+                "cy",
+                0.003127699950709939
+              ],
+              [
+                "ja",
+                0.001474138698540628
+              ],
+              [
+                "la",
+                0.0008933807257562876
+              ],
+              [
+                "ko",
+                0.0008538318797945976
+              ],
+              [
+                "zh",
+                0.0008047012961469591
+              ],
+              [
+                "ru",
+                0.000590117066167295
+              ],
+              [
+                "haw",
+                0.00048728621914051473
+              ],
+              [
+                "es",
+                0.00036096188705414534
+              ],
+              [
+                "ms",
+                0.00031106238020583987
+              ],
+              [
+                "jw",
+                0.00023660044826101512
+              ],
+              [
+                "km",
+                0.00022168931900523603
+              ],
+              [
+                "pt",
+                0.00016434160352218896
+              ],
+              [
+                "fr",
+                0.0001585667923791334
+              ],
+              [
+                "de",
+                0.00014460019883699715
+              ],
+              [
+                "id",
+                0.00011639481090242043
+              ],
+              [
+                "vi",
+                0.00011232375254621729
+              ],
+              [
+                "pl",
+                0.00010402515181340277
+              ],
+              [
+                "th",
+                9.531775140203536e-05
+              ],
+              [
+                "mi",
+                8.711768168723211e-05
+              ],
+              [
+                "tl",
+                7.906265091150999e-05
+              ],
+              [
+                "sn",
+                7.419299072353169e-05
+              ],
+              [
+                "ar",
+                7.332371751544997e-05
+              ],
+              [
+                "br",
+                4.769463703269139e-05
+              ],
+              [
+                "tr",
+                3.601557182264514e-05
+              ],
+              [
+                "it",
+                3.595369707909413e-05
+              ],
+              [
+                "nl",
+                2.6074008928844705e-05
+              ],
+              [
+                "hi",
+                2.4752760509727523e-05
+              ],
+              [
+                "ml",
+                1.813790549931582e-05
+              ],
+              [
+                "si",
+                1.61407733685337e-05
+              ],
+              [
+                "ur",
+                1.6070993297034875e-05
+              ],
+              [
+                "ro",
+                1.3901947568228934e-05
+              ],
+              [
+                "he",
+                1.1031915164494421e-05
+              ],
+              [
+                "yo",
+                1.0128408575837966e-05
+              ],
+              [
+                "hu",
+                1.0100686267833225e-05
+              ],
+              [
+                "fi",
+                9.897105883283075e-06
+              ],
+              [
+                "ta",
+                9.789697287487797e-06
+              ],
+              [
+                "sv",
+                9.476273589825723e-06
+              ],
+              [
+                "sa",
+                8.308185897476505e-06
+              ],
+              [
+                "uk",
+                8.250318387581501e-06
+              ],
+              [
+                "mn",
+                7.900269338279031e-06
+              ],
+              [
+                "el",
+                7.805101631674916e-06
+              ],
+              [
+                "sw",
+                7.341828222706681e-06
+              ],
+              [
+                "te",
+                5.9396488722995855e-06
+              ],
+              [
+                "cs",
+                5.194258392293705e-06
+              ],
+              [
+                "fa",
+                4.638680366042536e-06
+              ],
+              [
+                "bn",
+                4.567831638269126e-06
+              ],
+              [
+                "gl",
+                4.4000603338645305e-06
+              ],
+              [
+                "yi",
+                4.2997035052394494e-06
+              ],
+              [
+                "my",
+                3.881114480464021e-06
+              ],
+              [
+                "bo",
+                3.7811742004123516e-06
+              ],
+              [
+                "ht",
+                3.4681531815294875e-06
+              ],
+              [
+                "sl",
+                3.3600326787563972e-06
+              ],
+              [
+                "bg",
+                3.1785311875864863e-06
+              ],
+              [
+                "fo",
+                3.03785054711625e-06
+              ],
+              [
+                "af",
+                2.9673401513719e-06
+              ],
+              [
+                "da",
+                2.413951506241574e-06
+              ],
+              [
+                "no",
+                2.0115439838264138e-06
+              ],
+              [
+                "sk",
+                1.233032890013419e-06
+              ],
+              [
+                "bs",
+                1.0683330629035481e-06
+              ],
+              [
+                "hr",
+                9.59170279202226e-07
+              ],
+              [
+                "ca",
+                8.44567466629087e-07
+              ],
+              [
+                "oc",
+                7.420465522045561e-07
+              ],
+              [
+                "is",
+                7.079293595779745e-07
+              ],
+              [
+                "lv",
+                6.719245106978633e-07
+              ],
+              [
+                "eu",
+                5.939294283052732e-07
+              ],
+              [
+                "ne",
+                5.546922920984798e-07
+              ],
+              [
+                "lo",
+                5.208228799347125e-07
+              ],
+              [
+                "hy",
+                4.467870553526154e-07
+              ],
+              [
+                "be",
+                4.1211484358427697e-07
+              ],
+              [
+                "sd",
+                3.8465381635433005e-07
+              ],
+              [
+                "sr",
+                2.1514863135507767e-07
+              ],
+              [
+                "ps",
+                1.8968556503295986e-07
+              ],
+              [
+                "mt",
+                1.547092551845708e-07
+              ],
+              [
+                "mr",
+                1.2032440110942844e-07
+              ],
+              [
+                "az",
+                1.0943777795091592e-07
+              ],
+              [
+                "as",
+                1.0455899257522105e-07
+              ],
+              [
+                "lt",
+                1.0146487028350748e-07
+              ],
+              [
+                "sq",
+                8.53261994393506e-08
+              ],
+              [
+                "et",
+                8.038635002094452e-08
+              ],
+              [
+                "kk",
+                5.434722183395024e-08
+              ],
+              [
+                "mk",
+                4.902179995269762e-08
+              ],
+              [
+                "ka",
+                4.828637045761752e-08
+              ],
+              [
+                "kn",
+                4.543054998862317e-08
+              ],
+              [
+                "pa",
+                3.790134783798749e-08
+              ],
+              [
+                "ln",
+                2.8321846201606604e-08
+              ],
+              [
+                "am",
+                1.5514030948793334e-08
+              ],
+              [
+                "gu",
+                1.3816952026957097e-08
+              ],
+              [
+                "so",
+                6.253260576016828e-09
+              ],
+              [
+                "su",
+                4.795345898145342e-09
+              ],
+              [
+                "lb",
+                1.1152867518404719e-09
+              ],
+              [
+                "tg",
+                1.0820663254307306e-09
+              ],
+              [
+                "ha",
+                7.55274398578365e-10
+              ],
+              [
+                "tt",
+                5.026377647432412e-10
+              ],
+              [
+                "tk",
+                2.3657220626915887e-10
+              ],
+              [
+                "ba",
+                2.349959393743717e-10
+              ],
+              [
+                "mg",
+                9.068717998772513e-11
+              ],
+              [
+                "uz",
+                2.4247525862164387e-11
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:33.883229+00:00",
+          "kind": "asr_segment_created",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "21e6d20a160c476aaca9a2f850c7e55f",
+          "segment": {
+            "id": 1,
+            "seek": 0,
+            "start": 0.0,
+            "end": 7.0,
+            "text": " When you call someone who is thousands of miles away, you are using a satellite.",
+            "tokens": [
+              50364,
+              1133,
+              291,
+              818,
+              1580,
+              567,
+              307,
+              5383,
+              295,
+              6193,
+              1314,
+              11,
+              291,
+              366,
+              1228,
+              257,
+              16016,
+              13,
+              50714
+            ],
+            "avg_logprob": -0.25397037118673327,
+            "compression_ratio": 1.0666666666666667,
+            "no_speech_prob": 0.09061738103628159,
+            "words": null,
+            "temperature": 0.0
+          }
+        }
+      ],
+      "elapsed_seconds": 2.787
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+      "expected": "speech",
+      "input_sha256": "99664e80b659bfa9e2675efd38949e7d233787f1862c775dd9ba59eba6670f44",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "fd825668520c412eb1ced64a3106f182",
+      "job_result": {
+        "id": "fd825668520c412eb1ced64a3106f182",
+        "status": "done",
+        "stage": "Ready to download",
+        "title": "fleurs-en_us-validation-0-1548-quiet-minus20db.wav",
+        "language": "en",
+        "method": "local_audio_ai",
+        "preview": "When you call someone who is thousands of miles away, you're using a satellite.",
+        "error": "",
+        "segments": 1,
+        "warnings": [],
+        "extras": {
+          "translation_language": "",
+          "summary": false,
+          "speakers": false
+        },
+        "library_id": "fd825668520c412eb1ced64a3106f182"
+      },
+      "sqlite_record_present": true,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.0,
+          "text": "When you call someone who is thousands of miles away, you're using a satellite."
+        }
+      ],
+      "hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "exports": {
+        "txt": {
+          "bytes": 80,
+          "sha256": "81e44bbf04f2c479ac86f0381ef5f7d8f94a0d225f08315bf415d41e0d06169b"
+        },
+        "srt": {
+          "bytes": 112,
+          "sha256": "a645806dc59e93a2704dc7afc931dd268852c821b36a3ee43eb60d11bb6505ee"
+        },
+        "vtt": {
+          "bytes": 118,
+          "sha256": "62db3e846d0b10bdb88d1258beaccb74b08b2e7340dd99242fb4140a9557b84a"
+        },
+        "json": {
+          "bytes": 499,
+          "sha256": "61f955f5ee7ccd9ee2a2385dec3367f645e5017c569de088b41401296f41e622"
+        },
+        "zip": {
+          "bytes": 989,
+          "sha256": "a381b5657eeaf4c8158d0cdeaf13545c8c6dff16b2ba1bac15a96ab2113e4408"
+        }
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:53:34.100104+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "fd825668520c412eb1ced64a3106f182",
+          "input_sha256": "99664e80b659bfa9e2675efd38949e7d233787f1862c775dd9ba59eba6670f44"
+        },
+        {
+          "at": "2026-11-26T20:53:34.155352+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "fd825668520c412eb1ced64a3106f182",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            104640
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fe25391bed0",
+              "shape": [
+                104640
+              ],
+              "dtype": "<f4",
+              "sample_count": 104640,
+              "nonzero_sample_count": 89026,
+              "pcm_sha256": "2d1d5e6a39b8492d8ca71bc84ad827689d2336d51aa2a04baf7a9c894bb56851"
+            }
+          ],
+          "decoded_duration_seconds": 6.54
+        },
+        {
+          "at": "2026-11-26T20:53:34.155957+00:00",
+          "kind": "transcribe_request",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "fd825668520c412eb1ced64a3106f182",
+          "explicit_kwargs": {
+            "language": null,
+            "beam_size": 5,
+            "vad_filter": false,
+            "condition_on_previous_text": false
+          },
+          "resolved_options": {
+            "language": null,
+            "task": "transcribe",
+            "log_progress": false,
+            "beam_size": 5,
+            "best_of": 5,
+            "patience": 1,
+            "length_penalty": 1,
+            "repetition_penalty": 1,
+            "no_repeat_ngram_size": 0,
+            "temperature": [
+              0.0,
+              0.2,
+              0.4,
+              0.6,
+              0.8,
+              1.0
+            ],
+            "compression_ratio_threshold": 2.4,
+            "log_prob_threshold": -1.0,
+            "no_speech_threshold": 0.6,
+            "condition_on_previous_text": false,
+            "prompt_reset_on_temperature": 0.5,
+            "initial_prompt": null,
+            "prefix": null,
+            "suppress_blank": true,
+            "suppress_tokens": [
+              -1
+            ],
+            "without_timestamps": false,
+            "max_initial_timestamp": 1.0,
+            "word_timestamps": false,
+            "prepend_punctuations": "\"'\u201c\u00bf([{-",
+            "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+            "multilingual": false,
+            "vad_filter": false,
+            "vad_parameters": null,
+            "max_new_tokens": null,
+            "chunk_length": null,
+            "clip_timestamps": "0",
+            "hallucination_silence_threshold": null,
+            "hotwords": null,
+            "language_detection_threshold": 0.5,
+            "language_detection_segments": 1
+          },
+          "audio_array": {
+            "array_identity": "0x7fe25391bed0",
+            "shape": [
+              104640
+            ],
+            "dtype": "<f4",
+            "sample_count": 104640,
+            "nonzero_sample_count": 89026,
+            "pcm_sha256": "2d1d5e6a39b8492d8ca71bc84ad827689d2336d51aa2a04baf7a9c894bb56851"
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:35.279931+00:00",
+          "kind": "transcribe_info",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "fd825668520c412eb1ced64a3106f182",
+          "info": {
+            "language": "en",
+            "language_probability": 0.7782502770423889,
+            "duration": 6.54,
+            "duration_after_vad": 6.54,
+            "all_language_probs": [
+              [
+                "en",
+                0.7782502770423889
+              ],
+              [
+                "nn",
+                0.13005024194717407
+              ],
+              [
+                "cy",
+                0.01993388496339321
+              ],
+              [
+                "ru",
+                0.016138441860675812
+              ],
+              [
+                "ja",
+                0.007379055954515934
+              ],
+              [
+                "es",
+                0.005770055111497641
+              ],
+              [
+                "fr",
+                0.004657890647649765
+              ],
+              [
+                "ko",
+                0.004638404119759798
+              ],
+              [
+                "la",
+                0.0033789644949138165
+              ],
+              [
+                "haw",
+                0.002674444578588009
+              ],
+              [
+                "jw",
+                0.002668264089152217
+              ],
+              [
+                "pt",
+                0.002329188631847501
+              ],
+              [
+                "zh",
+                0.0021328895818442106
+              ],
+              [
+                "pl",
+                0.002111326204612851
+              ],
+              [
+                "ar",
+                0.0019274327205494046
+              ],
+              [
+                "km",
+                0.0015473449602723122
+              ],
+              [
+                "ms",
+                0.00127701077144593
+              ],
+              [
+                "vi",
+                0.0012374026700854301
+              ],
+              [
+                "id",
+                0.0010039119515568018
+              ],
+              [
+                "tr",
+                0.0009931835811585188
+              ],
+              [
+                "it",
+                0.0009212624281644821
+              ],
+              [
+                "de",
+                0.0008172658854164183
+              ],
+              [
+                "hi",
+                0.0007122726528905332
+              ],
+              [
+                "sn",
+                0.0006697502685710788
+              ],
+              [
+                "tl",
+                0.0006215142202563584
+              ],
+              [
+                "th",
+                0.000583403802011162
+              ],
+              [
+                "nl",
+                0.0005349409184418619
+              ],
+              [
+                "mi",
+                0.0005033823545090854
+              ],
+              [
+                "br",
+                0.00047893341979943216
+              ],
+              [
+                "el",
+                0.00036714409361593425
+              ],
+              [
+                "ml",
+                0.00034050646354444325
+              ],
+              [
+                "sv",
+                0.00026281128521077335
+              ],
+              [
+                "cs",
+                0.00023558453540317714
+              ],
+              [
+                "ro",
+                0.00023092198534868658
+              ],
+              [
+                "ta",
+                0.00022968367557041347
+              ],
+              [
+                "uk",
+                0.00021702733647543937
+              ],
+              [
+                "hu",
+                0.0002099414705298841
+              ],
+              [
+                "fi",
+                0.0001988415897358209
+              ],
+              [
+                "he",
+                0.00016778970893938094
+              ],
+              [
+                "ur",
+                0.00016536239127162844
+              ],
+              [
+                "te",
+                0.000143455748911947
+              ],
+              [
+                "yo",
+                0.00013048846449237317
+              ],
+              [
+                "si",
+                0.00012780676479451358
+              ],
+              [
+                "gl",
+                9.335600771009922e-05
+              ],
+              [
+                "sa",
+                8.418053039349616e-05
+              ],
+              [
+                "fa",
+                8.189623622456565e-05
+              ],
+              [
+                "bg",
+                6.232957821339369e-05
+              ],
+              [
+                "no",
+                5.786393739981577e-05
+              ],
+              [
+                "sw",
+                5.199439328862354e-05
+              ],
+              [
+                "mn",
+                5.194294863031246e-05
+              ],
+              [
+                "ca",
+                5.127556141815148e-05
+              ],
+              [
+                "bn",
+                5.065228106104769e-05
+              ],
+              [
+                "hr",
+                4.698054908658378e-05
+              ],
+              [
+                "da",
+                4.670019916375168e-05
+              ],
+              [
+                "sl",
+                3.669440411613323e-05
+              ],
+              [
+                "ht",
+                3.4604403481353074e-05
+              ],
+              [
+                "my",
+                3.262503742007539e-05
+              ],
+              [
+                "bs",
+                3.1960986234480515e-05
+              ],
+              [
+                "sk",
+                2.418095391476527e-05
+              ],
+              [
+                "fo",
+                2.084826883219648e-05
+              ],
+              [
+                "eu",
+                1.8991455362993293e-05
+              ],
+              [
+                "yi",
+                1.7448408470954746e-05
+              ],
+              [
+                "af",
+                1.718135354167316e-05
+              ],
+              [
+                "oc",
+                1.4648611795564648e-05
+              ],
+              [
+                "bo",
+                1.3995450899528805e-05
+              ],
+              [
+                "be",
+                1.0364434274379164e-05
+              ],
+              [
+                "is",
+                9.44889325182885e-06
+              ],
+              [
+                "ne",
+                8.447112122667022e-06
+              ],
+              [
+                "lv",
+                8.274113497463986e-06
+              ],
+              [
+                "lo",
+                6.2113376770867035e-06
+              ],
+              [
+                "sr",
+                6.140448476799065e-06
+              ],
+              [
+                "sd",
+                5.500532097357791e-06
+              ],
+              [
+                "hy",
+                5.266313110041665e-06
+              ],
+              [
+                "ps",
+                3.483234877421637e-06
+              ],
+              [
+                "mr",
+                3.4183494790340774e-06
+              ],
+              [
+                "lt",
+                2.887165919673862e-06
+              ],
+              [
+                "az",
+                2.6851871552935336e-06
+              ],
+              [
+                "sq",
+                2.5178369469358586e-06
+              ],
+              [
+                "et",
+                2.202508312620921e-06
+              ],
+              [
+                "as",
+                1.7963102436624467e-06
+              ],
+              [
+                "kn",
+                1.5268075230778777e-06
+              ],
+              [
+                "mt",
+                1.508792479398835e-06
+              ],
+              [
+                "mk",
+                1.3475546438712627e-06
+              ],
+              [
+                "ka",
+                1.234525939253217e-06
+              ],
+              [
+                "kk",
+                1.0499610425540595e-06
+              ],
+              [
+                "ln",
+                9.106174161388481e-07
+              ],
+              [
+                "pa",
+                8.309013423968281e-07
+              ],
+              [
+                "am",
+                3.273302411344048e-07
+              ],
+              [
+                "gu",
+                2.706560451315454e-07
+              ],
+              [
+                "so",
+                1.26339628536698e-07
+              ],
+              [
+                "su",
+                7.124376111278252e-08
+              ],
+              [
+                "tg",
+                2.5983043272503892e-08
+              ],
+              [
+                "lb",
+                1.4917391766289256e-08
+              ],
+              [
+                "ha",
+                7.983242511500066e-09
+              ],
+              [
+                "tt",
+                6.786037509698417e-09
+              ],
+              [
+                "tk",
+                3.4486979938463946e-09
+              ],
+              [
+                "ba",
+                3.075619314785172e-09
+              ],
+              [
+                "mg",
+                1.2074730104671971e-09
+              ],
+              [
+                "uz",
+                4.2460487903461797e-10
+              ]
+            ],
+            "transcription_options": {
+              "beam_size": 5,
+              "best_of": 5,
+              "patience": 1,
+              "length_penalty": 1,
+              "repetition_penalty": 1,
+              "no_repeat_ngram_size": 0,
+              "log_prob_threshold": -1.0,
+              "no_speech_threshold": 0.6,
+              "compression_ratio_threshold": 2.4,
+              "condition_on_previous_text": false,
+              "prompt_reset_on_temperature": 0.5,
+              "temperatures": [
+                0.0,
+                0.2,
+                0.4,
+                0.6,
+                0.8,
+                1.0
+              ],
+              "initial_prompt": null,
+              "prefix": null,
+              "suppress_blank": true,
+              "suppress_tokens": [
+                1,
+                2,
+                7,
+                8,
+                9,
+                10,
+                14,
+                25,
+                26,
+                27,
+                28,
+                29,
+                31,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                90,
+                91,
+                92,
+                93,
+                359,
+                503,
+                522,
+                542,
+                873,
+                893,
+                902,
+                918,
+                922,
+                931,
+                1350,
+                1853,
+                1982,
+                2460,
+                2627,
+                3246,
+                3253,
+                3268,
+                3536,
+                3846,
+                3961,
+                4183,
+                4667,
+                6585,
+                6647,
+                7273,
+                9061,
+                9383,
+                10428,
+                10929,
+                11938,
+                12033,
+                12331,
+                12562,
+                13793,
+                14157,
+                14635,
+                15265,
+                15618,
+                16553,
+                16604,
+                18362,
+                18956,
+                20075,
+                21675,
+                22520,
+                26130,
+                26161,
+                26435,
+                28279,
+                29464,
+                31650,
+                32302,
+                32470,
+                36865,
+                42863,
+                47425,
+                49870,
+                50254,
+                50258,
+                50358,
+                50359,
+                50360,
+                50361,
+                50362
+              ],
+              "without_timestamps": false,
+              "max_initial_timestamp": 1.0,
+              "word_timestamps": false,
+              "prepend_punctuations": "\"'\u201c\u00bf([{-",
+              "append_punctuations": "\"'.\u3002,\uff0c!\uff01?\uff1f:\uff1a\u201d)]}\u3001",
+              "multilingual": false,
+              "max_new_tokens": null,
+              "clip_timestamps": "0",
+              "hallucination_silence_threshold": null,
+              "hotwords": null
+            },
+            "vad_options": null
+          }
+        },
+        {
+          "at": "2026-11-26T20:53:36.700438+00:00",
+          "kind": "asr_segment_created",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "fd825668520c412eb1ced64a3106f182",
+          "segment": {
+            "id": 1,
+            "seek": 0,
+            "start": 0.0,
+            "end": 6.0,
+            "text": " When you call someone who is thousands of miles away, you're using a satellite.",
+            "tokens": [
+              50364,
+              1133,
+              291,
+              818,
+              1580,
+              567,
+              307,
+              5383,
+              295,
+              6193,
+              1314,
+              11,
+              291,
+              434,
+              1228,
+              257,
+              16016,
+              13,
+              50664
+            ],
+            "avg_logprob": -0.2757502719759941,
+            "compression_ratio": 1.0394736842105263,
+            "no_speech_prob": 0.6519991755485535,
+            "words": null,
+            "temperature": 0.0
+          }
+        }
+      ],
+      "elapsed_seconds": 2.675
+    }
+  ],
+  "sources_after": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_links.py": "c1c24b47b5c9a5e749a10f734452de1585c3f850f5a179e9c59769de6ecce3dd",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "sources_unchanged": true,
+  "finished_at": "2026-11-26T20:53:36.814715+00:00"
+}

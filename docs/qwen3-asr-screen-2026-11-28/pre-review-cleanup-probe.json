@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-11-28T02:24:57.436257+00:00",
+  "helper_sha256": "2c6fc46699e528e091b4c97d580bfa1c798da6949f9ea699348a4e91f8349d16",
+  "scope": "Standard-library process-cleanup probe only; no model, package installation, network or production edits.",
+  "leader_exit_code": 0,
+  "same_group_child_alive_after_terminate_owned": true,
+  "finding": "terminate_owned returns immediately after the owned leader exits, leaving a surviving child in its owned process group. The controller also stops sampling when the leader exits and only reports owned_worker_exited.",
+  "cleanup_of_probe": "The reviewer sends SIGTERM to the test-owned process group in finally; no child is intentionally retained."
+}

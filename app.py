@@ -7,29 +7,49 @@ from __future__ import annotations
 import html
 import json
 import io
+import gc
 import math
 import os
+
+# Keep optional model-runtime telemetry off before any ML dependency is imported.
+# ONNX Runtime reads this during native initialization; the later API opt-out also
+# covers builds using the older event provider.
+os.environ["ORT_DISABLE_TELEMETRY"] = "1"
+os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+
 import re
 import shutil
+import sys
+import tempfile
 import threading
 import time
 import uuid
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager
+from copy import deepcopy
 from dataclasses import dataclass, field
+from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 from functools import lru_cache
+from numbers import Real
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 from urllib.parse import parse_qs, urlsplit
 
 import library
+import batch_store
+import library_backup
+import diagnostics
+import asr_timing
 from sources import Source, parse_source
 from runtime_check import runtime_details, yt_dlp_js_options
 from enhancements import EnhancementError, assign_speakers, translate_segments, summarize_segments
+from source_highlights import select_highlights, validate_highlights
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
+from starlette.concurrency import run_in_threadpool
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -37,19 +57,30 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 MAX_BYTES = 150 * 1024 * 1024             # 150 MB per uploaded/downloaded input
 MAX_SECONDS = 2 * 60 * 60                 # 2 hours per recording
+ASR_NO_SPEECH_THRESHOLD = 0.6            # faster-whisper's existing default
 JOB_TTL = 60 * 60                        # completed jobs retained locally for 1 hour
 MAX_ACTIVE = 8
 MAX_BATCH_SIZE = 20                          # queued + processing
 ACCEPTED_SUFFIXES = {".mp3", ".wav", ".m4a", ".mp4", ".webm", ".ogg", ".flac", ".mov", ".mkv", ".aac", ".opus"}
 LANGUAGES = {"auto", "en", "el", "es", "fr", "de", "it", "pt", "ja", "ko", "zh", "ar"}
-MODELS = {"tiny", "base", "small"}
+MODELS = {"tiny", "base", "small", "large-v3-turbo"}
 MODES = {"smart", "audio", "captions"}
 FORMATS = {"txt", "srt", "vtt", "json", "zip", "summary_md", "summary_json",
+           "highlights_md", "highlights_json",
            "translation_txt", "translation_srt", "translation_vtt", "translation_json"}
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 JOB_ID_RE = re.compile(r"^[a-f0-9]{32}$")
 
-app = FastAPI(title="LinkScribe", version="0.2.0", docs_url=None, redoc_url=None)
+@asynccontextmanager
+async def _linkscr_lifespan(_application: FastAPI):
+    # FastAPI 0.160+ uses lifespan contexts in place of the removed
+    # add_event_handler API. Recovery is performed once per ASGI server start.
+    _restore_pending_batches()
+    yield
+
+
+app = FastAPI(title="LinkScribe", version="0.3.0", docs_url=None, redoc_url=None,
+              lifespan=_linkscr_lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
 pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="linkscr")
 lock = threading.RLock()
@@ -89,12 +120,26 @@ class Batch:
     finished_at: float = 0.0
 
 
+@dataclass
+class RecognitionResult:
+    """Private recognition/optional-timing result; no model or waveform escapes."""
+    segments: list[dict[str, Any]]
+    language: str
+    speaker_segments: list[dict[str, Any]] | None = None
+    warnings: list[str] = field(default_factory=list)
+    asr_provenance: dict[str, Any] = field(default_factory=dict)
+
+
 jobs: dict[str, Job] = {}
 batches: dict[str, Batch] = {}
 
 
 class ReadableError(Exception):
     """Error that can be safely displayed in the browser."""
+
+
+class SubtitleTimingError(ReadableError):
+    """Source timing cannot be represented honestly in a subtitle file."""
 
 
 def youtube_video_id(raw_url: str) -> str:
@@ -212,6 +257,14 @@ def _start_job(job: Job, worker, *args: Any) -> dict[str, str]:
     return {"id": job.id}
 
 
+def _cleanup_job_inputs(job: Job) -> None:
+    """Discard uploaded/downloaded media, including interrupted download parts."""
+    for pattern in ("input.*", "audio.*"):
+        for path in job.workdir.glob(pattern):
+            if path.is_file() or path.is_symlink():
+                path.unlink(missing_ok=True)
+
+
 def _guarded_worker(job_id: str, worker, *args: Any) -> None:
     try:
         _set(job_id, status="working")
@@ -224,10 +277,7 @@ def _guarded_worker(job_id: str, worker, *args: Any) -> None:
         _set(job_id, status="error", stage="Unable to transcribe", error="Processing failed. Check the terminal for details, or try an uploaded file.", finished_at=time.time())
     finally:
         # Delete inputs once output files exist (or the job has failed).
-        for path in jobs[job_id].workdir.glob("input.*"):
-            path.unlink(missing_ok=True)
-        for path in jobs[job_id].workdir.glob("audio.*"):
-            path.unlink(missing_ok=True)
+        _cleanup_job_inputs(jobs[job_id])
 
 
 def _captions(video_id: str, language: str) -> tuple[list[dict[str, Any]], str]:
@@ -272,6 +322,10 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
         "max_filesize": MAX_BYTES,
         "overwrites": False,
     }
+    if os.getenv("LINKSCRIBE_USE_SYSTEM_CERTS") == "1":
+        # Explicitly use the OS trust store (for managed local CA roots), while
+        # retaining normal certificate and hostname verification.
+        options["compat_opts"] = ["no-certifi"]
     # Prefer a supported Deno runtime (yt-dlp default); use supported Node as fallback.
     if source.provider == "youtube":
         options.update(yt_dlp_js_options())
@@ -281,8 +335,11 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
             info = ydl.extract_info(video_url, download=False)
             if not info:
                 raise ReadableError("YouTube did not return video details.")
-            if info.get("_type") in {"playlist", "multi_video"} or info.get("entries"):
+            if (info.get("_type") in {"playlist", "multi_video"} or info.get("entries")
+                    or info.get("additional_urls") or info.get("additional_entries")):
                 raise ReadableError("Only one video per link is allowed, not playlists.")
+            if info.get("_type", "video") != "video":
+                raise ReadableError("The source did not return a resolved video to download.")
             length = info.get("duration")
             if length and length > MAX_SECONDS:
                 raise ReadableError("The video exceeds the 2-hour limit for this starter app.")
@@ -290,7 +347,8 @@ def _download_source_audio(job_id: str, source: Source) -> tuple[Path, str]:
             if expected_size and expected_size > MAX_BYTES:
                 raise ReadableError("The audio exceeds the 150 MB input limit.")
             title = str(info.get("title") or f"{source.provider} video")[:180]
-            ydl.download([video_url])
+            # Download the metadata we validated; download(url) extracts it again.
+            ydl.process_ie_result(info, download=True)
     except ReadableError:
         raise
     except Exception as exc:
@@ -325,8 +383,10 @@ def _check_uploaded_duration(path: Path) -> None:
         raise ReadableError("Cannot open this media file. Try MP3, MP4, WAV or WebM.") from exc
 
 
-@lru_cache(maxsize=3)
+@lru_cache(maxsize=1)
 def _whisper_model(size: str):
+    import onnxruntime
+    onnxruntime.disable_telemetry_events()
     from faster_whisper import WhisperModel
     device = os.getenv("LINKSCRIBE_DEVICE", "cpu").lower()
     if device not in {"cpu", "cuda"}:
@@ -334,34 +394,167 @@ def _whisper_model(size: str):
     return WhisperModel(size, device=device, compute_type="int8" if device == "cpu" else "float16")
 
 
-def _recognize(path: Path, language: str, model: str) -> tuple[list[dict[str, Any]], str]:
+def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float, float]:
+    if (not isinstance(start, Real) or isinstance(start, bool) or
+            not isinstance(end, Real) or isinstance(end, bool)):
+        raise ReadableError("The speech model returned invalid timestamps for this recording.")
+    start, end = float(start), float(end)
+    if (not math.isfinite(start) or not math.isfinite(end) or
+            start < 0 or start >= duration or end <= start):
+        raise ReadableError("The speech model returned timestamps outside this recording or an invalid interval.")
+    return start, min(end, duration)
+
+
+def _recognize(path: Path, language: str, model: str, *, speaker_timing: bool = False) -> RecognitionResult:
+    try:
+        from faster_whisper.audio import decode_audio
+        audio = decode_audio(str(path), sampling_rate=16000)
+    except Exception as exc:
+        raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
+    if len(audio) > 16000 * MAX_SECONDS:
+        raise ReadableError("The recording exceeds the 2-hour limit.")
+    # Digital silence has no speech to recognize. This exact-zero check keeps
+    # every nonzero sample, including arbitrarily quiet speech; it is not VAD.
+    if not audio.any():
+        raise ReadableError("No spoken words were detected in this recording.")
+    duration = len(audio) / 16000
     engine = _whisper_model(model)
     try:
         segments, info = engine.transcribe(
-            str(path),
+            audio,
             language=None if language == "auto" else language,
             beam_size=5,
-            vad_filter=True,
+            # Quiet speech mixed with effects can be lost before recognition if
+            # VAD removes it. Preserve the complete recording for ASR.
+            vad_filter=False,
+            no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,
             condition_on_previous_text=False,
+            # Speaker timing must never change recognition's later seek/text.
+            word_timestamps=False,
         )
         # transcribe() returns a generator, which must be consumed.
-        output = [
-            {"start": round(float(s.start), 3), "end": round(float(s.end), 3), "text": s.text.strip()}
-            for s in segments if s.text.strip()
-        ]
+        output = []
+        raw_segments = [] if speaker_timing else None
+        all_marked_no_speech = True
+        for segment in segments:
+            if not segment.text.strip():
+                continue
+            probability = getattr(segment, "no_speech_prob", None)
+            all_marked_no_speech = all_marked_no_speech and (
+                isinstance(probability, (int, float))
+                and math.isfinite(probability)
+                and probability > ASR_NO_SPEECH_THRESHOLD
+            )
+            start, end = _bounded_asr_interval(segment.start, segment.end, duration)
+            public_start, public_end = round(start, 3), min(round(end, 3), duration)
+            # Keep valid native precision if millisecond rounding would erase it.
+            if public_start >= public_end:
+                public_start, public_end = start, end
+            item = {"start": public_start, "end": public_end, "text": segment.text.strip()}
+            if raw_segments is not None:
+                try:
+                    raw_segments.append({"start": segment.start, "end": segment.end,
+                                         "text": segment.text, "tokens": list(segment.tokens),
+                                         "seek": segment.seek})
+                except Exception:
+                    # A missing optional native interface cannot invalidate the
+                    # accepted text. Never reconstruct its tokens from that text.
+                    raw_segments = None
+            output.append(item)
+        # In particular, release the original full frontend before recomputing
+        # optional timing features on the same complete decoded array.
+        del segments
+    except ReadableError:
+        raise
     except Exception as exc:
         raise ReadableError("The speech model could not decode this file. Try another recording or a smaller model.") from exc
     if not output:
         raise ReadableError("No spoken words were detected in this recording.")
-    return output, str(info.language or language)
+    if all_marked_no_speech:
+        # Corroborate only a complete output that ASR itself marks as no speech.
+        # Never crop the audio or filter individual segments: one speech anchor
+        # preserves the entire transcript, including quiet dialogue and tails.
+        try:
+            from faster_whisper.vad import get_speech_timestamps
+            speech = get_speech_timestamps(audio, sampling_rate=16000)
+        except Exception as exc:
+            raise ReadableError("Speech detection could not verify this recording. Try again or choose another speech model.") from exc
+        if not speech:
+            raise ReadableError("No spoken words were detected in this recording.")
+    result = RecognitionResult(output, str(info.language or language),
+                               asr_provenance={"engine": "faster-whisper", "model": model,
+                                               "word_timestamps": False})
+    if speaker_timing:
+        try:
+            timing = asr_timing.align_fixed_segments(engine, audio, result.language,
+                                                     deepcopy(output), deepcopy(raw_segments),
+                                                     bound=_bounded_asr_interval)
+            if (not isinstance(timing.segments, list) or
+                    [s["text"] for s in timing.segments] != [s["text"] for s in output]):
+                raise asr_timing.TimingUnavailable("Optional timing changed source text or order")
+            for candidate in timing.segments:
+                start, end = _bounded_asr_interval(candidate["start"], candidate["end"], duration)
+                if (start, end) != (candidate["start"], candidate["end"]):
+                    raise asr_timing.TimingUnavailable("Optional timing left physical source bounds")
+        except Exception as exc:
+            # Optional timing, including a late native failure, never replaces
+            # accepted speech. Do not retain exception/traceback/audio references.
+            print(f"[LinkScribe] Optional word timing unavailable ({type(exc).__name__})")
+            timing = asr_timing.unavailable(output)
+        result.speaker_segments = timing.segments
+        result.warnings = timing.warnings
+        result.asr_provenance["speaker_timing"] = timing.provenance
+    return result
 
 
-def _timecode(seconds: float, subtitle_format: str) -> str:
-    ms = max(0, round(seconds * 1000))
+def _millisecond_timecode(ms: int, subtitle_format: str) -> str:
     hours, rest = divmod(ms, 3_600_000)
     mins, rest = divmod(rest, 60_000)
     secs, msecs = divmod(rest, 1000)
     return f"{hours:02d}:{mins:02d}:{secs:02d}{',' if subtitle_format == 'srt' else '.'}{msecs:03d}"
+
+
+def _timecode(seconds: float, subtitle_format: str) -> str:
+    return _millisecond_timecode(max(0, round(seconds * 1000)), subtitle_format)
+
+
+def _subtitle_interval_ms(segment: dict[str, Any]) -> tuple[int, int]:
+    start, end = segment["start"], segment["end"]
+    if (not isinstance(start, Real) or isinstance(start, bool) or
+            not isinstance(end, Real) or isinstance(end, bool) or
+            not math.isfinite(start) or not math.isfinite(end) or not 0 <= start < end):
+        raise SubtitleTimingError("Subtitle timestamps must be finite, nonnegative, positive intervals.")
+    # Quantize inward once; formatting integer milliseconds cannot round outward again.
+    start_ms = int((Decimal(str(start)) * 1000).to_integral_value(rounding=ROUND_CEILING))
+    end_ms = int((Decimal(str(end)) * 1000).to_integral_value(rounding=ROUND_FLOOR))
+    if end_ms <= start_ms:
+        raise SubtitleTimingError("These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    return start_ms, end_ms
+
+
+def _release_audio_models(*, recognizer_only: bool = False) -> None:
+    """Release recognition before speakers, or all audio models before text AI."""
+    caches = [_whisper_model]
+    if not recognizer_only:
+        for module_name, function_name in (("diarization", "_encoder"),
+                                            ("faster_whisper.vad", "get_vad_model")):
+            module = sys.modules.get(module_name)
+            if module is not None:
+                caches.append(getattr(module, function_name, None))
+    released = False
+    for cached in caches:
+        info, clear = getattr(cached, "cache_info", None), getattr(cached, "cache_clear", None)
+        if callable(info) and callable(clear):
+            try:
+                if info().currsize:
+                    clear()
+                    released = True
+            except Exception:
+                print("[LinkScribe] An audio model cache could not be released.")
+    if released:
+        # Model wrappers can contain reference cycles. This does not promise that
+        # every native allocator immediately returns its pages to the OS.
+        gc.collect()
 
 
 def _shown_text(segment: dict[str, Any]) -> str:
@@ -373,41 +566,108 @@ def _shown_text(segment: dict[str, Any]) -> str:
 def _render_subtitles(segments: list[dict[str, Any]], fmt: str) -> str:
     blocks = []
     for i, segment in enumerate(segments, start=1):
-        start = _timecode(segment["start"], fmt)
-        end = _timecode(max(segment["end"], segment["start"] + 0.1), fmt)
+        start_ms, end_ms = _subtitle_interval_ms(segment)
+        start = _millisecond_timecode(start_ms, fmt)
+        end = _millisecond_timecode(end_ms, fmt)
         index = f"{i}\n" if fmt == "srt" else ""
         blocks.append(f"{index}{start} --> {end}\n{_shown_text(segment)}\n")
     return ("WEBVTT\n\n" if fmt == "vtt" else "") + "\n".join(blocks)
 
 
-def _exports(record: dict[str, Any]) -> dict[str, bytes]:
-    """Single exporter for freshly completed jobs and saved/edited library items."""
+def _exports(record: dict[str, Any], *, requested: str | None = None,
+             include_zip: bool = True) -> dict[str, bytes]:
+    """Render one requested file, or all component files and an optional ZIP."""
+    # A ZIP needs the complete set, but ordinary downloads and the enclosing
+    # batch archive do not need an additional per-transcript archive.
+    if requested == "transcript.zip":
+        requested = None
+    def wants(name):
+        return requested is None or requested == name
+
     segments = record["segments"]
-    text = "\n".join(_shown_text(segment) for segment in segments) + "\n"
-    contents = {
-        "transcript.txt": text.encode("utf-8"),
-        "transcript.srt": _render_subtitles(segments, "srt").encode("utf-8"),
-        "transcript.vtt": _render_subtitles(segments, "vtt").encode("utf-8"),
-        "transcript.json": json.dumps({k: record[k] for k in ("source", "title", "language", "method", "segments")}, ensure_ascii=False, indent=2).encode("utf-8"),
-    }
+    highlights = (_valid_highlights(record) if requested is None or
+                  requested in {"transcript.json", "highlights.md", "highlights.json"} else None)
+    contents = {}
+    export_notes = []
+
+    if wants("transcript.txt"):
+        contents["transcript.txt"] = ("\n".join(_shown_text(segment) for segment in segments) + "\n").encode("utf-8")
+
+    def add_subtitles(prefix, timed_segments):
+        formats = [fmt for fmt in ("srt", "vtt") if wants(f"{prefix}.{fmt}")]
+        if not formats:
+            return
+        try:
+            rendered = {f"{prefix}.{fmt}": _render_subtitles(timed_segments, fmt).encode("utf-8")
+                        for fmt in formats}
+        except SubtitleTimingError as exc:
+            export_notes.append(f"{prefix}.srt / {prefix}.vtt unavailable: {exc}")
+        else:
+            contents.update(rendered)
+
+    add_subtitles("transcript", segments)
+    if wants("transcript.json"):
+        json_record = {key: record[key] for key in ("source", "title", "language", "method", "segments")}
+        if record.get("processing_metadata"):
+            json_record["processing_metadata"] = record["processing_metadata"]
+        if highlights is not None:
+            json_record["highlights"] = highlights
+        contents["transcript.json"] = json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
     for lang, translated in record.get("translations", {}).items():
         if lang not in {"el", "en"}: continue
-        contents[f"translation_{lang}.txt"] = ("\n".join(_shown_text(s) for s in translated) + "\n").encode("utf-8")
-        contents[f"translation_{lang}.srt"] = _render_subtitles(translated,"srt").encode("utf-8")
-        contents[f"translation_{lang}.vtt"] = _render_subtitles(translated,"vtt").encode("utf-8")
-        contents[f"translation_{lang}.json"] = json.dumps({"language":lang,"segments":translated},ensure_ascii=False,indent=2).encode("utf-8")
+        if wants(f"translation_{lang}.txt"):
+            contents[f"translation_{lang}.txt"] = ("\n".join(_shown_text(s) for s in translated) + "\n").encode("utf-8")
+        add_subtitles(f"translation_{lang}", translated)
+        if wants(f"translation_{lang}.json"):
+            contents[f"translation_{lang}.json"] = json.dumps({"language":lang,"segments":translated},ensure_ascii=False,indent=2).encode("utf-8")
     if summary := record.get("summary"):
-        md = "# Summary\n\n" + summary["summary"] + "\n\n## Key points\n\n"
-        md += "\n".join("- " + point for point in summary["key_points"])
-        md += "\n\n## Chapters\n\n"
-        md += "\n".join(f"- {_timecode(c['start'],'vtt')}: {c['title']}" for c in summary["chapters"]) + "\n"
-        contents["summary.md"] = md.encode("utf-8")
-        contents["summary.json"] = json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8")
-    stream = io.BytesIO()
-    with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
-        for name, data in contents.items(): z.writestr(name,data)
-    contents["transcript.zip"] = stream.getvalue()
+        if wants("summary.md"):
+            md = "# Summary\n\n" + summary["summary"] + "\n\n## Key points\n\n"
+            md += "\n".join("- " + point for point in summary["key_points"])
+            md += "\n\n## Chapters\n\n"
+            md += "\n".join(f"- {_timecode(c['start'],'vtt')}: {c['title']}" for c in summary["chapters"]) + "\n"
+            contents["summary.md"] = md.encode("utf-8")
+        if wants("summary.json"):
+            contents["summary.json"] = json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8")
+    if highlights is not None:
+        if wants("highlights.md"):
+            full_source = highlights["selected_segment_count"] == highlights["source_segment_count"]
+            scope = ("The complete source is included; no condensation was made." if full_source
+                     else "Selected excerpts may omit important context; read the full transcript.")
+            md = "# Source highlights\n\nVerbatim transcript excerpts. " + scope + "\n\nExcerpts may span speakers; consult the full transcript for speaker labels.\n"
+            for excerpt in highlights["excerpts"]:
+                md += f"\n## {_timecode(excerpt['start'], 'vtt')} – {_timecode(excerpt['end'], 'vtt')}\n\n"
+                # A long-enough fence keeps arbitrary quoted Markdown as literal source text.
+                fence = "`" * max(3, max((len(match.group()) + 1 for match in re.finditer(r"`+", excerpt["text"])), default=3))
+                md += fence + "text\n" + excerpt["text"] + "\n" + fence + "\n"
+            if highlights.get("warnings"):
+                md += "\n## Selection notes\n\n" + "\n".join("- " + warning for warning in highlights["warnings"]) + "\n"
+            contents["highlights.md"] = md.encode("utf-8")
+        if wants("highlights.json"):
+            contents["highlights.json"] = json.dumps(highlights, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
+    if export_notes and requested is None:
+        contents["export-notes.txt"] = ("\n".join(export_notes) + "\n").encode("utf-8")
+    if requested is None and include_zip:
+        stream = io.BytesIO()
+        _write_transcript_zip(contents, stream)
+        contents["transcript.zip"] = stream.getvalue()
     return contents
+
+
+def _write_transcript_zip(contents: dict[str, bytes], stream: BinaryIO) -> None:
+    with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for name, data in contents.items():
+            archive.writestr(name, data)
+
+
+def _valid_highlights(record: dict[str, Any]) -> dict[str, Any] | None:
+    highlights = record.get("highlights")
+    if highlights is not None:
+        try:
+            validate_highlights(highlights, record["segments"])
+        except ValueError:
+            return None  # A damaged optional result must not block the original transcript.
+    return highlights
 
 
 def _export_key(file_type: str, record: dict[str, Any]) -> str | None:
@@ -415,6 +675,8 @@ def _export_key(file_type: str, record: dict[str, Any]) -> str | None:
         return f"transcript.{file_type}"
     if file_type in {"summary_md","summary_json"}:
         return file_type.replace("_", ".") if record.get("summary") else None
+    if file_type in {"highlights_md", "highlights_json"}:
+        return file_type.replace("_", ".") if _valid_highlights(record) is not None else None
     if file_type.startswith("translation_"):
         fmt = file_type[len("translation_"):]
         langs = list(record.get("translations", {}))
@@ -423,44 +685,104 @@ def _export_key(file_type: str, record: dict[str, Any]) -> str | None:
     return None
 
 
+def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to download") -> None:
+    """Use the same complete job details for fresh and recovered library records."""
+    segments = record["segments"]
+    translations = record.get("translations", {})
+    _set(job_id, status="done", stage=stage, title=record["title"], error="",
+         language=record["language"], method=record["method"], segment_count=len(segments),
+         preview="\n".join(_shown_text(s) for s in segments)[:11000],
+         extras={"translation_language": next(iter(translations), ""), "summary": bool(record.get("summary")),
+                 "highlights": _valid_highlights(record) is not None,
+                 "speakers": any(s.get("speaker") for s in segments)},
+         warnings=record.get("processing_metadata", {}).get("warnings", []),
+         library_id=job_id, finished_at=time.time())
+
+
 def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, method: str,
-                   translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None) -> None:
+                   translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None,
+                   processing_metadata: dict[str,Any] | None = None,
+                   highlights: dict[str, Any] | None = None) -> None:
     job = jobs[job_id]
     record = {"source": job.source, "title": job.title, "language": lang, "method": method,
-              "segments": segments, "translations": translations or {}, "summary": summary}
-    for filename, payload in _exports(record).items():
+              "segments": segments, "translations": translations or {}, "summary": summary,
+              "processing_metadata": processing_metadata or {}, "highlights": highlights}
+    contents = _exports(record, include_zip=False)
+    if "export-notes.txt" in contents:
+        metadata = dict(record["processing_metadata"])
+        warnings = list(metadata.get("warnings", []))
+        for note in contents["export-notes.txt"].decode("utf-8").splitlines():
+            if note not in warnings:
+                warnings.append(note)
+        metadata["warnings"] = warnings
+        record["processing_metadata"] = metadata
+        contents = _exports(record, include_zip=False)
+    for filename, payload in contents.items():
         (job.workdir / filename).write_bytes(payload)
-    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary)
-    _set(job_id, status="done", stage="Ready to download", language=lang,
-         method=method, segment_count=len(segments),
-         preview="\n".join(_shown_text(s) for s in segments)[:11000],
-         extras={"translation_language": next(iter(translations or {}), ""), "summary": bool(summary),
-                 "speakers": any(s.get("speaker") for s in segments)},
-         library_id=job.id, finished_at=time.time())
+    # Keep the existing on-disk job exports for diagnostics and integrations,
+    # but do not build a second in-memory copy of the complete archive.
+    with (job.workdir / "transcript.zip").open("wb") as stream:
+        _write_transcript_zip(contents, stream)
+    # Publish the saved row and live result together with respect to deletion.
+    with lock:
+        library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, record["processing_metadata"], highlights)
+        _complete_job(job_id, record)
 
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
-                      method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool) -> None:
+                      method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool,
+                      recognition: RecognitionResult | None = None, highlights_enabled: bool = False) -> None:
     # Feature problems must never destroy the original recognized transcript.
-    warnings: list[str] = []
+    baseline = deepcopy(segments)
+    warnings: list[str] = list(recognition.warnings) if recognition else []
+    metadata: dict[str, Any] = {}
+    if recognition is not None and method == "local_audio_ai":
+        metadata["asr"] = deepcopy(recognition.asr_provenance)
     if speakers:
         if audio is None:
             warnings.append("Speaker labels require speech audio; use Audio AI mode.")
         else:
-            _set(job_id, stage="Identifying speaker turns with pyannote...")
-            try: segments = assign_speakers(audio, segments)
-            except EnhancementError as exc: warnings.append(str(exc))
+            _set(job_id, stage="Identifying speaker turns locally...")
+            try:
+                candidate = (recognition.speaker_segments if recognition is not None and
+                             recognition.speaker_segments is not None else baseline)
+                # _recognize returned only data. Drop its cached engine before
+                # loading the separate speaker model; keep reusable VAD/speaker caches.
+                _release_audio_models(recognizer_only=True)
+                speaker_report = assign_speakers(audio, deepcopy(candidate), include_report=True)
+                segments = speaker_report["segments"]
+                warnings.extend(speaker_report["warnings"])
+                metadata["speakers"] = speaker_report["provenance"]
+            except EnhancementError as exc:
+                segments = baseline
+                warnings.append(str(exc))
             except Exception as exc:
                 # Optional model bugs must never discard already recognized speech.
                 print(f"[LinkScribe] Speaker labeling failed ({type(exc).__name__}) for job {job_id}")
+                segments = baseline
                 warnings.append("Speaker labeling failed unexpectedly; original transcript retained.")
+    # Word timings are transient alignment evidence. Persist the resulting text
+    # groups and model provenance, without raw audio or voice embeddings.
+    segments = [{key: value for key, value in segment.items() if key != "_words"} for segment in segments]
+    highlights = None
+    if highlights_enabled:
+        _set(job_id, stage="Selecting source highlights locally...")
+        try:
+            highlights = select_highlights(segments, source_language=language)
+        except ValueError as exc:
+            warnings.append("Source highlights: " + str(exc))
+        except Exception as exc:
+            print(f"[LinkScribe] Source highlights failed ({type(exc).__name__}) for job {job_id}")
+            warnings.append("Source highlights failed unexpectedly; original transcript retained.")
+    if summary_enabled or (target != "none" and language != target):
+        _release_audio_models()
     translations: dict[str, Any] = {}
     if target != "none":
         if language == target:
             translations[target] = [dict(s) for s in segments]
         else:
-            _set(job_id, stage=f"Translating into {target} with local Ollama...")
-            try: translations[target] = translate_segments(segments, target)
+            _set(job_id, stage=f"Translating locally into {target}...")
+            try: translations[target] = translate_segments(segments, target, source_language=language)
             except EnhancementError as exc: warnings.append("Translation: " + str(exc))
             except Exception as exc:
                 print(f"[LinkScribe] Translation failed ({type(exc).__name__}) for job {job_id}")
@@ -468,21 +790,28 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     summary = None
     if summary_enabled:
         _set(job_id, stage="Creating chapters and AI summary locally...")
-        try: summary = summarize_segments(segments)
+        try: summary = summarize_segments(segments, source_language=language)
         except EnhancementError as exc: warnings.append("Summary: " + str(exc))
         except Exception as exc:
             print(f"[LinkScribe] Summary failed ({type(exc).__name__}) for job {job_id}")
             warnings.append("Summary failed unexpectedly; original transcript retained.")
     _set(job_id, warnings=warnings, stage="Saving transcript to library...")
-    _write_exports(job_id, segments, language, method, translations, summary)
+    if warnings:
+        metadata["warnings"] = warnings
+    if highlights is not None:
+        _write_exports(job_id, segments, language, method, translations, summary, metadata, highlights)
+    else:
+        _write_exports(job_id, segments, language, method, translations, summary, metadata)
 
 
 def _process_link(job_id: str, source: Source, mode: str, language: str, model: str,
-                  speakers: bool = False, target: str = "none", summary_enabled: bool = False) -> None:
+                  speakers: bool = False, target: str = "none", summary_enabled: bool = False,
+                  highlights_enabled: bool = False) -> None:
     segments: list[dict[str, Any]] | None = None
     used_language = language
     method = "local_audio_ai"
     audio = None
+    recognition = None
     # Forced audio for diarization, so that speaker labels are evidence-based.
     if source.provider == "youtube" and mode != "audio" and not speakers:
         _set(job_id, stage="Checking available captions...")
@@ -496,62 +825,223 @@ def _process_link(job_id: str, source: Source, mode: str, language: str, model: 
         _set(job_id, stage="Fetching the video's audio...")
         audio, title = _download_source_audio(job_id, source)
         _set(job_id, title=title, stage="Recognizing speech locally...")
-        segments, used_language = _recognize(audio, language, model)
-    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled)
+        recognition = _recognize(audio, language, model, speaker_timing=speakers)
+        segments, used_language = recognition.segments, recognition.language
+    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled,
+                      recognition=recognition, highlights_enabled=highlights_enabled)
 
 
 def _process_upload(job_id: str, file_path: Path, language: str, model: str,
-                    speakers: bool = False, target: str = "none", summary_enabled: bool = False) -> None:
+                    speakers: bool = False, target: str = "none", summary_enabled: bool = False,
+                    highlights_enabled: bool = False) -> None:
     _set(job_id, stage="Checking media file...")
     _check_uploaded_duration(file_path)
     _set(job_id, stage="Recognizing speech locally...")
-    segments, detected_language = _recognize(file_path, language, model)
-    _enhance_and_save(job_id, segments, detected_language, "local_audio_ai", file_path,
-                      speakers, target, summary_enabled)
+    recognition = _recognize(file_path, language, model, speaker_timing=speakers)
+    _enhance_and_save(job_id, recognition.segments, recognition.language, "local_audio_ai", file_path,
+                      speakers, target, summary_enabled, recognition=recognition, highlights_enabled=highlights_enabled)
+
+
+def _write_batch_archive(batch_id: str, stream: BinaryIO) -> None:
+    """Rebuild the archive from durable transcripts, even after a restart.
+
+    Job workdirs and their temporary exports expire, but the library does not.
+    """
+    stored = batch_store.get(batch_id)
+    if stored is None:
+        raise ReadableError("Batch not found in persistent history.")
+    records: list[dict[str, Any]] = []
+    with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for index, item in enumerate(stored["jobs"], start=1):
+            record = library.get(item["id"]) if item["status"] == "done" else None
+            entry = {"number": index, "source": item["source"], "status": item["status"],
+                     "title": record["title"] if record else item["title"],
+                     "error": item["error"], "warnings": [],
+                     "library_id": item["id"] if record else None}
+            if record:
+                prefix = f"{index:02d}_{item['id'][:8]}"
+                available = _exports(record, include_zip=False)
+                saved_warnings = record.get("processing_metadata", {}).get("warnings", [])
+                saved_warnings = [w for w in saved_warnings if isinstance(w, str)] if isinstance(saved_warnings, list) else []
+                export_warnings = available.get("export-notes.txt", b"").decode("utf-8").splitlines()
+                entry["warnings"] = list(dict.fromkeys(saved_warnings + export_warnings))
+                for filename, content in available.items():
+                    if filename.endswith((".txt", ".srt", ".vtt", ".json", ".md")):
+                        archive.writestr(f"{prefix}/{filename}", content)
+            elif item["status"] == "done":
+                entry["status"] = "error"
+                entry["error"] = "Transcript was removed from the library after processing."
+            records.append(entry)
+        manifest = {"batch_id": batch_id, "total": len(records),
+                    "completed": sum(item["status"] in {"done", "error"} for item in records),
+                    "failed": sum(item["status"] == "error" for item in records), "items": records}
+        archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
+
+
+def _batch_archive(batch_id: str) -> bytes:
+    """In-memory archive helper for callers that explicitly require bytes."""
+    stream = io.BytesIO()
+    _write_batch_archive(batch_id, stream)
+    return stream.getvalue()
+
+
+class _ZipArchiveResponse(StreamingResponse):
+    def __init__(self, stream: BinaryIO, filename: str, *, nosniff: bool = False):
+        self.stream = stream
+        length = stream.tell()
+        stream.seek(0)
+        headers = {"Content-Disposition": f'attachment; filename="{filename}"',
+                   "Content-Length": str(length), "Cache-Control": "no-store"}
+        if nosniff:
+            headers["X-Content-Type-Options"] = "nosniff"
+        super().__init__(iter(lambda: stream.read(64 * 1024), b""), media_type="application/zip",
+                         headers=headers)
+
+    async def __call__(self, scope, receive, send):
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            self.stream.close()
+
+
+class _BatchArchiveResponse(_ZipArchiveResponse):
+    def __init__(self, stream: BinaryIO, batch_id: str):
+        super().__init__(stream, f"linkscr-batch-{batch_id[:8]}.zip")
+
+
+def _transcript_download(record: dict[str, Any], name: str) -> StreamingResponse:
+    # Downloads always reflect the durable record, including edits, not the
+    # original job's cached exports. ZIP generation uses owned disk storage.
+    if name == "transcript.zip":
+        stream = tempfile.TemporaryFile(mode="w+b")
+        try:
+            _write_transcript_zip(_exports(record, include_zip=False), stream)
+            return _ZipArchiveResponse(stream, name)
+        except BaseException:
+            stream.close()
+            raise
+    available = _exports(record, requested=name)
+    if name not in available:
+        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    mime = "application/json" if name.endswith(".json") else "text/plain; charset=utf-8"
+    return StreamingResponse(io.BytesIO(available[name]), media_type=mime,
+                             headers={"Content-Disposition": f'attachment; filename="{name}"',
+                                      "Cache-Control": "no-store"})
 
 
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
-                   model: str, speakers: bool, target: str, summary_enabled: bool) -> None:
+                   model: str, speakers: bool, target: str, summary_enabled: bool,
+                   highlights_enabled: bool = False) -> None:
     batch = batches[batch_id]
+    batch_store.mark_batch(batch_id, "working")
     batch.status = "working"
+    persisted = batch_store.get(batch_id)
+    assert persisted is not None
+    previous = {item["id"]: item for item in persisted["jobs"]}
     for index, (job_id, source) in enumerate(zip(batch.job_ids, items)):
+        job = jobs[job_id]
+        old = previous[job_id]
         batch.stage = f"Processing {index + 1} of {len(items)}: {source.provider}"
-        _guarded_worker(job_id, _process_link, source, mode, language, model,
-                        speakers, target, summary_enabled)
+        # If a crash occurred after the transcript was saved but before the
+        # journal acknowledged it, skip costly retranscription on recovery.
+        with lock:
+            saved = library.get(job_id)
+            if saved is not None:
+                _complete_job(job_id, saved, "Restored completed transcript from library")
+        if saved is not None:
+            pass  # Already published under the deletion lock above.
+        elif old["status"] == "done":
+            # A completed journal entry whose record is missing was deleted by
+            # the user. Recovery must never download and recreate that record.
+            _set(job_id, status="error", stage="Transcript removed from library",
+                 error="Transcript was removed from the library after processing.",
+                 finished_at=time.time())
+        elif old["status"] == "error":
+            # A definite per-video failure stays recorded; recovery does not
+            # silently retry blocked or unauthorized sources forever.
+            _set(job_id, status="error", error=old["error"], stage="Previous attempt failed",
+                 finished_at=time.time())
+        else:
+            terminal = batch_store.claim_item(job_id)
+            if terminal is not None:
+                # The journal may have changed since the batch snapshot, e.g.
+                # a user deleted a later saved item while this batch resumed.
+                _set(job_id, status="error", stage="Previous item no longer pending",
+                     error=terminal["error"] or batch_store.REMOVED_ERROR,
+                     finished_at=time.time())
+            else:
+                _guarded_worker(job_id, _process_link, source, mode, language, model,
+                                speakers, target, summary_enabled, highlights_enabled)
+        _cleanup_job_inputs(job)
+        acknowledged = batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
+                                             library_id=job.library_id)
+        if job.status == "done" and acknowledged == "error":
+            _set(job_id, status="error", stage="Transcript removed from library",
+                 error=batch_store.REMOVED_ERROR, library_id="", warnings=[], finished_at=time.time())
         batch.completed += 1
-        if jobs[job_id].status == "error": batch.failed += 1
-    batch.stage = "Preparing batch archive..."
-    zip_path = batch.workdir / "batch.zip"
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for index, job_id in enumerate(batch.job_ids, start=1):
-            job = jobs[job_id]
-            prefix = f"{index:02d}_{job_id[:8]}"
-            for file in sorted(job.workdir.iterdir()):
-                if file.name.endswith((".txt",".srt",".vtt",".json",".md")) and file.is_file():
-                    archive.write(file, f"{prefix}/{file.name}")
-        # Keep a report in the ZIP even if every source failed. The archive
-        # otherwise looked like a successful but inexplicably empty batch.
-        manifest = {"batch_id": batch.id, "total": len(batch.job_ids),
-                    "completed": batch.completed, "failed": batch.failed, "items": []}
-        for index, job_id in enumerate(batch.job_ids, start=1):
-            job = jobs[job_id]
-            manifest["items"].append({"number": index, "source": job.source,
-                                      "status": job.status, "title": job.title,
-                                      "error": job.error, "warnings": job.warnings,
-                                      "library_id": job.library_id if job.status == "done" else None})
-        archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
-    batch.status="done"
-    batch.stage="Batch complete"
-    batch.finished_at=time.time()
+        if job.status == "error":
+            batch.failed += 1
+    # Downloads always rebuild from the durable library (including edits).
+    # Do not generate and retain an unused, immediately stale archive here.
+    batch_store.mark_batch(batch_id, "done")
+    batch.status, batch.stage, batch.finished_at = "done", "Batch complete", time.time()
 
 
 def _guarded_batch(batch_id: str, *args: Any) -> None:
     try:
-        _process_batch(batch_id,*args)
+        _process_batch(batch_id, *args)
     except Exception as exc:
         print(f"[LinkScribe] Batch {batch_id} failed: {type(exc).__name__}: {exc}")
-        batch=batches[batch_id]
-        batch.status="error"; batch.stage="Batch failed; check the server log"; batch.finished_at=time.time()
+        batch = batches[batch_id]
+        batch.status, batch.stage, batch.finished_at = "error", "Batch failed; check server log", time.time()
+        try: batch_store.mark_batch(batch_id, "error")
+        except Exception as journal_exc:
+            print(f"[LinkScribe] Unable to mark batch {batch_id} error: {type(journal_exc).__name__}")
+
+
+def _restore_pending_batches() -> None:
+    """Run at application startup to resume interrupted local video batches."""
+    for stored in batch_store.unfinished():
+        batch_id = stored["id"]
+        with lock:
+            if batch_id in batches:
+                continue
+        try:
+            cfg = stored["options"]
+            links = [parse_source(item["source"]) for item in stored["jobs"]]
+            if any(item["source"] != source.url for item, source in zip(stored["jobs"], links)):
+                raise ValueError("Non-canonical stored batch URL")
+            mode, language, model = cfg["mode"], cfg["language"], cfg["model"]
+            speakers, target, summary = cfg["speakers"], cfg["target"], cfg["summary"]
+            highlights = cfg.get("highlights", False)
+            if type(highlights) is not bool:
+                raise ValueError("Unsupported stored source-highlights option")
+            _validate_common(language, model, True)
+            if mode not in MODES or target not in {"none", "en", "el"}:
+                raise ValueError("Unsupported stored batch options")
+            for source in links:
+                _validate_enhancements(mode, source.provider, speakers, target)
+            directory = DATA_DIR / "batches" / batch_id
+            directory.mkdir(parents=True, exist_ok=True)
+            batch = Batch(id=batch_id, workdir=directory,
+                          job_ids=[item["id"] for item in stored["jobs"]])
+            with lock:
+                batches[batch_id] = batch
+                for item in stored["jobs"]:
+                    identifier = item["id"]
+                    workdir = DATA_DIR / identifier
+                    workdir.mkdir(parents=True, exist_ok=True)
+                    jobs[identifier] = Job(id=identifier, workdir=workdir,
+                        source=item["source"], title=item["title"], batch_id=batch_id,
+                        stage="Resuming interrupted batch...", status="queued")
+                    # Interrupted downloads must not survive skipped items or
+                    # interfere with yt-dlp's non-overwriting retry behavior.
+                    _cleanup_job_inputs(jobs[identifier])
+            pool.submit(_guarded_batch, batch_id, links, mode, language, model,
+                        speakers, target, summary, highlights)
+        except Exception as exc:
+            print(f"[LinkScribe] Cannot recover batch {batch_id}: {type(exc).__name__}: {exc}")
+            batch_store.mark_batch(batch_id, "error")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -562,6 +1052,11 @@ def index():
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "LinkScribe", "js_runtime": runtime_details()}
+
+
+@app.get("/api/diagnostics")
+def local_diagnostics():
+    return diagnostics.report()
 
 
 def _validate_enhancements(mode: str, provider: str, speakers: bool, target: str) -> None:
@@ -579,54 +1074,66 @@ def _validate_enhancements(mode: str, provider: str, speakers: bool, target: str
 def submit_link(request: Request, url: str = Form(...), mode: str = Form("smart"),
                 language: str = Form("auto"), model: str = Form("small"),
                 consent: bool = Form(False), speakers: bool = Form(False),
-                target_language: str = Form("none"), summary: bool = Form(False)):
+                target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
     _check_browser_origin(request)
     _validate_common(language, model, consent)
     try: source = parse_source(url)
     except ValueError as exc: raise HTTPException(400,str(exc)) from None
     _validate_enhancements(mode, source.provider, speakers, target_language)
     job = _new_job(source=source.url, title=f"{source.provider.title()} {source.video_id}")
-    return _start_job(job, _process_link, source, mode, language, model, speakers, target_language, summary)
+    return _start_job(job, _process_link, source, mode, language, model, speakers, target_language, summary, highlights)
 
 
 @app.post("/api/upload")
-async def submit_upload(request: Request, file: UploadFile = File(...),
+def submit_upload(request: Request, file: UploadFile = File(...),
                         language: str = Form("auto"), model: str = Form("small"),
                         consent: bool = Form(False), speakers: bool = Form(False),
-                        target_language: str = Form("none"), summary: bool = Form(False)):
-    _check_browser_origin(request)
-    _validate_common(language, model, consent)
-    if target_language not in {"none","en","el"}:
-        raise HTTPException(400,"Unsupported translation language.")
-    original_name = (file.filename or "recording").replace("\\", "/").split("/")[-1]
-    suffix = Path(original_name).suffix.lower()
-    if suffix not in ACCEPTED_SUFFIXES:
-        raise HTTPException(400,"Unsupported file type. Use audio or video such as MP3, WAV, MP4 or WebM.")
-    job = _new_job(source=f"uploaded:{original_name[:140]}", title=original_name[:140])
-    target = job.workdir / ("input" + suffix)
+                        target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
+    # The multipart parser already owns a seekable spool. Check its actual
+    # length before reserving a queue slot, and copy in the API worker thread.
     try:
-        total = 0
-        with target.open("wb") as destination:
-            while chunk := await file.read(1024 * 1024):
-                total += len(chunk)
-                if total > MAX_BYTES:
-                    raise HTTPException(413,"The upload limit is 150 MB.")
-                destination.write(chunk)
-        if total == 0: raise HTTPException(400,"The uploaded file is empty.")
-    except Exception:
-        with lock: jobs.pop(job.id, None)
-        shutil.rmtree(job.workdir,ignore_errors=True)
-        raise
+        _check_browser_origin(request)
+        _validate_common(language, model, consent)
+        if target_language not in {"none","en","el"}:
+            raise HTTPException(400,"Unsupported translation language.")
+        original_name = (file.filename or "recording").replace("\\", "/").split("/")[-1]
+        suffix = Path(original_name).suffix.lower()
+        if suffix not in ACCEPTED_SUFFIXES:
+            raise HTTPException(400,"Unsupported file type. Use audio or video such as MP3, WAV, MP4 or WebM.")
+        incoming = file.file
+        incoming.seek(0, 2)
+        size = incoming.tell()
+        if size > MAX_BYTES:
+            raise HTTPException(413,"The upload limit is 150 MB.")
+        if size == 0:
+            raise HTTPException(400,"The uploaded file is empty.")
+        incoming.seek(0)
+        job = _new_job(source=f"uploaded:{original_name[:140]}", title=original_name[:140])
+        target = job.workdir / ("input" + suffix)
+        try:
+            total = 0
+            with target.open("wb") as destination:
+                while chunk := incoming.read(1024 * 1024):
+                    total += len(chunk)
+                    if total > MAX_BYTES:
+                        raise HTTPException(413,"The upload limit is 150 MB.")
+                    destination.write(chunk)
+            if total != size:
+                raise HTTPException(400,"The uploaded file changed during processing. Please upload it again.")
+        except Exception:
+            with lock: jobs.pop(job.id, None)
+            shutil.rmtree(job.workdir,ignore_errors=True)
+            raise
     finally:
-        await file.close()
-    return _start_job(job,_process_upload,target,language,model,speakers,target_language,summary)
+        file.file.close()
+    return _start_job(job,_process_upload,target,language,model,speakers,target_language,summary,highlights)
 
 
 @app.post("/api/batch")
 def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smart"),
                  language: str = Form("auto"), model: str = Form("small"),
                  consent: bool = Form(False), speakers: bool = Form(False),
-                 target_language: str = Form("none"), summary: bool = Form(False)):
+                 target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
     _check_browser_origin(request)
     _validate_common(language,model,consent)
     if len(urls) > 50000: raise HTTPException(400,"Batch input is too long.")
@@ -635,7 +1142,7 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
         raise HTTPException(400,"Enter between 1 and 20 links, one per line.")
     try: items=[parse_source(link) for link in strings]
     except ValueError as exc: raise HTTPException(400,str(exc)) from None
-    if len({source.url for source in items}) != len(items):
+    if len({(source.provider, source.video_id) for source in items}) != len(items):
         raise HTTPException(400,"Remove duplicate video links from the batch.")
     for source in items: _validate_enhancements(mode,source.provider,speakers,target_language)
     _cleanup_expired()
@@ -650,46 +1157,99 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
         for source in items:
             child=_new_job(source.url,f"{source.provider.title()} {source.video_id}",batch_id=batch_id)
             batch.job_ids.append(child.id)
+    options = {"mode": mode, "language": language, "model": model,
+               "speakers": speakers, "target": target_language, "summary": summary, "highlights": highlights}
     try:
-        pool.submit(_guarded_batch,batch_id,items,mode,language,model,speakers,target_language,summary)
-    except RuntimeError:
+        batch_store.create(batch_id, [{"id": jobs[job_id].id,
+                        "source": jobs[job_id].source, "title": jobs[job_id].title}
+                        for job_id in batch.job_ids], options)
+        pool.submit(_guarded_batch,batch_id,items,mode,language,model,speakers,target_language,summary,highlights)
+    except (RuntimeError, OSError) as exc:
         with lock:
             batches.pop(batch_id,None)
             for identifier in batch.job_ids:
                 job=jobs.pop(identifier,None)
                 if job: shutil.rmtree(job.workdir,ignore_errors=True)
         shutil.rmtree(directory,ignore_errors=True)
-        raise HTTPException(503,"Processing service is shutting down.") from None
+        try: batch_store.mark_batch(batch_id, "error")
+        except Exception: pass
+        raise HTTPException(503,"Processing service is unavailable.") from None
     return {"id":batch_id,"count":len(items)}
+
+
+@app.get("/api/batches")
+def list_saved_batches():
+    """Allow reconnecting to past batches after server restart."""
+    saved = batch_store.recent()
+    warnings = library.get_processing_warnings([
+        item["library_id"] for batch in saved for item in batch["jobs"]
+        if item["status"] == "done"
+    ])
+    return {"items": [{"id": batch["id"], "status": batch["status"],
+                       "total": len(batch["jobs"]),
+                       "completed": sum(j["status"] in {"done", "error"} for j in batch["jobs"]),
+                       "failed": sum(j["status"] == "error" for j in batch["jobs"]),
+                       "with_warnings": sum(j["status"] == "done" and bool(warnings.get(j["library_id"]))
+                                            for j in batch["jobs"])}
+                      for batch in saved]}
 
 
 @app.get("/api/batches/{batch_id}")
 def batch_status(batch_id: str):
     _cleanup_expired()
-    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404,"Batch not found.")
+    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404, "Batch not found.")
+    saved = batch_store.get(batch_id)
+    if saved is None: raise HTTPException(404, "Batch not found.")
     with lock:
-        batch=batches.get(batch_id)
-        if not batch: raise HTTPException(404,"Batch expired or not found.")
-        children=[]
-        for child_id in batch.job_ids:
-            job=jobs.get(child_id)
-            if job:
-                children.append({"id":job.id,"title":job.title,"source":job.source,
-                                 "status":job.status,"stage":job.stage,"error":job.error,
-                                 "warnings":job.warnings,"library_id":job.library_id})
-        return {"id":batch.id,"status":batch.status,"stage":batch.stage,"total":len(batch.job_ids),
-                "completed":batch.completed,"failed":batch.failed,"jobs":children}
+        batch = batches.get(batch_id)
+        children = []
+        for item in saved["jobs"]:
+            child = jobs.get(item["id"])
+            # Terminal journal entries are authoritative even while old job
+            # objects remain in memory. In particular, deletion clears the
+            # library ID and warnings and must not be hidden by a cached job.
+            durable = item["status"] in {"done", "error"} or child is None
+            current = child is not None and (not durable or child.status == item["status"])
+            children.append({"id": item["id"], "title": item["title"] if durable else child.title,
+                             "source": item["source"], "status": item["status"] if durable else child.status,
+                             "stage": child.stage if current else "Restored from disk",
+                             "error": item["error"] if durable else child.error,
+                             "warnings": list(child.warnings) if current and child.status == "done" else [],
+                             "library_id": item["library_id"] if durable else child.library_id})
+        status = batch.status if batch else saved["status"]
+        stage = batch.stage if batch else "Saved batch"
+    # Completed-job objects expire and do not survive a process restart. Their
+    # saved transcript remains the durable source of processing warnings.
+    warnings = library.get_processing_warnings([
+        child["library_id"] for child in children if child["status"] == "done"
+    ])
+    for child in children:
+        child["warnings"] = list(dict.fromkeys(
+            child["warnings"] + warnings.get(child["library_id"], [])))
+    return {"id": batch_id, "status": status, "stage": stage,
+            "total": len(children),
+            "completed": sum(child["status"] in {"done", "error"} for child in children),
+            "failed": sum(child["status"] == "error" for child in children),
+            "with_warnings": sum(child["status"] == "done" and bool(child["warnings"])
+                                 for child in children),
+            "jobs": children}
 
 
 @app.get("/api/batches/{batch_id}/download")
 def batch_download(batch_id: str):
-    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404,"Batch not found.")
-    with lock:
-        batch=batches.get(batch_id)
-        if not batch or batch.status != "done": raise HTTPException(404,"Batch not ready.")
-        filename=batch.workdir / "batch.zip"
-        if not filename.is_file(): raise HTTPException(404,"Archive not found.")
-    return FileResponse(filename,media_type="application/zip",filename=f"linkscr-batch-{batch_id[:8]}.zip")
+    if not JOB_ID_RE.fullmatch(batch_id): raise HTTPException(404, "Batch not found.")
+    saved = batch_store.get(batch_id)
+    if not saved or saved["status"] != "done":
+        raise HTTPException(404, "Batch not ready.")
+    # The archive can contain twenty long transcripts. Keep the compressed
+    # output off the heap and stream fixed-size chunks from an owned temp file.
+    stream = tempfile.TemporaryFile(mode="w+b")
+    try:
+        _write_batch_archive(batch_id, stream)
+        return _BatchArchiveResponse(stream, batch_id)
+    except BaseException:
+        stream.close()
+        raise
 
 
 @app.get("/api/jobs/{job_id}")
@@ -717,17 +1277,49 @@ def download(job_id: str,file_type: str):
     if not record: raise HTTPException(404,"Transcript was deleted from the library.")
     key=_export_key(file_type,record)
     if not key: raise HTTPException(404,"Requested enhancement was not generated.")
-    contents=_exports(record)[key]  # Current saved edits, never stale temporary exports.
-    mime="application/zip" if key.endswith(".zip") else ("application/json" if key.endswith(".json") else "text/plain; charset=utf-8")
-    return StreamingResponse(io.BytesIO(contents),media_type=mime,
-                             headers={"Content-Disposition":f'attachment; filename="{key}"',
-                                      "Cache-Control":"no-store"})
+    return _transcript_download(record, key)
 
 
 @app.get("/api/library")
-def list_library(q: str = "", limit: int = 50):
+def list_library(q: str = "", limit: int = 50, before_created_at: float | None = None,
+                 before_id: str | None = None):
     if len(q) > 200: raise HTTPException(400,"Search query is too long.")
-    return {"items":library.list_items(q,limit)}
+    before = None
+    if before_created_at is not None or before_id is not None:
+        if (before_created_at is None or not math.isfinite(before_created_at) or
+                before_id is None or not JOB_ID_RE.fullmatch(before_id)):
+            raise HTTPException(400, "Invalid library page cursor.")
+        before = (before_created_at, before_id)
+    return library.list_page(q, limit, before=before)
+
+
+@app.get("/api/library/backup")
+def export_library_backup():
+    stream = tempfile.TemporaryFile(mode="w+b")
+    try:
+        library_backup.write_backup(stream)
+        return _ZipArchiveResponse(stream, "linkscr-library-backup.zip", nosniff=True)
+    except library_backup.BackupError as exc:
+        stream.close()
+        raise HTTPException(413, str(exc)) from None
+    except BaseException:
+        stream.close()
+        raise
+
+
+@app.post("/api/library/restore")
+def import_library_backup(request: Request, file: UploadFile = File(...)):
+    # Multipart parsing has already spooled the upload. Read that seekable file
+    # directly in FastAPI's worker thread, not on the browser/API event loop.
+    try:
+        _check_browser_origin(request)
+        return {"ok": True, **library_backup.restore_backup_file(file.file)}
+    except library_backup.BackupTooLarge:
+        raise HTTPException(413, "Backup upload exceeds the 50 MB limit.") from None
+    except library_backup.BackupError as exc:
+        raise HTTPException(400, str(exc)) from None
+    finally:
+        file.file.close()
 
 
 @app.get("/api/library/{item_id}")
@@ -742,11 +1334,19 @@ def get_library_item(item_id: str):
 async def edit_library_item(item_id: str, request: Request):
     _check_browser_origin(request)
     if not JOB_ID_RE.fullmatch(item_id): raise HTTPException(404,"Transcript not found.")
+    try: data=await request.json()
+    except (ValueError, RecursionError): raise HTTPException(400,"Invalid JSON.") from None
+    return await run_in_threadpool(_apply_library_edit, item_id, data)
+
+
+def _apply_library_edit(item_id: str, data: Any):
     record=library.get(item_id)
     if not record: raise HTTPException(404,"Transcript not found.")
-    try: data=await request.json()
-    except ValueError: raise HTTPException(400,"Invalid JSON.") from None
     if not isinstance(data,dict): raise HTTPException(400,"Invalid edit body.")
+    expected=data.get("expected_updated_at", record["updated_at"])
+    if (isinstance(expected,bool) or not isinstance(expected,(int,float)) or
+            expected != record["updated_at"]):
+        raise HTTPException(409,"The saved transcript changed. Reload it before saving again.")
     title=data.get("title")
     changes=data.get("segments")
     if not isinstance(title,str) or not title.strip() or len(title)>180:
@@ -755,23 +1355,83 @@ async def edit_library_item(item_id: str, request: Request):
     if not isinstance(changes,list) or len(changes)!=len(old):
         raise HTTPException(400,"Every segment must be preserved in the original order.")
     updated=[]
-    for original,change in zip(old,changes):
-        if not isinstance(change,dict): raise HTTPException(400,"Invalid segment.")
-        text=change.get("text"); speaker=change.get("speaker",original.get("speaker",""))
-        if not isinstance(text,str) or not text.strip() or len(text)>5000 or not isinstance(speaker,str) or len(speaker)>80:
-            raise HTTPException(400,"Invalid segment text or speaker label.")
-        updated.append({**original,"text":text.strip().replace("\r"," ").replace("\n"," "),
-                        **({"speaker":speaker.strip()} if speaker.strip() else {})})
-        if not speaker.strip(): updated[-1].pop("speaker",None)
-    library.update(item_id,title.strip(),updated)
-    return {"ok":True,"id":item_id,"message":"Edits saved. Previous translations and summaries were cleared because the transcript changed."}
+    try:
+        title.encode("utf-8")
+        for original,change in zip(old,changes):
+            if not isinstance(change,dict): raise HTTPException(400,"Invalid segment.")
+            text=change.get("text"); speaker=change.get("speaker",original.get("speaker",""))
+            if not isinstance(text,str) or not text.strip() or len(text)>5000 or not isinstance(speaker,str) or len(speaker)>80:
+                raise HTTPException(400,"Invalid segment text or speaker label.")
+            text.encode("utf-8"); speaker.encode("utf-8")
+            updated.append({**original,"text":text.strip().replace("\r"," ").replace("\n"," "),
+                            **({"speaker":speaker.strip()} if speaker.strip() else {})})
+            if not speaker.strip(): updated[-1].pop("speaker",None)
+    except UnicodeEncodeError:
+        raise HTTPException(400,"Edit contains invalid Unicode text.") from None
+    try:
+        revision=library.update_revision(item_id,title.strip(),updated,expected_updated_at=expected)
+    except library.EditConflict as exc:
+        raise HTTPException(409,str(exc)) from None
+    if revision is None:
+        raise HTTPException(404,"Transcript not found.")
+    # Job polling and its result card must describe the same saved version as
+    # library downloads after an edit, including invalidated AI exports.
+    with lock:
+        if item_id in jobs and jobs[item_id].status == "done":
+            saved = library.get(item_id)
+            if saved is not None:
+                _complete_job(item_id, saved, stage="Edits saved")
+    return {"ok":True,"id":item_id,"updated_at":revision,"message":"Edits saved. Previous translations, summaries and source highlights were cleared because the transcript changed."}
+
+@app.post("/api/library/{item_id}/highlights")
+def create_library_highlights(item_id: str, request: Request):
+    _check_browser_origin(request)
+    if not JOB_ID_RE.fullmatch(item_id):
+        raise HTTPException(404, "Transcript not found.")
+    record = library.get(item_id)
+    if record is None:
+        raise HTTPException(404, "Transcript not found.")
+    try:
+        highlights = select_highlights(record["segments"], source_language=record["language"])
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from None
+    try:
+        if not library.set_highlights(item_id, highlights):
+            raise HTTPException(404, "Transcript not found.")
+    except ValueError:
+        raise HTTPException(409, "The transcript changed during selection. Reload it and try again.") from None
+    saved = library.get(item_id)
+    if saved is None:
+        raise HTTPException(404, "Transcript not found.")
+    with lock:
+        if item_id in jobs and jobs[item_id].status == "done":
+            _complete_job(item_id, saved, stage="Source highlights saved")
+    return saved
 
 
 @app.delete("/api/library/{item_id}")
 def delete_library_item(item_id: str, request: Request):
     _check_browser_origin(request)
-    if not JOB_ID_RE.fullmatch(item_id) or not library.delete(item_id):
+    if not JOB_ID_RE.fullmatch(item_id):
         raise HTTPException(404,"Transcript not found.")
+    with lock:
+        if not batch_store.delete_library_record(item_id):
+            raise HTTPException(404,"Transcript not found.")
+        if item_id in jobs:
+            _set(item_id, status="error", stage="Transcript removed from library",
+                 error=batch_store.REMOVED_ERROR, preview="", segment_count=0,
+                 language="", method="", library_id="", extras={}, warnings=[],
+                 finished_at=time.time())
+        # The UUID directory contains temporary app exports, even if the
+        # process restarted and no longer has the corresponding Job object.
+        try:
+            shutil.rmtree(DATA_DIR / item_id)
+        except FileNotFoundError:
+            pass
+        except OSError:
+            return {"ok": True, "cleanup_warning": (
+                "The library record was deleted, but temporary files could not be removed. "
+                f"Check the local data/{item_id} directory.")}
     return {"ok":True}
 
 
@@ -783,8 +1443,5 @@ def library_download(item_id: str, file_type: str):
     if not record: raise HTTPException(404,"Transcript not found.")
     name=_export_key(file_type,record)
     if not name: raise HTTPException(404,"Requested enhancement not available.")
-    content=_exports(record)[name]
-    mime="application/zip" if name.endswith(".zip") else ("application/json" if name.endswith(".json") else "text/plain; charset=utf-8")
-    return StreamingResponse(io.BytesIO(content),media_type=mime,
-                             headers={"Content-Disposition":f'attachment; filename="{name}"',
-                                      "Cache-Control":"no-store"})
+    return _transcript_download(record, name)
+

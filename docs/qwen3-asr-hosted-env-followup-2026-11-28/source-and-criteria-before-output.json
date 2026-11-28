@@ -1,0 +1,556 @@
+{
+  "reviewer": "/root/package_verification",
+  "bound_at_utc": "2026-11-28T02:34:31.581189+00:00",
+  "source_commit": "a4ca88ec2820f8c0e1c29f4a7f5d36b8f0a32db3",
+  "plan_sha256": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+  "original_files": [
+    {
+      "path": "docs/asr-2026-11-26/fixtures.json",
+      "sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c",
+      "bytes": 14073
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+      "sha256": "829accfcda9fb6cf24089e1011d7257021854b9f9ace210f22b1907a01b579cd",
+      "bytes": 7370
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+      "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9",
+      "bytes": 4109
+    }
+  ],
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "sample_count": 106560,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "sample_count": 96000,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b"
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "sample_count": 67200,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad"
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "sample_count": 111360,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae"
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "sample_count": 160320,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "sample_count": 104640,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "sample_count": 126720,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270"
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "sample_count": 66240,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb"
+    }
+  ],
+  "original_contents": {
+    "docs/asr-2026-11-26/fixtures.json": {
+      "schema_version": 1,
+      "created_at": "2026-11-26T17:47:34.512580+00:00",
+      "dataset": {
+        "name": "google/fleurs",
+        "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+        "license": "CC-BY-4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "dataset_card": "https://huggingface.co/datasets/google/fleurs",
+        "license_confirmation": "https://huggingface.co/datasets/google/fleurs/discussions/2",
+        "paper": "https://research.google/pubs/fleurs-few-shot-learning-evaluation-of-universal-representations-of-speech/",
+        "attribution": "FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Alexis Conneau and collaborators, Google Research, 2022; distributed by google/fleurs on Hugging Face under CC-BY-4.0."
+      },
+      "selection": {
+        "method": "Fixed before recognition: five Greek and three English validation rows selected for ordinary vocabulary, names, numbers and negation from the first twelve Greek and first six English rows. No recognition outputs were used for selection.",
+        "representativeness": "Small diagnostic sample of read speech, not a representative population benchmark or conversational/noisy-speech acceptance."
+      },
+      "audio_preparation": "Downloaded the dataset viewer audio renditions unchanged. These are native recorded speech, not synthesized speech. Viewer audio encoding may differ from the original dataset container; exact downloaded bytes are identified by SHA-256. No trimming, enhancement or reference-conditioned decoding is performed.",
+      "cases": [
+        {
+          "id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "audio_file": "audio/fleurs-el_gr-validation-2-1528.wav",
+          "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+          "audio_bytes": 426298,
+          "audio_mime": "audio/wav",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "dataset_normalized_reference": "κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "el_gr",
+            "split": "validation",
+            "row_index": 2,
+            "sentence_id": 1528,
+            "dataset_num_samples": 106560,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 1,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/2/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=2&length=1"
+          },
+          "review_criteria": [
+            "Preserve the provision of special family camping areas and the reference to young children."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "audio_file": "audio/fleurs-el_gr-validation-5-1515.wav",
+          "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+          "audio_bytes": 384058,
+          "audio_mime": "audio/wav",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "dataset_normalized_reference": "είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του μαρτελί μέσα σε τέσσερα χρόνια",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "el_gr",
+            "split": "validation",
+            "row_index": 5,
+            "sentence_id": 1515,
+            "dataset_num_samples": 96000,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 1,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/5/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=5&length=1"
+          },
+          "review_criteria": [
+            "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "audio_file": "audio/fleurs-el_gr-validation-6-1577.wav",
+          "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+          "audio_bytes": 268858,
+          "audio_mime": "audio/wav",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "dataset_normalized_reference": "αυτό δεν μου βγάζει νόημα σε κάθε περίπτωση δεν ήταν δίκαιο",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "el_gr",
+            "split": "validation",
+            "row_index": 6,
+            "sentence_id": 1577,
+            "dataset_num_samples": 67200,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 0,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/6/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=6&length=1"
+          },
+          "review_criteria": [
+            "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "audio_file": "audio/fleurs-el_gr-validation-7-1598.wav",
+          "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+          "audio_bytes": 445498,
+          "audio_mime": "audio/wav",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "dataset_normalized_reference": "μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου δεν τραυματίστηκε κανείς",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "el_gr",
+            "split": "validation",
+            "row_index": 7,
+            "sentence_id": 1598,
+            "dataset_num_samples": 111360,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 0,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/7/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=7&length=1"
+          },
+          "review_criteria": [
+            "Preserve the count of three people and the claim that nobody was injured despite the collision."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "audio_file": "audio/fleurs-el_gr-validation-11-1590.wav",
+          "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+          "audio_bytes": 641338,
+          "audio_mime": "audio/wav",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "dataset_normalized_reference": "η κύρια τοπική μπίρα ονομάζεται «number one» και δεν αποτελεί μια σύνθετη μπύρα είναι όμως ευχάριστη και δροσιστική. η άλλη τοπική μπίρα λέγεται «manta»",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "el_gr",
+            "split": "validation",
+            "row_index": 11,
+            "sentence_id": 1590,
+            "dataset_num_samples": 160320,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 0,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/el_gr/validation/11/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=el_gr&split=validation&offset=11&length=1"
+          },
+          "review_criteria": [
+            "Preserve the two product names Number One and Manta and the negated description of the first beer."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "audio_file": "audio/fleurs-en_us-validation-0-1548.wav",
+          "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+          "audio_bytes": 418618,
+          "audio_mime": "audio/wav",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "dataset_normalized_reference": "when you call someone who is thousands of miles away you are using a satellite",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "en_us",
+            "split": "validation",
+            "row_index": 0,
+            "sentence_id": 1548,
+            "dataset_num_samples": 104640,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 0,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/0/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=0&length=1"
+          },
+          "review_criteria": [
+            "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "audio_file": "audio/fleurs-en_us-validation-2-1510.wav",
+          "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+          "audio_bytes": 506938,
+          "audio_mime": "audio/wav",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "dataset_normalized_reference": "the u.n. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "en_us",
+            "split": "validation",
+            "row_index": 2,
+            "sentence_id": 1510,
+            "dataset_num_samples": 126720,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 0,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/2/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=2&length=1"
+          },
+          "review_criteria": [
+            "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "audio_file": "audio/fleurs-en_us-validation-3-1578.wav",
+          "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+          "audio_bytes": 265018,
+          "audio_mime": "audio/wav",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "dataset_normalized_reference": "then lakkha singh took the lead in singing the bhajans",
+          "provenance": {
+            "dataset": "google/fleurs",
+            "revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+            "config": "en_us",
+            "split": "validation",
+            "row_index": 3,
+            "sentence_id": 1578,
+            "dataset_num_samples": 66240,
+            "dataset_sample_rate": 16000,
+            "dataset_gender_label": 1,
+            "viewer_asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/google/fleurs/--/70bb2e84b976b7e960aa89f1c648e09c59f894dd/--/en_us/validation/3/audio/audio.wav",
+            "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=google%2Ffleurs&config=en_us&split=validation&offset=3&length=1"
+          },
+          "review_criteria": [
+            "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+          ]
+        }
+      ],
+      "archive_provenance": {
+        "raw_file": "fixtures.json",
+        "raw_sha256": "e4e8274348b1b628ea3edf11c7e30ed93d653f09618cd91b16d9eb25ab26a946",
+        "sanitized": true,
+        "checksum_scope": "Existing report/manifest/source-report checksum fields refer to the original raw evidence. Sanitized artifact checksums are listed in artifact-index.json.",
+        "transformations": "Removed machine-local cache, artifact and dataset-extraction paths; made manifest paths relative; stripped signed URL query parameters if present. Reference text, hypotheses, judgments, numerical results and model/source hashes were preserved."
+      }
+    },
+    "docs/parakeet-screen-2026-11-28/input-arrays.json": {
+      "created_at": "2026-11-28T01:30:38.563931+00:00",
+      "model_initialized": false,
+      "inference_performed": false,
+      "source_fixture_manifest_sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c",
+      "decoder": {
+        "module": "faster_whisper.audio.decode_audio",
+        "source_file": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/audio.py",
+        "source_sha256": "60a1d8638f718cbf6d245aed3e5a5aa61c1f822a0b0fe9b48a7c928d47c23909",
+        "requested_sample_rate": 16000,
+        "runtime_versions": {
+          "faster-whisper": "1.2.1",
+          "av": "16.1.0",
+          "numpy": "2.5.5"
+        },
+        "scope": "Same full-audio PCM conversion used by prior application recognitions; no Whisper model or transcript involved."
+      },
+      "cases": [
+        {
+          "id": "fleurs-el_gr-validation-2-1528",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-2-1528.wav",
+          "original_audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-2-1528.npy",
+          "array_sha256": "a5e38c6b760a06d5132fe4806904b005a998ab60fd39174727a884a0bff1480c",
+          "dtype": "<f4",
+          "shape": [
+            106560
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 106560,
+          "duration_seconds": 6.66,
+          "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-el_gr-validation-5-1515",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-5-1515.wav",
+          "original_audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-5-1515.npy",
+          "array_sha256": "34b697dcc03bc2020b9f54c34f525eb29ad00342bda4aa77bc072f5aab8acff1",
+          "dtype": "<f4",
+          "shape": [
+            96000
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 96000,
+          "duration_seconds": 6.0,
+          "pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-el_gr-validation-6-1577",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-6-1577.wav",
+          "original_audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-6-1577.npy",
+          "array_sha256": "24488d58992d0b4c7a922dd1a18e17f8d259c4df985b72ab917eeb02bdcd1482",
+          "dtype": "<f4",
+          "shape": [
+            67200
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 67200,
+          "duration_seconds": 4.2,
+          "pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-el_gr-validation-7-1598",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-7-1598.wav",
+          "original_audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-7-1598.npy",
+          "array_sha256": "f3e925954c97008ec339e7fa5718b8aeec60d3ba9367d76437567e19865cab9e",
+          "dtype": "<f4",
+          "shape": [
+            111360
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 111360,
+          "duration_seconds": 6.96,
+          "pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-el_gr-validation-11-1590",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-el_gr-validation-11-1590.wav",
+          "original_audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-el_gr-validation-11-1590.npy",
+          "array_sha256": "cc75526eece38bdc17090e4bf36769618335bc4dd3b82247a49c983bf155e9ba",
+          "dtype": "<f4",
+          "shape": [
+            160320
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 160320,
+          "duration_seconds": 10.02,
+          "pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-en_us-validation-0-1548",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-0-1548.wav",
+          "original_audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-0-1548.npy",
+          "array_sha256": "c28e046e8d1391abc69614a6c81f8a409a9897a29c240138a4586720e39ea9c4",
+          "dtype": "<f4",
+          "shape": [
+            104640
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 104640,
+          "duration_seconds": 6.54,
+          "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-en_us-validation-2-1510",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-2-1510.wav",
+          "original_audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-2-1510.npy",
+          "array_sha256": "4ca922f5773d3318fca12c7e7157522b7bb71f258fe3e70aba82a442e937951f",
+          "dtype": "<f4",
+          "shape": [
+            126720
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 126720,
+          "duration_seconds": 7.92,
+          "pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        },
+        {
+          "id": "fleurs-en_us-validation-3-1578",
+          "original_audio_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/audio/fleurs-en_us-validation-3-1578.wav",
+          "original_audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+          "array_path": "/workspace/scratch/94360995dd61/parakeet-screen-2026-11-28/arrays/fleurs-en_us-validation-3-1578.npy",
+          "array_sha256": "bd2bbaf768eeca10034b8607d020decc9882329a7ed041b013a8bdc1454b05b8",
+          "dtype": "<f4",
+          "shape": [
+            66240
+          ],
+          "sample_rate_hz": 16000,
+          "sample_count": 66240,
+          "duration_seconds": 4.14,
+          "pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb",
+          "full_untrimmed_recording": true,
+          "vad_applied": false
+        }
+      ],
+      "total_duration_seconds": 52.44,
+      "complete": true
+    },
+    "docs/parakeet-screen-2026-11-28/semantic-criteria.json": {
+      "schema_version": 1,
+      "original_manifest_sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c",
+      "scope": "Eight previously exposed development clips; no fresh validation, no app integration.",
+      "classification_definitions": {
+        "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+        "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+        "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+        "not_evaluable": "No completed aligned transcript is available."
+      },
+      "review_method": "Review exact raw hypotheses against every original reference and criterion; names, numbers, negation and meaning are not replaced by WER. No human-listening claim.",
+      "cases": [
+        {
+          "id": "fleurs-el_gr-validation-2-1528",
+          "language": "el",
+          "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+          "review_criteria": [
+            "Preserve the provision of special family camping areas and the reference to young children."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-5-1515",
+          "language": "el",
+          "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+          "review_criteria": [
+            "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-6-1577",
+          "language": "el",
+          "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+          "review_criteria": [
+            "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-7-1598",
+          "language": "el",
+          "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+          "review_criteria": [
+            "Preserve the count of three people and the claim that nobody was injured despite the collision."
+          ]
+        },
+        {
+          "id": "fleurs-el_gr-validation-11-1590",
+          "language": "el",
+          "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+          "review_criteria": [
+            "Preserve the two product names Number One and Manta and the negated description of the first beer."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-0-1548",
+          "language": "en",
+          "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "review_criteria": [
+            "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-2-1510",
+          "language": "en",
+          "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+          "review_criteria": [
+            "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+          ]
+        },
+        {
+          "id": "fleurs-en_us-validation-3-1578",
+          "language": "en",
+          "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+          "review_criteria": [
+            "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+          ]
+        }
+      ]
+    }
+  },
+  "scope": "Eight already exposed development cases; original source/reference/semantic criteria unchanged. Review all raw unrepaired hypotheses before native repetition repair. No fresh validation or audio listening claim. No candidate output opened while creating this binding."
+}

@@ -1,0 +1,21 @@
+{
+  "runtime_version": "1.32.0",
+  "build_commit": "fab30a4",
+  "binary": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime.so.1.32.0",
+  "binary_sha256": "6c1585d1bbf45b0712ea4a21b705c5fcb4ba04ff2e30f1fbf81a49faf658638f",
+  "flag_file_offset": "0x1bfd51a",
+  "observed_static_behavior": "Native initialization loads ORT_DISABLE_TELEMETRY, calls a helper invoking getenv@plt, compares against1/true/yes/on/y, and branches to initialization cleanup/return when enabled. This confirms the setting is consumed by this installed binary, not merely an unused environment variable.",
+  "accepted_true_strings": {
+    "0x1bec004": "1",
+    "0x1bd91e1": "true",
+    "0x1bd9656": "yes",
+    "0x1bd5b7f": "on",
+    "0x1bd3a5b": "y"
+  },
+  "documentation": "Indexed first-party Privacy.md and ONNX Runtime1.29 release notes explicitly document process-lifetime opt-out before initialization. Live Privacy.md/raw retrieval returned404.",
+  "primary_urls": [
+    "https://github.com/microsoft/onnxruntime/blob/main/docs/Privacy.md",
+    "https://github.com/microsoft/onnxruntime/releases"
+  ],
+  "runtime_check": "One complete real speaker run after early environment+API opt-out completed without a repeated egress rejection. Syscall tracing unavailable: ptrace denied. No measured network-silence claim."
+}

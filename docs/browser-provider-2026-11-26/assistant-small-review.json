@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "reviewer": "OpenAI assistant; no human, blinded or audio-listening evaluation claimed",
+  "review_date": "2026-11-26",
+  "record": "dailymotion-small-record.json",
+  "rating": "major_content_issues",
+  "reference": "The same published English subtitle revision and source-page transcript identified in assistant-content-review.json. No exact-audio reference transcript or formal WER.",
+  "model": "small",
+  "input_audio_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+  "input_bytes_identical_to_tiny_run": true,
+  "actual_decoded_sample_count": 11746325,
+  "actual_sampling_rate_hz": 16000,
+  "actual_decoded_duration_seconds": 734.1453125,
+  "normal_output_segment_count": 53,
+  "normal_output_last_end_seconds": 423.24,
+  "largest_segment_duration_seconds": 68.9,
+  "findings": [
+    {
+      "type": "missing_later_reference_dialogue",
+      "description": "Small ends at 07:03.24, with no output for the later dialogue represented by the subtitle reference through 09:27. Full input decoding is observed, but the VAD intervals and actual tail audio content were not yet captured in this run."
+    },
+    {
+      "type": "meaning_error",
+      "output_start": 299.24,
+      "output_end": 302.12,
+      "output": "You're in charge, Tom.",
+      "reference_time": "04:59",
+      "reference_excerpt": "You're a jerk, Thom."
+    },
+    {
+      "type": "pronoun_error",
+      "output_start": 364.92,
+      "output_end": 366.92,
+      "output": "Why does she do this?",
+      "reference_time": "06:05",
+      "reference_excerpt": "Why does he do this?"
+    },
+    {
+      "type": "timing_needs_review",
+      "output_start": 62.46,
+      "output_end": 131.36,
+      "output": "Should have you be down there.",
+      "description": "A short question spans 68.90 seconds; timestamp ordering does not establish subtitle alignment."
+    }
+  ],
+  "observed_wording_changes": "Several words are closer to the reference than Tiny, including the robot-hand question and the threat verb. Major omissions and meaning/timing errors remain; no aggregate accuracy improvement score is claimed.",
+  "normal_result_preserved": "The actual Small result passed SQLite/export/cleanup checks and remained unchanged through the completed mixed batch and process restart.",
+  "next_diagnostic": "Observe actual VAD and collected audio sample intervals, then transcribe only separately labeled bounded tail excerpts with VAD off after normal saving/cleanup; never replace the saved normal transcript."
+}

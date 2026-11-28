@@ -1,0 +1,61 @@
+{
+  "review_type": "Independent retained failure and source diagnosis; no fix approval yet",
+  "source_commit": "d62df26c870f175f7454fe0c3900d97891c8bff5",
+  "run_id": 46121980993,
+  "job_id": 140908265951,
+  "artifact_id": 15254385257,
+  "classification": "Hosted file acquisition/preparation failure before recognition, optional fixed-text timing, or speaker model execution.",
+  "actual_failure": {
+    "type": "HTTPError",
+    "message": "HTTP Error 404: Not Found",
+    "phase": "prepare",
+    "runtime_install_passed": true,
+    "original_fixture_passed": true,
+    "four_small_files_reported_hash_verified": true,
+    "first_three_ecapa_files_reported_hash_verified": true,
+    "actual_pipeline_step": "skipped",
+    "model_construction_reported": false,
+    "hypotheses_or_speaker_turns_available": false
+  },
+  "failed_request_inference": {
+    "filename": "label_encoder.ckpt",
+    "url": "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb/resolve/0f99f2d0ebe89ac095bcc5903c4dd8f72b367286/label_encoder.ckpt",
+    "basis": "Immutable d62 helper loops sequentially over the plan dictionary; the first three ECAPA completed entries are checkpointed, and label_encoder.ckpt is next. The HTTP exception does not itself record a URL.",
+    "direct_request_url_observed": false
+  },
+  "source_finding": {
+    "retained_file": "docs/asr-speaker-timing-integration-2026-11-28/independent-review/speechbrain-v1.1.2-parameter_transfer.py",
+    "sha256": "9ef59c7141e6aad15d11dd184957054e758baf3537bc71ffe3079753715d4f65",
+    "function": "Pretrainer.collect_files",
+    "remote_filename": "self.split_path(self.paths[name]) when explicitly configured",
+    "local_filename": "name + PARAMFILE_EXT (.ckpt)",
+    "implication": "The hosted helper cannot infer the remote filename from the final local cache filename. Its acquisition loop and YAML checker incorrectly require those names to be identical."
+  },
+  "exact_remote_filename_status": {
+    "label_encoder.txt_confirmed": false,
+    "exact_pinned_yaml_bytes_present_in_artifact": false,
+    "known_yaml_receipt": {
+      "bytes": 1919,
+      "sha256": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41"
+    },
+    "reason": "The original helper retained the YAML only after all speaker downloads completed. Searches of retained source receipts did not establish the .txt spelling. No new fetch was made."
+  },
+  "supported_minimal_correction": "In the separately authorized hosted preparation, download/hash-verify and retain the same pinned YAML before other ECAPA files. Use non-instantiating node inspection of its four exact loadables and paths to derive safe same-repository remote filenames. Keep the same revision, unchanged expected local-file hashes, and local <loadable>.ckpt cache names; seed the HF snapshot under actual remote names. Preserve resolved mapping and pending request before downloads. Review actual patch and controls separately.",
+  "prior_review_scope_preserved": {
+    "file": "/workspace/scratch/94360995dd61/asr-speaker-integration-independent-review-2026-11-28/independent-hosted-contract-review.json",
+    "sha256": "e7d503f2cee957948aa182f6902e4e8117d9feae945d1fdf947ab8cae52bce2e",
+    "note": "The exact YAML was explicitly unavailable during source review, and actual hosted preparation/inference was unobserved. This failure is new observed evidence, not a retrospective amendment of the prior review."
+  },
+  "audit": {
+    "file": "failure-artifact-audit.json",
+    "sha256": "55142a4b9c10c70580486d35a86f3d65aa22d1508bec01787c376775b658a691",
+    "checks": 34,
+    "errors": [],
+    "method": "Retained metadata and all extracted artifact identities rehashed; complete original PCM decoded independently using the standard library; immutable Git source and exact pinned Pretrainer source read."
+  },
+  "scope_limits": [
+    "Completed model-file identities are retained transfer receipts; the model payloads themselves are not in the downloaded evidence artifact.",
+    "No recognition, timing, diarization, resource-use, or quality acceptance can be inferred from this failed preparation.",
+    "No model/provider/native work, metadata downloads, Git mutations, code changes, criteria changes, or reruns performed."
+  ]
+}

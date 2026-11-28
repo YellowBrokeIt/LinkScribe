@@ -1,0 +1,18 @@
+{
+  "issue": "An independent read-only SQLite inspection using mode=ro created empty-WAL and shared-memory sidecars because the database uses WAL mode. No original artifact file bytes changed.",
+  "discovered_by": "Strict whole-artifact inventory audit; all30 manifest file hash checks passed before the two extra files were found.",
+  "sidecars": [
+    {
+      "original_path": "speaker-app-report-artifacts-36c4f2e0/library.sqlite3-shm",
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "original_path": "speaker-app-report-artifacts-36c4f2e0/library.sqlite3-wal",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "correction": "Moved only those reviewer-generated sidecars into this review-preparation directory and use mode=ro&immutable=1 for future retained-database reads. No original input, raw report, database or ZIP edited.",
+  "source_database_sha256": "1d13bd53b3f1a3b7b01550aee9bd75d9c408054a3b602e91c93444017b2a7d96"
+}

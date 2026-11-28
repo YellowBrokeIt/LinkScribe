@@ -1,0 +1,75 @@
+--- frozen-detector-observer.py
++++ resource_monitor.py
+@@ -1,4 +1,4 @@
+-"""External limits and complete resource samples for one owned detector phase."""
++"""Reviewed resource monitor, adapted only for this stage's event prefix and helpers."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -13,7 +13,9 @@
+ 
+ import psutil
+ 
+-from common import HERE, PLAN_SHA256, emit, read_plan, save, sha, utc, verify_freeze
++from context import common, utc
++save = common.save
++sha = common.sha
+ 
+ 
+ def alive_owned(identities):
+@@ -184,8 +186,8 @@
+                     buffer += chunk
+                     while b"\n" in buffer:
+                         line, buffer = buffer.split(b"\n", 1)
+-                        if line.startswith(b"PERSON_EVENT "):
+-                            event = json.loads(line[len(b"PERSON_EVENT "):])
++                        if line.startswith(b"GEMMA_EVENT "):
++                            event = json.loads(line[len(b"GEMMA_EVENT "):])
+                             event["observed_elapsed_seconds"] = round(time.monotonic() - started, 6)
+                             report["events"].append(event)
+                             if event["event"] == "initialized":
+@@ -235,44 +237,3 @@
+         save(output, report)
+     return report
+ 
+-
+-def main():
+-    parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("--phase", choices=("prepare", "infer"), required=True)
+-    args = parser.parse_args()
+-    plan = read_plan()
+-    freeze_name = "setup-freeze" if args.phase == "prepare" else "inference-freeze"
+-    verify_freeze(freeze_name)
+-    runtime = Path(plan["runtime"]["owned_root"])
+-    environment = os.environ.copy()
+-    environment.update(plan["runtime"]["environment"])
+-    environment.update({"PYTHONPATH": plan["runtime"]["owned_package_target"],
+-                        "HF_HOME": str(runtime / "hf-cache"), "TMPDIR": str(runtime / "tmp"),
+-                        "PYTHONDONTWRITEBYTECODE": "1"})
+-    limits = {"rss_bytes": plan["limits"]["process_tree_rss_bytes"],
+-              "initialization_seconds": plan["limits"]["initialization_seconds"],
+-              "case_seconds": plan["limits"]["per_case_seconds"],
+-              "total_seconds": plan["limits"]["aggregate_worker_seconds"]}
+-    output = HERE / (args.phase + "-resources.json")
+-    report = monitor([plan["runtime"]["python"], str(HERE / "native_worker.py"), "--phase", args.phase],
+-                     environment, runtime / "private" / (args.phase + ".log"), output,
+-                     HERE / (args.phase + "-samples.jsonl"), limits,
+-                     {"phase": args.phase, "plan_sha256": PLAN_SHA256,
+-                      "phase_freeze_sha256": sha(HERE / (freeze_name + ".json")),
+-                      "worker_sha256": sha(HERE / "native_worker.py"), "observer_sha256": sha(__file__),
+-                      "translation_calls": 0, "whole_app_memory_approval": False})
+-    phase_output = HERE / ("prepare.json" if args.phase == "prepare" else "execution.json")
+-    report["phase_report_sha256"] = sha(phase_output) if phase_output.exists() else None
+-    report["phase_report_complete"] = (json.loads(phase_output.read_text()).get("complete") is True
+-                                       if phase_output.exists() else False)
+-    report["passed"] &= report["phase_report_complete"]
+-    read_plan()
+-    verify_freeze(freeze_name)
+-    save(output, report)
+-    emit("supervisor_complete", phase=args.phase, passed=report["passed"], elapsed_seconds=report["elapsed_seconds"],
+-         peak_rss_mib=report["peak_rss_mib"], peak_pss_mib=report["peak_pss_mib"], report=str(output))
+-    return int(not report["passed"])
+-
+-
+-if __name__ == "__main__":
+-    raise SystemExit(main())

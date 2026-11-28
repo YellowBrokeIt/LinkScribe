@@ -1,0 +1,11 @@
+--- a/tests/qa_speaker_integration.py
++++ b/tests/qa_speaker_integration.py
+@@ -324,7 +324,7 @@
+             "Recognition policy or attempt count changed")
+     require(report["upload_form"] == {"consent": "true", "speakers": "true", "target_language": "none", "summary": "false"},
+             "Unexpected enhancement or source-guidance request")
+-    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 4 and
++    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 0 and
+             report["model_initializations"][0]["num_workers"] == 1 and
+             report["model_initializations"][0]["actual_device"] == "cpu" and
+             report["model_initializations"][0]["actual_compute_type"] in {"int8", "int8_float32"}, "Unexpected native model runtime")

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/package_verification",
+  "bound_at_utc": "2026-11-28T02:37:55.452595+00:00",
+  "scope": "Pre-output review of the narrowly authorized hosted environment/path correction. No candidate hypotheses were available or inspected; recognition implementation and original criteria unchanged.",
+  "original_source_criteria_binding_sha256": "e58bacb2916dd6a337ff433460f92638000de74b10b300b256005bf924ae6c9d",
+  "original_plan_sha256": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+  "followup_plan_sha256": "a46131a56018ad24f70faa76cea1d206407358271ff60fab1dbe1afd6bb72380",
+  "followup_plan_path": "docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json",
+  "changed_plan_keys": [
+    "hosted_environment_followup",
+    "prepared_at",
+    "source_files"
+  ],
+  "only_changed_plan_bound_source": [
+    ".github/workflows/qwen3-asr-candidate-qa.yml"
+  ],
+  "all_other_plan_fields_identical": {
+    "schema_version": true,
+    "purpose": true,
+    "model_id": true,
+    "model_revision": true,
+    "model_files_path": true,
+    "model_license": true,
+    "runtime_versions": true,
+    "runtime_scope": true,
+    "dtype": true,
+    "attention_implementation": true,
+    "trust_remote_code": true,
+    "source_language_argument": true,
+    "target_language_argument": true,
+    "source_language_policy": true,
+    "timestamps": true,
+    "attempts_per_case": true,
+    "model_initializations": true,
+    "qa_seed": true,
+    "max_cpu_threads": true,
+    "torch_interop_threads": true,
+    "rss_limit_bytes": true,
+    "startup_seconds": true,
+    "per_case_seconds": true,
+    "total_worker_seconds": true,
+    "resource_sampling_seconds": true,
+    "per_file_download_seconds": true,
+    "limits_scope": true,
+    "generation": true,
+    "frontend": true,
+    "decoder_guidance": true,
+    "completion": true,
+    "worker_environment": true,
+    "offline_policy": true,
+    "original_fixtures_path": true,
+    "original_arrays_path": true,
+    "semantic_criteria_path": true,
+    "semantic_review": true,
+    "comparison_reports": true,
+    "cases": true,
+    "promotion": true,
+    "cleanup": true
+  },
+  "source_checks": [
+    {
+      "path": "tests/qa_qwen3_asr_candidate.py",
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": ".github/workflows/qwen3-asr-candidate-qa.yml",
+      "sha256": "1ef312a65ff80a8000ef29733f69ed34520ef2e930bdfa014cf060a0a9ed3c42",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt",
+      "sha256": "0e7f2a0b8562d9137a507fc33c451ad4623ee6d1fba98b1f8e9416c823c119c5",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/model-files.json",
+      "sha256": "d904805595b1477fe011261f57eed793d36ae03ae3c53a87af74d1c94384c854",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/model-metadata-provenance.json",
+      "sha256": "fc4393e4f825b8f9dfec2c2b73f5c1349ec4f4dd94344ea4e7a0000ca7192e77",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/asr-2026-11-26/fixtures.json",
+      "sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+      "sha256": "829accfcda9fb6cf24089e1011d7257021854b9f9ace210f22b1907a01b579cd",
+      "matches_frozen_plan": true
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+      "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9",
+      "matches_frozen_plan": true
+    }
+  ],
+  "workflow_review": {
+    "initial_job_env_runner_temp_expression_removed": true,
+    "initial_step_uses_RUNNER_TEMP_into_GITHUB_ENV": true,
+    "all_four_helper_actions_name_followup_plan": true,
+    "artifact_upload_step_preserves_same_runner_temp_evidence_path": true,
+    "initial_failed_workflow_retained": true,
+    "model_runtime_inputs_decoder_limits_semantic_criteria_unchanged": true,
+    "conclusion": "No material blocker found in this path-only correction. Actual hosted installation/execution/resource/semantic results remain required."
+  },
+  "execution_scope": "No ML imports, installation, model download, initialization or inference; no test rerun by reviewer. Peer separately owns the 14 non-model tests and shell path check."
+}

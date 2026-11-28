@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-28T00:22:56.576463+00:00",
+  "decision": "reject_this_profile_under_fixed_limits",
+  "reason": "Two complete requests independently reached the unchanged 2048-token response cap without final content. Further identical requests were stopped once this exact profile was blocked.",
+  "controller_action": {
+    "owned_exec_session": 32550,
+    "action": "Interrupt owned exec session",
+    "observed_exit_code": 130,
+    "normal_runner_finalization_observed": false
+  },
+  "complete": false,
+  "semantic_quality_approved": false,
+  "cases_completed": 2,
+  "cases_interrupted": 1,
+  "cases_not_run": 3,
+  "cases": [
+    {
+      "case_id": "dev-en-el-transcript-terminology",
+      "state": "execution_error",
+      "accepted_translation": false,
+      "reason": "Reasoning consumed all 2048 output tokens with no final content; production rejected done_reason:length."
+    },
+    {
+      "case_id": "dev-el-en-people-and-roles",
+      "state": "execution_error",
+      "accepted_translation": false,
+      "reason": "Reasoning consumed all 2048 output tokens with no final content; production rejected done_reason:length."
+    },
+    {
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "state": "interrupted",
+      "accepted_translation": false,
+      "reason": "An inference request had started, but the owned exec session was externally stopped before a response was captured."
+    },
+    {
+      "case_id": "dev-el-en-negation-scope",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    },
+    {
+      "case_id": "dev-en-el-conditional-publication",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    },
+    {
+      "case_id": "dev-el-en-uncertain-question",
+      "state": "not_run",
+      "accepted_translation": false,
+      "reason": "The profile had already failed its unchanged output bound; this case was not started."
+    }
+  ],
+  "raw_checkpoints_preserved": {
+    "baseline-development.json": "24ff0a087191a112f8f7b778638d0a2c7df4b9518f2d243a35f976eef14824ba",
+    "thinking-development.json": "cfc63ed7563e84b0d5bcc904d8738d35d1ab95da9470d3f9b61051e55bbfe6f3",
+    "execution-both.json": "ee156125a8ba7b04697fa6a1f8886c545c785f5809bbc98f8a8b16ed7a4d55eb"
+  },
+  "measurement_limits": "The external interrupt ended the executor before the normal report finalizer ran. Candidate memory is only the last checkpoint; candidate final OOM deltas and completed-run peak are unavailable. Raw incomplete checkpoints have not been rewritten as successful or normally completed runs.",
+  "cleanup_observation": "The owned exec session returned exit 130, and a subsequent resource observation reported about 8247.5 MiB available RAM. The runtime slot was released; no translation inference remains queued.",
+  "unused_validation_unchanged": true,
+  "unused_validation_sha256": "e6917b37e1bc738086bdb4e7b8248c22f29002964eaa33824beb6ca3a4cc3d14",
+  "production_enhancements_unchanged": true,
+  "candidate_snapshot_unchanged": true,
+  "runner_snapshot_matches_execution": true,
+  "sanitized_artifacts": {
+    "daemon-both.log": {
+      "sha256": "06cf02845d595bf54588ecce09ce0d91fe9d877f9ec9373086e8da5f84c54d01",
+      "redaction_record": "evidence-redactions.json"
+    }
+  },
+  "publication_sanitization": "The runtime environment mapping was removed from the published daemon log. Raw JSON checkpoints remain unchanged. Original log bytes and the earlier manifest are retained only outside the repository; hashes and transformation are recorded separately."
+}

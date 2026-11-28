@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T02:28:26.967116+00:00",
+  "scope": "Bounded independent pre-output source/contract review; no local model construction, inference, weights, tokenizer download or heavy installation.",
+  "status": "no_remaining_material_pre_output_contract_blocker",
+  "authorized_next_action": "One already-authorized hosted-only native Qwen3-ASR0.6B FP32 development screen on the original eight clips, subject to its frozen protocol and independent semantic review.",
+  "source_hashes": {
+    "tests/qa_qwen3_asr_candidate.py": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f",
+    "docs/qwen3-asr-screen-2026-11-28/plan.json": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+    ".github/workflows/qwen3-asr-candidate-qa.yml": "938395f6c4e1ba4cf8f923d97630a12b9a62b64a903c241bdbd7328097c655a1",
+    "docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt": "0e7f2a0b8562d9137a507fc33c451ad4623ee6d1fba98b1f8e9416c823c119c5",
+    "docs/qwen3-asr-screen-2026-11-28/model-files.json": "d904805595b1477fe011261f57eed793d36ae03ae3c53a87af74d1c94384c854",
+    "docs/qwen3-asr-screen-2026-11-28/model-metadata-provenance.json": "fc4393e4f825b8f9dfec2c2b73f5c1349ec4f4dd94344ea4e7a0000ca7192e77",
+    ".gitattributes": "4bf2e85caf492a3094fad1229572b00fdd306a3502fbfaba42492f2f12f0f324"
+  },
+  "independent_validate_only": {
+    "exit_code": 0,
+    "result": {
+      "validated_at": "2026-11-28T02:28:26.958544+00:00",
+      "plan_sha256": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+      "helper_sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f",
+      "model_initialized": false,
+      "inference_performed": false,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "github_sha": null
+    },
+    "record_sha256": "015ad71eb5d3a1e8381f0bce90bb39592174e771db48e81606573810f19323e3"
+  },
+  "initial_contract_review_sha256": "befa1b020ddf541e73060ab226f5c5e229b535ae32d9f480c31e504217604650",
+  "runtime_constraints_review_sha256": "f28102d804181ab78dd5b1853feb298bf5d39f9b23fc96a3be86d098aeb06f79",
+  "initial_cleanup_probe_sha256": "754a4ac57803bfe0438a46a7cc2d6892e84edaf281c738acdcdca734de4efbbc",
+  "corrected_cleanup_probe_sha256": "b7d5f355558ae68621c4f4e35f3d33c26ca95a8300a02912d78c7082515db4fe",
+  "source_findings": [
+    {
+      "area": "native_model_provenance",
+      "result": "consistent",
+      "detail": "Exact public native -hf revision7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c; all small runtime files actually hashed and large model/tokenizer identities labelled published LFS. Hosted downloader checks actual bytes/hash before offline local loading and after execution."
+    },
+    {
+      "area": "full_audio_identity",
+      "result": "consistent",
+      "detail": "Original dataset row/id/reference/audio hash and complete decoded PCM hash/sample count are bound. The native feature-extractor observer requires the exact full prepared float32 array once, with no VAD/crop; exact mel/mask dimensions and audio placeholders are checked and bound to the actual audio encoder."
+    },
+    {
+      "area": "native_cpu_no_hints",
+      "result": "consistent",
+      "detail": "Official Qwen3ASRForConditionalGeneration/Processor, CPU-only Torch, explicit FP32/eager, max4 selected CPUs and1 interop thread, trust_remote_code=False, local_files_only=True, sanitized offline environment and socket audit hook. Actual call supplies full audio and language=None only; original references are never supplied to generation."
+    },
+    {
+      "area": "raw_completion",
+      "result": "consistent",
+      "detail": "Raw prefix and every generated token stream are checkpointed, returned token IDs are compared to the stream, native EOS is required with no internal/post-EOS tokens, raw decode is retained before native repetition repair, and the parser-rewrite flag is explicit. Native emission tokens are not fabricated word timestamps."
+    },
+    {
+      "area": "resources",
+      "result": "consistent_after_cleanup_fix",
+      "detail": "Controller samples owned group RSS/time and worker records peak/times. Final cleanup now terminates surviving owned group members even after leader exit; success requires an exited leader and no live group members. The exact before/after no-model probe passes. This is sampled process-group enforcement, not a kernel allocation cap or whole-machine approval."
+    },
+    {
+      "area": "workflow",
+      "result": "consistent",
+      "detail": "Read-only repository permissions, nonpersisted checkout credentials, isolated pinned runtime, separate input/model preparation, hosted-only model loading, and always-upload evidence path excluding weight directory."
+    },
+    {
+      "area": "runtime_metadata",
+      "result": "passes_direct_pin_intersections",
+      "detail": "All8direct package Python requirements and active cross-constraints among selected pins satisfy Python3.12/Linux. Transformers5.13 accepts tokenizers0.22.2,hub1.5.0,safetensors0.8.0 andnumpy2.5.5. Official CPU-wheel metadata hash is independently verified. Hosted pip still must resolve/install transitive dependencies and prove actual imports."
+    }
+  ],
+  "reviewed_issue_resolved": {
+    "id": "owned_group_child_after_leader_exit",
+    "before": "A child survived when its leader exited0 before terminate_owned was called.",
+    "after": "The identical no-model probe leaves no live child; the controller now records cleanup and rejects success when live members or an unexited leader remain."
+  },
+  "unresolved_material_findings": [],
+  "limitations": [
+    "This is pre-output contract/source review plus a narrow no-model cleanup reproduction and validate-only check. No new recognition output or inference/resource success is claimed.",
+    "Declared package constraints are compatible, but actual hosted pip installation/imports must still pass and be retained.",
+    "The resource budget covers the observed owned process group, not the whole application or machine; sampled scans may miss transient peaks.",
+    "No Greek forced aligner or word timestamp accuracy is claimed. Native raw text, including any repetitions/omissions/names/numbers/negation errors, must be independently judged.",
+    "All eight clips are previously exposed development evidence, not fresh validation. No production/default change or full-film follow-up is approved by this review."
+  ]
+}

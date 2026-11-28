@@ -1,0 +1,9 @@
+# Optional default public-model speaker backend, tested with Linux CPU wheels.
+# The explicit +cpu versions prevent an accidental CUDA dependency download.
+# Install the base application requirements first.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.11.0+cpu
+torchaudio==2.11.0+cpu
+speechbrain==1.1.2
+faster-whisper==1.2.1
+scipy>=1.15,<2

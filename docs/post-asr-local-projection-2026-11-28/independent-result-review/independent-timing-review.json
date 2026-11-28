@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "reviewer": "root; separate from projection author",
+  "scope": "Complete retained offline projection review, including all86 film timeline rows, all76 coarse publisher cues, four complete short results and allexports.",
+  "audit_sha256": "4fc2ea87d6b308a12caeffe7b1eaba6d6af48292fe8a3f6a37ec0f6c3428eee3",
+  "original_reference_and_criteria": "Unchanged original evaluation-only.json and six original windows. No publisher text or timing was supplied to the candidate.",
+  "integrity": {
+    "pinned_inputs_checked": 10,
+    "original_raw_files_checked": 51,
+    "new_raw_files_checked": 46,
+    "contract_errors": [],
+    "source_strings_and_order_unchanged": true,
+    "all_five_full_input_identities_preserved": true,
+    "physical_bounds_and_order_passed": true,
+    "all_json_txt_srt_vtt_exports_passed": true,
+    "reviewer_decimal_quantization_error_preserved_in_initial_audit": true
+  },
+  "finding": {
+    "classification": "Localized conflict fallback is a useful reliability correction on retained alignment estimates; not a complete speech/word-accuracy approval.",
+    "film_segments": 86,
+    "segments_with_validated_optional_words": 78,
+    "segments_without_optional_words": [
+      55,
+      58,
+      65,
+      66,
+      67,
+      78,
+      80,
+      81
+    ],
+    "localized_conflict_fallback": [
+      80,
+      81
+    ],
+    "iterations": 1,
+    "original_global_fallback_remains_rejected": true,
+    "all_four_short_candidates_exactly_unchanged": true,
+    "segment_anchor_passes": 6,
+    "segment_anchor_total": 6,
+    "word_anchor_passes": 3,
+    "word_anchor_total": 6,
+    "word_passes": [
+      "captain/abort",
+      "world changed",
+      "memory completion"
+    ],
+    "word_fallbacks": [
+      "maybe we can too",
+      "lesson",
+      "could have gone worse"
+    ],
+    "captain_parent_seconds": [
+      504.78000000000003,
+      508.12
+    ],
+    "world_parent_seconds": [
+      518.54,
+      520.42
+    ],
+    "lesson_and_worse_keep_exact_baseline_intervals": true
+  },
+  "complete_review_limitations": [
+    "All86 source strings, including spelling errors, wrong words and four punctuation-only trailing segments, remain unchanged. This postpass cannot repair recognition quality.",
+    "The coarse publisher cues are not acoustic word ground truth. SequenceMatcher gaps or substitutions are diagnostics, not automatic ASR error labels.",
+    "Large timing movements remain beyond the six selected phrases: an isolated Oh shifts from147–149 to157.66–159.06; an extra Sorry from305–306 to314.80–315.64; an I am sorry parent expands from407–409 to398.68–408.06 without private words. These require acoustic assessment before general timing-accuracy claims.",
+    "Eight film segments explicitly have no usable optional words. Passing the six broad segment windows does not turn those into word-timing passes.",
+    "The original official734.000-second rendition differs from historical/current734.1453125-second provider recordings. No unavailable-input run is regraded.",
+    "Four unchanged short outputs preserve original lexical limitations, including Greek spelling errors."
+  ],
+  "next_scope": "Review and implement a separate optional speaker-timing postpass around an already-completed baseline recognition, preserving strings, no-speech guard, bounded warnings, model lifetime and baseline fallbacks. Production/actual-model integration tests remain required.",
+  "production_adoption_approved": false,
+  "speech_meaning_or_general_acoustic_accuracy_approved": false,
+  "fresh_validation_opened": false,
+  "historical_provider_result_regraded": false,
+  "model_execution_in_this_review": false
+}

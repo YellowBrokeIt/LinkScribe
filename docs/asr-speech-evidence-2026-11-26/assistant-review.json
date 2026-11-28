@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "reviewer": "assistant",
+  "review_type": "read_only_evidence_and_exact_output_comparison",
+  "human_review": false,
+  "semantic_quality_approved": false,
+  "scope": "Fixed-seed paired development regression of whole-recording acceptance; not a population noise or ASR accuracy benchmark.",
+  "complete": true,
+  "base_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "baseline": {
+    "complete_cases": 7,
+    "expected_outcome_passes": 6,
+    "failed_cases": [
+      "white_noise"
+    ],
+    "persisted_rows": 5
+  },
+  "candidate": {
+    "complete_cases": 7,
+    "expected_outcome_passes": 7,
+    "failed_cases": [],
+    "persisted_rows": 4
+  },
+  "exact_comparison": {
+    "raw_segments_scores_timestamps_identical_all_cases": true,
+    "positive_saved_segments_identical": true,
+    "actual_resolver_revision_and_all_files_identical": true,
+    "complete_decoded_array_preserved": true
+  },
+  "negative_example": {
+    "id": "white_noise",
+    "no_speech_prob": 0.8953099250793457,
+    "avg_logprob": -0.42299195491906366,
+    "temperature": 0.0,
+    "new_guard_exercised": true,
+    "silero_intervals": [],
+    "candidate_sqlite_record_absent": true,
+    "candidate_all_five_exports_404": true
+  },
+  "positive_counterexample": {
+    "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+    "no_speech_prob": 0.6519991755485535,
+    "new_guard_exercised": true,
+    "silero_intervals": [
+      {
+        "start": 14592,
+        "end": 104640
+      }
+    ],
+    "sampling_rate_hz": 16000,
+    "original_segments_and_exports_retained": true
+  },
+  "setup_failure_retained": {
+    "path": "raw/base-actual/report.json",
+    "cause": "Missing optional socksio package while initializing the configured httpx SOCKS transport.",
+    "inference_ran": false,
+    "resolution": "Switched to the existing speaker QA interpreter with socksio1.0.0; no proxy/TLS or package change."
+  },
+  "decision": "The isolated guard is supported for integration by this bounded regression; preserve draft language and run unseeded hosted full-film/provider acceptance before stronger release claims.",
+  "pending": [
+    "Unseeded same-noise hosted check, with separate corroboration evidence.",
+    "Full-recording licensed-film late speech, raw scores, mixed batch and restart preservation."
+  ],
+  "limitations": [
+    "Shared fixed RNG seed, unchanged production fallback and same verified model bytes; this does not guarantee deterministic production.",
+    "No source audio inspection or independent human transcript approval was performed by this review.",
+    "The positive clips are reused development material; quiet derivatives are defined transforms, not naturally quiet fresh recordings.",
+    "Existing Greek word/spelling errors are unchanged and not semantic passes.",
+    "No claim that all non-speech or hallucinations within speech-containing recordings are rejected."
+  ]
+}

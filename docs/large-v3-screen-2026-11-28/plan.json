@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "purpose": "One hosted-only exposed development screen of the full native large-v3 model under the unchanged production recognition policy; no promotion or fresh validation.",
+  "model_id": "Systran/faster-whisper-large-v3",
+  "model_revision": "edaa852ec7e145841d8ffdb056a99866b5f0a478",
+  "model_files_path": "docs/large-v3-screen-2026-11-28/model-files.json",
+  "production_policy_path": "docs/large-v3-screen-2026-11-28/production-policy.json",
+  "device": "cpu",
+  "compute_type": "int8",
+  "stored_model_precision": "float16",
+  "max_cpu_threads": 4,
+  "num_workers": 1,
+  "attempts_per_case": 1,
+  "model_initializations": 1,
+  "qa_seed": 1729,
+  "source_language_argument": null,
+  "word_timestamps": false,
+  "references_supplied_to_decoder": false,
+  "rss_limit_bytes": 6442450944,
+  "startup_seconds": 180,
+  "per_case_seconds": 180,
+  "total_worker_seconds": 1800,
+  "per_file_download_seconds": 600,
+  "resource_sampling_interval_seconds": 0.1,
+  "resource_series_file": "resource-samples.jsonl",
+  "runtime_versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "numpy": "2.5.5",
+    "av": "16.1.0",
+    "onnxruntime": "1.32.0",
+    "huggingface-hub": "2.5.0",
+    "tokenizers": "0.23.3"
+  },
+  "worker_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "DO_NOT_TRACK": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "PYTHONHASHSEED": "1729",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "original_fixtures_path": "docs/asr-2026-11-26/fixtures.json",
+  "original_arrays_path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+  "semantic_criteria_path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "sample_count": 106560,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "sample_count": 96000,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b"
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "sample_count": 67200,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad"
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "sample_count": 111360,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae"
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "sample_count": 160320,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "sample_count": 104640,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "sample_count": 126720,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270"
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "sample_count": 66240,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb"
+    }
+  ],
+  "production_transcribe_request": {
+    "language": null,
+    "beam_size": 5,
+    "vad_filter": false,
+    "no_speech_threshold": 0.6,
+    "condition_on_previous_text": false
+  },
+  "completion_contract": "Consume the entire native segment generator, retain every CTranslate2 fallback result and raw segment/token/text, and reject a sequence reaching the native length cap. CTranslate2 does not promise an exposed terminal EOS token in sequences_ids, so this is not labeled an EOS proof.",
+  "quality_contract": "Grade original raw native text against unchanged original meaning criteria. Production whitespace trimming is retained separately; no text correction, prompt, glossary, hint, language forcing, silence heuristic or fixed time substitution is allowed.",
+  "source_files": [
+    {
+      "path": "tests/qa_large_v3_candidate.py",
+      "bytes": 30634,
+      "sha256": "cd7f933b27fc297fcdd0f1901657306ee90d17211ceae16dd0c4d9d23200c451"
+    },
+    {
+      "path": "tests/qa_qwen3_asr_candidate.py",
+      "bytes": 38701,
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f"
+    },
+    {
+      "path": ".github/workflows/large-v3-candidate-qa.yml",
+      "bytes": 3420,
+      "sha256": "fddd840a6851921d0aa46720e40c0d7c75c2e14d2e588eb19841c0f174c71838"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/runtime-requirements.txt",
+      "bytes": 1927,
+      "sha256": "8e145688c61be66a67f97020a2d1de377ea9f0618ce410b6888892995a1ce5ad"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/model-files.json",
+      "bytes": 4136,
+      "sha256": "a0e074bc0bd225b4d958747637aadd3d409e7fa61e0da8f95a3aa36b95bd4992"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/model-metadata-provenance.json",
+      "bytes": 5270,
+      "sha256": "506bf773724e4e35bb5c2df0d6ed13b90fb96218a002cb486a71d85ee9282ea4"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/production-policy.json",
+      "bytes": 4007,
+      "sha256": "2f0d178461fa195e81b7d31731adac92045b6d8ee77020ccbd5a461102208724"
+    },
+    {
+      "path": "docs/large-v3-screen-2026-11-28/runtime-pin-review.json",
+      "bytes": 10033,
+      "sha256": "78a6daeb4488bbe94d4b2b34cf7b11b5bef4caa3dc55245fe26ced49040a5b44"
+    },
+    {
+      "path": "docs/asr-2026-11-26/fixtures.json",
+      "bytes": 14073,
+      "sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c"
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+      "bytes": 7370,
+      "sha256": "829accfcda9fb6cf24089e1011d7257021854b9f9ace210f22b1907a01b579cd"
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+      "bytes": 4109,
+      "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9"
+    }
+  ]
+}

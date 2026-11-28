@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "decision": "acquisition_passes; original_build_correctly_stopped_on_incomplete_system_header_allowlist; no_native_clearance",
+  "review_scope": "Independent read-only review of actual completed acquisition and failed build. No controller/compiler/native/parser/model execution, rerun, source edit, approval receipt or artifact modification by reviewer.",
+  "controller_plan_sha256": "edc16c0a14699c38bb7cd1916f5118d6778958cd708f0fbca920720ebc0d8c00",
+  "audit": {
+    "path": "/workspace/scratch/94360995dd61/grammar-v2-acquire-build-independent-review-2026-11-28/retained-stage-audit.json",
+    "sha256": "08c37e8419fa150e39a40acac8106272f6aec0f5e9cba12a8a0b90bf4f7ecc37",
+    "checks": 406,
+    "all_passed": true
+  },
+  "acquisition": {
+    "report": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/acquire.json",
+      "bytes": 4819,
+      "sha256": "18555b59280e855a5db402ce8e13d68a0eec9d84df49f6fb9f6cda7cc50f742f"
+    },
+    "resources": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/acquire-resources.json",
+      "bytes": 5307,
+      "sha256": "050477482ead25396ae8ebbf1bd8c350ab574ae29e8a3f4d2747c7c8f4f2b04b"
+    },
+    "decision": "pass",
+    "official_objects": 11,
+    "source_bytes": 289300,
+    "full_source_capsule_git_and_saved_sha_verified": true,
+    "seconds": 0.188254,
+    "sample_count": 4,
+    "peak_rss_mib": 37.3,
+    "owned_cleanup": true,
+    "new_network_requests": 0
+  },
+  "build": {
+    "report": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/build.json",
+      "bytes": 4303,
+      "sha256": "39c9353e21d4ace2c50e0ddafbbb740cb5fc9711744bc4ca6d92115c8fc63eab"
+    },
+    "resources": {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/build-resources.json",
+      "bytes": 7447,
+      "sha256": "5cf50d351e0aa75d1e8cfa5026fc606547e546b5ecf8aac58fc341d9192ed230"
+    },
+    "decision": "failed_original_gate_preserved",
+    "compiler_exit_code": 0,
+    "compiler_stdout_bytes": 0,
+    "compiler_stderr_bytes": 0,
+    "compiled_binary": {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/bin/test-gbnf-validator",
+      "bytes": 23152,
+      "sha256": "175a68a01c5b0250a025a9b9ea888411de43d5d0269a2ca2ad8ddd9aa18ac9ba"
+    },
+    "elf_and_loader_receipts_pass": true,
+    "bound_actual_libraries_verified": true,
+    "dependency_count": 273,
+    "original_allowed_roots_rejected_paths": 5,
+    "exact_error": "Compiler consumed an unexpected source/header: /usr/lib/linux/uapi/x86/asm/errno.h",
+    "seconds": 1.062938,
+    "sample_count": 17,
+    "peak_rss_mib": 126.5,
+    "owned_cleanup": true,
+    "validator_sanity_calls": 0,
+    "native_prepare_calls": 0,
+    "model_loads": 0
+  },
+  "cause": {
+    "classification": "Observed system-header path allowlist omission after successful compile/link/ELF/library checks.",
+    "detail": "The compiler dependency file records canonical /usr/lib/linux/uapi/x86/asm paths for five existing architecture header aliases under /usr/include/x86_64-linux-gnu/asm. Each alias is a symlink with exact target ../../../lib/linux/uapi/x86/asm/<same filename>. The original gate resolves paths before allowing only /usr/include, GCC roots and owned pinned source, so these legitimate system aliases fall outside its explicit roots.",
+    "exact_headers": [
+      {
+        "path": "/usr/lib/linux/uapi/x86/asm/errno.h",
+        "bytes": 31,
+        "sha256": "4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86",
+        "system_include_alias": {
+          "path": "/usr/include/x86_64-linux-gnu/asm/errno.h",
+          "is_symlink": true,
+          "link_text": "../../../lib/linux/uapi/x86/asm/errno.h",
+          "resolved": "/usr/lib/linux/uapi/x86/asm/errno.h"
+        }
+      },
+      {
+        "path": "/usr/lib/linux/uapi/x86/asm/types.h",
+        "bytes": 31,
+        "sha256": "b6bdcd528bce555b2ecb58e8a1624e3e13e09312c31318023c4e86b957e2b01f",
+        "system_include_alias": {
+          "path": "/usr/include/x86_64-linux-gnu/asm/types.h",
+          "is_symlink": true,
+          "link_text": "../../../lib/linux/uapi/x86/asm/types.h",
+          "resolved": "/usr/lib/linux/uapi/x86/asm/types.h"
+        }
+      },
+      {
+        "path": "/usr/lib/linux/uapi/x86/asm/bitsperlong.h",
+        "bytes": 321,
+        "sha256": "8ef5efeb3f25ae47ce03ba892f5caf77631b1257715fc12de72c21e61db17e43",
+        "system_include_alias": {
+          "path": "/usr/include/x86_64-linux-gnu/asm/bitsperlong.h",
+          "is_symlink": true,
+          "link_text": "../../../lib/linux/uapi/x86/asm/bitsperlong.h",
+          "resolved": "/usr/lib/linux/uapi/x86/asm/bitsperlong.h"
+        }
+      },
+      {
+        "path": "/usr/lib/linux/uapi/x86/asm/posix_types.h",
+        "bytes": 224,
+        "sha256": "983090c7e5e7eaff27114ec216889a8ad26e40ad8fbb78b8ae6c09391dc61543",
+        "system_include_alias": {
+          "path": "/usr/include/x86_64-linux-gnu/asm/posix_types.h",
+          "is_symlink": true,
+          "link_text": "../../../lib/linux/uapi/x86/asm/posix_types.h",
+          "resolved": "/usr/lib/linux/uapi/x86/asm/posix_types.h"
+        }
+      },
+      {
+        "path": "/usr/lib/linux/uapi/x86/asm/posix_types_64.h",
+        "bytes": 609,
+        "sha256": "5cdabc01dac0a3e9731ac16353210a615ca44e85b6ec9eafd2e79206e0b26c76",
+        "system_include_alias": {
+          "path": "/usr/include/x86_64-linux-gnu/asm/posix_types_64.h",
+          "is_symlink": true,
+          "link_text": "../../../lib/linux/uapi/x86/asm/posix_types_64.h",
+          "resolved": "/usr/lib/linux/uapi/x86/asm/posix_types_64.h"
+        }
+      }
+    ],
+    "full_dependency_evidence": {
+      "path": "/workspace/scratch/94360995dd61/grammar-v2-acquire-build-independent-review-2026-11-28/actual-header-dependencies.json",
+      "sha256": "5ab49d6690aff96a06251586ad6b5c4797e2ca18922460913e60f69f8d982857"
+    },
+    "remaining_pinned_source_closure": "The actual depfile includes the exact original C++ source and all nine pinned project headers. All273 dependency files have independently recorded current hashes."
+  },
+  "supported_next_preparation": "A separate continuation may bind the existing successful compile/ELF/loader receipts, exact binary and dependency file, and only the five explicit resolved UAPI objects plus their verified include aliases. It must preserve the original failed report, use unchanged three sanity cases and budgets, and obtain a new root receipt. No acquisition or compiler rerun is needed to inspect the retained result.",
+  "limits": [
+    "No parser sanity or emitted-grammar result exists yet; link success alone does not prove parser behavior.",
+    "This record does not approve native_prepare, native validation, translation generation or translation quality.",
+    "Resource figures use the declared sampled owned-process RSS/PSS scope; transient peaks can be missed."
+  ],
+  "historical_reports_or_sources_modified": false,
+  "reviewer_model_native_network_calls": 0
+}

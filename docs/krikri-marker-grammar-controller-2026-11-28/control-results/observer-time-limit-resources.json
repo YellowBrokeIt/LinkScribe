@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T08:02:53.736767+00:00",
+  "complete": false,
+  "passed": false,
+  "limits": {
+    "rss_bytes": 268435456,
+    "total_seconds": 0.35,
+    "initialization_seconds": 10,
+    "case_seconds": 10
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "events": [],
+  "measurement_errors": [],
+  "scope": "Owned monitor plus worker and descendants, deduplicated by PID, from spawn through exit.",
+  "rss_scope": "Summed process RSS can double-count shared pages; excludes OS/browser/unrelated processes.",
+  "pss_scope": "PSS apportions shared pages. System available memory is a separate uncontrolled observation.",
+  "sampling_limit": "Sequential scans at 0.1-second intervals can miss transient peaks.",
+  "control": "time-limit",
+  "harmless_python_program": "import time; time.sleep(5)",
+  "stop_reason": "aggregate_time_limit",
+  "worker_exit_code": 0,
+  "owned_processes_stopped": true,
+  "owned_process_identities": [
+    {
+      "pid": 8,
+      "created": 1795852973.0
+    }
+  ],
+  "sample_count": 5,
+  "sample_interval_seconds": 0.1,
+  "peak_rss_sample": {
+    "elapsed_seconds": 0.101583,
+    "rss_bytes": 23339008,
+    "pss_bytes": 19101696,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 16674816,
+        "pss_bytes": 14547968,
+        "cpu_user_seconds": 0.05,
+        "cpu_system_seconds": 0.05,
+        "threads": 1
+      },
+      {
+        "pid": 8,
+        "name": "python",
+        "rss_bytes": 6664192,
+        "pss_bytes": 4553728,
+        "cpu_user_seconds": 0.0,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8727658496,
+    "system_total_bytes": 10451427328,
+    "active_case": null
+  },
+  "peak_pss_sample": {
+    "elapsed_seconds": 0.101583,
+    "rss_bytes": 23339008,
+    "pss_bytes": 19101696,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 16674816,
+        "pss_bytes": 14547968,
+        "cpu_user_seconds": 0.05,
+        "cpu_system_seconds": 0.05,
+        "threads": 1
+      },
+      {
+        "pid": 8,
+        "name": "python",
+        "rss_bytes": 6664192,
+        "pss_bytes": 4553728,
+        "cpu_user_seconds": 0.0,
+        "cpu_system_seconds": 0.0,
+        "threads": 1
+      }
+    ],
+    "system_available_bytes": 8727658496,
+    "system_total_bytes": 10451427328,
+    "active_case": null
+  },
+  "peak_rss_mib": 22.3,
+  "peak_pss_mib": 18.2,
+  "minimum_system_available_bytes": 8727326720,
+  "measurement_complete": true,
+  "samples_file": "observer-time-limit-samples.jsonl",
+  "samples_sha256": "cf749255b5faa29af57bc7ad049c7b26bd4732ff2b421c1b01fa266b07b619b3",
+  "elapsed_seconds": 0.408024,
+  "finished_at": "2026-11-28T08:02:54.144830+00:00"
+}

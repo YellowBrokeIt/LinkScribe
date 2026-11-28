@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-28T02:37:39.845349+00:00",
+  "scope": "Read-only public metadata/source research. No model payload, header ranges, import, load or inference.",
+  "recommendation": "One technically plausible bounded candidate: official ILSP Llama-Krikri-8B-Instruct Q4_K_M; no quality or measured-resource approval.",
+  "quant_repository": {
+    "id": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+    "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "api_url": "https://huggingface.co/api/models/ilsp/Llama-Krikri-8B-Instruct-GGUF?blobs=true",
+    "private": false,
+    "gated": false,
+    "license_metadata": "llama3.1",
+    "last_modified": "2025-10-29T19:50:07.000Z"
+  },
+  "selected_file": {
+    "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+    "size_bytes": 5041147264,
+    "size_gib": 4.694934248924255,
+    "lfs_sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "git_pointer_blob_sha1": "04f279a3f0550e71ca724a279e15517926f7b997",
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+    "payload_hash_verified_locally": false
+  },
+  "base_repository": {
+    "id": "ilsp/Llama-Krikri-8B-Instruct",
+    "revision": "5b6f2625e9b329ec70ab8cb6cbea7a06629b431f",
+    "api_url": "https://huggingface.co/api/models/ilsp/Llama-Krikri-8B-Instruct?blobs=true",
+    "private": false,
+    "gated": false,
+    "license_metadata": "llama3.1",
+    "last_modified": "2026-09-24T18:51:39.000Z"
+  },
+  "configuration": {
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct/resolve/5b6f2625e9b329ec70ab8cb6cbea7a06629b431f/config.json",
+    "sha256": "8b9819bd5a6df0d33f256ecc63944f89f03c22bcb117c757e80ff1578bfb118c",
+    "architecture": "LlamaForCausalLM",
+    "num_hidden_layers": 32,
+    "num_attention_heads": 32,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "vocab_size": 149248,
+    "max_position_embeddings": 131072,
+    "bos_token_id": 128000,
+    "eos_token_ids": [
+      128001,
+      128008,
+      128009
+    ]
+  },
+  "memory_estimate": {
+    "is_measurement": false,
+    "context_tokens": 4096,
+    "parallel_sequences": 1,
+    "kv_element_type_assumed": "f16",
+    "formula": "2(K,V) * context4096 * layers32 * kv_heads8 * head_dim128 * bytes_per_element2",
+    "kv_bytes": 536870912,
+    "kv_mib": 512.0,
+    "weight_file_plus_kv_bytes": 5578018176,
+    "weight_file_plus_kv_gib": 5.194934248924255,
+    "process_budget_bytes": 6442450944,
+    "unallocated_margin_before_runtime_overheads_mib": 824.3873291015625,
+    "unmeasured": [
+      "tokenizer and model metadata",
+      "compute/activation buffers",
+      "native/daemon/observer Python process overhead",
+      "load-time peaks",
+      "actual CPU throughput",
+      "complete app residual ASR/speaker memory"
+    ],
+    "decision": "Plausible to measure with unchanged external6GiB stop; not proof of actual RAM fit or acceptable four-thread latency."
+  },
+  "disk_observation": {
+    "free_bytes": 3077361664,
+    "selected_payload_can_fit_with_reserve_now": false,
+    "rejected_gemma_text_payload_bytes": 5154941280,
+    "cleanup_performed": false,
+    "cleanup_scope_if_separately_authorized": "Only reproducible owned rejected Gemma text payload, after preserving all native/model/file identities; retain old evidence and shared runtime/Qwen files."
+  },
+  "greek_specific_basis": {
+    "paper": "https://arxiv.org/html/2505.13772v2",
+    "publisher_card": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct",
+    "publisher_announcement": "https://www.ilsp.gr/en/news/krikri/",
+    "pretraining_original_mix_billion_tokens": {
+      "greek": 56.7,
+      "english": 21.0,
+      "parallel": 5.5,
+      "math_code": 7.8
+    },
+    "reported_upsampled_total_billion_tokens": 110.2,
+    "greek_tokenizer_tokens_per_word": 1.65,
+    "base_llama_greek_tokens_per_word": 2.73,
+    "reported_greek_ifeval_strict_average_percent": 67.5,
+    "reported_meltemi_v1_5_greek_ifeval_percent": 32.7,
+    "instruction_data_includes": "sentence and document translation built from parallel corpora, plus Greek/English instruction/preference data",
+    "limitations": "These are publisher/full-model benchmark and training claims, not direct correctness tests of the selected Q4 output on LinkScribe English/Greek cases. No selected-quantization fourCPU/6GiB result was found in the reviewed sources."
+  },
+  "runtime_route": {
+    "version": "existing verified Ollama0.40.12",
+    "import_documentation": "https://docs.ollama.com/import",
+    "selected_format": "single complete publisher GGUF; no local conversion or new deep-learning framework",
+    "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+    "think_false_support": "Pinned server/routes.go rejects unsupported thinking only when requested boolean is true; ordinary think:false is accepted.",
+    "pre_inference_requirements": [
+      "Full selected payload SHA and native manifest/config verification",
+      "Check actual selected Q4 embedded tokenizer/template; repository-reported GGUF metadata alone is insufficient",
+      "Override dangerous repository num_ctx131072 to fixed4096 before any load/preflight; temperature0 and all output/time/thread limits predeclared",
+      "Preserve exact actual source/system/user messages; do not silently add publisher persona or translation hints",
+      "Record native stop tokens, complete actual rendering/token accounting and external measured model-load/inference resources"
+    ]
+  },
+  "weights_downloaded": false,
+  "inference_run": false,
+  "unused_validation_read": false,
+  "production_changed": false
+}

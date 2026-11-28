@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "status": "concrete_source_only_native_setup_plan_frozen_for_review",
+  "execution_authorized": false,
+  "generation_authorized": false,
+  "prepared_candidate": "unchanged source-only grammar plan 29ba6083c6ae15fbb4380f3884a99a1c688cf0513b73787854a7cdb9d9f58085",
+  "prior_preparation_manifest_sha256": "5fc1ba66c518d0c209aeead13d5ae031a8a06bc901f3e197a1d6ef1fec48b731",
+  "independent_source_review_sha256": "c386223da1bb5ef6b5e8df81833472494d87bb94b4b2f4683340c725d55cd389",
+  "selected_strategy": "Compile the unchanged official small validator against the exact retained libllama parser; do not build the full runtime.",
+  "source_revision": "5320c87ff0d994845b44ce7976f10055ec697447",
+  "source_files": 11,
+  "source_total_bytes": 289300,
+  "native_parser_sha256": "75c36cc531f9c40453fe4f6d2961f365cc6c06c311cb31137fc232eaf68531bb",
+  "runtime": {
+    "directory": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+    "version": "0.40.12",
+    "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+    "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+    "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+    "files_sha256": {
+      "bin/ollama": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+      "lib/ollama/llama-server": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b"
+    }
+  },
+  "model": {
+    "repository": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+    "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+    "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+    "bytes": 5041147264,
+    "sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+    "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+    "local_name": "linkscribe-krikri-8b-q4km:20261128",
+    "license": "Llama3.1 Community License",
+    "license_sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+    "use_policy_sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+    "public_ungated": true,
+    "projector_or_draft": false
+  },
+  "model_profile": {
+    "context": 4096,
+    "maximum_output": 2048,
+    "temperature": 0,
+    "think": false,
+    "threads": 4
+  },
+  "owned_build_root": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime",
+  "build_root_created_or_sources_acquired": false,
+  "new_packages_or_runtime_or_weights": false,
+  "cache_deletions": false,
+  "phases": [
+    {
+      "name": "acquire",
+      "seconds": 120,
+      "rss_mib": 256,
+      "cpu_affinity_count": 4,
+      "source_files": 11,
+      "source_bytes": 289300,
+      "model_or_native_parser_calls": 0
+    },
+    {
+      "name": "build-and-sanity",
+      "seconds": 120,
+      "rss_mib": 512,
+      "cpu_affinity_count": 4,
+      "compile_jobs": 1,
+      "native_model_free_sanity_calls": 3,
+      "model_loads": 0
+    },
+    {
+      "name": "native-prepare",
+      "seconds": 600,
+      "initialization_seconds": 180,
+      "rss_mib": 6144,
+      "cpu_affinity_count": 4,
+      "schema_queries": 7,
+      "prediction_tokens_per_query": 0,
+      "evaluated_source_prompt_tokens_per_schema_query": 0,
+      "complete_prompt_renders_and_token_counts": 6,
+      "translation_generation_calls": 0
+    },
+    {
+      "name": "validate-emitted-grammars",
+      "seconds": 60,
+      "seconds_per_probe": 2,
+      "rss_mib": 256,
+      "cpu_affinity_count": 4,
+      "candidate_raw_json_probes": 285,
+      "sentinel_missing_marker_probe": 1,
+      "model_loads": 0
+    }
+  ],
+  "aggregate_seconds": 900,
+  "disk": {
+    "free_reserve_bytes": 1073741824,
+    "owned_build_tree_max_bytes": 67108864,
+    "maximum_file_bytes": 16777216,
+    "observed_free_bytes": 1654960128
+  },
+  "observer_reuse": "Reuse reviewed process-group discovery/retained-PID accounting/TERM-KILL cleanup and complete RSS/PSS samples; phase-specific ceilings above. Concrete controller adaptation remains to be reviewed.",
+  "model_slot": "No model resident during build or validator-only phases. Native preflight needs root-reserved exclusive local model slot; none is requested or used by source planning.",
+  "new_grammar_converter_validator_tokenizer_model_calls": 0,
+  "metadata_commands_only": [
+    "nm -D --defined-only plus c++filt",
+    "readelf dynamic/version records",
+    "GCC -print-prog-name/-print-search-dirs/-dumpfullversion metadata queries",
+    "file hashing and existence checks"
+  ],
+  "primary_source_file_contents_read_only": true,
+  "actual_native_execution_artifacts": [],
+  "source_sha256": {
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/PLAN.md": "da4d76052d91d3861e87041118fa779a5a76046b2cd464e27acfe70f799eb109",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/README.md": "4ecdd9b494cc6a23ba56e74d3a61bd89e5191e32873f3d4681a489ac55f94a85",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/build-command.json": "828522cd44899d3c15ee3e47f1bf9da80ec217f117b5bbd784180ef153a7d8a3",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/independent-source-review.json": "c386223da1bb5ef6b5e8df81833472494d87bb94b4b2f4683340c725d55cd389",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/manifest.json": "fdae91b9eeb1b7a3c20032ad7b0ba824779e2790c0a45f94902c2dc4c64a0ed2",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/primary-source-0.json": "e66bc0f9f93d45ecf9f094330bd35decf6c4d6d341f786a08bef78aa74e34d09",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/primary-source-1.json": "a319728abe9f478a9fd7ddce91bb2a308e14e5128b834a63479e36647b37c265",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/primary-source-2.json": "305517cc569ef50232110d7ac9168af584831c62f3156aeedf9836ab81ca9630",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/independent-preparation-review/source-binding-audit.json": "c7a00a3807f165f51bd243acbbd4b18b6764012f539b580e2a34f5c67609d0b7",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/retained-binary-metadata.json": "6185da72e23ba8b385586fccde9df3622c731866d55177cac74fae4e2baec121",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/source-acquisition.json": "fff3936491b44259fe4d1faa82c95ca488df6aa66b55cf850e0a8dd9da5701a8",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/status-parser-controls.json": "deaf302ec33533a18074488fee123b8713060f1c8e47973a8427bd67e142340e",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/status_contract.py": "e3c8a5198538ecc10c74ee7e16ab5103cdb5b4f512821487d18c278022a4467b",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/validator-sanity.json": "5e5f0d3de612dd0079ff80bad4cfe081687b8cbfd87627066d9ab860d58a8175",
+    "docs/krikri-marker-grammar-native-plan-2026-11-28/zero-generation-contract.json": "0fee1b3d78b43c5f02d42e989f552f5b17052f408f419bbbed1245f65c3a4037",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/plan.json": "29ba6083c6ae15fbb4380f3884a99a1c688cf0513b73787854a7cdb9d9f58085",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/evidence-manifest.json": "5fc1ba66c518d0c209aeead13d5ae031a8a06bc901f3e197a1d6ef1fec48b731",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/expected-requests.json": "317239816bc8f0cff5d56d0e4b8ce2b1c0bc915742d3c9f7134ec29021867ccb",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/schemas.json": "9fbb1904bdd369cde85e156b53a695c58d1b60ceb3d26db7abba43e3da6e126f",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/native-probe-matrix.json": "48865a43b72feba5a7649b56a27fc34728627c08d0676fc3bdc50657e613c988",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/proposed-native-grammar-queries.json": "2c207c4dc72f8a71b4f87fa1cb0a037a0e555ed19a5dac13fd0c71e120c9b189",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/schema_profile.py": "a86cb12fe43b0dd03f6b757f4932c681d63f705c4ade1585717215edde866290",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/profile_oracle.py": "99b8d1c6bdc4ae04453f96f3fa403f3db7d9e7650131c3217dd3ad98e4d0d8e7",
+    "docs/krikri-marker-grammar-preparation-2026-11-28/historical-source-bindings.json": "9820858c4a53d24d8bb4d98e1d36c5980ff2914022f130274a8c3a9ffc0795cb",
+    "docs/krikri-source-spelling-screen-2026-11-28/resource_monitor.py": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d",
+    "docs/krikri-source-spelling-screen-2026-11-28/context.py": "363993081f7e4d6edadbd4b2bd112d070651de42b48cb781b9c254f1ca05ebf9",
+    "docs/krikri-source-spelling-screen-2026-11-28/prepare_native.py": "20a9f3fe55ddf457a9980c868b47180b5eb28d95765d31b0c332f15f3f10c6a7",
+    "docs/krikri-source-spelling-screen-2026-11-28/run_native.py": "583f3a7339fd01704c0f1864bf86ba85e97d58291d7c4928a52ee87f0df5ce22",
+    "docs/krikri-source-spelling-screen-2026-11-28/execution_gate.py": "2fd79ee6f952c1b29c06d932f6a603123fac3d7d8a070eb81426b4e9a90ff849"
+  },
+  "next_step": "Independent source review of concrete build/status/native plan, then exact controller adaptation and explicit root phase receipts before any acquisition/build/native execution. No translation generation."
+}

@@ -1,0 +1,42 @@
+--- a/tests/qa_speaker_integration.py
++++ b/tests/qa_speaker_integration.py
+@@ -324,7 +324,9 @@
+             "Recognition policy or attempt count changed")
+     require(report["upload_form"] == {"consent": "true", "speakers": "true", "target_language": "none", "summary": "false"},
+             "Unexpected enhancement or source-guidance request")
+-    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 4 and
++    # The unchanged app uses faster-whisper's constructor default 0. Native
++    # threading is bounded by execute()'s CPU affinity and OMP environment.
++    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 0 and
+             report["model_initializations"][0]["num_workers"] == 1 and
+             report["model_initializations"][0]["actual_device"] == "cpu" and
+             report["model_initializations"][0]["actual_compute_type"] in {"int8", "int8_float32"}, "Unexpected native model runtime")
+--- a/tests/test_speaker_hosted_qa.py
++++ b/tests/test_speaker_hosted_qa.py
+@@ -292,12 +292,25 @@
+         "actual_transcribe_calls": [{"options": {"language": None, "beam_size": 5, "vad_filter": False,
+              "no_speech_threshold": 0.6, "condition_on_previous_text": False, "word_timestamps": False}}],
+         "upload_form": {"consent": "true", "speakers": "true", "target_language": "none", "summary": "false"},
+-        "model_initializations": [{"cpu_threads": 4, "num_workers": 1, "actual_device": "cpu", "actual_compute_type": "int8_float32"}],
++        "model_initializations": [{"cpu_threads": 0, "num_workers": 1, "actual_device": "cpu", "actual_compute_type": "int8_float32"}],
+         "model_resolutions": [{"revision_directory": model["revision"], "files": {
+              name: {"bytes": row["bytes"], "sha256": row["sha256"]} for name, row in model["files"].items()}}],
+         "acoustic_analysis_calls": [{"completed": True, "result": {"model": {
+              "revision": plan["models"]["speaker"]["revision"], "sha256": {
+              name: item["sha256"] for name, item in plan["models"]["speaker"]["files"].items()}}}}]}
++
++
++@pytest.mark.parametrize("field,value", [
++    ("cpu_threads", 4), ("cpu_threads", 8), ("num_workers", 2),
++    ("actual_device", "cuda"), ("actual_compute_type", "float32"),
++])
++def test_default_constructor_contract_preserves_worker_device_and_compute_checks(field, value):
++    plan = protocol()
++    report = completion_control(plan)
++    qa.completed_contract(plan, report)
++    report["model_initializations"][0][field] = value
++    with pytest.raises(ValueError, match="Unexpected native model runtime"):
++        qa.completed_contract(plan, report)
+ 
+ 
+ @pytest.mark.parametrize("failure", ["rss", "total", "phase", "nan", "second_attempt", "guidance", "model"])

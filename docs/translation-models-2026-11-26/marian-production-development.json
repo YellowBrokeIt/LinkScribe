@@ -1,0 +1,1310 @@
+{
+  "schema_version": 1,
+  "run_id": "ae64772e-a354-485e-a2da-ed89a107e11e",
+  "created_at": "2026-11-26T18:20:32.530736+00:00",
+  "corpus_version": "2026-11-26-v1",
+  "source": {
+    "sha256": {
+      "enhancements.py": "baf89ba2c35c88b5d18194264ce70c1c822940d24de002eb1e8438ede4316076",
+      "marian_translation.py": "030319cc971d88c12c9254734ea74c58fa5d77ea2fc4c8a77e42023124e6914b",
+      "tests/evaluate_translation_quality.py": "dc674627b252414d92bb80fbc751518695643249e4345f22756d935a0c9a18cc",
+      "tests/fixtures/translation_quality_cases.json": "e9d2707985699072e69c7b08c5a08c284ecd355bd1bdb2acf5ce3a1829868626"
+    },
+    "git_commit": "9ec649975035724b0a66c05e938df5fae8716ee3",
+    "git_dirty": true
+  },
+  "interpretation": "Indicators only identify outputs needing review. Indicator pass does not approve meaning, names, numerical relationships, negation, completeness or fluency. Complete describes the requested selection; corpus_complete identifies full coverage. Compare exact outputs with the references and review criteria separately.",
+  "semantic_quality": "unreviewed",
+  "complete": true,
+  "corpus_complete": false,
+  "automatic_status": "review",
+  "requested_cases": 6,
+  "completed_cases": 6,
+  "selection": {
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "corpus_cases": 12,
+    "split_counts": {
+      "development": 6
+    }
+  },
+  "runtime": {
+    "backend": "marian-ctranslate2",
+    "task": "translation",
+    "models": {
+      "en-el": {
+        "backend": "marian-ctranslate2",
+        "pair": "en-el",
+        "repository": "Helsinki-NLP/opus-mt-tc-big-en-el",
+        "revision": "bb9aa4d8929451dd2396f399f7aa184c788d565b",
+        "archive_sha256": "7e72c7407c86b68582571ba45ec77799b54ffd3bc5b3ffb8cbbf92d0644c7829",
+        "model_sha256": "9e3c1f85a1c3f180544d831f626dbe03f74eeb1c78089900d0ddf21fa0c5bd8f",
+        "license": "CC-BY-4.0",
+        "ctranslate2": "4.9.1",
+        "sentencepiece": "0.2.1",
+        "settings": {
+          "device": "cpu",
+          "compute_type": "int8",
+          "beam_size": 4,
+          "length_penalty": 1.0,
+          "max_source_tokens": 384,
+          "max_decoding_length": 1024,
+          "max_input_length": 0,
+          "inter_threads": 1,
+          "intra_threads": 4
+        }
+      },
+      "el-en": {
+        "backend": "marian-ctranslate2",
+        "pair": "el-en",
+        "repository": "Helsinki-NLP/opus-mt-tc-big-el-en",
+        "revision": "a69108562775c6727edf3540346f9d8900b73634",
+        "archive_sha256": "7f44ee3eddd632b1934bedbae79ad7ba2650fb932803a098234da3a76ccd4f47",
+        "model_sha256": "66bc596962b53f56ea1e9412fb1612b6b2b4c405c99dd92709a62dbe3f5d240d",
+        "license": "CC-BY-4.0",
+        "ctranslate2": "4.9.1",
+        "sentencepiece": "0.2.1",
+        "settings": {
+          "device": "cpu",
+          "compute_type": "int8",
+          "beam_size": 4,
+          "length_penalty": 1.0,
+          "max_source_tokens": 384,
+          "max_decoding_length": 1024,
+          "max_input_length": 0,
+          "inter_threads": 1,
+          "intra_threads": 4
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "terminology",
+        "names",
+        "chronology"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c4\u03b7\u03c2 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7\u03c2 \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7.",
+        "\u0397 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7 \u03b4\u03b9\u03ae\u03c1\u03ba\u03b5\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7."
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as \u039c\u03b1\u03c1\u03af\u03b1."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria",
+              "\u039c\u03b1\u03c1\u03af\u03b1"
+            ]
+          },
+          {
+            "label": "transcription terminology",
+            "alternatives": [
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd",
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd",
+              "\u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6"
+            ]
+          },
+          {
+            "label": "translation",
+            "alternatives": [
+              "\u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3",
+              "\u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03b1\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12"
+        ]
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "Maria saved the transcript as a text file; she did not save the original recording.",
+              "Transcription took 12 minutes. Translation into Greek has not started yet."
+            ],
+            "source_tokens": [
+              [
+                "\u2581Maria",
+                "\u2581saved",
+                "\u2581the",
+                "\u2581transcript",
+                "\u2581as",
+                "\u2581a",
+                "\u2581text",
+                "\u2581file",
+                ";",
+                "\u2581she",
+                "\u2581did",
+                "\u2581not",
+                "\u2581save",
+                "\u2581the",
+                "\u2581original",
+                "\u2581recording",
+                "."
+              ],
+              [
+                "\u2581Tran",
+                "scription",
+                "\u2581took",
+                "\u258112",
+                "\u2581minutes",
+                ".",
+                "\u2581Translation",
+                "\u2581into",
+                "\u2581Greek",
+                "\u2581has",
+                "\u2581not",
+                "\u2581started",
+                "\u2581yet",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:35.579789+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581\u0397",
+                "\u2581\u039c\u03b1\u03c1\u03af\u03b1",
+                "\u2581\u03ad\u03c3\u03c9\u03c3\u03b5",
+                "\u2581\u03c4\u03b7",
+                "\u2581\u03bc\u03b5\u03c4\u03b1",
+                "\u03b3\u03c1\u03b1\u03c6\u03ae",
+                "\u2581\u03c9\u03c2",
+                "\u2581\u03b1\u03c1\u03c7\u03b5\u03af\u03bf",
+                "\u2581\u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5",
+                "\u00b7",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03ad\u03c3\u03c9\u03c3\u03b5",
+                "\u2581\u03c4\u03b7\u03bd",
+                "\u2581\u03b1\u03c1\u03c7\u03b9\u03ba\u03ae",
+                "\u2581\u03b5\u03b3\u03b3\u03c1\u03b1\u03c6\u03ae",
+                ".",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581\u0397",
+                "\u2581\u03bc\u03b5\u03c4\u03b1",
+                "\u03b3\u03c1\u03b1\u03c6\u03ae",
+                "\u2581\u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b5",
+                "\u258112",
+                "\u2581\u03bb\u03b5\u03c0\u03c4\u03ac",
+                ".",
+                "\u2581\u0397",
+                "\u2581\u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7",
+                "\u2581\u03c3\u03c4\u03b1",
+                "\u2581\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03ad\u03c7\u03b5\u03b9",
+                "\u2581\u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9",
+                "\u2581\u03b1\u03ba\u03cc\u03bc\u03b1",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.27
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03ad\u03c3\u03c9\u03c3\u03b5 \u03c4\u03b7 \u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03ad\u03c3\u03c9\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b5\u03b3\u03b3\u03c1\u03b1\u03c6\u03ae.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "\u0397 \u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 0.634,
+      "request_count": 1
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "names",
+        "roles",
+        "relationships"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Nikos",
+            "alternatives": [
+              "Nikos",
+              "Nicos",
+              "Niko"
+            ]
+          },
+          {
+            "label": "Eleni",
+            "alternatives": [
+              "Eleni",
+              "Elen\u0113"
+            ]
+          },
+          {
+            "label": "Elena",
+            "alternatives": [
+              "Elena"
+            ]
+          },
+          {
+            "label": "translator",
+            "alternatives": [
+              "translator"
+            ]
+          },
+          {
+            "label": "subtitles",
+            "alternatives": [
+              "subtitle",
+              "caption"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "review",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+              "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2."
+            ],
+            "source_tokens": [
+              [
+                "\u2581\u039f",
+                "\u2581\u039d\u03af\u03ba\u03bf\u03c2",
+                "\u2581\u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5",
+                "\u2581\u03c4\u03bf",
+                "\u2581\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+                "\u2581\u03c3\u03c4\u03b7\u03bd",
+                "\u2581\u0395\u03bb\u03ad\u03bd\u03b7",
+                ",",
+                "\u2581\u03cc\u03c7\u03b9",
+                "\u2581\u03c3\u03c4\u03b7\u03bd",
+                "\u2581\u0388\u03bb\u03b5\u03bd",
+                "\u03b1",
+                "."
+              ],
+              [
+                "\u2581\u0397",
+                "\u2581\u0395\u03bb\u03ad\u03bd\u03b7",
+                "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+                "\u2581\u03b7",
+                "\u2581\u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3",
+                "\u03c4\u03c1\u03b9\u03b1",
+                ".",
+                "\u2581\u039f",
+                "\u2581\u039d\u03af\u03ba\u03bf\u03c2",
+                "\u2581\u03ba\u03ac\u03bd\u03b5\u03b9",
+                "\u2581\u03c4\u03b7\u03bd",
+                "\u2581\u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3",
+                "\u03b7",
+                "\u2581\u03ba\u03b1\u03b9",
+                "\u2581\u03b7",
+                "\u2581\u0388\u03bb\u03b5\u03bd",
+                "\u03b1",
+                "\u2581\u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9",
+                "\u2581\u03c4\u03bf\u03c5\u03c2",
+                "\u2581\u03c5\u03c0\u03cc",
+                "\u03c4\u03b9\u03c4\u03bb\u03bf",
+                "\u03c5\u03c2",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:36.233060+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581Nikos",
+                "\u2581sent",
+                "\u2581the",
+                "\u2581text",
+                "\u2581to",
+                "\u2581Helen",
+                ",",
+                "\u2581not",
+                "\u2581Helena",
+                ".",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581Helen",
+                "\u2581is",
+                "\u2581the",
+                "\u2581translator",
+                ";",
+                "\u2581Nikos",
+                "\u2581does",
+                "\u2581the",
+                "\u2581recording",
+                "\u2581and",
+                "\u2581Helena",
+                "\u2581controls",
+                "\u2581the",
+                "\u2581sub",
+                "title",
+                "s",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.245
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nikos sent the text to Helen, not Helena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Helen is the translator; Nikos does the recording and Helena controls the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "Eleni",
+          "alternatives": [
+            "Eleni",
+            "Elen\u0113"
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.631,
+      "request_count": 1
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "numbers",
+        "decimals",
+        "grouped_amounts",
+        "bitcoin",
+        "negation"
+      ],
+      "segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b5\u03af\u03b4\u03b7. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5,000 sats, \u03cc\u03c7\u03b9 500 sats.",
+        "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sats \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Bitcoin",
+            "alternatives": [
+              "Bitcoin",
+              "\u039c\u03c0\u03af\u03c4\u03ba\u03bf\u03ca\u03bd"
+            ]
+          },
+          {
+            "label": "sats unit",
+            "alternatives": [
+              "sats",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12.50",
+          "2",
+          "5,000",
+          "500"
+        ]
+      },
+      "automatic_status": "review",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+              "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+            ],
+            "source_tokens": [
+              [
+                "\u2581The",
+                "\u2581receipt",
+                "\u2581shows",
+                "\u2581\u20ac1",
+                "2.50",
+                "\u2581for",
+                "\u25812",
+                "\u2581items",
+                ".",
+                "\u2581The",
+                "\u2581separate",
+                "\u2581transfer",
+                "\u2581is",
+                "\u25815,000",
+                "\u2581sat",
+                "s",
+                ",",
+                "\u2581not",
+                "\u2581500",
+                "\u2581sat",
+                "s",
+                "."
+              ],
+              [
+                "\u2581The",
+                "\u2581note",
+                "\u2581mentions",
+                "\u2581Bitcoin",
+                ".",
+                "\u2581It",
+                "\u2581does",
+                "\u2581not",
+                "\u2581say",
+                "\u2581that",
+                "\u2581euros",
+                "\u2581and",
+                "\u2581sat",
+                "s",
+                "\u2581are",
+                "\u2581the",
+                "\u2581same",
+                "\u2581unit",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:36.789201+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581\u0397",
+                "\u2581\u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7",
+                "\u2581\u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9",
+                "\u258112",
+                ",",
+                "50",
+                "\u2581\u20ac",
+                "\u2581\u03b3\u03b9\u03b1",
+                "\u25812",
+                "\u2581\u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1",
+                ".",
+                "\u2581\u0397",
+                "\u2581\u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae",
+                "\u2581\u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac",
+                "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+                "\u25815.000",
+                "\u2581s",
+                "at",
+                ",",
+                "\u2581\u03cc\u03c7\u03b9",
+                "\u2581500",
+                "\u2581s",
+                "at",
+                ".",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581\u03a4\u03bf",
+                "\u2581\u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03bc\u03b1",
+                "\u2581\u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9",
+                "\u2581\u03c4\u03bf",
+                "\u2581Bitcoin",
+                ".",
+                "\u2581\u0394\u03b5\u03bd",
+                "\u2581\u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9",
+                "\u2581\u03cc\u03c4\u03b9",
+                "\u2581\u03c4\u03b1",
+                "\u2581\u03b5\u03c5\u03c1\u03ce",
+                "\u2581\u03ba\u03b1\u03b9",
+                "\u2581\u03c4\u03b1",
+                "\u2581s",
+                "at",
+                "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+                "\u2581\u03b7",
+                "\u2581\u03af\u03b4\u03b9\u03b1",
+                "\u2581\u03bc\u03bf\u03bd\u03ac\u03b4\u03b1",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.511
+        }
+      ],
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9 12,50 \u20ac \u03b3\u03b9\u03b1 2 \u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5.000 sat, \u03cc\u03c7\u03b9 500 sat.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "\u03a4\u03bf \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03bc\u03b1 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sat \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "sats unit",
+          "alternatives": [
+            "sats",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+            "\u03c3\u03b1\u03c4\u03cc\u03c3"
+          ]
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "12.50",
+          "expected_count": 1,
+          "observed_count": 0
+        },
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "elapsed_seconds": 0.817,
+      "request_count": 1
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "negation",
+        "scope",
+        "uncertainty",
+        "time"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "reference_translations": [
+        "I did not say that Anna sold all the books. I said that she did not sell any yesterday.",
+        "She may sell one today, but that has not been decided."
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "Anna"
+            ]
+          },
+          {
+            "label": "yesterday",
+            "alternatives": [
+              "yesterday"
+            ]
+          },
+          {
+            "label": "today",
+            "alternatives": [
+              "today"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+              "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af."
+            ],
+            "source_tokens": [
+              [
+                "\u2581\u0394\u03b5\u03bd",
+                "\u2581\u03b5\u03af\u03c0\u03b1",
+                "\u2581\u03cc\u03c4\u03b9",
+                "\u2581\u03b7",
+                "\u2581\u0386\u03bd\u03bd\u03b1",
+                "\u2581\u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5",
+                "\u2581\u03cc\u03bb\u03b1",
+                "\u2581\u03c4\u03b1",
+                "\u2581\u03b2\u03b9\u03b2\u03bb\u03af\u03b1",
+                ".",
+                "\u2581\u0395\u03af\u03c0\u03b1",
+                "\u2581\u03cc\u03c4\u03b9",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5",
+                "\u2581\u03ba\u03b1\u03bd\u03ad\u03bd\u03b1",
+                "\u2581\u03c7\u03b8\u03b5\u03c2",
+                "."
+              ],
+              [
+                "\u2581\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1",
+                "\u2581\u03bc\u03c0\u03bf\u03c1\u03b5\u03af",
+                "\u2581\u03bd\u03b1",
+                "\u2581\u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9",
+                "\u2581\u03ad\u03bd\u03b1",
+                ",",
+                "\u2581\u03b1\u03bb\u03bb\u03ac",
+                "\u2581\u03b1\u03c5\u03c4\u03cc",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03ad\u03c7\u03b5\u03b9",
+                "\u2581\u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:38.221065+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581I",
+                "\u2581didn",
+                "'",
+                "t",
+                "\u2581say",
+                "\u2581Anna",
+                "\u2581sold",
+                "\u2581all",
+                "\u2581the",
+                "\u2581books",
+                ",",
+                "\u2581I",
+                "\u2581said",
+                "\u2581she",
+                "\u2581didn",
+                "'",
+                "t",
+                "\u2581sell",
+                "\u2581any",
+                "\u2581yesterday",
+                ".",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581Today",
+                "\u2581he",
+                "\u2581can",
+                "\u2581sell",
+                "\u2581one",
+                ",",
+                "\u2581but",
+                "\u2581that",
+                "\u2581hasn",
+                "'",
+                "t",
+                "\u2581been",
+                "\u2581decided",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.458
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn't say Anna sold all the books, I said she didn't sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today he can sell one, but that hasn't been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 1.378,
+      "request_count": 1
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "conditions",
+        "negation",
+        "names",
+        "roles"
+      ],
+      "segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+        "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "\u0386\u03bd\u03bd\u03b1",
+              "Anna"
+            ]
+          },
+          {
+            "label": "Giannis",
+            "alternatives": [
+              "\u0393\u03b9\u03ac\u03bd\u03bd\u03b7",
+              "Giannis",
+              "Yannis",
+              "Yiannis"
+            ]
+          },
+          {
+            "label": "only if",
+            "alternatives": [
+              "\u03bc\u03cc\u03bd\u03bf \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03c6\u03cc\u03c3\u03bf\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b5\u03ac\u03bd"
+            ]
+          },
+          {
+            "label": "Friday",
+            "alternatives": [
+              "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5"
+            ]
+          },
+          {
+            "label": "Monday",
+            "alternatives": [
+              "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "Anna will publish the video only if Giannis approves the text.",
+              "If Giannis does not answer by Friday, Anna will wait until Monday."
+            ],
+            "source_tokens": [
+              [
+                "\u2581Anna",
+                "\u2581will",
+                "\u2581publish",
+                "\u2581the",
+                "\u2581video",
+                "\u2581only",
+                "\u2581if",
+                "\u2581Gianni",
+                "s",
+                "\u2581approve",
+                "s",
+                "\u2581the",
+                "\u2581text",
+                "."
+              ],
+              [
+                "\u2581If",
+                "\u2581Gianni",
+                "s",
+                "\u2581does",
+                "\u2581not",
+                "\u2581answer",
+                "\u2581by",
+                "\u2581Friday",
+                ",",
+                "\u2581Anna",
+                "\u2581will",
+                "\u2581wait",
+                "\u2581until",
+                "\u2581Monday",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:39.705294+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581\u0397",
+                "\u2581\u0386\u03bd\u03bd\u03b1",
+                "\u2581\u03b8\u03b1",
+                "\u2581\u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9",
+                "\u2581\u03c4\u03bf",
+                "\u2581\u03b2\u03af\u03bd\u03c4\u03b5\u03bf",
+                "\u2581\u03bc\u03cc\u03bd\u03bf",
+                "\u2581\u03b1\u03bd",
+                "\u2581\u03bf",
+                "\u2581\u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2",
+                "\u2581\u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9",
+                "\u2581\u03c4\u03bf",
+                "\u2581\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+                ".",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581\u0391\u03bd",
+                "\u2581\u03bf",
+                "\u2581\u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9",
+                "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+                "\u2581\u03c4\u03b7\u03bd",
+                "\u2581\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae",
+                ",",
+                "\u2581\u03b7",
+                "\u2581\u0386\u03bd\u03bd\u03b1",
+                "\u2581\u03b8\u03b1",
+                "\u2581\u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9",
+                "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+                "\u2581\u03c4\u03b7",
+                "\u2581\u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.373
+        }
+      ],
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 1.396,
+      "request_count": 1
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "questions",
+        "uncertainty",
+        "numbers",
+        "quotation"
+      ],
+      "segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria"
+            ]
+          },
+          {
+            "label": "chapters",
+            "alternatives": [
+              "chapter"
+            ]
+          },
+          {
+            "label": "title",
+            "alternatives": [
+              "title"
+            ]
+          }
+        ],
+        "numbers": [
+          "12",
+          "21"
+        ]
+      },
+      "automatic_status": "pass",
+      "semantic_quality": "unreviewed",
+      "requests": [
+        {
+          "request": {
+            "backend": "marian-ctranslate2",
+            "source_texts": [
+              "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+              "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5."
+            ],
+            "source_tokens": [
+              [
+                "\u2581\u0397",
+                "\u2581\u039c\u03b1\u03c1\u03af\u03b1",
+                "\u2581\u03c1\u03ce\u03c4\u03b7\u03c3\u03b5",
+                ":",
+                "\u2581\u00ab",
+                "\u03a4\u03bf",
+                "\u2581\u03b1\u03c1\u03c7\u03b5\u03af\u03bf",
+                "\u2581\u03ad\u03c7\u03b5\u03b9",
+                "\u258112",
+                "\u2581\u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1",
+                "\u2581\u03ae",
+                "\u258121",
+                ";\u00bb"
+              ],
+              [
+                "\u2581\u0394\u03b5\u03bd",
+                "\u2581\u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5",
+                "\u2581\u03b1\u03ba\u03cc\u03bc\u03b7",
+                "\u2581\u03c4\u03b7\u03bd",
+                "\u2581\u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7",
+                ".",
+                "\u2581\u039f",
+                "\u2581\u03c4\u03af\u03c4\u03bb\u03bf\u03c2",
+                "\u2581\u03bc\u03cc\u03bd\u03bf\u03c2",
+                "\u2581\u03c4\u03bf\u03c5",
+                "\u2581\u03b4\u03b5\u03bd",
+                "\u2581\u03b1\u03c1\u03ba\u03b5\u03af",
+                "\u2581\u03b3\u03b9\u03b1",
+                "\u2581\u03bd\u03b1",
+                "\u2581\u03c4\u03bf",
+                "\u2581\u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4",
+                "\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5",
+                "."
+              ]
+            ],
+            "options": {
+              "beam_size": 4,
+              "length_penalty": 1.0,
+              "max_decoding_length": 1024,
+              "max_input_length": 0,
+              "return_end_token": true
+            }
+          },
+          "started_at": "2026-11-26T18:20:40.847229+00:00",
+          "raw_evidence_available": true,
+          "response_tokens": [
+            [
+              [
+                "\u2581Maria",
+                "\u2581asked",
+                ":",
+                "\u2581\"",
+                "Do",
+                "es",
+                "\u2581the",
+                "\u2581record",
+                "\u2581have",
+                "\u258112",
+                "\u2581chapters",
+                "\u2581or",
+                "\u258121",
+                "?\"",
+                "</s>"
+              ]
+            ],
+            [
+              [
+                "\u2581We",
+                "\u2581do",
+                "\u2581not",
+                "\u2581yet",
+                "\u2581know",
+                "\u2581the",
+                "\u2581answer",
+                ";",
+                "\u2581the",
+                "\u2581title",
+                "\u2581alone",
+                "\u2581is",
+                "\u2581not",
+                "\u2581enough",
+                "\u2581to",
+                "\u2581find",
+                "\u2581out",
+                ".",
+                "</s>"
+              ]
+            ]
+          ],
+          "elapsed_seconds": 0.358
+        }
+      ],
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Maria asked: \"Does the record have 12 chapters or 21?\"",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We do not yet know the answer; the title alone is not enough to find out.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "elapsed_seconds": 1.144,
+      "request_count": 1
+    }
+  ],
+  "counts": {
+    "pass": 4,
+    "review": 2,
+    "fail": 0,
+    "error": 0,
+    "incomplete": 0
+  },
+  "finished_at": "2026-11-26T18:20:41.230568+00:00",
+  "elapsed_seconds": 8.692
+}

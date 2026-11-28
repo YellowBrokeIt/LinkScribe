@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "inspected_at_utc": "2026-11-28T06:30:27.443647+00:00",
+  "scope": "Read-only architecture inspection; no production edit, test, model, frontend, alignment or recognition run.",
+  "baseline_source_commit": "6de3faddf88bb5da8ea35d985b33ad26e55e249f",
+  "inspected_native_versions": {
+    "faster-whisper": "1.2.1",
+    "CTranslate2": "4.9.1"
+  },
+  "source_files": [
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/app.py",
+      "bytes": 62018,
+      "sha256": "b0ea2cf313a15697369a61beab15ae7017251476fc25ea7c77bdcbafe527dd47",
+      "symbols": [
+        {
+          "symbol": "_whisper_model",
+          "ast_sha256": "b99f8a5d9caf8da034d1b3b752ba4efdb263e1d5f749a54ad12e713acf7a6222",
+          "source_excerpt_sha256": "d0e0f3f45dd82ab3060a7e4a8dcac34b0e10aba04557a5cb5bef4a933d7ef907",
+          "source_start_line": 373,
+          "source_end_line": 380
+        },
+        {
+          "symbol": "_bounded_asr_interval",
+          "ast_sha256": "738987000d449fa1b579472d096f3584e0bbfa9b619e82e76c056ba78a8b439b",
+          "source_excerpt_sha256": "3962499d75a60ab9470fb1f8331166b78fd7ca5ab05cafa399825ba6c0a8095e",
+          "source_start_line": 383,
+          "source_end_line": 391
+        },
+        {
+          "symbol": "_recognize",
+          "ast_sha256": "a48439194f107b70e2bcba76272ade4a4c5992fe33f1031eb307a5eddf4f5e09",
+          "source_excerpt_sha256": "37b58f6b10a0e78863e3198f5cc27345c4d01bdaafd13c04f6d8dec2c4185048",
+          "source_start_line": 394,
+          "source_end_line": 467
+        },
+        {
+          "symbol": "_enhance_and_save",
+          "ast_sha256": "f6889a9534f5afa0edfe061168a73c5a086ad59acb3006cd367a4f8071a7313f",
+          "source_excerpt_sha256": "08759c12bf91629d4da51018cf9a30b89299f7cbfd346016b75f058da67154be",
+          "source_start_line": 659,
+          "source_end_line": 722
+        },
+        {
+          "symbol": "_process_link",
+          "ast_sha256": "fac656dea2c55da45e96ea3e8696ea39b6568532149e0d29e2efd3a92dfad4ab",
+          "source_excerpt_sha256": "9fb5b1ccad848da166924a0da851a632e85dcb1419467819ffd0c19506d3f626",
+          "source_start_line": 725,
+          "source_end_line": 747
+        },
+        {
+          "symbol": "_process_upload",
+          "ast_sha256": "986c1f338871e9eeaaec5e009e1dc5f3d4c33d30297e0c2d1cf7badbfb5b0027",
+          "source_excerpt_sha256": "103a64ddbe781bbdddf29e6ca427c503c8bb13eeb4640091aebdd5558c83a4df",
+          "source_start_line": 750,
+          "source_end_line": 758
+        },
+        {
+          "symbol": "_release_audio_models",
+          "ast_sha256": "c925d279e3614abc510091c38296ba96e329b4744bbba662fe1f46a66d2c52ea",
+          "source_excerpt_sha256": "bbcaacf033ea499befbdcab2cf9424f0528fd8141606e6acdeaa18422184f51e",
+          "source_start_line": 495,
+          "source_end_line": 516
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/enhancements.py",
+      "bytes": 47725,
+      "sha256": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+      "symbols": [
+        {
+          "symbol": "_speaker_alignment",
+          "ast_sha256": "c40e51a0f178229e574a5f38169a0dfea1e7c34ee4f804650af6d57abe5efd50",
+          "source_excerpt_sha256": "13b5c369416c8ebe2801612a1cd8ed918d386595915ca9d9e13902c24383ed26",
+          "source_start_line": 802,
+          "source_end_line": 872
+        },
+        {
+          "symbol": "_word_speaker_alignment",
+          "ast_sha256": "24eca24b603319707481e5fa5c67d528101c960b589137cf27cf6698399be1cd",
+          "source_excerpt_sha256": "9f8b039c7645f8d583b210e6d7833057fb8fbda1c92f72ae14c1ac3de7b00c57",
+          "source_start_line": 875,
+          "source_end_line": 929
+        },
+        {
+          "symbol": "assign_speakers",
+          "ast_sha256": "c9923061efb7dc0fb3bdcb6620fc994b4b639d9297f5bc51a88642978dc80aba",
+          "source_excerpt_sha256": "cf5105459f9ce4bba8def826755160bb7eaf0b2401ce74c1ad1754233809d9dc",
+          "source_start_line": 932,
+          "source_end_line": 953
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/library.py",
+      "bytes": 11548,
+      "sha256": "a9c9984da6fb43d0db544a4e30e588c5ad15c0be1074766af574ab5da57312e4",
+      "symbols": [
+        {
+          "symbol": "_processing_metadata_json",
+          "ast_sha256": "a70ccf39282f983dd503fc80ce60efdf737992ea162e786dd2e8e09b7780918e",
+          "source_excerpt_sha256": "3ae8098c86160c45dcbdf7bf6e28b00954cd2c10ae15e0ec0312c2ea802438bd",
+          "source_start_line": 81,
+          "source_end_line": 131
+        },
+        {
+          "symbol": "save",
+          "ast_sha256": "b06e384a0672c261b57a1feaa0ae8fb21d162afdf0b6d3969dbdcd6c9599b5d1",
+          "source_excerpt_sha256": "199ea9c4018532419feaa3215a96751c2171194d13a16fbd84241274379c7fc2",
+          "source_start_line": 134,
+          "source_end_line": 150
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/transcribe.py",
+      "bytes": 80403,
+      "sha256": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+      "symbols": [
+        {
+          "symbol": "Segment",
+          "ast_sha256": "22d78d82f66c46b7d1be0e7fa1d4df48d2f7000d1d85dc41bc033c9b8c8dc423",
+          "source_excerpt_sha256": "90f52a5ae5b4b4aa7787cb87ba5b8a43669c13a10b724dcbe751f49b158ba77c",
+          "source_start_line": 48,
+          "source_end_line": 67
+        },
+        {
+          "symbol": "TranscriptionInfo",
+          "ast_sha256": "509ceec7292ec8c3e0c2fa2c5b1b0bbd4ec76d77c25a088b723412d757b2b768",
+          "source_excerpt_sha256": "ec172ca8372393ae95aa7174485565db13e39680b4362ec81da279bfd7958c71",
+          "source_start_line": 101,
+          "source_end_line": 108
+        },
+        {
+          "symbol": "WhisperModel.__init__",
+          "ast_sha256": "b68cfd7448f939ff9ee1bc145063c7b6da8b3a83876cfd2e465ceff81920725a",
+          "source_excerpt_sha256": "872784df803b8e84022ad6f106517f9e3bcad43517b5f50a3a3b1a9c4080b869",
+          "source_start_line": 621,
+          "source_end_line": 722
+        },
+        {
+          "symbol": "WhisperModel.transcribe",
+          "ast_sha256": "bb82a39daa3dc214443242430f0f18116ae45a6f0c8fab3c107d20b163ef864e",
+          "source_excerpt_sha256": "1b6d86cbfe4575c8547cd93ff119c14a6635e7ab1d468adb0bcd86eff8f14d31",
+          "source_start_line": 747,
+          "source_end_line": 1022
+        },
+        {
+          "symbol": "WhisperModel.generate_segments",
+          "ast_sha256": "2126262a463334239cef7572616208c0d70e094090d2171240d66b7d326f7f1b",
+          "source_excerpt_sha256": "074423bc9dccd88c8cd8413b33d39f096c16fec7b2118057041f0394b4d419ff",
+          "source_start_line": 1103,
+          "source_end_line": 1389
+        },
+        {
+          "symbol": "WhisperModel.add_word_timestamps",
+          "ast_sha256": "1bd3fe17e313f1b83b6124e12ed3d071c2d6e3174f662c26f78477a20f1e541d",
+          "source_excerpt_sha256": "7f515ae8a5d7fa6c80a2a2999e595d7e150f0b9eef1b3b36932eefcf53635e8a",
+          "source_start_line": 1567,
+          "source_end_line": 1696
+        },
+        {
+          "symbol": "WhisperModel.find_alignment",
+          "ast_sha256": "0b7b6ec529a67b822c394f21f2fe1c4b350a2ab0ee2b53cbc5c79a1a51fd6157",
+          "source_excerpt_sha256": "3166382120cb06bf4fe580e22bfa7f6fcce41c440c63174ed3c2176efae76868",
+          "source_start_line": 1698,
+          "source_end_line": 1766
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/feature_extractor.py",
+      "bytes": 7592,
+      "sha256": "e403966dbc592a53695eea2aea24fa60bab50ef6755e0076b311f907be7a397c",
+      "symbols": [
+        {
+          "symbol": "FeatureExtractor.__init__",
+          "ast_sha256": "1c98047fba655df7d8e5d7de25ba201bc97a8acd79a138e8a630426b8daa5533",
+          "source_excerpt_sha256": "185fe7e267dd7629c06f0636062d9cf4f6cabddc9d6102ef925414d250567386",
+          "source_start_line": 5,
+          "source_end_line": 22
+        },
+        {
+          "symbol": "FeatureExtractor.__call__",
+          "ast_sha256": "1daea7528e47fefd73ab91a4d968b788c5bb32a63a27b10d338a894be767f456",
+          "source_excerpt_sha256": "255d684a1bac82deb93577311fb0de3c6a28ec92e84b0037b436faeed053c92c",
+          "source_start_line": 198,
+          "source_end_line": 230
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/tokenizer.py",
+      "bytes": 8429,
+      "sha256": "614a96b6a9660096e4f4e9fbe8860cd75ad250dce8e85a847998a3d6d48165d2",
+      "symbols": [
+        {
+          "symbol": "Tokenizer.__init__",
+          "ast_sha256": "0ec9df2cc5a00eefd179e32ab7c7c46caf75095d6df2af59752fc0ec002d343d",
+          "source_excerpt_sha256": "389549e734cf7cc6f724a206795af15338a2a950d5b67ce647e653324aa56152",
+          "source_start_line": 12,
+          "source_end_line": 40
+        },
+        {
+          "symbol": "Tokenizer.sot_sequence",
+          "ast_sha256": "eb670efb196ccd562c46a34de2d571f9d0976ceba820f6c98f22da4871584762",
+          "source_excerpt_sha256": "f956bb34ea0afe2244f02433e753ed0560a9be529654b1833c2e8d0d557eb43b",
+          "source_start_line": 81,
+          "source_end_line": 90
+        },
+        {
+          "symbol": "Tokenizer.decode",
+          "ast_sha256": "8d11167442e22f2a0fb7a845cac786898553b3479e0b3965f78dfaaf2be4a6b4",
+          "source_excerpt_sha256": "61b3065b4ee28c114f30731a218df1d8afda705dc3c7c9fe052b903a5ffe24a4",
+          "source_start_line": 95,
+          "source_end_line": 97
+        }
+      ]
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/lib/python3.12/site-packages/faster_whisper/utils.py",
+      "bytes": 4946,
+      "sha256": "5b36ceb9d0fd3961de8cfb144bd82f9a4ef3151b2e5958405a11efb4f3ac4f82",
+      "symbols": []
+    }
+  ],
+  "retained_small_metadata_only": [
+    {
+      "path": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120/config.json",
+      "bytes": 2370,
+      "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828",
+      "archive_path": "retained-model-metadata/small-config.json",
+      "publisher_url": "https://huggingface.co/Systran/faster-whisper-small/blob/536b0662742c02347bc0e980a01041f333bce120/config.json",
+      "observed_fields": {
+        "alignment_heads": [
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/asr-followup-model-cache/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json",
+      "bytes": 2263,
+      "sha256": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "archive_path": "retained-model-metadata/turbo-config.json",
+      "publisher_url": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/blob/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json",
+      "observed_fields": {
+        "alignment_heads": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            11
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            11
+          ],
+          [
+            3,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/asr-followup-model-cache/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json",
+      "bytes": 340,
+      "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "archive_path": "retained-model-metadata/turbo-preprocessor.json",
+      "publisher_url": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/blob/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json",
+      "observed_fields": {
+        "feature_size": 128,
+        "sampling_rate": 16000,
+        "hop_length": 160,
+        "chunk_length": 30,
+        "n_fft": 400
+      }
+    }
+  ],
+  "current_model_aliases": [
+    "tiny",
+    "base",
+    "small",
+    "large-v3-turbo"
+  ],
+  "key_semantics": [
+    "regular Segment.seek is original previous_seek in feature frames; all subsegments from one encoder window share it",
+    "word_timestamps=True can update later recognition seek in generate_segments",
+    "full frontend has recording-wide log-mel maximum normalization",
+    "get_end of adjusted segments supplies native sequential timing state",
+    "public segments must not gain native token/seek or model/audio fields",
+    "library metadata lists max100, visited nodes max1024 and encoded bytes max32768"
+  ],
+  "proposal_sha256": "e3ac8899428af5ddca3bd5175ae1c70a6704a3a0679de7456922e2c964b3da76"
+}

@@ -1,0 +1,40 @@
+--- baseline/infer_native.py
++++ name-followup/infer_native.py
+@@ -15,8 +15,7 @@
+ import sys
+ import time
+ 
+-from staging import HERE, ROOT, common, read_plan
+-from native_verify import cache_identity, native_preflight
++from context import HERE, ROOT, PRIVATE, common, read_plan, cache_identity, native_preflight
+ 
+ 
+ def verify_freeze():
+@@ -29,6 +28,8 @@
+             raise ValueError("Frozen inference file changed: " + rel)
+     if freeze.get("independent_native_contract_approved") is not True:
+         raise ValueError("Independent before-output native contract review is absent.")
++    if freeze.get("root_generation_authorized") is not True:
++        raise ValueError("Root has not authorized generation after the separate preparation review.")
+ 
+ 
+ def run_cases(runtime, plan, process, report, output):
+@@ -56,7 +57,7 @@
+         value["executed_enhancements_snapshot"] = {"path": str(HERE / "enhancements-context4096.py"),
+                                                   "sha256": common.sha(HERE / "enhancements-context4096.py"),
+                                                   "published_source_sha256": plan["published_production_sha256"],
+-                                                  "only_code_change": "num_ctx8192 to4096",
++                                                  "only_code_changes": "num_ctx8192 to4096 and the frozen generic personal-name instruction clarification",
+                                                   "current_foreign_script_guard_preserved": True}
+         return value
+ 
+@@ -157,7 +158,8 @@
+         common.verify_blob(runtime, plan)
+         with socket.socket() as probe:
+             probe.bind(("127.0.0.1", 11434))
+-        fd = os.open(runtime / "infer-daemon-private.log", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
++        PRIVATE.mkdir(parents=True, exist_ok=True)
++        fd = os.open(PRIVATE / "infer-daemon-private.log", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+         with os.fdopen(fd, "w") as log:
+             process = subprocess.Popen([str(Path(plan["runtime"]["directory"]) / "bin/ollama"), "serve"],
+                                        env=common.daemon_environment(runtime), stdout=log, stderr=subprocess.STDOUT, start_new_session=True)

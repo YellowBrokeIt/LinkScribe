@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "executed": false,
+  "argv": [
+    "/usr/bin/x86_64-linux-gnu-g++-14",
+    "-std=c++17",
+    "-O2",
+    "-g0",
+    "-march=x86-64",
+    "-mtune=generic",
+    "-D_GLIBCXX_USE_CXX11_ABI=1",
+    "-MD",
+    "-MF",
+    "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/build/validator.d",
+    "-I/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/source/include",
+    "-I/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/source/ggml/include",
+    "-I/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/source/src",
+    "-pthread",
+    "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/source/tests/test-gbnf-validator.cpp",
+    "/workspace/scratch/94360995dd61/linkscribe-model-runtime/lib/ollama/libllama.so.0.7.0",
+    "/workspace/scratch/94360995dd61/linkscribe-model-runtime/lib/ollama/libggml.so.0.27.0",
+    "/workspace/scratch/94360995dd61/linkscribe-model-runtime/lib/ollama/libggml-base.so.0.27.0",
+    "-Wl,-rpath,/workspace/scratch/94360995dd61/linkscribe-model-runtime/lib/ollama",
+    "-Wl,-rpath-link,/workspace/scratch/94360995dd61/linkscribe-model-runtime/lib/ollama",
+    "-o",
+    "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/bin/test-gbnf-validator"
+  ],
+  "cwd": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime",
+  "environment_allowlist": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TMPDIR": "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/tmp"
+  },
+  "source_modified": false,
+  "compile_jobs": 1,
+  "native_instruction_extensions_requested": false,
+  "full_llama_cpp_build": false,
+  "new_package_dependencies": [],
+  "link_and_runtime_library_hashes": "retained-binary-metadata.json",
+  "post_link_loader_list_argv": [
+    "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+    "--list",
+    "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/bin/test-gbnf-validator"
+  ],
+  "post_link_elf_read_argv": [
+    "/usr/bin/readelf",
+    "-h",
+    "-d",
+    "/workspace/scratch/94360995dd61/linkscribe-grammar-validator-runtime/bin/test-gbnf-validator"
+  ],
+  "require_all_dependencies_resolve_to_bound_core_or_system_files": true,
+  "actual_compiler_dependency_file_and_every_dependency_sha256_required": true,
+  "on_failure": "Stop and retain the one build; no flag changes, package installation or full-source fallback."
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-28T07:05:36.509065+00:00",
+  "previous_live_observer_sha256": "e35277bffb4e854af6d144d8add276955268df66047b2b5149defb11563dfa40",
+  "original_production_sha256": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+  "new_exact_three_literal_production_sha256": "129d0f8c7dbbd5e621b8017d73c7aff204a40446d8ed59f7df8904c87efb579e",
+  "initial_focused_command": [
+    "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_summary_prompt_contract.py",
+    "tests/test_summary_boundaries.py",
+    "tests/test_model_lifecycle.py",
+    "tests/test_ollama_configuration.py",
+    "tests/test_enhancement_robustness.py"
+  ],
+  "initial_result": {
+    "exit_code": 1,
+    "passed": 97,
+    "failed": 2,
+    "pytest_seconds": 3.13,
+    "failed_tests": [
+      "test_model_lifecycle.py::test_long_summary_unloads_between_pairs_and_at_the_end",
+      "test_model_lifecycle.py::test_summary_observer_and_fresh_reload_exclude_control_from_inference_counts"
+    ],
+    "cause": "Old synthetic response dispatch depended on key_points text in the removed example. Actual structured summary schema is unchanged.",
+    "scope": "Recorded from the actual initial tool result; not a rerun or retained full console log."
+  },
+  "additional_source_review_finding": "Live summary observer also classified direct/synthesis as reduce using the removed example field names; archive its old bytes and classify actual native schema/map/reduce request shape."
+}

@@ -1,0 +1,23 @@
+--- a/app.py
++++ b/app.py
+@@ -397,8 +397,7 @@
+             # Decoder alignment can identify suspicious output around silence
+             # without prefiltering away quiet speech. Keep its normal fallback
+             # schedule; disabling fallback produced a repetition regression.
+-            word_timestamps=True,
+-            hallucination_silence_threshold=ASR_HALLUCINATION_SILENCE_SECONDS,
++            **({"word_timestamps": True} if word_timestamps else {}),
+         )
+         # transcribe() returns a generator, which must be consumed.
+         output = []
+@@ -597,8 +596,8 @@
+     metadata: dict[str, Any] = {}
+     if asr_model and method == "local_audio_ai":
+         metadata["asr"] = {"engine": "faster-whisper", "model": asr_model,
+-                           "word_timestamps": True, "word_timing_for_speakers": speakers,
+-                           "hallucination_silence_threshold_seconds": ASR_HALLUCINATION_SILENCE_SECONDS,
++                           "word_timestamps": speakers, "word_timing_for_speakers": speakers,
++                           "hallucination_silence_threshold_seconds": None,
+                            "vad_filter": False}
+     if speakers:
+         if audio is None:

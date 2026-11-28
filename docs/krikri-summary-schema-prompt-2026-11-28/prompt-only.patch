@@ -1,0 +1,30 @@
+--- rejected-original-summary-context4096.py
++++ summary-schema-prompt-context4096.py
+@@ -506,8 +506,7 @@
+             f"Write a concise factual summary, at most {MAX_SUMMARY_KEY_POINTS} concise key points "
+             "and a short chapter title "
+             "directly from this transcript. " + grounding +
+-            'JSON only: {"summary":"concise factual summary","key_points":["point"],'
+-            '"chapter_title":"short topical title"}.',
++            "Return only JSON matching the supplied schema.",
+             _summary_excerpt(chunks[0]),
+             response_schema=_summary_result_schema(include_chapter=True),
+         )
+@@ -522,7 +521,7 @@
+         response = _summary_call(
+             "Summarize a transcript excerpt factually. " + grounding +
+             "Keep notes under 700 characters. "
+-            'JSON only: {"notes":"concise factual notes","chapter_title":"short topical title"}.',
++            "Return only JSON with the string fields `notes` and `chapter_title`.",
+             _summary_excerpt(group),
+         )
+         notes.append(_summary_note(response, MAX_SUMMARY_NOTE_BYTES))
+@@ -556,7 +555,7 @@
+         f"Write a concise factual summary and at most {MAX_SUMMARY_KEY_POINTS} concise key points "
+         "strictly based on all supplied "
+         "chronological notes. Reflect final decisions when later notes correct earlier proposals. "
+-        + grounding + 'JSON only: {"summary":"concise factual summary","key_points":["point"]}.',
++        + grounding + "Return only JSON matching the supplied schema.",
+         "\n\n".join(notes),
+         response_schema=_summary_result_schema(),
+     )

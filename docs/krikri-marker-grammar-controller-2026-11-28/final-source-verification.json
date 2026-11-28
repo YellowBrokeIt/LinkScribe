@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "plan_sha256": "5d0a6a0f6361129bdaeebbb84de4f249d8e0c4d70467e81f2a9686ed3fe0b740",
+  "all_source_bindings_verified": 79,
+  "controls_sha256": "332a8395e798b4140a29fb62fb72d4a2d849ec2ad8882338be4cc6df681aab1d",
+  "source_controls_passed": 57,
+  "harmless_observer_runs": [
+    {
+      "control": "disk-limit",
+      "resource_report_sha256": "a5472cf3d5418430301e1561df56eee8ec8f82c9e01f357fca2c836bfa5d9b81",
+      "samples_sha256": "b46fca0aafdc640cff0bd7379a650f88fcb4c18d3d49411073bde0d38625f2e2",
+      "sample_count": 2,
+      "passed_phase": false,
+      "expected_stop_reason": "storage_policy_limit",
+      "cleanup_complete": true,
+      "peak_rss_mib": 24.2,
+      "elapsed_seconds": 0.104718
+    },
+    {
+      "control": "memory-limit",
+      "resource_report_sha256": "e9e47b99e24fa2ca34980fa044ac16377267fa05375b6caaed41cd99caa0fa44",
+      "samples_sha256": "8344966275a877f0bb1777b95a050e46d269c7d32679465121027c48e21ad9a8",
+      "sample_count": 3,
+      "passed_phase": false,
+      "expected_stop_reason": "process_tree_memory_limit",
+      "cleanup_complete": true,
+      "peak_rss_mib": 93.4,
+      "elapsed_seconds": 0.209723
+    },
+    {
+      "control": "orphan",
+      "resource_report_sha256": "9e20907859402bc01b2420093fb7a618badf46dc34e4ca073eaccd76cea7c544",
+      "samples_sha256": "dec08067dc1f16d872fc71502b0d11e9c4ede647378662224544b241dde3aca8",
+      "sample_count": 1,
+      "passed_phase": false,
+      "expected_stop_reason": "owned_child_survived_worker_exit",
+      "cleanup_complete": true,
+      "peak_rss_mib": 16.5,
+      "elapsed_seconds": 0.025773
+    },
+    {
+      "control": "success",
+      "resource_report_sha256": "a28567d1a4061ec2d947968a4ffe6045de858637b50a55bf8ed05410a77246da",
+      "samples_sha256": "3950aad619cddca77e836803710a72e679120b42c133b5b618f7e904c4af7d80",
+      "sample_count": 4,
+      "passed_phase": true,
+      "expected_stop_reason": null,
+      "cleanup_complete": true,
+      "peak_rss_mib": 22.3,
+      "elapsed_seconds": 0.262777
+    },
+    {
+      "control": "time-limit",
+      "resource_report_sha256": "e4f77cefc7ae5a7a45cebb8157627f5568df753ab7f7041317db1a2ee03607e1",
+      "samples_sha256": "cf749255b5faa29af57bc7ad049c7b26bd4732ff2b421c1b01fa266b07b619b3",
+      "sample_count": 5,
+      "passed_phase": false,
+      "expected_stop_reason": "aggregate_time_limit",
+      "cleanup_complete": true,
+      "peak_rss_mib": 22.3,
+      "elapsed_seconds": 0.408024
+    }
+  ],
+  "owned_build_root_exists": false,
+  "root_phase_receipts_present": false,
+  "compiler_native_library_converter_tokenizer_model_network_calls_in_controls": 0,
+  "native_generation_authorized": false,
+  "free_disk_bytes": 1610321920,
+  "previous_bundles_unchanged": true
+}

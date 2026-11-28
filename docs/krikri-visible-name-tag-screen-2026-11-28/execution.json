@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T06:04:41.558309+00:00",
+  "complete": false,
+  "generation_calls": 1,
+  "plan_sha256": "8878b61813184629abb2ffb4814d250fe85f05e8f2a94be09065c5854e32ac74",
+  "inference_freeze_sha256": "d08480222ac83a11cc6aa1cb181a67bb000ff3ef2c5967755327658765c1d069",
+  "semantic_quality": "unreviewed",
+  "unused_validation_opened": false,
+  "free_disk_before_bytes": 1672892416,
+  "runtime": {
+    "version": "0.40.12"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report": "dev-en-el-transcript-terminology.json",
+      "sha256": "78ac0b50f3db3cf3263e78062aa940c24b369e05765bef7a779d5d8b35ddb55e",
+      "preflight_report": "dev-en-el-transcript-terminology-preflight.json",
+      "preflight_sha256": "33aec963746f5a8244bc715059fc9bedb773d5f857d94e43e9b70803e6b7783c",
+      "protection_report": "dev-en-el-transcript-terminology-protection.json",
+      "protection_report_sha256": "ab8b2df2e00f0e73b69f0da0dd1c0ff61edc6566618b9b311e1f31858e1fd878",
+      "checks": {
+        "one_exact_declared_request": true,
+        "request_timeout_240s": true,
+        "structure_execution_and_guard_accepted": false,
+        "marker_restoration_and_post_guard_accepted": false,
+        "normal_completion": true,
+        "empty_reasoning": true,
+        "nonempty_final_content": true,
+        "output_below_cap": true,
+        "actual_prompt_count_matches_full_native_preflight": true,
+        "unload_acknowledged": true,
+        "resident_models_empty": true,
+        "case_below_600s": true
+      },
+      "elapsed_seconds": 25.472,
+      "metrics": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_eval_count": 231,
+          "eval_count": 65,
+          "reasoning_characters": 0,
+          "raw_evidence_available": true,
+          "elapsed_seconds": 14.356
+        }
+      ],
+      "semantic_quality": "unreviewed",
+      "automatic_status": "error"
+    }
+  ],
+  "free_disk_before_case_bytes": 1672794112,
+  "error": {
+    "type": "ValueError",
+    "message": "First execution/protocol/structure/script-guard/time failure; remaining fixed cases stop without retry."
+  },
+  "owned_daemon_stopped": true,
+  "finished_at": "2026-11-28T06:05:17.404055+00:00",
+  "frozen_inputs_unchanged": true
+}

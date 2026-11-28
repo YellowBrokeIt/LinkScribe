@@ -58,7 +58,15 @@ def parse_source(raw: str) -> Source:
         else:
             video_id = parts[0] if len(parts) == 1 else ""
         if VIMEO_ID_RE.fullmatch(video_id):
-            return Source("vimeo", video_id, f"https://vimeo.com/{video_id}")
+            # An explicitly supplied public player link has its own extractor
+            # route. Rewriting it to the regular page can introduce a login
+            # requirement even when that public player is accessible. Preserve
+            # only the allowlisted host/path; queries and privacy hashes are
+            # never forwarded, and regular pages do not gain a player fallback.
+            canonical_url = (f"https://player.vimeo.com/video/{video_id}"
+                             if host == "player.vimeo.com"
+                             else f"https://vimeo.com/{video_id}")
+            return Source("vimeo", video_id, canonical_url)
     if host in {"dailymotion.com", "www.dailymotion.com", "dai.ly"}:
         video_id = parts[0] if host == "dai.ly" and len(parts) == 1 else (parts[1] if len(parts) == 2 and parts[0] == "video" else "")
         if DAILYMOTION_ID_RE.fullmatch(video_id):

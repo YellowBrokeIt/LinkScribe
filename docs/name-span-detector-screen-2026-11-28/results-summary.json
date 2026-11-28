@@ -1,0 +1,63 @@
+{
+  "created_at": "2026-11-28T04:22:47.423974+00:00",
+  "decision": "reject_original_raw_detector_profile_for_direct_protected_translation",
+  "counts": {
+    "cases": 6,
+    "fully_correct_cases": 5,
+    "boundary_failure_cases": 1,
+    "annotated_mentions": 13,
+    "returned_mentions": 13,
+    "exact_matched_mentions": 12,
+    "oversized_boundary_predictions": 1,
+    "completely_uncovered_person_mentions": 0,
+    "disjoint_non_person_predictions": 0,
+    "exact_span_false_positive": 1,
+    "exact_span_false_negative": 1,
+    "exact_span_count_note": "The false-positive and false-negative counts describe the same single boundary error, not two separate semantic failures."
+  },
+  "independent_review_sha256": "6c42cc925456fdd3b827ab86d34da01c773f50d125f6da0787ba9a212fc8206b",
+  "actual_execution": {
+    "complete": true,
+    "strict_checkpoint_binding": true,
+    "detector_calls": 6,
+    "source_forward_count": 6,
+    "encoder_forward_count": 6,
+    "complete_encoded_tokens": [
+      47,
+      70,
+      59,
+      65,
+      41,
+      63
+    ],
+    "elapsed_seconds": 17.557703,
+    "peak_rss_mib": 2492.2,
+    "peak_pss_mib": 2462.9,
+    "sample_count": 169,
+    "owned_processes_stopped": true
+  },
+  "sole_boundary_failure": {
+    "case_id": "dev-el-en-uncertain-question",
+    "raw_span": {
+      "start": 0,
+      "end": 7,
+      "text": "Η Μαρία",
+      "label": "person",
+      "score": 0.9357870817184448
+    },
+    "independent_pre_output_name_span": {
+      "start": 2,
+      "end": 7,
+      "text": "Μαρία"
+    },
+    "meaning": "The native span includes a grammatical article. Direct protection would preserve ordinary source-language prose together with the name.",
+    "raw_span_modified": false
+  },
+  "translation_calls": 0,
+  "masking_experiments": 0,
+  "unused_validation_opened": false,
+  "production_changes": false,
+  "prior_krikri_results_regraded": false,
+  "tool_transport_note": "A code-mode transport/runtime reset interrupted polling after the owned phase had completed. The preserved worker and supervisor reports, all six raw cases, 169 samples and cleanup were read and independently checked before proceeding. No second invocation or retry was attempted.",
+  "next_scope": "Any source-only boundary-normalizer proposal/replay belongs in a new separately frozen directory; this raw profile and its rejection remain unchanged."
+}

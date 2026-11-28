@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-26T20:51:22.295954+00:00",
+  "arm": "base",
+  "complete": false,
+  "semantic_quality": "unreviewed",
+  "actual_asr": true,
+  "reference_supplied_to_decoder": false,
+  "manifest_sha256": "eb6f5091c709cdd152011428bd3c8624d5c42fa7ad85dc4f95222faaef55cf22",
+  "sources_before": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_links.py": "c1c24b47b5c9a5e749a10f734452de1585c3f850f5a179e9c59769de6ecce3dd",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "harness_sha256": "da28f3bb7b92eb53eb27ff05a5a7f693d60cff5a57626b0b6026aba142eaa846",
+  "qa_random_seed": 1729,
+  "runtime_versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "av": "16.1.0",
+    "onnxruntime": "1.32.0",
+    "huggingface-hub": "2.5.0"
+  },
+  "installed_source_hashes": {
+    "transcribe": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+    "vad": "37a9c774aefdd3162d936b896c8dcf5571b2ed938d65bffecfd631770049a18d",
+    "audio": "60a1d8638f718cbf6d245aed3e5a5aa61c1f822a0b0fe9b48a7c928d47c23909",
+    "utils": "5b36ceb9d0fd3961de8cfb144bd82f9a4ef3151b2e5958405a11efb4f3ac4f82"
+  },
+  "model_resolution": [],
+  "cases": [
+    {
+      "id": "silence",
+      "expected": "no_speech",
+      "input_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142",
+      "reference": null,
+      "execution_status": "complete",
+      "gate_status": "pass",
+      "job_id": "88a95f0d8c44458e985f4b3864c55fd0",
+      "job_result": {
+        "id": "88a95f0d8c44458e985f4b3864c55fd0",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "silence.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "No spoken words were detected in this recording.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:22.344521+00:00",
+          "kind": "recognize_start",
+          "case_id": "silence",
+          "job_id": "88a95f0d8c44458e985f4b3864c55fd0",
+          "input_sha256": "61480b2ca09e9d5b7b359b23869ac199fe1bbb5ae6ca1501a6151f73304f3142"
+        },
+        {
+          "at": "2026-11-26T20:51:22.389774+00:00",
+          "kind": "audio_decoded",
+          "case_id": "silence",
+          "job_id": "88a95f0d8c44458e985f4b3864c55fd0",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            512000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd5ad50f30",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 0,
+              "pcm_sha256": "e09534d59390e996d03db62710722cd319f787613231ec0ab6b4d53b0837c94f"
+            }
+          ],
+          "decoded_duration_seconds": 32.0
+        },
+        {
+          "at": "2026-11-26T20:51:22.390348+00:00",
+          "kind": "recognize_error",
+          "case_id": "silence",
+          "job_id": "88a95f0d8c44458e985f4b3864c55fd0",
+          "error": [
+            {
+              "type": "ReadableError",
+              "message": "No spoken words were detected in this recording."
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.232
+    },
+    {
+      "id": "white_noise",
+      "expected": "no_speech",
+      "input_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b",
+      "reference": null,
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "35931b0bc7e3410391b9ccae9d95abda",
+      "job_result": {
+        "id": "35931b0bc7e3410391b9ccae9d95abda",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "white_noise.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:22.569736+00:00",
+          "kind": "recognize_start",
+          "case_id": "white_noise",
+          "job_id": "35931b0bc7e3410391b9ccae9d95abda",
+          "input_sha256": "687acd5e96a280011d4c36699cda0caf02287bf06fc901b5c229ca39bca5b44b"
+        },
+        {
+          "at": "2026-11-26T20:51:22.600227+00:00",
+          "kind": "audio_decoded",
+          "case_id": "white_noise",
+          "job_id": "35931b0bc7e3410391b9ccae9d95abda",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            512000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd5ad50e10",
+              "shape": [
+                512000
+              ],
+              "dtype": "<f4",
+              "sample_count": 512000,
+              "nonzero_sample_count": 511922,
+              "pcm_sha256": "942e81279b4b05975576ace4e43a0e3adf498c3d11503d8b8e0afe964d28f76c"
+            }
+          ],
+          "decoded_duration_seconds": 32.0
+        },
+        {
+          "at": "2026-11-26T20:51:22.731346+00:00",
+          "kind": "recognize_error",
+          "case_id": "white_noise",
+          "job_id": "35931b0bc7e3410391b9ccae9d95abda",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.223
+    },
+    {
+      "id": "owned_440hz_tone",
+      "expected": "no_speech",
+      "input_sha256": "077e4ae8a47344e85166426f05163a89f645181f293c37ee0560335e1918cc14",
+      "reference": null,
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "9e416a9e05bd40478997bdbe950607ee",
+      "job_result": {
+        "id": "9e416a9e05bd40478997bdbe950607ee",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "owned_440hz_tone.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:22.788093+00:00",
+          "kind": "recognize_start",
+          "case_id": "owned_440hz_tone",
+          "job_id": "9e416a9e05bd40478997bdbe950607ee",
+          "input_sha256": "077e4ae8a47344e85166426f05163a89f645181f293c37ee0560335e1918cc14"
+        },
+        {
+          "at": "2026-11-26T20:51:22.866913+00:00",
+          "kind": "audio_decoded",
+          "case_id": "owned_440hz_tone",
+          "job_id": "9e416a9e05bd40478997bdbe950607ee",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            256000
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd4ef4d1d0",
+              "shape": [
+                256000
+              ],
+              "dtype": "<f4",
+              "sample_count": 256000,
+              "nonzero_sample_count": 254720,
+              "pcm_sha256": "a42ada02095acd85de87db33b7887e5ffbef8aa85f8a2e143be926aee212f562"
+            }
+          ],
+          "decoded_duration_seconds": 16.0
+        },
+        {
+          "at": "2026-11-26T20:51:22.869436+00:00",
+          "kind": "recognize_error",
+          "case_id": "owned_440hz_tone",
+          "job_id": "9e416a9e05bd40478997bdbe950607ee",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.217
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "expected": "speech",
+      "input_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "reference": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b5\u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03b7\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03b5\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "c8a742591c6e4600b2bff3711026d019",
+      "job_result": {
+        "id": "c8a742591c6e4600b2bff3711026d019",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-2-1528.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:23.001657+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "c8a742591c6e4600b2bff3711026d019",
+          "input_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80"
+        },
+        {
+          "at": "2026-11-26T20:51:23.029570+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "c8a742591c6e4600b2bff3711026d019",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            106560
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd4fb3df50",
+              "shape": [
+                106560
+              ],
+              "dtype": "<f4",
+              "sample_count": 106560,
+              "nonzero_sample_count": 104219,
+              "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+            }
+          ],
+          "decoded_duration_seconds": 6.66
+        },
+        {
+          "at": "2026-11-26T20:51:23.032021+00:00",
+          "kind": "recognize_error",
+          "case_id": "fleurs-el_gr-validation-2-1528",
+          "job_id": "c8a742591c6e4600b2bff3711026d019",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.215
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+      "expected": "speech",
+      "input_sha256": "c0394dc391282d03b7e50d2ff4d37fe7b3d67500ae6fc7b88e74021111b1bc02",
+      "reference": "\u039a\u03ac\u03c0\u03bf\u03b9\u03b1 \u03c6\u03b5\u03c3\u03c4\u03b9\u03b2\u03ac\u03bb \u03c0\u03b1\u03c1\u03ad\u03c7\u03bf\u03c5\u03bd \u03b5\u03b9\u03b4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03ba\u03b1\u03c4\u03b1\u03c3\u03ba\u03b7\u03bd\u03c9\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c7\u03ce\u03c1\u03bf\u03c5\u03c2 \u03b3\u03b9\u03b1 \u03bf\u03b9\u03ba\u03bf\u03b3\u03ad\u03bd\u03b5\u03b9\u03b5\u03c2 \u03bc\u03b5 \u03bc\u03b9\u03ba\u03c1\u03ac \u03c0\u03b1\u03b9\u03b4\u03b9\u03ac.",
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "d01c5d89b028456b9a23cf195fef5e0b",
+      "job_result": {
+        "id": "d01c5d89b028456b9a23cf195fef5e0b",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-el_gr-validation-2-1528-quiet-minus20db.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:23.216652+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "d01c5d89b028456b9a23cf195fef5e0b",
+          "input_sha256": "c0394dc391282d03b7e50d2ff4d37fe7b3d67500ae6fc7b88e74021111b1bc02"
+        },
+        {
+          "at": "2026-11-26T20:51:23.242883+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "d01c5d89b028456b9a23cf195fef5e0b",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            106560
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd4ef4d1d0",
+              "shape": [
+                106560
+              ],
+              "dtype": "<f4",
+              "sample_count": 106560,
+              "nonzero_sample_count": 88173,
+              "pcm_sha256": "412d5887db615edbdbd7ebb279c35c2d42adfd8a71f46f1f5feadabb6c1f9c2c"
+            }
+          ],
+          "decoded_duration_seconds": 6.66
+        },
+        {
+          "at": "2026-11-26T20:51:23.245692+00:00",
+          "kind": "recognize_error",
+          "case_id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+          "job_id": "d01c5d89b028456b9a23cf195fef5e0b",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.215
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "expected": "speech",
+      "input_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "a0ea0b4545ef4b3d97ab9af74b25e27c",
+      "job_result": {
+        "id": "a0ea0b4545ef4b3d97ab9af74b25e27c",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-en_us-validation-0-1548.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:23.432805+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "a0ea0b4545ef4b3d97ab9af74b25e27c",
+          "input_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48"
+        },
+        {
+          "at": "2026-11-26T20:51:23.459206+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "a0ea0b4545ef4b3d97ab9af74b25e27c",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            104640
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd4f3a3390",
+              "shape": [
+                104640
+              ],
+              "dtype": "<f4",
+              "sample_count": 104640,
+              "nonzero_sample_count": 103116,
+              "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+            }
+          ],
+          "decoded_duration_seconds": 6.54
+        },
+        {
+          "at": "2026-11-26T20:51:23.461376+00:00",
+          "kind": "recognize_error",
+          "case_id": "fleurs-en_us-validation-0-1548",
+          "job_id": "a0ea0b4545ef4b3d97ab9af74b25e27c",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.215
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+      "expected": "speech",
+      "input_sha256": "99664e80b659bfa9e2675efd38949e7d233787f1862c775dd9ba59eba6670f44",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "execution_status": "error",
+      "gate_status": "fail",
+      "job_id": "2b4233ff86d7475dafa99d7f9531fdf7",
+      "job_result": {
+        "id": "2b4233ff86d7475dafa99d7f9531fdf7",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "fleurs-en_us-validation-0-1548-quiet-minus20db.wav",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Processing failed. Check the terminal for details, or try an uploaded file.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "sqlite_record_present": false,
+      "export_statuses": {
+        "txt": 404,
+        "srt": 404,
+        "vtt": 404,
+        "json": 404,
+        "zip": 404
+      },
+      "input_cleaned": true,
+      "events": [
+        {
+          "at": "2026-11-26T20:51:23.648367+00:00",
+          "kind": "recognize_start",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "2b4233ff86d7475dafa99d7f9531fdf7",
+          "input_sha256": "99664e80b659bfa9e2675efd38949e7d233787f1862c775dd9ba59eba6670f44"
+        },
+        {
+          "at": "2026-11-26T20:51:23.674347+00:00",
+          "kind": "audio_decoded",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "2b4233ff86d7475dafa99d7f9531fdf7",
+          "sampling_rate_hz": 16000,
+          "channel_sample_counts": [
+            104640
+          ],
+          "decoded_arrays": [
+            {
+              "array_identity": "0x7fbd4ef4d170",
+              "shape": [
+                104640
+              ],
+              "dtype": "<f4",
+              "sample_count": 104640,
+              "nonzero_sample_count": 89026,
+              "pcm_sha256": "2d1d5e6a39b8492d8ca71bc84ad827689d2336d51aa2a04baf7a9c894bb56851"
+            }
+          ],
+          "decoded_duration_seconds": 6.54
+        },
+        {
+          "at": "2026-11-26T20:51:23.676511+00:00",
+          "kind": "recognize_error",
+          "case_id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+          "job_id": "2b4233ff86d7475dafa99d7f9531fdf7",
+          "error": [
+            {
+              "type": "ImportError",
+              "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+            }
+          ]
+        }
+      ],
+      "error": [
+        {
+          "type": "AssertionError",
+          "message": ""
+        }
+      ],
+      "elapsed_seconds": 0.214
+    }
+  ],
+  "sources_after": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_links.py": "c1c24b47b5c9a5e749a10f734452de1585c3f850f5a179e9c59769de6ecce3dd",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "sources_unchanged": true,
+  "finished_at": "2026-11-26T20:51:23.860539+00:00"
+}

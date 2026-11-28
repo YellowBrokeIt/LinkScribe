@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-28T03:58:04.452547+00:00",
+  "scope": "Independent manual PERSON mention annotations from complete original source text only, frozen before detector output. Not a detector input, dictionary, masking map or translation reference.",
+  "plan_sha256": "1a56796eb75a709c9231354ff17ca7b9f23be9988e3ddbc30ba0492433b2b9d5",
+  "worker_source_sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482",
+  "original_corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+  "model_output_seen": false,
+  "source_boundary_rules": [
+    "Only the exact full written personal-name mention is positive.",
+    "Exclude Greek articles, punctuation, pronouns, speaker metadata, standalone roles/titles, weekday names, language names and Bitcoin.",
+    "Repeated mentions count separately; retain each exact source spelling without identity merging or morphological normalization.",
+    "No ambiguous personal-name mention was identified in these six sources before output."
+  ],
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "joined_source": "Maria saved the transcript as a text file; she did not save the original recording.\nTranscription took 12 minutes. Translation into Greek has not started yet.",
+      "joined_utf8_sha256": "4872fa97eb447f9c4026fc8fc214008eb809d8a35ea0fb12818d2ada81ad5eac",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 83
+        },
+        {
+          "segment_index": 1,
+          "start": 84,
+          "end": 158
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 5,
+          "joined_start": 0,
+          "joined_end": 5,
+          "text": "Maria",
+          "label": "person"
+        }
+      ],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "joined_source": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.\nΗ Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+      "joined_utf8_sha256": "c3a7267c28e91201e57e80ef96a9b4e2509da584d3257119559223de5694362c",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 54
+        },
+        {
+          "segment_index": 1,
+          "start": 55,
+          "end": 150
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 32,
+          "joined_end": 37,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 48,
+          "segment_end": 53,
+          "joined_start": 48,
+          "joined_end": 53,
+          "text": "Έλενα",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 57,
+          "joined_end": 62,
+          "text": "Ελένη",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 32,
+          "segment_end": 37,
+          "joined_start": 87,
+          "joined_end": 92,
+          "text": "Νίκος",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 65,
+          "segment_end": 70,
+          "joined_start": 120,
+          "joined_end": 125,
+          "text": "Έλενα",
+          "label": "person"
+        }
+      ],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "joined_source": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.\nThe note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+      "joined_utf8_sha256": "7aa39d2d3bceb35a99f609d5239afbb2693eaba2c4f3578fc01edf7cd98efdb8",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 88
+        },
+        {
+          "segment_index": 1,
+          "start": 89,
+          "end": 170
+        }
+      ],
+      "expected_exact_mentions": [],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "joined_source": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.\nΣήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+      "joined_utf8_sha256": "79a6f7f1ac4e5b9189c100a7e2425645e7332d5ec7ea0a98de1d4c5207394ee0",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 76
+        },
+        {
+          "segment_index": 1,
+          "start": 77,
+          "end": 139
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 15,
+          "segment_end": 19,
+          "joined_start": 15,
+          "joined_end": 19,
+          "text": "Άννα",
+          "label": "person"
+        }
+      ],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "joined_source": "Anna will publish the video only if Giannis approves the text.\nIf Giannis does not answer by Friday, Anna will wait until Monday.",
+      "joined_utf8_sha256": "2a756157850a60007b31c6abf7a2628ff8f83becd3a2d5598227de2e50da375e",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 62
+        },
+        {
+          "segment_index": 1,
+          "start": 63,
+          "end": 129
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 0,
+          "segment_end": 4,
+          "joined_start": 0,
+          "joined_end": 4,
+          "text": "Anna",
+          "label": "person"
+        },
+        {
+          "segment_index": 0,
+          "segment_start": 36,
+          "segment_end": 43,
+          "joined_start": 36,
+          "joined_end": 43,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 3,
+          "segment_end": 10,
+          "joined_start": 66,
+          "joined_end": 73,
+          "text": "Giannis",
+          "label": "person"
+        },
+        {
+          "segment_index": 1,
+          "segment_start": 38,
+          "segment_end": 42,
+          "joined_start": 101,
+          "joined_end": 105,
+          "text": "Anna",
+          "label": "person"
+        }
+      ],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "joined_source": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»\nΔεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+      "joined_utf8_sha256": "f6b02dd8860b8a0057bbb4b7095e2eaa01cbffffac775de5f885d22540ea53d9",
+      "segment_map": [
+        {
+          "segment_index": 0,
+          "start": 0,
+          "end": 50
+        },
+        {
+          "segment_index": 1,
+          "start": 51,
+          "end": 139
+        }
+      ],
+      "expected_exact_mentions": [
+        {
+          "segment_index": 0,
+          "segment_start": 2,
+          "segment_end": 7,
+          "joined_start": 2,
+          "joined_end": 7,
+          "text": "Μαρία",
+          "label": "person"
+        }
+      ],
+      "ambiguous_mentions": [],
+      "all_other_source_spans_are_negative": true
+    }
+  ],
+  "total_person_mentions": 13
+}

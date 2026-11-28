@@ -1,0 +1,56 @@
+{
+  "recorded_utc": "2026-11-28T00:05:14.662473+00:00",
+  "version": {
+    "version": "0.40.12"
+  },
+  "tags": {
+    "models": [
+      {
+        "name": "qwen3:4b",
+        "model": "qwen3:4b",
+        "modified_at": "2026-11-28T02:03:44.11490224+02:00",
+        "size": 2497293931,
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "4.0B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 262144,
+          "embedding_length": 2560,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking"
+        ]
+      }
+    ]
+  },
+  "binary_url": "https://github.com/ollama/ollama/releases/download/v0.40.12/ollama-linux-amd64.tar.zst",
+  "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+  "binary_sha256": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+  "runtime_root": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+  "environment": {
+    "OLLAMA_MODELS": "/workspace/scratch/94360995dd61/linkscribe-model-runtime/models",
+    "OLLAMA_NO_CLOUD": "1",
+    "OLLAMA_NUM_PARALLEL": "1",
+    "OLLAMA_MAX_LOADED_MODELS": "1",
+    "OLLAMA_CONTEXT_LENGTH": "8192",
+    "OLLAMA_KEEP_ALIVE": "1m",
+    "LINKSCRIBE_OLLAMA_THREADS": "4"
+  },
+  "verification": {
+    "archive_sha256_observed_by_streaming_full_file": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+    "binary_sha256_observed": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+    "archive_provenance": "Pinned official GitHub release already used by .github/workflows/independent-qa.yml; CPU libraries extracted, CUDA and Vulkan subdirectories omitted.",
+    "model_digest_matches_existing_summary_runs": true,
+    "model_pull": "Actual successful /api/pull of qwen3:4b; /api/tags observed complete installed digest.",
+    "namespace_constraint": "Each exec command has isolated process/network namespace. Inference client and daemon run under one supervisor command. Filesystem model cache is shared."
+  }
+}

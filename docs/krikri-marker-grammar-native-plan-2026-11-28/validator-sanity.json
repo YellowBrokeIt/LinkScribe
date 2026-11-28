@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "executed": false,
+  "grammar": "root ::= \"ok\"\n",
+  "root_rule": "root",
+  "cases": [
+    {
+      "id": "accept-complete",
+      "input_utf8": "ok",
+      "expected_status": "accepted"
+    },
+    {
+      "id": "reject-other",
+      "input_utf8": "no",
+      "expected_status": "rejected"
+    },
+    {
+      "id": "reject-incomplete",
+      "input_utf8": "o",
+      "expected_status": "rejected"
+    }
+  ],
+  "no_model_vocabulary_or_weights": true,
+  "status_helper": "status_contract.py",
+  "status_source_scope": "Exact official status-line/receipt contract; zero process exit alone is not acceptance."
+}

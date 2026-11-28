@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T04:56:41.727092+00:00",
+  "complete": true,
+  "passed": true,
+  "limits": {
+    "rss_bytes": 6442450944,
+    "total_seconds": 600,
+    "initialization_seconds": 180,
+    "case_seconds": 600
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "events": [
+    {
+      "event": "case_start",
+      "id": "source-protection-render-only",
+      "generation_calls": 0,
+      "observed_elapsed_seconds": 22.797439
+    },
+    {
+      "event": "case_complete",
+      "id": "source-protection-render-only",
+      "generation_calls": 0,
+      "prompt_token_counts": [
+        229,
+        323,
+        223,
+        229,
+        276,
+        228
+      ],
+      "observed_elapsed_seconds": 22.975252
+    },
+    {
+      "event": "phase_complete",
+      "phase": "prepare",
+      "complete": true,
+      "error": null,
+      "observed_elapsed_seconds": 22.993204
+    }
+  ],
+  "measurement_errors": [],
+  "scope": "Owned monitor plus worker and descendants, deduplicated by PID, from spawn through exit.",
+  "rss_scope": "Summed process RSS can double-count shared pages; excludes OS/browser/unrelated processes.",
+  "pss_scope": "PSS apportions shared pages. System available memory is a separate uncontrolled observation.",
+  "sampling_limit": "Sequential scans at 0.1-second intervals can miss transient peaks.",
+  "phase": "prepare",
+  "plan_sha256": "d8b4c2e29998cd650be1f2d5bf232d47c6a8b478f831102f71bed0e2b3581bf4",
+  "worker_sha256": "cf2862ccea3f4148c0a9c788dcbe3ef3925a35906c9b3ed262d31f9f15103e6e",
+  "observer_sha256": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d",
+  "free_disk_before_bytes": 1756246016,
+  "whole_app_resource_approval": false,
+  "sample_count": 220,
+  "peak_rss_sample": {
+    "elapsed_seconds": 22.797859,
+    "rss_bytes": 5767958528,
+    "pss_bytes": 5758501888,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 18739200,
+        "pss_bytes": 15291392,
+        "cpu_user_seconds": 0.35,
+        "cpu_system_seconds": 1.05,
+        "threads": 1
+      },
+      {
+        "pid": 5,
+        "name": "python",
+        "rss_bytes": 18395136,
+        "pss_bytes": 14930944,
+        "cpu_user_seconds": 6.21,
+        "cpu_system_seconds": 2.56,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "ollama",
+        "rss_bytes": 32641024,
+        "pss_bytes": 31493120,
+        "cpu_user_seconds": 0.17,
+        "cpu_system_seconds": 0.06,
+        "threads": 10
+      },
+      {
+        "pid": 31,
+        "name": "llama-server",
+        "rss_bytes": 5698183168,
+        "pss_bytes": 5696786432,
+        "cpu_user_seconds": 5.52,
+        "cpu_system_seconds": 5.14,
+        "threads": 16
+      }
+    ],
+    "system_available_bytes": 2963062784,
+    "system_total_bytes": 10451427328,
+    "active_case": "source-protection-render-only"
+  },
+  "peak_pss_sample": {
+    "elapsed_seconds": 22.797859,
+    "rss_bytes": 5767958528,
+    "pss_bytes": 5758501888,
+    "processes": [
+      {
+        "pid": 2,
+        "name": "python",
+        "rss_bytes": 18739200,
+        "pss_bytes": 15291392,
+        "cpu_user_seconds": 0.35,
+        "cpu_system_seconds": 1.05,
+        "threads": 1
+      },
+      {
+        "pid": 5,
+        "name": "python",
+        "rss_bytes": 18395136,
+        "pss_bytes": 14930944,
+        "cpu_user_seconds": 6.21,
+        "cpu_system_seconds": 2.56,
+        "threads": 1
+      },
+      {
+        "pid": 6,
+        "name": "ollama",
+        "rss_bytes": 32641024,
+        "pss_bytes": 31493120,
+        "cpu_user_seconds": 0.17,
+        "cpu_system_seconds": 0.06,
+        "threads": 10
+      },
+      {
+        "pid": 31,
+        "name": "llama-server",
+        "rss_bytes": 5698183168,
+        "pss_bytes": 5696786432,
+        "cpu_user_seconds": 5.52,
+        "cpu_system_seconds": 5.14,
+        "threads": 16
+      }
+    ],
+    "system_available_bytes": 2963062784,
+    "system_total_bytes": 10451427328,
+    "active_case": "source-protection-render-only"
+  },
+  "worker_exit_code": 0,
+  "owned_processes_stopped": true,
+  "owned_process_identities": [
+    {
+      "pid": 5,
+      "created": 1795841800.99
+    },
+    {
+      "pid": 6,
+      "created": 1795841814.29
+    },
+    {
+      "pid": 25,
+      "created": 1795841814.38
+    },
+    {
+      "pid": 31,
+      "created": 1795841814.65
+    }
+  ],
+  "sample_interval_seconds": 0.1,
+  "peak_rss_mib": 5500.8,
+  "peak_pss_mib": 5491.7,
+  "minimum_system_available_bytes": 2963062784,
+  "measurement_complete": true,
+  "samples_file": "prepare-samples.jsonl",
+  "samples_sha256": "de49906416e383ddc6fea585ad15c7469f92ed37a2c0ff36c34a5d863e891134",
+  "elapsed_seconds": 23.00466,
+  "finished_at": "2026-11-28T04:57:04.731885+00:00",
+  "phase_report_sha256": "22316c01f002b46694524158d30fe39c86ab7e222a4cfc624f37e1f3c98dee67",
+  "frozen_inputs_unchanged": true,
+  "free_disk_after_bytes": 1755971584,
+  "disk_reserve_retained": true
+}

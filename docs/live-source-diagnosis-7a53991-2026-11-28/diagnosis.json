@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "result": "diagnosis_no_production_fix_claimed",
+  "created_at_utc": "2026-11-28T04:46:23.505979+00:00",
+  "commit": "7a53991da60c9e052be9a72299218b291b364c8d",
+  "artifact_id": 15248292627,
+  "original_zip_sha256": "ce6744c736d97f3166a8939d1874c10aedcee5aada5399ab96819932a64450a8",
+  "original_failure_preserved": {
+    "path": "failure-preservation.json",
+    "bytes": 2602,
+    "sha256": "36c871a0322160d4db5ddb5bc9340ed29f563d0d4e40e459fb658c75dcb8aabc"
+  },
+  "text_retention_diagnostic": {
+    "path": "text-retention-diagnostic.json",
+    "bytes": 6908,
+    "sha256": "ca449e287169788fc42285866a977b2bcf5f13f3cf7c5ce31fe27b61bf38261b"
+  },
+  "independent_review": {
+    "path": "independent-review.json",
+    "bytes": 6269,
+    "sha256": "b58e67d72b88ead8f5af18dd3da1d9c75c23ed3097fc3ff2f007bace2fb4a302"
+  },
+  "asr_comparison": {
+    "previous_commit": "f12afd80e99d9673e416d7f243976697a66675a9",
+    "previous_report": {
+      "path": "comparison-inputs/f12-provider-report.json",
+      "bytes": 427301,
+      "sha256": "37be896a137d4fb2accf592b7e1cdb1627df203197c7ff03ebd49c32524fe2ee"
+    },
+    "new_report": {
+      "path": "original-artifact/provider-report.json",
+      "bytes": 291262,
+      "sha256": "e72f3b954b4c65ba7564a51ae98eeb873c5f8701bad9f0fd785f01b0b5364cab"
+    },
+    "same_media_sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+    "same_complete_pcm": {
+      "shape": [
+        11746325
+      ],
+      "dtype": "<f4",
+      "sample_count": 11746325,
+      "nonzero_sample_count": 11722661,
+      "pcm_sha256": "7cebce904626489b7b336a60c64cde40fd483fb138fc33d9c67086c6a14f6a66"
+    },
+    "same_decoded_seconds": 734.1453125,
+    "all_four_model_file_identities_equal": true,
+    "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "same_explicit_kwargs": true,
+    "same_resolved_options": true,
+    "same_effective_options": true,
+    "same_reported_runtime_versions": {
+      "yt-dlp": "2026.11.23",
+      "curl-cffi": "0.17.0",
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "av": "16.1.0",
+      "certifi": "2026.11.20",
+      "onnxruntime": "1.32.0",
+      "huggingface-hub": "2.5.0"
+    },
+    "same_function_AST": {
+      "_whisper_model": true,
+      "_download_source_audio": true
+    },
+    "recognize_transcribe_call_AST_equal": true,
+    "source_pins": [
+      {
+        "path": "f12afd8-app.py",
+        "bytes": 56493,
+        "sha256": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a"
+      },
+      {
+        "path": "comparison-inputs/7a-app.py",
+        "bytes": 61682,
+        "sha256": "0840ee8cd72898b6fd61831888ee4932d3a3892070660ed76174f1700c8f9044"
+      }
+    ],
+    "first_native_segment_difference": {
+      "old": {
+        "id": 1,
+        "seek": 0,
+        "start": 0.0,
+        "end": 11.0,
+        "text": " We have main engine start, 4, 3, 2, 1, go!",
+        "tokens": [
+          50364,
+          492,
+          362,
+          2135,
+          2848,
+          722,
+          11,
+          1017,
+          11,
+          805,
+          11,
+          568,
+          11,
+          502,
+          11,
+          352,
+          0,
+          50914
+        ],
+        "avg_logprob": -0.39703214307164036,
+        "compression_ratio": 1.07,
+        "no_speech_prob": 0.5122584700584412,
+        "words": null,
+        "temperature": 0.0
+      },
+      "new": {
+        "id": 1,
+        "seek": 0,
+        "start": 0.0,
+        "end": 12.0,
+        "text": " We have main engine start, 4, 3, 2, 1, go!",
+        "tokens": [
+          50364,
+          492,
+          362,
+          2135,
+          2848,
+          722,
+          11,
+          1017,
+          11,
+          805,
+          11,
+          568,
+          11,
+          502,
+          11,
+          352,
+          0,
+          50964
+        ],
+        "avg_logprob": -0.399939778239228,
+        "compression_ratio": 1.07,
+        "no_speech_prob": 0.40009090304374695,
+        "words": null,
+        "temperature": 0.0
+      }
+    },
+    "language_probabilities": {
+      "old": 0.9670830368995667,
+      "new": 0.9751953482627869
+    },
+    "old_native_segment_count": 64,
+    "new_native_segment_count": 74,
+    "interpretation": "Native timing/tokenization differs before the application rounds or saves segments. The new physical-duration clamp cannot explain this earlier internal interval. Same recorded inputs/options/versions do not prove numerical execution identity.",
+    "remaining_uncertainty": "The live-source reports do not bind CPU model/instruction path, effective native compute properties, NumPy version, wheel binaries, or random seed. Numerical/backend variation and normal fallback sampling are possibilities, not established causes; differences already occur at temperature 0 before later sampled fallback.",
+    "policy_fix_supported": false
+  },
+  "repeat_acquisition": {
+    "successful_first_job_id": "0e6ba274ee414734961f565d496588b5",
+    "first_acquisition_events": [
+      {
+        "at": "2026-11-28T04:30:32.580734+00:00",
+        "pid": 3645,
+        "kind": "acquisition_start",
+        "job_id": "0e6ba274ee414734961f565d496588b5",
+        "provider": "dailymotion",
+        "url": "https://www.dailymotion.com/video/xbvubxi"
+      },
+      {
+        "at": "2026-11-28T04:30:36.733473+00:00",
+        "pid": 3645,
+        "kind": "acquisition_done",
+        "job_id": "0e6ba274ee414734961f565d496588b5",
+        "title": "فيلم  🎬 Tears of Steel | معركة المستقبل بدأت",
+        "bytes": 11919385,
+        "sha256": "c8359f5278729091cab5b04d44b19eb4670553769ad2ca0e0097af2e91aef1b0",
+        "duration_seconds": 734.191746,
+        "audio_streams": 1,
+        "elapsed_seconds": 4.153
+      }
+    ],
+    "batch_id": "82cf1cdfff71499fb937aa5ca4b81778",
+    "batch_check_status": "fail",
+    "final_batch_status": "done",
+    "completed": 2,
+    "failed": 2,
+    "repeated_dailymotion_job": {
+      "id": "15cd97b9651e42bcb9bbdac323170498",
+      "title": "Dailymotion xbvubxi",
+      "source": "https://www.dailymotion.com/video/xbvubxi",
+      "status": "error",
+      "stage": "Unable to transcribe",
+      "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+      "warnings": [],
+      "library_id": ""
+    },
+    "repeat_events": [
+      {
+        "at": "2026-11-28T04:32:21.859501+00:00",
+        "pid": 3645,
+        "kind": "acquisition_start",
+        "job_id": "15cd97b9651e42bcb9bbdac323170498",
+        "provider": "dailymotion",
+        "url": "https://www.dailymotion.com/video/xbvubxi"
+      },
+      {
+        "at": "2026-11-28T04:32:23.329442+00:00",
+        "pid": 3645,
+        "kind": "acquisition_failed",
+        "job_id": "15cd97b9651e42bcb9bbdac323170498",
+        "errors": [
+          {
+            "type": "ReadableError",
+            "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+          },
+          {
+            "type": "DownloadError",
+            "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+          },
+          {
+            "type": "ExtractorError",
+            "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+          }
+        ],
+        "elapsed_seconds": 1.47
+      }
+    ],
+    "no_decode_or_recognition_for_failed_repeat": true,
+    "persisted_batch_rows": [
+      {
+        "batch_id": "82cf1cdfff71499fb937aa5ca4b81778",
+        "position": 0,
+        "job_id": "15cd97b9651e42bcb9bbdac323170498",
+        "source": "https://www.dailymotion.com/video/xbvubxi",
+        "title": "Dailymotion xbvubxi",
+        "status": "error",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "library_id": "",
+        "updated_at": 1795840343.330041
+      },
+      {
+        "batch_id": "82cf1cdfff71499fb937aa5ca4b81778",
+        "position": 1,
+        "job_id": "0ac7c7a82e2e4947ac1f86d898033f7c",
+        "source": "https://www.youtube.com/watch?v=HOfdboHvshg",
+        "title": "Youtube HOfdboHvshg",
+        "status": "error",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "library_id": "",
+        "updated_at": 1795840367.556389
+      }
+    ],
+    "prior_single_source_same_error": [
+      {
+        "checkpoint": "745554b",
+        "source": {
+          "path": "comparison-inputs/prior-745554b-report.json",
+          "bytes": 62716,
+          "sha256": "8b547db2225bd0cfc6ee841900cfcaad7bcd91aac1471017ea86984722c3eb34"
+        },
+        "single_source_status": "fail",
+        "errors": [
+          {
+            "at": "2026-11-28T01:33:56.346953+00:00",
+            "pid": 3626,
+            "kind": "acquisition_failed",
+            "job_id": "f25dbfb9cd3843cab947f8e800fe8c3a",
+            "errors": [
+              {
+                "type": "ReadableError",
+                "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+              },
+              {
+                "type": "DownloadError",
+                "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+              },
+              {
+                "type": "ExtractorError",
+                "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+              }
+            ],
+            "elapsed_seconds": 3.202
+          }
+        ]
+      },
+      {
+        "checkpoint": "00567db",
+        "source": {
+          "path": "comparison-inputs/prior-00567db-report.json",
+          "bytes": 64063,
+          "sha256": "4a0c64a95c07df66858287513759b7065152aacb2bc50da97f6561aedb758f5d"
+        },
+        "single_source_status": "fail",
+        "errors": [
+          {
+            "at": "2026-11-28T04:08:27.371116+00:00",
+            "pid": 3622,
+            "kind": "acquisition_failed",
+            "job_id": "8740451e4fd34c359711974bf658f867",
+            "errors": [
+              {
+                "type": "ReadableError",
+                "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+              },
+              {
+                "type": "DownloadError",
+                "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+              },
+              {
+                "type": "ExtractorError",
+                "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+              }
+            ],
+            "elapsed_seconds": 1.776
+          }
+        ]
+      }
+    ],
+    "interpretation": "Failure is in provider extraction before audio/decode/ASR. The same URL was accessible earlier, and the same extractor error occurred outside batch in earlier runs. No batch-specific fault, HTTP 429/403, rate limit or exact failed extraction phase is established.",
+    "mixed_harness_expectation": "Harness chose the previously successful Dailymotion and a failed YouTube fixture, then required one success and one failure. Both new acquisition attempts failed; original overall/mixed failures remain unchanged."
+  },
+  "possible_generic_acquisition_improvement": {
+    "observed_code": "_download_source_audio calls ydl.extract_info(url, download=False), validates the returned metadata, then ydl.download([url]); installed yt-dlp download() calls extract_info again.",
+    "proposal": "If separately implemented and reviewed, download the already validated extracted video result through the supported process_ie_result(info, download=True) path while preserving playlist/duration/size checks and no implicit retries or credential changes.",
+    "evidence_support": "Avoids one redundant extraction/provider round-trip per successful acquisition and its additional failure opportunity.",
+    "not_established": "This artifact does not identify whether the first metadata extraction or second extraction failed, so reuse is not proven to fix this batch failure. No provider request or prototype execution was performed.",
+    "more_direct_diagnostic_gap": "Phase-tagged metadata-extraction versus transfer errors would distinguish those two existing calls without rerunning a provider."
+  },
+  "limits": [
+    "No live provider or ASR/model request, no listening, no output repair, no production/test edit, no Git mutation.",
+    "No window, lexical pattern, frozen checker or failed result was changed.",
+    "The separate lexical diagnostic is an observation, not a relaxed replacement gate or whole-transcript quality approval."
+  ]
+}

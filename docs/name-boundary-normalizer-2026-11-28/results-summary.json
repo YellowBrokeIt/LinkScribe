@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-28T04:42:51.650401+00:00",
+  "decision": "limited_original_six_source_boundary_development_pass_not_unattended_protection_approval",
+  "cases_correct": 6,
+  "cases": 6,
+  "exact_mentions": 13,
+  "mentions": 13,
+  "changed_boundaries": 1,
+  "unchanged_boundaries": 12,
+  "missing_or_extra_mentions": 0,
+  "mechanical_controls_passed": 50,
+  "invalid_input_rejections": 9,
+  "semantic_limit_cases_remain_limits": 4,
+  "raw_detector_rejection_unchanged": true,
+  "normalizer_replays_per_case": 1,
+  "detector_calls": 0,
+  "translation_calls": 0,
+  "masking_calls": 0,
+  "source_and_original_metadata_unchanged": true,
+  "original_scores_unchanged_and_not_reinterpreted": true,
+  "execution_sha256": "5f492ce712532ab4be96a0c2a743c7046165d8751e0971bf2c3546e03c1be4b8",
+  "independent_review_sha256": "06991541805b2c0633d48bdc9d0eed07cd8c53ef5daefdb21042cfa99f545228",
+  "known_limits": [
+    "A real name component can share an article spelling.",
+    "An undotted initial can share an article spelling.",
+    "Removing one article does not fix ordinary-prose overextension or missed entities.",
+    "An exact source-span pass does not establish correct translated meaning or role preservation."
+  ],
+  "evidence_wording_correction": "The replay hashes the prior independent raw-output review, which contains expected-span annotations. Those bytes are checksum-read but not parsed or supplied to the pure normalizer. The frozen annotation_input_read:false flag and broad proposal wording must be read as no annotation/reference data supplied to the algorithm, not as a claim that the process read no annotation-containing bytes. No original record was changed.",
+  "production_changes": false,
+  "unused_validation_opened": false
+}

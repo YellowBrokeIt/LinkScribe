@@ -5,10 +5,14 @@ This is intentionally single-user: never expose the existing app publicly.
 """
 from __future__ import annotations
 import json
+import math
 import sqlite3
+import unicodedata
 import time
 from pathlib import Path
 from typing import Any
+
+from source_highlights import validate_highlights
 
 DB_FILE = Path(__file__).resolve().parent / "data" / "library.sqlite3"
 
@@ -29,9 +33,26 @@ def _connect():
       plain_text TEXT NOT NULL,
       translations TEXT NOT NULL DEFAULT '{}',
       summary TEXT,
+      highlights TEXT,
+      processing_metadata TEXT NOT NULL DEFAULT '{}',
       created_at REAL NOT NULL,
       updated_at REAL NOT NULL
     )""")
+    if "processing_metadata" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+        try:
+            connection.execute("ALTER TABLE transcripts ADD COLUMN processing_metadata TEXT NOT NULL DEFAULT '{}'")
+        except sqlite3.OperationalError:
+            # Another local connection may have completed this additive migration.
+            if "processing_metadata" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+                connection.close()
+                raise
+    if "highlights" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+        try:
+            connection.execute("ALTER TABLE transcripts ADD COLUMN highlights TEXT")
+        except sqlite3.OperationalError:
+            if "highlights" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+                connection.close()
+                raise
     connection.execute("CREATE INDEX IF NOT EXISTS idx_transcripts_created ON transcripts(created_at DESC)")
     return connection
 
@@ -41,6 +62,16 @@ def _row(row: sqlite3.Row) -> dict[str, Any]:
     data["segments"] = json.loads(data["segments"])
     data["translations"] = json.loads(data["translations"])
     data["summary"] = json.loads(data["summary"]) if data["summary"] else None
+    data["processing_metadata"] = json.loads(data.get("processing_metadata") or "{}")
+    try:
+        data["highlights"] = json.loads(data["highlights"]) if data.get("highlights") else None
+        if data["highlights"] is not None:
+            validate_highlights(data["highlights"], data["segments"])
+    except ValueError:
+        data["highlights"] = None
+        warning = "Saved source highlights were damaged or no longer matched the transcript. Create them again; the original transcript is retained."
+        warnings = data["processing_metadata"].get("warnings", [])
+        data["processing_metadata"]["warnings"] = (warnings if isinstance(warnings, list) else []) + [warning]
     return data
 
 
@@ -48,18 +79,89 @@ def _plain(segments: list[dict[str, Any]]) -> str:
     return "\n".join(str(s.get("text", "")).strip().replace("\n", " ") for s in segments)
 
 
+def _processing_metadata_json(value: Any) -> str:
+    """Bound configuration provenance; never accept audio, vectors or credentials."""
+    if value is None:
+        value = {}
+    if not isinstance(value, dict):
+        raise ValueError("Processing metadata must be an object.")
+    nodes = 0
+    forbidden = {"audio", "embeddings", "embedding", "waveform", "voiceprint", "samples",
+                 "token", "hf_token", "api_key", "authorization"}
+
+    def visit(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        if depth > 8 or nodes > 1024:
+            raise ValueError("Processing metadata is too deeply nested or complex.")
+        if item is None or isinstance(item, bool):
+            return
+        if isinstance(item, (int, float)):
+            try:
+                if not math.isfinite(item):
+                    raise ValueError("Processing metadata contains a non-finite number.")
+            except OverflowError as exc:
+                raise ValueError("Processing metadata contains an oversized number.") from exc
+        elif isinstance(item, str):
+            if len(item) > 4096:
+                raise ValueError("Processing metadata contains an oversized string.")
+            item.encode("utf-8")
+        elif isinstance(item, dict):
+            if len(item) > 64:
+                raise ValueError("Processing metadata contains too many fields.")
+            for key, entry in item.items():
+                if not isinstance(key, str) or len(key) > 80 or key.lower() in forbidden:
+                    raise ValueError("Processing metadata contains a prohibited field.")
+                key.encode("utf-8")
+                visit(entry, depth + 1)
+        elif isinstance(item, list):
+            if len(item) > 100:
+                raise ValueError("Processing metadata contains an oversized list.")
+            for entry in item:
+                visit(entry, depth + 1)
+        else:
+            raise ValueError("Processing metadata contains an unsupported value.")
+
+    try:
+        visit(value)
+        encoded = json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+        if len(encoded.encode("utf-8")) > 32768:
+            raise ValueError("Processing metadata exceeds 32 KiB.")
+    except (UnicodeError, RecursionError) as exc:
+        raise ValueError("Processing metadata is not valid bounded Unicode JSON.") from exc
+    return encoded
+
+
 def save(identifier: str, source: str, title: str, language: str, method: str,
          segments: list[dict[str, Any]], translations: dict[str, Any] | None = None,
-         summary: dict[str, Any] | None = None) -> None:
+         summary: dict[str, Any] | None = None, processing_metadata: dict[str, Any] | None = None,
+         highlights: dict[str, Any] | None = None) -> None:
     now = time.time()
+    metadata_json = _processing_metadata_json(processing_metadata)
+    if highlights is not None:
+        validate_highlights(highlights, segments)
     with _connect() as connection:
         connection.execute("""INSERT INTO transcripts
-          (id,source,title,language,method,segments,plain_text,translations,summary,created_at,updated_at)
-          VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+          (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,highlights,created_at,updated_at)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
           (identifier, source, title, language, method,
            json.dumps(segments, ensure_ascii=False), _plain(segments),
            json.dumps(translations or {}, ensure_ascii=False),
-           json.dumps(summary, ensure_ascii=False) if summary else None, now, now))
+           json.dumps(summary, ensure_ascii=False) if summary else None, metadata_json,
+           json.dumps(highlights, ensure_ascii=False, allow_nan=False) if highlights is not None else None, now, now))
+
+
+def set_highlights(identifier: str, highlights: dict[str, Any]) -> bool:
+    """Bind derived excerpts to the current source atomically, preserving edits."""
+    with _connect() as connection:
+        connection.execute("BEGIN IMMEDIATE")
+        row = connection.execute("SELECT segments FROM transcripts WHERE id=?", (identifier,)).fetchone()
+        if row is None:
+            return False
+        validate_highlights(highlights, json.loads(row["segments"]))
+        connection.execute("UPDATE transcripts SET highlights=?, updated_at=? WHERE id=?",
+                           (json.dumps(highlights, ensure_ascii=False, allow_nan=False), time.time(), identifier))
+    return True
 
 
 def get(identifier: str) -> dict[str, Any] | None:
@@ -68,28 +170,100 @@ def get(identifier: str) -> dict[str, Any] | None:
     return _row(row) if row else None
 
 
-def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
+def get_processing_warnings(identifiers: list[str]) -> dict[str, list[str]]:
+    """Read saved warnings without loading transcript text or rebuilding exports."""
+    identifiers = list(dict.fromkeys(identifier for identifier in identifiers if identifier))
+    if not identifiers:
+        return {}
+    result = {}
+    connection = _connect()
+    try:
+        # Recent batch history can contain up to 1,000 items; keep each query
+        # below the parameter limit of older supported SQLite builds.
+        for offset in range(0, len(identifiers), 500):
+            selected = identifiers[offset:offset + 500]
+            rows = connection.execute(
+                "SELECT id,processing_metadata FROM transcripts WHERE id IN (" +
+                ",".join("?" for _ in selected) + ")", selected).fetchall()
+            for row in rows:
+                metadata = json.loads(row["processing_metadata"] or "{}")
+                warnings = metadata.get("warnings", []) if isinstance(metadata, dict) else []
+                result[row["id"]] = list(dict.fromkeys(
+                    warning for warning in warnings if isinstance(warning, str) and warning.strip()
+                )) if isinstance(warnings, list) else []
+    finally:
+        connection.close()
+    return result
+
+
+def _search_key(value: str) -> str:
+    """Canonical, Unicode caseless search without changing stored text."""
+    return unicodedata.normalize("NFC", unicodedata.normalize("NFD", value).casefold())
+
+
+def list_page(query: str = "", limit: int = 50, *, before: tuple[float, str] | None = None) -> dict[str, Any]:
+    """Seek through a stable descending order, including equal creation times."""
     limit = min(max(int(limit), 1), 100)
+    clauses = []
+    parameters = []
     with _connect() as connection:
         if query:
-            escaped = query.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-            term = "%" + escaped + "%"
-            rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
-                 created_at,updated_at FROM transcripts WHERE title LIKE ? ESCAPE '\\' OR
-                 plain_text LIKE ? ESCAPE '\\' ORDER BY created_at DESC LIMIT ?""", (term,term,limit)).fetchall()
-        else:
-            rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
-                created_at,updated_at FROM transcripts ORDER BY created_at DESC LIMIT ?""", (limit,)).fetchall()
-    return [dict(row) for row in rows]
+            # SQLite LIKE folds ASCII only; preserve literal Unicode search.
+            connection.create_function("linkscribe_search_key", 1, _search_key, deterministic=True)
+            term = _search_key(query)
+            clauses.append("(instr(linkscribe_search_key(title), ?) > 0 OR instr(linkscribe_search_key(plain_text), ?) > 0)")
+            parameters.extend((term, term))
+        if before is not None:
+            clauses.append("(created_at, id) < (?, ?)")
+            parameters.extend(before)
+        where = " WHERE " + " AND ".join(clauses) if clauses else ""
+        rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
+                created_at,updated_at FROM transcripts""" + where +
+                " ORDER BY created_at DESC, id DESC LIMIT ?", (*parameters, limit + 1)).fetchall()
+    items = [dict(row) for row in rows[:limit]]
+    cursor = None
+    if len(rows) > limit:
+        cursor = {"created_at": items[-1]["created_at"], "id": items[-1]["id"]}
+    return {"items": items, "next_cursor": cursor}
+
+
+def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
+    return list_page(query, limit)["items"]
+
+
+class EditConflict(ValueError):
+    """A saved transcript changed since the editor's snapshot."""
+
+
+def update_revision(identifier: str, title: str, segments: list[dict[str, Any]],
+                    *, expected_updated_at: float | None = None) -> float | None:
+    # Caller validates IDs, segment count, timestamps, and text constraints.
+    with _connect() as connection:
+        connection.execute("BEGIN IMMEDIATE")
+        existing = connection.execute("SELECT processing_metadata,updated_at FROM transcripts WHERE id=?", (identifier,)).fetchone()
+        if existing is None:
+            return None
+        if expected_updated_at is not None and existing["updated_at"] != expected_updated_at:
+            raise EditConflict("The saved transcript changed. Reload it before saving again.")
+        metadata = json.loads(existing["processing_metadata"] or "{}")
+        metadata.pop("translation", None)
+        metadata.pop("summary", None)
+        metadata["user_edited"] = True
+        now = time.time()
+        if now == existing["updated_at"]:
+            now = math.nextafter(now, math.inf)
+        cursor = connection.execute("""UPDATE transcripts SET title=?, segments=?, plain_text=?,
+            translations='{}', summary=NULL, highlights=NULL, processing_metadata=?, updated_at=? WHERE id=?""",
+            (title, json.dumps(segments,ensure_ascii=False), _plain(segments),
+             _processing_metadata_json(metadata), now, identifier))
+        if connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='batch_queue_items'").fetchone():
+            connection.execute("UPDATE batch_queue_items SET title=?,updated_at=? WHERE library_id=? OR job_id=?",
+                               (title, now, identifier, identifier))
+        return now if cursor.rowcount > 0 else None
 
 
 def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
-    # Caller validates IDs, segment count, timestamps, and text constraints.
-    with _connect() as connection:
-        cursor = connection.execute("""UPDATE transcripts SET title=?, segments=?, plain_text=?,
-            translations='{}', summary=NULL, updated_at=? WHERE id=?""",
-            (title, json.dumps(segments,ensure_ascii=False), _plain(segments), time.time(), identifier))
-        return cursor.rowcount > 0
+    return update_revision(identifier, title, segments) is not None
 
 
 def delete(identifier: str) -> bool:

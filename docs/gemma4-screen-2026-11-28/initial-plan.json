@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T01:50:02.835506+00:00",
+  "status": "frozen before download, native load or candidate output",
+  "purpose": "One text-only official Gemma 4 E4B QAT Q4_0 feasibility and exposed English/Greek translation development screen.",
+  "base_commit": "745554b86bef6f60f85098ec6c9be4c0ad53b3ed",
+  "source_sha256": {
+    "docs/gemma4-screen-2026-11-28/context-only.patch": "717b8c5a3faed347051e53a13a1b37b51f5a9f1a3f0ca672e8eb984ba3a670ef",
+    "docs/gemma4-screen-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/gemma4-screen-2026-11-28/enhancements-context4096.py": "819568e7dd6939ffc9b9eb91130109235b97fb1cfee6192838645dc4e34aa178",
+    "docs/gemma4-screen-2026-11-28/experiment.py": "1be3c476e90983df177e6424a9aa186a88fb323b640764f46873f77b8bf01805",
+    "docs/gemma4-screen-2026-11-28/model-license.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "docs/gemma4-screen-2026-11-28/official-model-metadata.json": "3763eee05f94bc17ea41c774a1fb3299f254a36ff74a9fd502c817e3479a6a39",
+    "docs/gemma4-screen-2026-11-28/publisher-README.md": "6c8dbc23d482d76d6a02e6804941fae6dccdcd20e6372c26e4dec35e21348607",
+    "docs/gemma4-screen-2026-11-28/publisher-chat-template.jinja": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+    "docs/gemma4-screen-2026-11-28/run_phase.py": "8ac32cee61c63de90ca2c7a959d7eb134c73e7ab5068b8b50496346c138c14f8",
+    "docs/gemma4-screen-2026-11-28/source-provenance.json": "68957029b25a38d4e6f0c3fe331661142d0768641a3595539ae460648d3476f7",
+    "docs/translation-followup-2026-11-28/baseline-development.json": "24ff0a087191a112f8f7b778638d0a2c7df4b9518f2d243a35f976eef14824ba",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "marian_translation.py": "75682953b3d68e6fd0a2e585cd826093c4c1f37fa558ebb9ab40cd368700ed5a",
+    "tests/evaluate_translation_quality.py": "412265b53e0dfb9333b90acdf117f84764acd2fcbe73568c122882ed669980f4",
+    "tests/measure_summary_memory.py": "7e6eeb61349b42562169dbf598fc9e885e65967cf5170faebe77a178120f7412",
+    "tests/smoke_full_local_workflow.py": "bfac638d06e4fb747a3702668178b08b828bf3841748797ed94ac9622a73b5ce"
+  },
+  "runtime": {
+    "directory": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+    "version": "0.40.12",
+    "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+    "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+    "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+    "files_sha256": {
+      "bin/ollama": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+      "lib/ollama/llama-server": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b"
+    }
+  },
+  "model": {
+    "repo": "google/gemma-4-E4B-it-qat-q4_0-gguf",
+    "revision": "4b4a2c1d584be7264f87aac328a1bc739ce81b6c",
+    "filename": "gemma-4-E4B_q4_0-it.gguf",
+    "sha256": "676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+    "bytes": 5154941280,
+    "url": "https://huggingface.co/google/gemma-4-E4B-it-qat-q4_0-gguf/resolve/4b4a2c1d584be7264f87aac328a1bc739ce81b6c/gemma-4-E4B_q4_0-it.gguf",
+    "license": "Apache-2.0",
+    "public_ungated_metadata": true,
+    "quantization": "publisher QAT Q4_0; no local conversion or quantization sweep",
+    "local_name": "linkscribe-gemma4-e4b-qat:20261128",
+    "optional_projector_downloaded_or_imported": false,
+    "draft_downloaded_or_imported": false,
+    "native_import_parameters": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 64
+    }
+  },
+  "request_profile": {
+    "think": false,
+    "temperature": 0,
+    "num_ctx": 4096,
+    "num_predict": 2048,
+    "num_thread": 4,
+    "timeout_seconds": 240,
+    "schema": "unchanged production translations array schema",
+    "retain_models": false,
+    "protocol_change": "Candidate model identity and fixed context 8192 -> 4096 only; exact isolated one-line enhancements snapshot and patch retained. Production remains unchanged.",
+    "native_defaults": "Google recommends temperature1/top_p0.95/top_k64. Native import retains those model defaults; explicit production temperature0 overrides sampling temperature. No tuning or glossary."
+  },
+  "limits": {
+    "download_seconds": 600,
+    "prepare_seconds": 360,
+    "infer_seconds": 900,
+    "initialization_seconds": 180,
+    "per_case_seconds": 240,
+    "process_budget_mib": 6144,
+    "sample_interval_seconds": 0.2,
+    "minimum_disk_reserve_bytes": 1073741824,
+    "whole_machine_goal_gib": 7.3,
+    "whole_machine_approval": false,
+    "memory_scope": "External sampled concurrent monitor+worker+owned daemon+native descendants RSS, PSS also. Stop owned processes when >6144 MiB, time cap or measurement error. Sampling may miss transient peaks; this is not a kernel cap. Import/native load/render-only preflight and generation are separately measured."
+  },
+  "evaluation": {
+    "case_ids": [
+      "dev-en-el-transcript-terminology",
+      "dev-el-en-people-and-roles",
+      "dev-en-el-bitcoin-amounts",
+      "dev-el-en-negation-scope",
+      "dev-en-el-conditional-publication",
+      "dev-el-en-uncertain-question"
+    ],
+    "case_count": 6,
+    "split": "development",
+    "attempts_per_case": 1,
+    "retained_baseline": "docs/translation-followup-2026-11-28/baseline-development.json",
+    "baseline_rerun": false,
+    "order": "original exposed six-case order"
+  },
+  "pre_generation_checks": [
+    "Full official pinned file byte count and SHA256; every imported cache descriptor verified.",
+    "No optional projector/draft files, manifest layers or native launch arguments.",
+    "Use actual render-only Ollama API and require exact official Gemma4 small system/user prompt, complete original source and no thinking trigger or answer text.",
+    "Native loaded llama-server tokenization for each complete rendered request; require one BOS and prompt tokens +2048 maximum response +1 end reserve <=4096.",
+    "Require preparation execution/memory pass, actual unload and daemon exit. Freeze resulting imported manifest, native rendering and exact token IDs before any quality generation."
+  ],
+  "source_meaning_criteria": "Every original case criterion remains unchanged. Preserve names, actors/roles, numbers/units/relationships, actions, negation, uncertainty, chronology and conditions. Fluency/lexical checks are not semantic approval. Any material meaning error rejects promotion.",
+  "stop_rules": [
+    "Stop on first execution, structure, protocol, output cap, missing final answer, nonempty reasoning, cleanup, time or sampled resource failure. Preserve complete/partial outputs.",
+    "Semantic flags do not trigger tuning; independent reviewer grades every completed original case.",
+    "No retries, heldout reads/runs, summary calls or production integration in this stage."
+  ],
+  "language_evidence_limit": "Publisher specifies140+ pretraining languages/35+ out-of-box languages but the examined primary model card/report does not enumerate Greek or give Greek translation scores. Greek fidelity is unverified and is the explicit purpose of actual development screening; Gemini language lists are not used as Gemma4 evidence.",
+  "memory_hypothesis": "The standalone text file is4.80GiB, separate from optional0.92GiB projector. At fixed4096 context, text-only CPU import is plausible under6GiB, but static file size and mobile/GPU estimates are not actual CPU RSS. Native load and all translations must pass the measured cap. No long-context/app-wide resource approval.",
+  "storage": {
+    "directory": "/workspace/scratch/94360995dd61/linkscribe-gemma4-runtime",
+    "free_bytes_before_plan": 8269619200,
+    "layout": "Download once directly into the isolated content-addressed Ollama blob. Official create references its SHA. No separate full payload copy or shared-cache modifications."
+  },
+  "research_sources": [
+    {
+      "url": "https://huggingface.co/google/gemma-4-E4B-it-qat-q4_0-gguf",
+      "supports": "Publisher-hosted exact public Apache2 QAT GGUF and native local runtime route."
+    },
+    {
+      "url": "https://huggingface.co/google/gemma-4-E4B-it-qat-q4_0-gguf/tree/4b4a2c1d584be7264f87aac328a1bc739ce81b6c",
+      "supports": "Separate exact text and projector files; official revision pinned."
+    },
+    {
+      "url": "https://gemma.ai/models/gemma-4/",
+      "supports": "Official QAT GGUF CPU/llama.cpp guidance; static/mobile memory numbers explicitly not measured CPU process footprint."
+    },
+    {
+      "url": "https://gemma.ai/get-started/capabilities/thinking/",
+      "supports": "Native E2B/E4B no-thinking format without think token or empty thought block."
+    },
+    {
+      "url": "https://gemma.ai/get-started/prompt-formatting/",
+      "supports": "Gemma4 native system/user/model turn protocol."
+    },
+    {
+      "url": "https://arxiv.org/html/2607.02770v1",
+      "supports": "Distinct Gemma4 architecture/posttraining, per-layer embeddings, QAT and cache-sharing; no guarantee of our task fidelity."
+    },
+    {
+      "url": "https://github.com/ollama/ollama/blob/v0.40.12/server/create.go",
+      "supports": "Native GGUF Gemma4 renderer/parser autodetection."
+    },
+    {
+      "url": "https://github.com/ollama/ollama/blob/v0.40.12/model/renderers/gemma4.go",
+      "supports": "Exact system/user no-thinking renderer."
+    }
+  ]
+}

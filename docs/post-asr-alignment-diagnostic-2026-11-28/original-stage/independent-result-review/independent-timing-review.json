@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:01:21.445086+00:00",
+  "decision": "Reject this global-fallback profile as a full-film timing improvement; retain four structurally valid short-control results without acoustic accuracy approval.",
+  "independent_of_runner_author": true,
+  "audit_sha256": "3f12e3e6ac548fe68815767112aaca14b7d76a806c85a9018c53ec7a9a2c386f",
+  "source_and_criteria_before_output_sha256": "02cea97b330f4ff54637ecbe7f63269bfaeb34dfcdf93161516ea8e6912e8310",
+  "raw_report_sha256": "2633406921d09adc2db49c0d8c2823ce69c47ba5459ceede6d9e683ea9711a28",
+  "contract_errors": [],
+  "completed_inputs": 5,
+  "native_encode_calls": 23,
+  "native_align_calls": 23,
+  "fresh_generation_calls": 0,
+  "source_words_tokens_and_segment_order_unchanged": true,
+  "complete_film_segments": 86,
+  "original_six_window_segment_passes": 4,
+  "original_six_window_word_passes": 0,
+  "all76_publisher_cues_reviewed": true,
+  "full_film_final_timing": "All86 exact physically bounded baseline intervals retained after the global-order fallback; no timing improvement accepted.",
+  "exact_crossing": {
+    "left_segment_index": 80,
+    "left_adjusted_interval": [
+      557.9799999999999,
+      563.46
+    ],
+    "right_segment_index": 81,
+    "right_adjusted_interval": [
+      563.2,
+      566.72
+    ],
+    "overlap_seconds": 0.26,
+    "original_seeks": [
+      53720,
+      56320
+    ],
+    "cause_scope": "One adjacent cross-window conflict in retained upstream estimates; full-film global fallback is a projection policy consequence, not an ASR omission."
+  },
+  "raw_only_unaccepted_estimates": [
+    {
+      "segment_index": 76,
+      "source": "Captain, we have to abort!",
+      "baseline": [
+        485.0,
+        508.8
+      ],
+      "raw_adjusted": [
+        504.78,
+        508.12
+      ]
+    },
+    {
+      "segment_index": 77,
+      "source": "The world's changed, Celia.",
+      "baseline": [
+        508.8,
+        535.2
+      ],
+      "raw_adjusted": [
+        518.54,
+        520.42
+      ]
+    }
+  ],
+  "unavailable_private_word_evidence_before_global_fallback": [
+    55,
+    58,
+    65,
+    66,
+    67,
+    78
+  ],
+  "four_short_controls": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "aligned_words": 11,
+      "changed_intervals": [
+        {
+          "index": 0,
+          "text": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+          "baseline": [
+            0.0,
+            6.0
+          ],
+          "candidate": [
+            0.0,
+            5.7
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+      "aligned_words": 11,
+      "changed_intervals": [
+        {
+          "index": 0,
+          "text": "Κάποια θεστηβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+          "baseline": [
+            0.0,
+            6.0
+          ],
+          "candidate": [
+            0.0,
+            5.7
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "aligned_words": 15,
+      "changed_intervals": [
+        {
+          "index": 0,
+          "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+          "baseline": [
+            0.0,
+            6.54
+          ],
+          "candidate": [
+            0.6799999999999995,
+            5.26
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-quiet-minus20db",
+      "aligned_words": 14,
+      "changed_intervals": [
+        {
+          "index": 0,
+          "text": "When you call someone who is thousands of miles away, you're using a satellite.",
+          "baseline": [
+            0.0,
+            6.0
+          ],
+          "candidate": [
+            0.6800000000000008,
+            5.3
+          ]
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "reference_review_limits": [
+    "All76 coarse publisher cues were inspected through an order-preserving exact-token diagnostic and the complete86-segment native/projected timeline. No threshold converts token overlap into semantic acceptance.",
+    "Publisher omissions, written screen text, contractions, spelling differences and speaker noises remain distinct from speech-model errors. Missing exact matches are retained, not automatically declared omissions.",
+    "Original lexical failures survive unchanged, including override versus overwrite, misrecognized commands, names, and Greek spelling/quiet-word errors. Fixed-text alignment cannot correct or certify them.",
+    "Unsupported baseline text such as repeated punctuation or extra phrases is retained; alignment of supplied text does not establish that it was spoken.",
+    "No exact acoustic word-boundary or speaker-attribution approval follows from these structural checks. Four short controls are complete-input timing-contract evidence only.",
+    "The734.000-second official-film rendition cannot regrade the prior734.1453125-second provider failure. No provider or whole-app execution occurred."
+  ],
+  "elapsed_seconds": 32.45680328399976,
+  "sampled_owned_peak_rss_bytes": 1175019520,
+  "model_unloaded_and_owned_group_empty": true,
+  "production_adoption_approved": false,
+  "historical_rejection_preserved": true,
+  "possible_next_step": "Separately freeze a source-only conflict-local fallback and controls, then replay unchanged native outputs offline; no new model request or reference-based timestamp edits."
+}

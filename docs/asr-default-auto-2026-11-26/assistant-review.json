@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "reviewer": "Assistant comparison with fixed dataset references and preceding exposed outputs; not human listening or fresh validation.",
+  "scope": "Default model and language form-field omission, automatic el detection, real upload and durable original-text/export workflow after exact-zero/decoded-duration guards.",
+  "default_path_acceptance": "passed",
+  "semantic_quality_approval": false,
+  "source_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "raw_report_sha256": "8514a07ce502d4a8c6a072a6f329db2c2c3c8bca55af162a1e776dfec06f8676",
+  "prior_explicit_report_sha256": "7eeaa2620569d83ad9d1eb4684a219be7195c9c5c9712c1c5a9c621e05d367b8",
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "detected_language": "el",
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "actual_hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+      "exact_match_to_prior_explicit_hypothesis": true,
+      "assistant_classification": "minor_issue",
+      "finding": "Camping/family meaning retained with spelling/grammar defects, including ιδικούς/κατασκοινωτικούς/οικογένεις."
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "detected_language": "el",
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "actual_hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια.",
+      "exact_match_to_prior_explicit_hypothesis": true,
+      "assistant_classification": "major_error",
+      "finding": "Proper name Μαρτελί remains damaged as Μαρτεή; fifth council and four-year interval remain. Numeric 4 is equivalent to written τέσσερα."
+    }
+  ],
+  "limits": [
+    "Two already exposed Greek read-speech cases, chosen by existing manifest order before this run.",
+    "No population accuracy, default Auto performance on other languages, noise, meetings or long recordings is established.",
+    "References and review criteria are never decoder prompts.",
+    "Source audio bytes were reused unchanged; all model weights were already cached and hash-verified.",
+    "Structural success and correct detected language do not correct the recognized words."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "executed": false,
+  "cases": [
+    {
+      "id": "exact-accept",
+      "returncode": 0,
+      "stdout": "Input string is valid according to the grammar.\n",
+      "stderr": "",
+      "expected": "accepted"
+    },
+    {
+      "id": "exact-reject",
+      "returncode": 0,
+      "stdout": "Input string is invalid according to the grammar.\nError: Unexpected end of input at position 1\n\nInput string:\no\u001b[0m\n",
+      "stderr": "",
+      "expected": "rejected"
+    },
+    {
+      "id": "loose-valid-substring",
+      "returncode": 0,
+      "stdout": "invalid; not valid\n",
+      "stderr": "",
+      "expected": "operational_error"
+    },
+    {
+      "id": "zero-with-no-status",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "expected": "operational_error"
+    },
+    {
+      "id": "success-with-warning",
+      "returncode": 0,
+      "stdout": "Input string is valid according to the grammar.\n",
+      "stderr": "warning\n",
+      "expected": "operational_error"
+    },
+    {
+      "id": "nonzero-even-with-status",
+      "returncode": 1,
+      "stdout": "Input string is valid according to the grammar.\n",
+      "stderr": "",
+      "expected": "operational_error"
+    },
+    {
+      "id": "truncated-rejection",
+      "returncode": 0,
+      "stdout": "Input string is invalid according to the grammar.\n",
+      "stderr": "",
+      "expected": "operational_error"
+    },
+    {
+      "id": "extra-success-output",
+      "returncode": 0,
+      "stdout": "Input string is valid according to the grammar.\nextra\n",
+      "stderr": "",
+      "expected": "operational_error"
+    }
+  ]
+}

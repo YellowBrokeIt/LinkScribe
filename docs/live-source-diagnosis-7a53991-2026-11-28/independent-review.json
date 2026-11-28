@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:43:55.528904+00:00",
+  "scope": "Bounded independent read of retained hosted outputs, event log, SQLite and exported transcript files. No gate rerun, source change, provider request, model execution, audio listening or widened timing window.",
+  "source_commit": "7a53991da60c9e052be9a72299218b291b364c8d",
+  "source_app_sha256": "0840ee8cd72898b6fd61831888ee4932d3a3892070660ed76174f1700c8f9044",
+  "artifact_files_sha256": {
+    "provider-report.json": "e72f3b954b4c65ba7564a51ae98eeb873c5f8701bad9f0fd785f01b0b5364cab",
+    "dailymotion-tail-check.json": "5fb12f102036e8aeb96d98838476e95dea82ed3d8a0a27a4379987b61aec19eb",
+    "events.jsonl": "a0fd2dffb9f528938409cb68ef5605d37e4251360e4f5b68721adaa863dac0b8",
+    "server.log": "1f4f4976f83ed26cdf8be4cf00ad2402105168b429829051a84d378aa20dbcea",
+    "library.sqlite3": "6bc846ef6f0faec563989ed46ad738e00b0feba9b22d1717bc1ff5d3ae2ccc55",
+    "records/0e6ba274ee414734961f565d496588b5.json": "9f10063ca0d8eb31a4903b56c50b626cd6c26053d22184d8af38857f78fb55e3",
+    "downloads/0e6ba274ee414734961f565d496588b5.json": "5c6499aa72283244908149247a17fb4501177a53598382fab090cbcd30195aba"
+  },
+  "failure_classifications_confirmed": true,
+  "anchor": {
+    "fixture": "dailymotion_tears_of_steel",
+    "job_id": "0e6ba274ee414734961f565d496588b5",
+    "classification": "full_segment_containment_failure_not_phrase_omission",
+    "raw_event": {
+      "at": "2026-11-28T04:31:44.527087+00:00",
+      "pid": 3645,
+      "kind": "asr_segment_created",
+      "job_id": "0e6ba274ee414734961f565d496588b5",
+      "segment": {
+        "id": 64,
+        "seek": 50218,
+        "start": 509.18,
+        "end": 520.1800000000001,
+        "text": " The world's changed Celia.",
+        "tokens": [
+          50714,
+          440,
+          1002,
+          311,
+          3105,
+          19967,
+          654,
+          13,
+          51264
+        ],
+        "avg_logprob": -0.8067277789115905,
+        "compression_ratio": 0.8688524590163934,
+        "no_speech_prob": 0.0726904347538948,
+        "words": null,
+        "temperature": 0.0
+      }
+    },
+    "saved_zero_based_segment_index": 63,
+    "saved_segment": {
+      "start": 509.18,
+      "end": 520.18,
+      "text": "The world's changed Celia."
+    },
+    "frozen_window_seconds": [
+      510.0,
+      529.0
+    ],
+    "start_precedes_window_by_seconds": 0.82,
+    "end_is_within_window": true,
+    "only_contained_saved_text": "Yeah",
+    "phrase_present_in_raw_saved_sqlite_and_exports": true,
+    "exports": {
+      "txt": {
+        "sha256": "eb15a20b0c9f19d408a8bfcef6bb592af3205337f4d711f11c37abc398b2ee9d",
+        "phrase_present": true
+      },
+      "srt": {
+        "sha256": "716b875d01243d880e664ee201ca65f2b30a2043100f5862404d068bdee0aaaf",
+        "matching_cue": "64\n00:08:29,180 --> 00:08:40,180\nThe world's changed Celia."
+      },
+      "vtt": {
+        "sha256": "129073e7efdb40e3ec6147791c7b9249e7bc458d7afa1f9d0851ddc9c7fbcb00",
+        "matching_cue": "00:08:29.180 --> 00:08:40.180\nThe world's changed Celia."
+      }
+    },
+    "failed_check": "late_dialogue_world_changed",
+    "other_retained_checks_passed": 27,
+    "frozen_gate_result_remains": "fail",
+    "meaning_scope": "The specific sentence is retained. This does not approve the surrounding merged/corrupted wording, complete dialogue coverage or alignment accuracy. The 0.82-second difference is relative to the frozen gate lower bound, not a measured human-aligned speech onset."
+  },
+  "mixed_batch_repeat": {
+    "batch_id": "82cf1cdfff71499fb937aa5ca4b81778",
+    "job_id": "15cd97b9651e42bcb9bbdac323170498",
+    "classification": "provider_acquisition_failure_before_asr",
+    "events": [
+      {
+        "at": "2026-11-28T04:32:21.859501+00:00",
+        "pid": 3645,
+        "kind": "acquisition_start",
+        "job_id": "15cd97b9651e42bcb9bbdac323170498",
+        "provider": "dailymotion",
+        "url": "https://www.dailymotion.com/video/xbvubxi"
+      },
+      {
+        "at": "2026-11-28T04:32:23.329442+00:00",
+        "pid": 3645,
+        "kind": "acquisition_failed",
+        "job_id": "15cd97b9651e42bcb9bbdac323170498",
+        "errors": [
+          {
+            "type": "ReadableError",
+            "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+          },
+          {
+            "type": "DownloadError",
+            "message": "ERROR: [dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+          },
+          {
+            "type": "ExtractorError",
+            "message": "[dailymotion] xbvubxi: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+          }
+        ],
+        "elapsed_seconds": 1.47
+      }
+    ],
+    "observed_event_counts": {
+      "acquisition_start": 1,
+      "acquisition_failed": 1
+    },
+    "recognition_decode_transcribe_or_segment_events": 0,
+    "final_job_status": "error",
+    "saved_library_id": "",
+    "final_batch_completed": 2,
+    "final_batch_failed": 2,
+    "interpretation": "The repeated Dailymotion request reports no video formats during yt-dlp extraction. The earlier successful Dailymotion fixture does not make this second request successful. The mixed-batch gate expected one successful source and one failed source, but both requests failed; that original failure remains."
+  },
+  "causal_limits": [
+    "No source-code or model-causality claim is made from this bounded review. Timing variation is already present in raw native output, before persistence/export.",
+    "The exact yt-dlp error establishes the stage of failure, not whether its root cause is provider policy, extractor behavior, network response or another environmental condition.",
+    "All original failures, source hashes and anchor windows remain unchanged. The artifact ZIP and GitHub run were not re-downloaded in this review."
+  ]
+}

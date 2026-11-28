@@ -1,0 +1,101 @@
+{
+  "created_at": "2026-11-28T02:20:46.158202+00:00",
+  "scope": "Primary small metadata/source inspection only; no local Qwen weights, native tokenizer JSON, Torch wheel or Transformers wheel downloaded. No local model initialization/inference.",
+  "torch": {
+    "version": "2.15.0+cpu",
+    "wheel_url": "https://download-r2.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "published_wheel_sha256": "0955c7e3446326293f48af18fad67872fa31dee5a36a87690eb9e5be8b465be3",
+    "downloaded_pep658_metadata_sha256": "8bbf94c86c3be6cf586385861d476b78cb66d19b67fef49ece4f7d68ca428cc3",
+    "cpu_only_metadata": "No CUDA runtime dependency in the selected CPU wheel metadata; execution also requires torch.version.cuda is None."
+  },
+  "transformers": {
+    "version": "5.13.0",
+    "source_commit": "6af945f436d85f2b0c5dff9b14feccd27b1d470b",
+    "published_wheel_sha256": "8adbc1d20bd5463cd6876b2eb7cb31971e1065788e7dc6bc12bab597a7c504b7",
+    "primary_pypi_url": "https://pypi.org/pypi/transformers/5.13.0/json"
+  },
+  "direct_dependency_metadata": [
+    {
+      "package": "huggingface-hub",
+      "version": "1.5.0",
+      "primary_metadata_url": "https://pypi.org/pypi/huggingface-hub/1.5.0/json",
+      "retrieved_metadata_sha256": "3ebaeaca8d4a907e4ea8e3572081e3c9eced704b0600cfd080e839b43aa04312",
+      "requires_python": ">=3.9.0",
+      "base_dependencies": [
+        "filelock>=3.10.0",
+        "fsspec>=2023.5.0",
+        "hf-xet<2.0.0,>=1.2.0; platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"arm64\" or platform_machine == \"aarch64\"",
+        "httpx<1,>=0.23.0",
+        "packaging>=20.9",
+        "pyyaml>=5.1",
+        "tqdm>=4.42.1",
+        "typer",
+        "typing-extensions>=4.1.0"
+      ]
+    },
+    {
+      "package": "safetensors",
+      "version": "0.8.0",
+      "primary_metadata_url": "https://pypi.org/pypi/safetensors/0.8.0/json",
+      "retrieved_metadata_sha256": "b8d395b433d0319498c9192ed323b86a84d82b5f40b4adf1b97b3bf8963fafad",
+      "requires_python": ">=3.10",
+      "base_dependencies": []
+    },
+    {
+      "package": "tokenizers",
+      "version": "0.22.2",
+      "primary_metadata_url": "https://pypi.org/pypi/tokenizers/0.22.2/json",
+      "retrieved_metadata_sha256": "e0d26d6f718da53613086be74e029862d02e1ad2789e5fc7129c761eafda3f50",
+      "requires_python": ">=3.9",
+      "base_dependencies": [
+        "huggingface-hub<2.0,>=0.16.4"
+      ]
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.5",
+      "primary_metadata_url": "https://pypi.org/pypi/numpy/2.5.5/json",
+      "retrieved_metadata_sha256": "02d3102fe56e3deefd9c75982046607864db0487b854e611e6c43edd6a2235a4",
+      "requires_python": ">=3.12",
+      "base_dependencies": []
+    },
+    {
+      "package": "av",
+      "version": "16.1.0",
+      "primary_metadata_url": "https://pypi.org/pypi/av/16.1.0/json",
+      "retrieved_metadata_sha256": "b6d8bae0948a2eaeaf74ac4f3ffc056d0d98a3c8b6f9d8bd864b567423e411e9",
+      "requires_python": ">=3.10",
+      "base_dependencies": []
+    },
+    {
+      "package": "jinja2",
+      "version": "3.1.6",
+      "primary_metadata_url": "https://pypi.org/pypi/jinja2/3.1.6/json",
+      "retrieved_metadata_sha256": "1bc757d7065f3e67d3a49e72ebc731d0774055575732592eede9820c136329cc",
+      "requires_python": ">=3.7",
+      "base_dependencies": [
+        "MarkupSafe>=2.0"
+      ]
+    }
+  ],
+  "retained_setup_lookup_failure": {
+    "url": "https://pypi.org/pypi/tokenizers/0.23.0/json",
+    "error": "HTTP 404 Not Found",
+    "resolution_before_execution": "Pin existing stable tokenizers0.22.2, within Transformers5.13 requirement >=0.22.0,<=0.23.0. Versions0.23.1+ exceed that upper bound. No installation/inference attempt used the missing version."
+  },
+  "inspected_native_sources": [
+    {
+      "primary_source_url": "https://github.com/huggingface/transformers/blob/6af945f436d85f2b0c5dff9b14feccd27b1d470b/src/transformers/models/qwen3_asr/processing_qwen3_asr.py",
+      "source_file_sha256": "c8aac6dc0ae9e8818a1f2dc7353a4f90e9f9f727888111adb5dee1cf5c16895d"
+    },
+    {
+      "primary_source_url": "https://github.com/huggingface/transformers/blob/6af945f436d85f2b0c5dff9b14feccd27b1d470b/src/transformers/models/qwen3_asr/feature_extraction_qwen3_asr.py",
+      "source_file_sha256": "95d23cca9645546b9f6a97885eace5c02a95f5048bf3616e03f00041fd993a74"
+    },
+    {
+      "primary_source_url": "https://github.com/huggingface/transformers/blob/6af945f436d85f2b0c5dff9b14feccd27b1d470b/src/transformers/models/qwen3_asr/modeling_qwen3_asr.py",
+      "source_file_sha256": "a3001e0e8c6cbbf922e097489357953131ba7573526cbd4676ef0d2a448d74c8"
+    }
+  ],
+  "transitive_dependency_scope": "Direct recognition dependencies are pinned. Hosted pip install report, freeze, and pip check retain the actual resolved transitive environment. This is not represented as a complete transitive lockfile."
+}

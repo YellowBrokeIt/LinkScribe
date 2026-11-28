@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:56:58.909681+00:00",
+  "reviewer": "/root",
+  "independent_of_candidate_author": true,
+  "auditor_sha256": "9d12ce0c899eee5acc76b26574845a1621acc37d1d74ee788402300593fd5cd3",
+  "source_and_criteria_before_output_sha256": "e945e62680fedcf1abf5cb8eb25d0987411d55a659c2693d7afb59f9e8cf3063",
+  "inference_authorization_sha256": "a3824c316e396f429be6c093dcd8cbda0e090543deb83fade35f7d21ca190ade",
+  "frozen_bindings_verified": 133,
+  "execution_sha256": "68c432e21db78cfe9ac44633507c57e43cbfdb12677088a5a93e68707f6f4dcd",
+  "resource_report_sha256": "d00b916c0b4c75b019af0d9467c3642bdf7cd211a028d36801656a46e7738ffa",
+  "sample_stream_sha256": "8fd3bb22f9324150318cd7f89816b8942ff651cb9d3506508ea846be0b73f033",
+  "case_observations": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "raw_translation_strings": [
+        "Η <x0/> αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+        "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+      ],
+      "accepted_translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Η Maria αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "guard_rejection_reproduced": null,
+      "prompt_tokens": 261,
+      "output_tokens": 59,
+      "report_sha256": "03ec5161231800f9a77f4f4b7d7ed4ddc145cf02256c1a30f190291ba131be4b",
+      "protection_sha256": "d8b5ea243c6e1ab154cc9ccb5ee2824a371784e3e13b8e42783d892e50c87b33"
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "source_segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "raw_translation_strings": [
+        "Nick sent the text to Helen, not to Elena.",
+        "Helen is the translator. Nick is doing the recording and Elena is checking the subtitles."
+      ],
+      "accepted_translation": null,
+      "guard_rejection_reproduced": "A protected marker is missing, duplicated, unknown or in the wrong source segment.",
+      "prompt_tokens": 350,
+      "output_tokens": 47,
+      "report_sha256": "469bafac5e96735ef366f6968c973f5b89811df2d448171cd718fa3d7371e4c4",
+      "protection_sha256": "2e0fcbcbc210d0c3c96983c532d12bbb47ed04e7bc36c41ba76b089d5bd20a9e"
+    }
+  ],
+  "cases_unrun": [
+    "dev-en-el-bitcoin-amounts",
+    "dev-el-en-negation-scope",
+    "dev-en-el-conditional-publication",
+    "dev-el-en-uncertain-question"
+  ],
+  "actual_generations": 2,
+  "accepted_translations": 1,
+  "raw_response_and_complete_request_preserved": true,
+  "all_429_sample_sums_order_and_peaks_verified": true,
+  "runtime": {
+    "elapsed_seconds": 53.240123,
+    "sample_count": 429,
+    "peak_rss_bytes": 5842067456,
+    "peak_pss_bytes": 5832692736,
+    "worker_exit_code": 1,
+    "supervisor_passed": false,
+    "measurement_complete": true,
+    "resource_limit_triggered": false,
+    "both_unloads_resident_empty_and_owned_cleanup_passed": true
+  },
+  "reviewer_native_model_tokenizer_calls": 0,
+  "reviewer_repair_or_retry_performed": false,
+  "mechanical_decision": "Reject at case 2; the completed first case is reviewed separately for meaning. Four cases remain unrun.",
+  "semantic_approval_claimed_by_this_mechanical_audit": false
+}

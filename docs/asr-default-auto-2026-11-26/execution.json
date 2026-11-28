@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-11-26T20:28:00.145727+00:00",
+  "status": "completed",
+  "published_commit": "2760679cdcd5bf2fdd0f18589e821a89d2bd9b90",
+  "source_sha256_before": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "prepared_invocation_sha256": "cd1a73621a538eba43d84d8da68019dce623de729798ab7ef924e034ec5edd61",
+  "manifest_sha256": "d7a54c7ec92d5bdd081a6b8fabe31c693b5d298b9ec0e75688d545a7796a8918",
+  "command": [
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/speaker-qa/.venv/bin/python",
+    "tests/smoke_real_asr_quality.py",
+    "--manifest",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/fixtures.json",
+    "--output",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/default-auto-greek/small-auto-greek-result.json",
+    "--language-mode",
+    "auto",
+    "--model-provenance",
+    "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/model-provenance.json",
+    "--timeout",
+    "180"
+  ],
+  "cwd": "/workspace/scratch/88e3e0e8fa8f/LinkScribe",
+  "explicit_environment": {
+    "ORT_DISABLE_TELEMETRY": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HOME": "/workspace/scratch/88e3e0e8fa8f/qa-runtime/asr-qa/hf-cache",
+    "LINKSCRIBE_DEVICE": "cpu"
+  },
+  "proxy_tls_policy": "Inherit existing proxy and TLS settings unchanged; do not log their potentially sensitive values. No network download is allowed by the offline run.",
+  "model_cache_hashes_verified": true,
+  "slot_release": "Bilingual explicitly reported its Ollama wrapper exited and released local inference before this run.",
+  "no_download_allowed": true,
+  "exit_code": 0,
+  "finished_utc": "2026-11-26T20:28:09.658557+00:00",
+  "wall_seconds": 9.512,
+  "source_sha256_after": {
+    "app.py": "41386cfc78938c8d8a03837e02be7ed4a7a53cbc5525947a73da651304d8c671",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+  },
+  "source_hashes_unchanged": true
+}

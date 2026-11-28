@@ -70,8 +70,12 @@ def runtime_details() -> dict[str, Any]:
 
 
 def yt_dlp_js_options() -> dict[str, Any]:
-    """Leave yt-dlp's default Deno selection, otherwise permit only patched Node."""
+    """Permit a checked runtime and disable defaults when none is supported."""
     chosen = runtime_details()
     if chosen["runtime"] == "node":
         return {"js_runtimes": {"node": {}}}
-    return {}
+    if chosen["runtime"] == "deno":
+        return {}
+    # Omitting the option enables yt-dlp's default Deno runtime, including a
+    # Deno installation we just rejected. An explicit empty map disables it.
+    return {"js_runtimes": {}}

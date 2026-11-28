@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "reviewer": "OpenAI assistant; no human, blinded, or audio-listening evaluation claimed",
+  "review_date": "2026-11-26",
+  "record": "dailymotion-tiny-record.json",
+  "reference_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:Tears_of_Steel_in_4k_-_Official_Blender_Foundation_release.webm.en.srt&oldid=188560225",
+  "reference_kind": "Published English subtitles of the official Blender film on Wikimedia Commons; not an independently made exact transcript of this repost.",
+  "provider_page": "https://www.dailymotion.com/video/xbvubxi",
+  "official_subtitle_index": "https://download.blender.org/demo/movies/ToS/subtitles/",
+  "official_subtitle_fetch": "Direct .srt retrieval was unavailable in this workspace; no byte-identity claim with the official .srt is made.",
+  "rating": "major_content_issues",
+  "scope": "Qualitative text comparison, with timestamp coverage checks. No WER, alignment accuracy score, or general model accuracy estimate.",
+  "observed_audio_container_duration_seconds": 734.191746,
+  "decoded_sample_duration": "not recorded in this historical run",
+  "observed_transcript_last_end_seconds": 423.1,
+  "reference_last_dialogue_end_seconds": 567,
+  "findings": [
+    {
+      "type": "name_and_statement_error",
+      "reference_time": "00:23",
+      "reference_excerpt": "You're a jerk, Thom.",
+      "output": "Durkton.",
+      "output_start": 11.57,
+      "output_end": 24.37
+    },
+    {
+      "type": "meaning_error",
+      "reference_time": "00:30.8",
+      "reference_excerpt": "freaked out",
+      "output_excerpt": "reached out",
+      "output_start": 30.37,
+      "output_end": 34.53
+    },
+    {
+      "type": "meaning_error",
+      "reference_time": "06:30.5",
+      "reference_excerpt": "crush",
+      "output_excerpt": "pressure",
+      "output_start": 389.74,
+      "output_end": 391.74
+    },
+    {
+      "type": "missing_later_dialogue",
+      "reference_time_range": "07:08–09:27",
+      "description": "No output segment follows 07:03.10. The reference includes later speech, including an abort instruction and the closing conversation; the Dailymotion page transcript independently contains later 08:26, 08:39, 09:19 entries. Exact audio content and cause of the omission were not isolated.",
+      "example_reference_time": "08:26",
+      "reference_excerpt": "Captain! We have to abort!"
+    },
+    {
+      "type": "timing_needs_review",
+      "output_start": 62.42,
+      "output_end": 118.69,
+      "output": "Could it be down there?",
+      "description": "A short utterance spans 56.27 seconds in the output; published subtitles put the corresponding question near 01:57. This is evidence against treating timestamp ordering checks as subtitle alignment approval."
+    }
+  ],
+  "positive_observation": "The output contains recognizable film dialogue in order, including the robotics/space conversation; it is not merely nonempty unrelated text.",
+  "functional_result_unchanged": "Real acquisition, recognition execution, SQLite, exports, cleanup, mixed batch and completed-state restart checks passed for this source. Content quality remains a separate failed review.",
+  "next_check": "Run production Small model on the same complete provider scope, retain actual decoded sample duration and exact input hashes, and compare resulting content before changing any quality claim."
+}

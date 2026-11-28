@@ -1,0 +1,476 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T01:00:49.305142+00:00",
+  "review_type": "Independent post hoc exploratory reference/transcript review; separate from the frozen four-anchor gate",
+  "reviewer": "package_verification",
+  "source_commit": "79189b013732fb95c1e685e1639b1b7891899729",
+  "plan_sha256": "42d5aa819b264ee3a1622d8c76956cdfa727b98825c5cb319819036c651a0312",
+  "reference_sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+  "media_sha256_verified": "2ec70bfb31b70d4229d8a7c1ea1e759fd3d464c206d0c3a7ff15c7752c0b25ea",
+  "method": "Read all 76 publisher subtitle cues and both complete saved hypotheses/segment lists. Inspect raw decoder events for conspicuous new losses, compare every raw text and rounded timestamp to saved/exported segments, and independently read the retained SQLite records in a new read-only connection. No new inference, audio listening, option edits, or anchor-window changes.",
+  "fixed_gate": {
+    "candidate_four_reference_anchors_preserved": true,
+    "frozen_anchor_ids": [
+      "71",
+      "72",
+      "75",
+      "76"
+    ],
+    "windows_unchanged": true,
+    "post_hoc_findings_are_not_new_fixed_gate_criteria": true
+  },
+  "arms": {
+    "baseline": {
+      "report": {
+        "canonical_repo_path": "docs/asr-official-tail-2026-11-28/baseline-report.json",
+        "sha256": "44107e7cb63209366262efd754f9e1e86ec9327fe950ee16c92b329b72731111"
+      },
+      "events_sha256": "b11411d2b296486f5a55acaabe9726ed826d157a72da6ccafea232512f62c38d",
+      "source_sha256": {
+        "app.py": "03bce28bd1f31571e519e87abe22b992ce49fd0c6e420bf03f7ddc33f463a996",
+        "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+      },
+      "source_files_match_retained_snapshot": true,
+      "source_files_unchanged_during_run": true,
+      "job_id": "052414708bcb4ad5a08a9adc1e4af992",
+      "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "model_bin_sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+      "transcribe_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false
+      },
+      "raw_segment_count": 86,
+      "raw_word_count": 0,
+      "raw_words_scope": "Word alignment disabled; raw word arrays are absent.",
+      "raw_to_saved_and_export_exact_after_production_rounding": true,
+      "independent_read_only_sqlite_query_matches": true,
+      "library_sqlite_sha256": "24095da6dd98506fa6971ee376800d720ccd76eac336f6b948d52bbf039b5e21",
+      "export_json_sha256": "68fd406da9c2a35b33a780a576e69e55ddf7adeddba4b4945510f835a25104cc",
+      "exports_check_results": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "processing_metadata": {
+        "asr": {
+          "engine": "faster-whisper",
+          "model": "small",
+          "word_timestamps": false,
+          "word_timing_for_speakers": false,
+          "hallucination_silence_threshold_seconds": null,
+          "vad_filter": false
+        }
+      },
+      "elapsed_seconds": 64.991,
+      "descriptive_word_metrics": {
+        "reference_words": 334,
+        "hypothesis_words": 355,
+        "substitutions": 43,
+        "deletions": 6,
+        "insertions": 27,
+        "word_errors": 76,
+        "word_error_rate": 0.2275449101796407
+      },
+      "same_complete_pcm": {
+        "seconds": 734.0,
+        "samples": 11744000,
+        "sha256": "ce528ed4ac517abefcbfb90f9aedbb7313d246ad89f03eabb5ba69a104d3ae06",
+        "vad_filter": false,
+        "duration_after_vad_seconds": 734.0,
+        "whole_recording_speech_check_count": 0
+      }
+    },
+    "aligned": {
+      "report": {
+        "canonical_repo_path": "docs/asr-official-tail-2026-11-28/aligned-report.json",
+        "sha256": "89914a3b94daf0385d9d740ea3eea1fd47f33c1e6f4fbb443bca0f3fbe294825"
+      },
+      "events_sha256": "dd7470c7b191f4b0b94aa7064a091defba6c2d2d7eadb037a93b658cf8f6c632",
+      "source_sha256": {
+        "app.py": "9504c3a3c4aaabae0e4d0cd78e25f71dd6ce6aa51c37de7d2c30f108197dde47",
+        "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+        "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+        "tests/smoke_real_asr_quality.py": "10ad3b3a72926deabed9a3bb3fe3cf0e426b0eab3a2d0459690179ad79b20fbf"
+      },
+      "source_files_match_retained_snapshot": true,
+      "source_files_unchanged_during_run": true,
+      "job_id": "477117ef20f14c83ad37267084139df8",
+      "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "model_bin_sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+      "transcribe_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false,
+        "word_timestamps": true,
+        "hallucination_silence_threshold": 2.0
+      },
+      "raw_segment_count": 60,
+      "raw_word_count": 330,
+      "raw_words_scope": "Observed in raw decoder evidence only; regular non-speaker saved segments and public JSON export omit word arrays.",
+      "raw_to_saved_and_export_exact_after_production_rounding": true,
+      "independent_read_only_sqlite_query_matches": true,
+      "library_sqlite_sha256": "e75e4a7dc9e979f3e6dbf1ab509ec6faac53de26fbe551c7c4fb5c08a8ea1738",
+      "export_json_sha256": "395e406afe404c127111e1392a90cbe7896d928d76747a4a591366de698ee2e0",
+      "exports_check_results": {
+        "real_upload_and_recognition": true,
+        "finite_ordered_timestamps": true,
+        "sqlite_exact_segments": true,
+        "all_five_exports": true,
+        "archive_members_match_exports": true,
+        "library_survives_job_eviction": true,
+        "uploaded_audio_cleaned": true
+      },
+      "processing_metadata": {
+        "asr": {
+          "engine": "faster-whisper",
+          "model": "small",
+          "word_timestamps": true,
+          "word_timing_for_speakers": false,
+          "hallucination_silence_threshold_seconds": 2.0,
+          "vad_filter": false
+        }
+      },
+      "elapsed_seconds": 91.627,
+      "descriptive_word_metrics": {
+        "reference_words": 334,
+        "hypothesis_words": 330,
+        "substitutions": 33,
+        "deletions": 26,
+        "insertions": 22,
+        "word_errors": 81,
+        "word_error_rate": 0.24251497005988024
+      },
+      "same_complete_pcm": {
+        "seconds": 734.0,
+        "samples": 11744000,
+        "sha256": "ce528ed4ac517abefcbfb90f9aedbb7313d246ad89f03eabb5ba69a104d3ae06",
+        "vad_filter": false,
+        "duration_after_vad_seconds": 734.0,
+        "whole_recording_speech_check_count": 0
+      }
+    }
+  },
+  "material_findings": [
+    {
+      "id": "omitted-abort-instruction",
+      "reference": {
+        "id": "70",
+        "subtitle_timestamps": "00:08:26,000 --> 00:08:28,000",
+        "text": "Captain! We have to abort!"
+      },
+      "classification": "new reference-covered dialogue omission in this paired observation",
+      "baseline_raw": [
+        {
+          "id": 77,
+          "seek": 48500,
+          "start": 485.0,
+          "end": 508.8,
+          "text": " Captain, we have to abort!",
+          "words": null
+        }
+      ],
+      "aligned_raw_match_count": 0,
+      "aligned_neighbor_segments": [
+        {
+          "id": 55,
+          "seek": 40468,
+          "start": 418.92,
+          "end": 422.64,
+          "text": " Now my fall this time",
+          "words": [
+            {
+              "start": 418.74,
+              "end": 419.44,
+              "word": " Now",
+              "probability": 0.02114786021411419
+            },
+            {
+              "start": 419.44,
+              "end": 419.58,
+              "word": " my",
+              "probability": 0.9173726439476013
+            },
+            {
+              "start": 419.58,
+              "end": 419.96,
+              "word": " fall",
+              "probability": 0.21620434522628784
+            },
+            {
+              "start": 419.96,
+              "end": 422.44,
+              "word": " this",
+              "probability": 0.6443876028060913
+            },
+            {
+              "start": 422.44,
+              "end": 423.14,
+              "word": " time",
+              "probability": 0.9869667291641235
+            }
+          ]
+        },
+        {
+          "id": 56,
+          "seek": 49468,
+          "start": 517.2800000000001,
+          "end": 520.32,
+          "text": " The world's changed Celia.",
+          "words": [
+            {
+              "start": 517.2800000000001,
+              "end": 518.44,
+              "word": " The",
+              "probability": 0.042763639241456985
+            },
+            {
+              "start": 518.44,
+              "end": 519.6,
+              "word": " world's",
+              "probability": 0.570668026804924
+            },
+            {
+              "start": 519.6,
+              "end": 519.86,
+              "word": " changed",
+              "probability": 0.9340945482254028
+            },
+            {
+              "start": 519.86,
+              "end": 520.32,
+              "word": " Celia.",
+              "probability": 0.8431176543235779
+            }
+          ]
+        }
+      ],
+      "observation": "The baseline preserves the abort instruction, with broad imprecise segment timing. The aligned result has no abort instruction anywhere in raw or saved output; its neighboring produced segments span a gap over the reference cue."
+    },
+    {
+      "id": "omitted-memory-completion",
+      "reference": {
+        "id": "73",
+        "subtitle_timestamps": "00:08:58,000 --> 00:08:59,000",
+        "text": "Memory overwrite complete!"
+      },
+      "classification": "new reference-covered dialogue omission in this paired observation",
+      "baseline_raw": [
+        {
+          "id": 80,
+          "seek": 53720,
+          "start": 537.2,
+          "end": 539.2,
+          "text": " Memory override complete!",
+          "words": null
+        }
+      ],
+      "aligned_raw_match_count": 0,
+      "aligned_neighbor_segments": [
+        {
+          "id": 57,
+          "seek": 52032,
+          "start": 534.7,
+          "end": 535.96,
+          "text": " Maybe we can too.",
+          "words": [
+            {
+              "start": 534.7,
+              "end": 535.26,
+              "word": " Maybe",
+              "probability": 0.4421041011810303
+            },
+            {
+              "start": 535.26,
+              "end": 535.5,
+              "word": " we",
+              "probability": 0.8882343769073486
+            },
+            {
+              "start": 535.5,
+              "end": 535.68,
+              "word": " can",
+              "probability": 0.9975447058677673
+            },
+            {
+              "start": 535.68,
+              "end": 535.96,
+              "word": " too.",
+              "probability": 0.9011035561561584
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "seek": 53596,
+          "start": 558.4,
+          "end": 563.44,
+          "text": " You know, there's a lesson to be learned from this.",
+          "words": [
+            {
+              "start": 558.4,
+              "end": 558.9,
+              "word": " You",
+              "probability": 0.03456132486462593
+            },
+            {
+              "start": 558.9,
+              "end": 559.4,
+              "word": " know,",
+              "probability": 0.9392799735069275
+            },
+            {
+              "start": 560.56,
+              "end": 562.14,
+              "word": " there's",
+              "probability": 0.8820956647396088
+            },
+            {
+              "start": 562.14,
+              "end": 562.24,
+              "word": " a",
+              "probability": 0.9584699869155884
+            },
+            {
+              "start": 562.24,
+              "end": 562.48,
+              "word": " lesson",
+              "probability": 0.9988440275192261
+            },
+            {
+              "start": 562.48,
+              "end": 562.66,
+              "word": " to",
+              "probability": 0.9941978454589844
+            },
+            {
+              "start": 562.66,
+              "end": 562.82,
+              "word": " be",
+              "probability": 0.9866852760314941
+            },
+            {
+              "start": 562.82,
+              "end": 562.98,
+              "word": " learned",
+              "probability": 0.8576947450637817
+            },
+            {
+              "start": 562.98,
+              "end": 563.18,
+              "word": " from",
+              "probability": 0.9950447082519531
+            },
+            {
+              "start": 563.18,
+              "end": 563.44,
+              "word": " this.",
+              "probability": 0.9977250695228577
+            }
+          ]
+        }
+      ],
+      "observation": "Baseline uses override for reference overwrite but preserves the completion message. Aligned omits that message in both raw and saved output."
+    },
+    {
+      "id": "corrupted-ad-lib-line",
+      "reference": {
+        "id": "62",
+        "subtitle_timestamps": "00:06:50,000 --> 00:06:51,000",
+        "text": "Good ad-lib."
+      },
+      "classification": "new corruption of a short reference-covered line in this paired observation",
+      "baseline_raw": [
+        {
+          "id": 67,
+          "seek": 39500,
+          "start": 410.0,
+          "end": 412.0,
+          "text": " Good ad-lib.",
+          "words": null
+        }
+      ],
+      "aligned_raw": [
+        {
+          "id": 54,
+          "seek": 40468,
+          "start": 406.22,
+          "end": 411.0,
+          "text": " I'm sorry who dad lip",
+          "words": [
+            {
+              "start": 406.22,
+              "end": 407.62,
+              "word": " I'm",
+              "probability": 0.8682499527931213
+            },
+            {
+              "start": 407.62,
+              "end": 408.08,
+              "word": " sorry",
+              "probability": 0.9036054015159607
+            },
+            {
+              "start": 408.08,
+              "end": 409.62,
+              "word": " who",
+              "probability": 0.034726545214653015
+            },
+            {
+              "start": 409.62,
+              "end": 410.66,
+              "word": " dad",
+              "probability": 0.30634018778800964
+            },
+            {
+              "start": 410.66,
+              "end": 411.0,
+              "word": " lip",
+              "probability": 0.6766204833984375
+            }
+          ]
+        }
+      ],
+      "observation": "The baseline line is correct. The aligned output merges it with the preceding apology and changes it to who dad lip."
+    }
+  ],
+  "other_observations": [
+    {
+      "reference_cue_ids": [
+        "65",
+        "66"
+      ],
+      "observation": "Aligned also emits no corresponding text for the quiet-on-set and out-of-time lines. Baseline already garbles these into Fire on set and Right of time with repetition, so this review does not label them newly lost correct baseline dialogue."
+    },
+    {
+      "reference_cue_ids": [
+        "69"
+      ],
+      "observation": "The memory-overwrite 90 percent line is absent in both hypotheses; it is an existing limitation, not established as a new regression here."
+    },
+    {
+      "observation": "Both outputs retain many earlier reference-covered exchanges. This bounded review does not count a completeness percentage or certify all meaning."
+    },
+    {
+      "observation": "The baseline ends with four punctuation-only segments. The aligned output still ends with an unreferenced You at 731.78–732.62 seconds. With no audio review and no published subtitles after 567 seconds, this review does not decide whether that final token is hallucinated."
+    }
+  ],
+  "conclusion": "The four frozen anchors pass, but the aligned-plus-2.0-second-silence policy is not regression-free on this paired observation. At least two reference-covered messages that baseline represents are absent from aligned raw output, plus a shorter newly corrupted line. These are decoder-output differences, not storage/export loss.",
+  "limits": [
+    "One observation per arm on one separately acquired official audio rendition; not the failed Dailymotion acquisition or an exact-provider rerun.",
+    "The paired options change both word alignment and hallucination silence threshold, so this comparison does not isolate their individual causal effects.",
+    "Publisher subtitles include some non-dialogue material and omit other audio. Whole-output WER is descriptive and is not a comprehensive semantic or acoustic truth score.",
+    "No independent word-timing ground truth or listening review was performed; narrower aligned timestamps do not establish timing accuracy.",
+    "Fresh SQLite connections and the retained harness separate-interpreter check establish persistence of these outputs. No full HTTP/browser/server restart was tested in this experiment."
+  ]
+}

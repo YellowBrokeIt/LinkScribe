@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-11-28T01:04:30.405104+00:00",
+  "execution_status": "not_started",
+  "requires_root_model_slot_release": true,
+  "source_commit": "79189b013732fb95c1e685e1639b1b7891899729",
+  "candidate": {
+    "source_root": "/workspace/scratch/94360995dd61/asr-alignment-only-2026-11-28/source",
+    "app_sha256": "736ff2e1080170701410807c5f0483cb4b09acb68da3e9169ebb376b16399b48",
+    "word_timestamps": true,
+    "hallucination_silence_threshold": null,
+    "patch": "alignment-only-proposed.patch",
+    "metadata": "Truthful processing metadata records None for the disabled heuristic."
+  },
+  "runner_sha256": "9f50231d88c97486768669f0f71de30a0dca78489bd73008b7fcbc1d81f31903",
+  "model": "small",
+  "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+  "model_bin_sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+  "cache_root": "/tmp/linkscribe-provider-models",
+  "offline": true,
+  "normal_fallback_unchanged": true,
+  "vad_filter": false,
+  "clip_timestamps": "0",
+  "initial_prompt": null,
+  "prefix": null,
+  "hotwords": null,
+  "reference_supplied_to_decoder": false,
+  "attempts_per_film": 1,
+  "per_inference_timeout_seconds": 240,
+  "per_process_wall_timeout_seconds": 255,
+  "total_execution_timeout_seconds": 600,
+  "process_group_rss_limit_bytes": 2684354560,
+  "memory_measurement": "Monitor the owned Linux process-group RSS every 0.25 seconds and terminate on an observed value above 2.5 GiB. Also reject a completed report whose recorded per-process peak exceeds the limit. Sampling may miss brief aggregate peaks; virtual-address-space limits are not used.",
+  "execution_order": [
+    "official_tears_of_steel",
+    "vimeo_sintel"
+  ],
+  "films": {
+    "official_tears_of_steel": {
+      "audio_path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/tearsofsteel-stereo.flac",
+      "source_identity": {
+        "container_duration_seconds": 734.0,
+        "streams": [
+          {
+            "sample_rate": 48000,
+            "channels": 2,
+            "codec": "flac"
+          }
+        ],
+        "decoded_duration_seconds": 734.0,
+        "sample_count": 11744000,
+        "shape": [
+          11744000
+        ],
+        "dtype": "<f4",
+        "pcm_sha256": "ce528ed4ac517abefcbfb90f9aedbb7313d246ad89f03eabb5ba69a104d3ae06",
+        "media_bytes": 83769154,
+        "media_sha256": "2ec70bfb31b70d4229d8a7c1ea1e759fd3d464c206d0c3a7ff15c7752c0b25ea"
+      },
+      "qa_random_seed": 1729,
+      "reference_path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/publisher-TOS-en.srt",
+      "reference_sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+      "reference_cues": 76,
+      "existing_four_anchors": [
+        {
+          "id": "71",
+          "start": 518.0,
+          "end": 520.0,
+          "text": "The world's changed, Celia...",
+          "window_seconds": [
+            510,
+            529
+          ],
+          "normalized_pattern": "\\bworld(?:s| has)? changed\\b"
+        },
+        {
+          "id": "72",
+          "start": 534.0,
+          "end": 536.0,
+          "text": "...maybe we can too.",
+          "window_seconds": [
+            528,
+            545
+          ],
+          "normalized_pattern": "\\bmaybe we can too\\b"
+        },
+        {
+          "id": "75",
+          "start": 562.0,
+          "end": 564.0,
+          "text": "There's a lesson to be learned from this.",
+          "window_seconds": [
+            545,
+            574
+          ],
+          "normalized_pattern": "\\blesson to be (?:learned|learnt) from this\\b"
+        },
+        {
+          "id": "76",
+          "start": 566.0,
+          "end": 567.0,
+          "text": "Could'a gone worse.",
+          "window_seconds": [
+            558,
+            577
+          ],
+          "normalized_pattern": "\\bcould(?: have|ve|a) (?:gone|been) worse\\b"
+        }
+      ],
+      "new_omission_regressions": [
+        {
+          "cue": 70,
+          "reference_start": 506.0,
+          "reference_end": 508.0,
+          "window_seconds": [
+            501,
+            513
+          ],
+          "expected_phrase": "Captain! We have to abort!",
+          "pattern": "\\bcaptain we have to abort\\b"
+        },
+        {
+          "cue": 73,
+          "reference_start": 538.0,
+          "reference_end": 539.0,
+          "window_seconds": [
+            533,
+            544
+          ],
+          "expected_phrase": "Memory overwrite complete!",
+          "pattern": "\\bmemory (?:overwrite|override) complete\\b",
+          "scope": "Override is the baseline lexical error; report it as such while checking that the spoken command is retained."
+        }
+      ],
+      "additional_known_substitution": {
+        "cue": 62,
+        "reference_start": 410.0,
+        "reference_end": 411.0,
+        "reference": "Good ad-lib.",
+        "baseline": "Good ad-lib.",
+        "aligned_2s": "who dad lip",
+        "review": "Include in complete-reference comparison; do not silently repair output."
+      },
+      "comparison_reports": [
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-report.json",
+        "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-report.json"
+      ],
+      "reference_source": "https://media.xiph.org/tearsofsteel/subtitles/TOS-en.srt",
+      "fixture_manifest_path": "/workspace/scratch/94360995dd61/asr-alignment-only-2026-11-28/official_tears_of_steel-fixtures.json",
+      "fixture_manifest_sha256": "e2c46bcc5ad909fa6ee1ab8fc92d538e735033cb7bdcd9073efbb9a2279ce5bb"
+    },
+    "vimeo_sintel": {
+      "audio_path": "/tmp/linkscribe-asr-vimeo-quality/source.mp4",
+      "source_identity": {
+        "media_bytes": 17669814,
+        "media_sha256": "de4bf866b48858c8fe7b9448ecc3d4713dfd74f44c7ca87736bda6c558fc2364",
+        "decoded_duration_seconds": 888.070375,
+        "sample_count": 14209126,
+        "shape": [
+          14209126
+        ],
+        "dtype": "<f4",
+        "pcm_sha256": "b4c6fe1672bd7448e91e8f48ce14b1161ae95883710f3cb0326e070d4e0b1615"
+      },
+      "qa_random_seed": 20261128,
+      "reference_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-vimeo-followup-2026-11-28/reference-sintel-en.srt",
+      "reference_sha256": "4ed7e1f1bc5ff69fe33606960e4c048ba6766237bf33b132fef76e1a92cb64b2",
+      "reference_cues": 26,
+      "reference_source": "https://media.xiph.org/sintel/subtitles/sintel_en.srt",
+      "comparison_reports": [
+        "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-vimeo-followup-2026-11-28/aligned-hallucination-report.json",
+        "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-vimeo-followup-2026-11-28/original-small-evidence.json"
+      ],
+      "comparison_scope": "The aligned/2.0 direct recognizer probe used seed 20261128 and identical media/model. The earlier original pipeline was unseeded; it is contextual evidence, not a controlled same-seed arm.",
+      "known_risk_windows_seconds": [
+        [
+          177.84,
+          207.5
+        ],
+        [
+          207.25,
+          233.0
+        ],
+        [
+          338.0,
+          343.0
+        ],
+        [
+          445.0,
+          465.0
+        ],
+        [
+          669.5,
+          691.5
+        ],
+        [
+          747.5,
+          880.06
+        ]
+      ],
+      "risk_review": "Review full 26-cue reference; preserve real quiet dialogue and singing. Inspect previously unsupported burst/ellipses and retained late vocals; reference gaps alone are not proof of no speech.",
+      "fixture_manifest_path": "/workspace/scratch/94360995dd61/asr-alignment-only-2026-11-28/vimeo_sintel-fixtures.json",
+      "fixture_manifest_sha256": "ff3e4913fee496f6afe6149b594a6722131a6791f18002e3e1f9dde0a4892497"
+    }
+  },
+  "interpretation": {
+    "provider_gate_exercised": false,
+    "no_threshold_sweep": true,
+    "preserve_original_failures": true,
+    "full_reference_review_required": true,
+    "retention_criteria": "Preserve the four frozen official tail anchors and restore the two independently identified missing commands; compare all 76 official-film and 26 Sintel reference cues for new omissions/substitutions. Preserve raw output, including failures. Do not infer overall semantic or subtitle accuracy from lexical anchor matches.",
+    "vimeo_context": "The earlier unsupported/musical-gap output and genuine late singing must be reviewed together; do not accept removal of speech merely because segment count falls.",
+    "promotion": "No stable-policy acceptance before actual results and broader reference review. Previously frozen provider checker and evidence stay unchanged."
+  },
+  "python_executable": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+  "runner_path": "/workspace/scratch/94360995dd61/LinkScribe/tests/probe_asr_alignment_only_followup.py",
+  "model_provenance_path": "/tmp/linkscribe-asr-vimeo-quality/small-model-provenance.json",
+  "execution_output_directory": "/workspace/scratch/94360995dd61/asr-alignment-only-2026-11-28/results",
+  "controller_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-official-tail-2026-11-28/run_alignment_only.py",
+  "controller_sha256": "91e09aab26f6861ca3e381128ba4f49506a52f269c3a05467d4aaa6df6769efe",
+  "model_bin_path": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120/model.bin"
+}

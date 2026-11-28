@@ -1,0 +1,17 @@
+{
+  "expected_rejection": true,
+  "purpose": "The unchanged old hosted runner must not certify the legitimately changed production timing policy.",
+  "command": [
+    "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+    "tests/qa_large_v3_candidate.py",
+    "--action",
+    "validate",
+    "--plan",
+    "docs/large-v3-screen-2026-11-28/plan.json"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "{\"failed_at\": \"2026-11-28T03:55:26.746443+00:00\", \"action\": \"validate\", \"error_type\": \"ValueError\", \"error\": \"production recognition policy changed\", \"model_initialization_not_claimed_by_controller\": true}\n",
+  "model_initialized": false,
+  "inference_performed": false
+}

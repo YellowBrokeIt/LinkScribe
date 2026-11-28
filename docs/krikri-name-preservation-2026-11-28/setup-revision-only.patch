@@ -1,0 +1,59 @@
+--- initial-setup/prepare_native.py
++++ setup-revision-1/prepare_native.py
+@@ -11,6 +11,32 @@
+ import subprocess
+ 
+ from context import BASE, HERE, ROOT, PRIVATE, common, read_plan, cache_identity, native_preflight
++
++
++def parameter_mapping(display):
++    """Ollama displays a map in arbitrary key order; repeated stops are ordered."""
++    expected_keys = {"num_ctx", "temperature", "top_p", "stop"}
++    result = {"stop": []}
++    for line in display.splitlines():
++        if not line.strip():
++            continue
++        key, text = line.split(maxsplit=1)
++        if key not in expected_keys:
++            raise ValueError("Unexpected displayed native parameter: " + key)
++        value = json.loads(text)
++        if key == "stop":
++            if not isinstance(value, str):
++                raise ValueError("Native stop value is not a string.")
++            result["stop"].append(value)
++        else:
++            if key in result:
++                raise ValueError("Duplicate singleton native parameter: " + key)
++            if type(value) not in (int, float) or (key == "num_ctx" and type(value) is not int):
++                raise ValueError("Native numeric parameter has an unexpected type.")
++            result[key] = value
++    if set(result) != expected_keys or not result["stop"]:
++        raise ValueError("A required native parameter is missing.")
++    return result
+ 
+ 
+ def main():
+@@ -43,7 +69,11 @@
+             if report["runtime"].get("version") != plan["runtime"]["version"]:
+                 raise ValueError("Runtime differs from the original fixed profile.")
+             report["show"] = common.api("/api/show", {"model": plan["model"]["local_name"]})
+-            if report["show"]["template"] != prepared["show"]["template"] or report["show"]["parameters"] != prepared["show"]["parameters"] or report["show"].get("system", ""):
++            report["baseline_parameter_mapping"] = parameter_mapping(prepared["show"]["parameters"])
++            report["current_parameter_mapping"] = parameter_mapping(report["show"]["parameters"])
++            if (report["show"]["template"] != prepared["show"]["template"] or report["show"].get("system", "") or
++                    report["baseline_parameter_mapping"] != plan["native_setup"]["import_parameters"] or
++                    report["current_parameter_mapping"] != plan["native_setup"]["import_parameters"]):
+                 raise ValueError("Native template/parameters/persona differ from the frozen baseline.")
+             cases = json.loads((HERE / "development-cases.json").read_text())["cases"]
+             expected = json.loads((HERE / "expected-requests.json").read_text())
+--- initial-setup/context.py
++++ setup-revision-1/context.py
+@@ -12,7 +12,7 @@
+ from native_verify import cache_identity, native_preflight
+ 
+ common = baseline.common
+-PRIVATE = Path("/workspace/scratch/94360995dd61/linkscribe-krikri-runtime/name-preservation")
++PRIVATE = Path("/workspace/scratch/94360995dd61/linkscribe-krikri-runtime/name-preservation/setup-revision-1")
+ 
+ 
+ def read_plan():
