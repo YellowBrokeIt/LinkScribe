@@ -14,6 +14,8 @@ from typing import Any, Iterator
 
 import library
 
+REMOVED_ERROR = "Transcript was removed from the library after processing."
+
 
 @contextmanager
 def _db() -> Iterator[sqlite3.Connection]:
@@ -68,19 +70,45 @@ def mark_batch(batch_id: str, status: str) -> None:
             raise KeyError(f"Missing batch: {batch_id}")
 
 
-def mark_item(job_id: str, status: str, title: str = "", error: str = "", library_id: str = "") -> None:
+def claim_item(job_id: str) -> dict[str, Any] | None:
+    """Start a pending item, or return its terminal journal state unchanged."""
+    with _db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute("SELECT status,error FROM batch_queue_items WHERE job_id=?",
+                           (job_id,)).fetchone()
+        if row is None:
+            raise KeyError(f"Missing batch job: {job_id}")
+        if row["status"] in {"done", "error"}:
+            return dict(row)
+        conn.execute("UPDATE batch_queue_items SET status='working',error='',library_id='',updated_at=? WHERE job_id=?",
+                     (time.time(), job_id))
+        return None
+
+
+def mark_item(job_id: str, status: str, title: str = "", error: str = "", library_id: str = "") -> str:
     assert status in {"queued", "working", "done", "error"}
     with _db() as conn:
-        if status == "done" and library_id:
+        # Serialize the saved-record check with edits and deletion. A late
+        # worker must not acknowledge a transcript that no longer exists.
+        conn.execute("BEGIN IMMEDIATE")
+        if status == "done":
             saved = conn.execute("SELECT title FROM transcripts WHERE id=?", (library_id,)).fetchone()
             if saved is not None:
                 title = saved["title"]  # Preserve an edit made just after transcript commit.
+            else:
+                status, error, library_id = "error", REMOVED_ERROR, ""
+                title = ""  # Preserve the latest journal title.
+        if status == "error":
+            previous = conn.execute("SELECT error FROM batch_queue_items WHERE job_id=?", (job_id,)).fetchone()
+            if previous is not None and previous["error"] == REMOVED_ERROR:
+                error, library_id, title = REMOVED_ERROR, "", ""
         cursor = conn.execute("""UPDATE batch_queue_items
             SET status=?,title=CASE WHEN ?!='' THEN ? ELSE title END,
                 error=?,library_id=?,updated_at=? WHERE job_id=?""",
                 (status, title, title, error, library_id, time.time(), job_id))
         if cursor.rowcount != 1:
             raise KeyError(f"Missing batch job: {job_id}")
+        return status
 
 
 def delete_library_record(identifier: str) -> bool:
@@ -95,7 +123,7 @@ def delete_library_record(identifier: str) -> bool:
             return False
         conn.execute("""UPDATE batch_queue_items SET status='error', error=?,
                      library_id='', updated_at=? WHERE job_id=?""",
-                     ("Transcript was removed from the library after processing.",
+                     (REMOVED_ERROR,
                       time.time(), identifier))
         return True
 

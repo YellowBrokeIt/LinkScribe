@@ -957,12 +957,22 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
             _set(job_id, status="error", error=old["error"], stage="Previous attempt failed",
                  finished_at=time.time())
         else:
-            batch_store.mark_item(job_id, "working")
-            _guarded_worker(job_id, _process_link, source, mode, language, model,
-                            speakers, target, summary_enabled, highlights_enabled)
+            terminal = batch_store.claim_item(job_id)
+            if terminal is not None:
+                # The journal may have changed since the batch snapshot, e.g.
+                # a user deleted a later saved item while this batch resumed.
+                _set(job_id, status="error", stage="Previous item no longer pending",
+                     error=terminal["error"] or batch_store.REMOVED_ERROR,
+                     finished_at=time.time())
+            else:
+                _guarded_worker(job_id, _process_link, source, mode, language, model,
+                                speakers, target, summary_enabled, highlights_enabled)
         _cleanup_job_inputs(job)
-        batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
-                              library_id=job.library_id)
+        acknowledged = batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
+                                             library_id=job.library_id)
+        if job.status == "done" and acknowledged == "error":
+            _set(job_id, status="error", stage="Transcript removed from library",
+                 error=batch_store.REMOVED_ERROR, library_id="", warnings=[], finished_at=time.time())
         batch.completed += 1
         if job.status == "error":
             batch.failed += 1
@@ -1190,12 +1200,17 @@ def batch_status(batch_id: str):
         children = []
         for item in saved["jobs"]:
             child = jobs.get(item["id"])
-            children.append({"id": item["id"], "title": child.title if child else item["title"],
-                             "source": item["source"], "status": child.status if child else item["status"],
-                             "stage": child.stage if child else "Restored from disk",
-                             "error": child.error if child else item["error"],
-                             "warnings": list(child.warnings) if child else [],
-                             "library_id": child.library_id if child else item["library_id"]})
+            # Terminal journal entries are authoritative even while old job
+            # objects remain in memory. In particular, deletion clears the
+            # library ID and warnings and must not be hidden by a cached job.
+            durable = item["status"] in {"done", "error"} or child is None
+            current = child is not None and (not durable or child.status == item["status"])
+            children.append({"id": item["id"], "title": item["title"] if durable else child.title,
+                             "source": item["source"], "status": item["status"] if durable else child.status,
+                             "stage": child.stage if current else "Restored from disk",
+                             "error": item["error"] if durable else child.error,
+                             "warnings": list(child.warnings) if current and child.status == "done" else [],
+                             "library_id": item["library_id"] if durable else child.library_id})
         status = batch.status if batch else saved["status"]
         stage = batch.stage if batch else "Saved batch"
     # Completed-job objects expire and do not survive a process restart. Their
