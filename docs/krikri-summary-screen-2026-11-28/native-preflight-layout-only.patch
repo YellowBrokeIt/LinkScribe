@@ -1,0 +1,15 @@
+--- baseline-native-preflight
++++ summary-native-preflight
+@@ -23,9 +23,9 @@
+                 layout = "publisher_llama31_jinja_date_headers"
+     if layout is None:
+         raise ValueError("Actual native wrapper is not either declared source-preserving Llama format.")
+-    rows = json.loads(user.split("JSON input: ", 1)[1])
+-    if rows != [{"id": i, "text": s["text"]} for i, s in enumerate(case["segments"])]:
+-        raise ValueError("Actual request does not contain every complete original source segment.")
++    expected_excerpt = "\n".join(f"[{segment['start']:.1f}s] {segment['text']}" for segment in case["segments"])
++    if user != expected_excerpt:
++        raise ValueError("Actual summary request differs from the complete original timestamped excerpt.")
+     runner = common.runner_identity(process)
+     command = runner["command"]
+     thread_flag = "-t" if "-t" in command else "--threads"

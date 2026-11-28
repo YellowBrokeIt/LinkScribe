@@ -439,3 +439,42 @@ existing Greek-specialist model. Its full source-layout check and
 model execution. Native prompt-fit verification, English output review and the
 conditional Greek run remain separate future gates. That prospective proposal
 does not change any prior summary failure or the current application checkpoint.
+
+## Fixed-text timing and independently rejected language results
+
+The [fixed-text timing stage](../post-asr-alignment-diagnostic-2026-11-28/README.md)
+completed the full official 734.000-second film and four ordinary/quiet English
+and Greek clips. It made 23 encoder/align calls, zero recognition/language-detection
+calls and one Small model initialization. All source strings survived. Runtime
+was 32.457 seconds, with 1120.59 MiB sampled owned RSS and 1171.48 MiB worker
+high-water RSS. Its global fallback was unsuitable: one 0.26-second conflict
+caused all 86 film intervals to revert, leaving four of six segment anchors and
+zero word anchors passing. The selected Git archive retains all actual raw
+results and review records; its manifest explicitly lists the five large PCM
+arrays omitted from that selection with their complete identities.
+
+The separately frozen [localized fallback replay](../post-asr-local-projection-2026-11-28/README.md)
+used those unchanged native estimates without another model call. It restored
+only film segments 80/81, preserving 78 word-bearing segments and all four short
+outputs. Root independently checked the complete 86-segment timeline, all 76
+coarse publisher cues, the original six anchors and all 40 TXT/JSON/SRT/VTT
+files. Six segment anchors and three word anchors pass. The eight segments
+without usable word evidence retain whole-segment fallback. Large movements
+elsewhere and existing lexical errors prevent a general accuracy claim. An
+initial reviewer-only binary-float rounding expectation was corrected to the
+published decimal export contract, with both audit versions retained.
+
+The [visible paired-name screen](../krikri-visible-name-tag-screen-2026-11-28/README.md)
+stopped on its first case when the model changed the exact spelling inside the
+protected tag. Strict rejection preceded restoration, leaving no accepted
+translation and five unrun cases. The 36.034-second phase peaked at 5545.0 MiB
+sampled RSS, completed a normal native response and unloaded cleanly. Preserved
+execution success does not override the exact-copy failure.
+
+The separate [first English summary result](../krikri-summary-screen-2026-11-28/RESULTS.md)
+completed normally in 47.674 seconds with 5578.5 MiB peak sampled RSS after a
+successful zero-generation preflight. Independent review rejected the single
+case for two material findings: a literal example-value paragraph instead of a
+real summary, and weakened per-quotation publication review. Greek was not run.
+All raw responses, prompts, sources, criteria and resource samples are sealed.
+No production model, version, release criteria or fresh validation changed.

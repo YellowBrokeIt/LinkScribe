@@ -1,0 +1,126 @@
+--- frozen-predecessor
++++ visible-name-preparation
+@@ -5,6 +5,7 @@
+ import importlib.util
+ import json
+ from pathlib import Path
++import unicodedata
+ 
+ from protection import build_protection, restore_segments, strict_response_strings
+ 
+@@ -80,6 +81,26 @@
+     return {"exact_decomposed_inflection_retained": True}
+ 
+ 
++def normalize_inner_name():
++    s = [{"start": 0, "end": 1, "text": "της Δανα\u0301ης"}]
++    r = [{"start": 0, "end": len(s[0]["text"]), "text": s[0]["text"], "label": "person", "score": 0.9}]
++    b = build_protection(s, r, "el")
++    value = copy.deepcopy(b["masked_segments"])
++    value[0]["text"] = unicodedata.normalize("NFC", value[0]["text"])
++    return restore_segments(b, value)
++
++
++def apostrophe_and_prefixes():
++    text = "Jean-Luc O’Rourke spoke."
++    name = "Jean-Luc O’Rourke"
++    s = [{"text": text, "speaker": "A", "start": 2.0, "end": 4.0}]
++    r = [{"start": 0, "end": len(name), "text": name, "label": "person", "score": 0.9}]
++    b = build_protection(s, r, "en")
++    restored, _ = restore_segments(b, b["masked_segments"])
++    assert restored == s and b["markers"][0]["source_text"] == name
++    return {"multiword_hyphen_and_curly_apostrophe_unchanged": True}
++
++
+ def guard_rejects_foreign():
+     restored, _ = alter_text(0, lambda s: s + " שלום")
+     return guard._translation_result(segments, restored, "el", "en")
+@@ -97,13 +118,25 @@
+             "restored_text": restored[0]["text"]}
+ 
+ 
++def ordinary_pronoun_limit():
++    text = "Η Δανάη μίλησε. Εκείνη έφυγε."
++    name = "Δανάη"
++    people = [{"start": text.index(name), "end": text.index(name) + len(name),
++               "text": name, "label": "person", "score": 0.91}]
++    example = build_protection([{"text": text}], people, "el")
++    token = example["markers"][0]["marker"]
++    restored, _ = restore_segments(example, [{"text": token + " spoke. He left."}])
++    return {"whole_name_copied_exactly": True, "meaning_not_certified": True,
++            "restored_text": restored[0]["text"]}
++
++
+ probe("exact-roundtrip-repeated-mentions-and-metadata", roundtrip)
+ probe("missing-marker", lambda: alter_text(0, lambda s: s.replace(markers[0], "")), True)
+ probe("duplicate-marker", lambda: alter_text(0, lambda s: s + markers[0]), True)
+ probe("marker-case-change", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0].upper())), True)
+ probe("split-marker", lambda: alter_text(0, lambda s: s.replace(markers[0], markers[0][:2] + " " + markers[0][2:])), True)
+ probe("cross-segment-marker-move", swap_entries, True)
+-probe("unknown-well-formed-marker", lambda: alter_text(0, lambda s: s + "<x9999/>"), True)
++probe("unknown-well-formed-marker", lambda: alter_text(0, lambda s: s + "<x9999>Dana</x9999>"), True)
+ probe("unknown-malformed-prefix", lambda: alter_text(0, lambda s: s + "<xbroken>"), True)
+ probe("extra-closing-tag-after-valid-marker", lambda: alter_text(0, lambda s: s + " </x0>"), True)
+ probe("extra-spaced-closing-tag-after-valid-marker", lambda: alter_text(0, lambda s: s + " < / x0 >"), True)
+@@ -111,10 +144,14 @@
+ probe("source-closing-tag-collision", lambda: build_protection([{"text": "</x0> pre-existing source"}], [], "en"), True)
+ probe("source-spaced-opening-tag-collision", lambda: build_protection([{"text": "< x0 /> pre-existing source"}], [], "en"), True)
+ probe("compatibility-marker-collision", lambda: build_protection([{"text": "＜Ｘ０／＞ pre-existing source"}], [], "en"), True)
++probe("source-visible-pair-collision", lambda: build_protection([{"text": "<x0>Dana</x0>"}], [], "en"), True)
++probe("source-format-separated-closing-collision", lambda: build_protection([{"text": "<\u200b/\u200bx0>"}], [], "en"), True)
+ probe("source-map-corruption", lambda: mutate_bundle("map"), True)
+ probe("source-metadata-corruption", lambda: mutate_bundle("source"), True)
+ probe("translated-metadata-change", metadata_change, True)
+ probe("inflection-and-unicode-not-repaired", inflection)
++probe("inner-unicode-normalization-rejected", normalize_inner_name, True)
++probe("apostrophe-hyphen-and-multiword-name-exact", apostrophe_and_prefixes)
+ probe("empty-entity-list", lambda: build_protection([{"text": "No personal names here."}], [], "en")["full_source_roundtrip_exact"])
+ probe("strict-json-valid", lambda: strict_response_strings('{"translations":["one","two"]}', 2))
+ probe("strict-json-extra-property", lambda: strict_response_strings('{"translations":["one"],"extra":1}', 1), True)
+@@ -125,13 +162,34 @@
+ probe("restored-production-script-guard", guard_rejects_foreign, True)
+ probe("restored-production-copy-guard", lambda: guard._translation_result(segments, restore_segments(bundle, bundle["masked_segments"])[0], "el", "en"), True)
+ probe("within-segment-role-order-not-certified", actor_swap_limit, semantic_limit="Once-only marker accounting cannot certify who acts on whom; independent meaning review remains mandatory.")
++probe("ordinary-pronoun-not-certified", ordinary_pronoun_limit,
++      semantic_limit="An unchanged visible name does not certify pronouns or grammatical agreement outside the span.")
++
++# Only output wrappers may be removed. Every modified inner source string fails,
++# including changes that a human might consider an acceptable transliteration.
++probe("localized-inner-name-rejected-not-restored", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0>Danae</x0>")), True)
++probe("inner-case-change-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0>δανάη</x0>")), True)
++probe("inner-whitespace-change-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0> Δανάη </x0>")), True)
++probe("empty-inner-name-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0></x0>")), True)
++probe("inner-name-repetition-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0>Δανάη Δανάη</x0>")), True)
++probe("missing-closing-wrapper", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0>Δανάη")), True)
++probe("wrong-closing-index", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0>Δανάη</x7>")), True)
++probe("nested-pair-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0><x8>Δανάη</x8></x0>")), True)
++probe("crossing-pairs-rejected", lambda: alter_text(0, lambda s: s.replace(markers[0], "<x0><x8>Δανάη</x0></x8>")), True)
++probe("stray-opening-prefix", lambda: alter_text(0, lambda s: s + " <x"), True)
++probe("escaped-pair-not-decoded-or-repaired", lambda: alter_text(0, lambda s: s.replace(markers[0], "&lt;x0&gt;Δανάη&lt;/x0&gt;")), True)
++probe("tag-attribute-not-accepted", lambda: alter_text(0, lambda s: s.replace(markers[0], '<x0 role="name">Δανάη</x0>')), True)
++probe("unwrapped-extra-name-not-certified", lambda: alter_text(0, lambda s: s + " Δανάη"),
++      semantic_limit="Additional unwrapped ordinary prose, including a copied name, remains a semantic addition despite intact whole-span accounting.")
++
+ def source_bound_maps():
+-    alternate = build_protection([{"text": "Διονύσης"}],
+-                                 [{"start": 0, "end": 8, "text": "Διονύσης", "label": "person", "score": 0.91}], "el")
++    alternate = build_protection([{"text": "Δανάη"}],
++                                 [{"start": 0, "end": 5, "text": "Δανάη", "label": "person", "score": 0.91}], "el")
+     assert alternate["markers"][0]["marker"] == bundle["markers"][0]["marker"]
+     assert alternate["source_binding_sha256"] != bundle["source_binding_sha256"]
+     assert alternate["protection_binding_sha256"] != bundle["protection_binding_sha256"]
+-    return {"tags_are_request_local": True, "source_map_identity_bound_outside_tag": True,
++    return {"tags_are_request_local": True, "same_name_pair_can_recur_in_different_requests": True,
++            "source_map_identity_bound_outside_tag": True,
+             "cross_request_semantic_identity_not_certified_by_tag_alone": True}
+ 
+ probe("request-local-tags-external-source-map-binding", source_bound_maps,
+@@ -142,7 +200,7 @@
+           "detector_calls": 0, "translation_calls": 0, "model_calls": 0,
+           "meaning_or_automatic_name_safety_certified": False,
+           "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+-with (HERE / "protection-control-results-v2.json").open("x", encoding="utf-8") as stream:
++with (HERE / "protection-control-results.json").open("x", encoding="utf-8") as stream:
+     json.dump(report, stream, ensure_ascii=False, indent=2, allow_nan=False);stream.write("\n")
+ print(json.dumps({"controls": len(results), "mechanical_passed": passed}))
+ raise SystemExit(0 if passed else 1)

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:00:07.870508+00:00",
+  "decision": "No new blocker in the source-only runtime adaptation. This is not native setup or generation approval.",
+  "plan_sha256": "8878b61813184629abb2ffb4814d250fe85f05e8f2a94be09065c5854e32ac74",
+  "source_bindings_verified": 82,
+  "exact_reuse_bindings_verified": 18,
+  "reused_runtime_files_byte_identical": [
+    "prepare_native.py",
+    "infer_native.py",
+    "run_native.py",
+    "resource_monitor.py"
+  ],
+  "context_only_change": "Separate private log directory; all native and resource guards unchanged.",
+  "context_sha256": "e1f70f4bc863c4b695e75f4b6dba4c08207d99a0de5cae5490988fc5cae19704",
+  "reviewed_preparation_sha256": "c6ead55c4c1f8877e3cb004cf4f9ea27b49d6622b546e539c79a8268a102d9c8",
+  "candidate_sha256": "ca9316ec3387fa58d12460ae0ee076162990234183a0bc703da277205db7c4a5",
+  "adapter_sha256": "c494160b01ce72632e0bf276c0c7205e4b23227840efa194a2bc96422d389ae4",
+  "complete_expected_requests_sha256": "17b4a0cc6def95e5ab4226df748dd5ed41084ebb55a888c9ab104249d4f73ce8",
+  "corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+  "criterion_binding_sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+  "unchanged_original_criteria": true,
+  "retained_prior_cleanup_probe_is_not_a_new_run": true,
+  "new_native_model_or_provider_calls": 0,
+  "no_execution_artifacts_present_at_review": true,
+  "remaining_gates": [
+    "Root must separately authorize and sequence actual native setup after exclusive speech-slot cleanup.",
+    "Selected-model full renders/token counts and resource/cleanup evidence for these six visible-name requests must be reviewed before generation.",
+    "Any later outputs retain the original complete actor/name/number/negation/condition/ordinary-prose review; exact pairs alone are not semantic success."
+  ],
+  "bindings": {
+    "reuse-verification.json": "948ccfff85d0d4a465458a81b87b63adcf5744b0b573d55dc86e794af7467815",
+    "runtime-path-only.patch": "8ce08ad639a0c012fdef362bb825cff94b3a48b2acabd02223f0e45da375f740",
+    "runtime-preparation.md": "b35392c4ed4f45900601c51d6d5108e74da699a23a4fa7e0cdbb09366fcd3c03",
+    "prepare_native.py": "cf2862ccea3f4148c0a9c788dcbe3ef3925a35906c9b3ed262d31f9f15103e6e",
+    "infer_native.py": "2c91a06f4d84c211de8b3f4786e40be7c0a45abb1bba7e8be299b259521c74f2",
+    "run_native.py": "bcaad034ad47061ed5e62e6633694bfa329eff640e6c5d81924c5b6b745d6717",
+    "resource_monitor.py": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d"
+  }
+}

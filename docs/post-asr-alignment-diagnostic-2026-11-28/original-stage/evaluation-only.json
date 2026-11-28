@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "scope": "Evaluation-only; no reference material is present in input-cases.json or read by the worker. No new output has been produced.",
+  "source_plan": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-official-tail-2026-11-28/alignment-only-plan.json",
+  "source_plan_sha256": "b7c8a2be6c40a5add4b6cf2a738819039ecde5d96f485a0b807af757958d22b1",
+  "reference_path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/publisher-TOS-en.srt",
+  "reference_sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+  "reference_cues": 76,
+  "existing_four_anchors": [
+    {
+      "id": "71",
+      "start": 518.0,
+      "end": 520.0,
+      "text": "The world's changed, Celia...",
+      "window_seconds": [
+        510,
+        529
+      ],
+      "normalized_pattern": "\\bworld(?:s| has)? changed\\b"
+    },
+    {
+      "id": "72",
+      "start": 534.0,
+      "end": 536.0,
+      "text": "...maybe we can too.",
+      "window_seconds": [
+        528,
+        545
+      ],
+      "normalized_pattern": "\\bmaybe we can too\\b"
+    },
+    {
+      "id": "75",
+      "start": 562.0,
+      "end": 564.0,
+      "text": "There's a lesson to be learned from this.",
+      "window_seconds": [
+        545,
+        574
+      ],
+      "normalized_pattern": "\\blesson to be (?:learned|learnt) from this\\b"
+    },
+    {
+      "id": "76",
+      "start": 566.0,
+      "end": 567.0,
+      "text": "Could'a gone worse.",
+      "window_seconds": [
+        558,
+        577
+      ],
+      "normalized_pattern": "\\bcould(?: have|ve|a) (?:gone|been) worse\\b"
+    }
+  ],
+  "existing_command_regressions": [
+    {
+      "cue": 70,
+      "reference_start": 506.0,
+      "reference_end": 508.0,
+      "window_seconds": [
+        501,
+        513
+      ],
+      "expected_phrase": "Captain! We have to abort!",
+      "pattern": "\\bcaptain we have to abort\\b"
+    },
+    {
+      "cue": 73,
+      "reference_start": 538.0,
+      "reference_end": 539.0,
+      "window_seconds": [
+        533,
+        544
+      ],
+      "expected_phrase": "Memory overwrite complete!",
+      "pattern": "\\bmemory (?:overwrite|override) complete\\b",
+      "scope": "Override is the baseline lexical error; report it as such while checking that the spoken command is retained."
+    }
+  ],
+  "review_requirements": [
+    "Byte-exact original source strings and segment order for all five inputs.",
+    "All original six official-film phrase windows unchanged; text retention distinct from interval containment.",
+    "Review all76 publisher cues against raw and projected timing, preserving source lexical errors and reference gaps.",
+    "Review all four ordinary/quiet clips, including fallback and unavailable word evidence.",
+    "Publisher cues are coarse evaluation evidence, not exact acoustic word timing. No subtitle/speaker accuracy or release approval from broad-window passes."
+  ]
+}

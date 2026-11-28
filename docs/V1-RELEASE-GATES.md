@@ -287,6 +287,27 @@ finds no preparation blocker, but no native model execution or summary-quality
 approval is recorded in that proposal. The planned English-first semantic gate
 must pass before its Greek case may run. Fresh validation remains unused.
 
+The subsequent [visible paired-name screen](krikri-visible-name-tag-screen-2026-11-28/README.md)
+stopped after its first response changed the protected spelling of Maria. The
+guard rejected it before restoration, and five cases remained unrun. The
+separate [first actual summary screen](krikri-summary-screen-2026-11-28/RESULTS.md)
+passed its native execution checks but failed independent English meaning
+review: the paragraph copied `concise factual summary` from the prompt example,
+and a key point weakened the requirement to check each quotation with its
+speaker. Greek remained unrun. The original source, criteria and failures are
+preserved while isolated source-only corrections are reviewed.
+
+The [fixed-text timing stage](post-asr-alignment-diagnostic-2026-11-28/README.md)
+completed five full retained inputs with zero new recognition calls, preserving
+every source string. Its original global fallback reverted all 86 film segments
+after a 0.26-second conflict. A separately frozen [offline correction](post-asr-local-projection-2026-11-28/README.md)
+restores only the two incident segments and leaves four short results unchanged.
+Independent review verified all exports, source identities and ordered physical
+intervals: six of six existing segment anchors pass, while only three of six
+word anchors pass. Eight film segments have no usable optional word evidence,
+and large timing movements elsewhere still need acoustic assessment. This is
+limited reliability evidence, not recognition-quality or production approval.
+
 ## Acceptance gates
 
 | Area | Required evidence | Current position |
@@ -355,6 +376,10 @@ must pass before its Greek case may run. Fresh validation remains unused.
 - [Rejected complete compact-tag translation screen](krikri-compact-tag-screen-2026-11-28/README.md)
 - [Compact-tag preparation and preserved initial guard failure](krikri-compact-source-name-protection-2026-11-28/README.md)
 - [Prospective English/Greek summary feasibility without model execution](krikri-summary-feasibility-2026-11-28/README.md)
+- [Rejected visible paired-name screen, with five cases unrun](krikri-visible-name-tag-screen-2026-11-28/README.md)
+- [Rejected actual English summary screen, with Greek unrun](krikri-summary-screen-2026-11-28/RESULTS.md)
+- [Fixed-text timing stage and original global fallback failure](post-asr-alignment-diagnostic-2026-11-28/README.md)
+- [Localized conflict fallback and complete retained-output review](post-asr-local-projection-2026-11-28/README.md)
 - [Translation writing-system corruption guard and retained-output replay](translation-script-guard-2026-11-28/README.md)
 - [Published evaluation and limitations](evaluation-2026-11-26/README.md)
 - [Real native speech evidence](asr-2026-11-26/README.md)

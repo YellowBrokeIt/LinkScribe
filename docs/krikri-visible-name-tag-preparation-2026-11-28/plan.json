@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T05:48:07.510546+00:00",
+  "status": "frozen_before_offline_source_controls_and_reference_token_estimates",
+  "authorized_scope": "ONE visible-name paired-tag preparation only; source-derived controls, offline request capture and the existing reference tokenizer; no native/model/detector loading or API calls.",
+  "candidate": {
+    "syntax": "<xN>exact original source name</xN>",
+    "ordinal_scope": "Unique per source mention in one complete request; request-local identity, external source/map/request bindings remain mandatory.",
+    "instruction": " Treat paired tags as exact-copy source spans. Copy every whole tagged span, including both tags and all text between them, exactly once, character for character, into the translation for its original input entry. Translate all surrounding ordinary text. Do not change the text inside a span, nest spans, or add, remove, split, or move a span to another entry.",
+    "file": "protection.py",
+    "sha256": "ca9316ec3387fa58d12460ae0ee076162990234183a0bc703da277205db7c4a5",
+    "adapter_sha256": "c494160b01ce72632e0bf276c0c7205e4b23227840efa194a2bc96422d389ae4",
+    "inner_name_change": "Reject, including semantically acceptable transliteration. Never restore a changed inner name.",
+    "restoration": "Remove only exact validated opening/closing wrappers; return the already validated inner text from the response itself.",
+    "namespace": "Same conservative opening/closing x-prefix scanner as compact profile, including spacing and comparison-only NFKC/casefold/format filtering.",
+    "nesting": "Reject nested or crossing pairs, unknown/malformed/unbalanced pairs and residual prefixes."
+  },
+  "observed_failure_addressed": {
+    "frozen_empty_tag_manifest_sha256": "4b6bb26a9c5118692e3178566ac74902ef7213fbf1c04969fe47adf8384094cd",
+    "outcome": "2 acceptable / 3 minor / 1 major; all names structurally preserved but explicitly feminine source actor referred to as he in two propositions.",
+    "hypothesis": "Visible actual name text may help retain lexical/anaphoric context while whole-pair verification catches name substitutions. The earlier article was already visible; causal attribution is unproved.",
+    "no_gender_inference_or_labels": true,
+    "no_name_dictionary_or_reference_answers": true,
+    "no_output_repair": true
+  },
+  "unchanged": {
+    "original_corpus_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "independent_criteria_binding_sha256": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+    "actual_retained_source_person_mentions": 13,
+    "normalizer_sha256": "fd91e0c9c944f5c37cf3ec39780c08b459d27c38bc66bb63b36c75e7c1206be0",
+    "model": {
+      "repository": "ilsp/Llama-Krikri-8B-Instruct-GGUF",
+      "revision": "3c1ce101a3e0d783a0f2223f212ccc35b4657532",
+      "filename": "llama-krikri-8b-instruct-q4_k_m.gguf",
+      "bytes": 5041147264,
+      "sha256": "e3f93427fe0fcc016e31ed4bfbc1d10916fb97f6b2b3298445196490d315376f",
+      "url": "https://huggingface.co/ilsp/Llama-Krikri-8B-Instruct-GGUF/resolve/3c1ce101a3e0d783a0f2223f212ccc35b4657532/llama-krikri-8b-instruct-q4_k_m.gguf",
+      "local_name": "linkscribe-krikri-8b-q4km:20261128",
+      "license": "Llama3.1 Community License",
+      "license_sha256": "bf2eac60b81e5c5f779fc3b4849d3bfacfd63f97f3eb68b44e9c6868c5801712",
+      "use_policy_sha256": "f456a3f5b15ab588c84d06cf095a245bfee0bbc1620b48ed00af2cca4a711735",
+      "public_ungated": true,
+      "projector_or_draft": false
+    },
+    "runtime": {
+      "directory": "/workspace/scratch/94360995dd61/linkscribe-model-runtime",
+      "version": "0.40.12",
+      "release_url": "https://github.com/ollama/ollama/releases/tag/v0.40.12",
+      "source_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+      "archive_sha256": "f8adcb7e08d272283a4bd3abc18cf581afe37e64b2aee04fda4f407f215485ba",
+      "files_sha256": {
+        "bin/ollama": "e38ef99ac4a7af0f7a7bec618ed38c77617fad8c412c025d69df49b4d7001786",
+        "lib/ollama/llama-server": "234b05b2138264f8fb263c3205e85f4c290e8afe5067e280a4f6f90cdac5696b"
+      }
+    },
+    "proposed_native_limits": {
+      "process_budget_mib": 6144,
+      "sample_interval_seconds": 0.1,
+      "preparation_seconds": 600,
+      "initialization_seconds": 180,
+      "request_seconds": 240,
+      "case_seconds": 600,
+      "inference_total_seconds": 1800,
+      "native_threads": 4,
+      "cpu_affinity_count": 4,
+      "context_tokens": 4096,
+      "maximum_output_tokens": 2048,
+      "scope": "Concurrent owned supervisor/worker/native daemon/runner from loading through exit; sampled summed RSS, PSS retained; not kernel or whole-machine approval."
+    },
+    "temperature": 0,
+    "think": false,
+    "top_p": 0.95,
+    "same_original_criteria_and_source_script_rule": true,
+    "production_changes": false
+  },
+  "offline_commands": [
+    {
+      "argv": [
+        "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+        "docs/krikri-visible-name-tag-preparation-2026-11-28/check_protection_controls.py"
+      ],
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    {
+      "argv": [
+        "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+        "docs/krikri-visible-name-tag-preparation-2026-11-28/build_inputs.py"
+      ],
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    {
+      "argv": [
+        "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+        "docs/krikri-visible-name-tag-preparation-2026-11-28/verify_profile.py"
+      ],
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    {
+      "argv": [
+        "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+        "docs/krikri-visible-name-tag-preparation-2026-11-28/estimate_tokens.py"
+      ],
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  ],
+  "offline_guards": {
+    "write_once_reports": true,
+    "no_native_runner_in_preparation": true,
+    "tokenizer_limit_seconds": 30,
+    "tokenizer_cpu_affinity_count": 4,
+    "tokenizer_sha256": "1b12728a215cde26d96f3add66a7a10f0e47147afbf2e677cc0a70ba49228ada",
+    "tokenizer_existing_bytes": 19508014,
+    "complete_old_native_vectors_required": 6,
+    "single_request_source_json_max_bytes": 1000,
+    "context_tokens": 4096,
+    "full_output_budget_tokens": 2048,
+    "end_token_reserve": 1,
+    "source_cropping": false
+  },
+  "known_limits": [
+    "All six are exposed development sources, no new corpus or reference-informed outputs.",
+    "Detector false positives/misses and article-normalizer semantic ambiguity remain unchanged.",
+    "Exact inflected forms can remain grammatically awkward in target prose.",
+    "Whole paired strings cannot certify pronouns, agreement, ordinary-prose additions, or actor/role assignments.",
+    "Request-local whole pairs can recur; external exact source/request binding is necessary.",
+    "Source containing the reserved namespace is refused; no namespace fallback or repair.",
+    "Strict whole-pair copying may reject a semantically valid transliteration.",
+    "Reference counts do not replace actual native rendering/token preflight.",
+    "Passing offline controls is not evidence of model copying or translation meaning."
+  ],
+  "source_sha256": {
+    "docs/krikri-compact-source-name-protection-2026-11-28/build_inputs.py": "1546c3bcd34125c03bab09b759c742b0991f19a7a821a0812e77dc83593c3286",
+    "docs/krikri-compact-source-name-protection-2026-11-28/evidence-manifest.json": "f9094d61dd9935a4103d0d1a55821e92add9cc71b045fb389997c3649ec0ff85",
+    "docs/krikri-compact-tag-screen-2026-11-28/evidence-manifest.json": "4b6bb26a9c5118692e3178566ac74902ef7213fbf1c04969fe47adf8384094cd",
+    "docs/krikri-compact-tag-screen-2026-11-28/independent-output-review.json": "ef33bda5ad465866452786d1cbc17a26caecb68c166f4a6c0ca91b1de2f9bfd4",
+    "docs/krikri-compact-tag-screen-2026-11-28/prepare.json": "fe1b1e0654678185198b768a784d9add507a63050627631bc6ed9ac2de493db4",
+    "docs/krikri-compact-tag-screen-2026-11-28/protection-inputs.json": "d16693a1b9e551b0b48e0f94ee71889e9804a9c38bb33e5be582c25425600ae0",
+    "docs/krikri-compact-tag-screen-2026-11-28/protection.py": "cb78fafb66c8b7810f860b983a2f0de0570464b98c7a3f843b924d0e43cfbf11",
+    "docs/krikri-screen-2026-11-28/enhancements-context4096.py": "e8b3a74da7d639908c18529ebbfe31203800408a067579e56a7100695983d4a3",
+    "docs/krikri-screen-2026-11-28/expected-requests.json": "9bad36451d55023f0cc4b3650af5095ffbe662b696b295a83a566590d0dbb558",
+    "docs/krikri-screen-2026-11-28/plan.json": "8842cceae54741a0999977db8f4e4584007eecebb95f0aaab2cc9d47cef4aeff",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/adapter-instruction-only.patch": "7f9c2bc3bb8b6ffdf082d65fc570c9262de171d140fa243c2c3c75b678af1700",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/build_inputs.py": "1546c3bcd34125c03bab09b759c742b0991f19a7a821a0812e77dc83593c3286",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/check_protection_controls.py": "635ae53eed54bbd325204587dfd910ba4f65e78f02b9606118aad407b52069cf",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/controls-profile-only.patch": "4586672cde3ecdb060e7e634978b806f2d100a2b5c74818da6082d3aecb94cd3",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/enhancements-context4096.py": "c494160b01ce72632e0bf276c0c7205e4b23227840efa194a2bc96422d389ae4",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/enhancements-production.py": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/estimate_tokens.py": "8dbdceb558b9f999b0098718b21680dc6e611e426c85445d4ef8f6cb45f85b26",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/independent-criterion-binding.json": "cd8c9bd75d0e5eaca23d9ac93a728f13d2ccf4490f57af1f1b43d5ed19047ab1",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/marker-instruction.txt": "62a3c7d29758d85a379e503133d2316000bd9418227961e11b98139510d0b909",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/proposal.md": "738f2f8a51e646d3cacad1903ff39e409c88314ed7391cf573f08a9288992422",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/protection.py": "ca9316ec3387fa58d12460ae0ee076162990234183a0bc703da277205db7c4a5",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/token-estimator-profile-only.patch": "0fc40124dc658e8b795109e55e947e2a92daa3b1090540cda9e2199920cf4fb9",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/verify_profile.py": "2d0e17537b3b140063194f8ba5487c2269c53a9524f64e07c5dd7759ef403cfc",
+    "docs/krikri-visible-name-tag-preparation-2026-11-28/visible-span-profile-only.patch": "c984ae7de431bf31f734d2be1165afeda7d4a9cdd79b55fc841796d5ad2bd718",
+    "docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py": "fd91e0c9c944f5c37cf3ec39780c08b459d27c38bc66bb63b36c75e7c1206be0",
+    "docs/name-boundary-normalizer-2026-11-28/evidence-manifest.json": "e40602570d9f7ab156dcc728167943625e9f5bc334e6491eec65c24ebdffb17a",
+    "docs/name-boundary-normalizer-2026-11-28/independent-replay-review.json": "06991541805b2c0633d48bdc9d0eed07cd8c53ef5daefdb21042cfa99f545228",
+    "docs/name-boundary-normalizer-2026-11-28/plan.json": "9d708e04ac952039e332314e098ab6befa90dd6b75d07842772aeb9992d41b76",
+    "docs/name-span-protection-research-2026-11-28/original-six-source-only.json": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482"
+  },
+  "free_disk_bytes": 1681096704,
+  "minimum_disk_reserve_bytes": 1073741824,
+  "native_execution_authorized": false,
+  "generation_authorized": false,
+  "expanded_or_fresh_validation_authorized": false,
+  "summaries_or_integration_authorized": false
+}

@@ -89,6 +89,22 @@ stopped after the second case rewrote protected markers. Its guard rejected the
 response, no names were guessed, and the remaining four cases were not run.
 These findings keep the language-quality gate open.
 
+The subsequent [visible-name experiment](docs/krikri-visible-name-tag-screen-2026-11-28/README.md)
+also failed its first exact-copy guard, leaving five translations unrun. The
+separate [English summary screen](docs/krikri-summary-screen-2026-11-28/RESULTS.md)
+returned the prompt's example phrase instead of a factual summary paragraph and
+weakened a publication-review requirement. That result is rejected; its Greek
+case was not run. These failures remain recorded while corrections are evaluated.
+
+A [fixed-text timing experiment](docs/post-asr-alignment-diagnostic-2026-11-28/README.md)
+aligned already-recognized text without another recognition pass. Its initial
+global fallback discarded all film timing estimates because two segments
+overlapped. The [localized fallback replay](docs/post-asr-local-projection-2026-11-28/README.md)
+preserves unaffected estimates and restores only the conflicting segments.
+All six existing segment-window checks pass, but only three word-window checks
+pass; original recognition errors and broader timing uncertainty remain.
+This diagnostic is separate from the published application's behavior.
+
 ## Features
 
 - **Single links or batches of 1–20 links**: accepts allowlisted YouTube, Vimeo and Dailymotion URLs; sequential processing and batch ZIP of successful results. Accepted URL formats do not guarantee provider access. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions. See [verified provider scope](#verified-provider-scope).

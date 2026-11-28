@@ -1,0 +1,355 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic source-contract control, not model/alignment/accuracy evidence.",
+  "model_initialized": false,
+  "model_inference": false,
+  "upstream_commit": "88e735ac42a2a97c7c10daec4e7ce9db49edf562",
+  "script_sha256": "650620d8ae889d5ee3b8c7f09d2ec004e9e8426a8ba4e7ce652f0648cf0bdd67",
+  "native_source_inventory_sha256": "97beece623b60f7e5dd320d97f107177bf50876497c22d8ed4905b4241960960",
+  "synthetic_examples": [
+    {
+      "synthetic_attention_values": [
+        [
+          0,
+          0,
+          0,
+          20,
+          20,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          20,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          20
+        ]
+      ],
+      "synthetic_path": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "consumer_result": {
+        "boundary_frames": [
+          0,
+          4,
+          4
+        ],
+        "first_boundary_seconds": 0.0,
+        "terminal_is_boundary_only": true,
+        "zero_duration_token_spans": 1
+      }
+    },
+    {
+      "synthetic_attention_values": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          20,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          20
+        ]
+      ],
+      "synthetic_path": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "consumer_result": {
+        "boundary_frames": [
+          0,
+          6
+        ],
+        "first_boundary_seconds": 0.0,
+        "terminal_is_boundary_only": true,
+        "zero_duration_token_spans": 0
+      }
+    },
+    {
+      "synthetic_attention_values": [
+        [
+          0,
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          10,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          10,
+          0
+        ]
+      ],
+      "synthetic_path": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          8
+        ]
+      ],
+      "consumer_result": {
+        "boundary_frames": [
+          0,
+          1,
+          3,
+          5
+        ],
+        "first_boundary_seconds": 0.0,
+        "terminal_is_boundary_only": true,
+        "zero_duration_token_spans": 0
+      }
+    }
+  ],
+  "valid_zero_span_example": {
+    "path": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "result": {
+      "boundary_frames": [
+        0,
+        0,
+        1
+      ],
+      "first_boundary_seconds": 0.0,
+      "terminal_is_boundary_only": true,
+      "zero_duration_token_spans": 1
+    }
+  },
+  "malformed_results": [
+    {
+      "name": "missing_terminal",
+      "rejected": true,
+      "reason": "Incomplete native start or terminal boundary"
+    },
+    {
+      "name": "terminal_probability_invented",
+      "rejected": true,
+      "reason": "Text probability count must exclude terminal boundary"
+    },
+    {
+      "name": "negative_frame",
+      "rejected": true,
+      "reason": "Native index outside text/terminal or frame range"
+    },
+    {
+      "name": "missing_text_index",
+      "rejected": true,
+      "reason": "Invalid native monotonic step"
+    },
+    {
+      "name": "crossing_path",
+      "rejected": true,
+      "reason": "Invalid native monotonic step"
+    },
+    {
+      "name": "nan_probability",
+      "rejected": true,
+      "reason": "Invalid token probability"
+    },
+    {
+      "name": "no_encoder_stride_frame",
+      "rejected": true,
+      "reason": "No native alignment frames"
+    }
+  ],
+  "source_deduction": "Finite native DTW starts at token0/frame0, and native word grouping starts at token boundary0. A raw-only first-word start therefore equals its audio-window start. Terminal indexN is required as an endpoint, but there are onlyN text probabilities.",
+  "official_baseline_implication": [
+    {
+      "segment_id": 77,
+      "seek_frames": 48500,
+      "first_text_span_start": 0,
+      "raw_only_start_seconds": 485.0,
+      "unchanged_window": [
+        501,
+        513
+      ],
+      "full_containment_start_impossible": true
+    },
+    {
+      "segment_id": 78,
+      "seek_frames": 50880,
+      "first_text_span_start": 0,
+      "raw_only_start_seconds": 508.8,
+      "unchanged_window": [
+        510,
+        529
+      ],
+      "full_containment_start_impossible": true
+    }
+  ]
+}

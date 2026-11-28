@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:11:07.056581+00:00",
+  "decision": "Reject at the first operational failure; no accepted/restored translation and five cases unrun.",
+  "independent_of_candidate_author": true,
+  "auditor_sha256": "aa8f6c08f36a95e4b75ff09e4ff58393af186ae6f0094e5235511742a041f58c",
+  "source_criteria_before_output_sha256": "2da59d2f38da5f6a8b4b7f899704d6d540860fb2ffe5d6bf0463bc8ca67210aa",
+  "inference_freeze_sha256": "d08480222ac83a11cc6aa1cb181a67bb000ff3ef2c5967755327658765c1d069",
+  "frozen_bindings_verified": 99,
+  "execution_sha256": "695c3da037cdb9262c4fa1deba26d921a8c5ff3f77bdc7c6400b02c95830ac9e",
+  "case_report_sha256": "78ac0b50f3db3cf3263e78062aa940c24b369e05765bef7a779d5d8b35ddb55e",
+  "protection_report_sha256": "ab8b2df2e00f0e73b69f0da0dd1c0ff61edc6566618b9b311e1f31858e1fd878",
+  "resource_report_sha256": "42542a97026917ad884414b3543ce8eeb726efcfe08c7d0665878434da514813",
+  "sample_stream_sha256": "59776b89d3b73c41d9914e5dc7b14e5763dd1ee084cda2f5069a10fcb6142fdc",
+  "actual_generations": 1,
+  "unrun_cases": 5,
+  "accepted_translations": 0,
+  "expected_exact_span": "<x0>Maria</x0>",
+  "actual_span": "<x0>Mαρία</x0>",
+  "actual_name_codepoints": [
+    "U+004D",
+    "U+03B1",
+    "U+03C1",
+    "U+03AF",
+    "U+03B1"
+  ],
+  "guard_rejection_reproduced": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment.",
+  "changed_inner_name_repaired": false,
+  "raw_translation_strings": [
+    "Η <x0>Mαρία</x0> αποθήκευσε τη μεταγραφή ως αρχείο κειμένου, αλλά δεν αποθήκευσε την αρχική ηχογράφηση.",
+    "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη."
+  ],
+  "raw_meaning_observations": {
+    "text_and_recording": "Preserved: transcript saved as a text file; original recording not saved.",
+    "process_and_chronology": "Preserved: transcription took 12 minutes; Greek translation has not started.",
+    "name": "Mixed-script Mαρία differs from source Maria. The exact-copy protocol fails; surviving ordinary facts do not make this rejected response an accepted translation.",
+    "other_five_cases": "Unrun; no quality judgment."
+  },
+  "runtime": {
+    "normal_stop": true,
+    "prompt_tokens": 231,
+    "output_tokens": 65,
+    "reasoning_empty": true,
+    "raw_retained_before_guard": true,
+    "elapsed_seconds": 36.034252,
+    "samples": 303,
+    "peak_rss_bytes": 5814366208,
+    "peak_pss_bytes": 5805011968,
+    "worker_exit_code": 1,
+    "unload_and_owned_cleanup_passed": true,
+    "measurement_complete": true,
+    "resource_limit_triggered": false
+  },
+  "unchanged_prior_failures_and_criteria": true,
+  "production_or_fresh_validation_approved": false,
+  "reviewer_native_or_model_calls": 0,
+  "initial_audit_interpreter_issue_sha256": "d0db2b00a96ba435ec94e9f3ad89faf5ea1aa413eda39da4b6dd3b85131ef624"
+}

@@ -1,0 +1,486 @@
+{
+  "complete": true,
+  "mechanical_passed": true,
+  "controls": 47,
+  "results": [
+    {
+      "id": "exact-roundtrip-repeated-mentions-and-metadata",
+      "mechanical_passed": true,
+      "observed": {
+        "metadata_and_text_exact": true,
+        "distinct_markers_for_repeated_name": true,
+        "article_unmasked": true
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "missing-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "duplicate-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "marker-case-change",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "split-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "cross-segment-marker-move",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "unknown-well-formed-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "unknown-malformed-prefix",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "extra-closing-tag-after-valid-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "extra-spaced-closing-tag-after-valid-marker",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-marker-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-closing-tag-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-spaced-opening-tag-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "compatibility-marker-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-visible-pair-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-format-separated-closing-collision",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source collides with the reserved marker namespace."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-map-corruption",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Protection map or masked source changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "source-metadata-corruption",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Original source metadata changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "translated-metadata-change",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated segment metadata/schema changed before restoration."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inflection-and-unicode-not-repaired",
+      "mechanical_passed": true,
+      "observed": {
+        "exact_decomposed_inflection_retained": true
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inner-unicode-normalization-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "apostrophe-hyphen-and-multiword-name-exact",
+      "mechanical_passed": true,
+      "observed": {
+        "multiword_hyphen_and_curly_apostrophe_unchanged": true
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "empty-entity-list",
+      "mechanical_passed": true,
+      "observed": true,
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-valid",
+      "mechanical_passed": true,
+      "observed": [
+        "one",
+        "two"
+      ],
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-extra-property",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native JSON must contain only the translations property."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-duplicate-property",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation JSON repeats a property."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-wrong-count",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation array has an invalid count or text value."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-wrong-type",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Native translation array has an invalid count or text value."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "strict-json-prose-wrapper",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "JSONDecodeError",
+        "message": "Expecting value: line 1 column 1 (char 0)"
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "restored-production-script-guard",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "EnhancementError",
+        "message": "The translation introduced text in an unexpected writing system. It was not saved as a completed translation; the original transcript remains available."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "restored-production-copy-guard",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "EnhancementError",
+        "message": "No separate English translation was generated because the model returned the original text unchanged. The original transcript remains available."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "within-segment-role-order-not-certified",
+      "mechanical_passed": true,
+      "observed": {
+        "markers_each_once_in_same_entry": true,
+        "meaning_not_certified": true,
+        "restored_text": "Πέτρο spoke to Δανάη."
+      },
+      "semantic_limit": "Once-only marker accounting cannot certify who acts on whom; independent meaning review remains mandatory."
+    },
+    {
+      "id": "ordinary-pronoun-not-certified",
+      "mechanical_passed": true,
+      "observed": {
+        "whole_name_copied_exactly": true,
+        "meaning_not_certified": true,
+        "restored_text": "Δανάη spoke. He left."
+      },
+      "semantic_limit": "An unchanged visible name does not certify pronouns or grammatical agreement outside the span."
+    },
+    {
+      "id": "localized-inner-name-rejected-not-restored",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inner-case-change-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inner-whitespace-change-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "empty-inner-name-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "inner-name-repetition-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "missing-closing-wrapper",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "wrong-closing-index",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "nested-pair-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "crossing-pairs-rejected",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "stray-opening-prefix",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "Translated text contains a malformed or unrecognized marker prefix."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "escaped-pair-not-decoded-or-repaired",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "tag-attribute-not-accepted",
+      "mechanical_passed": true,
+      "observed_error": {
+        "type": "ValueError",
+        "message": "A whole tagged source span is missing, changed, duplicated, nested, unknown or in the wrong source segment."
+      },
+      "semantic_limit": null
+    },
+    {
+      "id": "unwrapped-extra-name-not-certified",
+      "mechanical_passed": true,
+      "observed": [
+        [
+          {
+            "start": 0.25,
+            "end": 3.5,
+            "speaker": "Speaker A",
+            "text": "Η Δανάη μίλησε στη Δανάη. Δανάη"
+          },
+          {
+            "start": 3.5,
+            "end": 6.0,
+            "speaker": "Speaker B",
+            "text": "Ο Πέτρος άκουσε."
+          }
+        ],
+        [
+          {
+            "segment_index": 0,
+            "expected_markers": [
+              "<x0>Δανάη</x0>",
+              "<x1>Δανάη</x1>"
+            ],
+            "observed_markers": [
+              "<x0>Δανάη</x0>",
+              "<x1>Δανάη</x1>"
+            ],
+            "restored_markers": [
+              "<x0>Δανάη</x0>",
+              "<x1>Δανάη</x1>"
+            ],
+            "exact_same_segment_once_only": true,
+            "metadata_preserved": true,
+            "inner_source_spelling_exact": true,
+            "wrapper_only_removal": true,
+            "changed_inner_text_repaired": false
+          },
+          {
+            "segment_index": 1,
+            "expected_markers": [
+              "<x2>Πέτρος</x2>"
+            ],
+            "observed_markers": [
+              "<x2>Πέτρος</x2>"
+            ],
+            "restored_markers": [
+              "<x2>Πέτρος</x2>"
+            ],
+            "exact_same_segment_once_only": true,
+            "metadata_preserved": true,
+            "inner_source_spelling_exact": true,
+            "wrapper_only_removal": true,
+            "changed_inner_text_repaired": false
+          }
+        ]
+      ],
+      "semantic_limit": "Additional unwrapped ordinary prose, including a copied name, remains a semantic addition despite intact whole-span accounting."
+    },
+    {
+      "id": "request-local-tags-external-source-map-binding",
+      "mechanical_passed": true,
+      "observed": {
+        "tags_are_request_local": true,
+        "same_name_pair_can_recur_in_different_requests": true,
+        "source_map_identity_bound_outside_tag": true,
+        "cross_request_semantic_identity_not_certified_by_tag_alone": true
+      },
+      "semantic_limit": "Compact occurrence tags can repeat across requests; the wrapper must bind each actual request to its exact source/map. Marker strings alone do not authenticate cross-request meaning."
+    }
+  ],
+  "detector_calls": 0,
+  "translation_calls": 0,
+  "model_calls": 0,
+  "meaning_or_automatic_name_safety_certified": false,
+  "runner_sha256": "635ae53eed54bbd325204587dfd910ba4f65e78f02b9606118aad407b52069cf"
+}

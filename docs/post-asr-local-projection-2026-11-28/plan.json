@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "prepared; no actual retained-output projection replay performed",
+  "candidate": "incident_segment_baseline_fallback_v1",
+  "source_commit": "6de3faddf88bb5da8ea35d985b33ad26e55e249f",
+  "model_frontend_recognition_or_alignment_calls_allowed": false,
+  "evaluation_reference_read_allowed": false,
+  "automatic_retries": false,
+  "maximum_actual_replays": 1,
+  "original_experiment_root": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28",
+  "original_helper_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/run_postpass.py",
+  "input_cases_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/input-cases.json",
+  "original_report_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/results/report.json",
+  "raw_results_manifest_path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/raw-results-manifest.json",
+  "case_order": [
+    "official-tears-of-steel-stereo-full",
+    "fleurs-el_gr-validation-2-1528",
+    "fleurs-el_gr-validation-2-1528-quiet-minus20db",
+    "fleurs-en_us-validation-0-1548",
+    "fleurs-en_us-validation-0-1548-quiet-minus20db"
+  ],
+  "interval_policy": {
+    "conflict": "right.start < left.end - 1e-9",
+    "restore": "both incident segments to exact physically bounded baseline start/end",
+    "private_word_policy": "clear entire private word list for each restored segment",
+    "propagation": "repeat adjacency detection; fallback set only grows",
+    "maximum_rounds": "number of segments",
+    "baseline_overlap": "fail clearly; no fabricated ordering",
+    "unchanged_candidates": "preserve exact timings, text, words and metadata",
+    "reference_or_source_specific_rules": false
+  },
+  "source_scope": "One offline projection candidate on already retained native estimates. No regrade of original failed profile or missing 7a source.",
+  "pinned_files": [
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-local-projection-2026-11-28/replay_projection.py",
+      "bytes": 13842,
+      "sha256": "12a41231e30150afec3efca132e69cb3e50071c46c6560eb5c9c9fba35d1487c"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-local-projection-2026-11-28/test_projection.py",
+      "bytes": 9246,
+      "sha256": "9b1ce2b1bcc3a808fa4bbbea33d64419d3504f89412a72e6982149f513517e33"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-local-projection-2026-11-28/PROPOSAL.md",
+      "bytes": 4818,
+      "sha256": "cb3a3b3a2190ec2cceac5f1ec4278b765be0e550a868300363f7fd1a8218f448"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/run_postpass.py",
+      "bytes": 30358,
+      "sha256": "43d968c15bf80eba06b6c3744a5945db50bad57825845e2d8360dcefe6d48647"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/check_native_contract.py",
+      "bytes": 8061,
+      "sha256": "650620d8ae889d5ee3b8c7f09d2ec004e9e8426a8ba4e7ce652f0648cf0bdd67"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/production-timing-view.json",
+      "bytes": 3348,
+      "sha256": "919fc32d79ce79001154b66be2036b13cf3e69344c274b5d8b2980f21606adf6"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/input-cases.json",
+      "bytes": 93613,
+      "sha256": "5219ccd8ca12714e563e34fde2c66e9c2685aa621ba0f0e0c980817775801690"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/plan.json",
+      "bytes": 5838,
+      "sha256": "04ac58dd619d4d8e1eae6762db6aab05f81665c56f14c09bae25f30a6cc170c8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/raw-results-manifest.json",
+      "bytes": 10226,
+      "sha256": "6e816f53d2be3854e3bbe665e74e9550b837ef4f0a3a1b32fc4a660ee212fabe"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/results/report.json",
+      "bytes": 2756423,
+      "sha256": "2633406921d09adc2db49c0d8c2823ce69c47ba5459ceede6d9e683ea9711a28"
+    }
+  ]
+}

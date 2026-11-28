@@ -1,0 +1,13 @@
+{
+  "scope": "Reviewer-only expected export calculation correction; candidate/raw evidence unchanged",
+  "initial_issue": "The independent audit used math.floor(float_end*1000). For decimal520.42 the binary multiplication is520419.99999999994, producing an incorrect expected520419ms. The existing published application deliberately uses Decimal(str(timestamp)) and correctly exports520420ms.",
+  "correction": "Use decimal string conversion and ROUND_CEILING/ROUND_FLOOR for the independent expected integer milliseconds, matching the unchanged published inward-quantization contract. Preserve initial script and failed audit unchanged.",
+  "example": {
+    "end_seconds": "520.42",
+    "initial_incorrect_expected_ms": 520419,
+    "correct_decimal_expected_ms": 520420,
+    "actual_srt_and_vtt_ms": 520420
+  },
+  "model_rerun": false,
+  "candidate_changed": false
+}

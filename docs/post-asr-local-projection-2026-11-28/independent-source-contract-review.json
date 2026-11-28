@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:08:16.874702+00:00",
+  "reviewer": "package_verification, independent of the projection author",
+  "decision": "No source-contract blocker for the single proposed offline retained-output replay; root owns authorization. No actual replay, timing accuracy or production approval is inferred.",
+  "plan_sha256": "bff98950f7e5e042ea3dade24252f5bfacfd44698c6af78b59b65a15201c8840",
+  "helper_sha256": "12a41231e30150afec3efca132e69cb3e50071c46c6560eb5c9c9fba35d1487c",
+  "pinned_source_bindings_verified": 10,
+  "original_raw_manifest_sha256": "6e816f53d2be3854e3bbe665e74e9550b837ef4f0a3a1b32fc4a660ee212fabe",
+  "original_raw_files_verified": 51,
+  "historical_per_segment_projection_prefix_ast_identical": true,
+  "new_interval_policy_review": [
+    "The candidate list and physically bounded baseline must be complete, nonempty and individually finite/positive within decoded duration; source text and order match exactly.",
+    "Both incident segments of every adjacent conflict are restored to their exact bounded baseline start/end and lose private word evidence. All other candidate metadata, text and intervals are preserved.",
+    "A restored segment stays at baseline. If a conflict remains, at least one incident segment is new to the fallback set: two already-restored neighbors cannot conflict because the baseline was validated as ordered under the same tolerance. Thus each round grows the fallback set and the loop converges in at most the number of segments, with the whole baseline as the conservative limit.",
+    "The conflict step computes no new interval endpoint. It neither clips, shifts, sorts, interpolates nor averages timing and does not edit any source or word string. Optional private-word evidence is cleared only for the reverted segments.",
+    "The 1e-9 conflict tolerance is unchanged. Reference cues, phrase text, source IDs, scores and case names are not inputs to the generic conflict resolver.",
+    "Replay reconstructs the original adjusted copies and mappings from frozen completed native results. The original helper, plan, complete five-input provenance and all 51 raw files remain read-only; a distinct exclusive output directory prevents overwriting them."
+  ],
+  "retained_controls": {
+    "count": 14,
+    "reported_passed": true,
+    "exact_helper_test_log_bindings_verified": true,
+    "reviewer_reran_controls_or_projection": false,
+    "scope": "Single/disjoint conflict, both-direction propagation, convergence, unchanged unaffected metadata/words, physical/fractional bounds, invalid input/order rejection, original-prefix identity and optional-word fallback."
+  },
+  "model_frontend_tokenizer_alignment_recognition_or_network_calls_by_reviewer": 0,
+  "actual_retained_output_replayed_by_reviewer": false,
+  "criteria_or_windows_changed": false,
+  "limits": [
+    "The original global-fallback profile remains rejected; this distinct offline candidate cannot retrospectively change its result.",
+    "An overlapping original baseline fails rather than fabricating an ordered fallback. Empty inputs and general production compatibility are outside this fixed nonempty five-input replay.",
+    "Unaffected native timings remain estimates; a valid ordered export does not establish acoustic accuracy.",
+    "Any actual result still requires the unchanged six windows/all76 cues and four ordinary/quiet clip review, with fallback evidence and source errors retained."
+  ],
+  "bindings": {
+    "PROPOSAL.md": "cb3a3b3a2190ec2cceac5f1ec4278b765be0e550a868300363f7fd1a8218f448",
+    "plan.json": "bff98950f7e5e042ea3dade24252f5bfacfd44698c6af78b59b65a15201c8840",
+    "replay_projection.py": "12a41231e30150afec3efca132e69cb3e50071c46c6560eb5c9c9fba35d1487c",
+    "test_projection.py": "9b1ce2b1bcc3a808fa4bbbea33d64419d3504f89412a72e6982149f513517e33",
+    "synthetic-tests.json": "9e9aff0b74dd7941432ec6f79fe18341d5129e9c9c1a13934a4d90e111800c15",
+    "synthetic-tests.txt": "f1378dd624ebdedcfde693c72916bd175244b876fffcaa460f7912ca42ced68c",
+    "validate-only.json": "76ad22d939859814ae31e380a1660916cfc9f2bde98594337f6d5e5e15013fc8",
+    "preparation-manifest.json": "3d6d548cec13be116a61e2b0c32e1cf7b7c670eb7a453f03f420c7a4bc875a66"
+  }
+}

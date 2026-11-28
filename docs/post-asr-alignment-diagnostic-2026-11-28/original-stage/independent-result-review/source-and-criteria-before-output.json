@@ -1,0 +1,39 @@
+{
+  "created_at": "2026-11-28T05:57:27.989046+00:00",
+  "scope": "Root independent output-review criteria frozen before reading any new timing result. No model calls.",
+  "source_identities": [
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/plan.json",
+      "sha256": "04ac58dd619d4d8e1eae6762db6aab05f81665c56f14c09bae25f30a6cc170c8"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/run_postpass.py",
+      "sha256": "43d968c15bf80eba06b6c3744a5945db50bad57825845e2d8360dcefe6d48647"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/input-cases.json",
+      "sha256": "5219ccd8ca12714e563e34fde2c66e9c2685aa621ba0f0e0c980817775801690"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/post-asr-alignment-diagnostic-2026-11-28/evaluation-only.json",
+      "sha256": "4893b45f1002889ff735ce8ef6850d237e7daad46ede18137e9f8c6c924ef9be"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/publisher-TOS-en.srt",
+      "sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe"
+    },
+    {
+      "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/asr-official-tail-2026-11-28/analyze_alignment_only.py",
+      "sha256": "d29cf7e1d26bfc27367cb363c7316fb91f890cc7ff92742129253b21685f8de3"
+    }
+  ],
+  "requirements": [
+    "All five complete source strings, tokens, window order, PCM and source segment order unchanged.",
+    "Exact23 encode and23 fixed-text alignment calls; zero generation or fresh recognition; one model initialization and verified unload/owned cleanup.",
+    "Use all original six phrase windows and the existing normalize/full-containment rules unchanged; report missing optional word timing separately.",
+    "Compare all76 coarse publisher cues against source-bound projected timing; retain unmatched source/reference tokens and lexical errors explicitly. Publisher timing is not word-accuracy ground truth.",
+    "Review all four complete ordinary/quiet English/Greek clips and complete-source fallback; use exact6de physical-duration and inward-ms export rules.",
+    "Current official-film rendition cannot regrade7a provider failure. No provider, whole-app, speaker-accuracy or release approval."
+  ],
+  "candidate_outputs_read": false
+}

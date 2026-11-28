@@ -1,0 +1,64 @@
+--- docs/krikri-compact-tag-screen-2026-11-28/independent-audit_native_setup.py
++++ /workspace/scratch/94360995dd61/krikri-visible-name-tag-root-review-2026-11-28/audit_native_setup.py
+@@ -1,4 +1,4 @@
+-"""Read-only review of exact compact runtime preparation; never imports models."""
++"""Read-only review of exact visible-name runtime preparation; never imports models."""
+ from datetime import datetime,timezone
+ import hashlib
+ import json
+@@ -6,28 +6,28 @@
+ 
+ ROOT=Path('/workspace/scratch/94360995dd61/LinkScribe')
+ HERE=Path(__file__).resolve().parent
+-STAGE=ROOT/'docs/krikri-compact-tag-screen-2026-11-28'
+-PREP=ROOT/'docs/krikri-compact-source-name-protection-2026-11-28'
+-PRIOR=ROOT/'docs/krikri-source-name-protection-2026-11-28'
++STAGE=ROOT/'docs/krikri-visible-name-tag-screen-2026-11-28'
++PREP=ROOT/'docs/krikri-visible-name-tag-preparation-2026-11-28'
++PRIOR=ROOT/'docs/krikri-compact-tag-screen-2026-11-28'
+ BASE=ROOT/'docs/krikri-screen-2026-11-28'
+ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+ def read(p):return json.loads(p.read_bytes())
+ def check(v,label):
+     if not v:raise AssertionError(label)
+ 
+-check(sha(STAGE/'plan.json')=='e06f585f49b3a0903aa317eb725775a9f6e9b390c4c826d66c61304fbb8a4d5a','runtime plan')
+-check(sha(STAGE/'native-setup-freeze.json')=='793a4badcaed0093be956ffe95cf711dba27ecd205b9712f3091041009408933','native freeze')
++check(sha(STAGE/'plan.json')=='8878b61813184629abb2ffb4814d250fe85f05e8f2a94be09065c5854e32ac74','runtime plan')
++check(sha(STAGE/'native-setup-freeze.json')=='6898861ce1ded9d8233fb123a50b65e39d0340934e63ae5a5d0624d8f6d2128d','native freeze')
+ plan=read(STAGE/'plan.json');freeze=read(STAGE/'native-setup-freeze.json')
+-check(len(plan['source_sha256'])==67,'67 plan bindings')
++check(len(plan['source_sha256'])==82,'82 plan bindings')
+ for rel,expected in plan['source_sha256'].items():check(sha(ROOT/rel)==expected,'source '+rel)
+ for rel,expected in freeze['files_sha256'].items():check(sha(ROOT/rel)==expected,'native freeze '+rel)
+ for name in ['prepare_native.py','infer_native.py','resource_monitor.py','run_native.py']:
+     check((STAGE/name).read_bytes()==(PRIOR/name).read_bytes(),'reviewed runtime unchanged '+name)
+-check((STAGE/'context.py').read_text()==(PRIOR/'context.py').read_text().replace('linkscribe-krikri-runtime/source-name-protection','linkscribe-krikri-runtime/compact-tag-screen'),'only private log directory adapted')
++check((STAGE/'context.py').read_text()==(PRIOR/'context.py').read_text().replace('linkscribe-krikri-runtime/compact-tag-screen','linkscribe-krikri-runtime/visible-name-tag-screen'),'only private log directory adapted')
+ for name in ['protection.py','enhancements-context4096.py','expected-requests.json','protection-inputs.json','protected-source-cases.json','development-cases.json']:
+-    check((STAGE/name).read_bytes()==(PREP/name).read_bytes(),'reviewed compact profile copied exactly '+name)
++    check((STAGE/name).read_bytes()==(PREP/name).read_bytes(),'reviewed visible-name profile copied exactly '+name)
+ check(sha(STAGE/'development-cases.json')=='48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce','unchanged original six')
+-check(sha(PREP/'evidence-manifest.json')==plan['prepared_compact_profile']['manifest_sha256'],'immutable compact preparation')
++check(sha(PREP/'evidence-manifest.json')==plan['prepared_visible_profile']['manifest_sha256'],'immutable visible-name preparation')
+ setup=read(STAGE/'prepare.json');baseline=read(BASE/'prepare.json')
+ check(setup['complete'] and setup['generation_calls']==setup['native_create_calls']==setup['model_downloads']==0,'complete zero generation')
+ check(setup['cache']==baseline['cache'] and setup['header']==baseline['header'],'selected native package/header unchanged')
+@@ -55,7 +55,7 @@
+ resources=read(STAGE/'prepare-resources.json');sample_path=STAGE/'prepare-samples.jsonl'
+ check(sha(sample_path)==resources['samples_sha256'],'sample hash')
+ samples=[json.loads(s) for s in sample_path.read_text().splitlines()]
+-check(len(samples)==resources['sample_count']==207,'207 actual samples')
++check(len(samples)==resources['sample_count']==212,'212 actual samples')
+ for sample in samples:
+     check(len({r['pid'] for r in sample['processes']})==len(sample['processes']),'unique processes')
+     check(sum(p['rss_bytes'] for p in sample['processes'])==sample['rss_bytes'],'complete RSS sum')
+@@ -67,7 +67,7 @@
+ check(resources['limits']=={'rss_bytes':6442450944,'total_seconds':600,'initialization_seconds':180,'case_seconds':600},'unchanged setup limits')
+ check(resources['peak_rss_sample']['rss_bytes']<6442450944 and resources['elapsed_seconds']<180 and len(resources['cpu_affinity'])==4,'observed resource limits')
+ check(resources['disk_reserve_retained'] and resources['free_disk_after_bytes']>=1024**3,'disk reserve')
+-report={'schema_version':1,'reviewed_at':datetime.now(timezone.utc).isoformat(),'audit_passed':True,'plan_sha256':sha(STAGE/'plan.json'),'native_setup_freeze_sha256':sha(STAGE/'native-setup-freeze.json'),'plan_files_verified':67,'native_freeze_files_verified':len(freeze['files_sha256']),'reviewed_runtime_reused_byte_exact_except_private_path':True,'reviewed_corrected_profile_maps_requests_copied_byte_exact':True,'cases':rows,'preparation':{'model_generation_calls':0,'native_create_calls':0,'model_downloads':0,'elapsed_seconds':resources['elapsed_seconds'],'samples':len(samples),'peak_rss_bytes':resources['peak_rss_sample']['rss_bytes'],'peak_pss_bytes':resources['peak_pss_sample']['pss_bytes'],'worker_exit_code':0,'owned_processes_stopped':True,'free_disk_after_bytes':resources['free_disk_after_bytes']},'reviewer_model_tokenizer_native_provider_or_network_calls':0,'audit_script_sha256':sha(Path(__file__))}
++report={'schema_version':1,'reviewed_at':datetime.now(timezone.utc).isoformat(),'audit_passed':True,'plan_sha256':sha(STAGE/'plan.json'),'native_setup_freeze_sha256':sha(STAGE/'native-setup-freeze.json'),'plan_files_verified':82,'native_freeze_files_verified':len(freeze['files_sha256']),'reviewed_runtime_reused_byte_exact_except_private_path':True,'reviewed_corrected_profile_maps_requests_copied_byte_exact':True,'cases':rows,'preparation':{'model_generation_calls':0,'native_create_calls':0,'model_downloads':0,'elapsed_seconds':resources['elapsed_seconds'],'samples':len(samples),'peak_rss_bytes':resources['peak_rss_sample']['rss_bytes'],'peak_pss_bytes':resources['peak_pss_sample']['pss_bytes'],'worker_exit_code':0,'owned_processes_stopped':True,'free_disk_after_bytes':resources['free_disk_after_bytes']},'reviewer_model_tokenizer_native_provider_or_network_calls':0,'audit_script_sha256':sha(Path(__file__))}
+ p=HERE/'native-setup-audit.json'
+ with p.open('x',encoding='utf-8') as f:json.dump(report,f,ensure_ascii=False,indent=2);f.write('\n')
+ print(json.dumps({'path':str(p),'sha256':sha(p),'audit_passed':True}))
