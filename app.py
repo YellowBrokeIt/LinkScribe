@@ -1013,35 +1013,47 @@ def submit_link(request: Request, url: str = Form(...), mode: str = Form("smart"
 
 
 @app.post("/api/upload")
-async def submit_upload(request: Request, file: UploadFile = File(...),
+def submit_upload(request: Request, file: UploadFile = File(...),
                         language: str = Form("auto"), model: str = Form("small"),
                         consent: bool = Form(False), speakers: bool = Form(False),
                         target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
-    _check_browser_origin(request)
-    _validate_common(language, model, consent)
-    if target_language not in {"none","en","el"}:
-        raise HTTPException(400,"Unsupported translation language.")
-    original_name = (file.filename or "recording").replace("\\", "/").split("/")[-1]
-    suffix = Path(original_name).suffix.lower()
-    if suffix not in ACCEPTED_SUFFIXES:
-        raise HTTPException(400,"Unsupported file type. Use audio or video such as MP3, WAV, MP4 or WebM.")
-    job = _new_job(source=f"uploaded:{original_name[:140]}", title=original_name[:140])
-    target = job.workdir / ("input" + suffix)
+    # The multipart parser already owns a seekable spool. Check its actual
+    # length before reserving a queue slot, and copy in the API worker thread.
     try:
-        total = 0
-        with target.open("wb") as destination:
-            while chunk := await file.read(1024 * 1024):
-                total += len(chunk)
-                if total > MAX_BYTES:
-                    raise HTTPException(413,"The upload limit is 150 MB.")
-                destination.write(chunk)
-        if total == 0: raise HTTPException(400,"The uploaded file is empty.")
-    except Exception:
-        with lock: jobs.pop(job.id, None)
-        shutil.rmtree(job.workdir,ignore_errors=True)
-        raise
+        _check_browser_origin(request)
+        _validate_common(language, model, consent)
+        if target_language not in {"none","en","el"}:
+            raise HTTPException(400,"Unsupported translation language.")
+        original_name = (file.filename or "recording").replace("\\", "/").split("/")[-1]
+        suffix = Path(original_name).suffix.lower()
+        if suffix not in ACCEPTED_SUFFIXES:
+            raise HTTPException(400,"Unsupported file type. Use audio or video such as MP3, WAV, MP4 or WebM.")
+        incoming = file.file
+        incoming.seek(0, 2)
+        size = incoming.tell()
+        if size > MAX_BYTES:
+            raise HTTPException(413,"The upload limit is 150 MB.")
+        if size == 0:
+            raise HTTPException(400,"The uploaded file is empty.")
+        incoming.seek(0)
+        job = _new_job(source=f"uploaded:{original_name[:140]}", title=original_name[:140])
+        target = job.workdir / ("input" + suffix)
+        try:
+            total = 0
+            with target.open("wb") as destination:
+                while chunk := incoming.read(1024 * 1024):
+                    total += len(chunk)
+                    if total > MAX_BYTES:
+                        raise HTTPException(413,"The upload limit is 150 MB.")
+                    destination.write(chunk)
+            if total != size:
+                raise HTTPException(400,"The uploaded file changed during processing. Please upload it again.")
+        except Exception:
+            with lock: jobs.pop(job.id, None)
+            shutil.rmtree(job.workdir,ignore_errors=True)
+            raise
     finally:
-        await file.close()
+        file.file.close()
     return _start_job(job,_process_upload,target,language,model,speakers,target_language,summary,highlights)
 
 
