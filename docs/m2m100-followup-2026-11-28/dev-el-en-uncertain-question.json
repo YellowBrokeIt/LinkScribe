@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "model": {
+    "repository": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "weights_file": "pytorch_model.bin",
+    "weights_bytes": 1935796948,
+    "weights_sha256": "d907ea45e4e4b9db163382a6674f6218b3c59566fe06d77f4055c208b4e87ed1",
+    "license": "MIT",
+    "license_evidence": "Pinned official model card plus retained originating Fairseq MIT license text.",
+    "conversion_quantization": "float32",
+    "compute_type": "float32",
+    "trust_remote_code": false
+  },
+  "plan_sha256": "f89aa5300a047429c8bc136ab60527d7c45ef4956219358249869438bd529f94",
+  "inference_freeze_sha256": "ec186e54596808d1dd7664b28fbf044b794aa6b9bef4ef13d967236902dbbc81",
+  "cases": [
+    {
+      "id": "dev-el-en-uncertain-question",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "questions",
+        "uncertainty",
+        "numbers",
+        "quotation"
+      ],
+      "segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria"
+            ]
+          },
+          {
+            "label": "chapters",
+            "alternatives": [
+              "chapter"
+            ]
+          },
+          {
+            "label": "title",
+            "alternatives": [
+              "title"
+            ]
+          }
+        ],
+        "numbers": [
+          "12",
+          "21"
+        ]
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Mary asked, \u201cThe archive has 12 chapters or 21?\u201d",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We don't know the answer yet. the title alone is not enough to find out it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "Maria",
+          "alternatives": [
+            "Maria"
+          ]
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__el__",
+            "\u2581\u0397",
+            "\u2581\u039c\u03b1\u03c1",
+            "\u03af\u03b1",
+            "\u2581",
+            "\u03c1\u03ce",
+            "\u03c4\u03b7\u03c3\u03b5",
+            ":",
+            "\u2581\u00ab",
+            "\u03a4\u03bf",
+            "\u2581\u03b1\u03c1\u03c7",
+            "\u03b5\u03af\u03bf",
+            "\u2581\u03ad\u03c7\u03b5\u03b9",
+            "\u258112",
+            "\u2581\u03ba\u03b5",
+            "\u03c6\u03ac\u03bb",
+            "\u03b1\u03b9",
+            "\u03b1",
+            "\u2581\u03ae",
+            "\u258121",
+            ";",
+            "\u00bb",
+            "</s>"
+          ],
+          [
+            "__el__",
+            "\u2581\u0394\u03b5\u03bd",
+            "\u2581\u03b3\u03bd\u03c9",
+            "\u03c1\u03af\u03b6",
+            "\u03bf\u03c5\u03bc\u03b5",
+            "\u2581\u03b1\u03ba\u03cc\u03bc\u03b7",
+            "\u2581\u03c4\u03b7\u03bd",
+            "\u2581\u03b1\u03c0",
+            "\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7",
+            ".",
+            "\u2581\u039f",
+            "\u2581\u03c4\u03af\u03c4",
+            "\u03bb\u03bf\u03c2",
+            "\u2581\u03bc\u03cc",
+            "\u03bd\u03bf\u03c2",
+            "\u2581\u03c4\u03bf\u03c5",
+            "\u2581\u03b4\u03b5\u03bd",
+            "\u2581\u03b1",
+            "\u03c1\u03ba",
+            "\u03b5\u03af",
+            "\u2581\u03b3\u03b9\u03b1",
+            "\u2581\u03bd\u03b1",
+            "\u2581\u03c4\u03bf",
+            "\u2581\u03b4\u03b9\u03b1",
+            "\u03c0\u03b9\u03c3",
+            "\u03c4\u03ce",
+            "\u03c3\u03bf\u03c5\u03bc\u03b5",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__en__"
+          ],
+          [
+            "__en__"
+          ]
+        ],
+        "source_texts": [
+          "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:43.408738+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581Mary",
+              "\u2581asked",
+              ",",
+              "\u2581\u201c",
+              "The",
+              "\u2581arch",
+              "ive",
+              "\u2581has",
+              "\u258112",
+              "\u2581chap",
+              "ters",
+              "\u2581or",
+              "\u258121",
+              "?\u201d",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4171547293663025
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581We",
+              "\u2581don",
+              "'",
+              "t",
+              "\u2581know",
+              "\u2581the",
+              "\u2581answer",
+              "\u2581yet",
+              ".",
+              "\u2581the",
+              "\u2581title",
+              "\u2581alone",
+              "\u2581is",
+              "\u2581not",
+              "\u2581enough",
+              "\u2581to",
+              "\u2581find",
+              "\u2581out",
+              "\u2581it",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.45116832852363586
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 2.066,
+      "finished_at": "2026-11-28T01:31:45.476010+00:00"
+    }
+  ]
+}

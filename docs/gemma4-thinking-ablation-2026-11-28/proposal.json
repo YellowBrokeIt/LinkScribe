@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T02:20:29.674548+00:00",
+  "status": "proposed_not_executed",
+  "generation_calls": 0,
+  "purpose": "One native thinking-only ablation on the first exposed v2 failure; no promotion or claim from a single development case.",
+  "previous_stage": {
+    "directory": "docs/gemma4-exposed-v2-2026-11-28",
+    "manifest_sha256": "a638b7675f58e50cbf0a33898cf7dc8c4f76510d71bbdb1af61bb889bfa0d4d2",
+    "independent_review_sha256": "555a5ae186600d90ae875ca6fc92a38c06fabe8f4b314602c4c6714db0bba179",
+    "decision": "rejected:7major,3minor,2acceptable;all4longmajor"
+  },
+  "candidate": {
+    "original_plan_sha256": "0584e52a621a42974920f027ae4c47692364e3c0813943e6185d45732b9db932",
+    "original_inference_freeze_sha256": "a72dd00e7759fdc92745e81018721313553bb9e31ce8aaef4875e4365203f57f",
+    "six_case_evidence_manifest_sha256": "4a4cae0c8fe382b95f1b9cb7980055ca3d0b6e9faa62c02deb9aa8531ae065b0",
+    "model_repo": "google/gemma-4-E4B-it-qat-q4_0-gguf",
+    "model_revision": "4b4a2c1d584be7264f87aac328a1bc739ce81b6c",
+    "original_text_blob_sha256": "676c35070db6dbe52f93e9c864ee0fba4eddea94b9c875d9cb10daff453fbaee",
+    "native_manifest_sha256": "a3a7b071ffebe5e80b0979707cdcf7c27c5cae6cfd7e4f349ccee1546fee9627",
+    "adapter_snapshot_sha256": "819568e7dd6939ffc9b9eb91130109235b97fb1cfee6192838645dc4e34aa178",
+    "runtime_version": "0.40.12",
+    "native_renderer": "same native gemma4 small renderer; boolean thinking enabled",
+    "projector_or_draft": false,
+    "candidate_model_template_or_adapter_changed": "Only one line in a separate copy of the archived adapter: body[think]False becomes True. Original files remain immutable.",
+    "base_adapter_sha256": "819568e7dd6939ffc9b9eb91130109235b97fb1cfee6192838645dc4e34aa178",
+    "proposed_adapter_sha256": "c0ab3becf1565ef649480ed22cbca797723509f048965c055cbe8064769b17ac",
+    "native_parser": "same imported gemma4 thinking-capable parser"
+  },
+  "isolated_change": {
+    "request_field": "think",
+    "from": false,
+    "to": true,
+    "all_other_request_fields_byte_equivalent_under_canonical_JSON": true,
+    "patch_file": "thinking-only.patch"
+  },
+  "request_profile": {
+    "temperature": 0,
+    "num_ctx": 4096,
+    "num_predict": 2048,
+    "num_thread": 4,
+    "think": true,
+    "request_timeout_seconds": 240,
+    "schema": "unchanged original production translation JSON schema",
+    "model": "linkscribe-gemma4-e4b-qat:20261128",
+    "source_messages": "exact original full system and user messages; no hints, replacements, glossary or added answers"
+  },
+  "evaluation": {
+    "case_id": "v2-holdout-en-el-telescope-ownership",
+    "case_count": 1,
+    "attempts": 1,
+    "input_file": "telescope-source-and-criteria.json",
+    "input_file_sha256": "8c017aa490f4eaf8ed8c601d6936ca402592533dab00896d6b32d616c908cfcd",
+    "original_exposed_corpus_sha256": "2f31c4c9019d6bc821208c193a2344a9021c09124779afe21e775f05916e00f3",
+    "baseline_report_sha256": "8157f0b1843f10b928b8cad8aafa6d04e4bcc582703f76065408d9395f9cd312",
+    "baseline_rerun": false,
+    "criteria": "original three case criteria plus unchanged global meaning/name/number/unit/relationship/negation/uncertainty/action/condition/chronology/completeness requirements",
+    "independent_review": "package_verification with source/criteria binding before any output inspection",
+    "unused_v3_opened": false
+  },
+  "limits": {
+    "process_budget_mib": 6144,
+    "sample_interval_seconds": 0.2,
+    "initialization_seconds": 180,
+    "request_seconds": 240,
+    "case_and_total_seconds": 600,
+    "new_model_download_or_conversion": false,
+    "monitor_load_and_inference": true,
+    "scope": "Externally sampled concurrent supervisor, worker, owned daemon and native process tree; not kernel cap or whole-app approval."
+  },
+  "before_execution": [
+    "Root reviews this concrete source-supported proposal; no inference is authorized merely by writing it.",
+    "Freeze separate candidate copy, worker and supervisor hashes, exact archived helper/evaluator dependencies and independent original source/criteria binding. Do not edit prior frozen scripts or source hash records.",
+    "Verify the same full model payload, imported descriptors/config/params, runtime binaries and native renderer/parser identity. Record current checkout identity separately; execute the archived snapshot, not changed production code.",
+    "Preflight the actual complete native thinking prompt and loaded-tokenizer count before the single generation. Require prompt+2048+1<=4096 with no cropping, context/output change or model alternate."
+  ],
+  "during_and_after": [
+    "Assert the one actual generation request equals the retained non-thinking request except think:true, including source text and schema. Preserve every original segment metadata field.",
+    "Record the separate reasoning field and full raw final response. Do not grade reasoning as the translation. A missing separated reasoning span must be reported explicitly rather than assumed to demonstrate deliberation.",
+    "Accept execution only on normal stop, nonempty final content, valid original schema/count, actual prompt count equal to preflight and generated count below2048. Reject any length, timeout, resource, parse, measurement or cleanup failure and retain all evidence.",
+    "Explicitly unload, verify the resident-model list is empty and stop the owned process group. No retries or repair.",
+    "Independent semantic judgment determines whether the original telescope criteria improve. Failure stops this ablation; a passing first case still does not approve remaining v2, fresh v3, summaries, whole-app resources or production adoption."
+  ],
+  "source_artifacts_sha256": {
+    "proposed-request.json": "0a5c1bd92085e3135d311745879a3082082f9a45727d25272c3e6d2a13ea3a54",
+    "publisher-render-check.json": "1a5926a2662784a767ed7668f4e56d08ca9b4b5c3f3c076198a64397f8c03a6c",
+    "source-evidence.json": "3b3adb9dcc317055f9b55ab4bedccb4aac7c660bcfe3d09fa4bc37b9672bbb7c",
+    "telescope-source-and-criteria.json": "8c017aa490f4eaf8ed8c601d6936ca402592533dab00896d6b32d616c908cfcd",
+    "thinking-only.patch": "adc07ff9ec555f944f7231a349141a33754e1f71f12dbb5da1e95ebcb4f740e8"
+  }
+}

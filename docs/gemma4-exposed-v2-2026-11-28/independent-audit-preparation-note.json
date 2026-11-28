@@ -1,0 +1,16 @@
+{
+  "recorded_at": "2026-11-28T02:14:44.479527+00:00",
+  "scope": "Reviewer audit preparation, not model execution or semantic criteria change.",
+  "initial_audit_failure": "AssertionError: enhancements.py source changed",
+  "initial_audit_script_sha256": "61fbf13a4430bf56c8d93f1cdbef3c27ff18153fad049ab7c27d5e6e4b84d26c",
+  "expected_production_source_sha256_at_stage": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+  "current_production_source_sha256": "ea0cb0db9979937fe492a7d12c88a89a0604dfb2c55e760e07833ab7760df0a2",
+  "explanation": "Parent reported an intentional subsequent production script-corruption guard after the candidate stage. The actual experiment used its separately frozen enhancements-context4096.py adapter, which remains exact. The review now records live production-source drift explicitly while requiring every immutable executed candidate/helper, source corpus and raw evidence hash to match. No candidate output, model invocation, criterion or semantic classification changed.",
+  "second_audit_preparation_correction": {
+    "recorded_at": "2026-11-28T02:15:36.698936+00:00",
+    "failure": "Reviewer reassembly assertion initially joined raw fragment strings without the adapter’s existing strip().",
+    "initial_script_sha256": "c3e4c7cfc737fe6cce233e1b03cc15d541f7114054163e54a49a1f66939cfce7",
+    "evidence": "The unchanged pinned enhancements-context4096.py finish_batch appends text.strip() before joining fragments with a space. A returned textile fragment ends with one space; the saved output removes that edge space exactly as the frozen adapter specifies.",
+    "correction": "Audit now binds raw strings and exact strip-plus-join reassembly separately and records every edge-trim event. No source, candidate output, model invocation, criterion or semantic judgment changed."
+  }
+}

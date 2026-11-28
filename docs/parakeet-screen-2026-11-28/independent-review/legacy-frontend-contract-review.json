@@ -1,0 +1,22 @@
+{
+  "reviewed_at": "2026-11-28T01:56:31.241194+00:00",
+  "scope": "Read-only pre-output review of frozen frontend sensitivity ablation; no model/frontend construction or inference by reviewer.",
+  "plan_sha256": "f9b47352771a31ee354640e2e534d58cf01685cea9cfda642a7ef93e1ba6a44c",
+  "helper_sha256": "411bcc94bc3776f3a727be480b8b5bf569b289c7e543697f778f158caabe7a72",
+  "helper_diff_sha256": "2c361a3c4307cfa0183fb85b2058a19c850ff874e5bf662f890ee622d0f9b3d6",
+  "validate_only": {
+    "exit_code": 0,
+    "model_initialized": false,
+    "inference_performed": false
+  },
+  "material_blockers": [],
+  "findings": [
+    "Original model, tokenizer, native decoder, input arrays, source criteria, thread counts, attempts, initialization and resource budgets are unchanged by exact plan comparison.",
+    "The helper completes normal model construction and replaces only the uncalled NumPy frontend with the pinned model-supplied ONNX frontend; raw features are freshly computed and returned unchanged.",
+    "Each actual feature tensor is checked against the pinned matching retained ONNX pair at the same declared tolerance and exact shape/valid-length requirement; retained features are not substituted as inputs.",
+    "The changed frontend is explicitly logged and its session captured once; the existing full-array and raw-token/timestamp observer remains in place.",
+    "The comparator uses the one-thread parity outputs while this ablation preserves four recognition threads; any tolerated numerical difference is explicitly recorded.",
+    "The unchanged original semantic criteria remain authoritative. A different transcript would be frontend sensitivity evidence, not proof that the older frontend is correct."
+  ],
+  "decision": "No material pre-output contract blocker found. Authorized single diagnostic may proceed only after the shared model slot is released. No adoption, accuracy or ground-truth preference approved."
+}

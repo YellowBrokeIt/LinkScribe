@@ -1,0 +1,528 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T02:03:51.361017+00:00",
+  "reviewer": "Independent package_verification agent",
+  "complete": true,
+  "semantic_quality_approved": false,
+  "production_adoption_approved": false,
+  "full_film_followup_justified_by_this_screen": false,
+  "scope": "All eight original exposed development clips, unchanged original criteria, exact raw outputs. Read-only review with no additional model or frontend inference and no human audio-listening claim.",
+  "classification_definitions": {
+    "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+    "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+    "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+    "not_evaluable": "No completed aligned transcript is available."
+  },
+  "classification_counts": {
+    "minor_issue": 1,
+    "major_error": 4,
+    "acceptable": 3
+  },
+  "counts_by_language": {
+    "el": {
+      "minor_issue": 1,
+      "major_error": 3,
+      "acceptable": 1
+    },
+    "en": {
+      "acceptable": 2,
+      "major_error": 1
+    }
+  },
+  "identities": {
+    "plan_sha256": "f9b47352771a31ee354640e2e534d58cf01685cea9cfda642a7ef93e1ba6a44c",
+    "helper_sha256": "411bcc94bc3776f3a727be480b8b5bf569b289c7e543697f778f158caabe7a72",
+    "recognizer_report_sha256": "5cebad8176f649a43a17ced5efc6114d8fb27a9ffe6ac63a3e374903ff574f0e",
+    "execution_sha256": "439c6bac5d90100b975f7e03462661bcb8afaedc4e1d7f2ce5c054766322086f",
+    "original_report_sha256": "6c4d06ec6dec4c68d3774f8274c5007b9d7da0ba5ddacb3c3d074b44ff620e1c",
+    "original_independent_review_sha256": "af40b036a0f36cba482ab984aead8f0e52ea11a9b82e2b78e699c0e3d766238a",
+    "semantic_criteria_sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9",
+    "original_pre_output_source_criteria_snapshot_sha256": "fedc0efa8e5d4b67bbff0a8287d996ba5dc929d1220175a85a92db65e718607f",
+    "legacy_pre_output_contract_review_sha256": "ecd478e20482c62a5510e6881c462660869c65a548e06d108ce9db149513073c",
+    "mechanical_audit_sha256": "7a272b03585117deb2b68896ab84c0b4d4152d1e155537ca4845d0d4662c5a80",
+    "mechanical_audit_script_sha256": "3fafc014677bd8df0306fed40208452120de74e1f2398e271f88d6e174e4c532"
+  },
+  "mechanical_result": {
+    "all_eight_completed_once": true,
+    "all_frozen_files_match": true,
+    "full_prepared_audio_and_native_output_binding": true,
+    "legacy_frontend_feature_hashes_match_all_retained_onnx_pairs_exactly": true,
+    "same_4_cpu_threads_and_frozen_decoder_settings": true,
+    "all_declared_resource_limits_pass": true,
+    "resources": {
+      "source_audio_seconds": 52.44,
+      "controller_elapsed_seconds": 10.566833,
+      "worker_elapsed_seconds": 9.288655,
+      "startup_and_initialization_seconds_from_controller": 6.260378,
+      "model_initialization_seconds_recorded": 5.136743,
+      "recognition_sum_seconds": 3.640302,
+      "slowest_case_seconds": 0.713617,
+      "worker_recorded_peak_rss_bytes": 1462198272,
+      "process_group_sampled_peak_rss_bytes": 1462734848,
+      "rss_limit_bytes": 2684354560,
+      "controller_exit_code": 0,
+      "stopped_at_limit": null
+    },
+    "recorded_python_network_attempts": 0,
+    "source_target_language_and_reference_arguments_absent": true
+  },
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "language": "el",
+      "reference": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνωτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "original_review_criteria": [
+        "Preserve the provision of special family camping areas and the reference to young children."
+      ],
+      "original_int8_hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικού κατασκημού χώρου για οικογένει με μικρά παιδιά.",
+      "original_classification": "minor_issue",
+      "legacy_frontend_hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικού κατασκητού χώρου για οικογένει με μικρά παιδιά.",
+      "classification": "minor_issue",
+      "reason": "The special family camping-area provision and young children remain recoverable, but ειδικού κατασκητού χώρου and incomplete οικογένει are malformed. The changed camping-word spelling does not yield a clean or more faithful result.",
+      "criterion_assessment": {
+        "family_camping_provision": "recoverable_with_word_errors",
+        "young_children": "preserved"
+      },
+      "comparison_with_original": "Same minor category as the original NumPy-frontend output; κατασκημού becomes κατασκητού while other damaged word endings remain.",
+      "prior_small_vad_off_hypothesis": "Κάποια φεστιβάλ παρέχουν ιδικούς κατασκοινωτικούς χώρους για οικογένεις με μικρά παιδιά.",
+      "prior_turbo_hypothesis": "Κάποια φεστιβάλ παρέχουν ειδικούς κατασκηνοτικούς χώρους για οικογένειες με μικρά παιδιά.",
+      "evidence": {
+        "id": "fleurs-el_gr-validation-2-1528",
+        "wav_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+        "prepared_array_sha256": "a5e38c6b760a06d5132fe4806904b005a998ab60fd39174727a884a0bff1480c",
+        "full_pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d",
+        "sample_count": 106560,
+        "duration_seconds": 6.66,
+        "source_wav_pcm_sha256": "792ef7d6095d2fe8f3f298818a7660788c827c0055f43b301388e72e028cae87",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "088952b2d76a58406adf8cf7c26b80c4c65f67600d502b396d339da2f2f32618",
+        "raw_decode_call_sha256": "82fd04ae4dadaf20d78d327a3690b4662c6ac015c48211b9315976cf03d950da",
+        "text_utf8_sha256": "0918b0c0c7796aa99119bf32eed33de29e733f32c254f4e07177e99ae12d8050",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 37,
+        "last_token_seconds": 6.24,
+        "elapsed_seconds": 0.713617,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "0667f699ac78324a3862a8d715aca1dabf872517577764a1edf0068f9a78ebb2",
+        "retained_onnx_pair_sha256": "77b7af17a7729fc8085ec863f5dcc3650399b734c29bc6b3c9798121a0365a24",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          667
+        ],
+        "feature_shape": [
+          1,
+          128,
+          667
+        ]
+      }
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "language": "el",
+      "reference": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτελί μέσα σε τέσσερα χρόνια.",
+      "original_review_criteria": [
+        "Preserve the fifth council, the four-year interval and the proper name Μαρτελί. Written-out versus numeric forms may be equivalent."
+      ],
+      "original_int8_hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούριο του Μαρτέι μέσα σε τέσσερα χρόνια.",
+      "original_classification": "major_error",
+      "legacy_frontend_hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούριο του Μαρτέι μέσα σε τέσσερα χρόνια.",
+      "classification": "major_error",
+      "reason": "Μαρτελί remains Μαρτέι and συμβούλιο remains the malformed συμβούριο. The fifth council and four-year interval survive, but the explicit proper-name criterion still fails.",
+      "criterion_assessment": {
+        "fifth_council": "preserved",
+        "four_year_interval": "preserved",
+        "Μαρτελί": "not_preserved"
+      },
+      "comparison_with_original": "The final text is identical to the original int8 output. No correction of the name or council word.",
+      "prior_small_vad_off_hypothesis": "Είναι το πέμπτο προσωρινό εκλογικό συμβούλιο του Μαρτεή μέσα σε 4 χρόνια.",
+      "prior_turbo_hypothesis": "Είναι το 5ο προσωρινό εκλογικό συμβούλιο του Μαρτεΐ μέσα σε 4 χρόνια.",
+      "evidence": {
+        "id": "fleurs-el_gr-validation-5-1515",
+        "wav_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+        "prepared_array_sha256": "34b697dcc03bc2020b9f54c34f525eb29ad00342bda4aa77bc072f5aab8acff1",
+        "full_pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b",
+        "sample_count": 96000,
+        "duration_seconds": 6.0,
+        "source_wav_pcm_sha256": "4b080b2d5848b6be848e85e6bb99898d2d737da66d4f7fdf575fb491fa908f01",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "f79edf20d2bbb328d2df0fb4f7f868f160dca5f9003ede5705bc7e0dcbcb194d",
+        "raw_decode_call_sha256": "ea7af5544567a71efb16aff863bcb5fa646224867a72aa0028f1314b796518cb",
+        "text_utf8_sha256": "25a916670988b504311d9d9404b86cccb7a35fc4ef92707225ccbe031c61e021",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 33,
+        "last_token_seconds": 5.28,
+        "elapsed_seconds": 0.409494,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "23f8295d0fa68b30d19d2644d4d19b400552d4bc0e3187195bdbec6e60d95695",
+        "retained_onnx_pair_sha256": "02530123cac8e81f5e7521f9e2e9c4002b47857896f248dc98907fdc8b02b19b",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          601
+        ],
+        "feature_shape": [
+          1,
+          128,
+          601
+        ]
+      }
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "language": "el",
+      "reference": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "original_review_criteria": [
+        "Both negative statements must survive: it does not make sense, and in any case it was not fair."
+      ],
+      "original_int8_hypothesis": "Αυτό δεν μου βγάζει νόημα, σε κάθε περίπτωση δεν ήταν.",
+      "original_classification": "major_error",
+      "legacy_frontend_hypothesis": "Αυτό δεν μου βγάζει νόημα, σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "classification": "acceptable",
+      "reason": "Both full negative propositions are retained: it does not make sense and, in any case, it was not fair. The only reference difference is sentence punctuation.",
+      "criterion_assessment": {
+        "does_not_make_sense": "preserved",
+        "in_any_case_was_not_fair": "preserved"
+      },
+      "comparison_with_original": "A genuine local improvement: δίκαιο, omitted by the original int8 run, is restored. This restores the original criterion for this case only.",
+      "prior_small_vad_off_hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκιο.",
+      "prior_turbo_hypothesis": "Αυτό δεν μου βγάζει νόημα. Σε κάθε περίπτωση δεν ήταν δίκαιο.",
+      "evidence": {
+        "id": "fleurs-el_gr-validation-6-1577",
+        "wav_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+        "prepared_array_sha256": "24488d58992d0b4c7a922dd1a18e17f8d259c4df985b72ab917eeb02bdcd1482",
+        "full_pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad",
+        "sample_count": 67200,
+        "duration_seconds": 4.2,
+        "source_wav_pcm_sha256": "c55f4401d6bbb8e5e332ad6a995bdc37d991c4da573661c6b5e94b5a8251a2af",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "eaba108fa4ebe79c6a81ff6fbe38417a1493c135bab0da2b7ad176a027e209f2",
+        "raw_decode_call_sha256": "7062c90163ea85e56c599ab010f7cbf408f0218406375fc2f69cb2680b1c9ad6",
+        "text_utf8_sha256": "ab2d39e590445fe1689994ef25af880b0450a30e58bbba89dad3ee2d4572cc31",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 27,
+        "last_token_seconds": 3.84,
+        "elapsed_seconds": 0.270212,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "0df5d36a463a8d05cd1326cd64ededb6b93143760e01053196138c6ecb6f43f1",
+        "retained_onnx_pair_sha256": "292d18bc04e3341e97b442dd90a986668dcf82dbdb284ee3dd4a0b9698b302b6",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          421
+        ],
+        "feature_shape": [
+          1,
+          128,
+          421
+        ]
+      }
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "language": "el",
+      "reference": "Μολονότι 3 άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκρουση του αυτοκινήτου, δεν τραυματίστηκε κανείς.",
+      "original_review_criteria": [
+        "Preserve the count of three people and the claim that nobody was injured despite the collision."
+      ],
+      "original_int8_hypothesis": "Μόλι άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκληση του αυτοκίνητο, δεν τραυματίστηκαν.",
+      "original_classification": "major_error",
+      "legacy_frontend_hypothesis": "Μόλι άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκληση του αυτοκίνητο, δεν τραυματίστηκε κανεί.",
+      "classification": "major_error",
+      "reason": "The count three is still absent. Μολονότι remains incomplete Μόλι, and collision πρόσκρουση remains invitation πρόσκληση. The ending now contains δεν τραυματίστηκε κανεί, a recoverable nobody-was-injured statement with a truncated noun ending; no positive/negative reversal is alleged. The count and collision failures remain decisive.",
+      "criterion_assessment": {
+        "three_people": "omitted",
+        "despite_collision_relationship": "not_preserved",
+        "collision": "wrong_content_word",
+        "negative_injury_statement": "preserved",
+        "explicit_nobody_quantifier": "recoverable_with_missing_final_letter"
+      },
+      "comparison_with_original": "The nobody wording improves relative to the original δεν τραυματίστηκαν, but the lost count and collision/concession do not recover.",
+      "prior_small_vad_off_hypothesis": "Μόνο ότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκληση του αυτοκινήτου δεν τραγματίσκε κανείς.",
+      "prior_turbo_hypothesis": "Μολονότι τρεις άνθρωποι βρίσκονταν μέσα στο σπίτι κατά την πρόσκουση του αυτοκινήτου δεν τραυματίσκε κανείς.",
+      "evidence": {
+        "id": "fleurs-el_gr-validation-7-1598",
+        "wav_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+        "prepared_array_sha256": "f3e925954c97008ec339e7fa5718b8aeec60d3ba9367d76437567e19865cab9e",
+        "full_pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae",
+        "sample_count": 111360,
+        "duration_seconds": 6.96,
+        "source_wav_pcm_sha256": "097a1290030074bc82777c2d88834344b0d89c2759280f892512ea1e663a2aab",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "484c4375a9a8c8c917daef46ce6beb749de63581d4bea0e3785a6603b487cc7e",
+        "raw_decode_call_sha256": "f31180846799ad2d493ddfcfc3caaf9b403964007a11e486c93a0f132ac21946",
+        "text_utf8_sha256": "06d4fce48af64af1748595c5f88cf12009d3294d8618810b921bae30b448b1ac",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 45,
+        "last_token_seconds": 6.32,
+        "elapsed_seconds": 0.43252,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "1447ab7550980e28411fde08597b5df6c1f56cf1962cfc3f4dcf01a9f7341153",
+        "retained_onnx_pair_sha256": "9c3c42b7b1422981a577d1ac6f5685bd4dbecdda1552accc9911288e56b4d9ff",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          697
+        ],
+        "feature_shape": [
+          1,
+          128,
+          697
+        ]
+      }
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "language": "el",
+      "reference": "Η κύρια τοπική μπίρα ονομάζεται «Number One» και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσιστική. Η άλλη τοπική μπίρα λέγεται «Manta».",
+      "original_review_criteria": [
+        "Preserve the two product names Number One and Manta and the negated description of the first beer."
+      ],
+      "original_int8_hypothesis": "Η κύρια τοπική πύρα ονομάζεται Number One, και δεν αποτελεί μια σύνθενη πύρα, είναι όμω ευχάριστη και δροσητική. Η άλλη τοπική μπείρα λέγεται Μάντα.",
+      "original_classification": "minor_issue",
+      "legacy_frontend_hypothesis": "Η τοπική πύρα ονομάζεται Nummer One, και δεν αποτελεί μια σύνθετη πύρα, είναι όμω ευχάριστη και δροσητική. Η άλλη τοπική μπύρ λέγεται μάντα.",
+      "classification": "major_error",
+      "reason": "The named product Number One becomes Nummer One, which fails the unchanged proper-name requirement. The modifier κύρια (main) is also omitted. The negated complexity description remains, Manta is recoverable as μάντα, and the pleasant/refreshing comparison remains recoverable despite several spelling and word-ending errors.",
+      "criterion_assessment": {
+        "Number_One": "not_preserved_Nummer",
+        "Manta": "preserved_as_Greek_μάντα",
+        "main_local_beer_modifier": "omitted",
+        "negative_complexity_description": "preserved_with_wrong_beer_word",
+        "pleasant_refreshing_comparison": "recoverable_with_spelling_errors"
+      },
+      "comparison_with_original": "A new material product-name defect relative to the original Number One. The original minor category worsens to major under the same definition. σύνθετη improves, but πύρα, όμω, δροσητική and incomplete μπύρ remain defective.",
+      "prior_small_vad_off_hypothesis": "Η κύριε τοπική μπήρα ονομάζεται number one και δεν αποτελεί μια σύνθετη μπήρα. Είναι όμως ευχάριστο και δροσητική. Η άλλη τοπική μπήρα λέγεται μάντα.",
+      "prior_turbo_hypothesis": "Η κύρια τοπική μπύρα ονομάζεται Number One και δεν αποτελεί μια σύνθετη μπύρα, είναι όμως ευχάριστη και δροσεκτική. Η άλλη τοπική μπύρα λέγεται Manda.",
+      "evidence": {
+        "id": "fleurs-el_gr-validation-11-1590",
+        "wav_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+        "prepared_array_sha256": "cc75526eece38bdc17090e4bf36769618335bc4dd3b82247a49c983bf155e9ba",
+        "full_pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9",
+        "sample_count": 160320,
+        "duration_seconds": 10.02,
+        "source_wav_pcm_sha256": "d1ced9dbf6ec25f14ea6e6ec94c0ba4f39ce6f2e162739dfb9d363ee99c3cee7",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "6f4d37b5402993da601cc2f652728d7665845c9378d7e28f31deb033990bf3d6",
+        "raw_decode_call_sha256": "68fc2bd5b9a3c76bda05bb983a5836fe3c08236f7226ce218d8df700b79e06f8",
+        "text_utf8_sha256": "d8e772fab352d3472a8bd3480f539a891cf07c7385eded0f2593d14920db6bed",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 63,
+        "last_token_seconds": 9.120000000000001,
+        "elapsed_seconds": 0.536582,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "38c95e2e3120d0f9b6bb6476589becf797e33425a4b0cbc072fabaf4995ae212",
+        "retained_onnx_pair_sha256": "59b48f1dc6cfaa662f6115700fda6067906331a7d60fa6a84372e2f086b37d30",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          1003
+        ],
+        "feature_shape": [
+          1,
+          128,
+          1003
+        ]
+      }
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "en",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "original_review_criteria": [
+        "Preserve the distant phone-call condition and satellite claim as spoken; this is transcription fidelity, not fact checking."
+      ],
+      "original_int8_hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "original_classification": "acceptable",
+      "legacy_frontend_hypothesis": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "classification": "acceptable",
+      "reason": "The distant-call condition, thousands of miles and satellite claim remain intact. You’re is equivalent to you are; this evaluates fidelity to the spoken claim, not its real-world truth.",
+      "criterion_assessment": {
+        "distant_call_condition": "preserved",
+        "satellite_claim": "preserved"
+      },
+      "comparison_with_original": "Exact same final text as the original int8 output; no semantic change.",
+      "prior_small_vad_off_hypothesis": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "prior_turbo_hypothesis": "When you call someone who is thousands of miles away you're using a satellite",
+      "evidence": {
+        "id": "fleurs-en_us-validation-0-1548",
+        "wav_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+        "prepared_array_sha256": "c28e046e8d1391abc69614a6c81f8a409a9897a29c240138a4586720e39ea9c4",
+        "full_pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7",
+        "sample_count": 104640,
+        "duration_seconds": 6.54,
+        "source_wav_pcm_sha256": "c2e20eb18368277ab53cc1434dc46ed20264a1076ecb779adc9210367a0181c1",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "961d339fc40a5a3cd3806380d4c23366a7ed82826147a0fb62e9946bb7ca3247",
+        "raw_decode_call_sha256": "238927ba27de142524ec54466746febc39b1553880ce852ccbff7dda0e48d36b",
+        "text_utf8_sha256": "c2e9e16e0eea64989cdadbe67b6a1b54b6c5f43651c233bf0520bdc0adf67265",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 30,
+        "last_token_seconds": 6.0,
+        "elapsed_seconds": 0.415236,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "58435cd0d6f41480faa6eefad4e6a156c6de906a8c8d76d41738eb86c9e7d268",
+        "retained_onnx_pair_sha256": "c16baf186aab149dac7b1c2424818e7cdf34e5256859537dc7ad47394d9b1836",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          655
+        ],
+        "feature_shape": [
+          1,
+          128,
+          655
+        ]
+      }
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "language": "en",
+      "reference": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "original_review_criteria": [
+        "Preserve the U.N. attribution, proposed fund, affected countries and intended help in coping with warming impacts."
+      ],
+      "original_int8_hypothesis": "The UN also hopes to finalise a fund to help countries affected by global warming to cope with the impacts.",
+      "original_classification": "acceptable",
+      "legacy_frontend_hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "classification": "acceptable",
+      "reason": "The U.N. attribution, proposed fund, countries affected by global warming and help coping with impacts are all retained. UN is an accepted punctuation form.",
+      "criterion_assessment": {
+        "UN_attribution": "preserved",
+        "hoped_for_fund": "preserved",
+        "affected_countries": "preserved",
+        "coping_with_warming_impacts": "preserved"
+      },
+      "comparison_with_original": "finalise becomes finalize, an equivalent spelling change; no semantic change.",
+      "prior_small_vad_off_hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "prior_turbo_hypothesis": "The UN also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "evidence": {
+        "id": "fleurs-en_us-validation-2-1510",
+        "wav_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+        "prepared_array_sha256": "4ca922f5773d3318fca12c7e7157522b7bb71f258fe3e70aba82a442e937951f",
+        "full_pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270",
+        "sample_count": 126720,
+        "duration_seconds": 7.92,
+        "source_wav_pcm_sha256": "f94f223c68148329dffacb619b39975c53d9f231fe6a54fb7f6129cc50220e1b",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "1a1923c3b1055d0a332436d7820325f8a7addce6dae3cf25738adbb9638ee1a5",
+        "raw_decode_call_sha256": "5613d16c60125d50b0627def393576adde5746709aa308ef0c38e6cce735b1aa",
+        "text_utf8_sha256": "22348fd42247b2aeeb9c78454b759ee242ce524c246548e98c642a24a3f49399",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 38,
+        "last_token_seconds": 7.76,
+        "elapsed_seconds": 0.572862,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "f4db845396b5e810bd7d9a3f3d9c53689be57e0099da53d839f9d5702052e279",
+        "retained_onnx_pair_sha256": "f258e4e8fa3401dc4b8bb16f257512706d5c974bd3d72bcab054ccddf842c441",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          793
+        ],
+        "feature_shape": [
+          1,
+          128,
+          793
+        ]
+      }
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "language": "en",
+      "reference": "Then, Lakkha Singh took the lead in singing the bhajans.",
+      "original_review_criteria": [
+        "Preserve the person name Lakkha Singh, leading role and the sung bhajans."
+      ],
+      "original_int8_hypothesis": "Then Laka Singh took the lead in singing the Bajans.",
+      "original_classification": "major_error",
+      "legacy_frontend_hypothesis": "Then Laka Singh took the lead in singing the Bajans.",
+      "classification": "major_error",
+      "reason": "The leading role/action remains clear, but Lakkha Singh is still Laka Singh and bhajans is still Bajans. The original name and sung-term criteria remain unsatisfied.",
+      "criterion_assessment": {
+        "Lakkha_Singh": "not_faithfully_preserved",
+        "leading_role": "preserved",
+        "sung_bhajans": "not_faithfully_preserved"
+      },
+      "comparison_with_original": "Exact same final text as the original int8 output. The improvement over Small/Turbo in Singh/took the lead remains, but no further correction is observed.",
+      "prior_small_vad_off_hypothesis": "Then Lakas sing to the lead and singing the basjams",
+      "prior_turbo_hypothesis": "Then Laka sing to the lead and singing the pashams.",
+      "evidence": {
+        "id": "fleurs-en_us-validation-3-1578",
+        "wav_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+        "prepared_array_sha256": "bd2bbaf768eeca10034b8607d020decc9882329a7ed041b013a8bdc1454b05b8",
+        "full_pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb",
+        "sample_count": 66240,
+        "duration_seconds": 4.14,
+        "source_wav_pcm_sha256": "7880d7c9f96d88714d8db323b51c421fe776775e224130ee00f75dd0a5cb6363",
+        "source_wav_float32_equals_prepared_float32": false,
+        "complete_wav_matches_declared_decode_conversion": true,
+        "full_array_equals_logged_frontend_input": true,
+        "raw_result_sha256": "c8f1e3c9e9c516fe8975a6f01fc4f02a782da6f1ef712d93b0cc6375c84d8cd5",
+        "raw_decode_call_sha256": "4f023a6413873acd38d1302aea001b10bda2385e87dacd5833c947f4a0524a63",
+        "text_utf8_sha256": "f4c944771d92d20a3f065a2791af93bc926b5199b519f9d74f31cdf5d1754c9b",
+        "tokens_match_frozen_vocabulary": true,
+        "text_matches_native_decode": true,
+        "timestamps_equal_native_emission_frames_times_0_08": true,
+        "logprobs_equal_native_capture": true,
+        "token_count": 20,
+        "last_token_seconds": 3.84,
+        "elapsed_seconds": 0.289779,
+        "all_declared_structural_checks": true,
+        "legacy_frontend_features_sha256": "0e620d076da1fbc66d6ba295bdf7f97181919e548f429b0c6504c6dd7b2df2f8",
+        "retained_onnx_pair_sha256": "721f3728870ec51cf98c84b0ee1ea6ecfb178ac566b4e1839097eb55cb954935",
+        "features_exactly_match_retained_published_frontend": true,
+        "feature_lengths": [
+          415
+        ],
+        "feature_shape": [
+          1,
+          128,
+          415
+        ]
+      }
+    }
+  ],
+  "material_findings": [
+    "The fairness clause is restored, changing that case from major error to acceptable.",
+    "Three people, the collision/concession, Μαρτελί and Lakkha/bhajans remain incorrect or omitted.",
+    "The product name changes from Number One to Nummer One, a new material defect under the same original name-preservation rule; κύρια is also lost.",
+    "The two clear English outputs retain meaning; a spelling convention change does not establish a quality improvement."
+  ],
+  "comparison_limits": [
+    "The original int8 and this diagnostic use the same eight full arrays, weights, decoder, thread counts and criteria, with only the predeclared frontend adapter changed. These observations establish frontend sensitivity, not which frontend matches training.",
+    "Completed Small VAD-off and Turbo outputs are comparison context only: those runs used explicit source language and app routes unlike this recognizer-only auto-language run.",
+    "Token times are native emission frames, not independently verified word boundaries or invented word ends.",
+    "Full-array binding covers the originally declared signed-16-bit decode conversion from the float32 WAVs; it does not claim the prepared PCM is byte-identical to the original WAV float32 payload.",
+    "Sampled process-group RSS and worker high-water measurements do not establish whole-machine consumption or an unsampled group peak.",
+    "No app upload, storage, export, restart, full-film or fresh-validation route was exercised."
+  ],
+  "decision": "Reject this frontend diagnostic as an adoption candidate. A real local recovery coexists with persistent material errors and a new name error. Do not prefer the legacy frontend as ground truth, weaken criteria, or infer a quantization-only cause from this result."
+}

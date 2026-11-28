@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "phase": "infer",
+  "started_at": "2026-11-28T02:25:04.735721+00:00",
+  "complete": true,
+  "passed": true,
+  "semantic_quality": "unreviewed",
+  "events": [
+    {
+      "event": "case_start",
+      "id": "v2-holdout-en-el-telescope-ownership",
+      "observed_at_seconds": 14.794
+    },
+    {
+      "event": "generation_start",
+      "id": "v2-holdout-en-el-telescope-ownership",
+      "prompt_tokens": 142,
+      "shared_output_cap": 2048,
+      "observed_at_seconds": 22.851
+    },
+    {
+      "event": "case_complete",
+      "id": "v2-holdout-en-el-telescope-ownership",
+      "report": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-thinking-ablation-2026-11-28/v2-holdout-en-el-telescope-ownership.json",
+      "sha256": "9fc3f8a871abf43f83181a084028cfb05d7faa3f1b8c3527169de53e3e80337c",
+      "observed_at_seconds": 77.33
+    },
+    {
+      "event": "phase_complete",
+      "phase": "one_telescope_thinking_attempt",
+      "complete": true,
+      "error": null,
+      "observed_at_seconds": 77.33
+    }
+  ],
+  "limits": {
+    "process_budget_mib": 6144,
+    "phase_seconds": 600,
+    "initialization_seconds": 180,
+    "case_seconds": 600
+  },
+  "inference_freeze_sha256": "4fbbc0dd688e9d8500534a728de468b7222e5309a1138ff4ba260d1616d955f0",
+  "runner_sha256": "28268478f6ee79d38dee3d2a32f2b339fd18bcdad7731e3de8ca5edeb1d26a7c",
+  "worker_sha256": "71c4abc3ff24fd3a022e65bfe613f28997df5fd5323082dbd4206eb1e7b0aa01",
+  "whole_machine_resource_approval": false,
+  "host_observation": {
+    "total_mib": 9967.3,
+    "minimum_available_mib": 2453.4,
+    "scope": "Uncontrolled host observation; unrelated activity can affect it."
+  },
+  "memory": {
+    "sample_count": 353,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "rss_interpretation": "Concurrent summed RSS may double-count shared pages.",
+    "pss_interpretation": "PSS apportions shared memory and is available only for complete readable samples.",
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "peak_rss_sample": {
+      "at_seconds": 70.801,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17686528,
+          "pss_bytes": 14217216
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 20877312,
+          "pss_bytes": 17389568
+        },
+        {
+          "pid": 6,
+          "name": "ollama",
+          "rss_bytes": 24195072,
+          "pss_bytes": 23047168
+        },
+        {
+          "pid": 36,
+          "name": "llama-server",
+          "rss_bytes": 6011949056,
+          "pss_bytes": 6010668032
+        }
+      ],
+      "rss_bytes": 6074707968,
+      "pss_bytes": 6065321984
+    },
+    "peak_pss_sample": {
+      "at_seconds": 70.801,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17686528,
+          "pss_bytes": 14217216
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 20877312,
+          "pss_bytes": 17389568
+        },
+        {
+          "pid": 6,
+          "name": "ollama",
+          "rss_bytes": 24195072,
+          "pss_bytes": 23047168
+        },
+        {
+          "pid": 36,
+          "name": "llama-server",
+          "rss_bytes": 6011949056,
+          "pss_bytes": 6010668032
+        }
+      ],
+      "rss_bytes": 6074707968,
+      "pss_bytes": 6065321984
+    },
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 5793.3,
+    "peak_combined_pss_mib": 5784.3
+  },
+  "worker_exit_code": 0,
+  "owned_process_group_stopped": true,
+  "oom_counters": {
+    "before": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "after": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "deltas": {
+      "/proc/vmstat": {
+        "scope": "host_global",
+        "counters": {
+          "oom_kill": 0
+        },
+        "counter_reset_or_scope_change": false
+      }
+    }
+  },
+  "elapsed_seconds": 77.522,
+  "finished_at": "2026-11-28T02:26:22.257819+00:00",
+  "frozen_inputs_unchanged": true,
+  "execution_report_sha256": "ce4bf39f984d2e6b2751b4d28c1e406e0e9fb95e1655aa8574347f33cc6ca937"
+}

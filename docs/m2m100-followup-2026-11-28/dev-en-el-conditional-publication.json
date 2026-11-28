@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "semantic_quality": "unreviewed",
+  "model": {
+    "repository": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "weights_file": "pytorch_model.bin",
+    "weights_bytes": 1935796948,
+    "weights_sha256": "d907ea45e4e4b9db163382a6674f6218b3c59566fe06d77f4055c208b4e87ed1",
+    "license": "MIT",
+    "license_evidence": "Pinned official model card plus retained originating Fairseq MIT license text.",
+    "conversion_quantization": "float32",
+    "compute_type": "float32",
+    "trust_remote_code": false
+  },
+  "plan_sha256": "f89aa5300a047429c8bc136ab60527d7c45ef4956219358249869438bd529f94",
+  "inference_freeze_sha256": "ec186e54596808d1dd7664b28fbf044b794aa6b9bef4ef13d967236902dbbc81",
+  "cases": [
+    {
+      "id": "dev-en-el-conditional-publication",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "conditions",
+        "negation",
+        "names",
+        "roles"
+      ],
+      "segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+        "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "\u0386\u03bd\u03bd\u03b1",
+              "Anna"
+            ]
+          },
+          {
+            "label": "Giannis",
+            "alternatives": [
+              "\u0393\u03b9\u03ac\u03bd\u03bd\u03b7",
+              "Giannis",
+              "Yannis",
+              "Yiannis"
+            ]
+          },
+          {
+            "label": "only if",
+            "alternatives": [
+              "\u03bc\u03cc\u03bd\u03bf \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03c6\u03cc\u03c3\u03bf\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b5\u03ac\u03bd"
+            ]
+          },
+          {
+            "label": "Friday",
+            "alternatives": [
+              "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5"
+            ]
+          },
+          {
+            "label": "Monday",
+            "alternatives": [
+              "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd \u03bf Giannis \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "\u0391\u03bd \u03bf \u03a4\u03b6\u03b9\u03ac\u03bd\u03b9\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "native_request": {
+        "source": [
+          [
+            "__en__",
+            "\u2581Anna",
+            "\u2581will",
+            "\u2581publ",
+            "ish",
+            "\u2581the",
+            "\u2581video",
+            "\u2581only",
+            "\u2581if",
+            "\u2581Gi",
+            "annis",
+            "\u2581appro",
+            "ves",
+            "\u2581the",
+            "\u2581text",
+            ".",
+            "</s>"
+          ],
+          [
+            "__en__",
+            "\u2581If",
+            "\u2581Gi",
+            "annis",
+            "\u2581does",
+            "\u2581not",
+            "\u2581answer",
+            "\u2581by",
+            "\u2581Friday",
+            ",",
+            "\u2581Anna",
+            "\u2581will",
+            "\u2581wait",
+            "\u2581until",
+            "\u2581Monday",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__el__"
+          ],
+          [
+            "__el__"
+          ]
+        ],
+        "source_texts": [
+          "Anna will publish the video only if Giannis approves the text.",
+          "If Giannis does not answer by Friday, Anna will wait until Monday."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:40.787556+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u0386",
+              "\u03bd",
+              "\u03bd\u03b1",
+              "\u2581\u03b8\u03b1",
+              "\u2581\u03b4\u03b7\u03bc\u03bf\u03c3\u03b9",
+              "\u03b5\u03cd",
+              "\u03c3\u03b5\u03b9",
+              "\u2581\u03c4\u03bf",
+              "\u2581\u03b2\u03af\u03bd\u03c4\u03b5\u03bf",
+              "\u2581\u03bc\u03cc\u03bd\u03bf",
+              "\u2581\u03b5\u03ac\u03bd",
+              "\u2581\u03bf",
+              "\u2581Gi",
+              "annis",
+              "\u2581\u03b5\u03b3\u03ba",
+              "\u03c1",
+              "\u03af\u03bd\u03b5\u03b9",
+              "\u2581\u03c4\u03bf",
+              "\u2581\u03ba",
+              "\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.2879650890827179
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0391\u03bd",
+              "\u2581\u03bf",
+              "\u2581\u03a4",
+              "\u03b6",
+              "\u03b9\u03ac",
+              "\u03bd\u03b9",
+              "\u03c2",
+              "\u2581\u03b4\u03b5\u03bd",
+              "\u2581\u03b1\u03c0\u03b1\u03bd",
+              "\u03c4\u03ae\u03c3\u03b5\u03b9",
+              "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+              "\u2581\u03c4\u03b7\u03bd",
+              "\u2581\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae",
+              ",",
+              "\u2581\u03b7",
+              "\u2581\u0386",
+              "\u03bd",
+              "\u03bd\u03b1",
+              "\u2581\u03b8\u03b1",
+              "\u2581\u03c0\u03b5\u03c1\u03b9",
+              "\u03bc\u03ad\u03bd\u03b5\u03b9",
+              "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+              "\u2581\u03c4\u03b7\u03bd",
+              "\u2581\u0394\u03b5\u03c5",
+              "\u03c4\u03ad\u03c1\u03b1",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4010954201221466
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "pass",
+      "elapsed_seconds": 2.619,
+      "finished_at": "2026-11-28T01:31:43.407114+00:00"
+    }
+  ]
+}

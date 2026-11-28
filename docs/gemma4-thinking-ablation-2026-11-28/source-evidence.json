@@ -1,0 +1,65 @@
+{
+  "reviewed_at": "2026-11-28T02:20:29.674367+00:00",
+  "official_thinking_documentation": "https://gemma.ai/get-started/capabilities/thinking/",
+  "runtime_commit": "f067033f9126993b6172bdfffa71a74ad693fda4",
+  "runtime_source_files": [
+    {
+      "path": "model/renderers/gemma4.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/model/renderers/gemma4.go",
+      "git_blob_sha1": "bd39eed6e68863d6506825ef32d1120672259246",
+      "sha256": "5d6b33862fdbf14f1c6ae64d927eacac8e19dd9cb5398a23f66f6740b1bdf72d",
+      "bytes": 21270,
+      "git_tree_verified": true
+    },
+    {
+      "path": "model/renderers/renderer.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/model/renderers/renderer.go",
+      "git_blob_sha1": "672df033c583b964d0a87b0241a0e2683e377111",
+      "sha256": "9d324b4437b78caed1d67c59f7a8794a32f9248f65889c7f0abb2c4a75fbb16f",
+      "bytes": 4137,
+      "git_tree_verified": true
+    },
+    {
+      "path": "model/parsers/gemma4.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/model/parsers/gemma4.go",
+      "git_blob_sha1": "c2dffdaf7e5fc1091661f01adf1b1ea4adc209f1",
+      "sha256": "7f31d6df737e8b24d7293021d332b5d68f062578151c4cc427a440cd10bf93a5",
+      "bytes": 23093,
+      "git_tree_verified": true
+    },
+    {
+      "path": "model/parsers/parsers.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/model/parsers/parsers.go",
+      "git_blob_sha1": "69c387f894bcd6f928f9b6d332c96b7521bb2748",
+      "sha256": "4808f8cbcd310767fc57ee759fba8bfba8ad060e9ad23d3d0359aae0a9cfd6be",
+      "bytes": 5275,
+      "git_tree_verified": true
+    },
+    {
+      "path": "llm/llama_server.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/llm/llama_server.go",
+      "git_blob_sha1": "5805edd64d99f17dc979cc17f480f87509db926d",
+      "sha256": "58bd9f051b96d6a01f7029632751fb7a80fc13c4d91d05aaf36d51340d83ea24",
+      "bytes": 91977,
+      "git_tree_verified": true
+    },
+    {
+      "path": "llm/gbnf.go",
+      "url": "https://github.com/ollama/ollama/blob/f067033f9126993b6172bdfffa71a74ad693fda4/llm/gbnf.go",
+      "git_blob_sha1": "8703386b25fd7bcc92a85cfd349e2ddedba11687",
+      "sha256": "d7db8fd3812c6443a83d6e7d6454e3d27a302bc1c8df232ca0248db76e321b60",
+      "bytes": 4617,
+      "git_tree_verified": true
+    }
+  ],
+  "publisher_template_url": "https://huggingface.co/google/gemma-4-E4B-it/blob/4ecc2ba63bcac23ba4a767fc87025b1450f84c9c/chat_template.jinja",
+  "publisher_template_sha256": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+  "findings": [
+    "Official E2B/E4B thinking mode places the thinking control token at the beginning of the first system turn; no change to source or translation instructions is needed.",
+    "The pinned Ollama gemma4 renderer accepts boolean thinking, defaults false, and inserts the same native token when true. The imported manifest already selects the thinking-capable gemma4 parser.",
+    "The parser separates the thought channel and final content. For structured responses the runtime converts the JSON schema to grammar and applies it after the thinking close marker.",
+    "The unchanged num_predict2048 is forwarded as a single native n_predict limit. Thinking, channel markers and final output consume that one generated-token allowance; there is no separate extra final-answer allowance.",
+    "The thinking grammar can end before its closing marker. Therefore reasoning-only, empty-final, invalid-JSON or length-limited responses must remain failures; no forced close, retry or larger budget is proposed.",
+    "A deliberation stage is a plausible hypothesis for relationships and negation. Official mechanism documentation does not establish improvement in these Greek translations, material vocabulary or all longer passages."
+  ]
+}

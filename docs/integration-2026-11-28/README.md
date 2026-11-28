@@ -160,3 +160,38 @@ The standard install should provide it without changing proxies or certificate
 verification. The already installed 1.0.0 package initializes both current HTTPX
 transports successfully without a network request; fresh package verification
 remains tied to the later hosted checkpoint.
+
+## Completed restored-policy checkpoint: `745554b`
+
+The [completed hosted record](hosted-745554b/checkpoint.json) binds all results to
+`745554b86bef6f60f85098ec6c9be4c0ad53b3ed`. Every Windows/macOS/Ubuntu and
+independent Python 3.11/3.13 suite passed **685 tests and 32 subtests**. The actual
+candidate ZIP passed all six installation/startup checks and installed `socksio
+1.0.0` from ordinary requirements. Fresh checkout and actual Tiny upload also
+passed their pipeline checks.
+
+Chromium again passed **34/34**, including actual speech, source highlights,
+pending-save/open preservation, backups and mobile layouts. All eight recorded
+source hashes match this revision, and no uncaught JavaScript error occurred.
+The full original [browser report](hosted-745554b/browser-browser-report.json)
+is retained; controlled link/batch fixtures remain separate from actual network
+acquisition.
+
+Default local Ollama completed twelve translation corpus cases: five automatic
+passes, seven review flags and no execution errors. The original integration and
+translation reports preserve `semantic_quality: unreviewed`. This confirms the
+execution path without changing earlier adverse meaning reviews.
+
+All six real provider requests failed before recognition. The original YouTube
+trailers reported unavailable content, the regular Vimeo page required login,
+Dailymotion returned no video formats, the additional YouTube full film requested
+bot sign-in, and the explicit Vimeo player returned HTTP401. The restored-tail
+checker therefore failed closed on missing inference evidence; it did not observe
+new speech deletion. Exact silence and actual nonzero white-noise rejection
+passed. Both raw provider reports and the failed tail check are retained under
+the same hosted record. No access restriction was bypassed.
+
+The isolated [M2M100 translation screen](../m2m100-followup-2026-11-28/README.md)
+also remains rejected: its measured execution completed, while material role and
+transcription/translation meaning errors survived. Its successful setup and small
+memory footprint do not close the translation gate.

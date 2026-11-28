@@ -2,7 +2,7 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `929cf2d`** passed 678 automated tests
+The published **0.3.0 integration checkpoint `745554b`** passed 685 automated tests
 and 32 subtests in each of five hosted platform/Python configurations, fresh
 Linux installation, installation from the actual candidate archive and an actual
 audio-upload workflow. Chromium passed all **34 checks**, including preservation
@@ -23,11 +23,19 @@ Optional **source highlights** and explicit public Vimeo player links are now
 integrated. The separately frozen English/Greek highlights validation passed all
 four cases. The integrated candidate protects edits during asynchronous operations
 and declares the download transport previously installed only by provider QA.
-The aligned decoder with a two-second silence heuristic failed broader dialogue
-review and is rejected for release; an isolated comparison is investigating the
-cause before the recognition policy is accepted.
+Both universal word-alignment experiments failed broader dialogue review. The
+current checkpoint restores the prior conditional word-timestamp policy and
+includes the missing SOCKS dependency in its ordinary installation. These fixes
+do not resolve the remaining recognition or generated-content accuracy errors.
 Hosted results must be checked for the exact revision under review; this remains
 a draft rather than a v1.0 approval.
+
+The subsequent translation result check rejects newly introduced writing systems
+outside Latin/Greek unless the same complete normalized word already appears in
+the source. This addresses observed mixed-script corruption while preserving
+foreign names and quotations. The original transcript remains saved when a
+translation is rejected. The [regression record](docs/translation-script-guard-2026-11-28/README.md)
+separates this narrow fix from the still-failing translation meaning gate.
 
 ## Features
 
@@ -132,11 +140,11 @@ separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
 transcription accuracy or subtitle synchronization.
 
-The follow-up decoder candidate computes word alignment and enables Faster
+The rejected follow-up decoder candidate computed word alignment and enabled Faster
 Whisper's two-second hallucination/silence heuristic while retaining the normal
 temperature fallback and supplying the whole recording without input VAD.
-This can suppress suspicious output around silence and change subtitle
-boundaries; it cannot establish that every remaining word is correct. The
+This could suppress suspicious output around silence and change subtitle
+boundaries; it did not establish that every remaining word was correct. The
 [Vimeo ASR investigation](docs/asr-vimeo-followup-2026-11-28/README.md) retains
 rejected deterministic and Turbo-only alternatives, the full-film candidate,
 ordinary/quiet English-Greek comparisons, word-alignment scope and local

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "phase": "prepare",
+  "started_at": "2026-11-28T01:53:11.531257+00:00",
+  "complete": false,
+  "passed": false,
+  "semantic_quality": "unreviewed",
+  "events": [
+    {
+      "event": "import_start",
+      "observed_at_seconds": 4.847
+    },
+    {
+      "event": "phase_complete",
+      "phase": "prepare",
+      "complete": false,
+      "error": {
+        "type": "FileNotFoundError",
+        "message": "[Errno 2] No such file or directory: '/workspace/scratch/94360995dd61/linkscribe-gemma4-runtime/models/manifests/registry.ollama.ai/library/linkscribe-gemma4-e4b-qat/20261128'"
+      },
+      "observed_at_seconds": 5.732
+    }
+  ],
+  "limits": {
+    "process_budget_mib": 6144,
+    "phase_seconds": 360,
+    "initialization_seconds": 180,
+    "case_seconds": 240
+  },
+  "plan_sha256": "acf6baec4561cbf8e8c3b43c2c7ff4877f458f3a9622214fa3eab7f7d88294cd",
+  "runner_sha256": "8ac32cee61c63de90ca2c7a959d7eb134c73e7ab5068b8b50496346c138c14f8",
+  "worker_sha256": "1be3c476e90983df177e6424a9aa186a88fb323b640764f46873f77b8bf01805",
+  "whole_machine_resource_approval": false,
+  "host_observation": {
+    "total_mib": 9967.3,
+    "minimum_available_mib": 8206.8,
+    "scope": "Uncontrolled host observation; unrelated activity can affect it."
+  },
+  "memory": {
+    "sample_count": 31,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "rss_interpretation": "Concurrent summed RSS may double-count shared pages.",
+    "pss_interpretation": "PSS apportions shared memory and is available only for complete readable samples.",
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "peak_rss_sample": {
+      "at_seconds": 5.732,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17739776,
+          "pss_bytes": 14345216
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 17747968,
+          "pss_bytes": 14356480
+        },
+        {
+          "pid": 6,
+          "name": "ollama",
+          "rss_bytes": 85889024,
+          "pss_bytes": 85147648
+        }
+      ],
+      "rss_bytes": 121376768,
+      "pss_bytes": 113849344
+    },
+    "peak_pss_sample": {
+      "at_seconds": 5.732,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python",
+          "rss_bytes": 17739776,
+          "pss_bytes": 14345216
+        },
+        {
+          "pid": 5,
+          "name": "python",
+          "rss_bytes": 17747968,
+          "pss_bytes": 14356480
+        },
+        {
+          "pid": 6,
+          "name": "ollama",
+          "rss_bytes": 85889024,
+          "pss_bytes": 85147648
+        }
+      ],
+      "rss_bytes": 121376768,
+      "pss_bytes": 113849344
+    },
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 115.8,
+    "peak_combined_pss_mib": 108.6
+  },
+  "worker_exit_code": 1,
+  "owned_process_group_stopped": true,
+  "oom_counters": {
+    "before": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "after": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 2."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "deltas": {
+      "/proc/vmstat": {
+        "scope": "host_global",
+        "counters": {
+          "oom_kill": 0
+        },
+        "counter_reset_or_scope_change": false
+      }
+    }
+  },
+  "elapsed_seconds": 5.903,
+  "finished_at": "2026-11-28T01:53:17.435543+00:00",
+  "frozen_inputs_unchanged": true,
+  "phase_report_sha256": "174f60f5d10262282ecdf52f22d6c11354218c68ef41c3d5871212dcb8951ec2"
+}

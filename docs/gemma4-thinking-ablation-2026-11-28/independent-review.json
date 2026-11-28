@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T02:30:40.441042+00:00",
+  "scope": "One previously exposed telescope case with the authorized native think=false to true change only; independent judgment of returned final translation, not model thoughts. No unused v3 or additional inference.",
+  "complete": true,
+  "classification": "major_error",
+  "semantic_quality_approved": false,
+  "further_cases_or_production_approved": false,
+  "major_error_rule_unchanged": "Any material omission, invention, role reversal, name substitution, quantity/relationship error, or changed condition blocks quality promotion.",
+  "source_and_criteria_sha256": "8c017aa490f4eaf8ed8c601d6936ca402592533dab00896d6b32d616c908cfcd",
+  "criterion_binding_sha256": "b8be998e8be49ce130d97c691ef41f34067ec74c25d8f9c32d9f4e28685758f4",
+  "final_freeze_binding_sha256": "044a72ee9dbb3a1fb279a14435fc12e14c2c6e812839ae5cb60d6f48c36370f8",
+  "artifact_hashes": {
+    "inference-freeze.json": "4fbbc0dd688e9d8500534a728de468b7222e5309a1138ff4ba260d1616d955f0",
+    "native-preflight.json": "fed8b62f570bd42de52ced27c31c619f94157dfa7c4a0620a6a2237589634dc0",
+    "execution.json": "ce4bf39f984d2e6b2751b4d28c1e406e0e9fb95e1655aa8574347f33cc6ca937",
+    "resources.json": "796a799afc297d5b77024435e49ba3a74f66a1374cd1c9f4c83e30b0d15864ef",
+    "v2-holdout-en-el-telescope-ownership.json": "9fc3f8a871abf43f83181a084028cfb05d7faa3f1b8c3527169de53e3e80337c"
+  },
+  "baseline_report_sha256": "8157f0b1843f10b928b8cad8aafa6d04e4bcc582703f76065408d9395f9cd312",
+  "original_source_segments": [
+    {
+      "start": 0.75,
+      "end": 8.0,
+      "text": "Ariadne owns the brass telescope. Markos borrowed it for the night-sky demonstration; she did not give it to him.",
+      "speaker": "Speaker 6"
+    },
+    {
+      "start": 8.0,
+      "end": 15.25,
+      "text": "He must return it to her after the demonstration, even if he finishes early.",
+      "speaker": "Speaker 6"
+    }
+  ],
+  "actual_final_translation": [
+    {
+      "start": 0.75,
+      "end": 8.0,
+      "text": "Η Αριάδνη διαθέτει το χάλκινο τηλεσκόπιο. Ο Μάρκος το לקρέφτηκε για την επίδειξη του ουρανού, αλλά δεν το έδωσε σε αυτόν.",
+      "speaker": "Speaker 6"
+    },
+    {
+      "start": 8.0,
+      "end": 15.25,
+      "text": "Πρέπει να το επιστρέψει σε εκείνη μετά την επίδειξη, ακόμα κι αν τελειώσει νωρίς.",
+      "speaker": "Speaker 6"
+    }
+  ],
+  "criterion_assessment": [
+    {
+      "criterion": "Ariadne remains the owner; Markos is the borrower, not the lender or recipient of a gift.",
+      "status": "fail",
+      "detail": "Ariadne’s possession remains, but the main loan verb is unintelligible mixed Hebrew/Greek לקρέφτηκε rather than a Greek statement that Markos borrowed it. The denied-gift clause lacks the clear female giver and follows Markos as the subject. The final return obligation does not restore an explicit faithful account of the original borrowing and denied gift."
+    },
+    {
+      "criterion": "The brass material and the telescope must remain distinct from other observation equipment.",
+      "status": "fail",
+      "detail": "The telescope remains the same type of instrument. The material is now χάλκινο, a copper/bronze description rather than an unambiguous rendering of brass (ορειχάλκινο). This is closer to the original material than the non-thinking output’s gold, but does not meet the precise original criterion."
+    },
+    {
+      "criterion": "The return obligation remains in force even if Markos finishes early; do not assert that he actually finished early.",
+      "status": "pass",
+      "detail": "He must return it to her after the demonstration, even if he finishes early. The obligation and condition survive and early completion is not asserted."
+    }
+  ],
+  "additional_finding": "Night-sky demonstration becomes a sky demonstration, losing the night specification. The decisive rejection is the missing intelligible borrowing relationship, not the mere presence of a foreign-script character.",
+  "comparison_with_nonthinking": {
+    "baseline_classification": "major_error",
+    "baseline_translation": [
+      {
+        "start": 0.75,
+        "end": 8.0,
+        "text": "Η Αριάδνη διαθέτει το χρυσό τηλεσκόπιο. Ο Μάρκος το έδωσε για τη επίδειξη του νυχτερινού ουρανού· δεν το έδωσε σε αυτόν.",
+        "speaker": "Speaker 6"
+      },
+      {
+        "start": 8.0,
+        "end": 15.25,
+        "text": "Πρέπει να το επιστρέψει σε εκείνη μετά την επίδειξη, ακόμα κι αν τελειώσει νωρίς.",
+        "speaker": "Speaker 6"
+      }
+    ],
+    "observed_changes": "Gold becomes a less precise copper/bronze material word; the borrowing verb changes from a wrong gave relation into an uninterpretable mixed-script word. The already-correct return/early-finish condition stays the same. This case remains rejected."
+  },
+  "mechanical_binding": {
+    "only_request_field_changed": "think:false to true",
+    "all_other_request_fields_exactly_equal": true,
+    "all_original_source_and_segment_metadata_preserved": true,
+    "frozen_candidate_source_hashes_verified": true,
+    "raw_final_content_exactly_matches_saved_translation_with_existing_edge_trim": true,
+    "generation_calls": 1,
+    "unload_calls": 1,
+    "normal_stop": true,
+    "actual_native_prompt_tokens": 142,
+    "shared_generated_tokens_including_thinking": 787,
+    "shared_output_cap": 2048,
+    "context_tokens": 4096,
+    "separate_thinking_field_present": true,
+    "thinking_characters": 2143,
+    "thinking_utf8_sha256": "f842c49a5708025e1318efa32ff439988c41417e9cc73291a82082cd5de24fa3",
+    "thinking_text_used_for_semantic_judgment": false,
+    "request_canonical_json_sha256": "9be88522bf75b643ec2c84c8cb6ef4a9630ba4193c39a4f067a7530d219fa339",
+    "raw_response_utf8_sha256": "292c32af77f9c4310d44dad4ddb210a42b9ac48bfd5a484cb5ff5d99c5ce1f3e",
+    "final_content_utf8_sha256": "fec8181cc6eb9be8ea1cb9cef0b3e845dc832f01597dd5af617f18a99af8215b",
+    "saved_translation_canonical_json_sha256": "fbb5f79d8c750454d45cd29ba79156b028cfe4884d0e6d173169e71877b1b2a8",
+    "actual_inference_seconds": 62.399
+  },
+  "resource_scope": {
+    "standalone_stage_seconds": 77.522,
+    "peak_concurrent_process_tree_rss_mib": 5793.3,
+    "peak_concurrent_process_tree_pss_mib": 5784.3,
+    "process_budget_mib": 6144,
+    "sample_count": 353,
+    "sample_interval_seconds": 0.2,
+    "worker_exit_code": 0,
+    "owned_daemon_and_process_group_stopped": true,
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "whole_machine_or_app_approval": false
+  },
+  "hash_semantics": "Exact file bytes; raw-response hash is the retained response_json UTF-8 string, not HTTP wire bytes. Canonical JSON uses sorted keys, compact separators and ensure_ascii=False. The reasoning field is only counted/hashed for provenance and is neither reproduced nor graded.",
+  "decision": "Reject this thinking-only candidate on the original exposed case. It completed normally within the declared token/resource limits but did not preserve the original borrowing/material meaning in usable Greek. No retry, added budget, additional case, unused validation, summary or production promotion is supported by this result."
+}

@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T01:33:45.107005+00:00",
+  "complete": true,
+  "result": "fail",
+  "mode": "audio",
+  "requested_model": "small",
+  "requested_language": "auto",
+  "source_sha256_before": {
+    "app.py": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "sources.py": "84fe3a199dac4b6a1bc01da17ef65f3631fc02e825247ab17c52536fd67641a3",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764",
+    "tests/smoke_provider_followups.py": "d6f3ee73d415a5cee1bd69795c17554a14da2ea7d0827b132fc8d537ae5a33a3",
+    "tests/fixtures/public_provider_followups.json": "687a2cbfb8380d3a75c1d18b31b7bb876ef25e3511305fd1a917dde41698299e"
+  },
+  "fixture_licenses": {
+    "youtube_tears_of_steel_full": {
+      "url": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+      "provider": "youtube",
+      "title_contains": "Tears of Steel",
+      "public_title": "Tears of Steel - Blender VFX Open Movie",
+      "uploader": "Blender",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://mango.blender.org/about/",
+      "publication_evidence": "https://mango.blender.org/production/tears-of-steel-download-watch/",
+      "attribution": "(CC) Blender Foundation | mango.blender.org",
+      "note": "Official Blender channel full film. Metadata availability alone is not a successful media download or transcript. Retain acquisition failures in the report."
+    },
+    "vimeo_sintel_rerendered_player": {
+      "url": "https://player.vimeo.com/video/19934655",
+      "provider": "vimeo",
+      "title_contains": "Sintel",
+      "public_title": "Sintel re-rendered",
+      "uploader": "Teddl",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://vimeo.com/19934655",
+      "attribution": "\u00a9 copyright Blender Foundation | www.sintel.org",
+      "note": "Explicit public-player URL for the licensed re-render. The public description states CC BY 3.0. No private hash, credential, cookie, custom referrer or alternative proxy is supplied. This does not replace the original regular-page Vimeo fixture or its failed result."
+    }
+  },
+  "provider_acquisition": "actual_yt_dlp",
+  "speech_recognition": "actual_local_faster_whisper",
+  "instrumentation": "observer_wrappers_only; originals called without replacement outputs",
+  "asr_semantic_quality": "unreviewed",
+  "subtitle_alignment_accuracy": "unreviewed",
+  "system_certificates": false,
+  "fixtures": [
+    {
+      "fixture": "youtube_tears_of_steel_full",
+      "status": "fail",
+      "started_at": "2026-11-28T01:33:45.927436+00:00",
+      "url": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+      "job_id": "308c7fd21ca64767b9a97f94e9b66099",
+      "poll_count": 5,
+      "transitions": [
+        {
+          "at": "2026-11-28T01:33:45.932758+00:00",
+          "id": "308c7fd21ca64767b9a97f94e9b66099",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Youtube R6MlUcmOul8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-28T01:33:47.971964+00:00",
+          "id": "308c7fd21ca64767b9a97f94e9b66099",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Youtube R6MlUcmOul8",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "308c7fd21ca64767b9a97f94e9b66099",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Youtube R6MlUcmOul8",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 857, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-28T01:33:45.930161+00:00",
+          "pid": 3631,
+          "kind": "acquisition_start",
+          "job_id": "308c7fd21ca64767b9a97f94e9b66099",
+          "provider": "youtube",
+          "url": "https://www.youtube.com/watch?v=R6MlUcmOul8"
+        },
+        {
+          "at": "2026-11-28T01:33:47.714870+00:00",
+          "pid": 3631,
+          "kind": "acquisition_failed",
+          "job_id": "308c7fd21ca64767b9a97f94e9b66099",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[youtube] R6MlUcmOul8: Sign in to confirm you\u2019re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+            }
+          ],
+          "elapsed_seconds": 1.785
+        }
+      ],
+      "elapsed_seconds": 2.045
+    },
+    {
+      "fixture": "vimeo_sintel_rerendered_player",
+      "status": "fail",
+      "started_at": "2026-11-28T01:33:47.973213+00:00",
+      "url": "https://player.vimeo.com/video/19934655",
+      "job_id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+      "poll_count": 2,
+      "transitions": [
+        {
+          "at": "2026-11-28T01:33:48.038002+00:00",
+          "id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+          "status": "working",
+          "stage": "Fetching the video's audio...",
+          "title": "Vimeo 19934655",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        },
+        {
+          "at": "2026-11-28T01:33:48.540407+00:00",
+          "id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+          "status": "error",
+          "stage": "Unable to transcribe",
+          "title": "Vimeo 19934655",
+          "language": "",
+          "method": "",
+          "preview": "",
+          "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+          "segments": 0,
+          "warnings": [],
+          "extras": {},
+          "library_id": ""
+        }
+      ],
+      "final_job": {
+        "id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+        "status": "error",
+        "stage": "Unable to transcribe",
+        "title": "Vimeo 19934655",
+        "language": "",
+        "method": "",
+        "preview": "",
+        "error": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.",
+        "segments": 0,
+        "warnings": [],
+        "extras": {},
+        "library_id": ""
+      },
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        }
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/LinkScribe/LinkScribe/tests/smoke_real_links.py\", line 857, in run\n    raise RuntimeError(final.get(\"error\") or \"Actual provider job failed.\")\nRuntimeError: Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use.\n",
+      "events": [
+        {
+          "at": "2026-11-28T01:33:47.974764+00:00",
+          "pid": 3631,
+          "kind": "acquisition_start",
+          "job_id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+          "provider": "vimeo",
+          "url": "https://player.vimeo.com/video/19934655"
+        },
+        {
+          "at": "2026-11-28T01:33:48.382883+00:00",
+          "pid": 3631,
+          "kind": "acquisition_failed",
+          "job_id": "e8c1fb4e3ef347c5a657ca1d790e4fd4",
+          "errors": [
+            {
+              "type": "ReadableError",
+              "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+            },
+            {
+              "type": "DownloadError",
+              "message": "ERROR: [vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+            },
+            {
+              "type": "ExtractorError",
+              "message": "[vimeo] 19934655: Unable to download webpage: HTTP Error 401: Unauthorized (caused by <HTTPError 401: Unauthorized>)"
+            },
+            {
+              "type": "HTTPError",
+              "message": "HTTP Error 401: Unauthorized",
+              "http_status": 401,
+              "response_headers": {
+                "Content-Type": "text/html;charset=UTF-8",
+                "Server": "cloudflare",
+                "Date": "Sat, 28 Nov 2026 01:33:48 GMT",
+                "X-Mitmproxy-Blocked-Reason": null,
+                "X-Proxy-Error": null,
+                "X-Squid-Error": null
+              },
+              "response_origin": "https://player.vimeo.com",
+              "response_body_prefix": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta name=\"robots\" content=\"noindex, nofollow\" />\n    <title>Vimeo</title>\n    <style type=\"text/css\">\n      * {\n        margin: 0;\n        padding: 0;\n      }\n\n      body {\n        background: #000;\n        color: #fff;\n      }\n\n      @keyframes rotate {\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n\n      @keyframes dash {\n        0% {\n          stroke-dasharray: 1, 200;\n          stroke-dashoffset: 0;\n        }\n        50% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -35px;\n        }\n        100% {\n          stroke-dasharray: 89, 200;\n          stroke-dashoffset: -135px;\n        }\n      }\n\n      .spinner {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        background: transparent;\n        transform: translate(-50%, -50%);\n        transition: opacity 0.1s,\n          transform 0.25s cubic-bezier(0.17, 0.88, 0.32, 1.28);\n        max-width: 120px;\n        width: 18%;\n      }\n\n      .spinner circle {\n        stroke-width: 4px;\n        background: transparent;\n        stroke-width: 2px;\n      }\n\n      .spinner [data-spinner-trace=\"true\"] {\n        stroke-opacity: 20%;\n      }\n\n      .spinner [data-spinner-circle=\"true\"] {\n        transform-origin: 50% 50%;\n        stroke-linecap: round;\n        stroke-dasharray: 200;\n        stroke-dashoffset: 200;\n        animation: rotate 2s linear 0.25s infinite,\n          dash 1.5s ease-in-out 0.25s infinite;\n      }\n\n      .error {\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        width: 100%;\n      }\n\n      .error__header {\n        font-family: \"Helvetica Neue\";\n        font-size: 40px;\n        font-style: normal;\n        font-weight: 700;\n        line-height: 48px;\n        letter-spacing: -1.2px;\n        text-align: center;\n      }\n\n      .error_subheader {\n        font-family: \"Helvetica Neue\";\n        font-size: 18px;\n        font-style: normal;\n        font-weight: 400;\n        line-height: 28px"
+            }
+          ],
+          "elapsed_seconds": 0.408
+        }
+      ],
+      "elapsed_seconds": 0.569
+    }
+  ],
+  "mixed_batch": {
+    "status": "not_exercised",
+    "reason": "Requires one actual successful and one actually failing licensed fixture."
+  },
+  "restart": {
+    "status": "not_exercised",
+    "verified_record_ids": []
+  },
+  "tail_diagnostic": {
+    "status": "not_requested",
+    "included_in_normal_pipeline_output": false
+  },
+  "nonspeech": {
+    "status": "not_requested",
+    "scope": "Two owned generated 32-second fixtures: exact-zero rejection before inference and actual nonzero-noise ASR; no general silence/music/noise guarantee.",
+    "cases": []
+  },
+  "initial_server_pid": 3631,
+  "restarted_server_pid": 3643,
+  "source_sha256_after": {
+    "app.py": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "sources.py": "84fe3a199dac4b6a1bc01da17ef65f3631fc02e825247ab17c52536fd67641a3",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764",
+    "tests/smoke_provider_followups.py": "d6f3ee73d415a5cee1bd69795c17554a14da2ea7d0827b132fc8d537ae5a33a3",
+    "tests/fixtures/public_provider_followups.json": "687a2cbfb8380d3a75c1d18b31b7bb876ef25e3511305fd1a917dde41698299e"
+  },
+  "source_files_unchanged": true,
+  "asr_model_resolutions": [],
+  "asr_model_identity_complete": false,
+  "finished_at": "2026-11-28T01:33:49.289011+00:00",
+  "all_selected_providers_passed": false
+}

@@ -1,0 +1,31 @@
+{
+  "reviewed_at": "2026-11-28T01:40:47.240970+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Read-only pre-output screen-contract review; no model construction or inference performed by reviewer.",
+  "plan_sha256": "3a828ee4eb972a62b7f985ea1566c1cba6bca8bbcdcacc43a2211066c84cec2c",
+  "helper_sha256": "db64a85c594c15eb5061e9affd10a6ee66f2b28570cdb0548ecef8f72ddae9b0",
+  "validate_only": {
+    "exit_code": 0,
+    "validated": true,
+    "model_initialized": false,
+    "inference_performed": false
+  },
+  "material_blockers": [],
+  "findings": [
+    "Pinned model, runtime Python source, source WAV, prepared array and reference file identities are checked before and after recognition.",
+    "The unchanged full float32 PCM array is checked at input and at the actual frontend, including full sample count and hash; no VAD, cropping or chunking is introduced.",
+    "Recognition supplies only full waveform and sample_rate; source/target language, references, prompts and correction data are not passed.",
+    "Native decoder token IDs, frame indices and log probabilities are retained; decoded return is compared exactly with the raw adapter result, with timestamp structure/order/bounds checked.",
+    "CPU provider and thread counts are checked on actual sessions. Tokenizer/blank/emissions/timestamp scale are checked against loaded fields.",
+    "Offline and telemetry settings are asserted, the Python socket audit hook denies connect/address resolution, and ORT telemetry is disabled before session construction. This is not independent network capture.",
+    "One owned worker process group is monitored and terminated on runtime limits; no existing-result overwrite or retry path is used.",
+    "Initialization limit now starts from controller launch. Controller deadlines are sampled at 100 ms; final measured per-case/init/total timings and RSS must be reviewed before accepting feasibility.",
+    "Completed Small replay and independent review are now comparison sources; the original eight setup errors remain separately labeled historical failure context."
+  ],
+  "limits_of_review": [
+    "No semantic quality or correct timestamp alignment can be inferred before actual outputs.",
+    "Resource accounting is for the owned worker/process group, with sampled group RSS and recorded worker peak RSS; it is not a whole-machine or unsampled-total-peak guarantee.",
+    "The prototype is auto-language recognizer-only. Prior Small/Turbo evidence uses an explicit-language app path, so it is not a matched pipeline benchmark or app integration validation."
+  ],
+  "decision": "No material pre-output blocker found; authorized single screen may proceed. No production adoption approved."
+}

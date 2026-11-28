@@ -1,0 +1,55 @@
+{
+  "checked_at": "2026-11-28T02:26:36.193884+00:00",
+  "scope": "Bounded independent pre-output source/contract review; no local model construction, inference, weights, tokenizer download or heavy installation.",
+  "status": "one_cleanup_fix_required_before_contract_freeze",
+  "initial_helper_sha256": "2c6fc46699e528e091b4c97d580bfa1c798da6949f9ea699348a4e91f8349d16",
+  "initial_plan_sha256": "5a00c49391ceb3ad40dbc56f90c882466e0e08b1dbc790b649e3f0d8960eb5a7",
+  "workflow_sha256": "938395f6c4e1ba4cf8f923d97630a12b9a62b64a903c241bdbd7328097c655a1",
+  "runtime_constraints_review_sha256": "f28102d804181ab78dd5b1853feb298bf5d39f9b23fc96a3be86d098aeb06f79",
+  "cleanup_probe_sha256": "754a4ac57803bfe0438a46a7cc2d6892e84edaf281c738acdcdca734de4efbbc",
+  "source_findings": [
+    {
+      "area": "native_model_provenance",
+      "result": "consistent",
+      "detail": "Exact public native -hf revision7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c; all small runtime files actually hashed and large model/tokenizer identities labelled published LFS. Hosted downloader checks actual bytes/hash before offline local loading and after execution."
+    },
+    {
+      "area": "full_audio_identity",
+      "result": "consistent",
+      "detail": "Original dataset row/id/reference/audio hash and complete decoded PCM hash/sample count are bound. The native feature-extractor observer requires the exact full prepared float32 array once, with no VAD/crop; exact mel/mask dimensions and audio placeholders are checked and bound to the actual audio encoder."
+    },
+    {
+      "area": "native_cpu_no_hints",
+      "result": "consistent",
+      "detail": "Official Qwen3ASRForConditionalGeneration/Processor, CPU-only Torch, explicit FP32/eager, max4 selected CPUs and1 interop thread, trust_remote_code=False, local_files_only=True, sanitized offline environment and socket audit hook. Actual call supplies full audio and language=None only; original references are never supplied to generation."
+    },
+    {
+      "area": "raw_completion",
+      "result": "consistent",
+      "detail": "Raw prefix and every generated token stream are checkpointed, returned token IDs are compared to the stream, native EOS is required with no internal/post-EOS tokens, raw decode is retained before native repetition repair, and the parser-rewrite flag is explicit. Native emission tokens are not fabricated word timestamps."
+    },
+    {
+      "area": "resources",
+      "result": "bounded_with_cleanup_finding",
+      "detail": "Controller checks owned worker-group RSS/time and worker records its own peak/times; failures reject structural pass. No whole-machine budget or Greek forced-alignment approval is implied. A reproducible exited-leader cleanup hole remains, detailed separately."
+    },
+    {
+      "area": "workflow",
+      "result": "consistent",
+      "detail": "Read-only repository permissions, nonpersisted checkout credentials, isolated pinned runtime, separate input/model preparation, hosted-only model loading, and always-upload evidence path excluding weight directory."
+    },
+    {
+      "area": "runtime_metadata",
+      "result": "passes_direct_pin_intersections",
+      "detail": "All8direct package Python requirements and active cross-constraints among selected pins satisfy Python3.12/Linux. Transformers5.13 accepts tokenizers0.22.2,hub1.5.0,safetensors0.8.0 andnumpy2.5.5. Official CPU-wheel metadata hash is independently verified. Hosted pip still must resolve/install transitive dependencies and prove actual imports."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "owned_group_child_after_leader_exit",
+      "detail": "terminate_owned returns when the leader has already exited; a surviving same-group child stays alive and the controller stops sampling with only owned_worker_exited. A no-model standard-library reproduction demonstrated this state.",
+      "requested_correction": "Terminate and verify the owned process group even after leader exit; reject success if live owned group members remain. Preserve the before/after probe."
+    }
+  ],
+  "criteria_scope": "The same eight previously exposed ASR source/reference criteria apply; all outputs remain subject to independent raw-transcript semantic review and no promotion follows structural success."
+}

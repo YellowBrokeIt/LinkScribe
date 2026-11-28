@@ -1,0 +1,72 @@
+diff --git a/enhancements.py b/enhancements.py
+index b36095c..8c85668 100644
+--- a/enhancements.py
++++ b/enhancements.py
+@@ -9,6 +9,7 @@ from contextvars import ContextVar
+ import json
+ import os
+ from pathlib import Path
++import unicodedata
+ import urllib.error
+ import urllib.request
+ from functools import lru_cache
+@@ -303,6 +304,51 @@ def _translate_plain_fragment(text: str, source: str, target: str, profile: str)
+     return translated.strip()
+ 
+ 
++def _translation_letter_runs(text: str):
++    """Compare complete words without altering the stored source or result.
++
++    Compatibility normalization also recognizes Latin/Greek mathematical letters
++    and presentation forms. Marks stay with their letters, so a preserved foreign
++    name or quotation must match as a complete run, not just share its alphabet.
++    """
++    letters: list[str] = []
++    for char in unicodedata.normalize("NFKC", text):
++        if unicodedata.category(char)[0] in {"L", "M"}:
++            letters.append(char)
++        elif letters:
++            yield "".join(letters)
++            letters.clear()
++    if letters:
++        yield "".join(letters)
++
++
++def _check_translation_scripts(segments: list[dict[str, Any]],
++                               results: list[dict[str, Any]]) -> None:
++    """Reject newly introduced scripts outside the English/Greek text paths.
++
++    Both Latin and Greek remain allowed for names, units and technical terms.
++    Other writing systems can remain when the exact normalized letter run was
++    already present in the source. This is a narrow corruption check: it cannot
++    certify the target language, grammar, names, numbers or translated meaning.
++    """
++    def foreign_run(run: str) -> bool:
++        return any(unicodedata.category(char).startswith("L")
++                   and not unicodedata.name(char, "").startswith(("LATIN ", "GREEK "))
++                   for char in run)
++
++    source_runs = {run for segment in segments
++                   for run in _translation_letter_runs(segment["text"])
++                   if foreign_run(run)}
++    for segment in results:
++        for run in _translation_letter_runs(segment["text"]):
++            if foreign_run(run) and run not in source_runs:
++                raise EnhancementError(
++                    "The translation introduced text in an unexpected writing system. "
++                    "It was not saved as a completed translation; the original transcript "
++                    "remains available."
++                )
++
++
+ def _translation_result(segments: list[dict[str, Any]], results: list[dict[str, Any]],
+                         source: str | None, target: str) -> list[dict[str, Any]]:
+     """Do not advertise a copied transcript as a separate language result.
+@@ -323,6 +369,7 @@ def _translation_result(segments: list[dict[str, Any]], results: list[dict[str,
+             f"No separate {target_name} translation was generated because the model returned "
+             "the original text unchanged. The original transcript remains available."
+         )
++    _check_translation_scripts(segments, results)
+     return results
+ 
+ 

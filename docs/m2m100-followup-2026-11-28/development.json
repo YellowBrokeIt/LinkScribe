@@ -1,0 +1,1666 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T01:31:26.158703+00:00",
+  "complete": true,
+  "evidence_type": "actual_native_m2m100_translation_not_production_integration",
+  "semantic_quality": "unreviewed",
+  "plan_sha256": "f89aa5300a047429c8bc136ab60527d7c45ef4956219358249869438bd529f94",
+  "inference_freeze_sha256": "ec186e54596808d1dd7664b28fbf044b794aa6b9bef4ef13d967236902dbbc81",
+  "model": {
+    "repository": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "weights_file": "pytorch_model.bin",
+    "weights_bytes": 1935796948,
+    "weights_sha256": "d907ea45e4e4b9db163382a6674f6218b3c59566fe06d77f4055c208b4e87ed1",
+    "license": "MIT",
+    "license_evidence": "Pinned official model card plus retained originating Fairseq MIT license text.",
+    "conversion_quantization": "float32",
+    "compute_type": "float32",
+    "trust_remote_code": false
+  },
+  "versions": {
+    "torch": "2.11.0+cpu",
+    "ctranslate2": "4.9.1",
+    "transformers": "4.57.6",
+    "accelerate": "1.12.0",
+    "sentencepiece": "0.2.1",
+    "psutil": "7.2.2",
+    "numpy": "2.5.5",
+    "tokenizers": "0.22.2",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "0.36.2"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "terminology",
+        "names",
+        "chronology"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c4\u03b7\u03c2 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7\u03c2 \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7.",
+        "\u0397 \u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd\u03b7\u03c3\u03b7 \u03b4\u03b9\u03ae\u03c1\u03ba\u03b5\u03c3\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac. \u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7."
+      ],
+      "review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as \u039c\u03b1\u03c1\u03af\u03b1."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria",
+              "\u039c\u03b1\u03c1\u03af\u03b1"
+            ]
+          },
+          {
+            "label": "transcription terminology",
+            "alternatives": [
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03ce\u03bd",
+              "\u03b1\u03c0\u03bf\u03bc\u03b1\u03b3\u03bd\u03b7\u03c4\u03bf\u03c6\u03c9\u03bd",
+              "\u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6"
+            ]
+          },
+          {
+            "label": "translation",
+            "alternatives": [
+              "\u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3",
+              "\u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03b1\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12"
+        ]
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03ad\u03c3\u03c9\u03c3\u03b5 \u03c4\u03b7 \u03bc\u03b5\u03c4\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ba\u03b5\u03b9\u03bc\u03ad\u03bd\u03bf\u03c5\u00b7 \u03b4\u03b5\u03bd \u03ad\u03c3\u03c9\u03c3\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c1\u03c7\u03b9\u03ba\u03ae \u03b5\u03b3\u03b3\u03c1\u03b1\u03c6\u03ae.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "\u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c0\u03ae\u03c1\u03b5 12 \u03bb\u03b5\u03c0\u03c4\u03ac.\u0397 \u03bc\u03b5\u03c4\u03ac\u03c6\u03c1\u03b1\u03c3\u03b7 \u03c3\u03c4\u03b1 \u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03be\u03b5\u03ba\u03b9\u03bd\u03ae\u03c3\u03b5\u03b9.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "native_request": {
+        "source": [
+          [
+            "__en__",
+            "\u2581Maria",
+            "\u2581sa",
+            "ved",
+            "\u2581the",
+            "\u2581trans",
+            "cript",
+            "\u2581as",
+            "\u2581a",
+            "\u2581text",
+            "\u2581file",
+            ";",
+            "\u2581she",
+            "\u2581did",
+            "\u2581not",
+            "\u2581save",
+            "\u2581the",
+            "\u2581original",
+            "\u2581record",
+            "ing",
+            ".",
+            "</s>"
+          ],
+          [
+            "__en__",
+            "\u2581Trans",
+            "cription",
+            "\u2581took",
+            "\u258112",
+            "\u2581minutes",
+            ".",
+            "\u2581Trans",
+            "lation",
+            "\u2581into",
+            "\u2581Gre",
+            "ek",
+            "\u2581has",
+            "\u2581not",
+            "\u2581started",
+            "\u2581yet",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__el__"
+          ],
+          [
+            "__el__"
+          ]
+        ],
+        "source_texts": [
+          "Maria saved the transcript as a text file; she did not save the original recording.",
+          "Transcription took 12 minutes. Translation into Greek has not started yet."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:30.437965+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u039c\u03b1\u03c1",
+              "\u03af\u03b1",
+              "\u2581\u03ad",
+              "\u03c3\u03c9",
+              "\u03c3\u03b5",
+              "\u2581\u03c4\u03b7",
+              "\u2581\u03bc\u03b5\u03c4\u03b1",
+              "\u03b3\u03c1\u03b1\u03c6\u03ae",
+              "\u2581\u03c9\u03c2",
+              "\u2581\u03b1\u03c1\u03c7",
+              "\u03b5\u03af\u03bf",
+              "\u2581\u03ba",
+              "\u03b5\u03b9",
+              "\u03bc\u03ad\u03bd\u03bf\u03c5",
+              "\u00b7",
+              "\u2581\u03b4\u03b5\u03bd",
+              "\u2581\u03ad",
+              "\u03c3\u03c9",
+              "\u03c3\u03b5",
+              "\u2581\u03c4\u03b7\u03bd",
+              "\u2581\u03b1\u03c1\u03c7",
+              "\u03b9\u03ba\u03ae",
+              "\u2581\u03b5\u03b3",
+              "\u03b3\u03c1\u03b1\u03c6\u03ae",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.338693231344223
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u03bc\u03b5\u03c4\u03ac",
+              "\u03c6",
+              "\u03c1\u03b1\u03c3\u03b7",
+              "\u2581\u03c0\u03ae",
+              "\u03c1\u03b5",
+              "\u258112",
+              "\u2581\u03bb\u03b5\u03c0\u03c4\u03ac",
+              ".",
+              "\u0397",
+              "\u2581\u03bc\u03b5\u03c4\u03ac",
+              "\u03c6",
+              "\u03c1\u03b1\u03c3\u03b7",
+              "\u2581\u03c3\u03c4\u03b1",
+              "\u2581\u03b5\u03bb\u03bb\u03b7\u03bd",
+              "\u03b9\u03ba\u03ac",
+              "\u2581\u03b4\u03b5\u03bd",
+              "\u2581\u03ad\u03c7\u03b5\u03b9",
+              "\u2581\u03b1\u03ba\u03cc\u03bc\u03b7",
+              "\u2581\u03be\u03b5",
+              "\u03ba\u03b9\u03bd\u03ae",
+              "\u03c3\u03b5\u03b9",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4162856936454773
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "pass",
+      "elapsed_seconds": 2.765,
+      "finished_at": "2026-11-28T01:31:33.204082+00:00"
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "names",
+        "roles",
+        "relationships"
+      ],
+      "segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Nikos sent the text to Eleni, not to Elena.",
+        "Eleni is the translator. Nikos does the recording, and Elena checks the subtitles."
+      ],
+      "review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Nikos",
+            "alternatives": [
+              "Nikos",
+              "Nicos",
+              "Niko"
+            ]
+          },
+          {
+            "label": "Eleni",
+            "alternatives": [
+              "Eleni",
+              "Elen\u0113"
+            ]
+          },
+          {
+            "label": "Elena",
+            "alternatives": [
+              "Elena"
+            ]
+          },
+          {
+            "label": "translator",
+            "alternatives": [
+              "translator"
+            ]
+          },
+          {
+            "label": "subtitles",
+            "alternatives": [
+              "subtitle",
+              "caption"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nick sent the text to Elena, not to Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Nicos makes the recording and Elena controls the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "Eleni",
+          "alternatives": [
+            "Eleni",
+            "Elen\u0113"
+          ]
+        },
+        {
+          "kind": "term_not_observed",
+          "label": "translator",
+          "alternatives": [
+            "translator"
+          ]
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__el__",
+            "\u2581\u039f",
+            "\u2581\u039d",
+            "\u03af\u03ba",
+            "\u03bf\u03c2",
+            "\u2581\u03ad\u03c3",
+            "\u03c4\u03b5\u03b9",
+            "\u03bb\u03b5",
+            "\u2581\u03c4\u03bf",
+            "\u2581\u03ba",
+            "\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+            "\u2581\u03c3\u03c4\u03b7\u03bd",
+            "\u2581\u0395",
+            "\u03bb\u03ad",
+            "\u03bd\u03b7",
+            ",",
+            "\u2581\u03cc\u03c7\u03b9",
+            "\u2581\u03c3\u03c4\u03b7\u03bd",
+            "\u2581\u0388",
+            "\u03bb\u03b5",
+            "\u03bd\u03b1",
+            ".",
+            "</s>"
+          ],
+          [
+            "__el__",
+            "\u2581\u0397",
+            "\u2581\u0395",
+            "\u03bb\u03ad",
+            "\u03bd\u03b7",
+            "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+            "\u2581\u03b7",
+            "\u2581\u03bc\u03b5\u03c4\u03b1",
+            "\u03c6\u03c1\u03ac",
+            "\u03c3\u03c4",
+            "\u03c1\u03b9\u03b1",
+            ".",
+            "\u2581\u039f",
+            "\u2581\u039d",
+            "\u03af\u03ba",
+            "\u03bf\u03c2",
+            "\u2581\u03ba\u03ac\u03bd\u03b5\u03b9",
+            "\u2581\u03c4\u03b7\u03bd",
+            "\u2581\u03b7",
+            "\u03c7\u03bf",
+            "\u03b3\u03c1\u03ac\u03c6",
+            "\u03b7\u03c3\u03b7",
+            "\u2581\u03ba\u03b1\u03b9",
+            "\u2581\u03b7",
+            "\u2581\u0388",
+            "\u03bb\u03b5",
+            "\u03bd\u03b1",
+            "\u2581\u03b5\u03bb\u03ad\u03b3",
+            "\u03c7\u03b5\u03b9",
+            "\u2581\u03c4\u03bf\u03c5\u03c2",
+            "\u2581\u03c5\u03c0\u03cc",
+            "\u03c4\u03b9",
+            "\u03c4",
+            "\u03bb\u03bf\u03c5\u03c2",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__en__"
+          ],
+          [
+            "__en__"
+          ]
+        ],
+        "source_texts": [
+          "\u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ad\u03c3\u03c4\u03b5\u03b9\u03bb\u03b5 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf \u03c3\u03c4\u03b7\u03bd \u0395\u03bb\u03ad\u03bd\u03b7, \u03cc\u03c7\u03b9 \u03c3\u03c4\u03b7\u03bd \u0388\u03bb\u03b5\u03bd\u03b1.",
+          "\u0397 \u0395\u03bb\u03ad\u03bd\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03bc\u03b5\u03c4\u03b1\u03c6\u03c1\u03ac\u03c3\u03c4\u03c1\u03b9\u03b1. \u039f \u039d\u03af\u03ba\u03bf\u03c2 \u03ba\u03ac\u03bd\u03b5\u03b9 \u03c4\u03b7\u03bd \u03b7\u03c7\u03bf\u03b3\u03c1\u03ac\u03c6\u03b7\u03c3\u03b7 \u03ba\u03b1\u03b9 \u03b7 \u0388\u03bb\u03b5\u03bd\u03b1 \u03b5\u03bb\u03ad\u03b3\u03c7\u03b5\u03b9 \u03c4\u03bf\u03c5\u03c2 \u03c5\u03c0\u03cc\u03c4\u03b9\u03c4\u03bb\u03bf\u03c5\u03c2."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:33.205518+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581Nick",
+              "\u2581sent",
+              "\u2581the",
+              "\u2581text",
+              "\u2581to",
+              "\u2581Elena",
+              ",",
+              "\u2581not",
+              "\u2581to",
+              "\u2581Elena",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.44613000750541687
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581N",
+              "icos",
+              "\u2581makes",
+              "\u2581the",
+              "\u2581record",
+              "ing",
+              "\u2581and",
+              "\u2581Elena",
+              "\u2581control",
+              "s",
+              "\u2581the",
+              "\u2581sub",
+              "tit",
+              "les",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.37812352180480957
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 2.089,
+      "finished_at": "2026-11-28T01:31:35.295997+00:00"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "numbers",
+        "decimals",
+        "grouped_amounts",
+        "bitcoin",
+        "negation"
+      ],
+      "segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u03b1\u03c0\u03cc\u03b4\u03b5\u03b9\u03be\u03b7 \u03b3\u03c1\u03ac\u03c6\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b5\u03af\u03b4\u03b7. \u0397 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5,000 sats, \u03cc\u03c7\u03b9 500 sats.",
+        "\u0397 \u03c3\u03b7\u03bc\u03b5\u03af\u03c9\u03c3\u03b7 \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03b9 \u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03bb\u03ad\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 sats \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1."
+      ],
+      "review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Bitcoin",
+            "alternatives": [
+              "Bitcoin",
+              "\u039c\u03c0\u03af\u03c4\u03ba\u03bf\u03ca\u03bd"
+            ]
+          },
+          {
+            "label": "sats unit",
+            "alternatives": [
+              "sats",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3\u03b9",
+              "\u03c3\u03b1\u03c4\u03cc\u03c3"
+            ]
+          }
+        ],
+        "numbers": [
+          "12.50",
+          "2",
+          "5,000",
+          "500"
+        ]
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "\u0397 \u03c0\u03b1\u03c1\u03b1\u03bb\u03b1\u03b2\u03ae \u03b4\u03b5\u03af\u03c7\u03bd\u03b5\u03b9 \u20ac12.50 \u03b3\u03b9\u03b1 2 \u03b1\u03bd\u03c4\u03b9\u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03b1. \u03b7 \u03be\u03b5\u03c7\u03c9\u03c1\u03b9\u03c3\u03c4\u03ae \u03bc\u03b5\u03c4\u03b1\u03c6\u03bf\u03c1\u03ac \u03b5\u03af\u03bd\u03b1\u03b9 5.000 sats, \u03cc\u03c7\u03b9 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "\u03a4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03bf \u03b1\u03bd\u03b1\u03c6\u03ad\u03c1\u03b5\u03c4\u03b1\u03b9 \u03c3\u03c4\u03bf Bitcoin. \u0394\u03b5\u03bd \u03c3\u03b7\u03bc\u03b1\u03af\u03bd\u03b5\u03b9 \u03cc\u03c4\u03b9 \u03c4\u03b1 \u03b5\u03c5\u03c1\u03ce \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03c3\u03ac\u03c4 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b7 \u03af\u03b4\u03b9\u03b1 \u03bc\u03bf\u03bd\u03ac\u03b4\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "number_not_observed",
+          "expected": "5,000",
+          "expected_count": 1,
+          "observed_count": 0
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__en__",
+            "\u2581The",
+            "\u2581rece",
+            "ipt",
+            "\u2581shows",
+            "\u2581\u20ac",
+            "12.",
+            "50",
+            "\u2581for",
+            "\u25812",
+            "\u2581items",
+            ".",
+            "\u2581The",
+            "\u2581separate",
+            "\u2581transfer",
+            "\u2581is",
+            "\u25815,000",
+            "\u2581sats",
+            ",",
+            "\u2581not",
+            "\u2581500",
+            "\u2581sats",
+            ".",
+            "</s>"
+          ],
+          [
+            "__en__",
+            "\u2581The",
+            "\u2581note",
+            "\u2581men",
+            "tions",
+            "\u2581Bitcoin",
+            ".",
+            "\u2581It",
+            "\u2581does",
+            "\u2581not",
+            "\u2581say",
+            "\u2581that",
+            "\u2581euros",
+            "\u2581and",
+            "\u2581sats",
+            "\u2581are",
+            "\u2581the",
+            "\u2581same",
+            "\u2581unit",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__el__"
+          ],
+          [
+            "__el__"
+          ]
+        ],
+        "source_texts": [
+          "The receipt shows \u20ac12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "The note mentions Bitcoin. It does not say that euros and sats are the same unit."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:35.296792+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u03c0\u03b1\u03c1\u03b1",
+              "\u03bb\u03b1",
+              "\u03b2",
+              "\u03ae",
+              "\u2581\u03b4\u03b5\u03af\u03c7\u03bd",
+              "\u03b5\u03b9",
+              "\u2581\u20ac",
+              "12.",
+              "50",
+              "\u2581\u03b3\u03b9\u03b1",
+              "\u25812",
+              "\u2581\u03b1\u03bd\u03c4\u03b9\u03ba",
+              "\u03b5\u03af",
+              "\u03bc\u03b5\u03bd\u03b1",
+              ".",
+              "\u2581\u03b7",
+              "\u2581\u03be\u03b5",
+              "\u03c7\u03c9",
+              "\u03c1\u03b9\u03c3",
+              "\u03c4\u03ae",
+              "\u2581\u03bc\u03b5\u03c4\u03b1",
+              "\u03c6\u03bf\u03c1\u03ac",
+              "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+              "\u25815.000",
+              "\u2581sats",
+              ",",
+              "\u2581\u03cc\u03c7\u03b9",
+              "\u2581500",
+              "\u2581sats",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4537648558616638
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u03a4\u03bf",
+              "\u2581\u03c3\u03b7\u03bc\u03b5\u03b9",
+              "\u03c9\u03bc\u03b1",
+              "\u03c4\u03ac",
+              "\u03c1\u03b9\u03bf",
+              "\u2581\u03b1\u03bd\u03b1",
+              "\u03c6\u03ad",
+              "\u03c1\u03b5\u03c4\u03b1\u03b9",
+              "\u2581\u03c3\u03c4\u03bf",
+              "\u2581Bitcoin",
+              ".",
+              "\u2581\u0394\u03b5\u03bd",
+              "\u2581\u03c3\u03b7\u03bc\u03b1\u03af\u03bd\u03b5\u03b9",
+              "\u2581\u03cc\u03c4\u03b9",
+              "\u2581\u03c4\u03b1",
+              "\u2581\u03b5\u03c5\u03c1\u03ce",
+              "\u2581\u03ba\u03b1\u03b9",
+              "\u2581\u03c4\u03b1",
+              "\u2581\u03c3",
+              "\u03ac",
+              "\u03c4",
+              "\u2581\u03b5\u03af\u03bd\u03b1\u03b9",
+              "\u2581\u03b7",
+              "\u2581\u03af\u03b4\u03b9\u03b1",
+              "\u2581\u03bc\u03bf\u03bd\u03ac",
+              "\u03b4\u03b1",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4967554807662964
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 3.057,
+      "finished_at": "2026-11-28T01:31:38.354350+00:00"
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "negation",
+        "scope",
+        "uncertainty",
+        "time"
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "reference_translations": [
+        "I did not say that Anna sold all the books. I said that she did not sell any yesterday.",
+        "She may sell one today, but that has not been decided."
+      ],
+      "review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "Anna"
+            ]
+          },
+          {
+            "label": "yesterday",
+            "alternatives": [
+              "yesterday"
+            ]
+          },
+          {
+            "label": "today",
+            "alternatives": [
+              "today"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn\u2019t say that Anna sold all the books. I said she didn\u2019t sell one yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today it can sell one, but that has not been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "native_request": {
+        "source": [
+          [
+            "__el__",
+            "\u2581\u0394\u03b5\u03bd",
+            "\u2581\u03b5\u03af",
+            "\u03c0\u03b1",
+            "\u2581\u03cc\u03c4\u03b9",
+            "\u2581\u03b7",
+            "\u2581\u0386",
+            "\u03bd",
+            "\u03bd\u03b1",
+            "\u2581\u03c0",
+            "\u03bf\u03cd",
+            "\u03bb\u03b7",
+            "\u03c3\u03b5",
+            "\u2581\u03cc\u03bb\u03b1",
+            "\u2581\u03c4\u03b1",
+            "\u2581\u03b2\u03b9\u03b2",
+            "\u03bb\u03af\u03b1",
+            ".",
+            "\u2581\u0395\u03af",
+            "\u03c0\u03b1",
+            "\u2581\u03cc\u03c4\u03b9",
+            "\u2581\u03b4\u03b5\u03bd",
+            "\u2581\u03c0",
+            "\u03bf\u03cd",
+            "\u03bb\u03b7",
+            "\u03c3\u03b5",
+            "\u2581\u03ba\u03b1\u03bd",
+            "\u03ad\u03bd\u03b1",
+            "\u2581\u03c7",
+            "\u03b8\u03b5\u03c2",
+            ".",
+            "</s>"
+          ],
+          [
+            "__el__",
+            "\u2581\u03a3",
+            "\u03ae\u03bc\u03b5\u03c1\u03b1",
+            "\u2581\u03bc\u03c0\u03bf\u03c1\u03b5\u03af",
+            "\u2581\u03bd\u03b1",
+            "\u2581\u03c0\u03bf\u03c5",
+            "\u03bb\u03ae",
+            "\u03c3\u03b5\u03b9",
+            "\u2581\u03ad\u03bd\u03b1",
+            ",",
+            "\u2581\u03b1\u03bb\u03bb\u03ac",
+            "\u2581\u03b1\u03c5\u03c4\u03cc",
+            "\u2581\u03b4\u03b5\u03bd",
+            "\u2581\u03ad\u03c7\u03b5\u03b9",
+            "\u2581\u03b1\u03c0\u03bf\u03c6\u03b1\u03c3",
+            "\u03b9\u03c3",
+            "\u03c4\u03b5\u03af",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__en__"
+          ],
+          [
+            "__en__"
+          ]
+        ],
+        "source_texts": [
+          "\u0394\u03b5\u03bd \u03b5\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b7 \u0386\u03bd\u03bd\u03b1 \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03cc\u03bb\u03b1 \u03c4\u03b1 \u03b2\u03b9\u03b2\u03bb\u03af\u03b1. \u0395\u03af\u03c0\u03b1 \u03cc\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c0\u03bf\u03cd\u03bb\u03b7\u03c3\u03b5 \u03ba\u03b1\u03bd\u03ad\u03bd\u03b1 \u03c7\u03b8\u03b5\u03c2.",
+          "\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1 \u03bc\u03c0\u03bf\u03c1\u03b5\u03af \u03bd\u03b1 \u03c0\u03bf\u03c5\u03bb\u03ae\u03c3\u03b5\u03b9 \u03ad\u03bd\u03b1, \u03b1\u03bb\u03bb\u03ac \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03b1\u03c0\u03bf\u03c6\u03b1\u03c3\u03b9\u03c3\u03c4\u03b5\u03af."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:38.355331+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581I",
+              "\u2581didn",
+              "\u2019",
+              "t",
+              "\u2581say",
+              "\u2581that",
+              "\u2581Anna",
+              "\u2581sold",
+              "\u2581all",
+              "\u2581the",
+              "\u2581books",
+              ".",
+              "\u2581I",
+              "\u2581said",
+              "\u2581she",
+              "\u2581didn",
+              "\u2019",
+              "t",
+              "\u2581sell",
+              "\u2581one",
+              "\u2581y",
+              "esterday",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.350933313369751
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581Today",
+              "\u2581it",
+              "\u2581can",
+              "\u2581sell",
+              "\u2581one",
+              ",",
+              "\u2581but",
+              "\u2581that",
+              "\u2581has",
+              "\u2581not",
+              "\u2581been",
+              "\u2581decided",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.44656023383140564
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "pass",
+      "elapsed_seconds": 2.43,
+      "finished_at": "2026-11-28T01:31:40.786332+00:00"
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "split": "development",
+      "source_language": "en",
+      "target_language": "el",
+      "categories": [
+        "conditions",
+        "negation",
+        "names",
+        "roles"
+      ],
+      "segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "reference_translations": [
+        "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b1\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+        "\u0391\u03bd \u03bf \u0393\u03b9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7 \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1."
+      ],
+      "review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Anna",
+            "alternatives": [
+              "\u0386\u03bd\u03bd\u03b1",
+              "Anna"
+            ]
+          },
+          {
+            "label": "Giannis",
+            "alternatives": [
+              "\u0393\u03b9\u03ac\u03bd\u03bd\u03b7",
+              "Giannis",
+              "Yannis",
+              "Yiannis"
+            ]
+          },
+          {
+            "label": "only if",
+            "alternatives": [
+              "\u03bc\u03cc\u03bd\u03bf \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf \u03b5\u03c6\u03cc\u03c3\u03bf\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b1\u03bd",
+              "\u03bc\u03cc\u03bd\u03bf\u03bd \u03b5\u03ac\u03bd"
+            ]
+          },
+          {
+            "label": "Friday",
+            "alternatives": [
+              "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5"
+            ]
+          },
+          {
+            "label": "Monday",
+            "alternatives": [
+              "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1"
+            ]
+          }
+        ],
+        "numbers": []
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "\u0397 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03b4\u03b7\u03bc\u03bf\u03c3\u03b9\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c4\u03bf \u03b2\u03af\u03bd\u03c4\u03b5\u03bf \u03bc\u03cc\u03bd\u03bf \u03b5\u03ac\u03bd \u03bf Giannis \u03b5\u03b3\u03ba\u03c1\u03af\u03bd\u03b5\u03b9 \u03c4\u03bf \u03ba\u03b5\u03af\u03bc\u03b5\u03bd\u03bf.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "\u0391\u03bd \u03bf \u03a4\u03b6\u03b9\u03ac\u03bd\u03b9\u03c2 \u03b4\u03b5\u03bd \u03b1\u03c0\u03b1\u03bd\u03c4\u03ae\u03c3\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae, \u03b7 \u0386\u03bd\u03bd\u03b1 \u03b8\u03b1 \u03c0\u03b5\u03c1\u03b9\u03bc\u03ad\u03bd\u03b5\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [],
+      "native_request": {
+        "source": [
+          [
+            "__en__",
+            "\u2581Anna",
+            "\u2581will",
+            "\u2581publ",
+            "ish",
+            "\u2581the",
+            "\u2581video",
+            "\u2581only",
+            "\u2581if",
+            "\u2581Gi",
+            "annis",
+            "\u2581appro",
+            "ves",
+            "\u2581the",
+            "\u2581text",
+            ".",
+            "</s>"
+          ],
+          [
+            "__en__",
+            "\u2581If",
+            "\u2581Gi",
+            "annis",
+            "\u2581does",
+            "\u2581not",
+            "\u2581answer",
+            "\u2581by",
+            "\u2581Friday",
+            ",",
+            "\u2581Anna",
+            "\u2581will",
+            "\u2581wait",
+            "\u2581until",
+            "\u2581Monday",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__el__"
+          ],
+          [
+            "__el__"
+          ]
+        ],
+        "source_texts": [
+          "Anna will publish the video only if Giannis approves the text.",
+          "If Giannis does not answer by Friday, Anna will wait until Monday."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:40.787556+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0397",
+              "\u2581\u0386",
+              "\u03bd",
+              "\u03bd\u03b1",
+              "\u2581\u03b8\u03b1",
+              "\u2581\u03b4\u03b7\u03bc\u03bf\u03c3\u03b9",
+              "\u03b5\u03cd",
+              "\u03c3\u03b5\u03b9",
+              "\u2581\u03c4\u03bf",
+              "\u2581\u03b2\u03af\u03bd\u03c4\u03b5\u03bf",
+              "\u2581\u03bc\u03cc\u03bd\u03bf",
+              "\u2581\u03b5\u03ac\u03bd",
+              "\u2581\u03bf",
+              "\u2581Gi",
+              "annis",
+              "\u2581\u03b5\u03b3\u03ba",
+              "\u03c1",
+              "\u03af\u03bd\u03b5\u03b9",
+              "\u2581\u03c4\u03bf",
+              "\u2581\u03ba",
+              "\u03b5\u03af\u03bc\u03b5\u03bd\u03bf",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.2879650890827179
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__el__",
+              "\u2581\u0391\u03bd",
+              "\u2581\u03bf",
+              "\u2581\u03a4",
+              "\u03b6",
+              "\u03b9\u03ac",
+              "\u03bd\u03b9",
+              "\u03c2",
+              "\u2581\u03b4\u03b5\u03bd",
+              "\u2581\u03b1\u03c0\u03b1\u03bd",
+              "\u03c4\u03ae\u03c3\u03b5\u03b9",
+              "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+              "\u2581\u03c4\u03b7\u03bd",
+              "\u2581\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae",
+              ",",
+              "\u2581\u03b7",
+              "\u2581\u0386",
+              "\u03bd",
+              "\u03bd\u03b1",
+              "\u2581\u03b8\u03b1",
+              "\u2581\u03c0\u03b5\u03c1\u03b9",
+              "\u03bc\u03ad\u03bd\u03b5\u03b9",
+              "\u2581\u03bc\u03ad\u03c7\u03c1\u03b9",
+              "\u2581\u03c4\u03b7\u03bd",
+              "\u2581\u0394\u03b5\u03c5",
+              "\u03c4\u03ad\u03c1\u03b1",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4010954201221466
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "pass",
+      "elapsed_seconds": 2.619,
+      "finished_at": "2026-11-28T01:31:43.407114+00:00"
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "split": "development",
+      "source_language": "el",
+      "target_language": "en",
+      "categories": [
+        "questions",
+        "uncertainty",
+        "numbers",
+        "quotation"
+      ],
+      "segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "reference_translations": [
+        "Maria asked: 'Does the file have 12 chapters or 21?'",
+        "We do not know the answer yet. The title alone is not enough to establish that."
+      ],
+      "review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "indicators": {
+        "required_terms": [
+          {
+            "label": "Maria",
+            "alternatives": [
+              "Maria"
+            ]
+          },
+          {
+            "label": "chapters",
+            "alternatives": [
+              "chapter"
+            ]
+          },
+          {
+            "label": "title",
+            "alternatives": [
+              "title"
+            ]
+          }
+        ],
+        "numbers": [
+          "12",
+          "21"
+        ]
+      },
+      "complete": true,
+      "semantic_quality": "unreviewed",
+      "translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Mary asked, \u201cThe archive has 12 chapters or 21?\u201d",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We don't know the answer yet. the title alone is not enough to find out it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "structural_checks": {
+        "source_unchanged": true,
+        "segment_count": true,
+        "metadata_preserved": true,
+        "valid_text": true
+      },
+      "review_flags": [
+        {
+          "kind": "term_not_observed",
+          "label": "Maria",
+          "alternatives": [
+            "Maria"
+          ]
+        }
+      ],
+      "native_request": {
+        "source": [
+          [
+            "__el__",
+            "\u2581\u0397",
+            "\u2581\u039c\u03b1\u03c1",
+            "\u03af\u03b1",
+            "\u2581",
+            "\u03c1\u03ce",
+            "\u03c4\u03b7\u03c3\u03b5",
+            ":",
+            "\u2581\u00ab",
+            "\u03a4\u03bf",
+            "\u2581\u03b1\u03c1\u03c7",
+            "\u03b5\u03af\u03bf",
+            "\u2581\u03ad\u03c7\u03b5\u03b9",
+            "\u258112",
+            "\u2581\u03ba\u03b5",
+            "\u03c6\u03ac\u03bb",
+            "\u03b1\u03b9",
+            "\u03b1",
+            "\u2581\u03ae",
+            "\u258121",
+            ";",
+            "\u00bb",
+            "</s>"
+          ],
+          [
+            "__el__",
+            "\u2581\u0394\u03b5\u03bd",
+            "\u2581\u03b3\u03bd\u03c9",
+            "\u03c1\u03af\u03b6",
+            "\u03bf\u03c5\u03bc\u03b5",
+            "\u2581\u03b1\u03ba\u03cc\u03bc\u03b7",
+            "\u2581\u03c4\u03b7\u03bd",
+            "\u2581\u03b1\u03c0",
+            "\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7",
+            ".",
+            "\u2581\u039f",
+            "\u2581\u03c4\u03af\u03c4",
+            "\u03bb\u03bf\u03c2",
+            "\u2581\u03bc\u03cc",
+            "\u03bd\u03bf\u03c2",
+            "\u2581\u03c4\u03bf\u03c5",
+            "\u2581\u03b4\u03b5\u03bd",
+            "\u2581\u03b1",
+            "\u03c1\u03ba",
+            "\u03b5\u03af",
+            "\u2581\u03b3\u03b9\u03b1",
+            "\u2581\u03bd\u03b1",
+            "\u2581\u03c4\u03bf",
+            "\u2581\u03b4\u03b9\u03b1",
+            "\u03c0\u03b9\u03c3",
+            "\u03c4\u03ce",
+            "\u03c3\u03bf\u03c5\u03bc\u03b5",
+            ".",
+            "</s>"
+          ]
+        ],
+        "target_prefix": [
+          [
+            "__en__"
+          ],
+          [
+            "__en__"
+          ]
+        ],
+        "source_texts": [
+          "\u0397 \u039c\u03b1\u03c1\u03af\u03b1 \u03c1\u03ce\u03c4\u03b7\u03c3\u03b5: \u00ab\u03a4\u03bf \u03b1\u03c1\u03c7\u03b5\u03af\u03bf \u03ad\u03c7\u03b5\u03b9 12 \u03ba\u03b5\u03c6\u03ac\u03bb\u03b1\u03b9\u03b1 \u03ae 21;\u00bb",
+          "\u0394\u03b5\u03bd \u03b3\u03bd\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c4\u03b7\u03bd \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7. \u039f \u03c4\u03af\u03c4\u03bb\u03bf\u03c2 \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b1\u03c1\u03ba\u03b5\u03af \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03c4\u03bf \u03b4\u03b9\u03b1\u03c0\u03b9\u03c3\u03c4\u03ce\u03c3\u03bf\u03c5\u03bc\u03b5."
+        ],
+        "options": {
+          "beam_size": 5,
+          "patience": 1,
+          "num_hypotheses": 1,
+          "length_penalty": 1,
+          "coverage_penalty": 0,
+          "repetition_penalty": 1,
+          "no_repeat_ngram_size": 0,
+          "disable_unk": false,
+          "max_batch_size": 1,
+          "batch_type": "examples",
+          "asynchronous": false,
+          "max_input_length": 0,
+          "max_decoding_length": 512,
+          "min_decoding_length": 1,
+          "return_end_token": true,
+          "return_scores": true,
+          "sampling_topk": 1,
+          "sampling_topp": 1,
+          "sampling_temperature": 1,
+          "replace_unknowns": false
+        }
+      },
+      "raw_response_available": true,
+      "started_at": "2026-11-28T01:31:43.408738+00:00",
+      "raw_response": [
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581Mary",
+              "\u2581asked",
+              ",",
+              "\u2581\u201c",
+              "The",
+              "\u2581arch",
+              "ive",
+              "\u2581has",
+              "\u258112",
+              "\u2581chap",
+              "ters",
+              "\u2581or",
+              "\u258121",
+              "?\u201d",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.4171547293663025
+          ]
+        },
+        {
+          "hypotheses": [
+            [
+              "__en__",
+              "\u2581We",
+              "\u2581don",
+              "'",
+              "t",
+              "\u2581know",
+              "\u2581the",
+              "\u2581answer",
+              "\u2581yet",
+              ".",
+              "\u2581the",
+              "\u2581title",
+              "\u2581alone",
+              "\u2581is",
+              "\u2581not",
+              "\u2581enough",
+              "\u2581to",
+              "\u2581find",
+              "\u2581out",
+              "\u2581it",
+              ".",
+              "</s>"
+            ]
+          ],
+          "scores": [
+            -0.45116832852363586
+          ]
+        }
+      ],
+      "completion_checks": [
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        },
+        {
+          "target_language_prefix": true,
+          "actual_end_token": true,
+          "strictly_below_length_cap": true,
+          "nonempty_content_tokens": true,
+          "no_unexpected_special_content_tokens": true
+        }
+      ],
+      "automatic_status": "review",
+      "elapsed_seconds": 2.066,
+      "finished_at": "2026-11-28T01:31:45.476010+00:00"
+    }
+  ],
+  "native_runtime": {
+    "device": "cpu",
+    "compute_type": "float32",
+    "num_translators": 1,
+    "torch_threads": 4,
+    "torch_interop_threads": 1
+  },
+  "native_model_unloaded": true,
+  "finished_at": "2026-11-28T01:31:45.537144+00:00"
+}

@@ -1,0 +1,11 @@
+--- enhancements-context4096.py
++++ enhancements-thinking.py
+@@ -194,7 +194,7 @@
+     }
+     if not plain_text:
+         body["format"] = payload.get("response_schema", "json")
+-        body["think"] = False
++        body["think"] = True
+     try:
+         phase = _OLLAMA_PHASE.get()
+         if phase is not None and phase["task"] == task:

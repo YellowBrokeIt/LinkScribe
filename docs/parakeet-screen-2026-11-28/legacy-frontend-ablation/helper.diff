@@ -1,0 +1,91 @@
+--- original/run_screen.py
++++ legacy-frontend-ablation/run_screen.py
+@@ -53,6 +53,14 @@
+             and plan["target_language_argument"] is None, "fixed recognition policy")
+     require(len(plan["cpu_affinity"]) == 4 and set(plan["cpu_affinity"]) <= os.sched_getaffinity(0),
+             "four pinned CPUs unavailable")
++    original = json.loads(Path(plan["original_plan_path"]).read_text())
++    changed_keys = {"prepared_at", "scope", "helper_path", "helper_sha256", "output_directory",
++                    "frontend_handling", "pinned_files"}
++    for key, value in original.items():
++        if key not in changed_keys:
++            require(plan[key] == value, "non-frontend protocol changed: " + key)
++    require(plan["pinned_files"][:len(original["pinned_files"])] == original["pinned_files"],
++            "original file pins changed")
+     return sha(plan_path)
+ 
+ 
+@@ -69,7 +77,10 @@
+               "detected_language_returned_by_runtime": False,
+               "runtime_versions": plan["runtime_versions"], "cpu_affinity": sorted(os.sched_getaffinity(0)),
+               "environment": plan["environment"], "onnx_sessions": [], "cases": [],
+-              "python_network_attempts": []}
++              "python_network_attempts": [],
++              "frontend_diagnostic": "Sensitivity to model-published legacy frontend; not a proven bug fix",
++              "original_plan_sha256": plan["original_plan_sha256"],
++              "original_int8_report_sha256": plan["original_int8_report_sha256"]}
+     progress_path = output.parent / "progress.json"
+     def progress(stage, case_id=None):
+         write_json(progress_path, {"stage": stage, "case_id": case_id, "started_monotonic": time.monotonic(),
+@@ -113,6 +124,14 @@
+                     "unexpected actual session CPU configuration")
+             report["onnx_sessions"].append(identity)
+             return session
++        class PublishedLegacyNemoFrontend:
++            def __init__(self):
++                self.session = rt.InferenceSession(
++                    plan["legacy_frontend_path"], providers=["CPUExecutionProvider"], sess_options=options)
++            def __call__(self, waveforms, lengths):
++                # Exact published graph; no array edits, normalization, slicing, or repairs.
++                return self.session.run(["features", "features_lens"],
++                                        {"waveforms": waveforms, "waveforms_lens": lengths})
+         rt.InferenceSession = observed_session
+         try:
+             model = onnx_asr.load_model(
+@@ -121,10 +140,16 @@
+                 preprocessor_config={"max_concurrent_workers": 1, "use_numpy_preprocessors": True},
+                 resampler_config={"providers": ["CPUExecutionProvider"], "sess_options": options},
+             ).with_timestamps()
++            require(type(model.asr._preprocessor).__name__ == "NemoPreprocessorNumpy", "unexpected original frontend")
++            # Normal model/runtime construction is unchanged. Only its uncalled frontend is replaced.
++            model.asr._preprocessor = PublishedLegacyNemoFrontend()
++            report["normal_numpy_frontend_constructed_but_not_called"] = True
+         finally:
+             rt.InferenceSession = original_session
+         require(type(model.asr).__name__ == "NemoConformerTdt", "unexpected recognizer class")
+-        require(type(model.asr._preprocessor).__name__ == "NemoPreprocessorNumpy", "unexpected frontend")
++        require(type(model.asr._preprocessor).__name__ == "PublishedLegacyNemoFrontend", "unexpected frontend")
++        require(sum(s.get("path") == plan["legacy_frontend_path"] for s in report["onnx_sessions"]) == 1,
++                "published legacy frontend must be loaded exactly once")
+         require(model.asr._vocab_size == plan["tokenizer"]["vocabulary_entries"]
+                 and model.asr._blank_idx == plan["tokenizer"]["blank_id"]
+                 and model.asr._max_tokens_per_step == plan["tokenizer"]["normal_max_tokens_per_step"]
+@@ -144,6 +169,7 @@
+         report["token_timestamp_kind"] = "token emission frame * 0.01 seconds * subsampling_factor; no word ends invented"
+         report["max_tokens_per_step"] = model.asr._max_tokens_per_step
+         current = {}
++        published_features = {item["id"]: item for item in plan["published_frontend_features"]}
+         original_preprocessor = model.asr._preprocessor
+         original_decode = model.asr._decode_tokens
+         def observed_preprocessor(waveforms, lengths):
+@@ -157,6 +183,20 @@
+             current["features"] = {"shape": list(features.shape), "dtype": features.dtype.str,
+                                    "lengths": feature_lengths.tolist(),
+                                    "sha256": hashlib.sha256(features.tobytes()).hexdigest()}
++            expected = published_features[current["id"]]
++            with np.load(expected["path"], allow_pickle=False) as retained:
++                reference_features = retained["onnx_features"]
++                reference_lengths = retained["onnx_lengths"]
++                same_shape = features.shape == reference_features.shape
++                same_lengths = np.array_equal(feature_lengths, reference_lengths)
++                close = same_shape and np.allclose(features, reference_features, atol=5e-4, rtol=1e-4, equal_nan=False)
++                current["published_frontend_binding"] = {
++                    "retained_pair_sha256": expected["sha256"], "equal_shape": same_shape,
++                    "equal_lengths": bool(same_lengths), "release_tolerance_pass": bool(close),
++                    "features_sha256_exact": hashlib.sha256(reference_features.tobytes()).hexdigest()
++                        == current["features"]["sha256"],
++                    "note": "Retained frontend-only pair used 1 ORT thread; this unchanged ASR contract uses 4"}
++                require(same_shape and same_lengths and close, "frontend differs from pinned published graph output")
+             return features, feature_lengths
+         def observed_decode(ids, indices, logprobs):
+             ids, indices, logprobs = list(ids), list(indices), list(logprobs)

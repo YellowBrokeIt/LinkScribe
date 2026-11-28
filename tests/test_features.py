@@ -128,7 +128,12 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     assert client.get(f"/api/library/{job_id}").status_code==404
 
 
-def test_unchanged_translation_keeps_original_library_and_exports_with_warning(client, monkeypatch):
+@pytest.mark.parametrize("failure, expected_warning", [
+    ("unchanged", "No separate Greek translation"),
+    ("unexpected_script", "unexpected writing system"),
+])
+def test_rejected_translation_keeps_original_library_and_exports_with_warning(
+        client, monkeypatch, failure, expected_warning):
     monkeypatch.setattr(module, "_download_source_audio", fake_audio)
     monkeypatch.setattr(module, "_recognize", fake_recognize)
     monkeypatch.setattr(module, "translate_segments", enhancements.translate_segments)
@@ -137,7 +142,9 @@ def test_unchanged_translation_keeps_original_library_and_exports_with_warning(c
 
     def unchanged_reply(payload):
         encoded = payload["messages"][1]["content"].split("JSON input: ", 1)[1]
-        return {"translations": [item["text"] for item in json.loads(encoded)]}
+        return {"translations": [item["text"] if failure == "unchanged"
+                                 else "Η اقتباس απαιτεί άδεια."
+                                 for item in json.loads(encoded)]}
 
     monkeypatch.setattr(enhancements, "_ollama", unchanged_reply)
     response = client.post("/api/link", data={"url": VALID_VIMEO, "mode": "audio",
@@ -146,10 +153,10 @@ def test_unchanged_translation_keeps_original_library_and_exports_with_warning(c
     job_id = response.json()["id"]
     job = client.get(f"/api/jobs/{job_id}").json()
     assert job["status"] == "done" and not job["extras"]["translation_language"]
-    assert any("No separate Greek translation" in warning for warning in job["warnings"])
+    assert any(expected_warning in warning for warning in job["warnings"])
     record = client.get(f"/api/library/{job_id}").json()
     assert record["translations"] == {} and record["segments"] == fake_recognize(None, None, None)[0]
-    assert any("unchanged" in warning for warning in record["processing_metadata"]["warnings"])
+    assert any(expected_warning in warning for warning in record["processing_metadata"]["warnings"])
     assert client.get(f"/api/jobs/{job_id}/download/translation_txt").status_code == 404
     archive = zipfile.ZipFile(io.BytesIO(client.get(f"/api/library/{job_id}/download/zip").content))
     assert not any(name.startswith("translation_") for name in archive.namelist())

@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T02:01:21.119313+00:00",
+  "reviewer": "independent package_verification agent; read-only review, no model execution",
+  "scope": "Six previously exposed translation development cases, English/Greek, unchanged original source and meaning criteria. No unused validation files accessed. Not production or broad language-quality approval.",
+  "major_error_rule_unchanged": "Any material omission, invention, role reversal, name substitution, quantity/relationship error, or changed condition blocks quality promotion.",
+  "classification_interpretation": {
+    "acceptable": "No material semantic error or notable fluency defect observed in the complete output for this case.",
+    "minor_issue": "Recoverable wording or grammar defect without a material change of the tested meaning.",
+    "major_error": "The unchanged original major-error rule applies; any such finding blocks quality promotion."
+  },
+  "criteria_timing": {
+    "source_criteria_bound_before_any_candidate_output": true,
+    "initial_source_binding": {
+      "captured_at": "2026-11-28T01:50:51.840118+00:00",
+      "plan_sha256": "acf6baec4561cbf8e8c3b43c2c7ff4877f458f3a9622214fa3eab7f7d88294cd",
+      "development_cases_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+      "source_criteria_snapshot_sha256": "817abe3be810e222bfe37b8ab87c154afcea3742676da67ba27caac3c3dbd17b",
+      "scope": "Same original six exposed translation development cases and original meaning/actor/number/negation criteria; no unused validation files accessed. Candidate outputs not inspected.",
+      "candidate_outputs_inspected": false
+    },
+    "setup_only_revision_binding": {
+      "captured_at": "2026-11-28T01:55:04.155675+00:00",
+      "previous_plan_sha256": "acf6baec4561cbf8e8c3b43c2c7ff4877f458f3a9622214fa3eab7f7d88294cd",
+      "current_plan_sha256": "0584e52a621a42974920f027ae4c47692364e3c0813943e6185d45732b9db932",
+      "development_cases_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+      "source_criteria_snapshot_sha256": "817abe3be810e222bfe37b8ab87c154afcea3742676da67ba27caac3c3dbd17b",
+      "revision_reason_reported_by_experiment_owner": "Native local import manifest path corrected to runtime manifests-v2/ollama.com after setup-only verifier failure; initial evidence preserved. No candidate answer generation had occurred.",
+      "criteria_or_source_change": false,
+      "candidate_outputs_inspected": false
+    },
+    "final_runtime_binding": {
+      "captured_at": "2026-11-28T01:55:43.862259+00:00",
+      "inference_freeze_sha256": "a72dd00e7759fdc92745e81018721313553bb9e31ce8aaef4875e4365203f57f",
+      "plan_sha256": "0584e52a621a42974920f027ae4c47692364e3c0813943e6185d45732b9db932",
+      "source_criteria_snapshot_sha256": "817abe3be810e222bfe37b8ab87c154afcea3742676da67ba27caac3c3dbd17b",
+      "candidate_outputs_inspected": false,
+      "unused_validation_accessed": false
+    },
+    "timing_clarification": "The independent final-runtime binding was recorded after the first request started but before its first output was inspected. The original source/criteria binding and the experiment owner’s final inference freeze preceded generation."
+  },
+  "artifact_hashes": {
+    "plan.json": "0584e52a621a42974920f027ae4c47692364e3c0813943e6185d45732b9db932",
+    "inference-freeze.json": "a72dd00e7759fdc92745e81018721313553bb9e31ce8aaef4875e4365203f57f",
+    "development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "enhancements-context4096.py": "819568e7dd6939ffc9b9eb91130109235b97fb1cfee6192838645dc4e34aa178",
+    "infer.json": "889509881f5f544cb49fbb192eb2f4070ce9340beea1049bde7eb20d202cbbeb",
+    "infer-resources.json": "e9001374bf432abee8dab6bcfb401920a6e3d2070d5cfc30fb6d27f8c8c84ede",
+    "request-metrics.json": "a4b893fa2afb8007b66e334321ed40a25e854e04b75c54996036be7b98c06f36"
+  },
+  "independent_snapshot_sha256": "817abe3be810e222bfe37b8ab87c154afcea3742676da67ba27caac3c3dbd17b",
+  "hash_semantics": {
+    "raw_response_utf8_sha256": "SHA256 of the exact retained response_json string encoded as UTF-8, not a claim about HTTP wire bytes.",
+    "final_content_utf8_sha256": "SHA256 of the exact final message content string encoded as UTF-8.",
+    "canonical_json": "UTF-8 JSON, ensure_ascii=False, sorted keys, separators comma/colon."
+  },
+  "counts": {
+    "cases": 6,
+    "acceptable": 5,
+    "minor_issue": 1,
+    "major_error": 0,
+    "mechanical_binding_pass": 6
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "classification": "minor_issue",
+      "major_error_observed": false,
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Distinguish the transcript text, the transcription process and the original audio recording.",
+        "Preserve that the text was saved but the original recording was not.",
+        "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+        "Maria may remain in Latin letters or be rendered naturally as Μαρία."
+      ],
+      "actual_translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Η Μαρία αποθηκεύσε το μεταγραφή ως αρχείο κειμένου· δεν αποθηκεύσε την αρχική καταγραφή.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Η μεταγραφή πήρε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Distinguish the transcript text, the transcription process and the original audio recording.",
+          "meaning_preserved": true,
+          "evidence": "The saved transcript text, completed transcription process and unsaved original recording remain distinct. The original recording uses the less audio-specific Greek καταγραφή, but the text does not conflate it with the saved transcript."
+        },
+        {
+          "criterion": "Preserve that the text was saved but the original recording was not.",
+          "meaning_preserved": true,
+          "evidence": "Both saving the text and not saving the original recording are retained."
+        },
+        {
+          "criterion": "Preserve that transcription is complete and translation has not started, rather than claiming that translation took 12 minutes.",
+          "meaning_preserved": true,
+          "evidence": "The 12-minute duration belongs to transcription. Translation into Greek explicitly has not started."
+        },
+        {
+          "criterion": "Maria may remain in Latin letters or be rendered naturally as Μαρία.",
+          "meaning_preserved": true,
+          "evidence": "Maria is naturally rendered Μαρία."
+        }
+      ],
+      "minor_issues": [
+        "Recoverable Greek grammar and accent errors: το μεταγραφή and αποθηκεύσε. The wording needs editing, but does not create a material change of actor, event, quantity, negation or chronology."
+      ],
+      "automatic_status_for_context_only": "pass",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-en-el-transcript-terminology.json",
+      "hashes": {
+        "report_sha256": "ff24f6cb47d96912277c5613da0a11a0d52747674b7609b0c1e5d0fd06ce76b9",
+        "raw_response_utf8_sha256": "ee0d2383822ca17a77c06685c2b4d9b2debeb63f163cc201bf4e49dc880ed5b8",
+        "final_content_utf8_sha256": "0a31dcfc7c2b60186ba19f029cb3a97c00339ee5ef5b5bf0affa5a5bcb73750e",
+        "request_canonical_json_sha256": "debd456747d8ccbb381d2514a243862ec35d697b0d13dc292dae595591304e06",
+        "parsed_translation_canonical_json_sha256": "ffbd0a5ec2c6698f238b8e3d8d53b0b72318e5d1cd0142ea51797fbefbeab3d6"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 129,
+      "actual_output_tokens": 74,
+      "inference_seconds": 11.92
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "classification": "acceptable",
+      "major_error_observed": false,
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+        "Nikos sent the text to Eleni; Elena was not the recipient.",
+        "Do not add an unnatural English article before a person's name.",
+        "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable."
+      ],
+      "actual_translation": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Nikos sent the text to Eleni, not Elena.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Eleni is the translator. Nikos does the recording and Elena checks the subtitles.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Keep Eleni and Elena as two distinct people and assign each the correct role.",
+          "meaning_preserved": true,
+          "evidence": "Eleni remains the translator and Elena the subtitle checker; Nikos makes the recording."
+        },
+        {
+          "criterion": "Nikos sent the text to Eleni; Elena was not the recipient.",
+          "meaning_preserved": true,
+          "evidence": "Nikos sent the text to Eleni, explicitly not Elena."
+        },
+        {
+          "criterion": "Do not add an unnatural English article before a person's name.",
+          "meaning_preserved": true,
+          "evidence": "No English article was inserted before the names."
+        },
+        {
+          "criterion": "Reasonable transliteration variants are acceptable if the people remain consistently distinguishable.",
+          "meaning_preserved": true,
+          "evidence": "Consistent transliterations keep all three people distinguishable."
+        }
+      ],
+      "minor_issues": [],
+      "automatic_status_for_context_only": "pass",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-el-en-people-and-roles.json",
+      "hashes": {
+        "report_sha256": "c8da1f9c85b73d620644c6d1fb11dc2314a4967894a59d947c0af483d15a5fff",
+        "raw_response_utf8_sha256": "5bb4eec262b90bd7fa41c3f32e2d71401fb6ba011392edf0b4d341b76778afd4",
+        "final_content_utf8_sha256": "af5a7c343ce07f6a40c9203681cc82319c4934250e741a0c0dfa9523f2fe90cd",
+        "request_canonical_json_sha256": "05da5256555fc1408ded4cabb15fd93a72b4782b570fba3c13e937077b79c884",
+        "parsed_translation_canonical_json_sha256": "51afc0f9a2093bcf726b3794c49669795b956aeb1a5465d283f4e67bb0e17ee1"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 158,
+      "actual_output_tokens": 48,
+      "inference_seconds": 11.088
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts",
+      "classification": "acceptable",
+      "major_error_observed": false,
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "The receipt shows €12.50 for 2 items. The separate transfer is 5,000 sats, not 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "The note mentions Bitcoin. It does not say that euros and sats are the same unit.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+        "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+        "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+        "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation."
+      ],
+      "actual_translation": [
+        {
+          "start": 1.0,
+          "end": 7.0,
+          "text": "Η απόδειξη δείχνει 12,50€ για 2 αντικείμενα. Η ξεχωριστή μεταφορά είναι 5.000 sats, όχι 500 sats.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.0,
+          "end": 12.0,
+          "text": "Η σημείωση αναφέρει Bitcoin. Δεν λέει ότι τα ευρώ και τα sats είναι η ίδια μονάδα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Preserve the values 12.50 euros, 2 items, 5000 sats and the explicitly rejected amount of 500 sats.",
+          "meaning_preserved": true,
+          "evidence": "The output preserves €12.50, 2 items, 5,000 sats and the explicitly rejected 500 sats."
+        },
+        {
+          "criterion": "Locale-appropriate rendering such as 12,50 and 5.000 is valid if the numerical values are unchanged; literal-number flags alone are not errors.",
+          "meaning_preserved": true,
+          "evidence": "12,50€ and 5.000 are valid Greek locale renderings, not numerical changes."
+        },
+        {
+          "criterion": "Keep the receipt and transfer separate and retain the statement that euros and sats are different units.",
+          "meaning_preserved": true,
+          "evidence": "The receipt and separate transfer remain separate, and the denial that euros and sats are the same unit is retained."
+        },
+        {
+          "criterion": "Translate the ordinary English prose into Greek while allowing Bitcoin, sats and displayed receipt labels to remain as technical notation.",
+          "meaning_preserved": true,
+          "evidence": "The ordinary prose is translated into Greek; Bitcoin and sats appropriately remain technical notation."
+        }
+      ],
+      "minor_issues": [],
+      "automatic_status_for_context_only": "review",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-en-el-bitcoin-amounts.json",
+      "hashes": {
+        "report_sha256": "ad92563cbcad6ea835344aee696a36e3b30860475430034c2162a10d2eef3985",
+        "raw_response_utf8_sha256": "5391e40cd567e483f8c816b417489c5867e8b69eb7eb74e1e3166380f00f7905",
+        "final_content_utf8_sha256": "710acecbd1a6552039d5552b1acecfb1f8807d9c7e0db715c47375a7fb32e958",
+        "request_canonical_json_sha256": "29fe130ee4279360cacd47f91c006de60d50b3dd3ed10b4123b5a53a4f388678",
+        "parsed_translation_canonical_json_sha256": "fa040d744e44331eb75fdfa2473f44256663e7f363affdbf0f7d9ebd95e6fac5"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 148,
+      "actual_output_tokens": 89,
+      "inference_seconds": 14.032
+    },
+    {
+      "id": "dev-el-en-negation-scope",
+      "classification": "acceptable",
+      "major_error_observed": false,
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "Δεν είπα ότι η Άννα πούλησε όλα τα βιβλία. Είπα ότι δεν πούλησε κανένα χθες.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Σήμερα μπορεί να πουλήσει ένα, αλλά αυτό δεν έχει αποφασιστεί.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+        "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+        "Today's possible sale remains undecided rather than certain or completed.",
+        "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation."
+      ],
+      "actual_translation": [
+        {
+          "start": 0.0,
+          "end": 7.5,
+          "text": "I didn't say that Anna sold all the books. I said that she didn't sell any yesterday.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 7.5,
+          "end": 12.5,
+          "text": "Today she might sell one, but that has not been decided.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Preserve both scopes: denial of having said 'sold all', and the positive report that she sold none yesterday.",
+          "meaning_preserved": true,
+          "evidence": "The output denies having said Anna sold all the books and reports that she sold none yesterday."
+        },
+        {
+          "criterion": "Do not turn 'did not sell any' into 'did not sell all', which allows some sales.",
+          "meaning_preserved": true,
+          "evidence": "Did not sell any retains the zero-sales meaning, without weakening it to not all."
+        },
+        {
+          "criterion": "Today's possible sale remains undecided rather than certain or completed.",
+          "meaning_preserved": true,
+          "evidence": "Today she might sell one; the decision explicitly remains unresolved."
+        },
+        {
+          "criterion": "Judge complete propositions; merely retaining a token such as 'not' does not establish correct negation.",
+          "meaning_preserved": true,
+          "evidence": "The complete propositions and their scopes are preserved, including Anna as the actor."
+        }
+      ],
+      "minor_issues": [],
+      "automatic_status_for_context_only": "pass",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-el-en-negation-scope.json",
+      "hashes": {
+        "report_sha256": "0a745c6aee1db1fdd1d17fbf8139c170f49ca6f725f34dbd015674c430e346cf",
+        "raw_response_utf8_sha256": "c8f2b6148d43ea22c9c9406ea3e18bd2cce4a4602d9f56897d24ba514ca74266",
+        "final_content_utf8_sha256": "709dbf5267e534c90aa33af3402d88be7bb12a43007dd97419c214708908edd8",
+        "request_canonical_json_sha256": "b2915b9b743deb293e896e5c63932d78639c5341ce6300d1f5bdb84e32ca8f46",
+        "parsed_translation_canonical_json_sha256": "9c3f534a14a91fda25c3f3cc41d764602c328c7382d6c040a1f9f4a5546d8166"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 149,
+      "actual_output_tokens": 55,
+      "inference_seconds": 10.968
+    },
+    {
+      "id": "dev-en-el-conditional-publication",
+      "classification": "acceptable",
+      "major_error_observed": false,
+      "source_language": "en",
+      "target_language": "el",
+      "source_segments": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Anna will publish the video only if Giannis approves the text.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "If Giannis does not answer by Friday, Anna will wait until Monday.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Giannis approves and Anna publishes; do not reverse their roles.",
+        "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+        "The no-answer condition concerns Giannis, not Anna.",
+        "Retain Friday as the response deadline and Monday as the end of the waiting period."
+      ],
+      "actual_translation": [
+        {
+          "start": 2.0,
+          "end": 7.5,
+          "text": "Η Άννα θα δημοσιεύσει το βίντεο μόνο αν ο Γιάννης εγκρίνει το κείμενο.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 7.5,
+          "end": 13.5,
+          "text": "Αν ο Γιάννης δεν απαντήσει μέχρι την Παρασκευή, η Άννα θα περιμένει μέχρι τη Δευτέρα.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Giannis approves and Anna publishes; do not reverse their roles.",
+          "meaning_preserved": true,
+          "evidence": "Giannis approves the text and Anna publishes the video."
+        },
+        {
+          "criterion": "Approval is a necessary condition: retain 'only if', not merely a possible reason for publication.",
+          "meaning_preserved": true,
+          "evidence": "Only if is retained as μόνο αν, preserving approval as a necessary condition."
+        },
+        {
+          "criterion": "The no-answer condition concerns Giannis, not Anna.",
+          "meaning_preserved": true,
+          "evidence": "The no-answer condition concerns Giannis."
+        },
+        {
+          "criterion": "Retain Friday as the response deadline and Monday as the end of the waiting period.",
+          "meaning_preserved": true,
+          "evidence": "Friday remains the response deadline and Monday the end of Anna’s waiting period."
+        }
+      ],
+      "minor_issues": [],
+      "automatic_status_for_context_only": "pass",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-en-el-conditional-publication.json",
+      "hashes": {
+        "report_sha256": "009e6cb09ad91dbf415324fe582f73a58705f85c28b68c9c1bb4d68694a59cbb",
+        "raw_response_utf8_sha256": "1efd18c9bf7bed4560836718ff71f8a5b4cb17d75ef50cdf7aa5e94a6f22fd3c",
+        "final_content_utf8_sha256": "6f465fe5bfd14925aeefd92df937ecc5d44fe21682b659558191c1f660cd37df",
+        "request_canonical_json_sha256": "26703e982bbd08f5e81455506b6749f9864016bbaed45c7bdb8fe3489710e812",
+        "parsed_translation_canonical_json_sha256": "7f67d0a77af61631261cd66db7c196bb3a2dedf1206f31bb5bc4592a7bf1ef4e"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 125,
+      "actual_output_tokens": 82,
+      "inference_seconds": 13.114
+    },
+    {
+      "id": "dev-el-en-uncertain-question",
+      "classification": "acceptable",
+      "major_error_observed": false,
+      "source_language": "el",
+      "target_language": "en",
+      "source_segments": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Η Μαρία ρώτησε: «Το αρχείο έχει 12 κεφάλαια ή 21;»",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "Δεν γνωρίζουμε ακόμη την απάντηση. Ο τίτλος μόνος του δεν αρκεί για να το διαπιστώσουμε.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "unchanged_review_criteria": [
+        "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+        "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+        "Do not invent an answer or convert the question into a factual statement."
+      ],
+      "actual_translation": [
+        {
+          "start": 0.25,
+          "end": 5.0,
+          "text": "Maria asked: \"Does the file have 12 chapters or 21?\"",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 9.5,
+          "text": "We do not yet know the answer. The title alone is not enough to determine it.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "criterion_review": [
+        {
+          "criterion": "Keep the first sentence as a quoted question with two alternatives; do not choose a count.",
+          "meaning_preserved": true,
+          "evidence": "The output retains Maria’s quoted question and both alternatives, 12 or 21 chapters, without choosing one."
+        },
+        {
+          "criterion": "Retain the explicit uncertainty and the insufficiency of the title as evidence.",
+          "meaning_preserved": true,
+          "evidence": "The answer is explicitly still unknown, and the title alone remains insufficient evidence."
+        },
+        {
+          "criterion": "Do not invent an answer or convert the question into a factual statement.",
+          "meaning_preserved": true,
+          "evidence": "No answer or factual chapter count is invented."
+        }
+      ],
+      "minor_issues": [],
+      "automatic_status_for_context_only": "pass",
+      "report_path": "/workspace/scratch/94360995dd61/LinkScribe/docs/gemma4-screen-2026-11-28/dev-el-en-uncertain-question.json",
+      "hashes": {
+        "report_sha256": "212b2ce1722dacfa7b57c8cde78891eae8655ee9851a1ee12c8516fb0af95df8",
+        "raw_response_utf8_sha256": "411359f57fb285e5015f22d9e3dbdc1f9dcf230baaeb0766f3f3d3345abbfce9",
+        "final_content_utf8_sha256": "01fe95555ce535758011ad89f352e193210f18c7daacc4b6bddeb291b3bfe294",
+        "request_canonical_json_sha256": "717c3fa64b77c9752d2367e22a8ffc98608111bac0993e01e433ffd39e259d1f",
+        "parsed_translation_canonical_json_sha256": "0651c4218846aed98be1ad7f6c3f0e024d5ae6ce03ee8361309962aadce87918"
+      },
+      "mechanical_checks": {
+        "exact_source_and_criteria": true,
+        "one_inference_one_unload": true,
+        "complete_source_request": true,
+        "declared_options": true,
+        "normal_stop_strictly_below_cap": true,
+        "no_reasoning_content": true,
+        "parsed_output_exactly_matches_saved_report": true,
+        "segment_metadata_unchanged": true,
+        "actual_native_prompt_count_matches_preflight": true,
+        "same_native_model_digest": true,
+        "execution_checks_consistent": true
+      },
+      "actual_prompt_tokens": 154,
+      "actual_output_tokens": 55,
+      "inference_seconds": 11.46
+    }
+  ],
+  "resource_scope": {
+    "evidence_file": "infer-resources.json",
+    "execution_seconds": 82.22,
+    "sample_count": 385,
+    "sample_interval_seconds": 0.2,
+    "peak_concurrent_process_tree_rss_mib": 5799.3,
+    "peak_concurrent_process_tree_pss_mib": 5790.4,
+    "peak_rss_bytes": 6080995328,
+    "peak_pss_bytes": 6071714816,
+    "limit_mib": 6144,
+    "reported_rss_margin_mib": 344.7,
+    "worker_exit_code": 0,
+    "owned_daemon_and_process_group_stopped": true,
+    "host_global_oom_kill_delta": 0,
+    "cgroup_oom_counters_available": false,
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "whole_machine_or_long_context_approval": false
+  },
+  "conclusion": "No major semantic failure was observed in these six exposed development cases. Five are acceptable; the terminology case retains all tested meanings but has minor Greek grammar/precision defects. This supports considering a separately frozen next evaluation stage only. It does not establish heldout performance, whole-app memory suitability, long-input completeness, summary quality, or production approval."
+}

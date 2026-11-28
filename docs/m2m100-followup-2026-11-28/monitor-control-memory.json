@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "phase": "convert",
+  "started_at": "2026-11-28T01:27:41.235827+00:00",
+  "complete": false,
+  "passed": false,
+  "semantic_quality": "unreviewed",
+  "events": [],
+  "limits": {
+    "process_budget_mib": 128,
+    "phase_seconds": 10,
+    "initialization_seconds": 10,
+    "case_seconds": 10
+  },
+  "control_only": true,
+  "model_inference_calls": 0,
+  "host_observation": {
+    "total_mib": 9967.3,
+    "minimum_available_mib": 7948.9,
+    "scope": "Uncontrolled host observation; unrelated activity can affect it."
+  },
+  "memory": {
+    "sample_count": 3,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "scope": "Concurrent monitor process tree, including its owned native worker and descendants, deduplicated by PID.",
+    "excluded": "Operating system, browser, unrelated processes and filesystem cache outside process residency; not whole-machine approval.",
+    "rss_interpretation": "Concurrent summed RSS may double-count shared pages.",
+    "pss_interpretation": "PSS apportions shared memory and is available only for complete readable samples.",
+    "sampling_limit": "Sequential process scans at 0.2-second intervals may miss transient peaks.",
+    "peak_rss_sample": {
+      "at_seconds": 0.403,
+      "processes": [
+        {
+          "pid": 5,
+          "name": "python3",
+          "rss_bytes": 15732736,
+          "pss_bytes": 12042240
+        },
+        {
+          "pid": 8,
+          "name": "python3",
+          "rss_bytes": 172683264,
+          "pss_bytes": 170419200
+        }
+      ],
+      "rss_bytes": 188416000,
+      "pss_bytes": 182461440
+    },
+    "peak_pss_sample": {
+      "at_seconds": 0.403,
+      "processes": [
+        {
+          "pid": 5,
+          "name": "python3",
+          "rss_bytes": 15732736,
+          "pss_bytes": 12042240
+        },
+        {
+          "pid": 8,
+          "name": "python3",
+          "rss_bytes": 172683264,
+          "pss_bytes": 170419200
+        }
+      ],
+      "rss_bytes": 188416000,
+      "pss_bytes": 182461440
+    },
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 179.7,
+    "peak_combined_pss_mib": 174.0
+  },
+  "stop_reason": "process_memory_budget_exceeded",
+  "worker_exit_code": -15,
+  "owned_process_group_stopped": true,
+  "oom_counters": {
+    "before": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 5."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "after": {
+      "files": {
+        "/proc/vmstat": {
+          "scope": "host_global",
+          "counters": {
+            "oom_kill": 0
+          }
+        }
+      },
+      "unavailable": [
+        "No resolvable cgroup-v2 event files for PID 5."
+      ],
+      "interpretation": "Counters belong to the indicated host/cgroup scope. A change alone cannot attribute a kill to this run; missing counters do not prove zero OOM events."
+    },
+    "deltas": {
+      "/proc/vmstat": {
+        "scope": "host_global",
+        "counters": {
+          "oom_kill": 0
+        },
+        "counter_reset_or_scope_change": false
+      }
+    }
+  },
+  "elapsed_seconds": 0.409,
+  "finished_at": "2026-11-28T01:27:41.644696+00:00"
+}
