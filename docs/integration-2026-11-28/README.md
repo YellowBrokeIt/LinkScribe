@@ -82,3 +82,28 @@ The [follow-up local verification](followup-local.json) records **678 tests and
 source hashes. It includes the aligned-ASR regression checker and its negative
 controls. Those controlled checker tests do not stand in for the pending actual
 full-recording inference or Chromium run.
+
+## First hosted follow-up: `79189b0`
+
+The [exact-commit first-run record](hosted-79189b0-first-run.json) preserves five
+hosted suites each passing **678 tests and 32 subtests**, fresh checkout and
+actual ZIP installation, and actual Tiny upload/storage/exports. The ordinary
+ZIP requirements installed `curl-cffi` without an extra QA-only dependency.
+
+Chromium passed **33/34 checks**, including highlights after editing, the real
+in-flight-save case, and a backup containing nonnull highlights. The pending-open
+case captured the title input while the first editor was still hidden and empty.
+After the delayed second open, the application retained the correct original
+title and displayed the expected preservation message, but the test compared
+that title to its prematurely captured empty value. Its later persistence checks
+were not reached. The follow-up waits for the original editor and its unique
+title before recording the baseline; it removes no acceptance assertion.
+
+The full Dailymotion request now failed acquisition with **“No video formats
+found!”**, before any speech recognition. Consequently the new tail checker
+failed closed on missing evidence. This does not establish that the aligned
+decoder preserved or removed the late dialogue. Exact silence and actual white
+noise passed. The additional YouTube source reported unavailable content; Vimeo
+again returned HTTP401. All provider failures remain failures. A separately
+identified official-source comparison is being investigated, without treating
+it as a successful download from the original provider.

@@ -606,6 +606,8 @@ def run(args) -> int:
                     has_text="Edited owned fixture — English and Ελληνικά")
                 expect(fixture_row).to_have_count(1)
                 fixture_row.get_by_role("button", name="Open / edit", exact=True).click()
+                expect(page.locator("#editor")).to_be_visible()
+                expect(page.locator("#edit-title")).to_have_value("Edited owned fixture — English and Ελληνικά")
                 old_title = page.locator("#edit-title").input_value()
                 first = page.get_by_label("Text of segment 1", exact=True)
                 newer = first.input_value() + " Keep this edit made while opening another transcript."
