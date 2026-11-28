@@ -12,7 +12,7 @@ import math
 import re
 import zipfile
 import zlib
-from typing import Any
+from typing import Any, BinaryIO
 
 import library
 from source_highlights import validate_highlights
@@ -28,6 +28,10 @@ HEX_ID = re.compile(r"[a-f0-9]{32}\Z")
 
 class BackupError(ValueError):
     """Validation error suitable for an HTTP 400 response."""
+
+
+class BackupTooLarge(BackupError):
+    """Compressed archive exceeds the supported upload size."""
 
 
 def _encode(value: Any) -> bytes:
@@ -198,8 +202,19 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
     """Validate *all* rows before inserting. Skip existing IDs; never overwrite."""
     if not archive_bytes or len(archive_bytes) > MAX_ARCHIVE_BYTES:
         raise BackupError("Backup ZIP must be 50 MB or smaller.")
+    return restore_backup_file(io.BytesIO(archive_bytes))
+
+
+def restore_backup_file(archive_file: BinaryIO) -> dict[str, int]:
+    """Restore a seekable binary archive without copying or closing the input."""
     try:
-        with zipfile.ZipFile(io.BytesIO(archive_bytes)) as archive:
+        size = archive_file.seek(0, io.SEEK_END)
+        if size > MAX_ARCHIVE_BYTES:
+            raise BackupTooLarge("Backup ZIP must be 50 MB or smaller.")
+        if not size:
+            raise BackupError("Backup ZIP must be 50 MB or smaller.")
+        archive_file.seek(0)
+        with zipfile.ZipFile(archive_file) as archive:
             files = archive.infolist()
             if (len(files) != 2 or {x.filename for x in files} != {"manifest.json", "transcripts.json"}
                     or any(x.is_dir() or x.flag_bits & 1 for x in files)):

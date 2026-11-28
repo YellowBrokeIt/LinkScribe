@@ -1211,19 +1211,18 @@ def export_library_backup():
 
 
 @app.post("/api/library/restore")
-async def import_library_backup(request: Request, file: UploadFile = File(...)):
-    _check_browser_origin(request)
-    buffer = bytearray()
+def import_library_backup(request: Request, file: UploadFile = File(...)):
+    # Multipart parsing has already spooled the upload. Read that seekable file
+    # directly in FastAPI's worker thread, not on the browser/API event loop.
     try:
-        while chunk := await file.read(1024 * 1024):
-            buffer.extend(chunk)
-            if len(buffer) > library_backup.MAX_ARCHIVE_BYTES:
-                raise HTTPException(413, "Backup upload exceeds the 50 MB limit.")
-        return {"ok": True, **library_backup.restore_backup(bytes(buffer))}
+        _check_browser_origin(request)
+        return {"ok": True, **library_backup.restore_backup_file(file.file)}
+    except library_backup.BackupTooLarge:
+        raise HTTPException(413, "Backup upload exceeds the 50 MB limit.") from None
     except library_backup.BackupError as exc:
         raise HTTPException(400, str(exc)) from None
     finally:
-        await file.close()
+        file.file.close()
 
 
 @app.get("/api/library/{item_id}")
