@@ -169,6 +169,32 @@ def get(identifier: str) -> dict[str, Any] | None:
     return _row(row) if row else None
 
 
+def get_processing_warnings(identifiers: list[str]) -> dict[str, list[str]]:
+    """Read saved warnings without loading transcript text or rebuilding exports."""
+    identifiers = list(dict.fromkeys(identifier for identifier in identifiers if identifier))
+    if not identifiers:
+        return {}
+    result = {}
+    connection = _connect()
+    try:
+        # Recent batch history can contain up to 1,000 items; keep each query
+        # below the parameter limit of older supported SQLite builds.
+        for offset in range(0, len(identifiers), 500):
+            selected = identifiers[offset:offset + 500]
+            rows = connection.execute(
+                "SELECT id,processing_metadata FROM transcripts WHERE id IN (" +
+                ",".join("?" for _ in selected) + ")", selected).fetchall()
+            for row in rows:
+                metadata = json.loads(row["processing_metadata"] or "{}")
+                warnings = metadata.get("warnings", []) if isinstance(metadata, dict) else []
+                result[row["id"]] = list(dict.fromkeys(
+                    warning for warning in warnings if isinstance(warning, str) and warning.strip()
+                )) if isinstance(warnings, list) else []
+    finally:
+        connection.close()
+    return result
+
+
 def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
     limit = min(max(int(limit), 1), 100)
     with _connect() as connection:

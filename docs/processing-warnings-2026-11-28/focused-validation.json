@@ -1,0 +1,96 @@
+{
+  "created_at": "2026-11-28T04:15:43.101746+00:00",
+  "scope": "Controlled API/SQLite/export persistence tests and syntax checks; local browser startup unavailable; no model or live-provider calls.",
+  "baseline_commit": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_processing_warnings.py",
+    "tests/test_batch_recovery_regressions.py",
+    "tests/test_features.py"
+  ],
+  "working_directory": "/workspace/scratch/94360995dd61/LinkScribe",
+  "exit_code": 0,
+  "passed": 42,
+  "seconds": 1.54,
+  "source_files": {
+    "app.py": {
+      "sha256": "0840ee8cd72898b6fd61831888ee4932d3a3892070660ed76174f1700c8f9044",
+      "bytes": 61682
+    },
+    "library.py": {
+      "sha256": "a9c9984da6fb43d0db544a4e30e588c5ad15c0be1074766af574ab5da57312e4",
+      "bytes": 11548
+    },
+    "static/index.html": {
+      "sha256": "7cbb236df66089ac3c09a5d46ec2ce823589f07a985a28ba77c6ef27d766519b",
+      "bytes": 48987
+    },
+    "tests/test_processing_warnings.py": {
+      "sha256": "f4e7abcc9f3424dbd0c1e1d996ba95262d9e66c7cd4ffc9d377f426549d8a37d",
+      "bytes": 7006
+    },
+    "tests/smoke_browser.py": {
+      "sha256": "b2b0edc049cad777b6e687dae9a156bee3a2351532a3764495f9144344fe6c45",
+      "bytes": 50861
+    }
+  },
+  "syntax_checks": {
+    "python_files": [
+      "app.py",
+      "library.py",
+      "tests/test_processing_warnings.py",
+      "tests/smoke_browser.py"
+    ],
+    "inline_javascript": "node --check passed"
+  },
+  "api_scope": {
+    "controlled_batch_items": 20,
+    "completed": 20,
+    "fatal_source_failures": 1,
+    "completed_items_with_warnings": 2,
+    "original_saved_transcripts": 19,
+    "expiry_and_new_lifespan": true,
+    "fresh_python_process": true,
+    "no_repeated_source_work": true,
+    "full_transcripts_and_exports_not_loaded_during_warning_polling": true
+  },
+  "browser": {
+    "command": [
+      "python",
+      "tests/smoke_browser.py",
+      "--asr",
+      "stub",
+      "--scope",
+      "processing-warnings",
+      "--browser-executable",
+      "/usr/bin/chromium",
+      "--output",
+      "/workspace/scratch/94360995dd61/processing-warnings-browser-2026-11-28"
+    ],
+    "result": "startup failure; zero browser checks executed",
+    "exact_cause": "/usr/bin/chromium wrapper exists but /usr/lib/chromium/chromium is absent",
+    "asr_executed": false,
+    "speech_fixture_created": false,
+    "downloads_attempted": false,
+    "preserved_report": "initial-browser-startup-failure/browser-report.json",
+    "next_validation": "Ordinary hosted Chromium must exercise the new warning case; no local UI pass is claimed."
+  },
+  "diff_check": {
+    "exit_code": 0,
+    "scope": [
+      "app.py",
+      "library.py",
+      "static/index.html",
+      "tests/smoke_browser.py",
+      "tests/test_processing_warnings.py"
+    ]
+  },
+  "post_review_browser_harness": {
+    "record": "browser-review-correction.json",
+    "sha256": "1518ea9f62bb3175b8dd808b9986795c02eda563447cb9798582a89e62cff558",
+    "scope": "Two browser-state synchronization assertions added after the recorded tests/startup attempt; Python syntax rechecked. Production/API-test sources and 42-test result unchanged."
+  }
+}

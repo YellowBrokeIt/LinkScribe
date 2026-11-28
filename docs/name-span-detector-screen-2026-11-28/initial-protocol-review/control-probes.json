@@ -1,0 +1,47 @@
+{
+  "created_at": "2026-11-28T04:03:13.803539+00:00",
+  "passed": true,
+  "model_imports": 0,
+  "detector_calls": 0,
+  "translation_calls": 0,
+  "results": [
+    {
+      "control": "normal",
+      "report": "control-normal.json",
+      "sha256": "108a2084a5b3c0974bf4aff2319f8c035b47bf3b2ca917f7cf6d6f35c7476f98",
+      "passed": true,
+      "observed_stop_reason": null
+    },
+    {
+      "control": "deadline",
+      "report": "control-deadline.json",
+      "sha256": "e5be6f792c884440d4ebd667a0b74a0ece8c3473d5f4f6aa5567377d056136da",
+      "passed": true,
+      "observed_stop_reason": "aggregate_time_limit"
+    },
+    {
+      "control": "memory",
+      "report": "control-memory.json",
+      "sha256": "e2d9d297887548e9bb8e67addc1b34fb5812bf170311ef2b2f747d24e1d1d390",
+      "passed": true,
+      "observed_stop_reason": "process_tree_memory_limit"
+    },
+    {
+      "control": "span_integrity",
+      "report": "span-control-probes.json",
+      "sha256": "c98f35a80644690e47f7d4c59bc871569ef981452195b6d4acae0414bea8a9b9",
+      "passed": true,
+      "checks": 7
+    }
+  ],
+  "initial_harness_issue": {
+    "script": "verify_controls.py",
+    "sha256": "05ea195cba0a49ba629c115491b04b1d16425e8a05233cf7f4a9eb397188207f",
+    "completed_resource_controls": 3,
+    "span_probe_attempt_error": "ModuleNotFoundError: No module named 'regex'",
+    "cause": "Combined harness was launched with the base observer interpreter, which lacks regex. The already-declared M2M interpreter has regex; the detector worker uses that interpreter.",
+    "resolution": "Retained all three completed resource controls without rerunning; ran only the seven synthetic span checks using the declared existing interpreter. No package, model, native detector profile, input or criterion changed."
+  },
+  "observer_sha256": "1d2bede2325d21f0b318aa5c50da293f5828cdad3e13a1cb0c246b514c5d24f6",
+  "worker_sha256": "d20d3b4a974fa8450463fde6716080b1e551ed05247952e79b01d0bfc3bb5b5a"
+}

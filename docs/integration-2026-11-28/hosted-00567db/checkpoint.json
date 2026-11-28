@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "commit": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+  "tree": "76baf84793ef4ebcc72fbd87c85c96a5ba48e9c4",
+  "observed_at": "2026-11-28T04:20:39.033162+00:00",
+  "status": "all_ordinary_application_workflows_passed; all_six_live_provider_acquisitions_failed",
+  "runs": [
+    {
+      "id": 46106008929,
+      "name": "LinkScribe tests",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106008929",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:52Z",
+      "updated_at": "2026-11-28T04:08:49Z"
+    },
+    {
+      "id": 46106004225,
+      "name": "LinkScribe candidate artifacts",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004225",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:48Z",
+      "updated_at": "2026-11-28T04:07:34Z"
+    },
+    {
+      "id": 46106004237,
+      "name": "Independent LinkScribe QA",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004237",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:48Z",
+      "updated_at": "2026-11-28T04:16:18Z"
+    },
+    {
+      "id": 46106004196,
+      "name": "LinkScribe tests",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004196",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:48Z",
+      "updated_at": "2026-11-28T04:08:15Z"
+    },
+    {
+      "id": 46106004215,
+      "name": "LinkScribe browser QA",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004215",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:48Z",
+      "updated_at": "2026-11-28T04:09:00Z"
+    },
+    {
+      "id": 46106004205,
+      "name": "LinkScribe live source QA",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004205",
+      "head_sha": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+      "created_at": "2026-11-28T04:06:48Z",
+      "updated_at": "2026-11-28T04:09:45Z"
+    }
+  ],
+  "verification": {
+    "linux_and_python311_and_python313": {
+      "passed": 753,
+      "subtests_passed": 54
+    },
+    "windows_and_macos": {
+      "passed": 749,
+      "subtests_passed": 54,
+      "skipped": 4,
+      "skip_scope": "Two Qwen and two large-v3 Linux-only owned-process-group harness controls."
+    },
+    "browser": {
+      "passed": 34,
+      "page_errors": 0,
+      "report": "browser-report.json",
+      "artifact_id": 15248025402,
+      "artifact_sha256": "e0368f555468d91cd8be364241f64a10b33f94b5a42a3c70ffdb55f8c428d20a"
+    },
+    "installation": {
+      "actual_candidate_archive_checks_passed": 6,
+      "report": "installation.json",
+      "artifact_id": 15247966089,
+      "artifact_sha256": "c9b2ea717e0bd511d4e09b1b8d96b330915165e84b11f0470798db14898e8b9b"
+    },
+    "actual_upload": {
+      "job_id": 140858991161,
+      "status": "pass",
+      "evidence": "REAL END-TO-END INPUT FILE -> PyAV -> Whisper tiny -> SQLite -> exports: PASS"
+    },
+    "providers": {
+      "successful_acquisitions": 0,
+      "failed_acquisitions": 6,
+      "reports": [
+        "provider-followups.json",
+        "live-sources.json"
+      ],
+      "source_identities_match_commit": true,
+      "non_speech": {
+        "exact_zero": "pass before model inference",
+        "white_noise": "pass after actual Small inference"
+      },
+      "tail": "not exercised; Dailymotion acquisition failed",
+      "artifacts": [
+        {
+          "id": 15247946412,
+          "sha256": "053e2122cd9e5a51afb5b76ef9f987f6b80654979e2592991880c851d5cd3ffe"
+        },
+        {
+          "id": 15247686870,
+          "sha256": "5a02c2ef18121b376bf27de361faef8c9f5e4ca9825ce4d83baa72c8eddb5a99"
+        }
+      ]
+    },
+    "ollama": {
+      "job_id": 140858991195,
+      "status": "success",
+      "cases_completed": 12,
+      "automatic_counts": {
+        "pass": 5,
+        "review": 7,
+        "error": 0
+      },
+      "meaning": "unreviewed; not approved",
+      "artifact_id": 15247792250,
+      "artifact_sha256": "2a0caee7b7941ab5f82f477e355f414dd4c6ae9ac848931f6491f6c87c76ea6b",
+      "reports": [
+        "language-integration.json",
+        "language-translation-evaluation.json"
+      ]
+    }
+  },
+  "limitations": [
+    "These results verify this exact commit only, not later working-tree edits.",
+    "Provider access, speech/translation/summary meaning and whole-machine/long-recording resource gates remain open.",
+    "Version remains 0.3.0; no merge, tag or release."
+  ],
+  "independent_jobs": [
+    {
+      "id": 140858775426,
+      "name": "API and regressions / Python 3.13",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 140858775433,
+      "name": "Fresh Linux installation and health endpoint",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 140858775457,
+      "name": "API and regressions / Python 3.11",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 140858991161,
+      "name": "Real file upload / PyAV / Whisper / SQLite / exports",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 140858991195,
+      "name": "Real local Ollama / English-Greek / summaries / exports",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "retained_reports": [
+    {
+      "path": "browser-report.json",
+      "bytes": 14529,
+      "sha256": "2cb08d9c90a6114a06c6f982795efc5802cc4183226a15a49ec1ec87c4579412"
+    },
+    {
+      "path": "dailymotion-tail-check.json",
+      "bytes": 5248,
+      "sha256": "d950d0672158687bf1522e5f32ef6be334ae457694a8d9a9d628a37aebf3b482"
+    },
+    {
+      "path": "installation.json",
+      "bytes": 1151,
+      "sha256": "08228a34877ac80d497679f2e40d89410460ed64b3f46eb57de16d74ce52e49d"
+    },
+    {
+      "path": "language-integration.json",
+      "bytes": 8926,
+      "sha256": "360e655960ad3c31eebbed1f0aed4a87a5af512b9d1bec6cb356b18c84acfc7d"
+    },
+    {
+      "path": "language-translation-evaluation.json",
+      "bytes": 200841,
+      "sha256": "3ebd190961df0e45e427c62226e906c8d1d4aba46f22ea13022e1a4ed59e5b37"
+    },
+    {
+      "path": "live-sources-events.jsonl",
+      "bytes": 16382,
+      "sha256": "eb8a3c73de6a070557cb2595fc953a95c846444126ae3018331ca073f850365d"
+    },
+    {
+      "path": "live-sources-server.log",
+      "bytes": 1510,
+      "sha256": "d2b78e049f42bc65ac37a1fb13c52d62c0c60ab0db443b7fb82404636894e5f3"
+    },
+    {
+      "path": "live-sources.json",
+      "bytes": 64063,
+      "sha256": "4a0c64a95c07df66858287513759b7065152aacb2bc50da97f6561aedb758f5d"
+    },
+    {
+      "path": "provider-followups-events.jsonl",
+      "bytes": 6897,
+      "sha256": "4065c1cbe4bd12706b02602cfd698809b5408e97e0811568c7b48a18557283f8"
+    },
+    {
+      "path": "provider-followups-server.log",
+      "bytes": 541,
+      "sha256": "3923e48ddac05a2030216b8553cfa0113832e29a327fd78925ba7c08ed8bb700"
+    },
+    {
+      "path": "provider-followups.json",
+      "bytes": 15647,
+      "sha256": "c8e39ec9401ec1088f3833052c57361099f66aa7fd18c5b07d3073667e518ee2"
+    },
+    {
+      "path": "upstream-downloader-check.json",
+      "bytes": 2632,
+      "sha256": "9d9ca280706286357b59c5051cc4c51f06c0a68968bbeb97bb468f5e3dfdab3c"
+    }
+  ]
+}

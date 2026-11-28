@@ -1,0 +1,395 @@
+diff --git a/app.py b/app.py
+index 9fac399..f4e1b75 100644
+--- a/app.py
++++ b/app.py
+@@ -1020,11 +1020,18 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
+ @app.get("/api/batches")
+ def list_saved_batches():
+     """Allow reconnecting to past batches after server restart."""
++    saved = batch_store.recent()
++    warnings = library.get_processing_warnings([
++        item["library_id"] for batch in saved for item in batch["jobs"]
++        if item["status"] == "done"
++    ])
+     return {"items": [{"id": batch["id"], "status": batch["status"],
+                        "total": len(batch["jobs"]),
+                        "completed": sum(j["status"] in {"done", "error"} for j in batch["jobs"]),
+-                       "failed": sum(j["status"] == "error" for j in batch["jobs"])}
+-                      for batch in batch_store.recent()]}
++                       "failed": sum(j["status"] == "error" for j in batch["jobs"]),
++                       "with_warnings": sum(j["status"] == "done" and bool(warnings.get(j["library_id"]))
++                                            for j in batch["jobs"])}
++                      for batch in saved]}
+ 
+ 
+ @app.get("/api/batches/{batch_id}")
+@@ -1042,14 +1049,25 @@ def batch_status(batch_id: str):
+                              "source": item["source"], "status": child.status if child else item["status"],
+                              "stage": child.stage if child else "Restored from disk",
+                              "error": child.error if child else item["error"],
+-                             "warnings": child.warnings if child else [],
++                             "warnings": list(child.warnings) if child else [],
+                              "library_id": child.library_id if child else item["library_id"]})
+-        return {"id": batch_id, "status": batch.status if batch else saved["status"],
+-                "stage": batch.stage if batch else "Saved batch",
+-                "total": len(children),
+-                "completed": sum(child["status"] in {"done", "error"} for child in children),
+-                "failed": sum(child["status"] == "error" for child in children),
+-                "jobs": children}
++        status = batch.status if batch else saved["status"]
++        stage = batch.stage if batch else "Saved batch"
++    # Completed-job objects expire and do not survive a process restart. Their
++    # saved transcript remains the durable source of processing warnings.
++    warnings = library.get_processing_warnings([
++        child["library_id"] for child in children if child["status"] == "done"
++    ])
++    for child in children:
++        child["warnings"] = list(dict.fromkeys(
++            child["warnings"] + warnings.get(child["library_id"], [])))
++    return {"id": batch_id, "status": status, "stage": stage,
++            "total": len(children),
++            "completed": sum(child["status"] in {"done", "error"} for child in children),
++            "failed": sum(child["status"] == "error" for child in children),
++            "with_warnings": sum(child["status"] == "done" and bool(child["warnings"])
++                                 for child in children),
++            "jobs": children}
+ 
+ 
+ @app.get("/api/batches/{batch_id}/download")
+diff --git a/library.py b/library.py
+index 83a9d30..c75a98c 100644
+--- a/library.py
++++ b/library.py
+@@ -169,6 +169,32 @@ def get(identifier: str) -> dict[str, Any] | None:
+     return _row(row) if row else None
+ 
+ 
++def get_processing_warnings(identifiers: list[str]) -> dict[str, list[str]]:
++    """Read saved warnings without loading transcript text or rebuilding exports."""
++    identifiers = list(dict.fromkeys(identifier for identifier in identifiers if identifier))
++    if not identifiers:
++        return {}
++    result = {}
++    connection = _connect()
++    try:
++        # Recent batch history can contain up to 1,000 items; keep each query
++        # below the parameter limit of older supported SQLite builds.
++        for offset in range(0, len(identifiers), 500):
++            selected = identifiers[offset:offset + 500]
++            rows = connection.execute(
++                "SELECT id,processing_metadata FROM transcripts WHERE id IN (" +
++                ",".join("?" for _ in selected) + ")", selected).fetchall()
++            for row in rows:
++                metadata = json.loads(row["processing_metadata"] or "{}")
++                warnings = metadata.get("warnings", []) if isinstance(metadata, dict) else []
++                result[row["id"]] = list(dict.fromkeys(
++                    warning for warning in warnings if isinstance(warning, str) and warning.strip()
++                )) if isinstance(warnings, list) else []
++    finally:
++        connection.close()
++    return result
++
++
+ def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
+     limit = min(max(int(limit), 1), 100)
+     with _connect() as connection:
+diff --git a/static/index.html b/static/index.html
+index 44e89e8..0623506 100644
+--- a/static/index.html
++++ b/static/index.html
+@@ -101,7 +101,7 @@
+     .library-item small {display:block; color:var(--muted); margin-top:6px; font-size:11px; overflow-wrap:anywhere}
+     .library-item button {flex-shrink:0}
+     .secondary-actions, .editor-actions {display:flex; flex-wrap:wrap; gap:12px; margin-top:13px; align-items:center}
+-    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap}
++    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap; overflow-wrap:anywhere}
+     .summary-result {border-top:1px solid var(--stroke); padding-top:14px; margin-top:16px; white-space:pre-wrap; color:var(--muted); line-height:1.7}
+     .highlights-result {border-top:1px solid var(--stroke);padding-top:16px;margin-top:18px;min-width:0}
+     .highlight-excerpt {border-left:3px solid var(--accent);padding:0 0 0 12px;margin:18px 0;min-width:0}
+@@ -109,6 +109,7 @@
+     .highlight-excerpt .copy {max-width:100%;white-space:normal}
+     .batch-list {display:grid; gap:9px; margin-top:15px}
+     .batch-item {display:flex; justify-content:space-between; gap:12px; border:1px solid #35445e; border-radius:10px; padding:12px; font-size:12px}
++    .batch-item > div {min-width:0; flex:1}
+     .batch-item strong {overflow-wrap:anywhere}
+     .batch-item small {display:block; color:var(--muted); margin-top:4px}
+     .editor-rows {display:grid; gap:10px; margin-top:17px}
+@@ -250,6 +251,7 @@
+       <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
+       <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving clears older translations, summaries and source highlights.</p>
+       <div class="downloads" id="editor-downloads"></div>
++      <div class="warnings" id="editor-warnings" hidden></div>
+       <button class="copy" id="editor-highlights" type="button">Create source highlights</button>
+       <p class="input-note" id="editor-highlights-note">Uses the saved transcript. Save your edits before creating highlights.</p>
+       <section class="highlights-result" id="editor-highlights-result" aria-label="Saved source highlights" hidden></section>
+@@ -325,6 +327,11 @@
+    if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
+  }
+  function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
++ function renderWarnings(target,warnings){
++   const lines=Array.isArray(warnings)?[...new Set(warnings.filter(w=>typeof w==="string"&&w.trim()))]:[];
++   target.hidden=!lines.length;
++   target.textContent=lines.length?"Processing warnings\n"+lines.join("\n"):"";
++ }
+  function sourceTime(value){const total=Math.floor(value);return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");}
+  function renderHighlights(target,highlights,onSource){
+    target.replaceChildren();target.hidden=!highlights;
+@@ -354,8 +361,7 @@
+    $("preview").textContent=job.preview||"(Empty preview)";
+    const details=job.extras||{};
+    renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language,highlights:details.highlights});
+-   $("result-warnings").hidden=!(job.warnings||[]).length;
+-   $("result-warnings").textContent=(job.warnings||[]).join("\n");
++   renderWarnings($("result-warnings"),job.warnings);
+    $("result-actions").replaceChildren();
+    if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
+    $("summary-result").hidden=true;$("summary-result").textContent="";
+@@ -385,13 +391,15 @@
+  }
+  function renderBatch(batch){
+    $("batch-results").hidden=false;
+-   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.stage}`;
++   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.with_warnings||0} completed with warnings · ${batch.stage}`;
+    const list=$("batch-list");list.replaceChildren();
+    for(const item of batch.jobs){
+      const row=document.createElement("div");row.className="batch-item";
+      const group=document.createElement("div");const name=document.createElement("strong");name.textContent=item.title;
+-     const meta=document.createElement("small");meta.textContent=`${item.status} · ${item.error||item.stage}`;
+-     group.append(name,meta);row.appendChild(group);
++     const warned=item.status==="done"&&(item.warnings||[]).length;
++     const meta=document.createElement("small");meta.textContent=`${warned?"Transcript saved with warnings":item.status} · ${item.error||item.stage}`;
++     const warnings=document.createElement("div");warnings.className="warnings";renderWarnings(warnings,item.warnings);
++     group.append(name,meta,warnings);row.appendChild(group);
+      if(item.library_id) addButton(row,"Open",()=>openEditor(item.library_id));
+      list.appendChild(row);
+    }
+@@ -465,7 +473,7 @@
+      if(!response.items.length){target.textContent="No previous batches yet.";return;}
+      for(const item of response.items.slice(0,20)){
+        const box=document.createElement("div");box.className="batch-item";
+-       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.status}`;
++       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.with_warnings||0} completed with warnings · ${item.status}`;
+        const button=addButton(box,"View",async()=>{
+          try{const batch=await api(`/api/batches/${encodeURIComponent(item.id)}`);renderBatch(batch);
+            if(batch.status==="working"||batch.status==="queued"){currentBatch=batch.id;trackBatch(batch.id);}
+@@ -539,6 +547,7 @@
+      $("editor-message").textContent="";
+      $("editor").hidden=false;
+      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
++     renderWarnings($("editor-warnings"),editing.processing_metadata?.warnings);
+      renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+      showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
+    }catch(e){if(session===editorSession)showStatus("Cannot open transcript",e.message,true,false);}
+@@ -556,6 +565,7 @@
+      editing=saved;
+      showEditorPage();
+      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
++     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
+      renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+      $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
+      if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
+@@ -577,6 +587,7 @@
+      if(tab==="library")loadLibrary();
+      if(!$("results").hidden && resultJob?.library_id===id){
+        await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
++         warnings:saved.processing_metadata?.warnings||[],
+          segments:saved.segments.length,
+          preview:saved.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
+          extras:{...resultJob.extras,summary:!!saved.summary,highlights:!!saved.highlights,
+@@ -585,9 +596,10 @@
+      }
+      if(!editing||editing.id!==id||session!==editorSession)return;
+      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
++     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
+      renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
+      if(revision!==editorRevision){
+-       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;
++       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;editing.processing_metadata=saved.processing_metadata;
+        $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
+        return;
+      }
+diff --git a/tests/smoke_browser.py b/tests/smoke_browser.py
+index 5cb5586..60f7395 100644
+--- a/tests/smoke_browser.py
++++ b/tests/smoke_browser.py
+@@ -9,6 +9,8 @@ provider acquisition is replaced with explicitly recorded owned caption fixtures
+ for link/batch UI mechanics. --asr stub is an explicit, weaker alternative; it
+ never claims real recognition. The actual HTTP routes, origin guard, queue,
+ SQLite, exports, backup validation and browser JavaScript remain in use.
++--scope processing-warnings runs only the owned-caption warning/restart case
++and JavaScript-error check; it creates no speech fixture and performs no ASR.
+ """
+ from __future__ import annotations
+ 
+@@ -83,8 +85,9 @@ def serve(data_root: Path, asr: str) -> None:
+     summary = {"summary": "Owned QA fixture summary; not model output.",
+                "key_points": ["Tests editor pagination and exports."],
+                "chapters": [{"start": 0, "title": "Owned QA fixture"}]}
+-    library.save(FIXTURE_ID, "owned-ui-fixture", "Owned editor fixture: 35 segments", "en",
+-                 "owned_ui_fixture", segments, translations, summary)
++    if library.get(FIXTURE_ID) is None:
++        library.save(FIXTURE_ID, "owned-ui-fixture", "Owned editor fixture: 35 segments", "en",
++                     "owned_ui_fixture", segments, translations, summary)
+     uvicorn.run(app.app, host="127.0.0.1", port=8765, log_level="warning")
+ 
+ 
+@@ -110,6 +113,7 @@ def run(args) -> int:
+     report = {
+         "schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(),
+         "complete": False, "result": "running", "asr_mode": args.asr,
++        "scope": args.scope,
+         "asr_executed_successfully": False,
+         "provider_acquisition": "controlled_owned_caption_fixtures",
+         "language_enhancement_failure": "deliberately_invalid_child_process_settings",
+@@ -135,15 +139,9 @@ def run(args) -> int:
+     data_root = Path(scratch.name)
+     audio_path = output / "owned-speech.wav"
+     log = (output / "server.log").open("w", encoding="utf-8")
+-    try:
+-        # Never displace another local application or weaken the fixed-port guard.
+-        with socket.socket() as probe:
+-            probe.bind(("127.0.0.1", 8765))
+-        report["speech_fixture"] = make_audio(audio_path)
+-        (output / "invalid.txt").write_text("Owned invalid media fixture.\n")
+-        (output / "empty.wav").write_bytes(b"")
+-        (output / "corrupt.wav").write_bytes(b"This is not a WAV file.")
+-        (output / "invalid-backup.zip").write_bytes(b"This is not a ZIP file.")
++
++    def start_server():
++        nonlocal server
+         command = [args.server_python or sys.executable, str(Path(__file__).resolve()),
+                    "--serve", str(data_root), "--asr", args.asr]
+         server = subprocess.Popen(command, cwd=data_root, stdout=log, stderr=subprocess.STDOUT,
+@@ -156,11 +154,22 @@ def run(args) -> int:
+             try:
+                 with opener.open(BASE_URL + "/health", timeout=1) as response:
+                     if response.status == 200:
+-                        break
++                        return
+             except OSError:
+                 time.sleep(0.1)
+-        else:
+-            raise TimeoutError("Isolated app did not become ready within 30 seconds.")
++        raise TimeoutError("Isolated app did not become ready within 30 seconds.")
++
++    try:
++        # Never displace another local application or weaken the fixed-port guard.
++        with socket.socket() as probe:
++            probe.bind(("127.0.0.1", 8765))
++        report["speech_fixture"] = (make_audio(audio_path) if args.scope == "all" else
++                                    {"created": False, "reason": "Owned captions only; no speech inference."})
++        (output / "invalid.txt").write_text("Owned invalid media fixture.\n")
++        (output / "empty.wav").write_bytes(b"")
++        (output / "corrupt.wav").write_bytes(b"This is not a WAV file.")
++        (output / "invalid-backup.zip").write_bytes(b"This is not a ZIP file.")
++        start_server()
+ 
+         with sync_playwright() as playwright:
+             launch = {"headless": True, "args": ["--no-sandbox", "--disable-dev-shm-usage"]}
+@@ -183,6 +192,9 @@ def run(args) -> int:
+                                               "viewport": page.viewport_size})
+ 
+             def check(name, action):
++                if args.scope == "processing-warnings" and name not in {
++                        "batch_processing_warnings_persist", "no_uncaught_javascript_errors"}:
++                    return
+                 started = time.monotonic()
+                 item = {"name": name, "status": "running"}
+                 report["checks"].append(item)
+@@ -464,6 +476,79 @@ def run(args) -> int:
+                 return {"provider": "controlled_owned_caption_fixtures", "archive_files": names}
+             check("batch_partial_failure_download_history", batch_partial_failure)
+ 
++            def batch_processing_warnings():
++                fresh("batch")
++                consent()
++                page.locator("#mode").select_option("captions")
++                page.locator("#summary").check()
++                page.locator("#target-language").select_option("el")
++                page.locator("#batch-urls").fill("\n".join(
++                    "https://www.youtube.com/watch?v=" + ident for ident in ("QaWarning01", "QaWarning02")))
++                with page.expect_response(lambda r: r.url.endswith("/api/batch") and r.request.method == "POST") as sent:
++                    page.locator("#submit").click()
++                assert sent.value.status == 200, sent.value.text()
++                batch_id = sent.value.json()["id"]
++                expect(page.locator("#status-title")).to_have_text("Batch complete", timeout=30000)
++                expect(page.locator("#batch-progress")).to_contain_text("2/2 completed · 0 failed · 2 completed with warnings")
++                rows = page.locator("#batch-list .batch-item")
++                expect(rows).to_have_count(2)
++                for row in rows.all():
++                    expect(row).to_contain_text("Transcript saved with warnings")
++                    expect(row.locator(".warnings")).to_contain_text("Translation:")
++                    expect(row.locator(".warnings")).to_contain_text("Summary:")
++                before = context.request.get(BASE_URL + "/api/batches/" + batch_id).json()
++                first_id = before["jobs"][0]["library_id"]
++                original = context.request.get(BASE_URL + "/api/library/" + first_id).json()
++                assert original["translations"] == {} and original["summary"] is None
++                rows.first.get_by_role("button", name="Open", exact=True).click()
++                expect(page.locator("#editor-warnings")).to_contain_text("Translation:")
++                expect(page.locator("#editor-warnings")).to_contain_text("Summary:")
++                assert not page.locator('#editor-downloads a[href*="translation_"]').count()
++                assert not page.locator('#editor-downloads a[href*="summary_"]').count()
++                expect(page.get_by_label("Text of segment 1", exact=True)).to_have_value(original["segments"][0]["text"])
++                shot("processing-warnings-desktop")
++                page.set_viewport_size({"width": 320, "height": 700})
++                sizes = layout_sizes()
++                assert sizes["document"] <= sizes["viewport"], sizes
++                shot("processing-warnings-mobile")
++                page.set_viewport_size({"width": 1440, "height": 1000})
++
++                # A new app process has no previous Job/Batch objects. It must
++                # obtain completed warnings from the same durable SQLite store.
++                first_pid = server.pid
++                server.terminate()
++                server.wait(timeout=10)
++                start_server()
++                assert server.pid != first_pid
++                fresh("library")
++                saved_batch = page.locator("#saved-batches .batch-item").filter(has_text="2 completed with warnings")
++                expect(saved_batch).to_have_count(1)
++                saved_batch.get_by_role("button", name="View", exact=True).click()
++                expect(page.locator("#batch-progress")).to_contain_text("2/2 completed · 0 failed · 2 completed with warnings")
++                expect(page.locator("#batch-list .warnings").first).to_contain_text("Translation:")
++                after = context.request.get(BASE_URL + "/api/batches/" + batch_id).json()
++                assert [item["warnings"] for item in after["jobs"]] == [item["warnings"] for item in before["jobs"]]
++                assert context.request.get(BASE_URL + "/api/library/" + first_id).json() == original
++                page.locator("#batch-list .batch-item").first.get_by_role("button", name="Open", exact=True).click()
++                expect(page.locator("#editor-warnings")).to_contain_text("Summary:")
++                shot("processing-warnings-after-restart")
++                page.locator("#editor-close").click()
++                clean_record = page.locator("#library-items .library-item").filter(has_text="Owned editor fixture: 35 segments")
++                expect(clean_record).to_have_count(1)
++                clean_record.get_by_role("button", name="Open / edit", exact=True).click()
++                expect(page.locator("#editor")).to_be_visible()
++                expect(page.locator("#edit-title")).to_have_value("Owned editor fixture: 35 segments")
++                expect(page.locator("#editor-warnings")).to_be_hidden()
++                page.locator("#editor-close").click()
++                return {"batch_id": batch_id, "completed": 2, "failed": 0, "with_warnings": 2,
++                        "before_warnings": [item["warnings"] for item in before["jobs"]],
++                        "after_warnings": [item["warnings"] for item in after["jobs"]],
++                        "initial_server_pid": first_pid, "restarted_server_pid": server.pid,
++                        "original_record_unchanged": True, "unavailable_enhancement_links_absent": True,
++                        "warning_free_record_clears_editor_notes": True, "mobile_layout": sizes,
++                        "provider_and_language_inference": "controlled fixtures; no provider or model request"}
++            check("batch_processing_warnings_persist", batch_processing_warnings)
++
+             def search_edit_export():
+                 fresh("library")
+                 page.locator("#library-search").fill("no-such-owned-fixture-identifier")
+@@ -743,6 +828,7 @@ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--output", type=Path)
+     parser.add_argument("--asr", choices=("real", "stub"), default="real")
++    parser.add_argument("--scope", choices=("all", "processing-warnings"), default="all")
+     parser.add_argument("--server-python", help="Optional Python executable containing the app's dependencies.")
+     parser.add_argument("--browser-executable", help="Optional existing Chromium executable.")
+     parser.add_argument("--serve", type=Path, help=argparse.SUPPRESS)
+@@ -752,6 +838,8 @@ def main():
+         return 0
+     if args.output is None:
+         parser.error("--output is required")
++    if args.scope == "processing-warnings" and args.asr != "stub":
++        parser.error("--scope processing-warnings requires --asr stub; this scope performs no ASR")
+     return run(args)
+ 
+ 

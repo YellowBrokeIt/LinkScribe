@@ -9,6 +9,8 @@ provider acquisition is replaced with explicitly recorded owned caption fixtures
 for link/batch UI mechanics. --asr stub is an explicit, weaker alternative; it
 never claims real recognition. The actual HTTP routes, origin guard, queue,
 SQLite, exports, backup validation and browser JavaScript remain in use.
+--scope processing-warnings runs only the owned-caption warning/restart case
+and JavaScript-error check; it creates no speech fixture and performs no ASR.
 """
 from __future__ import annotations
 
@@ -83,8 +85,9 @@ def serve(data_root: Path, asr: str) -> None:
     summary = {"summary": "Owned QA fixture summary; not model output.",
                "key_points": ["Tests editor pagination and exports."],
                "chapters": [{"start": 0, "title": "Owned QA fixture"}]}
-    library.save(FIXTURE_ID, "owned-ui-fixture", "Owned editor fixture: 35 segments", "en",
-                 "owned_ui_fixture", segments, translations, summary)
+    if library.get(FIXTURE_ID) is None:
+        library.save(FIXTURE_ID, "owned-ui-fixture", "Owned editor fixture: 35 segments", "en",
+                     "owned_ui_fixture", segments, translations, summary)
     uvicorn.run(app.app, host="127.0.0.1", port=8765, log_level="warning")
 
 
@@ -110,6 +113,7 @@ def run(args) -> int:
     report = {
         "schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(),
         "complete": False, "result": "running", "asr_mode": args.asr,
+        "scope": args.scope,
         "asr_executed_successfully": False,
         "provider_acquisition": "controlled_owned_caption_fixtures",
         "language_enhancement_failure": "deliberately_invalid_child_process_settings",
@@ -135,15 +139,9 @@ def run(args) -> int:
     data_root = Path(scratch.name)
     audio_path = output / "owned-speech.wav"
     log = (output / "server.log").open("w", encoding="utf-8")
-    try:
-        # Never displace another local application or weaken the fixed-port guard.
-        with socket.socket() as probe:
-            probe.bind(("127.0.0.1", 8765))
-        report["speech_fixture"] = make_audio(audio_path)
-        (output / "invalid.txt").write_text("Owned invalid media fixture.\n")
-        (output / "empty.wav").write_bytes(b"")
-        (output / "corrupt.wav").write_bytes(b"This is not a WAV file.")
-        (output / "invalid-backup.zip").write_bytes(b"This is not a ZIP file.")
+
+    def start_server():
+        nonlocal server
         command = [args.server_python or sys.executable, str(Path(__file__).resolve()),
                    "--serve", str(data_root), "--asr", args.asr]
         server = subprocess.Popen(command, cwd=data_root, stdout=log, stderr=subprocess.STDOUT,
@@ -156,11 +154,22 @@ def run(args) -> int:
             try:
                 with opener.open(BASE_URL + "/health", timeout=1) as response:
                     if response.status == 200:
-                        break
+                        return
             except OSError:
                 time.sleep(0.1)
-        else:
-            raise TimeoutError("Isolated app did not become ready within 30 seconds.")
+        raise TimeoutError("Isolated app did not become ready within 30 seconds.")
+
+    try:
+        # Never displace another local application or weaken the fixed-port guard.
+        with socket.socket() as probe:
+            probe.bind(("127.0.0.1", 8765))
+        report["speech_fixture"] = (make_audio(audio_path) if args.scope == "all" else
+                                    {"created": False, "reason": "Owned captions only; no speech inference."})
+        (output / "invalid.txt").write_text("Owned invalid media fixture.\n")
+        (output / "empty.wav").write_bytes(b"")
+        (output / "corrupt.wav").write_bytes(b"This is not a WAV file.")
+        (output / "invalid-backup.zip").write_bytes(b"This is not a ZIP file.")
+        start_server()
 
         with sync_playwright() as playwright:
             launch = {"headless": True, "args": ["--no-sandbox", "--disable-dev-shm-usage"]}
@@ -183,6 +192,9 @@ def run(args) -> int:
                                               "viewport": page.viewport_size})
 
             def check(name, action):
+                if args.scope == "processing-warnings" and name not in {
+                        "batch_processing_warnings_persist", "no_uncaught_javascript_errors"}:
+                    return
                 started = time.monotonic()
                 item = {"name": name, "status": "running"}
                 report["checks"].append(item)
@@ -464,6 +476,79 @@ def run(args) -> int:
                 return {"provider": "controlled_owned_caption_fixtures", "archive_files": names}
             check("batch_partial_failure_download_history", batch_partial_failure)
 
+            def batch_processing_warnings():
+                fresh("batch")
+                consent()
+                page.locator("#mode").select_option("captions")
+                page.locator("#summary").check()
+                page.locator("#target-language").select_option("el")
+                page.locator("#batch-urls").fill("\n".join(
+                    "https://www.youtube.com/watch?v=" + ident for ident in ("QaWarning01", "QaWarning02")))
+                with page.expect_response(lambda r: r.url.endswith("/api/batch") and r.request.method == "POST") as sent:
+                    page.locator("#submit").click()
+                assert sent.value.status == 200, sent.value.text()
+                batch_id = sent.value.json()["id"]
+                expect(page.locator("#status-title")).to_have_text("Batch complete", timeout=30000)
+                expect(page.locator("#batch-progress")).to_contain_text("2/2 completed · 0 failed · 2 completed with warnings")
+                rows = page.locator("#batch-list .batch-item")
+                expect(rows).to_have_count(2)
+                for row in rows.all():
+                    expect(row).to_contain_text("Transcript saved with warnings")
+                    expect(row.locator(".warnings")).to_contain_text("Translation:")
+                    expect(row.locator(".warnings")).to_contain_text("Summary:")
+                before = context.request.get(BASE_URL + "/api/batches/" + batch_id).json()
+                first_id = before["jobs"][0]["library_id"]
+                original = context.request.get(BASE_URL + "/api/library/" + first_id).json()
+                assert original["translations"] == {} and original["summary"] is None
+                rows.first.get_by_role("button", name="Open", exact=True).click()
+                expect(page.locator("#editor-warnings")).to_contain_text("Translation:")
+                expect(page.locator("#editor-warnings")).to_contain_text("Summary:")
+                assert not page.locator('#editor-downloads a[href*="translation_"]').count()
+                assert not page.locator('#editor-downloads a[href*="summary_"]').count()
+                expect(page.get_by_label("Text of segment 1", exact=True)).to_have_value(original["segments"][0]["text"])
+                shot("processing-warnings-desktop")
+                page.set_viewport_size({"width": 320, "height": 700})
+                sizes = layout_sizes()
+                assert sizes["document"] <= sizes["viewport"], sizes
+                shot("processing-warnings-mobile")
+                page.set_viewport_size({"width": 1440, "height": 1000})
+
+                # A new app process has no previous Job/Batch objects. It must
+                # obtain completed warnings from the same durable SQLite store.
+                first_pid = server.pid
+                server.terminate()
+                server.wait(timeout=10)
+                start_server()
+                assert server.pid != first_pid
+                fresh("library")
+                saved_batch = page.locator("#saved-batches .batch-item").filter(has_text="2 completed with warnings")
+                expect(saved_batch).to_have_count(1)
+                saved_batch.get_by_role("button", name="View", exact=True).click()
+                expect(page.locator("#batch-progress")).to_contain_text("2/2 completed · 0 failed · 2 completed with warnings")
+                expect(page.locator("#batch-list .warnings").first).to_contain_text("Translation:")
+                after = context.request.get(BASE_URL + "/api/batches/" + batch_id).json()
+                assert [item["warnings"] for item in after["jobs"]] == [item["warnings"] for item in before["jobs"]]
+                assert context.request.get(BASE_URL + "/api/library/" + first_id).json() == original
+                page.locator("#batch-list .batch-item").first.get_by_role("button", name="Open", exact=True).click()
+                expect(page.locator("#editor-warnings")).to_contain_text("Summary:")
+                shot("processing-warnings-after-restart")
+                page.locator("#editor-close").click()
+                clean_record = page.locator("#library-items .library-item").filter(has_text="Owned editor fixture: 35 segments")
+                expect(clean_record).to_have_count(1)
+                clean_record.get_by_role("button", name="Open / edit", exact=True).click()
+                expect(page.locator("#editor")).to_be_visible()
+                expect(page.locator("#edit-title")).to_have_value("Owned editor fixture: 35 segments")
+                expect(page.locator("#editor-warnings")).to_be_hidden()
+                page.locator("#editor-close").click()
+                return {"batch_id": batch_id, "completed": 2, "failed": 0, "with_warnings": 2,
+                        "before_warnings": [item["warnings"] for item in before["jobs"]],
+                        "after_warnings": [item["warnings"] for item in after["jobs"]],
+                        "initial_server_pid": first_pid, "restarted_server_pid": server.pid,
+                        "original_record_unchanged": True, "unavailable_enhancement_links_absent": True,
+                        "warning_free_record_clears_editor_notes": True, "mobile_layout": sizes,
+                        "provider_and_language_inference": "controlled fixtures; no provider or model request"}
+            check("batch_processing_warnings_persist", batch_processing_warnings)
+
             def search_edit_export():
                 fresh("library")
                 page.locator("#library-search").fill("no-such-owned-fixture-identifier")
@@ -743,6 +828,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--asr", choices=("real", "stub"), default="real")
+    parser.add_argument("--scope", choices=("all", "processing-warnings"), default="all")
     parser.add_argument("--server-python", help="Optional Python executable containing the app's dependencies.")
     parser.add_argument("--browser-executable", help="Optional existing Chromium executable.")
     parser.add_argument("--serve", type=Path, help=argparse.SUPPRESS)
@@ -752,6 +838,8 @@ def main():
         return 0
     if args.output is None:
         parser.error("--output is required")
+    if args.scope == "processing-warnings" and args.asr != "stub":
+        parser.error("--scope processing-warnings requires --asr stub; this scope performs no ASR")
     return run(args)
 
 

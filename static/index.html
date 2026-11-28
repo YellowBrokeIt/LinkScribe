@@ -101,7 +101,7 @@
     .library-item small {display:block; color:var(--muted); margin-top:6px; font-size:11px; overflow-wrap:anywhere}
     .library-item button {flex-shrink:0}
     .secondary-actions, .editor-actions {display:flex; flex-wrap:wrap; gap:12px; margin-top:13px; align-items:center}
-    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap}
+    .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap; overflow-wrap:anywhere}
     .summary-result {border-top:1px solid var(--stroke); padding-top:14px; margin-top:16px; white-space:pre-wrap; color:var(--muted); line-height:1.7}
     .highlights-result {border-top:1px solid var(--stroke);padding-top:16px;margin-top:18px;min-width:0}
     .highlight-excerpt {border-left:3px solid var(--accent);padding:0 0 0 12px;margin:18px 0;min-width:0}
@@ -109,6 +109,7 @@
     .highlight-excerpt .copy {max-width:100%;white-space:normal}
     .batch-list {display:grid; gap:9px; margin-top:15px}
     .batch-item {display:flex; justify-content:space-between; gap:12px; border:1px solid #35445e; border-radius:10px; padding:12px; font-size:12px}
+    .batch-item > div {min-width:0; flex:1}
     .batch-item strong {overflow-wrap:anywhere}
     .batch-item small {display:block; color:var(--muted); margin-top:4px}
     .editor-rows {display:grid; gap:10px; margin-top:17px}
@@ -250,6 +251,7 @@
       <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
       <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving clears older translations, summaries and source highlights.</p>
       <div class="downloads" id="editor-downloads"></div>
+      <div class="warnings" id="editor-warnings" hidden></div>
       <button class="copy" id="editor-highlights" type="button">Create source highlights</button>
       <p class="input-note" id="editor-highlights-note">Uses the saved transcript. Save your edits before creating highlights.</p>
       <section class="highlights-result" id="editor-highlights-result" aria-label="Saved source highlights" hidden></section>
@@ -325,6 +327,11 @@
    if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
  }
  function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
+ function renderWarnings(target,warnings){
+   const lines=Array.isArray(warnings)?[...new Set(warnings.filter(w=>typeof w==="string"&&w.trim()))]:[];
+   target.hidden=!lines.length;
+   target.textContent=lines.length?"Processing warnings\n"+lines.join("\n"):"";
+ }
  function sourceTime(value){const total=Math.floor(value);return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");}
  function renderHighlights(target,highlights,onSource){
    target.replaceChildren();target.hidden=!highlights;
@@ -354,8 +361,7 @@
    $("preview").textContent=job.preview||"(Empty preview)";
    const details=job.extras||{};
    renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language,highlights:details.highlights});
-   $("result-warnings").hidden=!(job.warnings||[]).length;
-   $("result-warnings").textContent=(job.warnings||[]).join("\n");
+   renderWarnings($("result-warnings"),job.warnings);
    $("result-actions").replaceChildren();
    if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
    $("summary-result").hidden=true;$("summary-result").textContent="";
@@ -385,13 +391,15 @@
  }
  function renderBatch(batch){
    $("batch-results").hidden=false;
-   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.stage}`;
+   $("batch-progress").textContent=`${batch.completed}/${batch.total} completed · ${batch.failed} failed · ${batch.with_warnings||0} completed with warnings · ${batch.stage}`;
    const list=$("batch-list");list.replaceChildren();
    for(const item of batch.jobs){
      const row=document.createElement("div");row.className="batch-item";
      const group=document.createElement("div");const name=document.createElement("strong");name.textContent=item.title;
-     const meta=document.createElement("small");meta.textContent=`${item.status} · ${item.error||item.stage}`;
-     group.append(name,meta);row.appendChild(group);
+     const warned=item.status==="done"&&(item.warnings||[]).length;
+     const meta=document.createElement("small");meta.textContent=`${warned?"Transcript saved with warnings":item.status} · ${item.error||item.stage}`;
+     const warnings=document.createElement("div");warnings.className="warnings";renderWarnings(warnings,item.warnings);
+     group.append(name,meta,warnings);row.appendChild(group);
      if(item.library_id) addButton(row,"Open",()=>openEditor(item.library_id));
      list.appendChild(row);
    }
@@ -465,7 +473,7 @@
      if(!response.items.length){target.textContent="No previous batches yet.";return;}
      for(const item of response.items.slice(0,20)){
        const box=document.createElement("div");box.className="batch-item";
-       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.status}`;
+       const title=document.createElement("span");title.textContent=`${item.completed}/${item.total} processed · ${item.failed} failed · ${item.with_warnings||0} completed with warnings · ${item.status}`;
        const button=addButton(box,"View",async()=>{
          try{const batch=await api(`/api/batches/${encodeURIComponent(item.id)}`);renderBatch(batch);
            if(batch.status==="working"||batch.status==="queued"){currentBatch=batch.id;trackBatch(batch.id);}
@@ -539,6 +547,7 @@
      $("editor-message").textContent="";
      $("editor").hidden=false;
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
+     renderWarnings($("editor-warnings"),editing.processing_metadata?.warnings);
      renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
    }catch(e){if(session===editorSession)showStatus("Cannot open transcript",e.message,true,false);}
@@ -556,6 +565,7 @@
      editing=saved;
      showEditorPage();
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
      renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
      if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
@@ -577,6 +587,7 @@
      if(tab==="library")loadLibrary();
      if(!$("results").hidden && resultJob?.library_id===id){
        await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
+         warnings:saved.processing_metadata?.warnings||[],
          segments:saved.segments.length,
          preview:saved.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
          extras:{...resultJob.extras,summary:!!saved.summary,highlights:!!saved.highlights,
@@ -585,9 +596,10 @@
      }
      if(!editing||editing.id!==id||session!==editorSession)return;
      renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
      renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
      if(revision!==editorRevision){
-       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;
+       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;editing.processing_metadata=saved.processing_metadata;
        $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
        return;
      }

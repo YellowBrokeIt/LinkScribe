@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T03:31:23.758187+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Pre-output criteria compatibility and design risks only. No detector, model, tokenization, translation, new corpus or unused validation v3 was executed or opened.",
+  "source_bindings": {
+    "docs/krikri-screen-2026-11-28/development-cases.json": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+    "tests/fixtures/translation_quality_validation_v2.json": "2f31c4c9019d6bc821208c193a2344a9021c09124779afe21e775f05916e00f3"
+  },
+  "corpus_scope": "Six original development cases plus all12 previously exposed v2 cases; historical v2 holdout labels do not make them fresh validation.",
+  "conclusion": "Retaining the exact original-script text of genuine PERSON name spans is compatible with the existing written meaning criteria when all ordinary prose is translated and identities, roles and relationships remain correct. This is a design interpretation before candidate outputs, not automatic case acceptance, a relaxed criterion, or regrading of Nick/Helen.",
+  "reasoning": [
+    "The six-case instructions require preserving names and distinguishable people; reasonable transliteration variants are permitted but Latin-script output is not mandatory.",
+    "The first case explicitly permits Maria to remain Latin in Greek output. The generic preservation instruction likewise does not demand target-script conversion of names.",
+    "The exposed-v2 description says reference translations illustrate faithful meaning rather than mandatory wording; its actor/ownership criteria require the same people and roles, not a mandated name alphabet.",
+    "Ordinary prose still must be translated. Protecting an article, verb, common noun or entire untranslated clause as a name would fail that requirement.",
+    "Exact source-script retention preserves name identity but is not transliteration. A resulting feature should describe its behavior accurately."
+  ],
+  "unchanged_rules": [
+    "Original name substitutions remain failures; both baseline and generic-instruction follow-up remain5acceptable/1major.",
+    "Case-specific actors, owners/borrowers, conditional and negative statements, numbers/units, permissions, quotation status and full passage coverage remain independently reviewed.",
+    "Proper marker presence or exact name spelling does not establish correct actor relationships or overall translation meaning."
+  ],
+  "risks": [
+    {
+      "risk": "False-negative PERSON detection",
+      "impact": "An unprotected name can still be localized or mistranslated. Name protection is not proof that every personal name was found."
+    },
+    {
+      "risk": "False-positive or oversized spans",
+      "impact": "An ordinary word, title, article or neighboring prose can remain in the source language. This is especially harmful when a capitalized common word is mistaken for a person."
+    },
+    {
+      "risk": "Inflection and surface forms",
+      "impact": "Greek nominative, genitive and accusative mentions may have different source spellings. Restoring exact surface text can be awkward in an English grammatical role, while inventing or guessing a base form would violate the source-only design. Grade each actual output under the unchanged rules."
+    },
+    {
+      "risk": "Entity conflation and coreference",
+      "impact": "Do not merge similar names or infer aliases from reference answers. Per-mention provenance avoids silent Eleni/Elena conflation, but cannot by itself preserve pronoun antecedents."
+    },
+    {
+      "risk": "Role swaps with valid placeholders",
+      "impact": "Every placeholder can be present exactly once while the output reverses who sent, approved, owned or borrowed. Counts and checksums cannot validate these propositions."
+    },
+    {
+      "risk": "Loss of linguistic cues",
+      "impact": "Masking a personal name may remove useful gender or agreement cues. Do not add guessed gender or role annotations from a name dictionary; use only explicit source content."
+    },
+    {
+      "risk": "Fragmentation and budgets",
+      "impact": "Long passages require exact original-span-to-fragment mapping. A placeholder/name must not be split or silently dropped; actual complete prompt token budgets must include the protected form."
+    },
+    {
+      "risk": "Combined memory",
+      "impact": "The latest standalone Krikri screen peaked at5538.5MiB RSS under6144MiB, leaving605.5MiB observed margin. An added detector is not proven to fit concurrently; loading/unloading and combined process measurements would need their own declared check."
+    }
+  ],
+  "minimum_reviewable_contract": [
+    "Freeze detector/version/settings and source-only span rules before candidate outputs. No reference names, fixture-specific dictionary or reviewer criteria as runtime inputs.",
+    "For every detected mention retain original segment ID, exact code-point offsets and exact source substring. Validate bounds, non-overlap and complete reversible source reconstruction before any request.",
+    "Use collision-resistant per-mention markers with an explicit grammar; escape or reject source-marker collisions. Do not infer identity equivalence merely from similar spellings.",
+    "Preserve the declared marker multiset within each allowed source segment/fragment. Reject missing, duplicated, unknown, malformed or partially leaked markers; do not guess a repair.",
+    "Restore exact source substrings in one nonrecursive pass. Never treat restored text as a template, regex replacement program, HTML or another marker pass.",
+    "Retain the raw model response, parsed response, source-span mapping and final restored text separately so restoration cannot hide the actual model behavior.",
+    "Validate final structure and current script rules against the original unmasked source; preserve timestamps/speakers/source text unchanged.",
+    "Independently review full final propositions and target-language ordinary prose. A structural marker pass is separate from semantic acceptance.",
+    "No larger exposed-v2, unused-v3, summary, full-app, model promotion or production change follows automatically from this feasibility note."
+  ],
+  "not_claimed": [
+    "No evidence yet that any chosen source-only detector finds all required names or avoids false positives.",
+    "No evidence yet that placeholders survive native generation or improve the six-case outcome.",
+    "No promise of natural transliteration, inflection, correct coreference or actor-role fidelity.",
+    "No claim that source-name preservation fixes incorrect names already present in an ASR transcript."
+  ]
+}

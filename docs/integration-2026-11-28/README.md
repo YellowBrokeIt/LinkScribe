@@ -265,3 +265,62 @@ The completed rejected Qwen experiment's automatic workflow is archived as
 Its immutable source contract still passes in an explicitly reconstructed
 historical view. All ordinary hosted application workflows are unchanged.
 This local result does not stand in for hosted checks of the later exact commit.
+
+
+## Completed hosted timing checkpoint `00567db`
+
+The [exact completed record](hosted-00567db/checkpoint.json) binds source commit
+`00567db099c05f2abe1f127d8762f7adbdd9f712` and tree
+`76baf84793ef4ebcc72fbd87c85c96a5ba48e9c4` to the retained reports and independently
+verified artifact ZIP digests. These results do not certify later working changes.
+
+- [Platform tests](https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004196):
+  Ubuntu 753 passed plus 54 subtests; Windows/macOS 749 passed plus 54 subtests,
+  with four Linux-only Qwen/large-v3 process-group controls skipped on each.
+- [Independent QA](https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004237):
+  Python 3.11/3.13 each 753 plus 54; fresh Linux launcher and actual Tiny upload
+  passed. Default Ollama completed all twelve cases with five automatic passes,
+  seven review flags and zero execution errors. Meaning remains unreviewed.
+- [Chromium](https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004215):
+  all 34 checks passed, including actual audio upload, editor race regressions,
+  source highlights, backups and mobile layouts; zero uncaught page errors.
+  All eight source identities match this Git commit.
+- [Actual candidate archive](https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004225):
+  all six package checks passed from the generated ZIP, covering extraction,
+  actual launcher/health, diagnostics, static homepage, SQLite and dependencies.
+- [Live providers](https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46106004205):
+  all six acquisitions failed before ASR. YouTube requested a bot check, regular
+  Vimeo required sign-in, the supplied Vimeo player returned HTTP401, and
+  Dailymotion returned no video formats. The unchanged no-speech guard rejected
+  exact silence before inference and actual nonzero noise after Small inference.
+  No successful provider batch or restored late-dialogue check was available.
+
+The [upstream downloader check](hosted-00567db/upstream-downloader-check.json)
+found that the installed 2026.11.23 version was the latest published release and
+that the newest returned Dailymotion extractor-file change predates it. This
+identified no newer release/path fix to apply; it does not establish a universal
+cause or justify an access workaround. No additional provider retry was made.
+
+Version stays 0.3.0. Application execution passes do not close the documented
+speech, translation, summary, provider or whole-machine resource gates.
+
+
+## Persisted processing warnings: local integration complete
+
+The [reviewed repair](../processing-warnings-2026-11-28/README.md) restores
+processing notes to live/saved batch views and the transcript editor, with a
+separate completed-with-warnings count. Fatal failures retain their existing
+status. Warning polling reads only stored IDs/metadata in bounded queries.
+Controlled 20-item and fresh-process tests preserve all 19 successful transcripts,
+one fatal source failure and two completed items with warnings, without
+reacquisition or inference.
+
+The [combined local record](warnings-local/combined-tests.json) and
+[full output](warnings-local/combined-tests.txt) show **757 passed plus 54 subtests
+in 10.56 seconds**, with all five changed source/test identities unchanged during
+the run. Independent review found and corrected a browser assertion that could
+pass while its editor was still closed; the helper now waits for both visibility
+and the exact clean-record title. A local Chromium startup attempt ran zero
+checks because the wrapper target executable was absent. That failure remains
+recorded; no browser download was attempted. The new real-server-restart case
+must pass in hosted Chromium alongside the prior 34 checks.

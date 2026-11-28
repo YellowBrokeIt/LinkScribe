@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T04:23:00.680572+00:00",
+  "reviewer": "independent package_verification agent",
+  "scope": "Bounded read-only source and retained-evidence review of processing-warning persistence, counts, editor rendering, controlled API tests and browser restart regression. No model, provider, browser installation, browser execution or broad test rerun.",
+  "baseline_head": "00567db099c05f2abe1f127d8762f7adbdd9f712",
+  "source_files": {
+    "app.py": {
+      "sha256": "0840ee8cd72898b6fd61831888ee4932d3a3892070660ed76174f1700c8f9044",
+      "bytes": 61682
+    },
+    "library.py": {
+      "sha256": "a9c9984da6fb43d0db544a4e30e588c5ad15c0be1074766af574ab5da57312e4",
+      "bytes": 11548
+    },
+    "static/index.html": {
+      "sha256": "7cbb236df66089ac3c09a5d46ec2ce823589f07a985a28ba77c6ef27d766519b",
+      "bytes": 48987
+    },
+    "tests/test_processing_warnings.py": {
+      "sha256": "f4e7abcc9f3424dbd0c1e1d996ba95262d9e66c7cd4ffc9d377f426549d8a37d",
+      "bytes": 7006
+    },
+    "tests/smoke_browser.py": {
+      "sha256": "1518ea9f62bb3175b8dd808b9986795c02eda563447cb9798582a89e62cff558",
+      "bytes": 51028
+    }
+  },
+  "tracked_diff_sha256": "2e5ee854f05e5ea7053c3fc863aff6972b4a8621dd73c550f8bc605e3b1e33e0",
+  "decision": "no_remaining_source_or_harness_blocker_after_the_two_wait_correction; hosted_Chromium_result_pending",
+  "findings": [
+    {
+      "id": "clean_editor_hidden_assertion_race",
+      "severity": "test_false_pass",
+      "status": "corrected_and_source_verified",
+      "original_helper_sha256": "b2b0edc049cad777b6e687dae9a156bee3a2351532a3764495f9144344fe6c45",
+      "final_helper_sha256": "1518ea9f62bb3175b8dd808b9986795c02eda563447cb9798582a89e62cff558",
+      "finding": "After closing the warned editor, opening a clean record initiates an asynchronous GET. The old hidden-warning expectation could succeed while the whole editor was still hidden. A later close-button click did not recheck warning visibility.",
+      "correction": "Wait for #editor visible and #edit-title to equal the clean fixture title before asserting #editor-warnings hidden.",
+      "verification": "Removing exactly those two new assertions from the final helper reconstructs the complete initial helper SHA256. No production source or existing assertions changed."
+    }
+  ],
+  "reviewed_contracts": {
+    "durable_warning_source": "Completed batch warnings are looked up from existing transcript processing_metadata by durable library_id, not stored in another batch-journal copy. Expired or restarted in-memory Job/Batch objects are unnecessary.",
+    "polling_cost_and_query_safety": "Only id and processing_metadata are selected. IDs are deduplicated and parameterized in batches of 500. The helper explicitly closes its connection and does not call library.get, exports, acquisition or enhancement code.",
+    "status_semantics": "The done/error state machine and failed count are unchanged. with_warnings counts completed items with at least one warning, independently of fatal source failures; it does not count warning strings. Active snapshots copy warning lists under the existing lock, then query durable metadata outside it.",
+    "metadata_shape": "Stored metadata is already bounded/validated by library writes. The lookup accepts only nonblank strings in list-valued warnings, deduplicates them, and handles absent metadata/warnings.",
+    "source_preservation": "No segment, translation, summary, decoder or provider implementation changed in this diff. Optional feature failure remains a saved source transcript with warnings.",
+    "rendering": "Warnings use textContent rather than HTML and are hidden/cleared for empty notes. They render in job results, batch rows and the saved editor; saved editor updates remain behind the existing session/revision checks. Long messages can wrap.",
+    "export_links": "Existing enhancement link conditions still require actual saved translation/summary data. The new browser case asserts unavailable enhancement links absent.",
+    "browser_restart": "The test terminates and waits for its owned app server, starts another PID against the same temporary SQLite path, reloads history and compares persisted notes and the complete original record. Initial fixture seeding is now conditional, avoiding an overwrite on restart. This case is placed after checks requiring previous live upload jobs; later checks use saved library IDs.",
+    "browser_scope_and_cleanup": "The default remains the full existing browser suite. The optional processing-warnings scope requires --asr stub and explicitly skips speech fixture creation. Startup and final cleanup remain bounded; failures are retained by the harness. No additional downloads or model work were used in this review."
+  },
+  "retained_verification": {
+    "focused_validation_sha256": "8f645fc9edf7bd2c54dd379135ce2c77b4f83d4979892f5c5c082e11532c9d6b",
+    "reported_tests": 42,
+    "reported_test_seconds": 1.54,
+    "independently_rerun": false,
+    "test_contract_review": "20 controlled sources: 19 saved originals, one fatal source error, one optional translation failure and one unrepresentable timed-export warning. The tests require the same warnings after expiry, new lifespan and a separate fresh Python process, with scheduling/acquisition/inference forbidden. A separate polling check forbids full transcript loading and export construction.",
+    "actual_browser_startup_report_sha256": "34ad799ebe5f768bcbb4057e39e78db48837428beee8e6f7ed0846cc3cec0f7d",
+    "actual_local_browser_checks": 0,
+    "actual_local_browser_result": "startup failed because Chromium wrapper target was absent; no local UI pass",
+    "final_browser_syntax": "AST parse passed in this independent review",
+    "remaining_gate": "Ordinary hosted Chromium must execute the corrected new case and the existing complete browser suite on the published source."
+  },
+  "limitations": [
+    "Read-only review and retained API results do not replace actual Chromium execution or screenshot inspection.",
+    "Warnings represent saved processing history; this change does not establish speech or translation quality or promote a rejected model.",
+    "No unused validation inputs, live providers, models or external mutations were accessed."
+  ]
+}

@@ -1020,11 +1020,18 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
 @app.get("/api/batches")
 def list_saved_batches():
     """Allow reconnecting to past batches after server restart."""
+    saved = batch_store.recent()
+    warnings = library.get_processing_warnings([
+        item["library_id"] for batch in saved for item in batch["jobs"]
+        if item["status"] == "done"
+    ])
     return {"items": [{"id": batch["id"], "status": batch["status"],
                        "total": len(batch["jobs"]),
                        "completed": sum(j["status"] in {"done", "error"} for j in batch["jobs"]),
-                       "failed": sum(j["status"] == "error" for j in batch["jobs"])}
-                      for batch in batch_store.recent()]}
+                       "failed": sum(j["status"] == "error" for j in batch["jobs"]),
+                       "with_warnings": sum(j["status"] == "done" and bool(warnings.get(j["library_id"]))
+                                            for j in batch["jobs"])}
+                      for batch in saved]}
 
 
 @app.get("/api/batches/{batch_id}")
@@ -1042,14 +1049,25 @@ def batch_status(batch_id: str):
                              "source": item["source"], "status": child.status if child else item["status"],
                              "stage": child.stage if child else "Restored from disk",
                              "error": child.error if child else item["error"],
-                             "warnings": child.warnings if child else [],
+                             "warnings": list(child.warnings) if child else [],
                              "library_id": child.library_id if child else item["library_id"]})
-        return {"id": batch_id, "status": batch.status if batch else saved["status"],
-                "stage": batch.stage if batch else "Saved batch",
-                "total": len(children),
-                "completed": sum(child["status"] in {"done", "error"} for child in children),
-                "failed": sum(child["status"] == "error" for child in children),
-                "jobs": children}
+        status = batch.status if batch else saved["status"]
+        stage = batch.stage if batch else "Saved batch"
+    # Completed-job objects expire and do not survive a process restart. Their
+    # saved transcript remains the durable source of processing warnings.
+    warnings = library.get_processing_warnings([
+        child["library_id"] for child in children if child["status"] == "done"
+    ])
+    for child in children:
+        child["warnings"] = list(dict.fromkeys(
+            child["warnings"] + warnings.get(child["library_id"], [])))
+    return {"id": batch_id, "status": status, "stage": stage,
+            "total": len(children),
+            "completed": sum(child["status"] in {"done", "error"} for child in children),
+            "failed": sum(child["status"] == "error" for child in children),
+            "with_warnings": sum(child["status"] == "done" and bool(child["warnings"])
+                                 for child in children),
+            "jobs": children}
 
 
 @app.get("/api/batches/{batch_id}/download")

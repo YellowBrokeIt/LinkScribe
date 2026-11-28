@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T03:58:04.453037+00:00",
+  "reviewer": "/root/package_verification",
+  "decision": "No blocker in the frozen source-only detector plan for the already-authorized exact download and isolated setup stage. Concrete runner/native setup review remains required before the first detector forward.",
+  "plan_sha256": "1a56796eb75a709c9231354ff17ca7b9f23be9988e3ddbc30ba0492433b2b9d5",
+  "research_manifest_sha256": "e50db07e2e3bda6d1176233d0ca1f43147e654db604d44794705ea52b7e01b52",
+  "all_research_file_hashes_and_bytes_verified": true,
+  "research_manifest_files": 30,
+  "source_only_projection_exact": true,
+  "source_only_snapshot_sha256": "547c4edca0db2801d07d7cf6588655c062fb870a20b455560395eccdc9de3482",
+  "independent_annotation_sha256": "9a26e6f9eec232ae65f539a7d049c44d8a58cfd966d07c02005d5b933cacdae6",
+  "independent_annotation_rule": "Keep outside detector worker access/input. Review only after raw detector outputs are preserved.",
+  "metadata_review": {
+    "exact_public_revision_LFS_size_and_sha_match_retained_primary_API_objects": true,
+    "selected_safetensors_only_no_duplicate_pickle_or_backbone_weight_download": true,
+    "local_GLiNER_config_diff_limited_to_local_model_path_and_exact_builtin_encoder_config": true,
+    "runtime_dependency_review_sha256": "3accad2455bcd86a3fc18cfc5f382f8c70f95f2ddb6e21c20f5e78699e01807a",
+    "existing_distribution_identities_checked": 11,
+    "active_requires_dist_constraints_checked": 36,
+    "all_satisfied": true
+  },
+  "source_protocol_review": {
+    "native_predict_entities_keyword_path_supported": true,
+    "native_packing_default_must_be_asserted_none": true,
+    "native_safetensors_and_strict_state_load_route_present": true,
+    "builtin_DebertaV2Config_selects_builtin_DebertaV2Model_when_optional_replacements_absent": true,
+    "source_word_and_subtoken_truncation_both_identified_and_blocked_by_declared_preflight": true,
+    "source_offsets_grapheme_bounds_and_segment_crossing_rejection_declared": true,
+    "raw_predictions_before_validation_declared": true,
+    "one_attempt_per_original_full_case": true,
+    "complete_owned_process_exit_before_any_future_LLM_stage": true
+  },
+  "runner_checks_still_required": [
+    "Verify downloaded exact hashes/size, installed inspected GLiNER code, same local tokenizer/builtin model classes, strict state load, and no attempted network access.",
+    "Register complete native input comparison before any underlying model forward; compare full input IDs, attention mask and source-word mapping to truncation-disabled preflight for each case.",
+    "Enforce initialization/per-case/total deadlines and 6144 MiB owned-process-tree cap externally, preserve partial/raw failures, and verify cleanup even if the leader exits first.",
+    "Supply only joined source plus person label to native prediction; exclude annotations, semantic criteria, references and prior translations from worker inputs."
+  ],
+  "unchanged_scope": {
+    "six_original_sources": true,
+    "unused_v3_opened": false,
+    "exposed_v2_used": false,
+    "translation_or_masking_executed": false,
+    "existing_rejected_Krikri_evidence_regraded": false,
+    "production_or_core_dependencies_changed": false
+  },
+  "limitations": [
+    "A compatible declared dependency set does not establish successful native import/load/tokenizer conversion; actual setup must fail closed.",
+    "No model payload download, detector import, model construction, forward, or new translation was performed by this reviewer.",
+    "A successful detector-only source screen would support only a separately reviewed protected-translation experiment; it would not establish general NER or translation correctness."
+  ]
+}

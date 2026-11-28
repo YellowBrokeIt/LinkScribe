@@ -2,9 +2,9 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `a4ca88e`** passed **717 tests and
+The published **0.3.0 integration checkpoint `00567db`** passed **753 tests and
 54 subtests** on Ubuntu and independent Python 3.11/3.13 configurations. Windows
-and macOS each passed 715 tests and 54 subtests, with two Linux-only process-group
+and macOS each passed 749 tests and 54 subtests, with four Linux-only process-group
 harness controls skipped. Fresh Linux installation, installation from the actual
 candidate archive and an actual audio-upload workflow passed. Chromium passed all
 **34 checks**, including preservation
@@ -14,7 +14,7 @@ containing saved highlights. The
 31/32 and 33/34 harness failures, their corrections and actual editor fixes.
 Generated meaning still requires approval. Provider access and speech-quality
 regressions also leave release gates open. The
-[exact hosted record](docs/integration-2026-11-28/hosted-a4ca88e/checkpoint.json)
+[exact hosted record](docs/integration-2026-11-28/hosted-00567db/checkpoint.json)
 records the tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
 The downloaded source archive also passed a fresh local installation during
@@ -45,15 +45,23 @@ independent review found six major errors and two acceptable transcripts. It is
 not adopted. The ordinary application checks and an experiment's successful
 execution do not establish speech or generated-text accuracy.
 
-The next [timing correction](docs/asr-timing-boundary-2026-11-28/README.md)
+The [timing correction](docs/asr-timing-boundary-2026-11-28/README.md)
 keeps speech timestamps within the complete decoded recording and removes an
 artificial 100-millisecond subtitle extension. If an interval is too short for
 SRT/VTT, the app preserves its text and precise JSON timing, explains the omitted
 formats, and retains the warning in saved and batch results. Eight retained
 recordings passed actual decoding, export, SQLite and backup-restoration replay;
 no recognition was repeated. The combined local suite passed **753 tests and
-54 subtests**. Hosted verification of this later source is still pending and the
-speech, translation and summary meaning gates remain open.
+54 subtests**, and the ordinary hosted application checks at `00567db` passed.
+All six provider acquisitions failed before speech recognition; generated-text
+execution completed but speech, translation and summary meaning gates remain open.
+
+The subsequent [warning-visibility fix](docs/processing-warnings-2026-11-28/README.md)
+recovers saved processing notes after restart, shows a separate completed-with-warnings
+count in batch detail/history, and displays the notes in the transcript editor.
+Controlled 20-item and fresh-process checks preserve every successful source
+transcript. The combined local suite passes **757 tests and 54 subtests**;
+the new browser restart/visibility case awaits hosted Chromium verification.
 
 ## Features
 
