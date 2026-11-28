@@ -11,6 +11,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+from source_highlights import validate_highlights
+
 DB_FILE = Path(__file__).resolve().parent / "data" / "library.sqlite3"
 
 
@@ -30,6 +32,7 @@ def _connect():
       plain_text TEXT NOT NULL,
       translations TEXT NOT NULL DEFAULT '{}',
       summary TEXT,
+      highlights TEXT,
       processing_metadata TEXT NOT NULL DEFAULT '{}',
       created_at REAL NOT NULL,
       updated_at REAL NOT NULL
@@ -42,6 +45,13 @@ def _connect():
             if "processing_metadata" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
                 connection.close()
                 raise
+    if "highlights" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+        try:
+            connection.execute("ALTER TABLE transcripts ADD COLUMN highlights TEXT")
+        except sqlite3.OperationalError:
+            if "highlights" not in {row[1] for row in connection.execute("PRAGMA table_info(transcripts)")}:
+                connection.close()
+                raise
     connection.execute("CREATE INDEX IF NOT EXISTS idx_transcripts_created ON transcripts(created_at DESC)")
     return connection
 
@@ -52,6 +62,15 @@ def _row(row: sqlite3.Row) -> dict[str, Any]:
     data["translations"] = json.loads(data["translations"])
     data["summary"] = json.loads(data["summary"]) if data["summary"] else None
     data["processing_metadata"] = json.loads(data.get("processing_metadata") or "{}")
+    try:
+        data["highlights"] = json.loads(data["highlights"]) if data.get("highlights") else None
+        if data["highlights"] is not None:
+            validate_highlights(data["highlights"], data["segments"])
+    except ValueError:
+        data["highlights"] = None
+        warning = "Saved source highlights were damaged or no longer matched the transcript. Create them again; the original transcript is retained."
+        warnings = data["processing_metadata"].get("warnings", [])
+        data["processing_metadata"]["warnings"] = (warnings if isinstance(warnings, list) else []) + [warning]
     return data
 
 
@@ -114,17 +133,34 @@ def _processing_metadata_json(value: Any) -> str:
 
 def save(identifier: str, source: str, title: str, language: str, method: str,
          segments: list[dict[str, Any]], translations: dict[str, Any] | None = None,
-         summary: dict[str, Any] | None = None, processing_metadata: dict[str, Any] | None = None) -> None:
+         summary: dict[str, Any] | None = None, processing_metadata: dict[str, Any] | None = None,
+         highlights: dict[str, Any] | None = None) -> None:
     now = time.time()
     metadata_json = _processing_metadata_json(processing_metadata)
+    if highlights is not None:
+        validate_highlights(highlights, segments)
     with _connect() as connection:
         connection.execute("""INSERT INTO transcripts
-          (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,created_at,updated_at)
-          VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+          (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,highlights,created_at,updated_at)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
           (identifier, source, title, language, method,
            json.dumps(segments, ensure_ascii=False), _plain(segments),
            json.dumps(translations or {}, ensure_ascii=False),
-           json.dumps(summary, ensure_ascii=False) if summary else None, metadata_json, now, now))
+           json.dumps(summary, ensure_ascii=False) if summary else None, metadata_json,
+           json.dumps(highlights, ensure_ascii=False, allow_nan=False) if highlights is not None else None, now, now))
+
+
+def set_highlights(identifier: str, highlights: dict[str, Any]) -> bool:
+    """Bind derived excerpts to the current source atomically, preserving edits."""
+    with _connect() as connection:
+        connection.execute("BEGIN IMMEDIATE")
+        row = connection.execute("SELECT segments FROM transcripts WHERE id=?", (identifier,)).fetchone()
+        if row is None:
+            return False
+        validate_highlights(highlights, json.loads(row["segments"]))
+        connection.execute("UPDATE transcripts SET highlights=?, updated_at=? WHERE id=?",
+                           (json.dumps(highlights, ensure_ascii=False, allow_nan=False), time.time(), identifier))
+    return True
 
 
 def get(identifier: str) -> dict[str, Any] | None:
@@ -160,7 +196,7 @@ def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
         metadata["user_edited"] = True
         now = time.time()
         cursor = connection.execute("""UPDATE transcripts SET title=?, segments=?, plain_text=?,
-            translations='{}', summary=NULL, processing_metadata=?, updated_at=? WHERE id=?""",
+            translations='{}', summary=NULL, highlights=NULL, processing_metadata=?, updated_at=? WHERE id=?""",
             (title, json.dumps(segments,ensure_ascii=False), _plain(segments),
              _processing_metadata_json(metadata), now, identifier))
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='batch_queue_items'").fetchone():

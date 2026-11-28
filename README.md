@@ -2,10 +2,11 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 draft checkpoint `dc0985d`** passed 607 automated tests in
+The published **0.3.0 recovery checkpoint `002d8fc`** passed 613 automated tests in
 each of five hosted platform/Python configurations, 30 browser checks, fresh
-Linux installation and an actual audio-upload workflow. Provider access and
-generated-text quality still have open release gates. The
+Linux installation, installation from the actual candidate archive and an actual
+audio-upload workflow. Its real-Ollama integration completed; generated meaning
+still requires approval. Provider access and generated-text quality have open release gates. The
 [28 November checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
 records the exact tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
@@ -13,15 +14,22 @@ The downloaded source archive also passed a fresh local installation during
 recovery. The candidate-artifact workflow now verifies installation from its
 actual generated ZIP, in addition to the checkout-based installation checks.
 
+The next candidate integrates optional **source highlights** and preserves explicit
+public Vimeo player links. Local verification passed **652 tests and 32 subtests**;
+the separately frozen English/Greek highlights validation passed all four cases.
+Hosted results must be checked for the exact revision under review; these local
+results do not claim a new browser, platform or v1.0 approval.
+
 ## Features
 
 - **Single links or batches of 1–20 links**: accepts allowlisted YouTube, Vimeo and Dailymotion URLs; sequential processing and batch ZIP of successful results. Accepted URL formats do not guarantee provider access. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions. See [verified provider scope](#verified-provider-scope).
 - **Speaker labels (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from a public CPU model, with no account or access token. Extra dependencies are required. Actual Whisper word timestamps allow text to split at estimated speaker changes; uncertain speech remains `Unknown speaker`. Overlapping voices are not separated, and names must be assigned manually.
 - **Experimental translation drafts**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports. Actual evaluations found material meaning errors, so compare translations with the original transcript.
 - **AI summary and chapters**: local Ollama creates summaries, key points and chapter titles anchored to transcript segment timestamps. Review outputs for errors.
-- **Persistent transcript library**: local SQLite store with full-text search by title/transcript, editing of segment text/speaker names, deletion and on-demand exports. Original audio is deleted after each processing job. Edit invalidates stale translation/summary so saved exports remain consistent.
+- **Source highlights (opt-in)**: locally selects verbatim passages with original timestamps, without a language model or extra downloads. Open an excerpt's source segments to review context. Short sources may be retained completely, with an explicit notice. This is separate from the AI summary and does not promise complete coverage or correct recognition.
+- **Persistent transcript library**: local SQLite store with full-text search by title/transcript, editing of segment text/speaker names, deletion and on-demand exports. Original audio is deleted after each processing job. Edits invalidate stale translation, summary and source highlights so saved exports remain consistent. Source highlights can be regenerated from a saved transcript after editing.
 - **Uploads**: MP3, WAV, MP4 and other accepted audio/video formats.
-- **Exports**: TXT, SRT, VTT, JSON, ZIP, translated TXT/SRT/VTT/JSON, and summary MD/JSON.
+- **Exports**: TXT, SRT, VTT, JSON, ZIP, translated TXT/SRT/VTT/JSON, summary MD/JSON, and source highlights MD/JSON.
 
 No paid API keys are required for base transcription or the default public speaker backend. The optional legacy pyannote backend still requires authorized model access. Optional translation/summaries require their selected local model to be installed.
 
@@ -66,8 +74,14 @@ describe the tested clips and environment, not universal availability:
 | Provider | Observed end-to-end status |
 | --- | --- |
 | Dailymotion | At `dc0985d`, the complete 734.15-second licensed film passed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Disabling ASR VAD recovered later dialogue; output still needs review. |
-| YouTube | At `dc0985d`, both hosted audio attempts returned the extractor error “This content isn’t available.” Earlier runs encountered bot sign-in requirements, and a separate public-caption request returned `IpBlocked`. These observations do not establish one common cause. No successful YouTube transcript is claimed. |
-| Vimeo | At `dc0985d`, the selected clip returned “The web client only works when logged-in.” No successful transcript is claimed for that attempt. |
+| YouTube | At `dc0985d`, both hosted audio attempts returned “This content isn’t available.” A separately identified official full-film follow-up returned metadata and 33 formats but failed actual media acquisition with HTTP 403 in the local environment. Earlier bot sign-in and caption `IpBlocked` errors remain separate observations. No successful YouTube transcript is claimed. |
+| Vimeo | The original regular-page attempt failed with “The web client only works when logged-in.” Preserving a separately supplied public player link fixed an application URL rewrite: a different licensed 888.07-second recording then passed download, full Small recognition, SQLite, exports, cleanup and restart. The exact baseline-plus-parser experiment and its first dependency failure are retained; suspicious transcript phrases mean speech accuracy is not approved. |
+
+The [public-provider follow-up](docs/provider-followup-2026-11-28/README.md)
+identifies every fixture and tested source hash. Explicit `player.vimeo.com/video/ID`
+links retain their public player route. Regular pages remain regular pages, and
+private hashes, credentials and embed restrictions are not bypassed. Additional
+hosted fixtures preserve their results separately from the original failures.
 
 The [VAD diagnosis](docs/browser-provider-2026-11-26/assistant-vad-diagnosis.json)
 records that Small decoded the full 734.15-second Dailymotion input, but VAD kept
@@ -97,6 +111,27 @@ noise, without claiming general ASR accuracy. The
 separate caption-access denial. The overall three-provider
 gate remains failed; successful processing and faithful exports do not establish
 transcription accuracy or subtitle synchronization.
+
+## Optional source highlights
+
+Check **Source highlights** before processing a link, upload or batch. For an
+existing saved transcript, open it from **Library** and choose **Create source
+highlights**. Save pending edits first. Each passage links to its original source
+segments; downloads include its original text and timestamp boundaries.
+
+The selector uses bounded CPU work and does not call Ollama. It can omit distant
+context, preserve recognition errors or include multiple speakers in one passage.
+Consult the full transcript for speaker labels and context. If the whole modest
+source is retained, the display and Markdown explicitly state that no condensation
+was made. Editing invalidates the old selection; regenerating uses the new text.
+Invalid or stale optional highlights never block downloading the original.
+
+The [controlled English/Greek evaluation](docs/source-highlights-2026-11-28/README.md)
+retains two development failures, their general fixes, and the first frozen
+validation results. The final candidate passed six development and four previously
+unseen cases, preserving all declared source goals and exact text/times. These
+internal fixtures do not certify arbitrary meetings or replace the separate
+AI-summary quality gate.
 
 ## Optional translation, summaries and chapters (Ollama)
 
@@ -276,7 +311,12 @@ In **v0.3**, a SQLite batch journal saves queued jobs and completion statuses. O
 
 ## Back up and restore your library (v0.3)
 
-In the **Library** tab, choose **Download backup** to save a versioned ZIP containing all saved transcripts, timestamps, your edits, translation outputs, and summaries. Only text and metadata are included; audio, API secrets, and active batch work are not exported. Keep the backup in a safe place: it may contain sensitive transcript text.
+In the **Library** tab, choose **Download backup** to save a versioned ZIP containing all saved transcripts, timestamps, your edits, translation outputs, summaries and source highlights. Only text and metadata are included; audio, API secrets, and active batch work are not exported. Keep the backup in a safe place: it may contain sensitive transcript text.
+
+New backups use format version 2 to preserve source highlights. This candidate
+also imports older version 1 backups. Older app revisions cannot import version
+2; use this revision or later to restore a new backup. Highlights are checked
+against the exact source text, indices and timestamps before any record is inserted.
 
 To restore, select the saved ZIP and choose **Restore backup**. LinkScribe checks its SHA-256 integrity hash and validates the records **before any insertion**, including translated segments, summaries, chapter times and finite numeric values. One invalid record rejects the whole import without partially adding transcripts. Existing IDs and edits are never overwritten; only missing transcripts are imported. ZIP entries are allowlisted and bounded to 50 MB compressed / 100 MB transcript data; generated backups obey the same limits. This protects against accidental or malformed imports, but is not a substitute for protecting your device and backups.
 
@@ -294,13 +334,14 @@ To restore, select the saved ZIP and choose **Restore backup**. LinkScribe check
 ## API
 
 - `GET /health` — status and JS runtime diagnosis
-- `POST /api/link` — form fields: `url`, `mode` (`smart`, `audio`, `captions`), `language`, `model`, `consent=true`, `speakers`, `target_language` (`none`, `el`, `en`), `summary`
+- `POST /api/link` — form fields: `url`, `mode` (`smart`, `audio`, `captions`), `language`, `model`, `consent=true`, `speakers`, `target_language` (`none`, `el`, `en`), `summary`, `highlights`
 - `POST /api/upload` — media file, plus model/language/enhancement fields
 - `POST /api/batch` — newline-separated `urls` (1–20), plus link options
 - `GET /api/jobs/{id}` and `/api/jobs/{id}/download/{format}`
 - `GET /api/batches`, `GET /api/batches/{id}` and `/api/batches/{id}/download` (persistent batch history and exports)
 - `GET /api/diagnostics` (dependency and supported-JS-runtime checks, no access-token disclosures)
 - `GET /api/library/backup` (versioned transcript ZIP) and `POST /api/library/restore` (non-destructive validated import)
+- `POST /api/library/{id}/highlights` (select and save highlights from the current saved transcript)
 - `GET /api/library?q=...` and `GET /api/library/{id}`
 - `PUT /api/library/{id}` — title/segments edit (segment timestamps fixed)
 - `DELETE /api/library/{id}`

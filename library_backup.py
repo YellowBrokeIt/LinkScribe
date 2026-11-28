@@ -15,9 +15,11 @@ import zlib
 from typing import Any
 
 import library
+from source_highlights import validate_highlights
 
 FORMAT = "linkscr-transcript-library"
-VERSION = 1
+VERSION = 2
+SUPPORTED_VERSIONS = {1, 2}
 MAX_ARCHIVE_BYTES = 50 * 1024 * 1024
 MAX_JSON_BYTES = 100 * 1024 * 1024
 HEX_ID = re.compile(r"[a-f0-9]{32}\Z")
@@ -153,6 +155,12 @@ def _validated_record(record: Any) -> tuple:
             raise BackupError("Backup contains invalid translations.")
         _validate_segments(items)
     _validate_summary(summary)
+    highlights = record.get("highlights")
+    if highlights is not None:
+        try:
+            validate_highlights(highlights, segments)
+        except ValueError as exc:
+            raise BackupError("Backup source highlights do not match their transcript.") from exc
     try:
         processing_metadata = library._processing_metadata_json(record.get("processing_metadata", {}))
     except ValueError as exc:
@@ -166,6 +174,7 @@ def _validated_record(record: Any) -> tuple:
             _json_text(translations),
             _json_text(summary) if summary is not None else None,
             processing_metadata,
+            _json_text(highlights) if highlights is not None else None,
             float(created_at), float(updated_at))
 
 
@@ -188,18 +197,21 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
     except (zipfile.BadZipFile, EOFError, OSError, RuntimeError, NotImplementedError, zlib.error) as exc:
         raise BackupError("Invalid or damaged LinkScribe backup ZIP.") from exc
     if (not isinstance(manifest, dict) or manifest.get("format") != FORMAT or
-            type(manifest.get("version")) is not int or manifest["version"] != VERSION or
+            type(manifest.get("version")) is not int or manifest["version"] not in SUPPORTED_VERSIONS or
             type(manifest.get("records")) is not int or
             hashlib.sha256(payload).hexdigest() != manifest.get("sha256")):
         raise BackupError("Backup format or checksum is invalid.")
     data = _load_json(payload)
     if (not isinstance(data, dict) or data.get("format") != FORMAT or
-            type(data.get("version")) is not int or data["version"] != VERSION or
+            type(data.get("version")) is not int or data["version"] != manifest["version"] or
             not isinstance(data.get("records"), list) or
             len(data["records"]) != manifest.get("records")):
         raise BackupError("Backup manifest does not match its records.")
     if len(data["records"]) > 200000:
         raise BackupError("Backup contains too many records.")
+    if data["version"] == 1 and any(isinstance(record, dict) and record.get("highlights") is not None
+                                     for record in data["records"]):
+        raise BackupError("Source highlights require a version 2 backup.")
     parsed = [_validated_record(record) for record in data["records"]]
     ids = [row[0] for row in parsed]
     if len(set(ids)) != len(ids):
@@ -209,8 +221,8 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
         with conn:
             before = conn.total_changes
             conn.executemany("""INSERT OR IGNORE INTO transcripts
-              (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,created_at,updated_at)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""", parsed)
+              (id,source,title,language,method,segments,plain_text,translations,summary,processing_metadata,highlights,created_at,updated_at)
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""", parsed)
             inserted = conn.total_changes - before
     finally:
         conn.close()

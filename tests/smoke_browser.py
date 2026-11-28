@@ -117,7 +117,7 @@ def run(args) -> int:
         "semantic_translation_quality": "not_evaluated",
         "source_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
                           for name in ["app.py", "static/index.html", "library.py", "library_backup.py",
-                                       "batch_store.py", "tests/smoke_browser.py"]},
+                                       "batch_store.py", "source_highlights.py", "sources.py", "tests/smoke_browser.py"]},
         "checks": [], "console_errors": [], "page_errors": [], "screenshots": [],
     }
 
@@ -318,6 +318,7 @@ def run(args) -> int:
                 page.locator("#language").select_option("en")
                 page.locator("#model").select_option("tiny")
                 page.locator("#summary").check()  # Controlled failure; original ASR must survive.
+                page.locator("#highlights").check()
                 polled = []
                 listener = lambda request: polled.append(request.url) if re.search(r"/api/jobs/[a-f0-9]{32}$", request.url) else None
                 page.on("request", listener)
@@ -354,6 +355,28 @@ def run(args) -> int:
                         "poll_requests": len(polled), "segments": len(upload_record["segments"]), "exports": exports}
             check("upload_asr_polling_exports", actual_upload)
 
+            def upload_source_highlights():
+                from source_highlights import validate_highlights
+                highlights = upload_record["highlights"]
+                validate_highlights(highlights, upload_record["segments"])
+                expect(page.locator("#highlights-result")).to_be_visible()
+                expect(page.locator("#highlights-result")).to_contain_text("not a complete summary")
+                for excerpt in highlights["excerpts"]:
+                    assert excerpt["text"] in page.locator("#highlights-result").inner_text()
+                json_path = download('#downloads a[href$="/download/highlights_json"]', "upload-highlights.json")
+                assert json.loads(json_path.read_text()) == highlights
+                markdown = download('#downloads a[href$="/download/highlights_md"]', "upload-highlights.md")
+                assert "# Source highlights" in markdown.read_text()
+                page.locator("#highlights-result button").first.click()
+                expect(page.locator("#editor")).to_be_visible()
+                first = highlights["excerpts"][0]["segment_indices"][0]
+                expect(page.get_by_label(f"Text of segment {first + 1}", exact=True)).to_have_value(upload_record["segments"][first]["text"])
+                page.locator("#editor-close").click()
+                shot("upload-source-highlights")
+                return {"actual_asr_source": args.asr, "source_sha256": highlights["source_sha256"],
+                        "excerpts": len(highlights["excerpts"]), "source_jump_and_exports": "pass"}
+            check("actual_upload_source_highlights_and_downloads", upload_source_highlights)
+
             def upload_result_mobile_layout():
                 assert upload_record, "The upload result was unavailable for this dependent check."
                 sizes_at_widths = []
@@ -388,9 +411,11 @@ def run(args) -> int:
                 expect(page.locator("#result-meta")).to_contain_text(title)
                 expect(page.locator("#downloads a")).to_have_count(5)
                 expect(page.locator("#summary-result")).to_be_hidden()
+                expect(page.locator("#highlights-result")).to_be_hidden()
                 saved_job = context.request.get(BASE_URL + "/api/jobs/" + upload_record["id"]).json()
                 assert saved_job["title"] == title and "Reader: " + edited in saved_job["preview"], saved_job
                 assert not saved_job["extras"]["summary"] and not saved_job["extras"]["translation_language"], saved_job
+                assert not saved_job["extras"]["highlights"], saved_job
                 shot("saved-result-refreshed")
                 return {"visible_preview_and_download_match_saved_edit": True,
                         "title_speaker_and_job_status_refreshed": True}
@@ -497,8 +522,36 @@ def run(args) -> int:
             check("library_search_edit_pagination_exports", search_edit_export)
             page.set_viewport_size({"width": 1440, "height": 1000})
 
+            def library_source_highlights():
+                from source_highlights import validate_highlights
+                fresh("library")
+                page.locator("#library-search").fill("fixture")
+                page.locator("#library-refresh").click()
+                page.locator("#library-items .library-item").get_by_role("button", name="Open / edit", exact=True).click()
+                page.locator("#editor-highlights").click()
+                expect(page.locator("#editor-message")).to_contain_text("Source highlights saved")
+                before = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
+                validate_highlights(before["highlights"], before["segments"])
+                expect(page.locator("#editor-highlights-result")).to_be_visible()
+                first = page.get_by_label("Text of segment 1", exact=True)
+                first.fill(first.input_value() + " A saved clarification.")
+                expect(page.locator("#editor-highlights")).to_be_disabled()
+                page.locator("#editor-save").click()
+                expect(page.locator("#editor-message")).to_contain_text("Saved.")
+                expect(page.locator("#editor-highlights-result")).to_be_hidden()
+                page.locator("#editor-highlights").click()
+                expect(page.locator("#editor-message")).to_contain_text("Source highlights saved")
+                after = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
+                validate_highlights(after["highlights"], after["segments"])
+                assert before["highlights"]["source_sha256"] != after["highlights"]["source_sha256"]
+                shot("saved-source-highlights")
+                page.locator("#editor-close").click()
+                return {"saved_source_generation": "pass", "unsaved_edit_guard": "pass", "edit_regeneration": "pass"}
+            check("library_source_highlights_edit_and_regenerate", library_source_highlights)
+
             def backup_delete_restore():
                 fresh("library")
+                source_before = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID).json()
                 backup_path = download('a[href="/api/library/backup"]', "library-backup.zip")
                 with zipfile.ZipFile(backup_path) as archive:
                     names = archive.namelist()
@@ -519,6 +572,7 @@ def run(args) -> int:
                 expect(page.locator("#library-feedback")).to_contain_text("Restore complete: 1 imported;")
                 restored = context.request.get(BASE_URL + "/api/library/" + FIXTURE_ID)
                 assert restored.status == 200
+                assert restored.json()["highlights"] == source_before["highlights"]
                 after = context.request.get(BASE_URL + "/api/library?limit=100").json()["items"]
                 assert len(after) == len(before)
                 page.locator("#library-restore-file").set_input_files(output / "invalid-backup.zip")

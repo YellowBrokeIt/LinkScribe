@@ -1,0 +1,2181 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-27T23:51:27.074134+00:00",
+  "split": "development",
+  "corpus_version": "2026-11-28-source-highlights-development-v1",
+  "requested_case_ids": [
+    "dev-en-equipment-loan",
+    "dev-el-seed-register",
+    "dev-en-training-card",
+    "dev-el-fragmented-turns",
+    "dev-en-long-archive",
+    "dev-el-long-radio"
+  ],
+  "source_sha256": {
+    "source_highlights.py": "81dbc2060d3d8a7fe14fe8747deca3b50df04b1720f5612b7979e3cec57431d3",
+    "tests/evaluate_source_highlights.py": "19ae46d9f4a5dd7f216325b0de920876e45252265b48c11215f43890b2f567ad",
+    "tests/fixtures/source_highlights_development.json": "7894fe03fc8b5c966932cbfca15cbe8724866d5f8072555a7ed82aaceb29fc83"
+  },
+  "git_commit": "002d8fc66e5f3666b40477878e064c825ef1c495",
+  "python": "3.12.14",
+  "complete": true,
+  "corpus_complete": true,
+  "semantic_quality": "unreviewed",
+  "cases": [
+    {
+      "id": "dev-en-equipment-loan",
+      "source_language": "en",
+      "purpose": "Short meeting with corrected inventory, owner/operator separation, conditional collection and exact deposit.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "Nora is checking the equipment loan for a school astronomy evening. Elias owns the six battery packs, and Tessa will collect and return them. Nobody has transferred ownership to the school.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "The team spent several minutes comparing labels. The blue labels are easier to read in dim light, although the colour has no bearing on whether a battery passed its inspection.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "The handwritten list says that all six packs passed, but this is an unchecked draft from before the inspection. Nora asks the group to wait for the measured results rather than copy that line into the public notice.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "The measured result is four usable packs and two with damaged sockets. The two damaged packs stay with Elias and must not be issued to pupils. That replaces the draft claim that all six passed.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "The cases will be carried in one trolley. A cloth goes between the cases to prevent scratches. Someone proposes a second trolley, but nobody is assigned to obtain one and no purchase is authorised.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "The agreed refundable deposit is €62.40 for all four usable packs together, not €62.40 per pack. The deposit has not yet been sent; Nora is waiting for the school administrator to approve the transfer.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "Tessa can collect the four usable packs on Thursday only if Elias confirms that their chargers are included. If the chargers are missing, collection moves to the following week and the pupils use the school equipment.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "The group looks at a photograph of the storage cupboard. The photo is useful for packing, but the small handwritten numbers on the shelf are too blurred to read. Nobody treats that picture as an inspection record.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "The final notice must give the measured four-and-two split and the condition about chargers. Nora will write the notice after the administrator responds; Tessa will not make the payment or approve the notice.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 120.0,
+          "end": 131.5,
+          "text": "The astronomy evening is still planned, but its equipment loan is not confirmed. There has been no collection, no deposit payment, and no decision to lend the two damaged packs.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "input_sha256": "9446e4bf3d88b65bdb5c55f0076603abc2bfa9cfb260f21ad87588a3e091897a",
+      "review_questions": [
+        "Would a reader mistake a draft count for an inspection result?",
+        "Are a proposed payment and collection clearly still pending?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "edfd3cc3d8f860220300edf2149156d42060360abdde3da9e13209594dcd7557",
+        "source_segment_count": 10,
+        "selected_segment_count": 10,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "start": 0.75,
+            "end": 131.5,
+            "text": "Nora is checking the equipment loan for a school astronomy evening. Elias owns the six battery packs, and Tessa will collect and return them. Nobody has transferred ownership to the school.\nThe team spent several minutes comparing labels. The blue labels are easier to read in dim light, although the colour has no bearing on whether a battery passed its inspection.\nThe handwritten list says that all six packs passed, but this is an unchecked draft from before the inspection. Nora asks the group to wait for the measured results rather than copy that line into the public notice.\nThe measured result is four usable packs and two with damaged sockets. The two damaged packs stay with Elias and must not be issued to pupils. That replaces the draft claim that all six passed.\nThe cases will be carried in one trolley. A cloth goes between the cases to prevent scratches. Someone proposes a second trolley, but nobody is assigned to obtain one and no purchase is authorised.\nThe agreed refundable deposit is €62.40 for all four usable packs together, not €62.40 per pack. The deposit has not yet been sent; Nora is waiting for the school administrator to approve the transfer.\nTessa can collect the four usable packs on Thursday only if Elias confirms that their chargers are included. If the chargers are missing, collection moves to the following week and the pupils use the school equipment.\nThe group looks at a photograph of the storage cupboard. The photo is useful for packing, but the small handwritten numbers on the shelf are too blurred to read. Nobody treats that picture as an inspection record.\nThe final notice must give the measured four-and-two split and the condition about chargers. Nora will write the notice after the administrator responds; Tessa will not make the payment or approve the notice.\nThe astronomy evening is still planned, but its equipment loan is not confirmed. There has been no collection, no deposit payment, and no decision to lend the two damaged packs."
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "selection_fraction": 1.0,
+      "source_text_bytes": 1990,
+      "selected_text_bytes": 1999,
+      "coverage": {
+        "goals_covered": 4,
+        "goals_total": 4,
+        "goals": [
+          {
+            "id": "inventory",
+            "description": "Four usable and two damaged; damaged items excluded.",
+            "sufficient_segment_groups": [
+              [
+                3
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                3
+              ]
+            ]
+          },
+          {
+            "id": "deposit",
+            "description": "€62.40 total; approval and payment still pending.",
+            "sufficient_segment_groups": [
+              [
+                5
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "id": "collection",
+            "description": "Thursday collection depends on chargers; alternative stated.",
+            "sufficient_segment_groups": [
+              [
+                6
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "id": "ownership",
+            "description": "Elias retains ownership and Tessa collects/returns.",
+            "sufficient_segment_groups": [
+              [
+                0
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                0
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              2
+            ],
+            "require_any_complete_group": [
+              [
+                3
+              ]
+            ],
+            "reason": "An obsolete six-passed draft must not be excerpted without the measured replacement.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.001876
+    },
+    {
+      "id": "dev-el-seed-register",
+      "source_language": "el",
+      "purpose": "Greek inventory and distribution limits with conditional revised date, unit/total price and privacy.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "Η Ράνια οργανώνει την καταγραφή μιας δωρεάς σπόρων. Ο Λεωνίδας μετρά τα φακελάκια και η Μυρτώ σημειώνει ποια μπορούν να δοθούν στους επισκέπτες. Η δωρεά δεν έχει ακόμη μοιραστεί.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "Στο τραπέζι υπάρχουν χαρτιά διαφορετικού χρώματος. Η ομάδα συζητά ποιο χρώμα φαίνεται καλύτερα σε ασπρόμαυρη φωτοτυπία, χωρίς να αποφασίζει αλλαγή στις ποσότητες ή στις άδειες χρήσης.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "Συνολικά μετρήθηκαν 27 φακελάκια. Τα 19 έχουν πλήρη στοιχεία προέλευσης, ενώ τα άλλα οκτώ δεν έχουν ετικέτα. Τα οκτώ χωρίς ετικέτα θα μείνουν χωριστά και δεν θα διανεμηθούν.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "Η πρώτη πρόχειρη ανακοίνωση έλεγε ότι η παραλαβή θα γίνει στις 6 Μαΐου. Εκείνη η ημερομηνία ήταν πρόταση πριν ελεγχθεί το ωράριο και δεν αποτελεί επιβεβαιωμένο ραντεβού.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "Η διανομή μεταφέρεται στις 8 Μαΐου, μόνο αν η αίθουσα ανοίξει το πρωί. Αν μείνει κλειστή, η Ράνια θα ανακοινώσει νέα ημέρα. Η 6 η Μαΐου δεν ισχύει πλέον.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "Στη συνέχεια εξετάζουν το μέγεθος του κουτιού. Το μεγάλο κουτί χωρά όλα τα φακελάκια και το μικρό είναι ευκολότερο στη μεταφορά. Η συζήτηση αυτή δεν αλλάζει την απόφαση για τα οκτώ χωρίς ετικέτα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "Η τιμή των €14,80 αφορά όλες τις καινούριες ετικέτες μαζί, όχι κάθε φακελάκι. Είναι προσφορά του τυπογραφείου και δεν έχει εγκριθεί παραγγελία ή πληρωμή.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "Η Μυρτώ θα ελέγξει ξανά τον κατάλογο των 19 πριν ανοίξει η αίθουσα. Ο Λεωνίδας δεν θα προσθέσει εκτίμηση προέλευσης στα οκτώ άγνωστα, επειδή δεν υπάρχει σχετική πληροφορία.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "Οι φωτογραφίες προορίζονται για το εσωτερικό αρχείο. Οι εθελοντές δεν έχουν συμφωνήσει να δημοσιευτούν τα ονόματα ή τα τηλέφωνά τους μαζί με τις εικόνες.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 120.0,
+          "end": 131.5,
+          "text": "Η τελική συμφωνία είναι να διανεμηθούν μόνο τα 19 με πλήρη στοιχεία, αφού επιβεβαιωθεί η πρόσβαση στην αίθουσα. Δεν εγκρίθηκε η διανομή και των 27 ούτε η δημοσίευση του καταλόγου επικοινωνίας.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "input_sha256": "a408f71681587a58d11381765930e75df3360413c31be19b19fe105ef15712e5",
+      "review_questions": [
+        "Does the selection keep the distribution limit and the separate privacy limit?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "99f12fb37270854e634dc1a73af6ca01bed7502f237f61f0d7224a67ac249567",
+        "source_segment_count": 10,
+        "selected_segment_count": 9,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": 0.75,
+            "end": 78.5,
+            "text": "Η Ράνια οργανώνει την καταγραφή μιας δωρεάς σπόρων. Ο Λεωνίδας μετρά τα φακελάκια και η Μυρτώ σημειώνει ποια μπορούν να δοθούν στους επισκέπτες. Η δωρεά δεν έχει ακόμη μοιραστεί.\nΣτο τραπέζι υπάρχουν χαρτιά διαφορετικού χρώματος. Η ομάδα συζητά ποιο χρώμα φαίνεται καλύτερα σε ασπρόμαυρη φωτοτυπία, χωρίς να αποφασίζει αλλαγή στις ποσότητες ή στις άδειες χρήσης.\nΣυνολικά μετρήθηκαν 27 φακελάκια. Τα 19 έχουν πλήρη στοιχεία προέλευσης, ενώ τα άλλα οκτώ δεν έχουν ετικέτα. Τα οκτώ χωρίς ετικέτα θα μείνουν χωριστά και δεν θα διανεμηθούν.\nΗ πρώτη πρόχειρη ανακοίνωση έλεγε ότι η παραλαβή θα γίνει στις 6 Μαΐου. Εκείνη η ημερομηνία ήταν πρόταση πριν ελεγχθεί το ωράριο και δεν αποτελεί επιβεβαιωμένο ραντεβού.\nΗ διανομή μεταφέρεται στις 8 Μαΐου, μόνο αν η αίθουσα ανοίξει το πρωί. Αν μείνει κλειστή, η Ράνια θα ανακοινώσει νέα ημέρα. Η 6 η Μαΐου δεν ισχύει πλέον.\nΣτη συνέχεια εξετάζουν το μέγεθος του κουτιού. Το μεγάλο κουτί χωρά όλα τα φακελάκια και το μικρό είναι ευκολότερο στη μεταφορά. Η συζήτηση αυτή δεν αλλάζει την απόφαση για τα οκτώ χωρίς ετικέτα."
+          },
+          {
+            "segment_indices": [
+              7,
+              8,
+              9
+            ],
+            "start": 93.5,
+            "end": 131.5,
+            "text": "Η Μυρτώ θα ελέγξει ξανά τον κατάλογο των 19 πριν ανοίξει η αίθουσα. Ο Λεωνίδας δεν θα προσθέσει εκτίμηση προέλευσης στα οκτώ άγνωστα, επειδή δεν υπάρχει σχετική πληροφορία.\nΟι φωτογραφίες προορίζονται για το εσωτερικό αρχείο. Οι εθελοντές δεν έχουν συμφωνήσει να δημοσιευτούν τα ονόματα ή τα τηλέφωνά τους μαζί με τις εικόνες.\nΗ τελική συμφωνία είναι να διανεμηθούν μόνο τα 19 με πλήρη στοιχεία, αφού επιβεβαιωθεί η πρόσβαση στην αίθουσα. Δεν εγκρίθηκε η διανομή και των 27 ούτε η δημοσίευση του καταλόγου επικοινωνίας."
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ],
+      "selection_fraction": 0.9,
+      "source_text_bytes": 3125,
+      "selected_text_bytes": 2856,
+      "coverage": {
+        "goals_covered": 3,
+        "goals_total": 4,
+        "goals": [
+          {
+            "id": "eligible",
+            "description": "Only19 eligible;8 excluded.",
+            "sufficient_segment_groups": [
+              [
+                2
+              ],
+              [
+                9
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                2
+              ],
+              [
+                9
+              ]
+            ]
+          },
+          {
+            "id": "date",
+            "description": "8May conditional;6May superseded.",
+            "sufficient_segment_groups": [
+              [
+                4
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "id": "quote",
+            "description": "€14.80 total offer, no order or payment.",
+            "sufficient_segment_groups": [
+              [
+                6
+              ]
+            ],
+            "covered": false,
+            "matched_groups": []
+          },
+          {
+            "id": "privacy",
+            "description": "Internal photos do not authorise names/phone publication.",
+            "sufficient_segment_groups": [
+              [
+                8
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                8
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              3
+            ],
+            "require_any_complete_group": [
+              [
+                4
+              ]
+            ],
+            "reason": "Selecting the early6May proposal requires its replacement.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [
+          "Missing reference coverage: €14.80 total offer, no order or payment."
+        ],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.001718
+    },
+    {
+      "id": "dev-en-training-card",
+      "source_language": "en",
+      "purpose": "A quoted harmful instruction is a rejected example, not an instruction; confirmed versus waiting reservations.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "This is a rehearsal for volunteers who edit the museum notice board, not a real instruction to change the database. The trainer introduces examples of misleading wording and asks the group to explain why they are wrong.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "One practice card reads: delete every reservation and announce that the exhibition is cancelled. That is deliberately bad advice printed on a sample card. No reservation is to be deleted and the exhibition is going ahead.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "The actual reservation list contains 31 confirmed places and five requests waiting for a reply. The five waiting requests are not confirmed places, and the volunteers must not tell those visitors that seats are already reserved.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "The wall outside the office has three old posters. The trainer discusses which margins were easier to align, then moves the posters aside so that everyone can see the reservation examples clearly.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "A visitor may exchange an existing place for a different session only after the organiser confirms space there. Sending an exchange request by email does not itself cancel the original reservation.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "The proposed notice says that all groups can arrive at noon. That proposal is not authorised because the early session needs the entrance clear until half past noon.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "The approved arrival time for the second group is 12:45, not noon. The first group keeps its original slot. The corrected arrival time is the wording that belongs on the public notice.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "Several volunteers try different pens on spare paper. Black ink is easier to photocopy than pale green ink. Those colour tests do not change the bookings, arrival times, or conditions for exchanging a place.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "The organiser will review the draft before it is printed. The volunteers have permission to rehearse edits on copies, but no permission to change real reservations during this training session.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "input_sha256": "2d5bf1eba173bea77f4d8ea0f725576f894c69a11852f61869c247a4559b81cc",
+      "review_questions": [
+        "Could the rejected practice card be read as an instruction?",
+        "Does a conditional exchange become a completed cancellation?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "2f26a3311a7fe63bda61a283c0acc4764ab32b683ad52186a6d1ada86890acad",
+        "source_segment_count": 9,
+        "selected_segment_count": 9,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "start": 0.75,
+            "end": 118.25,
+            "text": "This is a rehearsal for volunteers who edit the museum notice board, not a real instruction to change the database. The trainer introduces examples of misleading wording and asks the group to explain why they are wrong.\nOne practice card reads: delete every reservation and announce that the exhibition is cancelled. That is deliberately bad advice printed on a sample card. No reservation is to be deleted and the exhibition is going ahead.\nThe actual reservation list contains 31 confirmed places and five requests waiting for a reply. The five waiting requests are not confirmed places, and the volunteers must not tell those visitors that seats are already reserved.\nThe wall outside the office has three old posters. The trainer discusses which margins were easier to align, then moves the posters aside so that everyone can see the reservation examples clearly.\nA visitor may exchange an existing place for a different session only after the organiser confirms space there. Sending an exchange request by email does not itself cancel the original reservation.\nThe proposed notice says that all groups can arrive at noon. That proposal is not authorised because the early session needs the entrance clear until half past noon.\nThe approved arrival time for the second group is 12:45, not noon. The first group keeps its original slot. The corrected arrival time is the wording that belongs on the public notice.\nSeveral volunteers try different pens on spare paper. Black ink is easier to photocopy than pale green ink. Those colour tests do not change the bookings, arrival times, or conditions for exchanging a place.\nThe organiser will review the draft before it is printed. The volunteers have permission to rehearse edits on copies, but no permission to change real reservations during this training session."
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "selection_fraction": 1.0,
+      "source_text_bytes": 1810,
+      "selected_text_bytes": 1818,
+      "coverage": {
+        "goals_covered": 4,
+        "goals_total": 4,
+        "goals": [
+          {
+            "id": "bad-example",
+            "description": "Deletion/cancellation command remains explicitly rejected.",
+            "sufficient_segment_groups": [
+              [
+                1
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                1
+              ]
+            ]
+          },
+          {
+            "id": "reservations",
+            "description": "31confirmed and5waiting remain distinct.",
+            "sufficient_segment_groups": [
+              [
+                2
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                2
+              ]
+            ]
+          },
+          {
+            "id": "exchange",
+            "description": "Exchange request does not cancel original place.",
+            "sufficient_segment_groups": [
+              [
+                4
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "id": "arrival",
+            "description": "Approved12:45 supersedes noon.",
+            "sufficient_segment_groups": [
+              [
+                6
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                6
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              5
+            ],
+            "require_any_complete_group": [
+              [
+                6
+              ]
+            ],
+            "reason": "The noon proposal needs the approved replacement.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.001246
+    },
+    {
+      "id": "dev-el-fragmented-turns",
+      "source_language": "el",
+      "purpose": "ASR-like unpunctuated fragments split corrections, permission conditions, ownership and price.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "Θα περιγράψω τώρα τι συμφωνήσαμε για τα δανεικά όργανα μέτρησης",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "η Άννα τα παραλαμβάνει από τον Θοδωρή αλλά ο Θοδωρής παραμένει ο ιδιοκτήτης τους",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "η αρχική λίστα είχε γράψει δεκαπέντε και αυτό το είπα κι εγώ πριν λίγο",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "όμως το ξαναμετρήσαμε και είναι έντεκα όχι δεκαπέντε αυτό είναι το τελικό σύνολο",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "τα έντεκα είναι όλα στην ίδια θήκη με τις οδηγίες και τις δύο εφεδρικές μπαταρίες",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "η φωτογραφία της θήκης τραβήχτηκε για να θυμόμαστε τη θέση κάθε οργάνου μέσα στο αφρώδες υλικό",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "δεν θα χρησιμοποιηθούν στις δοκιμές την Παρασκευή",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "εκτός αν ολοκληρωθεί πρώτα ο έλεγχος από την Εύα και μας πει ότι μπορούν να χρησιμοποιηθούν",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "η Εύα δεν έχει ολοκληρώσει ακόμη αυτόν τον έλεγχο και δεν έχουμε τέτοια επιβεβαίωση",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 120.0,
+          "end": 131.5,
+          "text": "η τιμή που είπαμε για τη μεταφορά είναι τριάντα δύο ευρώ συνολικά",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 133.25,
+          "end": 144.75,
+          "text": "όχι τριάντα δύο για το κάθε όργανο και το ποσό αυτό δεν έχει ακόμη πληρωθεί",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 146.5,
+          "end": 158.0,
+          "text": "οι εθελοντές συζητούν ποιο ντουλάπι κλειδώνει καλύτερα και ποιος έχει το δεύτερο κλειδί",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 159.75,
+          "end": 171.25,
+          "text": "αυτό είναι θέμα αποθήκευσης και δεν σημαίνει ότι τα όργανα έχουν ελεγχθεί ή έχουν γίνει περιουσία του συλλόγου",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 173.0,
+          "end": 184.5,
+          "text": "η Άννα θα τα επιστρέψει στον Θοδωρή τη Δευτέρα αν ολοκληρωθεί η χρήση τους",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 186.25,
+          "end": 197.75,
+          "text": "αν αναβληθεί η δοκιμή θα του τηλεφωνήσει για να συμφωνήσουν άλλη μέρα επιστροφής",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 199.5,
+          "end": 211.0,
+          "text": "άρα κρατάμε το τελικό σύνολο των έντεκα και περιμένουμε την Εύα πριν αποφασίσουμε για την Παρασκευή",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "input_sha256": "7a376769b56f9da6ab8b233d997c79c0b9539b339704179b3a94941053306537",
+      "review_questions": [
+        "Do contiguous context windows preserve unfinished speech and its immediate continuation?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "403112db8734725e9e1b471700e9b73888e95cc349d2410e9990ce4803aad9c3",
+        "source_segment_count": 16,
+        "selected_segment_count": 16,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "start": 0.75,
+            "end": 211.0,
+            "text": "Θα περιγράψω τώρα τι συμφωνήσαμε για τα δανεικά όργανα μέτρησης\nη Άννα τα παραλαμβάνει από τον Θοδωρή αλλά ο Θοδωρής παραμένει ο ιδιοκτήτης τους\nη αρχική λίστα είχε γράψει δεκαπέντε και αυτό το είπα κι εγώ πριν λίγο\nόμως το ξαναμετρήσαμε και είναι έντεκα όχι δεκαπέντε αυτό είναι το τελικό σύνολο\nτα έντεκα είναι όλα στην ίδια θήκη με τις οδηγίες και τις δύο εφεδρικές μπαταρίες\nη φωτογραφία της θήκης τραβήχτηκε για να θυμόμαστε τη θέση κάθε οργάνου μέσα στο αφρώδες υλικό\nδεν θα χρησιμοποιηθούν στις δοκιμές την Παρασκευή\nεκτός αν ολοκληρωθεί πρώτα ο έλεγχος από την Εύα και μας πει ότι μπορούν να χρησιμοποιηθούν\nη Εύα δεν έχει ολοκληρώσει ακόμη αυτόν τον έλεγχο και δεν έχουμε τέτοια επιβεβαίωση\nη τιμή που είπαμε για τη μεταφορά είναι τριάντα δύο ευρώ συνολικά\nόχι τριάντα δύο για το κάθε όργανο και το ποσό αυτό δεν έχει ακόμη πληρωθεί\nοι εθελοντές συζητούν ποιο ντουλάπι κλειδώνει καλύτερα και ποιος έχει το δεύτερο κλειδί\nαυτό είναι θέμα αποθήκευσης και δεν σημαίνει ότι τα όργανα έχουν ελεγχθεί ή έχουν γίνει περιουσία του συλλόγου\nη Άννα θα τα επιστρέψει στον Θοδωρή τη Δευτέρα αν ολοκληρωθεί η χρήση τους\nαν αναβληθεί η δοκιμή θα του τηλεφωνήσει για να συμφωνήσουν άλλη μέρα επιστροφής\nάρα κρατάμε το τελικό σύνολο των έντεκα και περιμένουμε την Εύα πριν αποφασίσουμε για την Παρασκευή"
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "selection_fraction": 1.0,
+      "source_text_bytes": 2358,
+      "selected_text_bytes": 2373,
+      "coverage": {
+        "goals_covered": 4,
+        "goals_total": 4,
+        "goals": [
+          {
+            "id": "count",
+            "description": "Corrected total11, not15.",
+            "sufficient_segment_groups": [
+              [
+                3
+              ],
+              [
+                15
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                3
+              ],
+              [
+                15
+              ]
+            ]
+          },
+          {
+            "id": "condition",
+            "description": "Use awaits Eva check and confirmation.",
+            "sufficient_segment_groups": [
+              [
+                6,
+                7,
+                8
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                6,
+                7,
+                8
+              ]
+            ]
+          },
+          {
+            "id": "price",
+            "description": "€32total, notperitem andunpaid.",
+            "sufficient_segment_groups": [
+              [
+                9,
+                10
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                9,
+                10
+              ]
+            ]
+          },
+          {
+            "id": "owner",
+            "description": "Anna receives;Thodoris owns.",
+            "sufficient_segment_groups": [
+              [
+                0,
+                1
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              2
+            ],
+            "require_any_complete_group": [
+              [
+                3
+              ],
+              [
+                15
+              ]
+            ],
+            "reason": "Early15 count requires explicit final11.",
+            "applies": true,
+            "satisfied": true
+          },
+          {
+            "when_any_selected": [
+              6
+            ],
+            "require_any_complete_group": [
+              [
+                7,
+                8
+              ]
+            ],
+            "reason": "A standalone no-use fragment drops the stated exception and pending check.",
+            "applies": true,
+            "satisfied": true
+          },
+          {
+            "when_any_selected": [
+              9
+            ],
+            "require_any_complete_group": [
+              [
+                10
+              ]
+            ],
+            "reason": "Price fragment needs total-vs-unit and unpaid continuation.",
+            "applies": true,
+            "satisfied": true
+          },
+          {
+            "when_any_selected": [
+              13
+            ],
+            "require_any_complete_group": [
+              [
+                14
+              ]
+            ],
+            "reason": "Monday return is conditional and has an alternative.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.001263
+    },
+    {
+      "id": "dev-en-long-archive",
+      "source_language": "en",
+      "purpose": "Long repetitive procedural discussion with private-only consent, price correction and decisive late publication limit.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "The opening proposal was to put all 90 recorded interviews online before the end of June. That suggestion is on the meeting agenda, but the group has not examined the permission forms or made a publication decision. The following discussion must be completed before anything is described as approved.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "The recorded-history archive group turns to cotton covers during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "The recorded-history archive group turns to numbered envelopes during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "The recorded-history archive group turns to plain storage boxes during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "The recorded-history archive group turns to wooden trays during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "The recorded-history archive group turns to binder clips during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "The recorded-history archive group turns to spare tags during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "The recorded-history archive group turns to blue folders during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 120.0,
+          "end": 131.5,
+          "text": "Permission review found 42 interviews with consent for private research only. Those forms do not permit public audio, public transcripts or quotations on the website. The remaining permission forms still need checking; 42 is not the number approved for online release.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 133.25,
+          "end": 144.75,
+          "text": "The recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 146.5,
+          "end": 158.0,
+          "text": "The recorded-history archive group turns to reference photographs during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 159.75,
+          "end": 171.25,
+          "text": "The recorded-history archive group turns to plastic rulers during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 173.0,
+          "end": 184.5,
+          "text": "The recorded-history archive group turns to adhesive pockets during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 186.25,
+          "end": 197.75,
+          "text": "The recorded-history archive group turns to index cards during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 199.5,
+          "end": 211.0,
+          "text": "The recorded-history archive group turns to blank forms during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 212.75,
+          "end": 224.25,
+          "text": "The recorded-history archive group turns to fabric handles during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 226.0,
+          "end": 237.5,
+          "text": "The recorded-history archive group turns to paper sleeves during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 239.25,
+          "end": 250.75,
+          "text": "The recorded-history archive group turns to cardboard dividers during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 252.5,
+          "end": 264.0,
+          "text": "The recorded-history archive group turns to cotton covers during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 265.75,
+          "end": 277.25,
+          "text": "The recorded-history archive group turns to numbered envelopes during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 279.0,
+          "end": 290.5,
+          "text": "The recorded-history archive group turns to plain storage boxes during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 292.25,
+          "end": 303.75,
+          "text": "The recorded-history archive group turns to wooden trays during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 305.5,
+          "end": 317.0,
+          "text": "The recorded-history archive group turns to binder clips during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 318.75,
+          "end": 330.25,
+          "text": "The recorded-history archive group turns to spare tags during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 332.0,
+          "end": 343.5,
+          "text": "The recorded-history archive group turns to blue folders during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 345.25,
+          "end": 356.75,
+          "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 358.5,
+          "end": 370.0,
+          "text": "The accepted equipment invoice is £146.20 in total. A copied spreadsheet displayed £1,462.00 because a decimal point was misplaced, and that copied value must not be used. The invoice is accepted for processing, but no payment has been made yet.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 371.75,
+          "end": 383.25,
+          "text": "The recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 385.0,
+          "end": 396.5,
+          "text": "The recorded-history archive group turns to reference photographs during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 398.25,
+          "end": 409.75,
+          "text": "The recorded-history archive group turns to plastic rulers during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 411.5,
+          "end": 423.0,
+          "text": "The recorded-history archive group turns to adhesive pockets during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 424.75,
+          "end": 436.25,
+          "text": "The recorded-history archive group turns to index cards during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 438.0,
+          "end": 449.5,
+          "text": "The recorded-history archive group turns to blank forms during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 451.25,
+          "end": 462.75,
+          "text": "The recorded-history archive group turns to fabric handles during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 464.5,
+          "end": 476.0,
+          "text": "The recorded-history archive group turns to paper sleeves during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 477.75,
+          "end": 489.25,
+          "text": "The recorded-history archive group turns to cardboard dividers during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 491.0,
+          "end": 502.5,
+          "text": "The recorded-history archive group turns to cotton covers during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 504.25,
+          "end": 515.75,
+          "text": "The recorded-history archive group turns to numbered envelopes during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 517.5,
+          "end": 529.0,
+          "text": "The recorded-history archive group turns to plain storage boxes during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 530.75,
+          "end": 542.25,
+          "text": "The recorded-history archive group turns to wooden trays during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 544.0,
+          "end": 555.5,
+          "text": "The recorded-history archive group turns to binder clips during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 557.25,
+          "end": 568.75,
+          "text": "The recorded-history archive group turns to spare tags during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 570.5,
+          "end": 582.0,
+          "text": "The recorded-history archive group turns to blue folders during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 583.75,
+          "end": 595.25,
+          "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 597.0,
+          "end": 608.5,
+          "text": "Jules owns the playback machine. Farah operates it while Omar checks the permission forms. Operating the machine gives Farah no authority to grant publication permission, and Omar is not the owner of the machine. The machine must go back to Jules after the review.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 610.25,
+          "end": 621.75,
+          "text": "The recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 623.5,
+          "end": 635.0,
+          "text": "The recorded-history archive group turns to reference photographs during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 636.75,
+          "end": 648.25,
+          "text": "The recorded-history archive group turns to plastic rulers during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 650.0,
+          "end": 661.5,
+          "text": "The recorded-history archive group turns to adhesive pockets during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 663.25,
+          "end": 674.75,
+          "text": "The recorded-history archive group turns to index cards during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 676.5,
+          "end": 688.0,
+          "text": "The recorded-history archive group turns to blank forms during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 689.75,
+          "end": 701.25,
+          "text": "The recorded-history archive group turns to fabric handles during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 703.0,
+          "end": 714.5,
+          "text": "The recorded-history archive group turns to paper sleeves during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 716.25,
+          "end": 727.75,
+          "text": "The recorded-history archive group turns to cardboard dividers during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 729.5,
+          "end": 741.0,
+          "text": "The recorded-history archive group turns to cotton covers during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 742.75,
+          "end": 754.25,
+          "text": "The recorded-history archive group turns to numbered envelopes during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 756.0,
+          "end": 767.5,
+          "text": "The recorded-history archive group turns to plain storage boxes during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 769.25,
+          "end": 780.75,
+          "text": "The recorded-history archive group turns to wooden trays during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 782.5,
+          "end": 794.0,
+          "text": "The recorded-history archive group turns to binder clips during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 795.75,
+          "end": 807.25,
+          "text": "The recorded-history archive group turns to spare tags during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 809.0,
+          "end": 820.5,
+          "text": "The recorded-history archive group turns to blue folders during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 822.25,
+          "end": 833.75,
+          "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 835.5,
+          "end": 847.0,
+          "text": "After reading all the forms, the group rejects the opening plan to publish 90 interviews. Exactly 18 speakers permit selected written quotations after checking the wording themselves. No speaker has authorised uploading a complete audio recording. Only those checked quotations may be considered for the website.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 848.75,
+          "end": 860.25,
+          "text": "The recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 862.0,
+          "end": 873.5,
+          "text": "The recorded-history archive group turns to reference photographs during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 875.25,
+          "end": 886.75,
+          "text": "The recorded-history archive group turns to plastic rulers during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 888.5,
+          "end": 900.0,
+          "text": "The recorded-history archive group turns to adhesive pockets during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 901.75,
+          "end": 913.25,
+          "text": "The recorded-history archive group turns to index cards during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 915.0,
+          "end": 926.5,
+          "text": "The recorded-history archive group turns to blank forms during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 928.25,
+          "end": 939.75,
+          "text": "The recorded-history archive group turns to fabric handles during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 941.5,
+          "end": 953.0,
+          "text": "The end-of-June target is withdrawn. The website update will wait until each of the 18 speakers has checked their own quotation; no replacement date is fixed. Nothing has been published during this meeting. The private-only interviews remain outside the website plan.",
+          "speaker": "Speaker 3"
+        }
+      ],
+      "input_sha256": "596a6e26be796fea82d4100b94fd18ee464685bb9e0391aed22b8f0ad5082623",
+      "review_questions": [
+        "Do procedural repetitions displace decisive information?",
+        "Is the late decision retained rather than the opening proposal?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "84382bd045a2a8054100448be8c4ee75859a659c82b38b39f7d99992a7e3bb33",
+        "source_segment_count": 72,
+        "selected_segment_count": 16,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1
+            ],
+            "start": 0.75,
+            "end": 25.5,
+            "text": "The opening proposal was to put all 90 recorded interviews online before the end of June. That suggestion is on the meeting agenda, but the group has not examined the permission forms or made a publication decision. The following discussion must be completed before anything is described as approved.\nThe recorded-history archive group turns to cotton covers during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement."
+          },
+          {
+            "segment_indices": [
+              8,
+              9,
+              10
+            ],
+            "start": 106.75,
+            "end": 144.75,
+            "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers check that the cupboard closes without force, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.\nPermission review found 42 interviews with consent for private research only. Those forms do not permit public audio, public transcripts or quotations on the website. The remaining permission forms still need checking; 42 is not the number approved for online release.\nThe recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement."
+          },
+          {
+            "segment_indices": [
+              26,
+              27,
+              28
+            ],
+            "start": 345.25,
+            "end": 383.25,
+            "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers leave room for a person carrying a box, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.\nThe accepted equipment invoice is £146.20 in total. A copied spreadsheet displayed £1,462.00 because a decimal point was misplaced, and that copied value must not be used. The invoice is accepted for processing, but no payment has been made yet.\nThe recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement."
+          },
+          {
+            "segment_indices": [
+              44,
+              45,
+              46
+            ],
+            "start": 583.75,
+            "end": 621.75,
+            "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers place the empty packaging on the bottom shelf, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.\nJules owns the playback machine. Farah operates it while Omar checks the permission forms. Operating the machine gives Farah no authority to grant publication permission, and Omar is not the owner of the machine. The machine must go back to Jules after the review.\nThe recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers sort the material by its existing shelf label, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement."
+          },
+          {
+            "segment_indices": [
+              62,
+              63,
+              64
+            ],
+            "start": 822.25,
+            "end": 860.25,
+            "text": "The recorded-history archive group turns to packing sheets during this part of the discussion. The volunteers keep the original labels visible during handling, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.\nAfter reading all the forms, the group rejects the opening plan to publish 90 interviews. Exactly 18 speakers permit selected written quotations after checking the wording themselves. No speaker has authorised uploading a complete audio recording. Only those checked quotations may be considered for the website.\nThe recorded-history archive group turns to padded sleeves during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement."
+          },
+          {
+            "segment_indices": [
+              70,
+              71
+            ],
+            "start": 928.25,
+            "end": 953.0,
+            "text": "The recorded-history archive group turns to fabric handles during this part of the discussion. The volunteers compare the old and new handwriting, then describe what they can see on the work table. They compare several ways of keeping the material tidy without changing its contents. This is a description of the working area; it records no new approval, price, public release or completion of the project. The team keeps a note so the next shift can understand the same arrangement.\nThe end-of-June target is withdrawn. The website update will wait until each of the 18 speakers has checked their own quotation; no replacement date is fixed. Nothing has been published during this meeting. The private-only interviews remain outside the website plan."
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        8,
+        9,
+        10,
+        26,
+        27,
+        28,
+        44,
+        45,
+        46,
+        62,
+        63,
+        64,
+        70,
+        71
+      ],
+      "selection_fraction": 0.2222222222222222,
+      "source_text_bytes": 34034,
+      "selected_text_bytes": 6565,
+      "coverage": {
+        "goals_covered": 5,
+        "goals_total": 5,
+        "goals": [
+          {
+            "id": "private",
+            "description": "42private-only permissions are not publicclearance.",
+            "sufficient_segment_groups": [
+              [
+                9
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                9
+              ]
+            ]
+          },
+          {
+            "id": "invoice",
+            "description": "£146.20total replaces£1462;unpaid.",
+            "sufficient_segment_groups": [
+              [
+                27
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                27
+              ]
+            ]
+          },
+          {
+            "id": "roles",
+            "description": "Julesowner/Farahoperator/Omarpermissions.",
+            "sufficient_segment_groups": [
+              [
+                45
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                45
+              ]
+            ]
+          },
+          {
+            "id": "publication",
+            "description": "18checked quotations only;no wholeaudio.",
+            "sufficient_segment_groups": [
+              [
+                63
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                63
+              ]
+            ]
+          },
+          {
+            "id": "timing",
+            "description": "June targetwithdrawn;no fixedreplacement;nothingpublished.",
+            "sufficient_segment_groups": [
+              [
+                71
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                71
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              0
+            ],
+            "require_any_complete_group": [
+              [
+                63,
+                71
+              ]
+            ],
+            "reason": "An opening90-online proposal must include the late restrictive decision and withdrawn deadline.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.016653
+    },
+    {
+      "id": "dev-el-long-radio",
+      "source_language": "el",
+      "purpose": "Long Greek operational transcript with measured inventory, an unaccepted quote, publication limits and postponed action.",
+      "source_segments": [
+        {
+          "start": 0.75,
+          "end": 12.25,
+          "text": "Το πρώτο σχέδιο αναφέρει δώδεκα σταθμούς ηχογράφησης για τη γιορτή. Αυτός είναι ο αριθμός του καταλόγου πριν από τον τεχνικό έλεγχο, όχι επιβεβαιωμένος αριθμός διαθέσιμων σταθμών. Η ομάδα συμφωνεί να περιμένει τα αποτελέσματα.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 14.0,
+          "end": 25.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα κουτιά φύλαξης σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 27.25,
+          "end": 38.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις παλιές καρτέλες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 40.5,
+          "end": 52.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους άδειους φακέλους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 53.75,
+          "end": 65.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα υφασμάτινα καλύμματα σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 67.0,
+          "end": 78.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ξύλινες βάσεις σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 80.25,
+          "end": 91.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις φωτογραφίες αναφοράς σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 93.5,
+          "end": 105.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους πλαστικούς χάρακες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 106.75,
+          "end": 118.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα λευκά χαρτιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 120.0,
+          "end": 131.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ετικέτες των ραφιών σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 133.25,
+          "end": 144.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 146.5,
+          "end": 158.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους μικρούς δίσκους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 159.75,
+          "end": 171.25,
+          "text": "Ο τεχνικός έλεγχος ολοκληρώθηκε: οκτώ σταθμοί λειτουργούν και τέσσερις χρειάζονται επισκευή καλωδίων. Οι τέσσερις δεν θα χρησιμοποιηθούν στη γιορτή όπως είναι. Το αποτέλεσμα αντικαθιστά την αρχική αναφορά ότι υπάρχουν δώδεκα έτοιμοι σταθμοί.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 173.0,
+          "end": 184.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις σελίδες του τετραδίου σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 186.25,
+          "end": 197.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις λωρίδες χαρτονιού σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 199.5,
+          "end": 211.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις χάρτινες θήκες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 212.75,
+          "end": 224.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα κουτιά φύλαξης σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 226.0,
+          "end": 237.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις παλιές καρτέλες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 239.25,
+          "end": 250.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους άδειους φακέλους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 252.5,
+          "end": 264.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα υφασμάτινα καλύμματα σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 265.75,
+          "end": 277.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ξύλινες βάσεις σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 279.0,
+          "end": 290.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις φωτογραφίες αναφοράς σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 292.25,
+          "end": 303.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους πλαστικούς χάρακες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 305.5,
+          "end": 317.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα λευκά χαρτιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 318.75,
+          "end": 330.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ετικέτες των ραφιών σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 332.0,
+          "end": 343.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 345.25,
+          "end": 356.75,
+          "text": "Η προσφορά επισκευής είναι €73,40 για όλα τα καλώδια μαζί. Δεν είναι τιμή ανά σταθμό και δεν περιλαμβάνει αγορά καινούριων μικροφώνων. Η προσφορά δεν έχει εγκριθεί και δεν έχει γίνει πληρωμή. Η Κατερίνα θα ζητήσει πρώτα την έγκριση της ομάδας.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 358.5,
+          "end": 370.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα καθαρά πανιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 371.75,
+          "end": 383.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις σελίδες του τετραδίου σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 385.0,
+          "end": 396.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις λωρίδες χαρτονιού σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 398.25,
+          "end": 409.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις χάρτινες θήκες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 411.5,
+          "end": 423.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα κουτιά φύλαξης σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 424.75,
+          "end": 436.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις παλιές καρτέλες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 438.0,
+          "end": 449.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους άδειους φακέλους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 451.25,
+          "end": 462.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα υφασμάτινα καλύμματα σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 464.5,
+          "end": 476.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ξύλινες βάσεις σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 477.75,
+          "end": 489.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις φωτογραφίες αναφοράς σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 491.0,
+          "end": 502.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους πλαστικούς χάρακες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 504.25,
+          "end": 515.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα λευκά χαρτιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 517.5,
+          "end": 529.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ετικέτες των ραφιών σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 530.75,
+          "end": 542.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 544.0,
+          "end": 555.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους μικρούς δίσκους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 557.25,
+          "end": 568.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα καθαρά πανιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 570.5,
+          "end": 582.0,
+          "text": "Η άδεια των συμμετεχόντων καλύπτει ακρόαση μέσα στο εργαστήριο. Δεν επιτρέπει να ανέβουν ολόκληρες οι ηχογραφήσεις στο διαδίκτυο ούτε να δημοσιευτούν τα ονόματα μαζί με τα δείγματα. Τυχόν δημόσια αποσπάσματα χρειάζονται ξεχωριστή άδεια που δεν έχει δοθεί.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 583.75,
+          "end": 595.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις λωρίδες χαρτονιού σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 597.0,
+          "end": 608.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις χάρτινες θήκες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 610.25,
+          "end": 621.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα κουτιά φύλαξης σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 623.5,
+          "end": 635.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις παλιές καρτέλες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 636.75,
+          "end": 648.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους άδειους φακέλους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 650.0,
+          "end": 661.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα υφασμάτινα καλύμματα σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 663.25,
+          "end": 674.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ξύλινες βάσεις σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 676.5,
+          "end": 688.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις φωτογραφίες αναφοράς σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 689.75,
+          "end": 701.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους πλαστικούς χάρακες σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 703.0,
+          "end": 714.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα λευκά χαρτιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 3"
+        },
+        {
+          "start": 716.25,
+          "end": 727.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ετικέτες των ραφιών σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 729.5,
+          "end": 741.0,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 742.75,
+          "end": 754.25,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους μικρούς δίσκους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 756.0,
+          "end": 767.5,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα καθαρά πανιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να μείνουν ορατές οι υπάρχουσες επιγραφές και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 769.25,
+          "end": 780.75,
+          "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις σελίδες του τετραδίου σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 782.5,
+          "end": 794.0,
+          "text": "Η τελική απόφαση είναι να χρησιμοποιηθούν οι οκτώ λειτουργικοί σταθμοί μόνο μετά τον τελευταίο έλεγχο της Τρίτης. Η δοκιμαστική μετάδοση της Δευτέρας αναβάλλεται. Η Κατερίνα θα επιστρέψει τα δανεικά μικρόφωνα μετά τη γιορτή· δεν τα έχει ήδη επιστρέψει και παραμένουν ιδιοκτησία του δανειστή.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "input_sha256": "add251c50535edfc0eb45291e9b2af3f9a6c90c76c05da7cae80e0dda1a65d56",
+      "review_questions": [
+        "Are completed inspection, proposed payment and future return kept distinct?"
+      ],
+      "result": {
+        "kind": "source_highlights",
+        "version": 1,
+        "method": "deterministic_source_selection",
+        "source_sha256": "38988b95e6cc6d1f2e12cd144b5184c34fdd7a12479dbf26603bd0b41d282895",
+        "source_segment_count": 60,
+        "selected_segment_count": 16,
+        "excerpts": [
+          {
+            "segment_indices": [
+              0,
+              1
+            ],
+            "start": 0.75,
+            "end": 25.5,
+            "text": "Το πρώτο σχέδιο αναφέρει δώδεκα σταθμούς ηχογράφησης για τη γιορτή. Αυτός είναι ο αριθμός του καταλόγου πριν από τον τεχνικό έλεγχο, όχι επιβεβαιωμένος αριθμός διαθέσιμων σταθμών. Η ομάδα συμφωνεί να περιμένει τα αποτελέσματα.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα κουτιά φύλαξης σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη."
+          },
+          {
+            "segment_indices": [
+              11,
+              12,
+              13
+            ],
+            "start": 146.5,
+            "end": 184.5,
+            "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τους μικρούς δίσκους σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΟ τεχνικός έλεγχος ολοκληρώθηκε: οκτώ σταθμοί λειτουργούν και τέσσερις χρειάζονται επισκευή καλωδίων. Οι τέσσερις δεν θα χρησιμοποιηθούν στη γιορτή όπως είναι. Το αποτέλεσμα αντικαθιστά την αρχική αναφορά ότι υπάρχουν δώδεκα έτοιμοι σταθμοί.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις σελίδες του τετραδίου σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη."
+          },
+          {
+            "segment_indices": [
+              25,
+              26,
+              27
+            ],
+            "start": 332.0,
+            "end": 370.0,
+            "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΗ προσφορά επισκευής είναι €73,40 για όλα τα καλώδια μαζί. Δεν είναι τιμή ανά σταθμό και δεν περιλαμβάνει αγορά καινούριων μικροφώνων. Η προσφορά δεν έχει εγκριθεί και δεν έχει γίνει πληρωμή. Η Κατερίνα θα ζητήσει πρώτα την έγκριση της ομάδας.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα καθαρά πανιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη."
+          },
+          {
+            "segment_indices": [
+              42,
+              43,
+              44
+            ],
+            "start": 557.25,
+            "end": 595.25,
+            "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα καθαρά πανιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να συγκριθεί η παλιά γραφή με τη φωτογραφία αναφοράς και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΗ άδεια των συμμετεχόντων καλύπτει ακρόαση μέσα στο εργαστήριο. Δεν επιτρέπει να ανέβουν ολόκληρες οι ηχογραφήσεις στο διαδίκτυο ούτε να δημοσιευτούν τα ονόματα μαζί με τα δείγματα. Τυχόν δημόσια αποσπάσματα χρειάζονται ξεχωριστή άδεια που δεν έχει δοθεί.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις λωρίδες χαρτονιού σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη."
+          },
+          {
+            "segment_indices": [
+              53,
+              54,
+              55
+            ],
+            "start": 703.0,
+            "end": 741.0,
+            "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα λευκά χαρτιά σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις ετικέτες των ραφιών σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να υπάρχει χώρος για τη μεταφορά ενός κουτιού και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΗ ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τα μεταλλικά κλιπ σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να χωριστεί η άδεια συσκευασία από το υπόλοιπο υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη."
+          },
+          {
+            "segment_indices": [
+              58,
+              59
+            ],
+            "start": 769.25,
+            "end": 794.0,
+            "text": "Η ομάδα του ραδιοφωνικού εργαστηρίου εξετάζει τις σελίδες του τετραδίου σε αυτό το μέρος της συζήτησης. Οι εθελοντές προσπαθούν να κλείνει το ντουλάπι χωρίς να πιέζεται το υλικό και περιγράφουν όσα βλέπουν στο τραπέζι. Συγκρίνουν τρόπους τακτοποίησης χωρίς να αλλάζουν το περιεχόμενο. Η περιγραφή αυτή δεν αποτελεί νέα έγκριση, παραγγελία ή απόφαση δημοσίευσης. Κρατούν σημειώσεις ώστε η επόμενη βάρδια να καταλάβει την ίδια διάταξη.\nΗ τελική απόφαση είναι να χρησιμοποιηθούν οι οκτώ λειτουργικοί σταθμοί μόνο μετά τον τελευταίο έλεγχο της Τρίτης. Η δοκιμαστική μετάδοση της Δευτέρας αναβάλλεται. Η Κατερίνα θα επιστρέψει τα δανεικά μικρόφωνα μετά τη γιορτή· δεν τα έχει ήδη επιστρέψει και παραμένουν ιδιοκτησία του δανειστή."
+          }
+        ],
+        "warnings": [
+          "Selected transcript excerpts, not a complete summary. They may omit important information or distant context. Check the full transcript; recognition errors are retained."
+        ]
+      },
+      "execution_status": "passed",
+      "fidelity_checks": [
+        "verbatim complete source segments",
+        "actual timestamp boundaries",
+        "ordered contiguous passages",
+        "no duplicate source selections",
+        "no generated excerpt headings",
+        "accurate segment counts"
+      ],
+      "selected_indices": [
+        0,
+        1,
+        11,
+        12,
+        13,
+        25,
+        26,
+        27,
+        42,
+        43,
+        44,
+        53,
+        54,
+        55,
+        58,
+        59
+      ],
+      "selection_fraction": 0.26666666666666666,
+      "source_text_bytes": 45588,
+      "selected_text_bytes": 10982,
+      "coverage": {
+        "goals_covered": 4,
+        "goals_total": 4,
+        "goals": [
+          {
+            "id": "inventory",
+            "description": "8usable;4require repair.",
+            "sufficient_segment_groups": [
+              [
+                12
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                12
+              ]
+            ]
+          },
+          {
+            "id": "quote",
+            "description": "€73.40total/unapproved/unpaid.",
+            "sufficient_segment_groups": [
+              [
+                26
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                26
+              ]
+            ]
+          },
+          {
+            "id": "permission",
+            "description": "No onlineaudio or namedpublication without separatepermission.",
+            "sufficient_segment_groups": [
+              [
+                43
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                43
+              ]
+            ]
+          },
+          {
+            "id": "decision",
+            "description": "8usable awaitTuesdaycheck;Mondaytrialpostponed;returnnotcompleted.",
+            "sufficient_segment_groups": [
+              [
+                59
+              ]
+            ],
+            "covered": true,
+            "matched_groups": [
+              [
+                59
+              ]
+            ]
+          }
+        ],
+        "context_rules": [
+          {
+            "when_any_selected": [
+              0
+            ],
+            "require_any_complete_group": [
+              [
+                12
+              ]
+            ],
+            "reason": "The original12-station proposal needs the measured8/4result.",
+            "applies": true,
+            "satisfied": true
+          }
+        ],
+        "review_flags": [],
+        "semantic_quality": "unreviewed",
+        "note": "Reference matches check source inclusion, not general semantic safety or usefulness."
+      },
+      "elapsed_seconds": 0.014875
+    }
+  ],
+  "source_unchanged": true,
+  "finished_at": "2026-11-27T23:51:27.123655+00:00",
+  "execution_failures": 0,
+  "cases_with_review_flags": 1
+}

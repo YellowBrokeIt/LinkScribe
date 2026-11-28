@@ -39,6 +39,7 @@ import diagnostics
 from sources import Source, parse_source
 from runtime_check import runtime_details, yt_dlp_js_options
 from enhancements import EnhancementError, assign_speakers, translate_segments, summarize_segments
+from source_highlights import select_highlights, validate_highlights
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -59,6 +60,7 @@ LANGUAGES = {"auto", "en", "el", "es", "fr", "de", "it", "pt", "ja", "ko", "zh",
 MODELS = {"tiny", "base", "small", "large-v3-turbo"}
 MODES = {"smart", "audio", "captions"}
 FORMATS = {"txt", "srt", "vtt", "json", "zip", "summary_md", "summary_json",
+           "highlights_md", "highlights_json",
            "translation_txt", "translation_srt", "translation_vtt", "translation_json"}
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 JOB_ID_RE = re.compile(r"^[a-f0-9]{32}$")
@@ -484,6 +486,9 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
     json_record = {key: record[key] for key in ("source", "title", "language", "method", "segments")}
     if record.get("processing_metadata"):
         json_record["processing_metadata"] = record["processing_metadata"]
+    highlights = _valid_highlights(record)
+    if highlights is not None:
+        json_record["highlights"] = highlights
     contents = {
         "transcript.txt": text.encode("utf-8"),
         "transcript.srt": _render_subtitles(segments, "srt").encode("utf-8"),
@@ -503,6 +508,20 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
         md += "\n".join(f"- {_timecode(c['start'],'vtt')}: {c['title']}" for c in summary["chapters"]) + "\n"
         contents["summary.md"] = md.encode("utf-8")
         contents["summary.json"] = json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8")
+    if highlights is not None:
+        full_source = highlights["selected_segment_count"] == highlights["source_segment_count"]
+        scope = ("The complete source is included; no condensation was made." if full_source
+                 else "Selected excerpts may omit important context; read the full transcript.")
+        md = "# Source highlights\n\nVerbatim transcript excerpts. " + scope + "\n\nExcerpts may span speakers; consult the full transcript for speaker labels.\n"
+        for excerpt in highlights["excerpts"]:
+            md += f"\n## {_timecode(excerpt['start'], 'vtt')} – {_timecode(excerpt['end'], 'vtt')}\n\n"
+            # A long-enough fence keeps arbitrary quoted Markdown as literal source text.
+            fence = "`" * max(3, max((len(match.group()) + 1 for match in re.finditer(r"`+", excerpt["text"])), default=3))
+            md += fence + "text\n" + excerpt["text"] + "\n" + fence + "\n"
+        if highlights.get("warnings"):
+            md += "\n## Selection notes\n\n" + "\n".join("- " + warning for warning in highlights["warnings"]) + "\n"
+        contents["highlights.md"] = md.encode("utf-8")
+        contents["highlights.json"] = json.dumps(highlights, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
     stream = io.BytesIO()
     with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
         for name, data in contents.items(): z.writestr(name,data)
@@ -510,11 +529,23 @@ def _exports(record: dict[str, Any]) -> dict[str, bytes]:
     return contents
 
 
+def _valid_highlights(record: dict[str, Any]) -> dict[str, Any] | None:
+    highlights = record.get("highlights")
+    if highlights is not None:
+        try:
+            validate_highlights(highlights, record["segments"])
+        except ValueError:
+            return None  # A damaged optional result must not block the original transcript.
+    return highlights
+
+
 def _export_key(file_type: str, record: dict[str, Any]) -> str | None:
     if file_type in {"txt","srt","vtt","json","zip"}:
         return f"transcript.{file_type}"
     if file_type in {"summary_md","summary_json"}:
         return file_type.replace("_", ".") if record.get("summary") else None
+    if file_type in {"highlights_md", "highlights_json"}:
+        return file_type.replace("_", ".") if _valid_highlights(record) is not None else None
     if file_type.startswith("translation_"):
         fmt = file_type[len("translation_"):]
         langs = list(record.get("translations", {}))
@@ -531,6 +562,7 @@ def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to do
          language=record["language"], method=record["method"], segment_count=len(segments),
          preview="\n".join(_shown_text(s) for s in segments)[:11000],
          extras={"translation_language": next(iter(translations), ""), "summary": bool(record.get("summary")),
+                 "highlights": _valid_highlights(record) is not None,
                  "speakers": any(s.get("speaker") for s in segments)},
          library_id=job_id, finished_at=time.time())
     if record.get("processing_metadata", {}).get("warnings"):
@@ -539,20 +571,21 @@ def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to do
 
 def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, method: str,
                    translations: dict[str,Any] | None = None, summary: dict[str,Any] | None = None,
-                   processing_metadata: dict[str,Any] | None = None) -> None:
+                   processing_metadata: dict[str,Any] | None = None,
+                   highlights: dict[str, Any] | None = None) -> None:
     job = jobs[job_id]
     record = {"source": job.source, "title": job.title, "language": lang, "method": method,
               "segments": segments, "translations": translations or {}, "summary": summary,
-              "processing_metadata": processing_metadata or {}}
+              "processing_metadata": processing_metadata or {}, "highlights": highlights}
     for filename, payload in _exports(record).items():
         (job.workdir / filename).write_bytes(payload)
-    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, processing_metadata)
+    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, processing_metadata, highlights)
     _complete_job(job_id, record)
 
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
                       method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool,
-                      asr_model: str | None = None) -> None:
+                      asr_model: str | None = None, highlights_enabled: bool = False) -> None:
     # Feature problems must never destroy the original recognized transcript.
     warnings: list[str] = []
     metadata: dict[str, Any] = {}
@@ -576,6 +609,16 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     # Word timings are transient alignment evidence. Persist the resulting text
     # groups and model provenance, without raw audio or voice embeddings.
     segments = [{key: value for key, value in segment.items() if key != "_words"} for segment in segments]
+    highlights = None
+    if highlights_enabled:
+        _set(job_id, stage="Selecting source highlights locally...")
+        try:
+            highlights = select_highlights(segments, source_language=language)
+        except ValueError as exc:
+            warnings.append("Source highlights: " + str(exc))
+        except Exception as exc:
+            print(f"[LinkScribe] Source highlights failed ({type(exc).__name__}) for job {job_id}")
+            warnings.append("Source highlights failed unexpectedly; original transcript retained.")
     if summary_enabled or (target != "none" and language != target):
         _release_audio_models()
     translations: dict[str, Any] = {}
@@ -600,11 +643,15 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     _set(job_id, warnings=warnings, stage="Saving transcript to library...")
     if warnings:
         metadata["warnings"] = warnings
-    _write_exports(job_id, segments, language, method, translations, summary, metadata)
+    if highlights is not None:
+        _write_exports(job_id, segments, language, method, translations, summary, metadata, highlights)
+    else:
+        _write_exports(job_id, segments, language, method, translations, summary, metadata)
 
 
 def _process_link(job_id: str, source: Source, mode: str, language: str, model: str,
-                  speakers: bool = False, target: str = "none", summary_enabled: bool = False) -> None:
+                  speakers: bool = False, target: str = "none", summary_enabled: bool = False,
+                  highlights_enabled: bool = False) -> None:
     segments: list[dict[str, Any]] | None = None
     used_language = language
     method = "local_audio_ai"
@@ -623,17 +670,19 @@ def _process_link(job_id: str, source: Source, mode: str, language: str, model: 
         audio, title = _download_source_audio(job_id, source)
         _set(job_id, title=title, stage="Recognizing speech locally...")
         segments, used_language = _recognize(audio, language, model, **({"word_timestamps": True} if speakers else {}))
-    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled, asr_model=model)
+    _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled,
+                      asr_model=model, highlights_enabled=highlights_enabled)
 
 
 def _process_upload(job_id: str, file_path: Path, language: str, model: str,
-                    speakers: bool = False, target: str = "none", summary_enabled: bool = False) -> None:
+                    speakers: bool = False, target: str = "none", summary_enabled: bool = False,
+                    highlights_enabled: bool = False) -> None:
     _set(job_id, stage="Checking media file...")
     _check_uploaded_duration(file_path)
     _set(job_id, stage="Recognizing speech locally...")
     segments, detected_language = _recognize(file_path, language, model, **({"word_timestamps": True} if speakers else {}))
     _enhance_and_save(job_id, segments, detected_language, "local_audio_ai", file_path,
-                      speakers, target, summary_enabled, asr_model=model)
+                      speakers, target, summary_enabled, asr_model=model, highlights_enabled=highlights_enabled)
 
 
 def _batch_archive(batch_id: str) -> bytes:
@@ -670,7 +719,8 @@ def _batch_archive(batch_id: str) -> bytes:
 
 
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
-                   model: str, speakers: bool, target: str, summary_enabled: bool) -> None:
+                   model: str, speakers: bool, target: str, summary_enabled: bool,
+                   highlights_enabled: bool = False) -> None:
     batch = batches[batch_id]
     batch_store.mark_batch(batch_id, "working")
     batch.status = "working"
@@ -700,7 +750,7 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
         else:
             batch_store.mark_item(job_id, "working")
             _guarded_worker(job_id, _process_link, source, mode, language, model,
-                            speakers, target, summary_enabled)
+                            speakers, target, summary_enabled, highlights_enabled)
         _cleanup_job_inputs(job)
         batch_store.mark_item(job_id, job.status, title=job.title, error=job.error,
                               library_id=job.library_id)
@@ -741,6 +791,9 @@ def _restore_pending_batches() -> None:
                 raise ValueError("Non-canonical stored batch URL")
             mode, language, model = cfg["mode"], cfg["language"], cfg["model"]
             speakers, target, summary = cfg["speakers"], cfg["target"], cfg["summary"]
+            highlights = cfg.get("highlights", False)
+            if type(highlights) is not bool:
+                raise ValueError("Unsupported stored source-highlights option")
             _validate_common(language, model, True)
             if mode not in MODES or target not in {"none", "en", "el"}:
                 raise ValueError("Unsupported stored batch options")
@@ -763,7 +816,7 @@ def _restore_pending_batches() -> None:
                     # interfere with yt-dlp's non-overwriting retry behavior.
                     _cleanup_job_inputs(jobs[identifier])
             pool.submit(_guarded_batch, batch_id, links, mode, language, model,
-                        speakers, target, summary)
+                        speakers, target, summary, highlights)
         except Exception as exc:
             print(f"[LinkScribe] Cannot recover batch {batch_id}: {type(exc).__name__}: {exc}")
             batch_store.mark_batch(batch_id, "error")
@@ -799,21 +852,21 @@ def _validate_enhancements(mode: str, provider: str, speakers: bool, target: str
 def submit_link(request: Request, url: str = Form(...), mode: str = Form("smart"),
                 language: str = Form("auto"), model: str = Form("small"),
                 consent: bool = Form(False), speakers: bool = Form(False),
-                target_language: str = Form("none"), summary: bool = Form(False)):
+                target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
     _check_browser_origin(request)
     _validate_common(language, model, consent)
     try: source = parse_source(url)
     except ValueError as exc: raise HTTPException(400,str(exc)) from None
     _validate_enhancements(mode, source.provider, speakers, target_language)
     job = _new_job(source=source.url, title=f"{source.provider.title()} {source.video_id}")
-    return _start_job(job, _process_link, source, mode, language, model, speakers, target_language, summary)
+    return _start_job(job, _process_link, source, mode, language, model, speakers, target_language, summary, highlights)
 
 
 @app.post("/api/upload")
 async def submit_upload(request: Request, file: UploadFile = File(...),
                         language: str = Form("auto"), model: str = Form("small"),
                         consent: bool = Form(False), speakers: bool = Form(False),
-                        target_language: str = Form("none"), summary: bool = Form(False)):
+                        target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
     _check_browser_origin(request)
     _validate_common(language, model, consent)
     if target_language not in {"none","en","el"}:
@@ -839,14 +892,14 @@ async def submit_upload(request: Request, file: UploadFile = File(...),
         raise
     finally:
         await file.close()
-    return _start_job(job,_process_upload,target,language,model,speakers,target_language,summary)
+    return _start_job(job,_process_upload,target,language,model,speakers,target_language,summary,highlights)
 
 
 @app.post("/api/batch")
 def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smart"),
                  language: str = Form("auto"), model: str = Form("small"),
                  consent: bool = Form(False), speakers: bool = Form(False),
-                 target_language: str = Form("none"), summary: bool = Form(False)):
+                 target_language: str = Form("none"), summary: bool = Form(False), highlights: bool = Form(False)):
     _check_browser_origin(request)
     _validate_common(language,model,consent)
     if len(urls) > 50000: raise HTTPException(400,"Batch input is too long.")
@@ -855,7 +908,7 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
         raise HTTPException(400,"Enter between 1 and 20 links, one per line.")
     try: items=[parse_source(link) for link in strings]
     except ValueError as exc: raise HTTPException(400,str(exc)) from None
-    if len({source.url for source in items}) != len(items):
+    if len({(source.provider, source.video_id) for source in items}) != len(items):
         raise HTTPException(400,"Remove duplicate video links from the batch.")
     for source in items: _validate_enhancements(mode,source.provider,speakers,target_language)
     _cleanup_expired()
@@ -871,12 +924,12 @@ def submit_batch(request: Request, urls: str = Form(...), mode: str = Form("smar
             child=_new_job(source.url,f"{source.provider.title()} {source.video_id}",batch_id=batch_id)
             batch.job_ids.append(child.id)
     options = {"mode": mode, "language": language, "model": model,
-               "speakers": speakers, "target": target_language, "summary": summary}
+               "speakers": speakers, "target": target_language, "summary": summary, "highlights": highlights}
     try:
         batch_store.create(batch_id, [{"id": jobs[job_id].id,
                         "source": jobs[job_id].source, "title": jobs[job_id].title}
                         for job_id in batch.job_ids], options)
-        pool.submit(_guarded_batch,batch_id,items,mode,language,model,speakers,target_language,summary)
+        pool.submit(_guarded_batch,batch_id,items,mode,language,model,speakers,target_language,summary,highlights)
     except (RuntimeError, OSError) as exc:
         with lock:
             batches.pop(batch_id,None)
@@ -1043,7 +1096,33 @@ async def edit_library_item(item_id: str, request: Request):
     with lock:
         if saved is not None and item_id in jobs and jobs[item_id].status == "done":
             _complete_job(item_id, saved, stage="Edits saved")
-    return {"ok":True,"id":item_id,"message":"Edits saved. Previous translations and summaries were cleared because the transcript changed."}
+    return {"ok":True,"id":item_id,"message":"Edits saved. Previous translations, summaries and source highlights were cleared because the transcript changed."}
+
+
+@app.post("/api/library/{item_id}/highlights")
+def create_library_highlights(item_id: str, request: Request):
+    _check_browser_origin(request)
+    if not JOB_ID_RE.fullmatch(item_id):
+        raise HTTPException(404, "Transcript not found.")
+    record = library.get(item_id)
+    if record is None:
+        raise HTTPException(404, "Transcript not found.")
+    try:
+        highlights = select_highlights(record["segments"], source_language=record["language"])
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from None
+    try:
+        if not library.set_highlights(item_id, highlights):
+            raise HTTPException(404, "Transcript not found.")
+    except ValueError:
+        raise HTTPException(409, "The transcript changed during selection. Reload it and try again.") from None
+    saved = library.get(item_id)
+    if saved is None:
+        raise HTTPException(404, "Transcript not found.")
+    with lock:
+        if item_id in jobs and jobs[item_id].status == "done":
+            _complete_job(item_id, saved, stage="Source highlights saved")
+    return saved
 
 
 @app.delete("/api/library/{item_id}")

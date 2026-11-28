@@ -1,0 +1,98 @@
+{
+  "recorded_at": "2026-11-27T23:58:50.496690+00:00",
+  "baseline_commit": "002d8fc66e5f3666b40477878e064c825ef1c495",
+  "tested_revision": "uncommitted integrated candidate; exact source hashes below",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "source_sha256": {
+    "app.py": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "library.py": "f723399ec9b4353951d70e4b99dfe40e2b4a8d831cee7cad5bfccc667029509a",
+    "library_backup.py": "bb06e219f4be0b9764501b391e35b4ebcc5b091666b6d191b98264d3f6512978",
+    "sources.py": "84fe3a199dac4b6a1bc01da17ef65f3631fc02e825247ab17c52536fd67641a3",
+    "source_highlights.py": "aeca9cd24343fa67ffdf00077ae0591846110ebcc71dc4c224181e57ff8cc17a",
+    "static/index.html": "390ea5abdd661d98ddcabb85913e1b24ca306d166c5833a5635d473c10daf6e2",
+    "tests/test_highlights_integration.py": "86f110681db34ed695080b0e2d19538205cc5f3dd12498becd9ecebc60dcaf29",
+    "tests/test_source_highlights.py": "f59736ea5f98748cd6c338e9483161d9683727af9168290209215e6521c6244a",
+    "tests/test_vimeo_player_sources.py": "258445b88bdcd55b03d52b85ebc36c23e7108babad43b27c1692a3cce7e1d85b",
+    "tests/test_features.py": "d21f4bdfb632dd18be9fda77a3a02428bfccc0ac12e33c81f017f7f43a363e58",
+    "tests/smoke_browser.py": "46ca0cbcfcaa32a186019db992d75dcf4686e4a9c08d52664f8d25529ec4b1a0",
+    "tests/smoke_provider_followups.py": "d6f3ee73d415a5cee1bd69795c17554a14da2ea7d0827b132fc8d537ae5a33a3"
+  },
+  "pytest": {
+    "command": [
+      "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "result": "pass",
+    "tests_passed": 652,
+    "subtests_passed": 32,
+    "elapsed_seconds": 8.77,
+    "output": "........................................................................ [ 11%]\n................................................................ [ 20%]\n........................................................................ [ 31%]\n........................................................................ [ 42%]\n........................................................................ [ 53%]\n................................................ [ 61%]\n........................................................................ [ 72%]\n........................................................................ [ 83%]\n........................................................................ [ 94%]\n....................................                                     [100%]\n652 passed, 32 subtests passed in 8.77s\n"
+  },
+  "checks": {
+    "python_compilation": {
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "-m",
+        "compileall",
+        "-q",
+        "app.py",
+        "library.py",
+        "library_backup.py",
+        "sources.py",
+        "source_highlights.py",
+        "tests/test_highlights_integration.py",
+        "tests/smoke_browser.py",
+        "tests/smoke_provider_followups.py"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "dependency_consistency": {
+      "command": [
+        "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "returncode": 0,
+      "stdout": "No broken requirements found.\n",
+      "stderr": ""
+    },
+    "javascript_syntax": {
+      "command": [
+        "node",
+        "--check",
+        "/workspace/scratch/94360995dd61/linkscribe-ui-syntax.js"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "shell_syntax": {
+      "command": [
+        "bash",
+        "-n",
+        "start_linux.sh",
+        "launch.sh"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "diff_whitespace": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "scope": "Deterministic unit/API/storage/export/backup tests and syntax/dependency checks. Acquisition and ASR are controlled in the new API fixtures. No local browser or new full actual audio workflow pass is claimed. Hosted browser/platform/archive/provider checks are required for the published integrated commit."
+}

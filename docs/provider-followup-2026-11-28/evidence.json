@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "scope": "Local provider investigation. Pipeline run uses frozen base commit plus the exact parser-only patch below; it does not verify the integrated source-highlights revision or its future hosted CI.",
+  "base_commit": "002d8fc66e5f3666b40477878e064c825ef1c495",
+  "base_commit_url": "https://github.com/YellowBrokeIt/LinkScribe/commit/002d8fc66e5f3666b40477878e064c825ef1c495",
+  "tested_sources_patch": "--- a/sources.py\n+++ b/sources.py\n@@ -58,7 +58,7 @@\n         else:\n             video_id = parts[0] if len(parts) == 1 else \"\"\n         if VIMEO_ID_RE.fullmatch(video_id):\n-            return Source(\"vimeo\", video_id, f\"https://vimeo.com/{video_id}\")\n+            return Source(\"vimeo\", video_id, (f\"https://player.vimeo.com/video/{video_id}\" if host == \"player.vimeo.com\" else f\"https://vimeo.com/{video_id}\"))\n     if host in {\"dailymotion.com\", \"www.dailymotion.com\", \"dai.ly\"}:\n         video_id = parts[0] if host == \"dai.ly\" and len(parts) == 1 else (parts[1] if len(parts) == 2 and parts[0] == \"video\" else \"\")\n         if DAILYMOTION_ID_RE.fullmatch(video_id):\n",
+  "source_sha256_before": {
+    "app.py": "86d9765a3e03d08953cbd118ee921eef8e630f4b61fc3e7c38de04adae279955",
+    "sources.py": "267312e614eaf04e1ff918d46716274ea15634d31cd82286fcf04ce2b548cfde",
+    "runtime_check.py": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d",
+    "library.py": "62f5d1b9c93e8925cb4a2cff648c2ea351f38c5f6a0b46ecce55f71e5416e944",
+    "batch_store.py": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe",
+    "enhancements.py": "fe06cb5efd70dc7789bcb88836ccc1f88bc9b021fc94c5e80750e6409e03f3cb",
+    "tests/smoke_real_links.py": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764"
+  },
+  "source_files_unchanged": true,
+  "runtime": {
+    "yt_dlp": "2026.11.23",
+    "faster_whisper": "1.2.1",
+    "model": "small",
+    "device": "cpu",
+    "system_certificates": true,
+    "socksio": "1.0.0 from isolated PYTHONPATH target for the successful run",
+    "proxy_configuration": "existing environment unchanged"
+  },
+  "vimeo_pipeline": {
+    "url": "https://player.vimeo.com/video/19934655",
+    "fixture": "vimeo_sintel_rerendered_player",
+    "result": "pass",
+    "started_at": "2026-11-27T23:48:16.584484+00:00",
+    "finished_at": "2026-11-27T23:50:55.791498+00:00",
+    "fixture_provenance": {
+      "url": "https://player.vimeo.com/video/19934655",
+      "provider": "vimeo",
+      "title_contains": "Sintel",
+      "public_title": "Sintel re-rendered",
+      "uploader": "Teddl",
+      "license": "CC BY 3.0",
+      "license_evidence": "https://durian.blender.org/sharing/",
+      "publication_evidence": "https://vimeo.com/19934655",
+      "attribution": "© copyright Blender Foundation | www.sintel.org",
+      "note": "Explicit public-player URL. Frozen source based on 002d8fc, with only sources.py changed to preserve this URL form instead of canonicalizing it to a regular Vimeo page. No cookies, credentials, custom referrer, impersonation dependency, alternate proxy, or privacy-parameter changes."
+    },
+    "acquisition": {
+      "at": "2026-11-27T23:48:39.845213+00:00",
+      "pid": 5,
+      "kind": "acquisition_done",
+      "job_id": "9f6ee440c5a147568b16f9ad16675014",
+      "title": "Sintel re-rendered",
+      "bytes": 17669814,
+      "sha256": "de4bf866b48858c8fe7b9448ecc3d4713dfd74f44c7ca87736bda6c558fc2364",
+      "duration_seconds": 888.093605,
+      "audio_streams": 1,
+      "elapsed_seconds": 22.434
+    },
+    "decoded_duration_seconds": 888.070375,
+    "decoded_array": {
+      "array_identity": "0x7fa810d44570",
+      "shape": [
+        14209126
+      ],
+      "dtype": "<f4",
+      "sample_count": 14209126,
+      "nonzero_sample_count": 14158454,
+      "pcm_sha256": "b4c6fe1672bd7448e91e8f48ce14b1161ae95883710f3cb0326e070d4e0b1615"
+    },
+    "same_decoded_array_passed_to_asr": true,
+    "transcribe_request": {
+      "at": "2026-11-27T23:49:03.932711+00:00",
+      "pid": 5,
+      "kind": "transcribe_request",
+      "job_id": "9f6ee440c5a147568b16f9ad16675014",
+      "explicit_kwargs": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false
+      },
+      "resolved_options": {
+        "language": null,
+        "task": "transcribe",
+        "log_progress": false,
+        "beam_size": 5,
+        "best_of": 5,
+        "patience": 1,
+        "length_penalty": 1,
+        "repetition_penalty": 1,
+        "no_repeat_ngram_size": 0,
+        "temperature": [
+          0.0,
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          1.0
+        ],
+        "compression_ratio_threshold": 2.4,
+        "log_prob_threshold": -1.0,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false,
+        "prompt_reset_on_temperature": 0.5,
+        "initial_prompt": null,
+        "prefix": null,
+        "suppress_blank": true,
+        "suppress_tokens": [
+          -1
+        ],
+        "without_timestamps": false,
+        "max_initial_timestamp": 1.0,
+        "word_timestamps": false,
+        "prepend_punctuations": "\"'“¿([{-",
+        "append_punctuations": "\"'.。,，!！?？:：”)]}、",
+        "multilingual": false,
+        "vad_filter": false,
+        "vad_parameters": null,
+        "max_new_tokens": null,
+        "chunk_length": null,
+        "clip_timestamps": "0",
+        "hallucination_silence_threshold": null,
+        "hotwords": null,
+        "language_detection_threshold": 0.5,
+        "language_detection_segments": 1
+      },
+      "audio_array": {
+        "array_identity": "0x7fa810d44570",
+        "shape": [
+          14209126
+        ],
+        "dtype": "<f4",
+        "sample_count": 14209126,
+        "nonzero_sample_count": 14158454,
+        "pcm_sha256": "b4c6fe1672bd7448e91e8f48ce14b1161ae95883710f3cb0326e070d4e0b1615"
+      }
+    },
+    "asr_model_resolutions": [
+      {
+        "at": "2026-11-27T23:49:03.178655+00:00",
+        "pid": 5,
+        "kind": "asr_model_resolved",
+        "job_id": "9f6ee440c5a147568b16f9ad16675014",
+        "requested_model": "small",
+        "requested_revision": null,
+        "local_files_only": false,
+        "resolved_directory": "/tmp/linkscribe-provider-models/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+        "resolved_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "files": {
+          "config.json": {
+            "bytes": 2370,
+            "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+          },
+          "model.bin": {
+            "bytes": 483546902,
+            "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+          },
+          "tokenizer.json": {
+            "bytes": 2203239,
+            "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+          },
+          "vocabulary.txt": {
+            "bytes": 459861,
+            "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+          }
+        },
+        "identity_complete": true,
+        "evidence_errors": []
+      }
+    ],
+    "segment_count": 81,
+    "last_segment_end_seconds": 880.06,
+    "detected_language": "en",
+    "language_probability": 0.3527390658855438,
+    "exports": {
+      "txt": {
+        "bytes": 1878,
+        "sha256": "5460702adcd14dee042643e21ce9f307a8fd3ba6d7aca0db2f9fc1ff284793d1"
+      },
+      "srt": {
+        "bytes": 4622,
+        "sha256": "72cb9b5b0602d451f2b3b89713234be2494cd803874de79b032e5afdf7250377"
+      },
+      "vtt": {
+        "bytes": 4396,
+        "sha256": "8c00d3fb1d0e90c6b5d92614da76b4c9d680b12156dbda88221a01460a618533"
+      },
+      "json": {
+        "bytes": 8014,
+        "sha256": "611a4a19aa0cd0528889a848dea4bf63c91ac522513624857260a05608a8fdd1"
+      },
+      "zip": {
+        "bytes": 6427,
+        "sha256": "96de93b7ee5a59e95199502ab0d90e6c6e7a3deb5f38ab513f51c672b378fbb8"
+      }
+    },
+    "sqlite_matches_saved_segments": true,
+    "input_audio_cleaned": true,
+    "raw_segment_constructions_match_saved_text_and_times": true,
+    "export_text_order_preserved": true,
+    "restart": {
+      "status": "pass",
+      "verified_record_ids": [
+        "9f6ee440c5a147568b16f9ad16675014"
+      ]
+    },
+    "mixed_batch": {
+      "status": "not_exercised",
+      "reason": "Requires one actual successful and one actually failing licensed fixture."
+    },
+    "asr_semantic_quality": "unreviewed",
+    "subtitle_alignment_accuracy": "unreviewed",
+    "quality_observation": "Raw output includes suspicious/repeated phrases and weak language confidence. This is not an accuracy or readiness pass."
+  },
+  "vimeo_initial_environment_failure": {
+    "started_at": "2026-11-27T23:46:43.590406+00:00",
+    "finished_at": "2026-11-27T23:47:10.000354+00:00",
+    "result": "fail",
+    "acquisition": {
+      "at": "2026-11-27T23:47:07.594931+00:00",
+      "pid": 6,
+      "kind": "acquisition_done",
+      "job_id": "ec96f486b5dd4b7e8a6a516af9b7c25a",
+      "title": "Sintel re-rendered",
+      "bytes": 17669814,
+      "sha256": "de4bf866b48858c8fe7b9448ecc3d4713dfd74f44c7ca87736bda6c558fc2364",
+      "duration_seconds": 888.093605,
+      "audio_streams": 1,
+      "elapsed_seconds": 23.175
+    },
+    "recognition_failure": {
+      "at": "2026-11-27T23:47:08.682340+00:00",
+      "pid": 6,
+      "kind": "recognition_failed",
+      "job_id": "ec96f486b5dd4b7e8a6a516af9b7c25a",
+      "errors": [
+        {
+          "type": "ImportError",
+          "message": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+        }
+      ],
+      "elapsed_seconds": 1.087
+    },
+    "correction": "Added socksio 1.0.0 to an isolated dependency target; retained existing SOCKS proxy and certificate verification. The next run is recorded independently."
+  },
+  "youtube_followup": {
+    "url": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+    "metadata_probe": {
+      "fixture": "youtube_blender_tears_of_steel",
+      "url": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+      "started_at": "2026-11-27T23:42:59.876817+00:00",
+      "mode": "metadata_only",
+      "credentials": false,
+      "alternate_proxy": false,
+      "impersonation_dependency": false,
+      "status": "metadata_pass",
+      "id": "R6MlUcmOul8",
+      "title": "Tears of Steel - Blender VFX Open Movie",
+      "duration": 734,
+      "uploader": "Blender",
+      "license": null,
+      "availability": "public",
+      "formats": 33,
+      "elapsed_seconds": 10.838
+    },
+    "pipeline_started_at": "2026-11-27T23:43:57.656440+00:00",
+    "pipeline_finished_at": "2026-11-27T23:44:24.119177+00:00",
+    "pipeline_result": "fail",
+    "acquisition_failure": {
+      "at": "2026-11-27T23:44:22.807726+00:00",
+      "pid": 9,
+      "kind": "acquisition_failed",
+      "job_id": "ffff57f07ec2493f96f1e20d98f81bf3",
+      "errors": [
+        {
+          "type": "ReadableError",
+          "message": "Video audio could not be accessed. Check the source restrictions, update yt-dlp (and Deno/Node if required by YouTube), or upload media you are allowed to use."
+        },
+        {
+          "type": "DownloadError",
+          "message": "ERROR: unable to download video data: HTTP Error 403: Forbidden"
+        },
+        {
+          "type": "HTTPError",
+          "message": "HTTP Error 403: Forbidden",
+          "http_status": 403,
+          "response_headers": {
+            "Content-Type": "text/html; charset=utf-8",
+            "Server": "envoy",
+            "Date": "Fri, 27 Nov 2026 23:44:22 GMT",
+            "X-Mitmproxy-Blocked-Reason": null,
+            "X-Proxy-Error": null,
+            "X-Squid-Error": null
+          },
+          "response_origin": "https://rr5---sn-q4flrn7r.googlevideo.com",
+          "response_body_prefix": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n        <p>Unable to access this site.</p>\n      </center>\n    </body>\n</html>\n"
+        }
+      ],
+      "elapsed_seconds": 24.318
+    },
+    "conclusion": "Public metadata succeeded but media acquisition returned HTTP403. No transcript. Server/envoy and Site Unavailable body identify the observed response, not a proven root cause or proof the video was removed. No proxy, login, referrer or access workaround attempted."
+  },
+  "restricted_vimeo_fixture": {
+    "fixture": "vimeo_public_sintel_player",
+    "url": "https://player.vimeo.com/video/11721242",
+    "started_at": "2026-11-27T23:42:59.878972+00:00",
+    "mode": "metadata_only",
+    "credentials": false,
+    "alternate_proxy": false,
+    "impersonation_dependency": false,
+    "status": "failed",
+    "errors": [
+      {
+        "type": "DownloadError",
+        "message": "ERROR: [vimeo] 11721242: Cannot download embed-only video without embedding URL. Please call yt-dlp with the URL of the page that embeds this video."
+      },
+      {
+        "type": "ExtractorError",
+        "message": "[vimeo] 11721242: Cannot download embed-only video without embedding URL. Please call yt-dlp with the URL of the page that embeds this video."
+      },
+      {
+        "type": "ExtractorError",
+        "message": "11721242: Unable to download webpage: HTTP Error 403: Forbidden (caused by <HTTPError 403: Forbidden>)"
+      },
+      {
+        "type": "HTTPError",
+        "message": "HTTP Error 403: Forbidden",
+        "http_status": 403,
+        "policy_headers": {}
+      }
+    ],
+    "elapsed_seconds": 4.694
+  },
+  "original_hosted_provider_results": {
+    "run_url": "https://github.com/YellowBrokeIt/LinkScribe/actions/runs/45897284195",
+    "source_commit": "dc0985dabaacdbeedd1d55daf0351ea6bda69d84",
+    "youtube_HOfdboHvshg": "This content isn’t available.",
+    "youtube_WwHux5QZfC8": "This content isn’t available.",
+    "vimeo_11721242_regular_page": "The web client only works when logged-in.",
+    "disposition": "Unchanged failures; new fixtures do not replace them."
+  },
+  "targeted_shared_tree_tests": {
+    "command": "python -m pytest -q tests/test_vimeo_player_sources.py",
+    "result": "14 passed",
+    "scope": "Deterministic route, validation, denial and duplicate-identity tests; not a network or ASR proof."
+  },
+  "raw_evidence_manifest": [
+    {
+      "relative_to_scratch": "provider-full-vimeo-socks-2026-11-28/provider-report.json",
+      "bytes": 241005,
+      "sha256": "f699c32cdce54e33def4d2307e8a5974a40a420facfe93ed304ab35d4e2fdbbf"
+    },
+    {
+      "relative_to_scratch": "provider-full-vimeo-socks-2026-11-28/events.jsonl",
+      "bytes": 46294,
+      "sha256": "27e10e1bea8ae599023c0d665ddfd9f341ec305dc1af2296dfe47eda4b5b166c"
+    },
+    {
+      "relative_to_scratch": "provider-full-vimeo-socks-2026-11-28/executed-smoke-real-links.py",
+      "bytes": 60416,
+      "sha256": "142d82069717388677ff097d24dcc6263a468f4caa5f7800ccd5e367879bb764"
+    },
+    {
+      "relative_to_scratch": "provider-full-youtube-2026-11-28/provider-report.json",
+      "bytes": 7833,
+      "sha256": "21c231f0bbe46181c2624f4542fd8a62a93332e219d36bbbd65a9a39ead31740"
+    },
+    {
+      "relative_to_scratch": "provider-full-vimeo-2026-11-28/provider-report.json",
+      "bytes": 8489,
+      "sha256": "4db526896092efcfc7c373c5328f24999667411743d3a155f9359b943ab09c71"
+    },
+    {
+      "relative_to_scratch": "provider-probe-2026-11-28.json",
+      "bytes": 2961,
+      "sha256": "ff65d1c9e0a67bacb8824b689e127f6618a22d509ef938de07429bf48fbb738e"
+    },
+    {
+      "relative_to_scratch": "provider-vimeo-alternative-2026-11-28.json",
+      "bytes": 1509,
+      "sha256": "8b6bc726e0f7fded3c08868b1775c01effdbccf758b20a9d41debd8f2e78b386"
+    },
+    {
+      "relative_to_scratch": "provider-vimeo-acquisition-2026-11-28.json",
+      "bytes": 642,
+      "sha256": "1876b4da8737b65045747a0b11179cc1241cf744b834b149deae9474a8a4c355"
+    }
+  ],
+  "external_sources": [
+    "https://github.com/yt-dlp/yt-dlp/releases/tag/2026.11.23",
+    "https://github.com/yt-dlp/yt-dlp#vimeo",
+    "https://github.com/yt-dlp/yt-dlp/blob/2026.11.23/yt_dlp/extractor/vimeo.py",
+    "https://help.vimeo.com/hc/en-us/articles/12426199699985-About-video-privacy-settings",
+    "https://vimeo.com/19934655",
+    "https://durian.blender.org/sharing/",
+    "https://www.youtube.com/watch?v=R6MlUcmOul8",
+    "https://mango.blender.org/about/"
+  ]
+}

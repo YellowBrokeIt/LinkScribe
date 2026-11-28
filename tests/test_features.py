@@ -39,7 +39,7 @@ def client(monkeypatch):
     (VALID_YT,"youtube","https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
     ("youtube.com/shorts/dQw4w9WgXcQ","youtube","https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
     (VALID_VIMEO,"vimeo","https://vimeo.com/12345678"),
-    ("https://player.vimeo.com/video/12345678","vimeo","https://vimeo.com/12345678"),
+    ("https://player.vimeo.com/video/12345678","vimeo","https://player.vimeo.com/video/12345678"),
     (VALID_DAILY,"dailymotion","https://www.dailymotion.com/video/x8abcd9"),
     ("https://dai.ly/x8abcd9","dailymotion","https://www.dailymotion.com/video/x8abcd9"),
 ])
@@ -95,7 +95,7 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     job_id=result.json()["id"]
     details=client.get(f"/api/jobs/{job_id}").json()
     assert details["status"]=="done",details
-    assert details["extras"]=={"translation_language":"el","summary":True,"speakers":True}
+    assert details["extras"]=={"translation_language":"el","summary":True,"speakers":True,"highlights":False}
     assert details["library_id"]==job_id
     assert not (module.jobs[job_id].workdir/"audio.mp3").exists()
     transcript=client.get(f"/api/library/{job_id}").json()
@@ -118,7 +118,7 @@ def test_all_enhancements_and_library_crud(client,monkeypatch):
     current_job=client.get(f"/api/jobs/{job_id}").json()
     assert current_job["title"]=="Edited sample"
     assert current_job["preview"]=="Alice: Changed words\nBob: Other speaker"
-    assert current_job["extras"]=={"translation_language":"","summary":False,"speakers":True}
+    assert current_job["extras"]=={"translation_language":"","summary":False,"speakers":True,"highlights":False}
     assert "Changed words" in client.get(f"/api/library/{job_id}/download/txt").text
     assert "Changed words" in client.get(f"/api/jobs/{job_id}/download/txt").text
     assert client.get(f"/api/library/{job_id}/download/summary_md").status_code==404

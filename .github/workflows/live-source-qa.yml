@@ -9,6 +9,8 @@ on:
       - 'runtime_check.py'
       - 'requirements.txt'
       - 'tests/smoke_real_links.py'
+      - 'tests/smoke_provider_followups.py'
+      - 'tests/fixtures/public_provider_followups.json'
       - '.github/workflows/live-source-qa.yml'
 permissions:
   contents: read
@@ -50,5 +52,41 @@ jobs:
         with:
           name: linkscribe-live-sources-${{ github.sha }}
           path: qa-real-links/**
+          if-no-files-found: warn
+          retention-days: 30
+
+  provider-followups:
+    name: Additional public YouTube and Vimeo player recordings
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - name: Install application and supported public-web transport
+        run: |
+          python -m pip install -r requirements.txt curl-cffi==0.17.0
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Exercise separately identified licensed follow-up sources
+        env:
+          PYTHONPATH: .
+          HF_HOME: ${{ runner.temp }}/linkscr-followup-models
+          ORT_DISABLE_TELEMETRY: '1'
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: >-
+          python tests/smoke_provider_followups.py
+          --model small --timeout 600 --output qa-provider-followups
+      - name: Preserve successful and failed follow-up evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkscribe-provider-followups-${{ github.sha }}
+          path: qa-provider-followups/**
           if-no-files-found: warn
           retention-days: 30

@@ -103,6 +103,10 @@
     .secondary-actions, .editor-actions {display:flex; flex-wrap:wrap; gap:12px; margin-top:13px; align-items:center}
     .warnings {background:#3b2a2d; border:1px solid #a77560; border-radius:9px; padding:12px; color:#ffd5b0; margin-top:15px; font-size:13px; white-space:pre-wrap}
     .summary-result {border-top:1px solid var(--stroke); padding-top:14px; margin-top:16px; white-space:pre-wrap; color:var(--muted); line-height:1.7}
+    .highlights-result {border-top:1px solid var(--stroke);padding-top:16px;margin-top:18px;min-width:0}
+    .highlight-excerpt {border-left:3px solid var(--accent);padding:0 0 0 12px;margin:18px 0;min-width:0}
+    .highlight-excerpt pre {white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.65;color:var(--text)}
+    .highlight-excerpt .copy {max-width:100%;white-space:normal}
     .batch-list {display:grid; gap:9px; margin-top:15px}
     .batch-item {display:flex; justify-content:space-between; gap:12px; border:1px solid #35445e; border-radius:10px; padding:12px; font-size:12px}
     .batch-item strong {overflow-wrap:anywhere}
@@ -184,6 +188,7 @@
           </div>
           <div class="enhancements" id="enhancements">
             <label class="extra-option"><input type="checkbox" id="speakers"><span><strong>Speaker labels</strong><small>Optional public CPU model setup; no access token needed. Uses audio mode.</small></span></label>
+            <label class="extra-option"><input type="checkbox" id="highlights"><span><strong>Source highlights</strong><small>Selected original excerpts with timestamps. Works locally without an extra AI model; may omit important context.</small></span></label>
             <label class="extra-option"><input type="checkbox" id="summary"><span><strong>AI summary & chapters · draft</strong><small>Local Ollama; check facts and conditions against the source</small></span></label>
             <div class="setting"><label for="target-language">Translate transcript · experimental</label>
               <select id="target-language"><option value="none">No translation</option><option value="el">To Greek 🇬🇷</option><option value="en">To English 🇬🇧</option></select>
@@ -197,7 +202,7 @@
           <div class="library-toolbar"><input id="library-search" type="search" placeholder="Search titles or spoken words"><button type="button" id="library-refresh" class="copy">Search</button></div>
           <div class="library-tools" aria-label="Transcript backup and restore">
             <h3>Keep a copy of your transcript library</h3>
-            <p class="input-note">Backup saves transcripts, edits, translations and summaries into a ZIP. Restoring imports missing records without overwriting existing ones; no audio or access tokens are included.</p>
+            <p class="input-note">Backup saves transcripts, edits, translations, summaries and source highlights into a ZIP. Restoring imports missing records without overwriting existing ones; no audio or access tokens are included.</p>
             <div class="backup-actions">
               <a class="copy" href="/api/library/backup" download="linkscr-library-backup.zip">↓ Download backup</a>
               <input id="library-restore-file" type="file" accept=".zip,application/zip" aria-label="Select library backup ZIP">
@@ -230,6 +235,7 @@
       <div class="preview-title"><span>Transcript preview</span><button class="copy" id="copy" type="button">Copy preview</button></div>
       <pre class="transcript" id="preview"></pre>
       <div class="summary-result" id="summary-result" hidden></div>
+      <section class="highlights-result" id="highlights-result" aria-label="Source highlights" hidden></section>
       <p class="input-note">Transcripts are also saved to your local library. Temporary job download files expire, but your library text persists.</p>
     </section>
     <section id="batch-results" class="results" aria-label="Batch results" hidden>
@@ -242,8 +248,11 @@
       <div class="preview-title"><h2 class="result-title">Edit saved transcript</h2><button type="button" id="editor-close" class="copy">Close</button></div>
       <label class="input-title" for="edit-title">Title</label><input id="edit-title" class="edit-title" maxlength="180">
       <p class="input-note">AI transcripts are drafts. Check names, numbers, and unclear speech against the recording.</p>
-      <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving invalidates any older translations and summaries.</p>
+      <p class="input-note">Edit each timestamped segment and optional speaker label. The times remain fixed. Saving clears older translations, summaries and source highlights.</p>
       <div class="downloads" id="editor-downloads"></div>
+      <button class="copy" id="editor-highlights" type="button">Create source highlights</button>
+      <p class="input-note" id="editor-highlights-note">Uses the saved transcript. Save your edits before creating highlights.</p>
+      <section class="highlights-result" id="editor-highlights-result" aria-label="Saved source highlights" hidden></section>
       <div id="editor-rows" class="editor-rows"></div>
       <div class="editor-paging"><button class="copy" id="editor-prev" type="button">← Previous</button><span id="editor-page-label"></span><button class="copy" id="editor-next" type="button">Next →</button></div>
       <div class="editor-actions"><button type="button" class="submit" id="editor-save">Save changes</button><button type="button" class="copy danger" id="editor-delete">Delete transcript</button></div>
@@ -264,7 +273,7 @@
  const tabs = {link:$("tab-link"),upload:$("tab-upload"),batch:$("tab-batch"),library:$("tab-library")};
  const views = {link:$("view-link"),upload:$("view-upload"),batch:$("view-batch"),library:$("view-library")};
  const form=$("job-form");
- let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0;
+ let tab="link", currentJob=null, currentBatch=null, resultJob=null, editing=null, editorPage=0, editorDirty=false;
  const perPage=30;
  function chooseTab(name) {
    tab=name;
@@ -311,24 +320,49 @@
    nav.replaceChildren();
    for(const [code,label] of [["txt","↓ TXT"],["srt","↓ SRT"],["vtt","↓ VTT"],["json","↓ JSON"],["zip","↓ All files ZIP"]]) addDownload(nav,root,code,label);
    if(record.summary){addDownload(nav,root,"summary_md","↓ Summary MD");addDownload(nav,root,"summary_json","↓ Summary JSON");}
+   if(record.highlights){addDownload(nav,root,"highlights_md","↓ Highlights MD");addDownload(nav,root,"highlights_json","↓ Highlights JSON");}
    if(record.translation){addDownload(nav,root,"translation_txt","↓ Translated TXT");addDownload(nav,root,"translation_srt","↓ Translated SRT");addDownload(nav,root,"translation_vtt","↓ Translated VTT");}
  }
  function addButton(target,title,handler){const button=document.createElement("button");button.className="copy";button.type="button";button.textContent=title;button.addEventListener("click",handler);target.appendChild(button);return button;}
+ function sourceTime(value){const total=Math.floor(value);return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");}
+ function renderHighlights(target,highlights,onSource){
+   target.replaceChildren();target.hidden=!highlights;
+   if(!highlights)return;
+   const heading=document.createElement("h3");heading.textContent="Source highlights";
+   const note=document.createElement("p");note.className="input-note";
+   const coverage=highlights.selected_segment_count===highlights.source_segment_count
+     ? `All ${highlights.source_segment_count} source segments are included; no condensation was made.`
+     : `${highlights.selected_segment_count} of ${highlights.source_segment_count} segments selected.`;
+   note.textContent=`${coverage} These are original transcript excerpts, not a complete summary. Excerpts may span speakers; open the source for speaker labels and context.`;
+   target.append(heading,note);
+   for(const excerpt of highlights.excerpts){
+     const block=document.createElement("article");block.className="highlight-excerpt";
+     const first=excerpt.segment_indices[0],last=excerpt.segment_indices[excerpt.segment_indices.length-1];
+     const label=sourceTime(excerpt.start)+"–"+sourceTime(excerpt.end)+` · View source segments ${first+1}–${last+1}`;
+     addButton(block,label,()=>onSource(first));
+     const text=document.createElement("pre");text.textContent=excerpt.text;block.appendChild(text);target.appendChild(block);
+   }
+   if(highlights.warnings?.length){const warnings=document.createElement("p");warnings.className="input-note";warnings.textContent=highlights.warnings.join(" ");target.appendChild(warnings);}
+ }
+ function markEditorDirty(){editorDirty=true;$("editor-highlights").disabled=true;}
+ $("edit-title").addEventListener("input",markEditorDirty);
  async function showResults(job, scroll=true) {
    resultJob=job;
    const root=$("results");
    $("result-meta").textContent=`${job.title} · ${job.language} · ${job.method.replaceAll("_"," ")} · ${job.segments} segments`;
    $("preview").textContent=job.preview||"(Empty preview)";
    const details=job.extras||{};
-   renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language});
+   renderDownloads($("downloads"),`/api/jobs/${encodeURIComponent(job.id)}`,{summary:details.summary,translation:details.translation_language,highlights:details.highlights});
    $("result-warnings").hidden=!(job.warnings||[]).length;
    $("result-warnings").textContent=(job.warnings||[]).join("\n");
    $("result-actions").replaceChildren();
    if(job.library_id) addButton($("result-actions"),"Open in library / edit",()=>openEditor(job.library_id));
    $("summary-result").hidden=true;$("summary-result").textContent="";
-   if(details.summary && job.library_id){
+   renderHighlights($("highlights-result"),null,()=>{});
+   if((details.summary||details.highlights) && job.library_id){
      try {
        const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
+       renderHighlights($("highlights-result"),record.highlights,index=>openEditor(job.library_id,index));
        if(record.summary){const summary=record.summary;
          $("summary-result").textContent="SUMMARY DRAFT\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
          $("summary-result").hidden=false;
@@ -385,7 +419,7 @@
    if(tab==="library")return;
    if(!$("consent").checked){showStatus("Permission required","Confirm you may process this media.",true,false);return;}
    const data=new FormData();data.set("language",$("language").value);data.set("model",$("model").value);
-   data.set("consent","true");data.set("speakers",String($("speakers").checked));data.set("summary",String($("summary").checked));
+   data.set("consent","true");data.set("speakers",String($("speakers").checked));data.set("summary",String($("summary").checked));data.set("highlights",String($("highlights").checked));
    data.set("target_language",$("target-language").value);
    const submittedTab=tab;
    let endpoint;
@@ -476,30 +510,47 @@
      const timer=document.createElement("label");timer.textContent=`#${i+1} · ${segment.start.toFixed(1)}–${segment.end.toFixed(1)}s`;
      const speaker=document.createElement("input");speaker.placeholder="Speaker (optional)";speaker.maxLength=80;speaker.value=segment.speaker||"";
      speaker.setAttribute("aria-label",`Speaker of segment ${i+1}`);
-     speaker.addEventListener("input",()=>segment.speaker=speaker.value);
+     speaker.addEventListener("input",()=>{segment.speaker=speaker.value;markEditorDirty();});
      const spoken=document.createElement("textarea");spoken.value=segment.text;spoken.maxLength=5000;
      spoken.setAttribute("aria-label",`Text of segment ${i+1}`);
-     spoken.addEventListener("input",()=>segment.text=spoken.value);
+     spoken.addEventListener("input",()=>{segment.text=spoken.value;markEditorDirty();});
      row.append(timer,speaker,spoken);rows.appendChild(row);
    }
    $("editor-page-label").textContent=`Segments ${first+1}–${last} of ${editing.segments.length}`;
    $("editor-prev").disabled=editorPage===0;
    $("editor-next").disabled=last>=editing.segments.length;
  }
- async function openEditor(id){
+ async function openEditor(id,sourceIndex=0){
+   if(editorDirty&&!confirm("Discard your unsaved edits and open the saved transcript?"))return;
    try{
      editing=await api(`/api/library/${encodeURIComponent(id)}`);
-     editorPage=0;
+     editorPage=Math.floor(Math.max(0,Math.min(sourceIndex,editing.segments.length-1))/perPage);editorDirty=false;$("editor-highlights").disabled=false;
      $("edit-title").value=editing.title;
      $("editor-message").textContent="";
      $("editor").hidden=false;
-     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0});
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
+     renderHighlights($("editor-highlights-result"),editing.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
      showEditorPage();$("editor").scrollIntoView({behavior:"smooth",block:"start"});
    }catch(e){showStatus("Cannot open transcript",e.message,true,false);}
  }
  $("editor-prev").addEventListener("click",()=>{if(editorPage>0){editorPage--;showEditorPage();}});
  $("editor-next").addEventListener("click",()=>{if(editing&&(editorPage+1)*perPage<editing.segments.length){editorPage++;showEditorPage();}});
- $("editor-close").addEventListener("click",()=>{$("editor").hidden=true;editing=null;});
+ $("editor-close").addEventListener("click",()=>{if(editorDirty&&!confirm("Discard your unsaved edits?"))return;$("editor").hidden=true;editing=null;editorDirty=false;});
+ $("editor-highlights").addEventListener("click",async()=>{
+   if(!editing||editorDirty)return;
+   const id=editing.id;$("editor-highlights").disabled=true;
+   try{
+     const saved=await api(`/api/library/${encodeURIComponent(id)}/highlights`,{method:"POST"});
+     if(!editing||editing.id!==id)return;
+     if(editorDirty){$("editor-message").textContent="Highlights created for the saved transcript. Your unsaved edits are still here.";return;}
+     editing=saved;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(id)}`,{summary:!!saved.summary,translation:Object.keys(saved.translations||{}).length>0,highlights:!!saved.highlights});
+     renderHighlights($("editor-highlights-result"),saved.highlights,index=>{editorPage=Math.floor(index/perPage);showEditorPage();$("editor-rows").scrollIntoView({behavior:"smooth",block:"start"});});
+     $("editor-message").textContent="Source highlights saved. Review them with the full transcript.";
+     if(resultJob?.library_id===id)await showResults({...resultJob,extras:{...resultJob.extras,highlights:!!saved.highlights}},false);
+   }catch(e){if(editing?.id===id)$("editor-message").textContent="Could not create highlights: "+e.message;}
+   finally{if(editing?.id===id)$("editor-highlights").disabled=editorDirty;}
+ });
  $("editor-save").addEventListener("click",async()=>{
    if(!editing)return;
    const title=$("edit-title").value.trim();
@@ -508,17 +559,19 @@
    try{
      await api(`/api/library/${encodeURIComponent(editing.id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))})});
      editing=await api(`/api/library/${encodeURIComponent(editing.id)}`);
-     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(editing.id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0});
+     editorDirty=false;$("editor-highlights").disabled=false;
+     renderDownloads($("editor-downloads"),`/api/library/${encodeURIComponent(editing.id)}`,{summary:!!editing.summary,translation:Object.keys(editing.translations||{}).length>0,highlights:!!editing.highlights});
+     renderHighlights($("editor-highlights-result"),editing.highlights,()=>{});
      showEditorPage();if(tab==="library")loadLibrary();
      if(!$("results").hidden && resultJob?.library_id===editing.id){
        await showResults({...resultJob,title:editing.title,language:editing.language,method:editing.method,
          segments:editing.segments.length,
          preview:editing.segments.map(s=>(s.speaker?s.speaker+": ":"")+s.text).join("\n").slice(0,11000),
-         extras:{...resultJob.extras,summary:!!editing.summary,
+         extras:{...resultJob.extras,summary:!!editing.summary,highlights:!!editing.highlights,
            translation_language:Object.keys(editing.translations||{})[0]||"",
            speakers:editing.segments.some(s=>s.speaker)}},false);
      }
-     $("editor-message").textContent="Saved. Older translations and summaries were cleared; exported files now reflect your edits.";
+     $("editor-message").textContent="Saved. Older translations, summaries and source highlights were cleared; exported files now reflect your edits.";
    }catch(e){$("editor-message").textContent="Save failed: "+e.message;}
  });
  $("editor-delete").addEventListener("click",async()=>{
