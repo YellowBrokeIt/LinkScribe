@@ -578,12 +578,18 @@
    if(!title){$("editor-message").textContent="A title is required.";return;}
    if(editing.segments.some(s=>!s.text.trim())){$("editor-message").textContent="Every segment needs text.";return;}
    const id=editing.id,session=editorSession,revision=editorRevision;
-   const body=JSON.stringify({title,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))});
+   const body=JSON.stringify({title,expected_updated_at:editing.updated_at,segments:editing.segments.map(s=>({text:s.text,speaker:s.speaker||""}))});
    editorSaving=true;$("editor-save").disabled=true;$("editor-highlights").disabled=true;
    $("editor-message").textContent="Saving...";
    try{
-     await api(`/api/library/${encodeURIComponent(id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+     const receipt=await api(`/api/library/${encodeURIComponent(id)}`,{method:"PUT",headers:{"Content-Type":"application/json"},body});
      const saved=await api(`/api/library/${encodeURIComponent(id)}`);
+     if(saved.updated_at!==receipt.updated_at){
+       if(editing?.id===id&&session===editorSession){
+         $("editor-message").textContent="Your earlier version was saved, but the library changed again. Copy any unsaved edits before reloading the saved transcript.";
+       }
+       return;
+     }
      if(tab==="library")loadLibrary();
      if(!$("results").hidden && resultJob?.library_id===id){
        await showResults({...resultJob,title:saved.title,language:saved.language,method:saved.method,
@@ -599,7 +605,7 @@
      renderWarnings($("editor-warnings"),saved.processing_metadata?.warnings);
      renderHighlights($("editor-highlights-result"),saved.highlights,()=>{});
      if(revision!==editorRevision){
-       editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;editing.processing_metadata=saved.processing_metadata;
+       editing.updated_at=saved.updated_at;editing.summary=saved.summary;editing.translations=saved.translations;editing.highlights=saved.highlights;editing.processing_metadata=saved.processing_metadata;
        $("editor-message").textContent="Saved the earlier version. Your newer edits are still here; save again to store them.";
        return;
      }

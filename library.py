@@ -218,17 +218,27 @@ def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
     return [dict(row) for row in rows]
 
 
-def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
+class EditConflict(ValueError):
+    """A saved transcript changed since the editor's snapshot."""
+
+
+def update_revision(identifier: str, title: str, segments: list[dict[str, Any]],
+                    *, expected_updated_at: float | None = None) -> float | None:
     # Caller validates IDs, segment count, timestamps, and text constraints.
     with _connect() as connection:
-        existing = connection.execute("SELECT processing_metadata FROM transcripts WHERE id=?", (identifier,)).fetchone()
+        connection.execute("BEGIN IMMEDIATE")
+        existing = connection.execute("SELECT processing_metadata,updated_at FROM transcripts WHERE id=?", (identifier,)).fetchone()
         if existing is None:
-            return False
+            return None
+        if expected_updated_at is not None and existing["updated_at"] != expected_updated_at:
+            raise EditConflict("The saved transcript changed. Reload it before saving again.")
         metadata = json.loads(existing["processing_metadata"] or "{}")
         metadata.pop("translation", None)
         metadata.pop("summary", None)
         metadata["user_edited"] = True
         now = time.time()
+        if now == existing["updated_at"]:
+            now = math.nextafter(now, math.inf)
         cursor = connection.execute("""UPDATE transcripts SET title=?, segments=?, plain_text=?,
             translations='{}', summary=NULL, highlights=NULL, processing_metadata=?, updated_at=? WHERE id=?""",
             (title, json.dumps(segments,ensure_ascii=False), _plain(segments),
@@ -236,7 +246,11 @@ def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='batch_queue_items'").fetchone():
             connection.execute("UPDATE batch_queue_items SET title=?,updated_at=? WHERE library_id=? OR job_id=?",
                                (title, now, identifier, identifier))
-        return cursor.rowcount > 0
+        return now if cursor.rowcount > 0 else None
+
+
+def update(identifier: str, title: str, segments: list[dict[str, Any]]) -> bool:
+    return update_revision(identifier, title, segments) is not None
 
 
 def delete(identifier: str) -> bool:

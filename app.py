@@ -49,6 +49,7 @@ from source_highlights import select_highlights, validate_highlights
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
+from starlette.concurrency import run_in_threadpool
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -1274,11 +1275,19 @@ def get_library_item(item_id: str):
 async def edit_library_item(item_id: str, request: Request):
     _check_browser_origin(request)
     if not JOB_ID_RE.fullmatch(item_id): raise HTTPException(404,"Transcript not found.")
+    try: data=await request.json()
+    except (ValueError, RecursionError): raise HTTPException(400,"Invalid JSON.") from None
+    return await run_in_threadpool(_apply_library_edit, item_id, data)
+
+
+def _apply_library_edit(item_id: str, data: Any):
     record=library.get(item_id)
     if not record: raise HTTPException(404,"Transcript not found.")
-    try: data=await request.json()
-    except ValueError: raise HTTPException(400,"Invalid JSON.") from None
     if not isinstance(data,dict): raise HTTPException(400,"Invalid edit body.")
+    expected=data.get("expected_updated_at", record["updated_at"])
+    if (isinstance(expected,bool) or not isinstance(expected,(int,float)) or
+            expected != record["updated_at"]):
+        raise HTTPException(409,"The saved transcript changed. Reload it before saving again.")
     title=data.get("title")
     changes=data.get("segments")
     if not isinstance(title,str) or not title.strip() or len(title)>180:
@@ -1287,24 +1296,33 @@ async def edit_library_item(item_id: str, request: Request):
     if not isinstance(changes,list) or len(changes)!=len(old):
         raise HTTPException(400,"Every segment must be preserved in the original order.")
     updated=[]
-    for original,change in zip(old,changes):
-        if not isinstance(change,dict): raise HTTPException(400,"Invalid segment.")
-        text=change.get("text"); speaker=change.get("speaker",original.get("speaker",""))
-        if not isinstance(text,str) or not text.strip() or len(text)>5000 or not isinstance(speaker,str) or len(speaker)>80:
-            raise HTTPException(400,"Invalid segment text or speaker label.")
-        updated.append({**original,"text":text.strip().replace("\r"," ").replace("\n"," "),
-                        **({"speaker":speaker.strip()} if speaker.strip() else {})})
-        if not speaker.strip(): updated[-1].pop("speaker",None)
-    if not library.update(item_id,title.strip(),updated):
+    try:
+        title.encode("utf-8")
+        for original,change in zip(old,changes):
+            if not isinstance(change,dict): raise HTTPException(400,"Invalid segment.")
+            text=change.get("text"); speaker=change.get("speaker",original.get("speaker",""))
+            if not isinstance(text,str) or not text.strip() or len(text)>5000 or not isinstance(speaker,str) or len(speaker)>80:
+                raise HTTPException(400,"Invalid segment text or speaker label.")
+            text.encode("utf-8"); speaker.encode("utf-8")
+            updated.append({**original,"text":text.strip().replace("\r"," ").replace("\n"," "),
+                            **({"speaker":speaker.strip()} if speaker.strip() else {})})
+            if not speaker.strip(): updated[-1].pop("speaker",None)
+    except UnicodeEncodeError:
+        raise HTTPException(400,"Edit contains invalid Unicode text.") from None
+    try:
+        revision=library.update_revision(item_id,title.strip(),updated,expected_updated_at=expected)
+    except library.EditConflict as exc:
+        raise HTTPException(409,str(exc)) from None
+    if revision is None:
         raise HTTPException(404,"Transcript not found.")
     # Job polling and its result card must describe the same saved version as
     # library downloads after an edit, including invalidated AI exports.
-    saved = library.get(item_id)
     with lock:
-        if saved is not None and item_id in jobs and jobs[item_id].status == "done":
-            _complete_job(item_id, saved, stage="Edits saved")
-    return {"ok":True,"id":item_id,"message":"Edits saved. Previous translations, summaries and source highlights were cleared because the transcript changed."}
-
+        if item_id in jobs and jobs[item_id].status == "done":
+            saved = library.get(item_id)
+            if saved is not None:
+                _complete_job(item_id, saved, stage="Edits saved")
+    return {"ok":True,"id":item_id,"updated_at":revision,"message":"Edits saved. Previous translations, summaries and source highlights were cleared because the transcript changed."}
 
 @app.post("/api/library/{item_id}/highlights")
 def create_library_highlights(item_id: str, request: Request):
