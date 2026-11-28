@@ -2,15 +2,16 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
-The published **0.3.0 integration checkpoint `f12afd8`** passed 652 automated tests
+The published **0.3.0 integration checkpoint `929cf2d`** passed 678 automated tests
 and 32 subtests in each of five hosted platform/Python configurations, fresh
 Linux installation, installation from the actual candidate archive and an actual
-audio-upload workflow. Its real-Ollama integration completed; generated meaning
-still requires approval. Chromium passed 31 of 32 checks; a newly added library
-test hit an ambiguous selector before generation. The
-[integration record](docs/integration-2026-11-28/README.md) retains that failure
-and the follow-up editor fixes. Provider access and generated-text quality have
-open release gates. The
+audio-upload workflow. Chromium passed all **34 checks**, including preservation
+of corrections during saves and navigation, highlights after editing, and backups
+containing saved highlights. The
+[integration record](docs/integration-2026-11-28/README.md) retains the preceding
+31/32 and 33/34 harness failures, their corrections and actual editor fixes.
+Generated meaning still requires approval. Provider access and speech-quality
+regressions also leave release gates open. The
 [28 November checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
 records the exact tested commit, completed runs and remaining work; these
 results do not certify later revisions or constitute a v1.0 release.
@@ -20,9 +21,11 @@ actual generated ZIP, in addition to the checkout-based installation checks.
 
 Optional **source highlights** and explicit public Vimeo player links are now
 integrated. The separately frozen English/Greek highlights validation passed all
-four cases. The follow-up candidate protects edits during asynchronous operations,
-declares the download transport previously installed only by provider QA, and
-tests aligned speech decoding against the retained late-dialogue regression.
+four cases. The integrated candidate protects edits during asynchronous operations
+and declares the download transport previously installed only by provider QA.
+The aligned decoder with a two-second silence heuristic failed broader dialogue
+review and is rejected for release; an isolated comparison is investigating the
+cause before the recognition policy is accepted.
 Hosted results must be checked for the exact revision under review; this remains
 a draft rather than a v1.0 approval.
 
@@ -43,6 +46,10 @@ The standard requirements include `curl-cffi` for the public-video transport
 used by yt-dlp's Dailymotion extractor. **Check setup** identifies a missing
 transport in an older installation. Transport availability does not override a
 provider's authentication, embedding or network restrictions.
+
+The requirements also include `socksio` so model downloads can use an existing
+SOCKS proxy. This fixes an observed missing-dependency startup failure while
+retaining the machine's proxy configuration and normal certificate checks.
 
 ## Quick start — Linux (Ubuntu)
 
@@ -77,16 +84,17 @@ Even without a JavaScript runtime, caption retrieval may still work. Non-YouTube
 
 ### Verified provider scope
 
-The [latest completed hosted checks at `dc0985d`](docs/checkpoint-recovery-2026-11-28/README.md)
+The [integrated hosted checks](docs/integration-2026-11-28/README.md)
+and [earlier checkpoint recovery](docs/checkpoint-recovery-2026-11-28/README.md)
 and [earlier browser/provider evidence](docs/browser-provider-2026-11-26/README.md)
 separate accepted URLs from actual acquisition and transcription. These results
 describe the tested clips and environment, not universal availability:
 
 | Provider | Observed end-to-end status |
 | --- | --- |
-| Dailymotion | At `dc0985d`, the complete 734.15-second licensed film passed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. Disabling ASR VAD recovered later dialogue; output still needs review. |
+| Dailymotion | At `dc0985d` and `f12afd8`, the complete 734.15-second licensed film passed download, recognition, SQLite storage, exports, cleanup, a mixed success/failure batch, and retrieval after restart. The subsequent `79189b0` request returned “No video formats found!” before ASR. A separately acquired complete publisher-listed audio source is being used for speech regression diagnosis; it does not convert this provider failure into a pass. |
 | YouTube | At `dc0985d`, both hosted audio attempts returned “This content isn’t available.” A separately identified official full-film follow-up returned metadata and 33 formats but failed actual media acquisition with HTTP 403 in the local environment. Earlier bot sign-in and caption `IpBlocked` errors remain separate observations. No successful YouTube transcript is claimed. |
-| Vimeo | The original regular-page attempt failed with “The web client only works when logged-in.” Preserving a separately supplied public player link fixed an application URL rewrite: a different licensed 888.07-second recording then passed download, full Small recognition, SQLite, exports, cleanup and restart. The exact baseline-plus-parser experiment and its first dependency failure are retained; suspicious transcript phrases mean speech accuracy is not approved. |
+| Vimeo | The original regular-page attempt failed with “The web client only works when logged-in.” Preserving a separately supplied public player link fixed an application URL rewrite: a different licensed 888.07-second recording then passed download, full Small recognition, SQLite, exports, cleanup and restart locally. Subsequent hosted player requests returned HTTP401. The exact baseline-plus-parser experiment and its first dependency failure are retained; suspicious transcript phrases mean speech accuracy is not approved. |
 
 The [public-provider follow-up](docs/provider-followup-2026-11-28/README.md)
 identifies every fixture and tested source hash. Explicit `player.vimeo.com/video/ID`
@@ -132,9 +140,12 @@ boundaries; it cannot establish that every remaining word is correct. The
 [Vimeo ASR investigation](docs/asr-vimeo-followup-2026-11-28/README.md) retains
 rejected deterministic and Turbo-only alternatives, the full-film candidate,
 ordinary/quiet English-Greek comparisons, word-alignment scope and local
-Dailymotion acquisition failures. The hosted follow-up must additionally retain
-the previously lost late dialogue from the exact Dailymotion recording. The
-version remains a candidate until that regression is verified.
+Dailymotion acquisition failures. Hosted acquisition then failed before the exact
+Dailymotion regression could run. On separately verified complete publisher-listed
+audio, all four target late phrases survived, but broader review found two other
+spoken commands missing. The combined alignment/two-second-heuristic policy is
+therefore rejected for release. Its four-anchor pass is retained with the broader
+failure; neither is treated as overall speech accuracy approval.
 
 ## Optional source highlights
 

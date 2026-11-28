@@ -107,3 +107,56 @@ noise passed. The additional YouTube source reported unavailable content; Vimeo
 again returned HTTP401. All provider failures remain failures. A separately
 identified official-source comparison is being investigated, without treating
 it as a successful download from the original provider.
+
+## Corrected browser checkpoint: `929cf2d`
+
+The [completed hosted record](hosted-929cf2d.json) confirms **34/34 Chromium
+checks passed**. The pending-open test reached its remaining assertions: newer
+text was saved to the original record and the other transcript was unchanged.
+Both highlights cases, pending-save preservation and the nonnull-highlight backup
+round trip passed. Root and independent review of desktop/320px screenshots found
+no additional material visual defect. All eight browser source hashes match the
+exact checkpoint.
+
+All five platform/Python suites again passed **678 tests and 32 subtests**.
+Fresh checkout, actual candidate ZIP installation and actual Tiny upload passed.
+The real default Ollama workflow completed all twelve cases with five automatic
+passes, seven review flags and zero execution errors. Generated meaning remains
+unapproved. This browser-harness/documentation commit did not trigger another
+live-provider run; the preceding acquisition failures remain applicable evidence.
+
+## Speech policy rollback after broader review
+
+The [complete official-film comparison](../asr-official-tail-2026-11-28/README.md)
+established that four passing late anchors were insufficient: universal word
+alignment plus the two-second heuristic omitted the abort and memory-completion
+commands. Removing only the heuristic restored those commands, but independent
+review of all 102 publisher subtitle cues found new action/name substitutions,
+an unresolved short-line corruption and six new punctuation-only segments. Both
+alternatives are retained as rejected development evidence.
+
+Production therefore restores the prior conditional word-timestamp policy and
+removes the new silence heuristic. Word timestamps remain available when speaker
+alignment requests them. Existing whole-recording nonspeech corroboration and
+the normal decoder fallback remain unchanged. This rollback does not claim to
+repair the baseline's remaining ASR errors or establish overall accuracy.
+
+The experimental tail checker remains byte-for-byte frozen. A
+[separate restored-policy checker](../../tests/check_asr_restored_tail_followup.py)
+reuses its complete input/model/event/persistence checks and unchanged four
+segment-time windows, then requires the current app hash, both requested and
+effective ordinary decoder settings, and absent unrequested word alignment.
+It never marks the rejected candidate approved. Its
+[retained-provider recheck](restored-asr-retained-provider-check.json) passes on
+the actual `f12afd8` artifact because the restored application file is exactly
+that previously exercised source. This is a historical evidence recheck, **not
+a new acquisition or inference run**. The hosted workflow uses this policy-specific
+entry point for future actual runs and still fails closed on absent evidence.
+
+The next requirements update also declares `socksio>=1.0,<2`: an earlier actual
+model load failed because that dependency was absent under the existing SOCKS
+proxy. The successful correction had installed it only in an isolated target.
+The standard install should provide it without changing proxies or certificate
+verification. The already installed 1.0.0 package initializes both current HTTPX
+transports successfully without a network request; fresh package verification
+remains tied to the later hosted checkpoint.

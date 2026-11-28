@@ -52,7 +52,6 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 MAX_BYTES = 150 * 1024 * 1024             # 150 MB per uploaded/downloaded input
 MAX_SECONDS = 2 * 60 * 60                 # 2 hours per recording
 ASR_NO_SPEECH_THRESHOLD = 0.6            # faster-whisper's existing default
-ASR_HALLUCINATION_SILENCE_SECONDS = 2.0  # decoder alignment; never an input VAD filter
 JOB_TTL = 60 * 60                        # completed jobs retained locally for 1 hour
 MAX_ACTIVE = 8
 MAX_BATCH_SIZE = 20                          # queued + processing
@@ -394,11 +393,7 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             vad_filter=False,
             no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,
             condition_on_previous_text=False,
-            # Decoder alignment can identify suspicious output around silence
-            # without prefiltering away quiet speech. Keep its normal fallback
-            # schedule; disabling fallback produced a repetition regression.
-            word_timestamps=True,
-            hallucination_silence_threshold=ASR_HALLUCINATION_SILENCE_SECONDS,
+            **({"word_timestamps": True} if word_timestamps else {}),
         )
         # transcribe() returns a generator, which must be consumed.
         output = []
@@ -424,9 +419,8 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
         raise ReadableError("No spoken words were detected in this recording.")
     if all_marked_no_speech:
         # Corroborate only a complete output that ASR itself marks as no speech.
-        # This corroboration does not crop audio or filter individual decoder
-        # results: one speech anchor preserves all output already returned by
-        # the decoder, including quiet dialogue and tails.
+        # Never crop the audio or filter individual segments: one speech anchor
+        # preserves the entire transcript, including quiet dialogue and tails.
         try:
             from faster_whisper.vad import get_speech_timestamps
             speech = get_speech_timestamps(audio, sampling_rate=16000)
@@ -596,10 +590,7 @@ def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
     warnings: list[str] = []
     metadata: dict[str, Any] = {}
     if asr_model and method == "local_audio_ai":
-        metadata["asr"] = {"engine": "faster-whisper", "model": asr_model,
-                           "word_timestamps": True, "word_timing_for_speakers": speakers,
-                           "hallucination_silence_threshold_seconds": ASR_HALLUCINATION_SILENCE_SECONDS,
-                           "vad_filter": False}
+        metadata["asr"] = {"engine": "faster-whisper", "model": asr_model, "word_timestamps": speakers}
     if speakers:
         if audio is None:
             warnings.append("Speaker labels require speech audio; use Audio AI mode.")

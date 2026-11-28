@@ -12,6 +12,7 @@ on:
       - 'tests/smoke_provider_followups.py'
       - 'tests/fixtures/public_provider_followups.json'
       - 'tests/check_asr_dailymotion_tail_followup.py'
+      - 'tests/check_asr_restored_tail_followup.py'
       - '.github/workflows/live-source-qa.yml'
 permissions:
   contents: read
@@ -47,10 +48,10 @@ jobs:
           --fixture vimeo_sintel_trailer
           --fixture dailymotion_tears_of_steel
           --model small --timeout 600 --check-nonspeech --output qa-real-links
-      - name: Verify retained late dialogue with the aligned decoder
+      - name: Verify retained late dialogue with the restored ordinary decoder
         if: always()
         run: >-
-          python tests/check_asr_dailymotion_tail_followup.py
+          python tests/check_asr_restored_tail_followup.py
           qa-real-links/provider-report.json
           --output qa-real-links/dailymotion-tail-check.json
       - name: Preserve successful and failed provider evidence

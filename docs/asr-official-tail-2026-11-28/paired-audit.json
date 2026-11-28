@@ -1,0 +1,556 @@
+{
+  "reviewed_at": "2026-11-28T00:58:06.917367+00:00",
+  "plan_sha256": "42d5aa819b264ee3a1622d8c76956cdfa727b98825c5cb319819036c651a0312",
+  "analysis_sha256": "b727bf95f9e6f97d7aa14e2fccc4074aa9452da81e49c26b579a03f1d25aee63",
+  "provider_gate_exercised": false,
+  "semantic_accuracy_approved": false,
+  "subtitle_accuracy_approved": false,
+  "scope": "One complete official-film rendition; four frozen reference anchors and normal persistence/export checks.",
+  "arms": {
+    "baseline": {
+      "report_sha256": "44107e7cb63209366262efd754f9e1e86ec9327fe950ee16c92b329b72731111",
+      "saved_transcript_sha256": "68fd406da9c2a35b33a780a576e69e55ddf7adeddba4b4945510f835a25104cc",
+      "app_sha256": "03bce28bd1f31571e519e87abe22b992ce49fd0c6e420bf03f7ddc33f463a996",
+      "source_unchanged": true,
+      "identical_complete_pcm_verified": true,
+      "same_pinned_small_weights_verified": true,
+      "raw_saved_sqlite_segments_match": true,
+      "separate_process_sqlite_matches": true,
+      "normal_export_checks": {
+        "txt": {
+          "bytes": 1906,
+          "sha256": "a836ff4ca753941891802fdc6924ac018204ff6b87a4da795168e1fc1060740d"
+        },
+        "srt": {
+          "bytes": 4820,
+          "sha256": "2d2bcf43cb33cb4c44857cf58362b166a8c26ad08d91f5adeb48e898a46fdbea"
+        },
+        "vtt": {
+          "bytes": 4579,
+          "sha256": "d94ed3f69240e569034aa9b0c057f44bd3114a78717a99d594f69b5b19c55fa1"
+        },
+        "json": {
+          "bytes": 8411,
+          "sha256": "68fd406da9c2a35b33a780a576e69e55ddf7adeddba4b4945510f835a25104cc"
+        },
+        "zip": {
+          "bytes": 6346,
+          "sha256": "a5b752ea3a821deef3df90cde4175c851979eb23f642ea1dd3abc9dc618663dc"
+        }
+      },
+      "segment_count": 86,
+      "upload_harness_elapsed_seconds": 64.991,
+      "recognizer_elapsed_seconds": 63.087,
+      "process_peak_rss_bytes": 1554010112,
+      "actual_explicit_options": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false
+      },
+      "anchors": [
+        {
+          "id": "71",
+          "start": 518.0,
+          "end": 520.0,
+          "text": "The world's changed, Celia...",
+          "window_seconds": [
+            510,
+            529
+          ],
+          "normalized_pattern": "\\bworld(?:s| has)? changed\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": false,
+          "actual_word_window_pass": null,
+          "contained_segment_text": "",
+          "actual_word_window_text": "",
+          "overlapping_raw_segments": [
+            {
+              "start": 508.8,
+              "end": 535.2,
+              "text": " The world's changed, Celia.",
+              "words": null
+            }
+          ]
+        },
+        {
+          "id": "72",
+          "start": 534.0,
+          "end": 536.0,
+          "text": "...maybe we can too.",
+          "window_seconds": [
+            528,
+            545
+          ],
+          "normalized_pattern": "\\bmaybe we can too\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": null,
+          "contained_segment_text": "Maybe we can too.  Memory override complete!",
+          "actual_word_window_text": "",
+          "overlapping_raw_segments": [
+            {
+              "start": 508.8,
+              "end": 535.2,
+              "text": " The world's changed, Celia.",
+              "words": null
+            },
+            {
+              "start": 535.2,
+              "end": 537.2,
+              "text": " Maybe we can too.",
+              "words": null
+            },
+            {
+              "start": 537.2,
+              "end": 539.2,
+              "text": " Memory override complete!",
+              "words": null
+            }
+          ]
+        },
+        {
+          "id": "75",
+          "start": 562.0,
+          "end": 564.0,
+          "text": "There's a lesson to be learned from this.",
+          "window_seconds": [
+            545,
+            574
+          ],
+          "normalized_pattern": "\\blesson to be (?:learned|learnt) from this\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": null,
+          "contained_segment_text": "You know, there's a lesson to be learned from this.  this could have gone worse",
+          "actual_word_window_text": "",
+          "overlapping_raw_segments": [
+            {
+              "start": 558.2,
+              "end": 563.2,
+              "text": " You know, there's a lesson to be learned from this.",
+              "words": null
+            },
+            {
+              "start": 563.2,
+              "end": 568.6400000000001,
+              "text": " this could have gone worse",
+              "words": null
+            }
+          ]
+        },
+        {
+          "id": "76",
+          "start": 566.0,
+          "end": 567.0,
+          "text": "Could'a gone worse.",
+          "window_seconds": [
+            558,
+            577
+          ],
+          "normalized_pattern": "\\bcould(?: have|ve|a) (?:gone|been) worse\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": null,
+          "contained_segment_text": "You know, there's a lesson to be learned from this.  this could have gone worse",
+          "actual_word_window_text": "",
+          "overlapping_raw_segments": [
+            {
+              "start": 558.2,
+              "end": 563.2,
+              "text": " You know, there's a lesson to be learned from this.",
+              "words": null
+            },
+            {
+              "start": 563.2,
+              "end": 568.6400000000001,
+              "text": " this could have gone worse",
+              "words": null
+            }
+          ]
+        }
+      ]
+    },
+    "aligned": {
+      "report_sha256": "89914a3b94daf0385d9d740ea3eea1fd47f33c1e6f4fbb443bca0f3fbe294825",
+      "saved_transcript_sha256": "395e406afe404c127111e1392a90cbe7896d928d76747a4a591366de698ee2e0",
+      "app_sha256": "9504c3a3c4aaabae0e4d0cd78e25f71dd6ce6aa51c37de7d2c30f108197dde47",
+      "source_unchanged": true,
+      "identical_complete_pcm_verified": true,
+      "same_pinned_small_weights_verified": true,
+      "raw_saved_sqlite_segments_match": true,
+      "separate_process_sqlite_matches": true,
+      "normal_export_checks": {
+        "txt": {
+          "bytes": 1726,
+          "sha256": "73c306ca974540000becbe3f7c119bebf8746a8a2df70c844ffb223e2ef5563a"
+        },
+        "srt": {
+          "bytes": 3756,
+          "sha256": "d5c4a6ba1e71afb51995609159cccfc8caedf171c79cb58f5fd9b07297001ace"
+        },
+        "vtt": {
+          "bytes": 3593,
+          "sha256": "9c2bea27fae31ecf7d4c2e9c997600293e7e62f512cc9d1100827cf2099cd6e1"
+        },
+        "json": {
+          "bytes": 6481,
+          "sha256": "395e406afe404c127111e1392a90cbe7896d928d76747a4a591366de698ee2e0"
+        },
+        "zip": {
+          "bytes": 6035,
+          "sha256": "5b33ea8e4b471eec081758d34e9f2060f5ed5de6bd588576a62af91b37c976de"
+        }
+      },
+      "segment_count": 60,
+      "upload_harness_elapsed_seconds": 91.627,
+      "recognizer_elapsed_seconds": 90.572,
+      "process_peak_rss_bytes": 1539084288,
+      "actual_explicit_options": {
+        "language": null,
+        "beam_size": 5,
+        "vad_filter": false,
+        "no_speech_threshold": 0.6,
+        "condition_on_previous_text": false,
+        "word_timestamps": true,
+        "hallucination_silence_threshold": 2.0
+      },
+      "anchors": [
+        {
+          "id": "71",
+          "start": 518.0,
+          "end": 520.0,
+          "text": "The world's changed, Celia...",
+          "window_seconds": [
+            510,
+            529
+          ],
+          "normalized_pattern": "\\bworld(?:s| has)? changed\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": true,
+          "contained_segment_text": "The world's changed Celia.",
+          "actual_word_window_text": "The world's changed Celia.",
+          "overlapping_raw_segments": [
+            {
+              "start": 517.2800000000001,
+              "end": 520.32,
+              "text": " The world's changed Celia.",
+              "words": [
+                {
+                  "start": 517.2800000000001,
+                  "end": 518.44,
+                  "word": " The",
+                  "probability": 0.042763639241456985
+                },
+                {
+                  "start": 518.44,
+                  "end": 519.6,
+                  "word": " world's",
+                  "probability": 0.570668026804924
+                },
+                {
+                  "start": 519.6,
+                  "end": 519.86,
+                  "word": " changed",
+                  "probability": 0.9340945482254028
+                },
+                {
+                  "start": 519.86,
+                  "end": 520.32,
+                  "word": " Celia.",
+                  "probability": 0.8431176543235779
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "72",
+          "start": 534.0,
+          "end": 536.0,
+          "text": "...maybe we can too.",
+          "window_seconds": [
+            528,
+            545
+          ],
+          "normalized_pattern": "\\bmaybe we can too\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": true,
+          "contained_segment_text": "Maybe we can too.",
+          "actual_word_window_text": "Maybe we can too.",
+          "overlapping_raw_segments": [
+            {
+              "start": 534.7,
+              "end": 535.96,
+              "text": " Maybe we can too.",
+              "words": [
+                {
+                  "start": 534.7,
+                  "end": 535.26,
+                  "word": " Maybe",
+                  "probability": 0.4421041011810303
+                },
+                {
+                  "start": 535.26,
+                  "end": 535.5,
+                  "word": " we",
+                  "probability": 0.8882343769073486
+                },
+                {
+                  "start": 535.5,
+                  "end": 535.68,
+                  "word": " can",
+                  "probability": 0.9975447058677673
+                },
+                {
+                  "start": 535.68,
+                  "end": 535.96,
+                  "word": " too.",
+                  "probability": 0.9011035561561584
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "75",
+          "start": 562.0,
+          "end": 564.0,
+          "text": "There's a lesson to be learned from this.",
+          "window_seconds": [
+            545,
+            574
+          ],
+          "normalized_pattern": "\\blesson to be (?:learned|learnt) from this\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": true,
+          "contained_segment_text": "You know, there's a lesson to be learned from this.  Could have gone worse.",
+          "actual_word_window_text": "You know, there's a lesson to be learned from this. Could have gone worse.",
+          "overlapping_raw_segments": [
+            {
+              "start": 558.4,
+              "end": 563.44,
+              "text": " You know, there's a lesson to be learned from this.",
+              "words": [
+                {
+                  "start": 558.4,
+                  "end": 558.9,
+                  "word": " You",
+                  "probability": 0.03456132486462593
+                },
+                {
+                  "start": 558.9,
+                  "end": 559.4,
+                  "word": " know,",
+                  "probability": 0.9392799735069275
+                },
+                {
+                  "start": 560.56,
+                  "end": 562.14,
+                  "word": " there's",
+                  "probability": 0.8820956647396088
+                },
+                {
+                  "start": 562.14,
+                  "end": 562.24,
+                  "word": " a",
+                  "probability": 0.9584699869155884
+                },
+                {
+                  "start": 562.24,
+                  "end": 562.48,
+                  "word": " lesson",
+                  "probability": 0.9988440275192261
+                },
+                {
+                  "start": 562.48,
+                  "end": 562.66,
+                  "word": " to",
+                  "probability": 0.9941978454589844
+                },
+                {
+                  "start": 562.66,
+                  "end": 562.82,
+                  "word": " be",
+                  "probability": 0.9866852760314941
+                },
+                {
+                  "start": 562.82,
+                  "end": 562.98,
+                  "word": " learned",
+                  "probability": 0.8576947450637817
+                },
+                {
+                  "start": 562.98,
+                  "end": 563.18,
+                  "word": " from",
+                  "probability": 0.9950447082519531
+                },
+                {
+                  "start": 563.18,
+                  "end": 563.44,
+                  "word": " this.",
+                  "probability": 0.9977250695228577
+                }
+              ]
+            },
+            {
+              "start": 565.48,
+              "end": 566.7,
+              "text": " Could have gone worse.",
+              "words": [
+                {
+                  "start": 565.48,
+                  "end": 566.08,
+                  "word": " Could",
+                  "probability": 0.5222136378288269
+                },
+                {
+                  "start": 566.08,
+                  "end": 566.22,
+                  "word": " have",
+                  "probability": 0.39034342765808105
+                },
+                {
+                  "start": 566.22,
+                  "end": 566.4,
+                  "word": " gone",
+                  "probability": 0.9912364482879639
+                },
+                {
+                  "start": 566.4,
+                  "end": 566.7,
+                  "word": " worse.",
+                  "probability": 0.9922631978988647
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "76",
+          "start": 566.0,
+          "end": 567.0,
+          "text": "Could'a gone worse.",
+          "window_seconds": [
+            558,
+            577
+          ],
+          "normalized_pattern": "\\bcould(?: have|ve|a) (?:gone|been) worse\\b",
+          "phrase_present_in_normal_transcript": true,
+          "strict_segment_window_pass": true,
+          "actual_word_window_pass": true,
+          "contained_segment_text": "You know, there's a lesson to be learned from this.  Could have gone worse.",
+          "actual_word_window_text": "You know, there's a lesson to be learned from this. Could have gone worse.",
+          "overlapping_raw_segments": [
+            {
+              "start": 558.4,
+              "end": 563.44,
+              "text": " You know, there's a lesson to be learned from this.",
+              "words": [
+                {
+                  "start": 558.4,
+                  "end": 558.9,
+                  "word": " You",
+                  "probability": 0.03456132486462593
+                },
+                {
+                  "start": 558.9,
+                  "end": 559.4,
+                  "word": " know,",
+                  "probability": 0.9392799735069275
+                },
+                {
+                  "start": 560.56,
+                  "end": 562.14,
+                  "word": " there's",
+                  "probability": 0.8820956647396088
+                },
+                {
+                  "start": 562.14,
+                  "end": 562.24,
+                  "word": " a",
+                  "probability": 0.9584699869155884
+                },
+                {
+                  "start": 562.24,
+                  "end": 562.48,
+                  "word": " lesson",
+                  "probability": 0.9988440275192261
+                },
+                {
+                  "start": 562.48,
+                  "end": 562.66,
+                  "word": " to",
+                  "probability": 0.9941978454589844
+                },
+                {
+                  "start": 562.66,
+                  "end": 562.82,
+                  "word": " be",
+                  "probability": 0.9866852760314941
+                },
+                {
+                  "start": 562.82,
+                  "end": 562.98,
+                  "word": " learned",
+                  "probability": 0.8576947450637817
+                },
+                {
+                  "start": 562.98,
+                  "end": 563.18,
+                  "word": " from",
+                  "probability": 0.9950447082519531
+                },
+                {
+                  "start": 563.18,
+                  "end": 563.44,
+                  "word": " this.",
+                  "probability": 0.9977250695228577
+                }
+              ]
+            },
+            {
+              "start": 565.48,
+              "end": 566.7,
+              "text": " Could have gone worse.",
+              "words": [
+                {
+                  "start": 565.48,
+                  "end": 566.08,
+                  "word": " Could",
+                  "probability": 0.5222136378288269
+                },
+                {
+                  "start": 566.08,
+                  "end": 566.22,
+                  "word": " have",
+                  "probability": 0.39034342765808105
+                },
+                {
+                  "start": 566.22,
+                  "end": 566.4,
+                  "word": " gone",
+                  "probability": 0.9912364482879639
+                },
+                {
+                  "start": 566.4,
+                  "end": 566.7,
+                  "word": " worse.",
+                  "probability": 0.9922631978988647
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "candidate_four_reference_anchors_preserved": true,
+  "baseline_four_phrases_present": true,
+  "baseline_strict_segment_window_count": 3
+}

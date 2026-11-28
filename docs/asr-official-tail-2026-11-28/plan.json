@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-28T00:53:07.488423+00:00",
+  "source_commit": "79189b013732fb95c1e685e1639b1b7891899729",
+  "provider_gate_exercised": false,
+  "source_identity": {
+    "container_duration_seconds": 734.0,
+    "streams": [
+      {
+        "sample_rate": 48000,
+        "channels": 2,
+        "codec": "flac"
+      }
+    ],
+    "decoded_duration_seconds": 734.0,
+    "sample_count": 11744000,
+    "shape": [
+      11744000
+    ],
+    "dtype": "<f4",
+    "pcm_sha256": "ce528ed4ac517abefcbfb90f9aedbb7313d246ad89f03eabb5ba69a104d3ae06",
+    "media_bytes": 83769154,
+    "media_sha256": "2ec70bfb31b70d4229d8a7c1ea1e759fd3d464c206d0c3a7ff15c7752c0b25ea"
+  },
+  "source_url": "https://media.xiph.org/tearsofsteel/tearsofsteel-stereo.flac",
+  "license_source": "https://media.xiph.org/tearsofsteel/README.txt",
+  "published_reference": "https://media.xiph.org/tearsofsteel/subtitles/TOS-en.srt",
+  "reference_sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+  "independent_reference_anchors": [
+    {
+      "id": "71",
+      "start": 518.0,
+      "end": 520.0,
+      "text": "The world's changed, Celia...",
+      "window_seconds": [
+        510,
+        529
+      ],
+      "normalized_pattern": "\\bworld(?:s| has)? changed\\b"
+    },
+    {
+      "id": "72",
+      "start": 534.0,
+      "end": 536.0,
+      "text": "...maybe we can too.",
+      "window_seconds": [
+        528,
+        545
+      ],
+      "normalized_pattern": "\\bmaybe we can too\\b"
+    },
+    {
+      "id": "75",
+      "start": 562.0,
+      "end": 564.0,
+      "text": "There's a lesson to be learned from this.",
+      "window_seconds": [
+        545,
+        574
+      ],
+      "normalized_pattern": "\\blesson to be (?:learned|learnt) from this\\b"
+    },
+    {
+      "id": "76",
+      "start": 566.0,
+      "end": 567.0,
+      "text": "Could'a gone worse.",
+      "window_seconds": [
+        558,
+        577
+      ],
+      "normalized_pattern": "\\bcould(?: have|ve|a) (?:gone|been) worse\\b"
+    }
+  ],
+  "reference_supplied_to_decoder": false,
+  "qa_random_seed": 1729,
+  "runner_sha256": "e34a055a4e60295427c41fbe05062f57b5c2bd6a0fdb9fd2c41d87a083ac18aa",
+  "fixture_manifest_sha256": "7dda2f83064f277dc38195a3387bd93df48128fbb9a0bbb4935028b2a6c9d0bb",
+  "model": "small",
+  "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+  "model_bin_sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+  "timeout_per_arm_seconds": 240,
+  "inference_attempts_per_arm": 1,
+  "workflow": "Existing real upload harness, normal unchanged recognition, saved-record/export checks, independent-process SQLite verification; no full HTTP server/browser restart claim.",
+  "arms": {
+    "baseline": {
+      "source_root": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/baseline-source",
+      "app_sha256": "03bce28bd1f31571e519e87abe22b992ce49fd0c6e420bf03f7ddc33f463a996"
+    },
+    "aligned": {
+      "source_root": "/workspace/scratch/94360995dd61/asr-official-tail-2026-11-28/aligned-source",
+      "app_sha256": "9504c3a3c4aaabae0e4d0cd78e25f71dd6ce6aa51c37de7d2c30f108197dde47"
+    }
+  },
+  "baseline_scope": "Current published tree with only prior ASR keyword policy and truthful corresponding processing metadata restored; exact patch retained.",
+  "acquisition_metadata_correction": "Initial request log computed the small SHA1SUMS file size/digest before the buffered writer closed. The retained closed file is 790 bytes with SHA256 d349fa846d03054f602ec677fffe4f8eb7da7ce61e7b5a6e59c04e74964dc9ff; its published FLAC SHA1 matches. Original request log is preserved.",
+  "preflight_correction": "Before any inference, corrected JSON/shell escaping of regex word-boundary tokens and verified that each pattern matches its independently published reference. Original preflight plan retained separately."
+}

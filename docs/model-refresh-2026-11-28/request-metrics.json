@@ -1,0 +1,279 @@
+{
+  "evidence_type": "actual_production_request_observations",
+  "plan_sha256": "834c5add5ce8d8a6dbf3f52bb1b03368a46f9b2c0321b5269ae345286646b953",
+  "execution_sha256": "6fbc9558563bbfcf9e2ecf033fd9d7a93b6c4df5daec5bdff2638ccdc3016a34",
+  "semantic_quality": "requires_separate_independent_review",
+  "elapsed_seconds": 73.210237,
+  "inference_requests": 6,
+  "unload_requests": 6,
+  "memory": {
+    "sample_count": 343,
+    "sample_interval_seconds": 0.2,
+    "pss_available_for_every_sample": true,
+    "errors": [],
+    "endpoint_verified": true,
+    "sampler_stopped": true,
+    "daemon_executable": "/workspace/scratch/94360995dd61/linkscribe-model-runtime/bin/ollama",
+    "daemon_subcommand": "serve",
+    "scope": "This app process and descendants plus the supplied Ollama daemon and descendants, deduplicated by PID.",
+    "excluded": "OS, browser, unrelated processes, and filesystem cache outside the measured process residency; this is not whole-VM memory.",
+    "rss_interpretation": "Concurrent summed RSS is an upper bound that can double-count shared pages.",
+    "pss_interpretation": "Linux PSS apportions shared pages; it is reported only for complete samples.",
+    "sampling_limit": "Samples scan processes sequentially and may miss transient peaks between scans.",
+    "ollama_daemon_pid": 5,
+    "app_pid": 2,
+    "peak_rss_sample": {
+      "at_seconds": 23.746,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python3",
+          "rss_bytes": 19632128,
+          "pss_bytes": 18728960
+        },
+        {
+          "pid": 5,
+          "name": "ollama",
+          "rss_bytes": 38174720,
+          "pss_bytes": 37037056
+        },
+        {
+          "pid": 56,
+          "name": "llama-server",
+          "rss_bytes": 3821760512,
+          "pss_bytes": 3820504064
+        }
+      ],
+      "rss_bytes": 3879567360,
+      "pss_bytes": 3876270080
+    },
+    "peak_pss_sample": {
+      "at_seconds": 23.746,
+      "processes": [
+        {
+          "pid": 2,
+          "name": "python3",
+          "rss_bytes": 19632128,
+          "pss_bytes": 18728960
+        },
+        {
+          "pid": 5,
+          "name": "ollama",
+          "rss_bytes": 38174720,
+          "pss_bytes": 37037056
+        },
+        {
+          "pid": 56,
+          "name": "llama-server",
+          "rss_bytes": 3821760512,
+          "pss_bytes": 3820504064
+        }
+      ],
+      "rss_bytes": 3879567360,
+      "pss_bytes": 3876270080
+    },
+    "api_endpoint": "http://127.0.0.1:11434",
+    "matching_listeners": [
+      {
+        "address": "127.0.0.1",
+        "port": 11434
+      }
+    ],
+    "measurement_complete": true,
+    "peak_combined_rss_mib": 3699.8,
+    "peak_combined_pss_mib": 3696.7
+  },
+  "oom_deltas": {
+    "/proc/vmstat": {
+      "scope": "host_global",
+      "counters": {
+        "oom_kill": 0
+      },
+      "counter_reset_or_scope_change": false
+    }
+  },
+  "source_hashes_unchanged": true,
+  "owned_daemon_stopped": true,
+  "cases": [
+    {
+      "case_id": "dev-en-el-transcript-terminology",
+      "report": "dev-en-el-transcript-terminology.json",
+      "report_sha256": "d204fd742ff5bb807b7e7588f5f7b71c7ce54aa8cc2bd90a03b48edc33d6d395",
+      "case_elapsed_seconds": 16.669,
+      "inference_elapsed_seconds": 16.65,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        130
+      ],
+      "generated_tokens": [
+        155
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "review",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    },
+    {
+      "case_id": "dev-el-en-people-and-roles",
+      "report": "dev-el-en-people-and-roles.json",
+      "report_sha256": "923634685cfa4b663d5efce7d9e254193b0bed375975cec9d55c263023cd8150",
+      "case_elapsed_seconds": 9.222,
+      "inference_elapsed_seconds": 9.201,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        231
+      ],
+      "generated_tokens": [
+        42
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "pass",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    },
+    {
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "report": "dev-en-el-bitcoin-amounts.json",
+      "report_sha256": "250aa42f491cc01cdf2797f617e96364a5700df451e32acbc3ce8ca9c809c5e3",
+      "case_elapsed_seconds": 14.71,
+      "inference_elapsed_seconds": 14.695,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        151
+      ],
+      "generated_tokens": [
+        169
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "review",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    },
+    {
+      "case_id": "dev-el-en-negation-scope",
+      "report": "dev-el-en-negation-scope.json",
+      "report_sha256": "96903ec47bb4b35d7cc8937908c564f481454c88504da6d7e366cee06bf3d8e0",
+      "case_elapsed_seconds": 8.968,
+      "inference_elapsed_seconds": 8.953,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        220
+      ],
+      "generated_tokens": [
+        41
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "pass",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    },
+    {
+      "case_id": "dev-en-el-conditional-publication",
+      "report": "dev-en-el-conditional-publication.json",
+      "report_sha256": "95db59b6a7595f36d099aa523100f0837c3fd617a520dd667be5e4a253636fe1",
+      "case_elapsed_seconds": 13.85,
+      "inference_elapsed_seconds": 13.838,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        125
+      ],
+      "generated_tokens": [
+        152
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "review",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    },
+    {
+      "case_id": "dev-el-en-uncertain-question",
+      "report": "dev-el-en-uncertain-question.json",
+      "report_sha256": "52813664d0a1af06a0a5217f627f5f39e798f2c05d6837a59aae83803ad56e29",
+      "case_elapsed_seconds": 9.0,
+      "inference_elapsed_seconds": 8.991,
+      "inference_requests": 1,
+      "unload_requests": 1,
+      "completion_reasons": [
+        "stop"
+      ],
+      "prompt_tokens": [
+        215
+      ],
+      "generated_tokens": [
+        44
+      ],
+      "thinking_characters": [
+        0
+      ],
+      "automatic_status": "pass",
+      "protocol_checks": {
+        "unchanged_production_requests_except_model": true,
+        "normal_completion_and_final_content": true,
+        "empty_reasoning_field": true,
+        "unload_acknowledged": true,
+        "resident_model_unloaded": true,
+        "sampled_rss_within_process_budget": true
+      }
+    }
+  ]
+}

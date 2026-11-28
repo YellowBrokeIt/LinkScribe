@@ -20,7 +20,7 @@ def stub_decode(monkeypatch, audio):
 
 
 @pytest.mark.parametrize("word_timestamps", [False, True])
-def test_asr_aligns_full_input_and_only_exposes_words_when_requested(monkeypatch, tmp_path, word_timestamps):
+def test_asr_preserves_full_input_and_optional_word_timing(monkeypatch, tmp_path, word_timestamps):
     calls = []
     audio = np.array([0, 0.1, -0.1, 0, 1e-30], dtype=np.float32)
     original = audio.copy()
@@ -46,9 +46,9 @@ def test_asr_aligns_full_input_and_only_exposes_words_when_requested(monkeypatch
     assert language == "en" and [s["text"] for s in segments] == [s.text for s in spoken]
     assert calls[0][1]["language"] is None
     assert calls[0][1]["condition_on_previous_text"] is False
-    assert calls[0][1]["word_timestamps"] is True
-    assert calls[0][1]["hallucination_silence_threshold"] == 2.0
-    assert "temperature" not in calls[0][1]  # Keep the original decoder fallback schedule.
+    assert calls[0][1].get("word_timestamps", False) is word_timestamps
+    assert calls[0][1].get("hallucination_silence_threshold") is None
+    assert "temperature" not in calls[0][1]  # Fixed-zero fallback lost real dialogue.
     assert all(("_words" in segment) is word_timestamps for segment in segments)
 
 
