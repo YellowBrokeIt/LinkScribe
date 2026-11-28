@@ -1,0 +1,24 @@
+--- docs/krikri-marker-grammar-controller-2026-11-28/review-snapshots/acquire-build-v1/run_stage.py
++++ docs/krikri-marker-grammar-controller-2026-11-28/run_stage.py
+@@ -24,9 +24,12 @@
+         raise ValueError("Controller must run in the exact declared existing interpreter.")
+     verify_tools(plan["extra_tool_bindings"])
+     before = require_storage()
++    if phase == "native_prepare" and os.environ.get("HOME") != plan["native_inherited_home"]:
++        raise ValueError("The unchanged inherited native runtime home differs from its reviewed value.")
+     for suffix in (".json", "-resources.json", "-samples.jsonl", "-claim.json"):
+         if (HERE / (phase + suffix)).exists():
+             raise ValueError("This phase was already claimed or attempted; no retry.")
++    os.umask(0o077)
+     claim = {"schema_version": 1, "phase": phase, "controller_pid": os.getpid(),
+              "controller_created": psutil.Process().create_time(), "created_at": utc(),
+              "nonce": uuid.uuid4().hex, "authorization_sha256": sha(HERE / (phase + "-authorization.json")),
+@@ -45,6 +48,8 @@
+                    "PYTHONNOUSERSITE": "1", "PYTHONDONTWRITEBYTECODE": "1",
+                    "GRAMMAR_CONTROLLER_PID": str(os.getpid()),
+                    "GRAMMAR_PHASE_CLAIM_SHA256": sha(claim_path)}
++    if phase == "native_prepare":
++        environment["HOME"] = os.environ["HOME"]  # Inherit unchanged; never repurpose this variable.
+     limits = phase_limits(native, phase, completed_elapsed)
+     worker = HERE / "phase_worker.py"
+     result = monitor([sys.executable, "-B", str(worker), "--phase", phase], environment,

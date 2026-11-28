@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "protocol": "single_original_two_reader_speaker_pipeline_v1",
+  "status": "Prepared future hosted constructor-check correction; no new hosted result is claimed",
+  "baseline_commit": "f2ebd0433976ed62478b67e98c4515e3d78afaa5",
+  "model_execution_hosted_only": true,
+  "attempts": 1,
+  "maximum_cpus": 4,
+  "rss_limit_bytes": 6442450944,
+  "total_worker_seconds": 600,
+  "phase_seconds": {
+    "initialization": 180,
+    "recognition": 180,
+    "speaker_timing": 180,
+    "speakers": 180,
+    "persistence": 90
+  },
+  "worker_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "HF_DATASETS_OFFLINE": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "ORT_DISABLE_TELEMETRY": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "LINKSCRIBE_DEVICE": "cpu",
+    "LINKSCRIBE_SPEAKER_BACKEND": "speechbrain",
+    "PYTHONUTF8": "1"
+  },
+  "fixture": {
+    "id": "two_speakers_returning",
+    "filename": "two_speakers_returning.wav",
+    "sha256": "dc977c1cb0af1a30946eeb0c59218039987412462d2e8c5a2d23990b559f087f",
+    "sample_count": 554160,
+    "sample_rate_hz": 16000,
+    "duration_seconds": 34.635,
+    "license": "CC BY4.0",
+    "attribution": "LibriSpeech: Vassil Panayotov, Guoguo Chen, Daniel Povey and Sanjeev Khudanpur; speech derived from LibriVox audiobooks.",
+    "dataset_revision": "71cacbfb7e2354c4226d01e70d77d5fca3d04ba1",
+    "sources": [
+      {
+        "id": "2961-960-0004",
+        "speaker_id": "2961",
+        "sha256": "c815b1d8d37cd643047430c39f790067c75ee3adb93fdfbbe3da493f71d44615",
+        "row_index": 501,
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=openslr%2Flibrispeech_asr&config=clean&split=test&offset=500&length=15",
+        "asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/501/audio/audio.flac"
+      },
+      {
+        "id": "8455-210777-0028",
+        "speaker_id": "8455",
+        "sha256": "61e1697bdc0de5142e0cd76c4a14ed38086b66b9a0ab7722bd1c02aa3cebd261",
+        "row_index": 1000,
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=openslr%2Flibrispeech_asr&config=clean&split=test&offset=1000&length=15",
+        "asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/1000/audio/audio.flac"
+      },
+      {
+        "id": "2961-960-0005",
+        "speaker_id": "2961",
+        "sha256": "0d0c423dc55c236b5f55ca2fc4ab87b39b85d5d2a34585573afe6038ebf3a091",
+        "row_index": 502,
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=openslr%2Flibrispeech_asr&config=clean&split=test&offset=500&length=15",
+        "asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/502/audio/audio.flac"
+      },
+      {
+        "id": "8455-210777-0030",
+        "speaker_id": "8455",
+        "sha256": "4c1f5a6047a567c2ac3e7eb8b40444387b4f091f460ccd3cb6c052b202349555",
+        "row_index": 1002,
+        "rows_api_url": "https://datasets-server.huggingface.co/rows?dataset=openslr%2Flibrispeech_asr&config=clean&split=test&offset=1000&length=15",
+        "asset_url_without_query": "https://datasets-server.huggingface.co/cached-assets/openslr/librispeech_asr/--/71cacbfb7e2354c4226d01e70d77d5fca3d04ba1/--/clean/test/1002/audio/audio.flac"
+      }
+    ],
+    "reference_intervals": [
+      {
+        "start": 0.5,
+        "end": 8.5,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 9.1,
+        "end": 16.835,
+        "speaker": "8455",
+        "short": false
+      },
+      {
+        "start": 17.435,
+        "end": 25.435,
+        "speaker": "2961",
+        "short": false
+      },
+      {
+        "start": 26.035,
+        "end": 34.035,
+        "speaker": "8455",
+        "short": false
+      }
+    ]
+  },
+  "models": {
+    "recognizer": {
+      "repo": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "license": "MIT",
+      "files": {
+        "config.json": {
+          "bytes": 2370,
+          "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828",
+          "maximum_bytes": 2370
+        },
+        "model.bin": {
+          "bytes": 483546902,
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+          "maximum_bytes": 483546902
+        },
+        "tokenizer.json": {
+          "bytes": 2203239,
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+          "maximum_bytes": 2203239
+        },
+        "vocabulary.txt": {
+          "bytes": 459861,
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913",
+          "maximum_bytes": 459861
+        }
+      }
+    },
+    "speaker": {
+      "repo": "speechbrain/spkrec-ecapa-voxceleb",
+      "revision": "0f99f2d0ebe89ac095bcc5903c4dd8f72b367286",
+      "license": "Apache-2.0",
+      "files": {
+        "classifier.ckpt": {
+          "sha256": "fd9e3634fe68bd0a427c95e354c0c677374f62b3f434e45b78599950d860d535",
+          "maximum_bytes": 20971520
+        },
+        "hyperparams.yaml": {
+          "sha256": "6f78854fa04ba59e761437b76a2575d3aba5e5016de3e9b69f0c9a5077fb1a41",
+          "maximum_bytes": 20971520
+        },
+        "mean_var_norm_emb.ckpt": {
+          "sha256": "cd70225b05b37be64fc5a95e24395d804231d43f74b2e1e5a513db7b69b34c33",
+          "maximum_bytes": 20971520
+        },
+        "label_encoder.ckpt": {
+          "sha256": "e13c3a167bb4112685670ee896d20e2b565af16b3a4ceeaa8689fa4d22adb8b9",
+          "maximum_bytes": 20971520
+        },
+        "embedding_model.ckpt": {
+          "sha256": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2",
+          "maximum_bytes": 209715200
+        }
+      }
+    }
+  },
+  "source_files": [
+    {
+      "path": "app.py",
+      "sha256": "56f515e6943c49fa75565086e41b840816af3972909ceb5e95ed8d8a7fa99e3b"
+    },
+    {
+      "path": "asr_timing.py",
+      "sha256": "7780261b5ebeba913fe82836547408e7b0562381a7cc616d01f76822ce00db5e"
+    },
+    {
+      "path": "enhancements.py",
+      "sha256": "129d0f8c7dbbd5e621b8017d73c7aff204a40446d8ed59f7df8904c87efb579e"
+    },
+    {
+      "path": "diarization.py",
+      "sha256": "89e497f711c538413c3df79a77421c3ef5272bb63f784df2943ad1c5deccbe47"
+    },
+    {
+      "path": "library.py",
+      "sha256": "a9c9984da6fb43d0db544a4e30e588c5ad15c0be1074766af574ab5da57312e4"
+    },
+    {
+      "path": "library_backup.py",
+      "sha256": "bb06e219f4be0b9764501b391e35b4ebcc5b091666b6d191b98264d3f6512978"
+    },
+    {
+      "path": "batch_store.py",
+      "sha256": "5ca99ed791a91effab4e1a7248f14f20f6745814445cd4b257b1352cc2fd20fe"
+    },
+    {
+      "path": "sources.py",
+      "sha256": "84fe3a199dac4b6a1bc01da17ef65f3631fc02e825247ab17c52536fd67641a3"
+    },
+    {
+      "path": "source_highlights.py",
+      "sha256": "aeca9cd24343fa67ffdf00077ae0591846110ebcc71dc4c224181e57ff8cc17a"
+    },
+    {
+      "path": "runtime_check.py",
+      "sha256": "7b8c8e7954802d1ef7954977cd05f3018274869e6cd31c34a8ec8528e309405d"
+    },
+    {
+      "path": "diagnostics.py",
+      "sha256": "cefb28297283653dd4ef1ce84b9f60682ac8cb42bc2eb5dea004570258a0375c"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "6615aebe817390b37fb3573735a79f113cb6e0d1256e36150423e5b6ae9cf8b8"
+    },
+    {
+      "path": "requirements-speakers-free.txt",
+      "sha256": "67a04ffec9a9b739efea724e555dddcba23a93d1f73eee64d2b1c11184d2c942"
+    },
+    {
+      "path": "tests/smoke_real_speaker_app.py",
+      "sha256": "0f1a02279905471dec3467fad43c8e1c4b68b578c8c16e9346d940d5e96f7fec"
+    },
+    {
+      "path": "tests/smoke_real_speakers.py",
+      "sha256": "7260c5506ce3f1c606c6a75c630f33614f2491d83c3c5dac59b530beda6f1165"
+    },
+    {
+      "path": "tests/qa_speaker_integration.py",
+      "sha256": "12979240cca0a486cee2d3a9063e179f25a2775fd0fcfb6fd4b8546ec1e224cc"
+    },
+    {
+      "path": "tests/qa_qwen3_asr_candidate.py",
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f"
+    },
+    {
+      "path": ".github/workflows/speaker-integration-qa.yml",
+      "sha256": "555f1b0a50873100e061b9fca81843537ff3bb0745876f093738c30a9a21300c"
+    },
+    {
+      "path": "docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt",
+      "sha256": "34b9dbb5a4d784c05da4c31d4d709ce5792c8300cc0a368478d0e106db2c3e8a"
+    },
+    {
+      "path": "docs/speaker-evaluation-2026-11-26/selected_sources_fresh_holdout.json",
+      "sha256": "33362c31bba21c931970b4255394362f750df7f0141c8b2f6822a587f96f257a"
+    },
+    {
+      "path": "docs/speaker-evaluation-2026-11-26/speaker-app-initial.json",
+      "sha256": "9f3573231be107d12d6cb4736e261e44de21449ce8bc064695bc1aea8bfd230f"
+    }
+  ],
+  "recognition_contract": {
+    "model_alias": "small",
+    "language": "auto",
+    "transcribe_calls": 1,
+    "word_timestamps": false,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "all_default_temperature_fallback_preserved": true,
+    "word_timing_method": "same_engine_fixed_text_postpass",
+    "no_replacement_text_or_generation": true
+  },
+  "controlled_fixture_criteria": {
+    "source": "unchanged tests/smoke_real_speakers.py score",
+    "speaker_count": 2,
+    "minimum_assigned_core_fraction": 0.8,
+    "minimum_permutation_matched_label_purity": 0.95,
+    "references_for_post_execution_evaluation_only": true
+  },
+  "limitations": [
+    "Already exposed constructed English reading fixture, not fresh validation or a natural meeting.",
+    "Two output labels alone establish execution only. Acoustic turns and all transcript timing remain available for independent review.",
+    "Timing/ASR semantic quality and Greek/multilingual speaker accuracy are not approved by this pipeline.",
+    "Process exceptions preserve baseline; OS/native process death remains a distinct recovery limitation."
+  ],
+  "local_preparation_observation": {
+    "old_speaker_fixture_and_cache_available": false,
+    "torch_torchaudio_speechbrain_in_main_runtime": false,
+    "local_download_or_inference_performed": false,
+    "execution_selected": "isolated hosted workflow"
+  },
+  "runtime_packages": {
+    "torch": "2.11.0+cpu",
+    "torchaudio": "2.11.0+cpu",
+    "speechbrain": "1.1.2",
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.9.1",
+    "numpy": "2.5.5",
+    "av": "16.1.0",
+    "onnxruntime": "1.32.0",
+    "tokenizers": "0.23.3",
+    "huggingface-hub": "2.5.0",
+    "scipy": "1.18.1",
+    "httpx": "0.29.0",
+    "fastapi": "0.165.0",
+    "uvicorn": "0.54.0",
+    "python-multipart": "0.0.34",
+    "PyYAML": "6.0.4"
+  },
+  "measurement_contract": {
+    "sample_interval_seconds": 0.1,
+    "per_member_pid_state_rss_retained": true,
+    "incomplete_owned_or_unknown_membership_accounting_rejects_run": true,
+    "final_process_high_water_and_phase_caps_checked": true,
+    "native_alignment_return_saved_before_validation": true,
+    "speaker_yaml_checked_after_hash_before_object_construction": true,
+    "network_scope": "Declared HF/Transformers/dataset offline flags after verified preparation; no OS-wide network isolation or socket-attempt measurement is claimed.",
+    "lifetime_scope": "Actual recognizer release before speaker backend. Audio-to-text-AI release is supported by source/order tests because this run does not request translation or summary."
+  },
+  "parent_plan": {
+    "path": "docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json",
+    "sha256": "30e723794e53facc18bd88675c81d402ae8bce846aca38d5338ff5065459abec"
+  },
+  "setup_followup": {
+    "first_failed_run": 46121980993,
+    "first_failed_job": 140908265951,
+    "first_artifact_id": 15254385257,
+    "first_artifact_zip_sha256": "be2651874e1eb4019114bc208553a36934772d5db0a5aaa03a6f31698dc32aa2",
+    "reason": "Remote checkpoint filenames are declared in pinned YAML and may differ from SpeechBrain local cache names.",
+    "source_resolution": "Inspect inert nodes of exact pinned YAML first, record four declared source filenames within the same repository/revision, and seed unchanged local loadable.ckpt identities.",
+    "remote_label_encoder_filename_locally_verified": false,
+    "source_pretrainer_contract": "docs/asr-speaker-timing-integration-2026-11-28/independent-review/speechbrain-v1.1.2-parameter_transfer.py",
+    "production_model_fixture_runtime_limits_and_semantic_criteria_unchanged": true
+  },
+  "constructor_followup": {
+    "original_run_id": 46123086352,
+    "original_head_sha": "f2ebd0433976ed62478b67e98c4515e3d78afaa5",
+    "original_conclusion": "failure",
+    "failure": "Unexpected native model runtime: checker expected explicit cpu_threads4 but unchanged app uses native default0",
+    "only_execution_check_change": "Expect constructor cpu_threads0; keep all other model/device/worker/resource/input/acoustic criteria unchanged",
+    "thread_scope": "Source-enforced launch affinity of at most4CPUs and matching OMP/MKL environment; no claim to measure effective native threads or inference-side affinity",
+    "retained_actual_result": "docs/hosted-speaker-f2ebd04-2026-11-28/manifest.json",
+    "retained_actual_result_manifest_sha256": "796f638f869ea7fb2b1b1436c54005a247f454cbfab6c22eab8fa170eaf2c8e5",
+    "production_changes": false,
+    "model_rerun_in_this_preparation": false
+  }
+}

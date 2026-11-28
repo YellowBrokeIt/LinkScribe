@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "checks": [
+    {
+      "id": "parse-context.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-run_stage.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-process_io.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-native_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-phase_worker.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-native_actions.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-resource_monitor.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-phase_actions.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-status_contract.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-test_controller.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "parse-execution_gate.py",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "all-eleven-primary-git-objects",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "capsule-changed-body",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Official source content differs from its pinned Git object: tests/test-gbnf-validator.cpp"
+      }
+    },
+    {
+      "id": "capsule-missing-object",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Official source capsule does not match the exact ordered allowlist."
+      }
+    },
+    {
+      "id": "capsule-duplicate-object",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Official source capsule does not match the exact ordered allowlist."
+      }
+    },
+    {
+      "id": "capsule-path-escape",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Official source capsule does not match the exact ordered allowlist."
+      }
+    },
+    {
+      "id": "status-exact-accept",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "status-exact-reject",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "status-loose-valid-substring",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator did not provide an exact, unambiguous status receipt."
+      }
+    },
+    {
+      "id": "status-zero-with-no-status",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator did not provide an exact, unambiguous status receipt."
+      }
+    },
+    {
+      "id": "status-success-with-warning",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator initialization, process or diagnostic failure."
+      }
+    },
+    {
+      "id": "status-nonzero-even-with-status",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator initialization, process or diagnostic failure."
+      }
+    },
+    {
+      "id": "status-truncated-rejection",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator did not provide an exact, unambiguous status receipt."
+      }
+    },
+    {
+      "id": "status-extra-success-output",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Validator did not provide an exact, unambiguous status receipt."
+      }
+    },
+    {
+      "id": "pure-receipt-fields",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "receipt-root_authorized",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Independent root authorization without generation authority is required."
+      }
+    },
+    {
+      "id": "receipt-runner_author_self_approval",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Independent root authorization without generation authority is required."
+      }
+    },
+    {
+      "id": "receipt-generation_authorized",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Independent root authorization without generation authority is required."
+      }
+    },
+    {
+      "id": "receipt-plan_sha256",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Root receipt does not bind the exact controller/native plan and independent review."
+      }
+    },
+    {
+      "id": "generation-phase-unavailable",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Root receipt names an unsupported or different phase."
+      }
+    },
+    {
+      "id": "actual-controller-missing-root-receipt-acquire",
+      "passed": true,
+      "execution_attempted": false
+    },
+    {
+      "id": "actual-controller-missing-root-receipt-build",
+      "passed": true,
+      "execution_attempted": false
+    },
+    {
+      "id": "actual-controller-missing-root-receipt-native_prepare",
+      "passed": true,
+      "execution_attempted": false
+    },
+    {
+      "id": "actual-controller-missing-root-receipt-validate",
+      "passed": true,
+      "execution_attempted": false
+    },
+    {
+      "id": "full-six-retained-render-contract",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "native-nonzero-prediction",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Only the exact ordered empty-prompt, zero-prediction grammar queries are allowed."
+      }
+    },
+    {
+      "id": "native-nonempty-prompt",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Only the exact ordered empty-prompt, zero-prediction grammar queries are allowed."
+      }
+    },
+    {
+      "id": "native-weakened-schema",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Only the exact ordered empty-prompt, zero-prediction grammar queries are allowed."
+      }
+    },
+    {
+      "id": "native-changed-response-field",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Only the exact ordered empty-prompt, zero-prediction grammar queries are allowed."
+      }
+    },
+    {
+      "id": "native-foreign-port",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Native transport refuses this non-allowlisted request; generation/import/download is unavailable."
+      }
+    },
+    {
+      "id": "native-generation-chat",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Native transport refuses this non-allowlisted request; generation/import/download is unavailable."
+      }
+    },
+    {
+      "id": "native-create",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Native transport refuses this non-allowlisted request; generation/import/download is unavailable."
+      }
+    },
+    {
+      "id": "native-generated-content-rejected",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "A zero-output schema query evaluated or generated tokens."
+      }
+    },
+    {
+      "id": "native-prompt-evaluation-rejected",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "A zero-output schema query evaluated or generated tokens."
+      }
+    },
+    {
+      "id": "complete-zero-output-call-inventory",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "native-query-repeat-refused",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Only the exact ordered empty-prompt, zero-prediction grammar queries are allowed."
+      }
+    },
+    {
+      "id": "bounded-subprocess-timeout",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "TimeoutError",
+        "message": "Bounded command exceeded its fixed deadline."
+      }
+    },
+    {
+      "id": "bounded-subprocess-capture",
+      "passed": true,
+      "expected_rejection": true,
+      "detail": {
+        "type": "ValueError",
+        "message": "Bounded command capture limit exceeded; retained prefix is not complete output."
+      }
+    },
+    {
+      "id": "disk-low-reserve",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "disk-file-limit",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "disk-tree-limit",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "disk-symlink-rejection",
+      "passed": true,
+      "expected_rejection": false,
+      "detail": null
+    },
+    {
+      "id": "observer-success",
+      "passed": true,
+      "resource_report": {
+        "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/control-results/observer-success-resources.json",
+        "bytes": 2926,
+        "sha256": "8554a9103791c5be154ec2b4d07e8c1d08e71aa42903430b723a9b7e77f77422"
+      },
+      "observed_stop_reason": null
+    },
+    {
+      "id": "observer-time-limit",
+      "passed": true,
+      "resource_report": {
+        "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/control-results/observer-time-limit-resources.json",
+        "bytes": 2824,
+        "sha256": "0fb298baf8bb564693293f539414a76c24bd25a549e225205c78198392dd6122"
+      },
+      "observed_stop_reason": "aggregate_time_limit"
+    },
+    {
+      "id": "observer-memory-limit",
+      "passed": true,
+      "resource_report": {
+        "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/control-results/observer-memory-limit-resources.json",
+        "bytes": 2871,
+        "sha256": "bc5b6a2840c889c96e798fb2239a1c99c4864aed07e6ed5fc760f214d7c493f0"
+      },
+      "observed_stop_reason": "process_tree_memory_limit"
+    },
+    {
+      "id": "observer-orphan",
+      "passed": true,
+      "resource_report": {
+        "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/control-results/observer-orphan-resources.json",
+        "bytes": 3050,
+        "sha256": "0eca6f189d851cb0d043bd2faa4a36afea92b3e20bebea9782a88a9b2d9b44ac"
+      },
+      "observed_stop_reason": "owned_child_survived_worker_exit"
+    },
+    {
+      "id": "observer-disk-limit",
+      "passed": true,
+      "resource_report": {
+        "path": "/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-marker-grammar-controller-v2-2026-11-28/control-results/observer-disk-limit-resources.json",
+        "bytes": 4127,
+        "sha256": "548f444af2864ba01762838b5276515e994ccc582c28cd9a82dc139c45678097"
+      },
+      "observed_stop_reason": "storage_policy_limit"
+    }
+  ],
+  "compiler_native_library_converter_tokenizer_model_calls": 0,
+  "network_calls": 0,
+  "harmless_process_controls_only": true,
+  "actual_root_receipts_created": 0,
+  "source_materialization_into_build_root": false,
+  "synthetic_symlink_cleanup_only": true,
+  "native_probe_matrix_not_executed": true
+}

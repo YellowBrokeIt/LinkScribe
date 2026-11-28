@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "authorized": false,
+  "executed": false,
+  "native_query_source_path": "docs/krikri-marker-grammar-preparation-2026-11-28/proposed-native-grammar-queries.json",
+  "native_query_source_sha256": "2c207c4dc72f8a71b4f87fa1cb0a037a0e555ed19a5dac13fd0c71e120c9b189",
+  "candidate_requests_path": "docs/krikri-marker-grammar-preparation-2026-11-28/expected-requests.json",
+  "candidate_requests_sha256": "317239816bc8f0cff5d56d0e4b8ce2b1c0bc915742d3c9f7134ec29021867ccb",
+  "probe_matrix_path": "docs/krikri-marker-grammar-preparation-2026-11-28/native-probe-matrix.json",
+  "probe_matrix_sha256": "48865a43b72feba5a7649b56a27fc34728627c08d0676fc3bdc50657e613c988",
+  "same_prior_native_runtime_model_template_settings": true,
+  "native_runner_pid_and_port_bound_to_owned_pinned_binary": true,
+  "required_response_key": "generation_settings/grammar",
+  "candidate_conversion_failures": [
+    "non-2xx response",
+    "missing/empty grammar",
+    "unexpected grammar backend",
+    "unsupported-pattern warning",
+    "generic-string fallback",
+    "input or runtime drift"
+  ],
+  "validator_acceptance": "status_contract.py exact status with zero exit and no stderr; every frozen expected result must match actual emitted-grammar acceptance",
+  "sentinel": "One known unsupported lookahead. Closed converter error is retained; if a weak grammar is returned, its missing-marker acceptance must cause the enforcement gate to reject it. Never substitute it for a candidate.",
+  "full_messages_and_vectors": "All complete messages and source-spelling context equal frozen predecessor; observe current native date/BOS/template framing and verify actual full prompt + 2048 output + terminal <=4096. No source cropping.",
+  "after_native_phase": [
+    "explicit unload acknowledged",
+    "resident-model list empty",
+    "owned daemon/group stopped",
+    "then and only then run validator-only probe phase"
+  ],
+  "no_generation_authority_from_pass": true,
+  "independent_review_of_actual_artifacts_required": true
+}

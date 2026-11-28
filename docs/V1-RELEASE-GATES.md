@@ -9,6 +9,57 @@ Development continues on `feature/linkscribe-v03-reliability` and draft PR #2.
 The stable branch remains unchanged while the release gates below are open.
 The application version remains **0.3.0**.
 
+## Latest verified state: 28 November 2026
+
+The completed application and speaker evidence is saved in
+[checkpoint 6b779db](https://github.com/YellowBrokeIt/LinkScribe/commit/6b779dba8d0ac9a1b099628eadb98db7ad8d894e).
+The production application files at `f2ebd04` are identical to the integrated
+`d62df26` files. The complete [d62 hosted record](hosted-d62df26-complete-2026-11-28/README.md)
+and [final f2 status](f2ebd04-final-status-2026-11-28/README.md) distinguish exact
+execution results from quality approval.
+
+- Current f2 Linux/Python suites passed **846 tests and 54 subtests**; Windows
+  and macOS passed **840 and 54 subtests**, with six Linux process controls
+  skipped. Browser passed **35/35**; checkout/actual ZIP installation, actual
+  upload and Ollama execution jobs completed. These are results for f2, not a
+  claim that later source changes have already run remotely.
+- The actual two-reader speaker application pipeline completed with one ordinary
+  transcription, same-engine fixed-text timing, actual recognizer release,
+  durable SQLite and all exports. Original acoustic thresholds pass: **221/258
+  assigned core samples (85.66%)**, **100% matched purity among assignments**,
+  and two speakers. Thirty-seven core samples and seven saved groups remain
+  unassigned. The [complete original result](hosted-speaker-f2ebd04-2026-11-28/README.md)
+  preserves the failed GitHub status, caused by an incorrect constructor-thread
+  expectation. The separately reviewed offline correction expects the actual
+  pinned default zero while keeping the original source-enforced four-CPU
+  launch constraint. No effective native thread measurement is claimed.
+- The maintained checker correction now has a
+  [new source-bound future plan](asr-speaker-constructor-followup-2026-11-28/README.md),
+  35 passing focused controls and a passing no-model preflight. Previous plans,
+  failed reports and acceptance criteria remain unchanged.
+- Full review of the default model's original twelve exposed translations at
+  the identical language source found **nine major errors and three acceptable
+  outputs**. The [complete source/output/criterion review](default-qwen-d62-meaning-review-2026-11-28/README.md)
+  remains a release blocker, including errors that automatic execution checks
+  missed. Faithful summaries, broader Greek/English speech meaning and complete
+  application resource fit also remain open.
+- The full Dailymotion recording and fixed late-dialogue checks passed; the
+  other five live URL attempts were blocked by provider sign-in/access rules.
+  These failed acquisitions remain visible and no restriction was bypassed.
+- The prospective translation grammar checker compiled successfully, but its
+  header verification stopped before parser sanity or model calls. The
+  [retained build and exact five-header diagnosis](grammar-v2-retained-build-2026-11-28/README.md)
+  support a separate bounded continuation. Compilation is not grammar or
+  translation-quality approval. The unused fresh language validation sets
+  remain unopened.
+
+These updates change current status and correct one QA expectation. They do not
+weaken the release gates or approve a model replacement. The historical records
+below remain intact; their counts and failed experiments belong to their named
+source checkpoints.
+
+## Preserved checkpoint history
+
 The [28 November checkpoint recovery](checkpoint-recovery-2026-11-28/README.md)
 reconciles the completed hosted results for published commit
 `dc0985dabaacdbeedd1d55daf0351ea6bda69d84`. At that status check there were no

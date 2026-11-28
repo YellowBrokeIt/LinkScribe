@@ -24,7 +24,7 @@ spec = importlib.util.spec_from_file_location("_speaker_shared_qa", Path(__file_
 common = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(common)
 require, sha, write_json = common.require, common.sha256, common.write_json
-DEFAULT_PLAN = ROOT / "docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json"
+DEFAULT_PLAN = ROOT / "docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json"
 
 
 def validate(plan_path):
@@ -324,7 +324,9 @@ def completed_contract(plan, report):
             "Recognition policy or attempt count changed")
     require(report["upload_form"] == {"consent": "true", "speakers": "true", "target_language": "none", "summary": "false"},
             "Unexpected enhancement or source-guidance request")
-    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 4 and
+    # The unchanged app uses faster-whisper's constructor default 0. Native
+    # threading is bounded by execute()'s CPU affinity and OMP environment.
+    require(len(report["model_initializations"]) == 1 and report["model_initializations"][0]["cpu_threads"] == 0 and
             report["model_initializations"][0]["num_workers"] == 1 and
             report["model_initializations"][0]["actual_device"] == "cpu" and
             report["model_initializations"][0]["actual_compute_type"] in {"int8", "int8_float32"}, "Unexpected native model runtime")

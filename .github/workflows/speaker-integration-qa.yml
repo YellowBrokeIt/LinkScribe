@@ -8,7 +8,7 @@ on:
       - '.github/workflows/speaker-integration-qa.yml'
       - 'tests/qa_speaker_integration.py'
       - 'tests/smoke_real_speaker_app.py'
-      - 'docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json'
+      - 'docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json'
       - 'docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt'
 
 permissions:
@@ -42,7 +42,7 @@ jobs:
       - name: Validate source-bound plan without model imports
         run: >-
           python tests/qa_speaker_integration.py --action validate
-          --plan docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json
+          --plan docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json
           --evidence "$SPEAKER_QA_ROOT/evidence"
       - name: Install declared CPU application and optional speaker runtime
         shell: bash
@@ -57,12 +57,12 @@ jobs:
       - name: Recover original public fixture and exact pinned model files
         run: >-
           "$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action prepare
-          --plan docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json
+          --plan docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json
           --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"
       - name: Run the one bounded offline application pipeline
         run: >-
           "$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action execute
-          --plan docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json
+          --plan docs/asr-speaker-constructor-followup-2026-11-28/hosted-plan.json
           --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"
       - name: Preserve raw success or failure, turns, exports and resource samples
         if: always()

@@ -1,0 +1,40 @@
+--- docs/krikri-source-spelling-screen-2026-11-28/resource_monitor.py
++++ docs/krikri-marker-grammar-controller-2026-11-28/resource_monitor.py
+@@ -89,7 +89,7 @@
+     return not owned_group(process, identities) and not alive_owned(identities)
+ 
+ 
+-def monitor(command, environment, private_log, output, samples_path, limits, metadata):
++def monitor(command, environment, private_log, output, samples_path, limits, metadata, policy_check=None):
+     if output.exists() or samples_path.exists() or private_log.exists():
+         raise ValueError("Refusing to repeat or overwrite a measured phase.")
+     available = sorted(os.sched_getaffinity(0))
+@@ -154,6 +154,10 @@
+                               "pss_bytes": sum(e["pss_bytes"] for e in entries), "processes": entries,
+                               "system_available_bytes": system.available, "system_total_bytes": system.total,
+                               "active_case": case_active}
++                    if policy_check is not None:
++                        sample["storage"] = policy_check()
++                        if sample["storage"].get("violation"):
++                            report["stop_reason"] = "storage_policy_limit"
+                     samples.write(json.dumps(sample, separators=(",", ":"), allow_nan=False) + "\n")
+                     samples.flush()
+                     count += 1
+@@ -232,6 +236,17 @@
+         report["samples_sha256"] = sha(samples_path) if samples_path.exists() else None
+         report["elapsed_seconds"] = round(time.monotonic() - started, 6)
+         report["finished_at"] = utc()
++        if policy_check is not None:
++            try:
++                report["storage_after_cleanup"] = policy_check()
++                if report["storage_after_cleanup"].get("violation"):
++                    report["complete"] = False
++                    report["stop_reason"] = "storage_policy_limit"
++            except Exception as error:
++                report["measurement_errors"].append({"type": type(error).__name__, "message": str(error)})
++                report["measurement_complete"] = False
++                report["complete"] = False
++                report["stop_reason"] = "incomplete_storage_measurement"
+         report["passed"] = (report["complete"] and report["measurement_complete"]
+                             and report["owned_processes_stopped"] and not report.get("error"))
+         save(output, report)

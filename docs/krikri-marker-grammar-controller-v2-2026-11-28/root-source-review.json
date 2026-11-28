@@ -1,0 +1,59 @@
+{
+  "reviewer": "root",
+  "reviewed_at": "2026-11-28T08:16:33.797961+00:00",
+  "plan_sha256": "edc16c0a14699c38bb7cd1916f5118d6778958cd708f0fbca920720ebc0d8c00",
+  "independent_review_sha256": "ac63d5c7c889c80fed00f5367714eec1944809bdfd0440f19d639e72aefbb4a0",
+  "decision": "Source review clear for separately receipted bounded phases",
+  "reviewed_scope": [
+    "All eight foundation modules and exact immutable snapshot bindings",
+    "Native request allowlist and owned runner/raw-response handling",
+    "Complete original six requests, seven zero-output grammar queries and 285 unchanged probes",
+    "Final phase elapsed enforcement and actual paired harmless late-cleanup regression",
+    "Actual model-free controls and preserved original source/evidence manifests"
+  ],
+  "unchanged_budgets": [
+    {
+      "name": "acquire",
+      "seconds": 120,
+      "rss_mib": 256,
+      "cpu_affinity_count": 4,
+      "source_files": 11,
+      "source_bytes": 289300,
+      "model_or_native_parser_calls": 0
+    },
+    {
+      "name": "build-and-sanity",
+      "seconds": 120,
+      "rss_mib": 512,
+      "cpu_affinity_count": 4,
+      "compile_jobs": 1,
+      "native_model_free_sanity_calls": 3,
+      "model_loads": 0
+    },
+    {
+      "name": "native-prepare",
+      "seconds": 600,
+      "initialization_seconds": 180,
+      "rss_mib": 6144,
+      "cpu_affinity_count": 4,
+      "schema_queries": 7,
+      "prediction_tokens_per_query": 0,
+      "evaluated_source_prompt_tokens_per_schema_query": 0,
+      "complete_prompt_renders_and_token_counts": 6,
+      "translation_generation_calls": 0
+    },
+    {
+      "name": "validate-emitted-grammars",
+      "seconds": 60,
+      "seconds_per_probe": 2,
+      "rss_mib": 256,
+      "cpu_affinity_count": 4,
+      "candidate_raw_json_probes": 285,
+      "sentinel_missing_marker_probe": 1,
+      "model_loads": 0
+    }
+  ],
+  "no_generation_phase": true,
+  "semantic_approval": false,
+  "model_slot_reserved": false
+}
