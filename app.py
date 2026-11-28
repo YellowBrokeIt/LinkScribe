@@ -20,6 +20,7 @@ os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 import re
 import shutil
 import sys
+import tempfile
 import threading
 import time
 import uuid
@@ -32,7 +33,7 @@ from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 from functools import lru_cache
 from numbers import Real
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 from urllib.parse import parse_qs, urlsplit
 
 import library
@@ -830,7 +831,7 @@ def _process_upload(job_id: str, file_path: Path, language: str, model: str,
                       speakers, target, summary_enabled, recognition=recognition, highlights_enabled=highlights_enabled)
 
 
-def _batch_archive(batch_id: str) -> bytes:
+def _write_batch_archive(batch_id: str, stream: BinaryIO) -> None:
     """Rebuild the archive from durable transcripts, even after a restart.
 
     Job workdirs and their temporary exports expire, but the library does not.
@@ -838,7 +839,6 @@ def _batch_archive(batch_id: str) -> bytes:
     stored = batch_store.get(batch_id)
     if stored is None:
         raise ReadableError("Batch not found in persistent history.")
-    stream = io.BytesIO()
     records: list[dict[str, Any]] = []
     with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for index, item in enumerate(stored["jobs"], start=1):
@@ -865,7 +865,29 @@ def _batch_archive(batch_id: str) -> bytes:
                     "completed": sum(item["status"] in {"done", "error"} for item in records),
                     "failed": sum(item["status"] == "error" for item in records), "items": records}
         archive.writestr("batch-report.json", json.dumps(manifest, ensure_ascii=False, indent=2))
+
+
+def _batch_archive(batch_id: str) -> bytes:
+    """In-memory archive helper for callers that explicitly require bytes."""
+    stream = io.BytesIO()
+    _write_batch_archive(batch_id, stream)
     return stream.getvalue()
+
+
+class _BatchArchiveResponse(StreamingResponse):
+    def __init__(self, stream: BinaryIO, batch_id: str):
+        self.stream = stream
+        length = stream.tell()
+        stream.seek(0)
+        super().__init__(iter(lambda: stream.read(64 * 1024), b""), media_type="application/zip",
+                         headers={"Content-Disposition": f'attachment; filename="linkscr-batch-{batch_id[:8]}.zip"',
+                                  "Content-Length": str(length), "Cache-Control": "no-store"})
+
+    async def __call__(self, scope, receive, send):
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            self.stream.close()
 
 
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
@@ -907,10 +929,8 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
         batch.completed += 1
         if job.status == "error":
             batch.failed += 1
-    batch.stage = "Preparing batch archive..."
-    payload = _batch_archive(batch_id)
-    batch.workdir.mkdir(parents=True, exist_ok=True)
-    (batch.workdir / "batch.zip").write_bytes(payload)
+    # Downloads always rebuild from the durable library (including edits).
+    # Do not generate and retain an unused, immediately stale archive here.
     batch_store.mark_batch(batch_id, "done")
     batch.status, batch.stage, batch.finished_at = "done", "Batch complete", time.time()
 
@@ -1164,10 +1184,15 @@ def batch_download(batch_id: str):
     saved = batch_store.get(batch_id)
     if not saved or saved["status"] != "done":
         raise HTTPException(404, "Batch not ready.")
-    payload = _batch_archive(batch_id)
-    return StreamingResponse(io.BytesIO(payload), media_type="application/zip",
-               headers={"Content-Disposition": f'attachment; filename="linkscr-batch-{batch_id[:8]}.zip"',
-                        "Cache-Control": "no-store"})
+    # The archive can contain twenty long transcripts. Keep the compressed
+    # output off the heap and stream fixed-size chunks from an owned temp file.
+    stream = tempfile.TemporaryFile(mode="w+b")
+    try:
+        _write_batch_archive(batch_id, stream)
+        return _BatchArchiveResponse(stream, batch_id)
+    except BaseException:
+        stream.close()
+        raise
 
 
 @app.get("/api/jobs/{job_id}")
