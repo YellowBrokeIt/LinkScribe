@@ -572,62 +572,84 @@ def _render_subtitles(segments: list[dict[str, Any]], fmt: str) -> str:
     return ("WEBVTT\n\n" if fmt == "vtt" else "") + "\n".join(blocks)
 
 
-def _exports(record: dict[str, Any]) -> dict[str, bytes]:
-    """Single exporter for freshly completed jobs and saved/edited library items."""
+def _exports(record: dict[str, Any], *, requested: str | None = None,
+             include_zip: bool = True) -> dict[str, bytes]:
+    """Render one requested file, or all component files and an optional ZIP."""
+    # A ZIP needs the complete set, but ordinary downloads and the enclosing
+    # batch archive do not need an additional per-transcript archive.
+    if requested == "transcript.zip":
+        requested = None
+    def wants(name):
+        return requested is None or requested == name
+
     segments = record["segments"]
-    text = "\n".join(_shown_text(segment) for segment in segments) + "\n"
-    json_record = {key: record[key] for key in ("source", "title", "language", "method", "segments")}
-    if record.get("processing_metadata"):
-        json_record["processing_metadata"] = record["processing_metadata"]
-    highlights = _valid_highlights(record)
-    if highlights is not None:
-        json_record["highlights"] = highlights
-    contents = {"transcript.txt": text.encode("utf-8")}
+    highlights = (_valid_highlights(record) if requested is None or
+                  requested in {"transcript.json", "highlights.md", "highlights.json"} else None)
+    contents = {}
     export_notes = []
 
+    if wants("transcript.txt"):
+        contents["transcript.txt"] = ("\n".join(_shown_text(segment) for segment in segments) + "\n").encode("utf-8")
+
     def add_subtitles(prefix, timed_segments):
+        formats = [fmt for fmt in ("srt", "vtt") if wants(f"{prefix}.{fmt}")]
+        if not formats:
+            return
         try:
             rendered = {f"{prefix}.{fmt}": _render_subtitles(timed_segments, fmt).encode("utf-8")
-                        for fmt in ("srt", "vtt")}
+                        for fmt in formats}
         except SubtitleTimingError as exc:
             export_notes.append(f"{prefix}.srt / {prefix}.vtt unavailable: {exc}")
         else:
             contents.update(rendered)
 
     add_subtitles("transcript", segments)
-    contents["transcript.json"] = json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
+    if wants("transcript.json"):
+        json_record = {key: record[key] for key in ("source", "title", "language", "method", "segments")}
+        if record.get("processing_metadata"):
+            json_record["processing_metadata"] = record["processing_metadata"]
+        if highlights is not None:
+            json_record["highlights"] = highlights
+        contents["transcript.json"] = json.dumps(json_record, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
     for lang, translated in record.get("translations", {}).items():
         if lang not in {"el", "en"}: continue
-        contents[f"translation_{lang}.txt"] = ("\n".join(_shown_text(s) for s in translated) + "\n").encode("utf-8")
+        if wants(f"translation_{lang}.txt"):
+            contents[f"translation_{lang}.txt"] = ("\n".join(_shown_text(s) for s in translated) + "\n").encode("utf-8")
         add_subtitles(f"translation_{lang}", translated)
-        contents[f"translation_{lang}.json"] = json.dumps({"language":lang,"segments":translated},ensure_ascii=False,indent=2).encode("utf-8")
+        if wants(f"translation_{lang}.json"):
+            contents[f"translation_{lang}.json"] = json.dumps({"language":lang,"segments":translated},ensure_ascii=False,indent=2).encode("utf-8")
     if summary := record.get("summary"):
-        md = "# Summary\n\n" + summary["summary"] + "\n\n## Key points\n\n"
-        md += "\n".join("- " + point for point in summary["key_points"])
-        md += "\n\n## Chapters\n\n"
-        md += "\n".join(f"- {_timecode(c['start'],'vtt')}: {c['title']}" for c in summary["chapters"]) + "\n"
-        contents["summary.md"] = md.encode("utf-8")
-        contents["summary.json"] = json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8")
+        if wants("summary.md"):
+            md = "# Summary\n\n" + summary["summary"] + "\n\n## Key points\n\n"
+            md += "\n".join("- " + point for point in summary["key_points"])
+            md += "\n\n## Chapters\n\n"
+            md += "\n".join(f"- {_timecode(c['start'],'vtt')}: {c['title']}" for c in summary["chapters"]) + "\n"
+            contents["summary.md"] = md.encode("utf-8")
+        if wants("summary.json"):
+            contents["summary.json"] = json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8")
     if highlights is not None:
-        full_source = highlights["selected_segment_count"] == highlights["source_segment_count"]
-        scope = ("The complete source is included; no condensation was made." if full_source
-                 else "Selected excerpts may omit important context; read the full transcript.")
-        md = "# Source highlights\n\nVerbatim transcript excerpts. " + scope + "\n\nExcerpts may span speakers; consult the full transcript for speaker labels.\n"
-        for excerpt in highlights["excerpts"]:
-            md += f"\n## {_timecode(excerpt['start'], 'vtt')} – {_timecode(excerpt['end'], 'vtt')}\n\n"
-            # A long-enough fence keeps arbitrary quoted Markdown as literal source text.
-            fence = "`" * max(3, max((len(match.group()) + 1 for match in re.finditer(r"`+", excerpt["text"])), default=3))
-            md += fence + "text\n" + excerpt["text"] + "\n" + fence + "\n"
-        if highlights.get("warnings"):
-            md += "\n## Selection notes\n\n" + "\n".join("- " + warning for warning in highlights["warnings"]) + "\n"
-        contents["highlights.md"] = md.encode("utf-8")
-        contents["highlights.json"] = json.dumps(highlights, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
-    if export_notes:
+        if wants("highlights.md"):
+            full_source = highlights["selected_segment_count"] == highlights["source_segment_count"]
+            scope = ("The complete source is included; no condensation was made." if full_source
+                     else "Selected excerpts may omit important context; read the full transcript.")
+            md = "# Source highlights\n\nVerbatim transcript excerpts. " + scope + "\n\nExcerpts may span speakers; consult the full transcript for speaker labels.\n"
+            for excerpt in highlights["excerpts"]:
+                md += f"\n## {_timecode(excerpt['start'], 'vtt')} – {_timecode(excerpt['end'], 'vtt')}\n\n"
+                # A long-enough fence keeps arbitrary quoted Markdown as literal source text.
+                fence = "`" * max(3, max((len(match.group()) + 1 for match in re.finditer(r"`+", excerpt["text"])), default=3))
+                md += fence + "text\n" + excerpt["text"] + "\n" + fence + "\n"
+            if highlights.get("warnings"):
+                md += "\n## Selection notes\n\n" + "\n".join("- " + warning for warning in highlights["warnings"]) + "\n"
+            contents["highlights.md"] = md.encode("utf-8")
+        if wants("highlights.json"):
+            contents["highlights.json"] = json.dumps(highlights, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
+    if export_notes and requested is None:
         contents["export-notes.txt"] = ("\n".join(export_notes) + "\n").encode("utf-8")
-    stream = io.BytesIO()
-    with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
-        for name, data in contents.items(): z.writestr(name,data)
-    contents["transcript.zip"] = stream.getvalue()
+    if requested is None and include_zip:
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
+            for name, data in contents.items(): z.writestr(name,data)
+        contents["transcript.zip"] = stream.getvalue()
     return contents
 
 
@@ -827,7 +849,7 @@ def _batch_archive(batch_id: str) -> bytes:
                      "library_id": item["id"] if record else None}
             if record:
                 prefix = f"{index:02d}_{item['id'][:8]}"
-                available = _exports(record)
+                available = _exports(record, include_zip=False)
                 saved_warnings = record.get("processing_metadata", {}).get("warnings", [])
                 saved_warnings = [w for w in saved_warnings if isinstance(w, str)] if isinstance(saved_warnings, list) else []
                 export_warnings = available.get("export-notes.txt", b"").decode("utf-8").splitlines()
@@ -1161,7 +1183,7 @@ def download(job_id: str,file_type: str):
     if not record: raise HTTPException(404,"Transcript was deleted from the library.")
     key=_export_key(file_type,record)
     if not key: raise HTTPException(404,"Requested enhancement was not generated.")
-    available = _exports(record)  # Current saved edits, never stale temporary exports.
+    available = _exports(record, requested=key)  # Current saved edits, never stale temporary exports.
     if key not in available:
         raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
     contents = available[key]
@@ -1290,7 +1312,7 @@ def library_download(item_id: str, file_type: str):
     if not record: raise HTTPException(404,"Transcript not found.")
     name=_export_key(file_type,record)
     if not name: raise HTTPException(404,"Requested enhancement not available.")
-    available = _exports(record)
+    available = _exports(record, requested=name)
     if name not in available:
         raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
     content = available[name]
