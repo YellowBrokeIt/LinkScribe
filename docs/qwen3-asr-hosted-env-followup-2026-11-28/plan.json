@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-11-28T02:36:55.109376+00:00",
+  "purpose": "One recognizer-only development screen on eight already exposed native English/Greek recordings; no fresh validation or app integration.",
+  "model_id": "Qwen/Qwen3-ASR-0.6B-hf",
+  "model_revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+  "model_files_path": "docs/qwen3-asr-screen-2026-11-28/model-files.json",
+  "model_license": "Apache-2.0",
+  "runtime_versions": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.13.0",
+    "numpy": "2.5.5",
+    "av": "16.1.0",
+    "huggingface-hub": "1.5.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "Jinja2": "3.1.6"
+  },
+  "runtime_scope": "Isolated hosted Ubuntu 24.04 x86_64 Python 3.12 venv; direct pins and actual pip install/freeze report; no ML package installation or model download locally.",
+  "dtype": "float32",
+  "attention_implementation": "eager",
+  "trust_remote_code": false,
+  "source_language_argument": null,
+  "target_language_argument": null,
+  "source_language_policy": "Automatic language identification through the unmodified native audio-only request; no language system message.",
+  "timestamps": "None; Greek is not in the native forced-alignment language subset. No invented or substituted word times.",
+  "attempts_per_case": 1,
+  "model_initializations": 1,
+  "qa_seed": 1729,
+  "max_cpu_threads": 4,
+  "torch_interop_threads": 1,
+  "rss_limit_bytes": 6442450944,
+  "startup_seconds": 180,
+  "per_case_seconds": 90,
+  "total_worker_seconds": 900,
+  "resource_sampling_seconds": 0.1,
+  "per_file_download_seconds": 300,
+  "limits_scope": "Controller samples the owned worker process group; worker also checks recorded peak RSS and completed timings. A limit stop preserves partial evidence and rejects this screen.",
+  "generation": {
+    "max_new_tokens": 512,
+    "do_sample": false,
+    "num_beams": 1,
+    "eos_token_id": [
+      151643,
+      151645
+    ],
+    "pad_token_id": 151645
+  },
+  "frontend": {
+    "sampling_rate_hz": 16000,
+    "dtype": "<f4",
+    "full_untrimmed_recording": true,
+    "vad": false,
+    "truncation": false,
+    "padding": true,
+    "return_attention_mask": true,
+    "n_window": 50,
+    "feature_binding": "Observe exact original complete PCM at native feature extraction and bind the resulting full features/mask to the actual audio encoder; no cached feature substitution."
+  },
+  "decoder_guidance": {
+    "reference_text": false,
+    "language_hint": false,
+    "glossary": false,
+    "custom_prompt": false,
+    "word_corrections": false
+  },
+  "completion": "Retain prompt plus every generated token and raw decode; require preserved prefix, matching streamed/returned IDs, native terminal EOS and no token-bound truncation. Native parse_output repetition repair is retained separately, never used to conceal raw output errors.",
+  "worker_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "DO_NOT_TRACK": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "PYTHONHASHSEED": "1729",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "offline_policy": "Only verified local model files; sanitized worker environment, HF/Transformers offline flags, Python socket audit denial; official native runtime only, trust_remote_code false. No credentials or secrets supplied.",
+  "original_fixtures_path": "docs/asr-2026-11-26/fixtures.json",
+  "original_arrays_path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+  "semantic_criteria_path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+  "semantic_review": "Independently review all eight raw, unrepaired hypotheses against every original reference and criterion. Proper names, numbers, negation and relationships matter; structural success does not approve quality.",
+  "comparison_reports": {
+    "completed_small": "docs/asr-2026-11-26/small-vad-off-regression-replay.json",
+    "small_review": "docs/asr-2026-11-26/small-vad-off-review.json",
+    "original_setup_failure_context_only": "docs/asr-2026-11-26/small-vad-off-regression.json",
+    "parakeet": "docs/parakeet-screen-2026-11-28/README.md"
+  },
+  "cases": [
+    {
+      "id": "fleurs-el_gr-validation-2-1528",
+      "audio_sha256": "308cbd20dc2312f5c8650f7510e8f03d1722b5c679c2b5f1666273d274c46e80",
+      "sample_count": 106560,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6635ba5199aa6aa8c1e3e438a576f9c0ea89d9d1536e4feb626a66c01917826d"
+    },
+    {
+      "id": "fleurs-el_gr-validation-5-1515",
+      "audio_sha256": "c98aa4f766244d9bb2a8c625290e7cced52fa27eea7c8d577ad68f1d55b2858b",
+      "sample_count": 96000,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "6f44cbd46b96d36bd7c20054da5e156a25d1b9d60d731201cd47708e41d3586b"
+    },
+    {
+      "id": "fleurs-el_gr-validation-6-1577",
+      "audio_sha256": "ecdcbfeb4233be45e348365f15a86fd3b2fc5d7e46c6e551ca1917a23e935ec4",
+      "sample_count": 67200,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "bf268f7827d716d723bfaf80e2efbc11476154b2f11e471e500421d8096263ad"
+    },
+    {
+      "id": "fleurs-el_gr-validation-7-1598",
+      "audio_sha256": "24f5d0c64422965523f3d285b45bd16d507f0ea13455a5eab1aba1f996f0e5b5",
+      "sample_count": 111360,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "b6fbf8143ecf03cd0d53bf98d03a0a681e331bb76dce1d97b2ddb03e55e5e2ae"
+    },
+    {
+      "id": "fleurs-el_gr-validation-11-1590",
+      "audio_sha256": "095544bb7150a04d90629893b909332e4e596848109f58d0e2fdfe738f383466",
+      "sample_count": 160320,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "41b4c5d5688f314e50554ee0046efe3605d38da4d9195b02df5d2418e344b2a9"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "audio_sha256": "048169439c0328b758349af74aeb54a82a7a476e309709eb791dced06db25d48",
+      "sample_count": 104640,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "f627161a8e8b7da7006e85ba2bb2354676d859d4059224278073fe32e3d702b7"
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "audio_sha256": "e5664ae10a6273fbe0009068e512f4c416cccbeff19d3d2d11e5fb8d72d03fb7",
+      "sample_count": 126720,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "4e1805c3417bbfba3f1b569501721c81a5c496d9eb0e4285f7a6f887d2443270"
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "audio_sha256": "7172cc6e8a7b006a8175c57df13bb69db0c6249dc09d7b015c98722d5af9734c",
+      "sample_count": 66240,
+      "sample_rate_hz": 16000,
+      "pcm_sha256": "cca34531c24648133ff4f065768719b1cba52737b04c071593eadb38e10adbdb"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "tests/qa_qwen3_asr_candidate.py",
+      "bytes": 38701,
+      "sha256": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f"
+    },
+    {
+      "path": ".github/workflows/qwen3-asr-candidate-qa.yml",
+      "bytes": 3459,
+      "sha256": "1ef312a65ff80a8000ef29733f69ed34520ef2e930bdfa014cf060a0a9ed3c42"
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/runtime-requirements.txt",
+      "bytes": 689,
+      "sha256": "0e7f2a0b8562d9137a507fc33c451ad4623ee6d1fba98b1f8e9416c823c119c5"
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/model-files.json",
+      "bytes": 5116,
+      "sha256": "d904805595b1477fe011261f57eed793d36ae03ae3c53a87af74d1c94384c854"
+    },
+    {
+      "path": "docs/qwen3-asr-screen-2026-11-28/model-metadata-provenance.json",
+      "bytes": 11610,
+      "sha256": "fc4393e4f825b8f9dfec2c2b73f5c1349ec4f4dd94344ea4e7a0000ca7192e77"
+    },
+    {
+      "path": "docs/asr-2026-11-26/fixtures.json",
+      "bytes": 14073,
+      "sha256": "309d5528387a20c79a8c8166b00eed7699fc64507de84c7d269c7772fbe3257c"
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/input-arrays.json",
+      "bytes": 7370,
+      "sha256": "829accfcda9fb6cf24089e1011d7257021854b9f9ace210f22b1907a01b579cd"
+    },
+    {
+      "path": "docs/parakeet-screen-2026-11-28/semantic-criteria.json",
+      "bytes": 4109,
+      "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9"
+    }
+  ],
+  "promotion": "None. Production ASR policy, default model, application requirements and release gates remain unchanged. Any quality failure, incomplete case or protocol/limit failure rejects adoption from this screen.",
+  "cleanup": "Terminate and verify all live members of the owned process group even if its leader has already exited; no successful controller return with surviving live members.",
+  "hosted_environment_followup": {
+    "original_commit": "a4ca88ec2820f8c0e1c29f4a7f5d36b8f0a32db3",
+    "original_plan_path": "docs/qwen3-asr-screen-2026-11-28/plan.json",
+    "original_plan_sha256": "854541d77c51ffde4e5bacf371786dc518fac51bf32c2494d15fddb668220ac7",
+    "original_manifest_sha256": "de6b17fe21efed26c2b580637f6a25412ce167031399bfa14d1330537e4e680e",
+    "failed_run": 46098646055,
+    "reason": "Job-level env cannot use runner.temp. Resolve the same directory in an initial shell step through RUNNER_TEMP/GITHUB_ENV. Every helper action names this corrected plan explicitly.",
+    "protocol_change": false,
+    "model_or_input_or_limit_change": false,
+    "helper_behavior_change": false
+  }
+}

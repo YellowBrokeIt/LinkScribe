@@ -16,7 +16,7 @@ HELPER = Path(__file__).with_name("qa_qwen3_asr_candidate.py")
 SPEC = importlib.util.spec_from_file_location("qwen3_asr_candidate_qa", HELPER)
 qa = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(qa)
-PLAN = qa.ROOT / "docs/qwen3-asr-screen-2026-11-28/plan.json"
+PLAN = qa.ROOT / "docs/qwen3-asr-hosted-env-followup-2026-11-28/plan.json"
 
 
 class QwenCandidateContractTests(unittest.TestCase):
