@@ -218,6 +218,7 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
             hashlib.sha256(payload).hexdigest() != manifest.get("sha256")):
         raise BackupError("Backup format or checksum is invalid.")
     data = _load_json(payload)
+    del payload
     if (not isinstance(data, dict) or data.get("format") != FORMAT or
             type(data.get("version")) is not int or data["version"] != manifest["version"] or
             not isinstance(data.get("records"), list) or
@@ -228,7 +229,12 @@ def restore_backup(archive_bytes: bytes) -> dict[str, int]:
     if data["version"] == 1 and any(isinstance(record, dict) and record.get("highlights") is not None
                                      for record in data["records"]):
         raise BackupError("Source highlights require a version 2 backup.")
-    parsed = [_validated_record(record) for record in data["records"]]
+    # Reuse the decoded list, releasing each JSON record as it becomes SQL
+    # parameters. Keep every validation before opening the write transaction.
+    parsed = data.pop("records")
+    del data
+    for index in range(len(parsed)):
+        parsed[index] = _validated_record(parsed[index])
     ids = [row[0] for row in parsed]
     if len(set(ids)) != len(ids):
         raise BackupError("Backup contains duplicate transcript IDs.")

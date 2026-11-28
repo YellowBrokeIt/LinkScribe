@@ -106,3 +106,37 @@ def test_backup_snapshot_is_consistent_during_concurrent_edit(saved, monkeypatch
         assert members(library_backup.make_backup()[0]) == baseline
     assert library.get(second)["title"] == "Concurrent edit"
     assert members(library_backup.make_backup()[0]) != baseline
+
+
+@pytest.mark.parametrize("failure", ["invalid-last-row", "duplicate-existing", "duplicate-new"])
+def test_restore_validates_all_records_before_opening_database(saved, monkeypatch, failure):
+    existing = add(1)
+    fresh = add(2)
+    original = library.get(existing)
+    incoming = library.get(fresh)
+    library.delete(fresh)
+    changed = dict(original, title="Must not overwrite my edit")
+    invalid = dict(incoming, id=f"{3:032x}", segments=[])
+    records = {
+        "invalid-last-row": [incoming, changed, invalid],
+        "duplicate-existing": [incoming, changed, changed],
+        "duplicate-new": [incoming, changed, incoming],
+    }[failure]
+    payload = library_backup._encode({"format": library_backup.FORMAT,
+                                      "version": library_backup.VERSION,
+                                      "records": records})
+    output = io.BytesIO()
+    with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("transcripts.json", payload)
+        archive.writestr("manifest.json", library_backup._encode({
+            "format": library_backup.FORMAT, "version": library_backup.VERSION,
+            "records": len(records), "sha256": hashlib.sha256(payload).hexdigest()}))
+    def no_connection():
+        pytest.fail("Restore accessed SQLite before validation completed")
+    with monkeypatch.context() as patch:
+        patch.setattr(library, "_connect", no_connection)
+        with pytest.raises(library_backup.BackupError):
+            library_backup.restore_backup(output.getvalue())
+    assert library.get(existing) == original
+    assert library.get(fresh) is None
+    assert library_backup.make_backup()[1] == 1
