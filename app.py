@@ -723,8 +723,10 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
     # but do not build a second in-memory copy of the complete archive.
     with (job.workdir / "transcript.zip").open("wb") as stream:
         _write_transcript_zip(contents, stream)
-    library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, record["processing_metadata"], highlights)
-    _complete_job(job_id, record)
+    # Publish the saved row and live result together with respect to deletion.
+    with lock:
+        library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, record["processing_metadata"], highlights)
+        _complete_job(job_id, record)
 
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
@@ -942,9 +944,12 @@ def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
         batch.stage = f"Processing {index + 1} of {len(items)}: {source.provider}"
         # If a crash occurred after the transcript was saved but before the
         # journal acknowledged it, skip costly retranscription on recovery.
-        saved = library.get(job_id)
+        with lock:
+            saved = library.get(job_id)
+            if saved is not None:
+                _complete_job(job_id, saved, "Restored completed transcript from library")
         if saved is not None:
-            _complete_job(job_id, saved, "Restored completed transcript from library")
+            pass  # Already published under the deletion lock above.
         elif old["status"] == "done":
             # A completed journal entry whose record is missing was deleted by
             # the user. Recovery must never download and recreate that record.
@@ -1407,8 +1412,26 @@ def create_library_highlights(item_id: str, request: Request):
 @app.delete("/api/library/{item_id}")
 def delete_library_item(item_id: str, request: Request):
     _check_browser_origin(request)
-    if not JOB_ID_RE.fullmatch(item_id) or not batch_store.delete_library_record(item_id):
+    if not JOB_ID_RE.fullmatch(item_id):
         raise HTTPException(404,"Transcript not found.")
+    with lock:
+        if not batch_store.delete_library_record(item_id):
+            raise HTTPException(404,"Transcript not found.")
+        if item_id in jobs:
+            _set(item_id, status="error", stage="Transcript removed from library",
+                 error=batch_store.REMOVED_ERROR, preview="", segment_count=0,
+                 language="", method="", library_id="", extras={}, warnings=[],
+                 finished_at=time.time())
+        # The UUID directory contains temporary app exports, even if the
+        # process restarted and no longer has the corresponding Job object.
+        try:
+            shutil.rmtree(DATA_DIR / item_id)
+        except FileNotFoundError:
+            pass
+        except OSError:
+            return {"ok": True, "cleanup_warning": (
+                "The library record was deleted, but temporary files could not be removed. "
+                f"Check the local data/{item_id} directory.")}
     return {"ok":True}
 
 

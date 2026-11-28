@@ -787,6 +787,23 @@ def run(args) -> int:
                 return {"cross_site_post_status": response.status, "same_origin_browser_writes": "exercised_above"}
             check("actual_origin_guard", origin_guard)
 
+            def delete_current_result():
+                link_success()
+                expect(page.locator("#results")).to_be_visible()
+                url = page.locator('#downloads a').first.get_attribute("href")
+                identifier = url.split("/")[3]
+                page.locator("#result-actions button").click()
+                expect(page.locator("#editor")).to_be_visible()
+                page.locator("#editor-delete").click()
+                expect(page.locator("#editor")).to_be_hidden()
+                expect(page.locator("#results")).to_be_hidden()
+                expect(page.locator("#preview")).to_be_empty()
+                expect(page.locator("#editor-rows")).to_be_empty()
+                assert context.request.get(BASE_URL + "/api/jobs/" + identifier).json()["preview"] == ""
+                assert context.request.get(BASE_URL + "/api/library/" + identifier).status == 404
+                return {"deleted_live_result_and_editor": True}
+            check("delete_current_result_clears_preview", delete_current_result)
+
             def javascript_errors():
                 assert not report["page_errors"], report["page_errors"]
                 return {"uncaught_page_exceptions": 0,

@@ -371,6 +371,7 @@
    if((details.summary||details.highlights) && job.library_id){
      try {
        const record=await api(`/api/library/${encodeURIComponent(job.library_id)}`);
+       if(resultJob!==job)return;
        renderHighlights($("highlights-result"),record.highlights,index=>openEditor(job.library_id,index));
        if(record.summary){const summary=record.summary;
          $("summary-result").textContent="SUMMARY DRAFT\n"+summary.summary+"\n\nKEY POINTS\n"+summary.key_points.map(p=>"• "+p).join("\n")+"\n\nCHAPTERS\n"+summary.chapters.map(c=>Math.floor(c.start/60)+":"+String(Math.floor(c.start%60)).padStart(2,"0")+"  "+c.title).join("\n");
@@ -378,6 +379,7 @@
        }
      }catch(_){}
    }
+   if(resultJob!==job)return;
    root.hidden=false;if(scroll)root.scrollIntoView({behavior:"smooth",block:"start"});
  }
  async function trackJob(jobId){
@@ -638,9 +640,21 @@
  $("editor-delete").addEventListener("click",async()=>{
    if(!editing||!confirm("Permanently delete this saved transcript?"))return;
    const id=editing.id,session=editorSession;
-   try{await api(`/api/library/${encodeURIComponent(id)}`,{method:"DELETE"});
-     if(editing?.id===id&&session===editorSession){editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;}
-     loadLibrary();}
+   try{const receipt=await api(`/api/library/${encodeURIComponent(id)}`,{method:"DELETE"});
+     if(resultJob?.library_id===id){
+       resultJob=null;$("results").hidden=true;
+       for(const key of ["preview","result-meta","summary-result","result-warnings"])$(key).textContent="";
+       for(const key of ["downloads","result-actions","highlights-result"])$(key).replaceChildren();
+     }
+     if(editing?.id===id&&session===editorSession){
+       editorSession++;$("editor").hidden=true;editing=null;editorDirty=false;
+       $("edit-title").value="";
+       for(const key of ["editor-rows","editor-downloads","editor-highlights-result"])$(key).replaceChildren();
+       for(const key of ["editor-warnings","editor-message","editor-page-label"])$(key).textContent="";
+     }
+     loadLibrary();loadSavedBatches();
+     if(receipt.cleanup_warning)showStatus("Temporary file cleanup incomplete",receipt.cleanup_warning,true,false);
+   }
    catch(e){if(editing?.id===id&&session===editorSession)$("editor-message").textContent="Delete failed: "+e.message;}
  });
 })();
