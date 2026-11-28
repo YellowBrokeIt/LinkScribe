@@ -15,6 +15,7 @@ import signal
 import subprocess
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -23,7 +24,7 @@ spec = importlib.util.spec_from_file_location("_speaker_shared_qa", Path(__file_
 common = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(common)
 require, sha, write_json = common.require, common.sha256, common.write_json
-DEFAULT_PLAN = ROOT / "docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json"
+DEFAULT_PLAN = ROOT / "docs/asr-speaker-hosted-followup-2026-11-28/hosted-plan.json"
 
 
 def validate(plan_path):
@@ -99,18 +100,76 @@ def speaker_cache_declarations(path, model):
     base = top["pretrained_path"]
     require(isinstance(base, ScalarNode) and base.tag == "tag:yaml.org,2002:str" and base.value == model["repo"],
             "Unexpected speaker checkpoint source")
-    resolved = {}
+    resolved, source_names = {}, set()
     for name in sorted(expected):
         loadable, source = loadables[name], paths[name]
         require(isinstance(loadable, ScalarNode) and loadable.tag == "!ref" and loadable.value == "<" + name + ">",
                 "Unexpected speaker loadable reference")
         require(isinstance(source, ScalarNode) and source.tag == "!ref" and
-                source.value == "<pretrained_path>/" + name + ".ckpt", "Unexpected speaker checkpoint path")
+                source.value.startswith("<pretrained_path>/"), "Unexpected speaker checkpoint path")
+        # SpeechBrain's remote filename comes from the declared path; its
+        # local save_filename is independently the loadable name + '.ckpt'.
+        source_filename = common.safe_filename(source.value[len("<pretrained_path>/"):])
+        require(source_filename not in source_names and source_filename != "hyperparams.yaml",
+                "Duplicate or conflicting speaker source filename")
+        source_names.add(source_filename)
         require(name + ".ckpt" in model["files"], "Unseeded speaker checkpoint")
         resolved[name] = {"loadable_reference": loadable.value, "path_reference": source.value,
-                          "resolved_source": base.value + "/" + name + ".ckpt", "seeded_filename": name + ".ckpt"}
+                          "resolved_source": base.value + "/" + source_filename,
+                          "source_filename": source_filename, "seeded_filename": name + ".ckpt"}
     return {"yaml_sha256": sha(path), "parser": "PyYAML compose/SafeLoader nodes only",
             "object_construction_performed": False, "declarations": resolved}
+
+
+def prepare_model_files(plan, work, evidence, report):
+    """Resolve pinned YAML paths separately from SpeechBrain's cache names."""
+    for family, model in plan["models"].items():
+        folder = model_path(plan, work, family)
+        folder.mkdir(parents=True, exist_ok=False)
+        files, source_names = {}, {}
+        report["models"][family] = files
+
+        def transfer(local_name, source_name):
+            local_name, source_name = common.safe_filename(local_name), common.safe_filename(source_name)
+            identity = model["files"][local_name]
+            url = f"https://huggingface.co/{model['repo']}/resolve/{model['revision']}/{source_name}"
+            report["stage"] = "model_file_download"
+            report["active_download"] = {"family": family, "source_filename": source_name,
+                "local_filename": local_name, "url_without_query": url, "expected_sha256": identity["sha256"]}
+            write_json(evidence / "preparation.json", report)
+            downloaded = download_checked(url, folder / local_name, identity["sha256"],
+                                          identity["maximum_bytes"], identity.get("bytes"))
+            files[local_name] = {**downloaded, "source_filename": source_name, "local_filename": local_name}
+            source_names[local_name] = source_name
+            report["active_download"] = None
+            write_json(evidence / "preparation.json", report)
+
+        if family == "speaker":
+            # Retain the exact verified declaration before any checkpoint
+            # transfer can fail; no HyperPyYAML object is constructed here.
+            transfer("hyperparams.yaml", "hyperparams.yaml")
+            yaml_path = folder / "hyperparams.yaml"
+            (evidence / "speaker-hyperparams.yaml").write_bytes(yaml_path.read_bytes())
+            report["stage"] = "speaker_yaml_declarations"
+            write_json(evidence / "preparation.json", report)
+            declarations = speaker_cache_declarations(yaml_path, model)
+            report["speaker_cache_declarations"] = declarations
+            write_json(evidence / "speaker-cache-declarations.json", declarations)
+            write_json(evidence / "preparation.json", report)
+            for row in declarations["declarations"].values():
+                transfer(row["seeded_filename"], row["source_filename"])
+            # The local savedir uses the loadable name; the HF snapshot uses
+            # the remote filename. Both links point to identical pinned bytes.
+            snapshot = folder / "hub/models--speechbrain--spkrec-ecapa-voxceleb/snapshots" / model["revision"]
+            snapshot.mkdir(parents=True)
+            for local_name, source_name in source_names.items():
+                (snapshot / source_name).hardlink_to(folder / local_name)
+        else:
+            for name in model["files"]:
+                transfer(name, name)
+    refs = work / "hf/hub/models--Systran--faster-whisper-small/refs"
+    refs.mkdir()
+    (refs / "main").write_text(plan["models"]["recognizer"]["revision"], encoding="utf-8")
 
 
 def strict_group_sample(pgid, *, proc_root=Path("/proc"), page_size=None):
@@ -199,12 +258,13 @@ def prepare(plan, work, evidence):
     common.require_hosted()
     inputs = evidence / "inputs"
     inputs.mkdir(exist_ok=False)
-    report = {"complete": False, "model_constructed": False, "sources": [], "models": {}}
+    report = {"complete": False, "model_constructed": False, "stage": "runtime_identity", "sources": [], "models": {}}
     write_json(evidence / "preparation.json", report)
     try:
         from importlib.metadata import version
         report["runtime_packages"] = {name: version(name) for name in plan["runtime_packages"]}
         require(report["runtime_packages"] == plan["runtime_packages"], "Installed native runtime differs from plan")
+        report["stage"] = "fixture_recovery"
         metadata = {}
         for source in plan["fixture"]["sources"]:
             url = source["rows_api_url"]
@@ -233,36 +293,14 @@ def prepare(plan, work, evidence):
         require(all(constructed[key] == plan["fixture"][key] for key in ("sha256", "sample_count", "reference_intervals")),
                 "Recovered original fixture differs")
         report["fixture"] = {"path": str(target), **constructed, "references_for_evaluation_only": True}
-        for family, model in plan["models"].items():
-            folder = model_path(plan, work, family)
-            folder.mkdir(parents=True, exist_ok=False)
-            files = {}
-            report["models"][family] = files
-            for name, identity in model["files"].items():
-                name = common.safe_filename(name)
-                url = f"https://huggingface.co/{model['repo']}/resolve/{model['revision']}/{name}"
-                files[name] = download_checked(url, folder / name, identity["sha256"],
-                                               identity["maximum_bytes"], identity.get("bytes"))
-                write_json(evidence / "preparation.json", report)
-            if family == "speaker":
-                # Preserve the exact verified configuration; inspect tags and
-                # references without constructing a model or YAML object.
-                yaml_path = folder / "hyperparams.yaml"
-                (evidence / "speaker-hyperparams.yaml").write_bytes(yaml_path.read_bytes())
-                report["speaker_cache_declarations"] = speaker_cache_declarations(yaml_path, model)
-                write_json(evidence / "speaker-cache-declarations.json", report["speaker_cache_declarations"])
-                # SpeechBrain can resolve either its existing local savedir or
-                # its declared HF cache. Both contain the same pinned bytes.
-                snapshot = folder / "hub/models--speechbrain--spkrec-ecapa-voxceleb/snapshots" / model["revision"]
-                snapshot.mkdir(parents=True)
-                for name in model["files"]:
-                    (snapshot / name).hardlink_to(folder / name)
-        refs = work / "hf/hub/models--Systran--faster-whisper-small/refs"
-        refs.mkdir()
-        (refs / "main").write_text(plan["models"]["recognizer"]["revision"], encoding="utf-8")
+        prepare_model_files(plan, work, evidence, report)
+        report["stage"] = "prepared"
         report["complete"] = True
     except Exception as exc:
-        report["failure"] = {"type": type(exc).__name__, "message": str(exc)}
+        report["failure"] = {"type": type(exc).__name__, "message": str(exc),
+                             "stage": report["stage"], "active_download": report.get("active_download")}
+        if isinstance(exc, urllib.error.HTTPError):
+            report["failure"]["http_status"] = exc.code
         raise
     finally:
         write_json(evidence / "preparation.json", report)

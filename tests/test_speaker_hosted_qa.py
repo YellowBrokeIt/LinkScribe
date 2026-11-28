@@ -166,6 +166,124 @@ def test_speaker_yaml_cache_check_uses_nodes_and_rejects_unseeded_paths_without_
         qa.speaker_cache_declarations(path, model)
 
 
+def synthetic_model_preparation(tmp_path):
+    """Synthetic bytes exercise filename routing, never model loading."""
+    plan = protocol()
+    work, evidence = tmp_path / "work", tmp_path / "evidence"
+    work.mkdir()
+    evidence.mkdir()
+    names = ("embedding_model", "mean_var_norm_emb", "classifier", "label_encoder")
+    text = "pretrained_path: speechbrain/spkrec-ecapa-voxceleb\n"
+    text += "pretrainer: !new:speechbrain.utils.parameter_transfer.Pretrainer\n  loadables:\n"
+    text += "".join(f"    {name}: !ref <{name}>\n" for name in names)
+    text += "  paths:\n"
+    text += "".join(f"    {name}: !ref <pretrained_path>/{'synthetic-labels.txt' if name == 'label_encoder' else name + '.ckpt'}\n" for name in names)
+    payloads = {name + ".ckpt": ("synthetic " + name).encode() for name in names}
+    payloads["hyperparams.yaml"] = text.encode()
+    payloads["config.json"] = b'{"synthetic": true}\n'
+    plan["models"]["recognizer"]["files"] = {"config.json": {"sha256": hashlib.sha256(payloads["config.json"]).hexdigest(),
+                                                               "maximum_bytes": 1000}}
+    for name in plan["models"]["speaker"]["files"]:
+        plan["models"]["speaker"]["files"][name] = {"sha256": hashlib.sha256(payloads[name]).hexdigest(), "maximum_bytes": 10000}
+    return plan, work, evidence, payloads
+
+
+def test_declared_remote_name_is_mapped_to_unchanged_local_name_and_hf_snapshot(tmp_path, monkeypatch):
+    plan, work, evidence, payloads = synthetic_model_preparation(tmp_path)
+    calls = []
+    def transfer(url, target, digest, maximum_bytes, expected_bytes=None):
+        calls.append({"url": url, "target": target.name})
+        if target.name.endswith(".ckpt"):
+            assert (evidence / "speaker-hyperparams.yaml").read_bytes() == payloads["hyperparams.yaml"]
+            declarations = json.loads((evidence / "speaker-cache-declarations.json").read_text(encoding="utf-8"))
+            assert declarations["declarations"]["label_encoder"]["source_filename"] == "synthetic-labels.txt"
+        content = payloads[target.name]
+        assert hashlib.sha256(content).hexdigest() == digest
+        target.write_bytes(content)
+        return {"url_without_query": url, "bytes": len(content), "sha256": digest}
+    monkeypatch.setattr(qa, "download_checked", transfer)
+    report = {"models": {}}
+    qa.prepare_model_files(plan, work, evidence, report)
+    speaker = qa.model_path(plan, work, "speaker")
+    snapshot = speaker / "hub/models--speechbrain--spkrec-ecapa-voxceleb/snapshots" / plan["models"]["speaker"]["revision"]
+    assert calls[1]["target"] == "hyperparams.yaml"
+    label_call = next(row for row in calls if row["target"] == "label_encoder.ckpt")
+    assert label_call["url"].endswith("/" + plan["models"]["speaker"]["revision"] + "/synthetic-labels.txt")
+    assert (speaker / "label_encoder.ckpt").read_bytes() == payloads["label_encoder.ckpt"]
+    assert (snapshot / "synthetic-labels.txt").read_bytes() == payloads["label_encoder.ckpt"]
+    assert not (snapshot / "label_encoder.ckpt").exists()
+    assert report["models"]["speaker"]["label_encoder.ckpt"]["sha256"] == plan["models"]["speaker"]["files"]["label_encoder.ckpt"]["sha256"]
+
+
+def test_yaml_and_resolved_mapping_survive_first_checkpoint_transfer_failure(tmp_path, monkeypatch):
+    plan, work, evidence, payloads = synthetic_model_preparation(tmp_path)
+    calls = []
+    def transfer(url, target, digest, maximum_bytes, expected_bytes=None):
+        calls.append(url)
+        if target.name.endswith(".ckpt"):
+            raise qa.urllib.error.HTTPError(url, 404, "Synthetic missing checkpoint", None, None)
+        target.write_bytes(payloads[target.name])
+        return {"url_without_query": url, "bytes": len(payloads[target.name]), "sha256": digest}
+    monkeypatch.setattr(qa, "download_checked", transfer)
+    report = {"models": {}}
+    with pytest.raises(qa.urllib.error.HTTPError):
+        qa.prepare_model_files(plan, work, evidence, report)
+    saved = json.loads((evidence / "preparation.json").read_text(encoding="utf-8"))
+    assert saved["stage"] == "model_file_download" and saved["active_download"]["local_filename"] == "classifier.ckpt"
+    assert saved["active_download"]["url_without_query"] == calls[-1]
+    assert saved["active_download"]["expected_sha256"] == plan["models"]["speaker"]["files"]["classifier.ckpt"]["sha256"]
+    assert (evidence / "speaker-hyperparams.yaml").read_bytes() == payloads["hyperparams.yaml"]
+    assert (evidence / "speaker-cache-declarations.json").is_file()
+    assert len(calls) == 3  # Small synthetic config, speaker YAML, one failed checkpoint.
+
+
+@pytest.mark.parametrize("bad_path", ["<pretrained_path>/../outside.ckpt", "https://example.org/labels.txt",
+    "<pretrained_path>/labels.txt?download=1", "<pretrained_path>/labels.txt#fragment",
+    "<pretrained_path>/folder\\labels.txt", "<pretrained_path>/<other>.ckpt",
+    "<pretrained_path>//absolute.ckpt", "<pretrained_path>/classifier.ckpt"])
+def test_unresolvable_or_unsafe_yaml_paths_stop_before_checkpoint_download(tmp_path, monkeypatch, bad_path):
+    plan, work, evidence, payloads = synthetic_model_preparation(tmp_path)
+    payloads["hyperparams.yaml"] = payloads["hyperparams.yaml"].replace(b"<pretrained_path>/synthetic-labels.txt", bad_path.encode())
+    plan["models"]["speaker"]["files"]["hyperparams.yaml"]["sha256"] = hashlib.sha256(payloads["hyperparams.yaml"]).hexdigest()
+    calls = []
+    def transfer(url, target, digest, maximum_bytes, expected_bytes=None):
+        calls.append(target.name)
+        assert not target.name.endswith(".ckpt"), "Rejected YAML triggered a checkpoint transfer"
+        target.write_bytes(payloads[target.name])
+        return {"url_without_query": url, "bytes": len(payloads[target.name]), "sha256": digest}
+    monkeypatch.setattr(qa, "download_checked", transfer)
+    with pytest.raises(ValueError):
+        qa.prepare_model_files(plan, work, evidence, {"models": {}})
+    assert calls == ["config.json", "hyperparams.yaml"]
+    assert (evidence / "speaker-hyperparams.yaml").read_bytes() == payloads["hyperparams.yaml"]
+
+
+def test_extra_loadable_is_rejected_without_any_constructor_or_transfer(tmp_path):
+    plan, work, evidence, payloads = synthetic_model_preparation(tmp_path)
+    text = payloads["hyperparams.yaml"].decode().replace("  paths:\n", "    extra: !ref <extra>\n  paths:\n")
+    path = evidence / "extra.yaml"
+    path.write_text(text, encoding="utf-8")
+    plan["models"]["speaker"]["files"]["hyperparams.yaml"]["sha256"] = qa.sha(path)
+    with pytest.raises(ValueError, match="checkpoint declarations"):
+        qa.speaker_cache_declarations(path, plan["models"]["speaker"])
+
+
+def test_early_runtime_failure_keeps_original_exception_and_stage(tmp_path, monkeypatch):
+    import importlib.metadata
+    plan, work, evidence, payloads = synthetic_model_preparation(tmp_path)
+    monkeypatch.setattr(qa.common, "require_hosted", lambda: None)
+    def unavailable(name):
+        raise RuntimeError("synthetic runtime metadata failure")
+    monkeypatch.setattr(importlib.metadata, "version", unavailable)
+    monkeypatch.setattr(qa, "prepare_model_files", lambda *a: pytest.fail("Model preparation reached after runtime failure"))
+    with pytest.raises(RuntimeError, match="synthetic runtime metadata failure"):
+        qa.prepare(plan, work, evidence)
+    saved = json.loads((evidence / "preparation.json").read_text(encoding="utf-8"))
+    assert saved["failure"] == {"type": "RuntimeError", "message": "synthetic runtime metadata failure",
+                                 "stage": "runtime_identity", "active_download": None}
+    assert not saved["model_constructed"] and not saved["complete"]
+
+
 def completion_control(plan):
     model = plan["models"]["recognizer"]
     return {"complete": True, "audio": {"sha256": plan["fixture"]["sha256"]},

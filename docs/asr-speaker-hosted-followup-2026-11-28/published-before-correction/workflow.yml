@@ -1,0 +1,74 @@
+name: Fixed-text speaker pipeline QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feature/**', 'qa/**']
+    paths:
+      - '.github/workflows/speaker-integration-qa.yml'
+      - 'tests/qa_speaker_integration.py'
+      - 'tests/smoke_real_speaker_app.py'
+      - 'docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json'
+      - 'docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: speaker-pipeline-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  actual-speaker-pipeline:
+    name: Original two-reader upload / fixed text timing / speakers / persistence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      ORT_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - name: Define runner-local isolated workspace
+        shell: bash
+        run: |
+          printf '%s\n' "SPEAKER_QA_ROOT=$RUNNER_TEMP/linkscribe-speaker-pipeline" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source-bound plan without model imports
+        run: >-
+          python tests/qa_speaker_integration.py --action validate
+          --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json
+          --evidence "$SPEAKER_QA_ROOT/evidence"
+      - name: Install declared CPU application and optional speaker runtime
+        shell: bash
+        run: |
+          python -m venv "$SPEAKER_QA_ROOT/runtime"
+          "$SPEAKER_QA_ROOT/runtime/bin/python" -m pip install --retries 0 \
+            --report "$SPEAKER_QA_ROOT/evidence/runtime-install.json" \
+            -r docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt \
+            > "$SPEAKER_QA_ROOT/evidence/runtime-install.log" 2>&1
+          "$SPEAKER_QA_ROOT/runtime/bin/python" -m pip freeze > "$SPEAKER_QA_ROOT/evidence/installed-packages.txt"
+          "$SPEAKER_QA_ROOT/runtime/bin/python" -m pip check > "$SPEAKER_QA_ROOT/evidence/pip-check.txt"
+      - name: Recover original public fixture and exact pinned model files
+        run: >-
+          "$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action prepare
+          --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json
+          --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"
+      - name: Run the one bounded offline application pipeline
+        run: >-
+          "$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action execute
+          --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json
+          --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"
+      - name: Preserve raw success or failure, turns, exports and resource samples
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixed-text-speaker-pipeline-${{ github.sha }}
+          path: ${{ env.SPEAKER_QA_ROOT }}/evidence/
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,257 @@
+﻿2026-11-28T07:36:28.2982920Z Current runner version: '2.338.2'
+2026-11-28T07:36:28.3001267Z ##[group]Runner Image Provisioner
+2026-11-28T07:36:28.3002220Z Hosted Compute Agent
+2026-11-28T07:36:28.3002764Z Version: 20261111.635
+2026-11-28T07:36:28.3003220Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-28T07:36:28.3003730Z Build Date: 2026-11-11T01:49:01Z
+2026-11-28T07:36:28.3004233Z Worker ID: {f5f6e0a5-f1da-427a-bdb1-668a8fbb95e1}
+2026-11-28T07:36:28.3004755Z Region: us-west-2
+2026-11-28T07:36:28.3005154Z Cloud: AWS
+2026-11-28T07:36:28.3005533Z ##[endgroup]
+2026-11-28T07:36:28.3006503Z ##[group]Operating System
+2026-11-28T07:36:28.3006957Z Ubuntu
+2026-11-28T07:36:28.3007343Z 24.04.5
+2026-11-28T07:36:28.3007711Z LTS
+2026-11-28T07:36:28.3008088Z ##[endgroup]
+2026-11-28T07:36:28.3008474Z ##[group]Runner Image
+2026-11-28T07:36:28.3008906Z Image: ubuntu-24.04
+2026-11-28T07:36:28.3009313Z Version: 20261122.23.1
+2026-11-28T07:36:28.3010243Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261122.23/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-28T07:36:28.3011318Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261122.23
+2026-11-28T07:36:28.3012184Z ##[endgroup]
+2026-11-28T07:36:28.3013050Z ##[group]GITHUB_TOKEN Permissions
+2026-11-28T07:36:28.3014608Z Contents: read
+2026-11-28T07:36:28.3015012Z Metadata: read
+2026-11-28T07:36:28.3015436Z ##[endgroup]
+2026-11-28T07:36:28.3017148Z Secret source: Actions
+2026-11-28T07:36:28.3017899Z Cache mode: write
+2026-11-28T07:36:28.3018453Z Prepare workflow directory
+2026-11-28T07:36:28.3287552Z Prepare all required actions
+2026-11-28T07:36:28.3325162Z Getting action download info
+2026-11-28T07:36:28.6720917Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-28T07:36:29.7726840Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-28T07:36:29.9006313Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-28T07:36:30.1864656Z Complete job name: Original two-reader upload / fixed text timing / speakers / persistence
+2026-11-28T07:36:30.2381745Z ##[group]Run printf '%s\n' "SPEAKER_QA_ROOT=$RUNNER_TEMP/linkscribe-speaker-pipeline" >> "$GITHUB_ENV"
+2026-11-28T07:36:30.2382503Z [36;1mprintf '%s\n' "SPEAKER_QA_ROOT=$RUNNER_TEMP/linkscribe-speaker-pipeline" >> "$GITHUB_ENV"[0m
+2026-11-28T07:36:30.6830747Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-28T07:36:30.6831425Z env:
+2026-11-28T07:36:30.6832072Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:30.6832396Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:30.6832730Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:36:30.6833068Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:36:30.6833383Z ##[endgroup]
+2026-11-28T07:36:30.7094955Z ##[group]Run actions/checkout@v4
+2026-11-28T07:36:30.7095339Z with:
+2026-11-28T07:36:30.7095730Z   persist-credentials: false
+2026-11-28T07:36:30.7096066Z   repository: YellowBrokeIt/LinkScribe
+2026-11-28T07:36:30.7098504Z   token: ***
+2026-11-28T07:36:30.7098777Z   ssh-strict: true
+2026-11-28T07:36:30.7099048Z   ssh-user: git
+2026-11-28T07:36:30.7099324Z   clean: true
+2026-11-28T07:36:30.7099607Z   sparse-checkout-cone-mode: true
+2026-11-28T07:36:30.7099918Z   fetch-depth: 1
+2026-11-28T07:36:30.7100192Z   fetch-tags: false
+2026-11-28T07:36:30.7100479Z   show-progress: true
+2026-11-28T07:36:30.7100790Z   lfs: false
+2026-11-28T07:36:30.7101045Z   submodules: false
+2026-11-28T07:36:30.7101322Z   set-safe-directory: true
+2026-11-28T07:36:30.7101839Z   allow-unsafe-pr-checkout: false
+2026-11-28T07:36:30.7102156Z env:
+2026-11-28T07:36:30.7102441Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:30.7102774Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:30.7103162Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:36:30.7103470Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:36:30.7103860Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:36:30.7104257Z ##[endgroup]
+2026-11-28T07:36:32.8437488Z Syncing repository: YellowBrokeIt/LinkScribe
+2026-11-28T07:36:32.8438819Z ##[group]Getting Git version info
+2026-11-28T07:36:32.8439296Z Working directory is '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T07:36:32.8439883Z [command]/usr/bin/git version
+2026-11-28T07:36:32.9072200Z git version 2.56.1
+2026-11-28T07:36:32.9101151Z ##[endgroup]
+2026-11-28T07:36:32.9121609Z Temporarily overriding HOME='/home/runner/work/_temp/bf0fb7ce-13df-460e-9260-27f517cdfa3d' before making global git config changes
+2026-11-28T07:36:32.9122671Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T07:36:32.9126541Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T07:36:32.9190967Z Deleting the contents of '/home/runner/work/LinkScribe/LinkScribe'
+2026-11-28T07:36:32.9194553Z ##[group]Initializing the repository
+2026-11-28T07:36:32.9198993Z [command]/usr/bin/git init /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T07:36:32.9348164Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-28T07:36:32.9348772Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-28T07:36:32.9349407Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-28T07:36:32.9349854Z hint: call:
+2026-11-28T07:36:32.9350087Z hint:
+2026-11-28T07:36:32.9350465Z hint: 	git config --global init.defaultBranch <name>
+2026-11-28T07:36:32.9350822Z hint:
+2026-11-28T07:36:32.9351162Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-28T07:36:32.9351863Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-28T07:36:32.9352263Z hint:
+2026-11-28T07:36:32.9352604Z hint: 	git branch -m <name>
+2026-11-28T07:36:32.9352905Z hint:
+2026-11-28T07:36:32.9353292Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-28T07:36:32.9364580Z Initialized empty Git repository in /home/runner/work/LinkScribe/LinkScribe/.git/
+2026-11-28T07:36:32.9372505Z [command]/usr/bin/git remote add origin https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T07:36:32.9431294Z ##[endgroup]
+2026-11-28T07:36:32.9432282Z ##[group]Disabling automatic garbage collection
+2026-11-28T07:36:32.9434752Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-28T07:36:32.9457381Z ##[endgroup]
+2026-11-28T07:36:32.9457933Z ##[group]Setting up auth
+2026-11-28T07:36:32.9463168Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T07:36:32.9490395Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T07:36:33.0305495Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T07:36:33.0331831Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T07:36:33.0488642Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T07:36:33.0514840Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T07:36:33.0672178Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-28T07:36:33.0702558Z ##[endgroup]
+2026-11-28T07:36:33.0703213Z ##[group]Fetching the repository
+2026-11-28T07:36:33.0716549Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d62df26c870f175f7454fe0c3900d97891c8bff5:refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T07:36:39.0286379Z From https://github.com/YellowBrokeIt/LinkScribe
+2026-11-28T07:36:39.0286982Z  * [new ref]         d62df26c870f175f7454fe0c3900d97891c8bff5 -> origin/feature/linkscribe-v03-reliability
+2026-11-28T07:36:39.0290482Z ##[endgroup]
+2026-11-28T07:36:39.0291129Z ##[group]Determining the checkout info
+2026-11-28T07:36:39.0292077Z ##[endgroup]
+2026-11-28T07:36:39.0297613Z [command]/usr/bin/git sparse-checkout disable
+2026-11-28T07:36:39.0372751Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-28T07:36:39.0388823Z ##[group]Checking out the ref
+2026-11-28T07:36:39.0392134Z [command]/usr/bin/git checkout --progress --force -B feature/linkscribe-v03-reliability refs/remotes/origin/feature/linkscribe-v03-reliability
+2026-11-28T07:36:39.2524811Z Switched to a new branch 'feature/linkscribe-v03-reliability'
+2026-11-28T07:36:39.2531394Z branch 'feature/linkscribe-v03-reliability' set up to track 'origin/feature/linkscribe-v03-reliability'.
+2026-11-28T07:36:39.2542507Z ##[endgroup]
+2026-11-28T07:36:39.2583001Z [command]/usr/bin/git log -1 --format=%H
+2026-11-28T07:36:39.2604409Z d62df26c870f175f7454fe0c3900d97891c8bff5
+2026-11-28T07:36:39.2620378Z ##[group]Removing auth
+2026-11-28T07:36:39.2623645Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T07:36:39.2647221Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T07:36:39.2805715Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T07:36:39.2827426Z http.https://github.com/.extraheader
+2026-11-28T07:36:39.2833130Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-28T07:36:39.2856689Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T07:36:39.3009411Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T07:36:39.3032408Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T07:36:39.3179046Z ##[endgroup]
+2026-11-28T07:36:39.3331324Z ##[group]Run actions/setup-python@v5
+2026-11-28T07:36:39.3331808Z with:
+2026-11-28T07:36:39.3332041Z   python-version: 3.12
+2026-11-28T07:36:39.3332299Z   check-latest: false
+2026-11-28T07:36:39.3334318Z   token: ***
+2026-11-28T07:36:39.3334559Z   update-environment: true
+2026-11-28T07:36:39.3334826Z   allow-prereleases: false
+2026-11-28T07:36:39.3335051Z   freethreaded: false
+2026-11-28T07:36:39.3335292Z env:
+2026-11-28T07:36:39.3335501Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:39.3335744Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:39.3335992Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:36:39.3336263Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:36:39.3336622Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:36:39.3336958Z ##[endgroup]
+2026-11-28T07:36:39.4381620Z ##[group]Installed versions
+2026-11-28T07:36:39.5894609Z (node:2249) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T07:36:39.5895484Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T07:36:39.5896017Z Successfully set up CPython (3.12.16)
+2026-11-28T07:36:39.5896674Z ##[endgroup]
+2026-11-28T07:36:39.6005673Z ##[group]Run python tests/qa_speaker_integration.py --action validate --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json --evidence "$SPEAKER_QA_ROOT/evidence"
+2026-11-28T07:36:39.6007265Z [36;1mpython tests/qa_speaker_integration.py --action validate --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json --evidence "$SPEAKER_QA_ROOT/evidence"[0m
+2026-11-28T07:36:39.6460953Z shell: /usr/bin/bash -e {0}
+2026-11-28T07:36:39.6461351Z env:
+2026-11-28T07:36:39.6461750Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:39.6462158Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:39.6462433Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:36:39.6462699Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:36:39.6463038Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:36:39.6463479Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:39.6463979Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T07:36:39.6464402Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:39.6464754Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:39.6465119Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:39.6465468Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T07:36:39.6465775Z ##[endgroup]
+2026-11-28T07:36:41.0667763Z ##[group]Run python -m venv "$SPEAKER_QA_ROOT/runtime"
+2026-11-28T07:36:41.0668212Z [36;1mpython -m venv "$SPEAKER_QA_ROOT/runtime"[0m
+2026-11-28T07:36:41.0668609Z [36;1m"$SPEAKER_QA_ROOT/runtime/bin/python" -m pip install --retries 0 \[0m
+2026-11-28T07:36:41.0669030Z [36;1m  --report "$SPEAKER_QA_ROOT/evidence/runtime-install.json" \[0m
+2026-11-28T07:36:41.0669451Z [36;1m  -r docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt \[0m
+2026-11-28T07:36:41.0669863Z [36;1m  > "$SPEAKER_QA_ROOT/evidence/runtime-install.log" 2>&1[0m
+2026-11-28T07:36:41.0670345Z [36;1m"$SPEAKER_QA_ROOT/runtime/bin/python" -m pip freeze > "$SPEAKER_QA_ROOT/evidence/installed-packages.txt"[0m
+2026-11-28T07:36:41.0670937Z [36;1m"$SPEAKER_QA_ROOT/runtime/bin/python" -m pip check > "$SPEAKER_QA_ROOT/evidence/pip-check.txt"[0m
+2026-11-28T07:36:41.0695865Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-28T07:36:41.0696266Z env:
+2026-11-28T07:36:41.0696635Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:41.0696900Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:36:41.0697165Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:36:41.0697439Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:36:41.0697868Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:36:41.0698267Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:41.0698687Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T07:36:41.0699065Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:41.0699403Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:41.0699760Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:36:41.0700124Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T07:36:41.0700412Z ##[endgroup]
+2026-11-28T07:37:23.7893750Z ##[group]Run "$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action prepare --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"
+2026-11-28T07:37:23.7894984Z [36;1m"$SPEAKER_QA_ROOT/runtime/bin/python" tests/qa_speaker_integration.py --action prepare --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json --work "$SPEAKER_QA_ROOT/work" --evidence "$SPEAKER_QA_ROOT/evidence"[0m
+2026-11-28T07:37:23.7921410Z shell: /usr/bin/bash -e {0}
+2026-11-28T07:37:23.7921908Z env:
+2026-11-28T07:37:23.7922140Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:37:23.7922408Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:37:23.7922734Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:37:23.7922995Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:37:23.7923366Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:37:23.7923852Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:23.7924286Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T07:37:23.7924665Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:23.7925009Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:23.7925493Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:23.7925855Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T07:37:23.7926195Z ##[endgroup]
+2026-11-28T07:37:28.0088983Z ##[error]Process completed with exit code 1.
+2026-11-28T07:37:28.0174790Z ##[group]Run actions/upload-artifact@v4
+2026-11-28T07:37:28.0175082Z with:
+2026-11-28T07:37:28.0175426Z   name: fixed-text-speaker-pipeline-d62df26c870f175f7454fe0c3900d97891c8bff5
+2026-11-28T07:37:28.0175883Z   path: /home/runner/work/_temp/linkscribe-speaker-pipeline/evidence/
+2026-11-28T07:37:28.0176230Z   if-no-files-found: warn
+2026-11-28T07:37:28.0176491Z   retention-days: 30
+2026-11-28T07:37:28.0176723Z   compression-level: 6
+2026-11-28T07:37:28.0176951Z   overwrite: false
+2026-11-28T07:37:28.0177188Z   include-hidden-files: false
+2026-11-28T07:37:28.0177459Z env:
+2026-11-28T07:37:28.0177786Z   HF_HUB_DISABLE_TELEMETRY: 1
+2026-11-28T07:37:28.0178038Z   ORT_DISABLE_TELEMETRY: 1
+2026-11-28T07:37:28.0178307Z   TOKENIZERS_PARALLELISM: false
+2026-11-28T07:37:28.0178650Z   PIP_DISABLE_PIP_VERSION_CHECK: 1
+2026-11-28T07:37:28.0179001Z   SPEAKER_QA_ROOT: /home/runner/work/_temp/linkscribe-speaker-pipeline
+2026-11-28T07:37:28.0179489Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:28.0179877Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-28T07:37:28.0180268Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:28.0180643Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:28.0181019Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-28T07:37:28.0181380Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-28T07:37:28.0181846Z ##[endgroup]
+2026-11-28T07:37:28.1459394Z (node:2360) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-28T07:37:28.1460103Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-28T07:37:28.1525694Z With the provided path, there will be 12 files uploaded
+2026-11-28T07:37:28.1526388Z Artifact name is valid!
+2026-11-28T07:37:28.1542434Z Root directory input is valid!
+2026-11-28T07:37:28.7629490Z Beginning upload of artifact content to blob storage
+2026-11-28T07:37:28.9035633Z (node:2360) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-28T07:37:29.8649111Z Uploaded bytes 1872129
+2026-11-28T07:37:29.9547895Z Finished uploading artifact content to blob storage!
+2026-11-28T07:37:29.9548712Z SHA256 digest of uploaded artifact zip is be2651874e1eb4019114bc208553a36934772d5db0a5aaa03a6f31698dc32aa2
+2026-11-28T07:37:29.9549546Z Finalizing artifact upload
+2026-11-28T07:37:30.3424101Z Artifact fixed-text-speaker-pipeline-d62df26c870f175f7454fe0c3900d97891c8bff5.zip successfully finalized. Artifact ID 15254385257
+2026-11-28T07:37:30.3425527Z Artifact fixed-text-speaker-pipeline-d62df26c870f175f7454fe0c3900d97891c8bff5 has been successfully uploaded! Final size is 1872129 bytes. Artifact ID is 15254385257
+2026-11-28T07:37:30.3430594Z Artifact download URL: https://github.com/YellowBrokeIt/LinkScribe/actions/runs/46121980993/artifacts/15254385257
+2026-11-28T07:37:30.3591061Z Post job cleanup.
+2026-11-28T07:37:30.4254273Z [command]/usr/bin/git version
+2026-11-28T07:37:30.4284230Z git version 2.56.1
+2026-11-28T07:37:30.4309798Z Temporarily overriding HOME='/home/runner/work/_temp/3854bae3-89fb-4821-866f-ca8b70528cd4' before making global git config changes
+2026-11-28T07:37:30.4310944Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-28T07:37:30.4314463Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/LinkScribe/LinkScribe
+2026-11-28T07:37:30.4346027Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-28T07:37:30.4371199Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-28T07:37:30.4555654Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-28T07:37:30.4594022Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-28T07:37:30.4768367Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-28T07:37:30.4793898Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-28T07:37:30.5078485Z Cleaning up orphan processes
+2026-11-28T07:37:30.5356534Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
