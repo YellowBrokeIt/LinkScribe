@@ -126,7 +126,7 @@ def test_batch_title_and_transcript_edit_rollback_together(local):
     assert batch_store.get("d" * 32)["jobs"][0]["title"] == "Original title"
 
 
-def test_app_requests_real_words_and_persists_speaker_report(local, monkeypatch):
+def test_app_requests_separate_timing_and_persists_speaker_report(local, monkeypatch):
     import importlib
     import numpy as np
     monkeypatch.setattr(importlib.import_module("faster_whisper.audio"), "decode_audio",
@@ -135,12 +135,22 @@ def test_app_requests_real_words_and_persists_speaker_report(local, monkeypatch)
     class Engine:
         def transcribe(self, path, **kwargs):
             requests.append(kwargs)
-            word = SimpleNamespace(start=0.1, end=0.9, word=" Hello")
-            return iter([SimpleNamespace(start=0, end=1, text="Hello", words=[word])]), SimpleNamespace(language="en")
+            return iter([SimpleNamespace(start=0, end=1, text=" Hello", tokens=[1], seek=0)]), SimpleNamespace(language="en")
     monkeypatch.setattr(app, "_whisper_model", lambda _size: Engine())
-    segments, language = app._recognize(local / "audio.wav", "auto", "small", word_timestamps=True)
-    assert requests[0]["word_timestamps"] is True
-    assert segments[0]["_words"] == [{"start": 0.1, "end": 0.9, "word": " Hello"}]
+    timing_calls = []
+    def timing(engine, audio, language, baseline, raw, *, bound):
+        timing_calls.append((language, raw))
+        assert requests == [{"language": None, "beam_size": 5, "vad_filter": False,
+                             "no_speech_threshold": 0.6, "condition_on_previous_text": False,
+                             "word_timestamps": False}]
+        return app.asr_timing.TimingResult(
+            [{**baseline[0], "_words": [{"start": 0.1, "end": 0.9, "word": " Hello"}]}], [],
+            {"method": "fixed_text_postpass", "status": "complete", "segment_count": 1,
+             "word_timed_segments": 1, "original_timing_segments": 0})
+    monkeypatch.setattr(app.asr_timing, "align_fixed_segments", timing)
+    result = app._recognize(local / "audio.wav", "auto", "small", speaker_timing=True)
+    assert len(timing_calls) == 1 and timing_calls[0][1][0]["tokens"] == [1]
+    assert "_words" not in result.segments[0]
     report_metadata = metadata()["speakers"]
     def labels(path, items, *, include_report):
         assert include_report and items[0]["_words"]
@@ -151,11 +161,13 @@ def test_app_requests_real_words_and_persists_speaker_report(local, monkeypatch)
     workdir = local / identifier
     workdir.mkdir()
     app.jobs[identifier] = app.Job(id=identifier, workdir=workdir, source="uploaded:voice.wav")
-    app._enhance_and_save(identifier, segments, language, "local_audio_ai", local / "audio.wav",
-                          True, "none", False, asr_model="small")
+    app._enhance_and_save(identifier, result.segments, result.language, "local_audio_ai", local / "audio.wav",
+                          True, "none", False, recognition=result)
     saved = library.get(identifier)
     assert "_words" not in saved["segments"][0]
     assert saved["processing_metadata"]["speakers"] == report_metadata
+    assert saved["processing_metadata"]["asr"]["word_timestamps"] is False
+    assert saved["processing_metadata"]["asr"]["speaker_timing"] == result.asr_provenance["speaker_timing"]
     assert app.jobs[identifier].warnings == ["Labels are estimates."]
     app.jobs.clear()
     with TestClient(app.app) as client:

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-28T07:07:56.450630+00:00",
+  "decision": "Concrete archive-member and required-module gates repaired; no new installation dependency or source-bundling omission found.",
+  "archive_route": "candidate-artifacts.yml uses git archive of the complete committed HEAD with LinkScribe/ prefix, without a file allowlist; asr_timing.py is an eligible source file and must be committed by root.",
+  "packaging_mechanisms_reviewed": [
+    "Full-tree candidate source ZIP and manifest",
+    "Safe candidate extraction and actual Linux launcher install job",
+    "Linux launcher and existing-environment browser launcher",
+    "Windows launcher",
+    "Ordinary and independent workflow compile lists",
+    "Root source/import inventory; no separate standalone binary packager or source-copy distribution found"
+  ],
+  "source_archive_scope": "Unreleased source distribution, not a standalone installer. No fresh install or model execution was run during this review.",
+  "changes": {
+    "member_count": "Explicit MAX_ARCHIVE_MEMBERS=5000 replaces 2000; current accumulated full-tree source/evidence inventory outgrew the old arbitrary entry sanity bound.",
+    "required_module": "LinkScribe/asr_timing.py must exist before extraction.",
+    "compile_gates": "Both explicit workflow compile lists now include asr_timing.py."
+  },
+  "unchanged_safety_gates": [
+    "100 MiB archive byte cap",
+    "300 MiB aggregate uncompressed byte cap",
+    "exact repository/commit/archive/SHA256 provenance",
+    "Git archive commit comment",
+    "path traversal/duplicate/member-type/encryption rejection",
+    "symlink and nested file-directory conflict rejection",
+    "fresh extraction and actual launcher health/home/library installation gate"
+  ],
+  "validation": {
+    "archive_unit_tests": 8,
+    "all_passed": true,
+    "new_negative_controls": [
+      "Exactly 5001 ZIP members rejected before any extraction",
+      "Missing asr_timing.py rejected before any extraction"
+    ],
+    "old_vs_new_observed_count_probe_sha256": "7669116e44ecc395aa4f6e8c990334d090e587f3df7a7d18e753bb46205f7f5a",
+    "new_module_import": "Fresh python -I -S -B with native/model imports, network and subprocess forbidden imported asr_timing using only standard library.",
+    "shell_syntax_passed": true,
+    "scoped_diff_whitespace_passed": true
+  },
+  "runtime_behavior": "asr_timing imports only standard library at application startup. Its optional native path accepts the inspected faster-whisper 1.2.1 / CTranslate2 4.9.1 interface; other installed versions fall back to accepted baseline segments with an explicit warning. Existing base requirements and launchers remain unchanged.",
+  "functional_or_semantic_quality_gate_relaxed": false,
+  "new_model_or_provider_calls": 0,
+  "files_sha256": {
+    ".github/workflows/tests.yml": "fcdb4a3a8f174bfd4561728178b21a0a946b34454028e919db9042fbd4b4f465",
+    ".github/workflows/independent-qa.yml": "488f8342d36e5a43071a63b3c5e3fce2d782f0056b0e6c52a82deecb3a6049df",
+    "tests/smoke_candidate_install.py": "a718f33bf8b3c9c6435401b56a95bffe095ab5d4e54f0eed11d336c31806a535",
+    "tests/test_candidate_archive.py": "03af32a954e9258c3c07259861e90de38ca138710a3c8eb2555428aaee74b130"
+  },
+  "observed_asr_timing_sha256": "7780261b5ebeba913fe82836547408e7b0562381a7cc616d01f76822ce00db5e"
+}

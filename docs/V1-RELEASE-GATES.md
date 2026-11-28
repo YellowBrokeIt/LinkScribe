@@ -308,7 +308,52 @@ word anchors pass. Eight film segments have no usable optional word evidence,
 and large timing movements elsewhere still need acoustic assessment. This is
 limited reliability evidence, not recognition-quality or production approval.
 
+## Next integration candidate
+
+The [speaker-timing integration](asr-speaker-timing-integration-2026-11-28/README.md)
+keeps ordinary recognition at `word_timestamps=False` and performs optional
+fixed-token timing only after that generator has finished. It preserves the full
+decoded source, native text/tokens/window offsets and recognized strings. Invalid
+or conflicting optional estimates retain original intervals; timing and speaker
+failures preserve the original transcript and durable warnings. Production now
+releases the recognizer before speaker inference, and retains its existing full
+audio-model release before text inference. Unsupported timing-runtime versions
+retain ordinary recognition with a visible fallback. Actual hosted integration
+and the whole-machine/long-recording limits remain separate gates.
+
+The [summary prompt-only result](krikri-summary-schema-prompt-2026-11-28/RESULTS.md)
+removed a copied example paragraph but still omitted the required specific
+per-quotation review. Its single English case remains rejected and Greek unrun.
+The production candidate takes only the three generic example-value removals;
+context, schemas, grounding instructions, point count, default model and unload
+logic remain unchanged. That narrow filler fix does not approve summary meaning.
+The [source-only action-preservation assessment](summary-action-preservation-feasibility-2026-11-28/README.md)
+does not support another current summary mechanism: complete verbatim passages
+already exist as accurately labeled source highlights, and do not establish
+faithful concise summarization.
+
+The [source-spelling-context translation result](krikri-source-spelling-screen-2026-11-28/RESULTS.md)
+has one independently acceptable case and one protocol rejection, followed by
+four unrun cases. The second actual response omitted all required markers and
+substituted Nick/Helen for the original names. Root reproduced the guard failure,
+verified all 133 execution bindings and 429 resource samples, and approved no
+model switch, repair or fresh validation. A failed two-call stage is not a
+completed six-case quality result.
+
+The next exact full-tree candidate archive also exceeds the prior 2,000-member
+sanity limit. The extraction check now has an explicit 5,000-member bound, with
+a rejection control above it and a required-file check for `asr_timing.py`. The
+100 MiB compressed and 300 MiB extracted limits, provenance/hash checks and all
+path/symlink protections remain in force. Actual candidate-ZIP installation
+still must pass for the newly published application commit.
+
 ## Acceptance gates
+
+The current combined local candidate passed **834 tests and 54 subtests in
+11.55 seconds**. The [record](integration-2026-11-28/speaker-timing-local/maintained-suite/verification.json)
+binds the unchanged tested source. The preceding five collection errors and
+the explicit `tests/` discovery correction are retained separately. These new
+local results do not replace the exact earlier hosted results in the table.
 
 | Area | Required evidence | Current position |
 | --- | --- | --- |

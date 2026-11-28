@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "review_type": "Independent bounded hosted contract recheck before model execution",
+  "decision": "No remaining concrete blocker identified in the corrected hosted source contract. Actual setup, resource and acoustic results remain unobserved.",
+  "source_files": [
+    {
+      "path": "tests/qa_speaker_integration.py",
+      "bytes": 25917,
+      "sha256": "1d86a5dd2aedfda9a34eb40c3b5dcb23edbc39e4f53397169b5f5136ddb21aa2"
+    },
+    {
+      "path": "tests/smoke_real_speaker_app.py",
+      "bytes": 26278,
+      "sha256": "0f1a02279905471dec3467fad43c8e1c4b68b578c8c16e9346d940d5e96f7fec"
+    },
+    {
+      "path": "tests/test_speaker_hosted_qa.py",
+      "bytes": 15012,
+      "sha256": "8bd85a09a53cef7cf1ea116163eef9dc1ba4d267c91e28449a803aceb5c1702f"
+    },
+    {
+      "path": ".github/workflows/speaker-integration-qa.yml",
+      "bytes": 3199,
+      "sha256": "76e1ac923cd03a1c7278315170fac9cadc5f74c1cb8f724e81bfe6fa2aca936c"
+    },
+    {
+      "path": "docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt",
+      "bytes": 350,
+      "sha256": "34b9dbb5a4d784c05da4c31d4d709ce5792c8300cc0a368478d0e106db2c3e8a"
+    },
+    {
+      "path": "docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json",
+      "bytes": 11573,
+      "sha256": "ab8540dfd58584f5de43ae5019d7c4812a1a2b4762759fc390702e5ecb321faa"
+    }
+  ],
+  "all_plan_source_bindings_verified": 21,
+  "core_review": {
+    "path": "independent-core-source-review.json",
+    "sha256": "8002f96c1a114702202680207ccfb0fdcdd92fc9301b8387ffe8812248b005eb"
+  },
+  "resolved_findings": [
+    {
+      "id": "memory-completeness",
+      "resolution": "The new helper retains each group member PID/state/RSS plus explicit read errors. Unknown or owned unreadable membership marks the sample incomplete; execution records and rejects incompleteness before checking process exit. Final recorded sampled RSS, worker OS high-water, time caps and strict post-cleanup member inventory also gate acceptance. Historical shared helper bytes remain unchanged.",
+      "validation": "Independent targeted controls reproduce unreadable stat and statm, then verify the actual owned-worker controller rejects incomplete accounting and cleans the group."
+    },
+    {
+      "id": "native-return-retention",
+      "resolution": "A new per-instance NativeObserver replaces only ephemeral _AlignOnly.native. It checkpoints the actual returned path/probability data before the unchanged _AlignOnly validator, retains native/validation errors separately, and restores class observers afterward. The cached engine.model and its native method are not changed.",
+      "validation": "Independent synthetic malformed terminal path is stored before validation failure; exact engine/model identity and one native method call are asserted."
+    },
+    {
+      "id": "offline-cache-declarations",
+      "resolution": "Hosted preparation copies exact-hash pinned hyperparams into evidence and uses yaml.compose/SafeLoader nodes only. It requires the four seeded loadable names, exact !ref values and pinned repository checkpoint paths before worker execution. The checked SB1.1.2 fetch path returns those existing savedir files without reaching HF download.",
+      "validation": "Independent synthetic YAML control forbids SafeConstructor.construct_object, accepts seeded declarations and rejects an unseeded URL. Actual pinned YAML bytes were not acquired locally and remain an actual hosted preparation check."
+    }
+  ],
+  "hosted_contract_findings": [
+    "Exact original already-exposed 34.635-second two-reader WAV is reconstructed and checked by original file hash, sample count and reference intervals; independent int16-to-float32 PCM hash is compared with actual recognizer waveform. Entire constructed recording is submitted through the real FastAPI upload queue; original gold speaker intervals are evaluated only after worker exit.",
+    "One pinned CPU Small recognizer initialization and one unchanged full-waveform transcribe request are required. Full source hashes, actual resolved model revision/four file hashes, native options, tokens/seeks, timing encode fingerprints, raw alignment returns and source-preserving projection are retained.",
+    "Actual speaker input/source decode hashes, unmodified acoustic turns and model hash provenance are retained. The independent controlled voice score runs on acoustic turns after exit; two output labels alone are expressly not accuracy evidence.",
+    "Recognizer weak references/cache must be gone before actual speaker assignment. Record/metadata/export comparisons, job eviction followed by durable library download, and a fresh stdlib-only SQLite process verify persistence. Private word lists are excluded from saved records.",
+    "One-shot attempt markers, fixed total/phase limits, max-four CPU affinity, aggregate complete RSS samples, worker OS high-water and owned-group cleanup reject operational failure; raw logs/artifacts upload even on failure."
+  ],
+  "independent_correction_controls": {
+    "path": "independent-hosted-correction-controls.txt",
+    "sha256": "91e7809b3e27d7be1de9408076076bc6e6dd5b4dae4cd48d190cef0d8ffa906b",
+    "result": ".....                                                                    [100%]\n5 passed in 0.10s",
+    "models_loaded_or_executed": false,
+    "provider_requests": false,
+    "scope": "Only four named correction tests / five parameterized cases; no broad rerun."
+  },
+  "owner_control_evidence_read": {
+    "path": "/workspace/scratch/94360995dd61/asr-speaker-hosted-controls-corrected.txt",
+    "sha256": "da0f7cba0001c026ff7ad43472267ae87af5ec029e9096efaf7bdd61e01d3f5f",
+    "result": "18 passed in 0.39s"
+  },
+  "limitations": [
+    "Sampled summed process-group RSS is a sampled bound, with worker OS high-water as a separate check; it is not a whole-machine or continuous per-child high-water measurement.",
+    "Offline behavior uses declared HF/Transformers environment flags and exact preseeded local files. No socket-attempt observer or OS network namespace blockade is claimed.",
+    "Translation and summary are disabled in this hosted run. Actual recognizer-before-speaker lifetime is observed; full audio-model release before text AI remains source/controlled-test evidence.",
+    "The original controlled English reading fixture does not establish natural-meeting, Greek, multilingual, word-alignment or full transcript semantic accuracy.",
+    "Automatic approval review rejected the small pinned YAML metadata fetch as outside the current no-download review scope. It was not retried or routed around; the separately authorized hosted prepare phase must supply actual pinned-YAML evidence.",
+    "Historical docs/test_*.py snapshots are evidence, not ordinary maintained test modules. Root is restricting automatic pytest discovery to tests/ while preserving frozen explicit experiment commands and failed-discovery evidence; this does not change the hosted runtime protocol."
+  ],
+  "actions": {
+    "repo_edits": false,
+    "git_mutations": false,
+    "model_download_load_or_inference": false,
+    "fresh_inputs_opened": false,
+    "frozen_sources_modified": false,
+    "controlled_model_free_tests_only": true
+  }
+}

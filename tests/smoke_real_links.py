@@ -55,7 +55,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = "http://127.0.0.1:8765"
 TAIL_WINDOWS_SECONDS = ((424, 434), (502, 522), (553, 571))
 NONSPEECH_SECONDS = 32
-SOURCE_FILES = ("app.py", "sources.py", "runtime_check.py", "library.py", "batch_store.py",
+SOURCE_FILES = ("app.py", "asr_timing.py", "sources.py", "runtime_check.py", "library.py", "batch_store.py",
                 "enhancements.py", "tests/smoke_real_links.py")
 FIXTURES = {
     "youtube_sintel_trailer": {
@@ -574,17 +574,17 @@ def serve(data_root, events_path, diagnose_tail=False):
               elapsed_seconds=round(time.monotonic() - started, 3))
         return path, title
 
-    def observed_recognize(path, language, model):
+    def observed_recognize(path, language, model, **options):
         started = time.monotonic()
         job_id = Path(path).parent.name
         event("recognition_start", job_id=job_id, model=model, requested_language=language,
               audio_sha256=digest(path))
         context.job_id, context.model, context.language = job_id, model, language
         try:
-            segments, detected_language = recognize(path, language, model)
-            event("recognition_done", job_id=job_id, model=model, language=detected_language,
-                  segment_count=len(segments), elapsed_seconds=round(time.monotonic() - started, 3))
-            return segments, detected_language
+            result = recognize(path, language, model, **options)
+            event("recognition_done", job_id=job_id, model=model, language=result.language,
+                  segment_count=len(result.segments), elapsed_seconds=round(time.monotonic() - started, 3))
+            return result
         except Exception as error:
             event("recognition_failed", job_id=job_id, errors=exception_chain(error),
                   elapsed_seconds=round(time.monotonic() - started, 3))

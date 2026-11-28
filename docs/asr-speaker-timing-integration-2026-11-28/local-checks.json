@@ -1,0 +1,44 @@
+{
+  "model_downloads": 0,
+  "model_initializations": 0,
+  "recognition_or_alignment_calls": 0,
+  "source_provider_calls": 0,
+  "checks": [
+    {
+      "path": "asr-speaker-hosted-controls-corrected.txt",
+      "sha256": "da0f7cba0001c026ff7ad43472267ae87af5ec029e9096efaf7bdd61e01d3f5f"
+    },
+    {
+      "path": "asr-speaker-hosted-controls-first.txt",
+      "sha256": "499a67bff3d5411b5c5391eb0ed53e818c7522e93ed0c36c92c79e1ae33f8786"
+    },
+    {
+      "path": "asr-speaker-timing-callers-tests.txt",
+      "sha256": "7e99a12afe5543e4f1c4afea1305b608c0d5a920f2f7ee2c48526626b1e067db"
+    },
+    {
+      "path": "asr-speaker-timing-first-tests.txt",
+      "sha256": "f8de2eecd82f12f59d701a5bdf16de02cf6ad8fd265e867cc91908ab6321077c"
+    },
+    {
+      "path": "asr-speaker-timing-focused-tests.txt",
+      "sha256": "b502f5fb3ea4c8e617bad2eef7ca685f0b10183ded37b27956e07ba5a13dd06a"
+    },
+    {
+      "path": "asr-speaker-timing-lifetime-tests.txt",
+      "sha256": "12730093272da7eafed08687dc3d7c1958644a2e5de8a303324b91fe5b5ea196"
+    },
+    {
+      "path": "hosted-preflight.json",
+      "sha256": "72fd7178ef4ef2ae597a34b650c0c0777f356f4bac7b989f85d113fc4aa3ebe2"
+    }
+  ],
+  "earlier_checks_scope": "93/94/201/123-pass files are retained chronological focused results on earlier preparation revisions. They are not claimed to have run after every final edit. Parent combined suite will bind the final published source separately.",
+  "final_hosted_controls": {
+    "command": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python -m pytest -q tests/test_speaker_hosted_qa.py",
+    "passed": 18,
+    "seconds": 0.39,
+    "scope": "Synthetic/model-free checks; no acoustic or hosted success claim"
+  },
+  "validation_command": "/workspace/scratch/94360995dd61/linkscribe-dev-venv/bin/python tests/qa_speaker_integration.py --action validate --plan docs/asr-speaker-timing-integration-2026-11-28/hosted-plan.json --evidence /workspace/scratch/94360995dd61/asr-speaker-hosted-prepare-corrected-2026-11-28"
+}

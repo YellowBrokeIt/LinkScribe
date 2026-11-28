@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "decision": "No packaging or application-gate blocker introduced by the narrow pytest discovery configuration.",
+  "scope": "Independent source/evidence read only; no code changes, new archive install, model calls or additional suite run.",
+  "source_and_evidence": [
+    {
+      "path": "pytest.ini",
+      "bytes": 255,
+      "sha256": "db3be2df7fc1951d4570aa87523b876bf7bd4d2b4f7a49d7e63d8b71a13c2b3a"
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "bytes": 915,
+      "sha256": "fcdb4a3a8f174bfd4561728178b21a0a946b34454028e919db9042fbd4b4f465"
+    },
+    {
+      "path": ".github/workflows/independent-qa.yml",
+      "bytes": 7789,
+      "sha256": "488f8342d36e5a43071a63b3c5e3fce2d782f0056b0e6c52a82deecb3a6049df"
+    },
+    {
+      "path": ".github/workflows/candidate-artifacts.yml",
+      "bytes": 3156,
+      "sha256": "f84c97300347bd0469f18a68239314f3e171327bb04ab6256254147a5be59aeb"
+    },
+    {
+      "path": "tests/smoke_candidate_install.py",
+      "bytes": 11448,
+      "sha256": "a718f33bf8b3c9c6435401b56a95bffe095ab5d4e54f0eed11d336c31806a535"
+    },
+    {
+      "path": "tests/test_candidate_archive.py",
+      "bytes": 6384,
+      "sha256": "03af32a954e9258c3c07259861e90de38ca138710a3c8eb2555428aaee74b130"
+    },
+    {
+      "path": "docs/integration-2026-11-28/speaker-timing-local/pytest.txt",
+      "bytes": 7639,
+      "sha256": "8ab0243e0b5d2e21beeafb5fd2edea33db649b4209e7015200365c98b689350f"
+    },
+    {
+      "path": "docs/integration-2026-11-28/speaker-timing-local/verification.json",
+      "bytes": 9539,
+      "sha256": "4e777c5b84945f6efcc6a40116aba161e77c6975642795c60c7a6edef65d7e8f"
+    },
+    {
+      "path": "docs/integration-2026-11-28/speaker-timing-local/maintained-suite/pytest.txt",
+      "bytes": 1019,
+      "sha256": "c08bae9787fa89fd7b5cf001f18cdb37c340de3d067fc222d07269e7ec920b11"
+    },
+    {
+      "path": "docs/integration-2026-11-28/speaker-timing-local/maintained-suite/verification.json",
+      "bytes": 9828,
+      "sha256": "a7f1deb5eb3ae013260980312174aec726ead7f75d523e62c9718f99ddc9b1c9"
+    }
+  ],
+  "pytest_configuration": {
+    "only_effective_setting": {
+      "testpaths": "tests"
+    },
+    "specific_tests_deselected": false,
+    "exclusion_markers_added": false,
+    "runtime_or_application_code_changed_by_this_addendum": false
+  },
+  "findings": [
+    "Automatic pytest discovery now begins in the maintained tests/ tree. All maintained unit/API/QA/harness regression modules remain available. No per-test exclusion, marker filter or assertion change was introduced.",
+    "New docs/test_*.py historical snapshots retain old import roots and experiment-specific audit hooks. Treating those evidence copies as ordinary application test modules caused the initial discovery errors; their bytes and the failed run are preserved.",
+    "Frozen standalone experiment commands and maintained tests that explicitly read/reconstruct historical contracts remain usable. A scoped discovery root does not delete or rewrite those records.",
+    "The candidate workflow creates the complete committed source tree with git archive. There is no application-file allowlist excluding pytest.ini; once committed it is included automatically. This review does not claim a not-yet-built archive was installed.",
+    "The launchers use installation/runtime entry points rather than pytest discovery, so pytest.ini does not alter launcher behavior or application requirements. Existing member-count, byte-cap, archive provenance/path/symlink and required asr_timing.py gates remain unchanged.",
+    "Root reran the ordinary complete command after the discovery correction. The retained maintained-suite log reports834 tests and54 subtests passed in11.55 seconds, separately from the initial failed collection."
+  ],
+  "actual_test_evidence": {
+    "initial_failure_preserved": true,
+    "corrected_command": "python -m pytest -q",
+    "passed": 834,
+    "subtests_passed": 54,
+    "seconds": 11.55,
+    "independent_review_reran_suite": false
+  },
+  "original_packaging_manifest_unchanged": {
+    "path": "/workspace/scratch/94360995dd61/asr-timing-packaging-review-2026-11-28/manifest.json",
+    "sha256": "39172054be3e7a1b94b9774edad3cdc35ab19ea1c4e0cd111a7d8be3010d9e3d"
+  }
+}

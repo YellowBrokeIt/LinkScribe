@@ -1,6 +1,52 @@
 # Integrated highlights checkpoint and follow-up fixes
 
+## Next candidate: fixed-text speaker timing and summary prompt repair
+
+The current source integrates [optional fixed-text speaker timing](../asr-speaker-timing-integration-2026-11-28/README.md)
+after the unchanged ordinary recognition pass, with exact original text retained
+through partial timing or speaker failure. The recognizer is released before
+speaker inference. Its earlier five-input timing replay remains scoped evidence;
+the new production path needs its own actual hosted integration result.
+
+The [narrow production summary patch](../summary-placeholder-production-fix-2026-11-28/stable-changes.json)
+removes only three example-value prompt endings. Root independently compared the
+entire application AST and confirmed no other summary-code change. Current QA
+now identifies direct/final requests by their actual response schema rather than
+the removed example words. Focused source/protocol and packaging verification
+passed 107 tests and 8 subtests; it is not a meaning approval. The unchanged
+Krikri summary candidate still failed its concrete quotation-review requirement.
+
+The [packaging review](../asr-timing-packaging-review-2026-11-28/independent-packaging-review.json)
+found that the complete pending source archive exceeded its original file-count
+bound. The new explicit 5,000-member limit retains the 100 MiB compressed and
+300 MiB extracted caps and the existing provenance/path protections. Extraction
+also requires the new timing module. Rejection of a missing module and 5,001
+members is checked before any archive file is written. Fresh installation of
+the eventual exact committed archive remains required.
+
+The separately sealed [source-spelling-context experiment](../krikri-source-spelling-screen-2026-11-28/RESULTS.md)
+has one acceptable translation and one exact-marker rejection; four cases are
+unrun. The [summary schema-only experiment](../krikri-summary-schema-prompt-2026-11-28/RESULTS.md)
+has a real paragraph but still fails meaning review; Greek is unrun. All raw
+responses, earlier failures and criteria remain retained. No default model,
+release version or stable-branch change follows from these experiments.
+
 ## Published checkpoint
+
+The next combined local checkpoint passed **834 tests and 54 subtests in
+11.55 seconds**, with all inventoried code unchanged throughout execution.
+The [complete source-bound result](speaker-timing-local/maintained-suite/verification.json)
+and [discovery repair](speaker-timing-local/collection-fix-review.json) retain the
+earlier collection failure. Newly archived standalone experiments had been
+auto-imported, colliding with old module names and installing a process guard
+outside its intended run. `pytest.ini` now selects every maintained `tests/`
+regression; no individual assertion or test is excluded. Frozen experimental
+scripts retain their original bytes and separate documented commands.
+
+The [independent integration review](speaker-timing-local/independent-root-integration-review.json)
+approves one actual hosted speaker run for the exact published source. It does
+not preapprove acoustic accuracy, generated meaning or a v1.0 release. The named
+published results below remain historical until new hosted evidence is available.
 
 Commit [`f12afd8`](https://github.com/YellowBrokeIt/LinkScribe/commit/f12afd80e99d9673e416d7f243976697a66675a9)
 integrates the frozen source-highlights selector and the explicit Vimeo player

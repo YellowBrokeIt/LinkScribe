@@ -20,15 +20,16 @@ COMMIT = "a" * 40
 REPOSITORY = "owner/LinkScribe"
 
 
-def make_artifact(tmp_path, extra=(), comment=COMMIT, manifest_changes=None):
+def make_artifact(tmp_path, extra=(), comment=COMMIT, manifest_changes=None, omit=()):
     artifact = tmp_path / "artifact"
     artifact.mkdir()
     archive = artifact / candidate.ARCHIVE_NAME
     with warnings.catch_warnings(), zipfile.ZipFile(archive, "w") as bundle:
         warnings.filterwarnings("ignore", message="Duplicate name:", category=UserWarning)
         bundle.comment = comment.encode("ascii")
-        for name in ("start_linux.sh", "requirements.txt", "app.py", "static/index.html"):
-            bundle.writestr(f"LinkScribe/{name}", "fixture, never executed\n")
+        for name in ("start_linux.sh", "requirements.txt", "app.py", "asr_timing.py", "static/index.html"):
+            if name not in omit:
+                bundle.writestr(f"LinkScribe/{name}", "fixture, never executed\n")
         for name, content in extra:
             bundle.writestr(name, content)
     manifest = {"repository": REPOSITORY, "commit": COMMIT,
@@ -47,9 +48,28 @@ class CandidateArchiveTests(unittest.TestCase):
             artifact, destination = make_artifact(Path(temporary))
             source = candidate.extract_candidate(artifact, destination, COMMIT, REPOSITORY)
             self.assertEqual(source["commit"], COMMIT)
-            self.assertEqual(source["members"], 4)
+            self.assertEqual(source["members"], 5)
             self.assertTrue((destination / "LinkScribe/static/index.html").is_file())
+            self.assertTrue((destination / "LinkScribe/asr_timing.py").is_file())
             self.assertFalse((destination / "LinkScribe/.venv").exists())
+
+    def test_missing_timing_module_extracts_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            artifact, destination = make_artifact(Path(temporary), omit={"asr_timing.py"})
+            with self.assertRaisesRegex(ValueError, "missing required application files"):
+                candidate.extract_candidate(artifact, destination, COMMIT, REPOSITORY)
+            self.assertEqual(list(destination.iterdir()), [])
+
+    def test_5001_members_extract_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            extra = [(f"LinkScribe/evidence/{index}.txt", "small fixture\n")
+                     for index in range(4996)]
+            artifact, destination = make_artifact(Path(temporary), extra=extra)
+            with zipfile.ZipFile(artifact / candidate.ARCHIVE_NAME) as bundle:
+                self.assertEqual(len(bundle.infolist()), 5001)
+            with self.assertRaisesRegex(ValueError, "invalid member count"):
+                candidate.extract_candidate(artifact, destination, COMMIT, REPOSITORY)
+            self.assertEqual(list(destination.iterdir()), [])
 
     def test_manifest_mismatch_extracts_nothing(self):
         for changes in ({"commit": "b" * 40}, {"repository": "other/LinkScribe"},

@@ -30,6 +30,9 @@ ARCHIVE_NAME = "LinkScribe-candidate-source.zip"
 BASE_URL = "http://127.0.0.1:8765"
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_EXTRACTED_BYTES = 300 * 1024 * 1024
+# The complete source tree includes retained experiment evidence. Its archive
+# outgrew the original 2,000-entry sanity bound; byte and path caps still apply.
+MAX_ARCHIVE_MEMBERS = 5000
 
 
 def extract_candidate(artifact_dir: Path, destination: Path,
@@ -56,7 +59,7 @@ def extract_candidate(artifact_dir: Path, destination: Path,
         if bundle.comment != expected_commit.encode("ascii"):
             raise ValueError("Git archive commit comment does not match the expected source.")
         members = bundle.infolist()
-        if not members or len(members) > 2000:
+        if not members or len(members) > MAX_ARCHIVE_MEMBERS:
             raise ValueError("Candidate archive has an invalid member count.")
         if sum(item.file_size for item in members) > MAX_EXTRACTED_BYTES:
             raise ValueError("Candidate archive exceeds the extraction size limit.")
@@ -78,7 +81,8 @@ def extract_candidate(artifact_dir: Path, destination: Path,
             if not item.is_dir():
                 files.add(name)
         required = {"LinkScribe/start_linux.sh", "LinkScribe/requirements.txt",
-                    "LinkScribe/app.py", "LinkScribe/static/index.html"}
+                    "LinkScribe/app.py", "LinkScribe/asr_timing.py",
+                    "LinkScribe/static/index.html"}
         if not required.issubset(files):
             raise ValueError("Candidate archive is missing required application files.")
         if any(parent.as_posix() in files

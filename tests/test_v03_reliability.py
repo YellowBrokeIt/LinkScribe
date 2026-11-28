@@ -41,8 +41,8 @@ def install_dummy_recognition(monkeypatch, reject=()):
         target=app.jobs[job_id].workdir / "audio.wav"
         target.write_bytes(b"pretend audio")
         return target, "Sample"
-    def recognize(path,language,model):
-        return [{"start": 0.0, "end": 1.25, "text": "Example words spoken."}],"en"
+    def recognize(path,language,model,**_kwargs):
+        return app.RecognitionResult([{"start": 0.0, "end": 1.25, "text": "Example words spoken."}],"en")
     monkeypatch.setattr(app,"_download_source_audio",download)
     monkeypatch.setattr(app,"_recognize",recognize)
     return hits

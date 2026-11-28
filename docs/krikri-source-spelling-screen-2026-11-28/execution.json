@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-28T06:47:23.250715+00:00",
+  "complete": false,
+  "generation_calls": 2,
+  "plan_sha256": "cd20d9168446cbe0ece0cc2795b5bb501fd0f182c3a4697b129c9c3227728392",
+  "inference_freeze_sha256": "ea2f6f7dc8ddb5b431c77a7b0efe4e7ef105c2631ced34098492b0b8d747a75e",
+  "authorization_sha256": "a3824c316e396f429be6c093dcd8cbda0e090543deb83fade35f7d21ca190ade",
+  "semantic_quality": "unreviewed",
+  "unused_validation_opened": false,
+  "free_disk_before_bytes": 1658359808,
+  "runtime": {
+    "version": "0.40.12"
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "report": "dev-en-el-transcript-terminology.json",
+      "sha256": "03ec5161231800f9a77f4f4b7d7ed4ddc145cf02256c1a30f190291ba131be4b",
+      "preflight_report": "dev-en-el-transcript-terminology-preflight.json",
+      "preflight_sha256": "8394808d433f90123ea0ec23b90a63c9cff774f1142d8066f53ec1da9eb587ea",
+      "protection_report": "dev-en-el-transcript-terminology-protection.json",
+      "protection_report_sha256": "d8b5ea243c6e1ab154cc9ccb5ee2824a371784e3e13b8e42783d892e50c87b33",
+      "checks": {
+        "one_exact_declared_request": true,
+        "request_timeout_240s": true,
+        "structure_execution_and_guard_accepted": true,
+        "marker_restoration_and_post_guard_accepted": true,
+        "normal_completion": true,
+        "empty_reasoning": true,
+        "nonempty_final_content": true,
+        "output_below_cap": true,
+        "actual_prompt_count_matches_full_native_preflight": true,
+        "unload_acknowledged": true,
+        "resident_models_empty": true,
+        "case_below_600s": true
+      },
+      "elapsed_seconds": 21.544,
+      "metrics": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_eval_count": 261,
+          "eval_count": 59,
+          "reasoning_characters": 0,
+          "raw_evidence_available": true,
+          "elapsed_seconds": 14.488
+        }
+      ],
+      "semantic_quality": "unreviewed",
+      "automatic_status": "pass"
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "report": "dev-el-en-people-and-roles.json",
+      "sha256": "469bafac5e96735ef366f6968c973f5b89811df2d448171cd718fa3d7371e4c4",
+      "preflight_report": "dev-el-en-people-and-roles-preflight.json",
+      "preflight_sha256": "e032266f676677d5f08d60a425c6df341bffefff3512d7a7c159fe07aea2f483",
+      "protection_report": "dev-el-en-people-and-roles-protection.json",
+      "protection_report_sha256": "2e0fcbcbc210d0c3c96983c532d12bbb47ed04e7bc36c41ba76b089d5bd20a9e",
+      "checks": {
+        "one_exact_declared_request": true,
+        "request_timeout_240s": true,
+        "structure_execution_and_guard_accepted": false,
+        "marker_restoration_and_post_guard_accepted": false,
+        "normal_completion": true,
+        "empty_reasoning": true,
+        "nonempty_final_content": true,
+        "output_below_cap": true,
+        "actual_prompt_count_matches_full_native_preflight": true,
+        "unload_acknowledged": true,
+        "resident_models_empty": true,
+        "case_below_600s": true
+      },
+      "elapsed_seconds": 21.368,
+      "metrics": [
+        {
+          "done": true,
+          "done_reason": "stop",
+          "prompt_eval_count": 350,
+          "eval_count": 47,
+          "reasoning_characters": 0,
+          "raw_evidence_available": true,
+          "elapsed_seconds": 14.349
+        }
+      ],
+      "semantic_quality": "unreviewed",
+      "automatic_status": "error"
+    }
+  ],
+  "free_disk_before_case_bytes": 1658122240,
+  "error": {
+    "type": "ValueError",
+    "message": "First execution/protocol/structure/script-guard/time failure; remaining fixed cases stop without retry."
+  },
+  "owned_daemon_stopped": true,
+  "finished_at": "2026-11-28T06:48:16.302609+00:00",
+  "frozen_inputs_unchanged": true
+}

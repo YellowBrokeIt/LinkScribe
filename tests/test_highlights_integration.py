@@ -77,7 +77,7 @@ def test_link_highlights_use_actual_source_and_all_exports_without_ollama(site, 
 
 def test_upload_highlights_survive_optional_summary_failure(site, monkeypatch):
     monkeypatch.setattr(app, "_check_uploaded_duration", lambda *_: None)
-    monkeypatch.setattr(app, "_recognize", lambda *_args, **_kwargs: (deepcopy(SEGMENTS), "en"))
+    monkeypatch.setattr(app, "_recognize", lambda *_args, **_kwargs: app.RecognitionResult(deepcopy(SEGMENTS), "en"))
     def fail_summary(*args, **kwargs):
         raise app.EnhancementError("Controlled unavailable model")
     monkeypatch.setattr(app, "summarize_segments", fail_summary)

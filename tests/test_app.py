@@ -93,7 +93,8 @@ def test_real_http_routes_with_stubbed_captions(monkeypatch):
 def test_upload_with_stubbed_speech_recognizer(monkeypatch):
     monkeypatch.setattr(module.pool, "submit", lambda fn, *args: fn(*args))
     monkeypatch.setattr(module, "_check_uploaded_duration", lambda p: None)
-    monkeypatch.setattr(module, "_recognize", lambda p, lang, model: ([{"start":0, "end":1.4, "text":"Local recording"}], "en"))
+    monkeypatch.setattr(module, "_recognize", lambda p, lang, model, **_kwargs: module.RecognitionResult(
+        [{"start":0, "end":1.4, "text":"Local recording"}], "en"))
     client = TestClient(module.app)
     wrong_file = client.post("/api/upload", data={"consent":"true"}, files={"file":("unsafe.exe",b"stuff")})
     assert wrong_file.status_code == 400

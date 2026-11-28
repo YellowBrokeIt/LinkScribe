@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "scope": "Primary-source metadata lookup only; no model weights/downloads or runtime calls. Current public pages are not immutable execution pins.",
+  "lookups": [
+    {
+      "url": "https://huggingface.co/Systran/faster-whisper-tiny/raw/main/config.json",
+      "observed_alignment_heads": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "source": "publisher conversion config read through web retrieval"
+    },
+    {
+      "url": "https://huggingface.co/Systran/faster-whisper-base/raw/main/config.json",
+      "observed_alignment_heads": [
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "source": "publisher conversion config read through web retrieval"
+    },
+    {
+      "url": "https://huggingface.co/openai/whisper-tiny/raw/main/preprocessor_config.json",
+      "feature_size": 80,
+      "hop_length": 160,
+      "chunk_length": 30
+    },
+    {
+      "url": "https://huggingface.co/openai/whisper-base/raw/main/preprocessor_config.json",
+      "feature_size": 80,
+      "hop_length": 160,
+      "chunk_length": 30
+    },
+    {
+      "url": "https://opennmt.net/CTranslate2/python/ctranslate2.models.Whisper.html",
+      "inspected_version": "4.9.1",
+      "facts": [
+        "align accepts mel or encoded features, fixed text tokens/start sequence and nonpadding num_frames",
+        "n_mels is exposed on the loaded engine",
+        "effective compute types include int8_float32"
+      ]
+    },
+    {
+      "url": "https://github.com/SYSTRAN/faster-whisper/blob/v1.2.1/faster_whisper/transcribe.py",
+      "web_result": "DisabledError",
+      "fallback": "exact installed source inspected and hashed"
+    },
+    {
+      "url": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/raw/main/config.json",
+      "web_result": "not accessible via web tool",
+      "fallback": "exact retained publisher revision metadata inspected and copied; no third-party mirror used"
+    },
+    {
+      "url": "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/raw/main/preprocessor_config.json",
+      "web_result": "not accessible via web tool",
+      "fallback": "exact retained publisher revision metadata inspected and copied"
+    }
+  ]
+}

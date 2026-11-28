@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T06:58:15.536544+00:00",
+  "reviewer": "/root",
+  "independent_of_candidate_author": true,
+  "source_and_criteria_before_output_sha256": "e945e62680fedcf1abf5cb8eb25d0987411d55a659c2693d7afb59f9e8cf3063",
+  "mechanical_audit_sha256": "e102bdd0ba209690b8da843eaab152bd3f9762f0ff7538b73e98a51e2f02176f",
+  "development_source_criteria_sha256": "48ad72a365a55ec9aff24ef78f6f310d16221d5964e5d6c8e156df6ad9d701ce",
+  "decision": "Rejected. Case 1 is acceptable on the unchanged meaning criteria; case 2 is a protocol rejection with no accepted restoration; four cases are unrun.",
+  "classifications": {
+    "accepted_translations_reviewed": 1,
+    "acceptable": 1,
+    "minor_issue": 0,
+    "major_error_in_accepted_translation": 0,
+    "protocol_rejections": 1,
+    "unrun": 4
+  },
+  "cases": [
+    {
+      "id": "dev-en-el-transcript-terminology",
+      "classification": "acceptable",
+      "source": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Maria saved the transcript as a text file; she did not save the original recording.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Transcription took 12 minutes. Translation into Greek has not started yet.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "complete_accepted_translation": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "Η Maria αποθήκευσε τη μεταγραφή ως αρχείο κειμένου· δεν αποθήκευσε την αρχική ηχογράφηση.",
+          "speaker": "Speaker 1"
+        },
+        {
+          "start": 5.5,
+          "end": 11.0,
+          "text": "Η μεταγραφή διήρκεσε 12 λεπτά. Η μετάφραση στα ελληνικά δεν έχει ξεκινήσει ακόμη.",
+          "speaker": "Speaker 1"
+        }
+      ],
+      "criterion_findings": [
+        "The saved transcript is a text file. The original recording is explicitly not saved; the two objects remain distinct.",
+        "The transcription process took 12 minutes; Greek translation explicitly has not started. The chronology and which process took 12 minutes are preserved.",
+        "Maria is restored in the exact original Latin spelling, which the already frozen criterion permits. The feminine Greek article is appropriate here.",
+        "The use of μεταγραφή is understandable in this explicit transcript/recording context; no material omission, invention, role reversal, quantity or condition error is observed."
+      ],
+      "mechanical_acceptance_not_used_as_meaning_proof": true
+    },
+    {
+      "id": "dev-el-en-people-and-roles",
+      "classification": "protocol_rejection",
+      "source": [
+        {
+          "start": 0.5,
+          "end": 5.0,
+          "text": "Ο Νίκος έστειλε το κείμενο στην Ελένη, όχι στην Έλενα.",
+          "speaker": "Speaker 2"
+        },
+        {
+          "start": 5.0,
+          "end": 10.5,
+          "text": "Η Ελένη είναι η μεταφράστρια. Ο Νίκος κάνει την ηχογράφηση και η Έλενα ελέγχει τους υπότιτλους.",
+          "speaker": "Speaker 2"
+        }
+      ],
+      "raw_unaccepted_strings": [
+        "Nick sent the text to Helen, not to Elena.",
+        "Helen is the translator. Nick is doing the recording and Elena is checking the subtitles."
+      ],
+      "accepted_translation": null,
+      "criterion_findings": [
+        "Every required compact marker is absent from the actual normal-stop response. The unchanged exact marker guard rejects the output before restoration; no repaired or accepted final exists.",
+        "Raw ordinary prose preserves recipient negation and the three role assignments, but substitutes Nick and Helen for the source names Νίκος and Ελένη. The prior name-substitution failure is not regraded as a faithful transliteration.",
+        "The source-spelling context did not make the native model obey the fixed marker contract. Surviving ordinary facts cannot turn this rejected output into an accepted translation."
+      ],
+      "guard_rejection_independently_reproduced": "A protected marker is missing, duplicated, unknown or in the wrong source segment.",
+      "no_name_repair": true
+    }
+  ],
+  "unrun_cases": [
+    "dev-en-el-bitcoin-amounts",
+    "dev-el-en-negation-scope",
+    "dev-en-el-conditional-publication",
+    "dev-el-en-uncertain-question"
+  ],
+  "scope": "Exactly two native generation calls in one fixed original-six development stage; this is not a completed six-case quality result.",
+  "runtime": {
+    "elapsed_seconds": 53.240123,
+    "sample_count": 429,
+    "peak_rss_bytes": 5842067456,
+    "peak_pss_bytes": 5832692736,
+    "worker_exit_code": 1,
+    "supervisor_passed": false,
+    "measurement_complete": true,
+    "resource_limit_triggered": false,
+    "both_unloads_resident_empty_and_owned_cleanup_passed": true
+  },
+  "whole_machine_or_long_recording_fit_approved": false,
+  "prior_failures_and_original_criteria_unchanged": true,
+  "production_model_or_name_protection_adoption_approved": false,
+  "expanded_or_fresh_validation_approved": false,
+  "unused_validation_opened": false,
+  "reviewer_native_model_tokenizer_calls": 0,
+  "next_action": "Seal the failed experiment. Any different decoding mechanism needs a separate concrete source contract; this result authorizes no further model execution."
+}

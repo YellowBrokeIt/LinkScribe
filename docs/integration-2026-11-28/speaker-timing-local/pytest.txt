@@ -1,0 +1,112 @@
+
+==================================== ERRORS ====================================
+_ ERROR collecting docs/asr-speaker-timing-integration-2026-11-28/preparation-history/hosted-before-review/test_speaker_hosted_qa.py _
+docs/asr-speaker-timing-integration-2026-11-28/preparation-history/hosted-before-review/test_speaker_hosted_qa.py:16: in <module>
+    SPEC.loader.exec_module(qa)
+<frozen importlib._bootstrap_external>:999: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+docs/asr-speaker-timing-integration-2026-11-28/preparation-history/hosted-before-review/qa_speaker_integration.py:23: in <module>
+    spec.loader.exec_module(common)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+<frozen importlib._bootstrap_external>:1190: in get_data
+    ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/94360995dd61/LinkScribe/docs/asr-speaker-timing-integration-2026-11-28/preparation-history/hosted-before-review/qa_qwen3_asr_candidate.py'
+_ ERROR collecting docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py _
+ImportError while importing test module '/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py:29: in <module>
+    from protection import digest, restore_segments, strict_response_strings
+docs/krikri-source-spelling-screen-2026-11-28/protection.py:20: in <module>
+    _spec.loader.exec_module(_normalizer)
+docs/name-boundary-normalizer-2026-11-28/boundary_normalizer.py:14: in <module>
+    import regex
+E   ModuleNotFoundError: No module named 'regex'
+_ ERROR collecting docs/krikri-summary-schema-prompt-2026-11-28/test_protocol.py _
+ImportError while importing test module '/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-summary-schema-prompt-2026-11-28/test_protocol.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+docs/krikri-summary-schema-prompt-2026-11-28/test_protocol.py:9: in <module>
+    import infer_native
+docs/krikri-summary-schema-prompt-2026-11-28/infer_native.py:10: in <module>
+    from context import HERE, ROOT, common, read_json, read_plan, authorize, utc
+docs/krikri-summary-schema-prompt-2026-11-28/context.py:10: in <module>
+    import psutil
+E   ModuleNotFoundError: No module named 'psutil'
+___ ERROR collecting docs/krikri-summary-screen-2026-11-28/test_protocol.py ____
+ImportError while importing test module '/workspace/scratch/94360995dd61/LinkScribe/docs/krikri-summary-screen-2026-11-28/test_protocol.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+docs/krikri-summary-screen-2026-11-28/test_protocol.py:9: in <module>
+    import infer_native
+docs/krikri-summary-screen-2026-11-28/infer_native.py:10: in <module>
+    from context import HERE, ROOT, common, read_json, read_plan, authorize, utc
+docs/krikri-summary-screen-2026-11-28/context.py:10: in <module>
+    import psutil
+E   ModuleNotFoundError: No module named 'psutil'
+_______________ ERROR collecting tests/test_provider_runtime.py ________________
+tests/test_provider_runtime.py:5: in <module>
+    import yt_dlp
+../linkscribe-dev-venv/lib/python3.12/site-packages/yt_dlp/__init__.py:17: in <module>
+    from .cookies import SUPPORTED_BROWSERS, SUPPORTED_KEYRINGS, CookieLoadError
+../linkscribe-dev-venv/lib/python3.12/site-packages/yt_dlp/cookies.py:23: in <module>
+    from .aes import (
+../linkscribe-dev-venv/lib/python3.12/site-packages/yt_dlp/aes.py:5: in <module>
+    from .dependencies import Cryptodome
+../linkscribe-dev-venv/lib/python3.12/site-packages/yt_dlp/dependencies/__init__.py:82: in <module>
+    from . import Cryptodome
+../linkscribe-dev-venv/lib/python3.12/site-packages/yt_dlp/dependencies/Cryptodome.py:21: in <module>
+    from Cryptodome.PublicKey import RSA
+../linkscribe-dev-venv/lib/python3.12/site-packages/Cryptodome/PublicKey/RSA.py:43: in <module>
+    from Cryptodome.Math.Numbers import Integer
+../linkscribe-dev-venv/lib/python3.12/site-packages/Cryptodome/Math/Numbers.py:39: in <module>
+    from Cryptodome.Math._IntegerGMP import IntegerGMP as Integer
+../linkscribe-dev-venv/lib/python3.12/site-packages/Cryptodome/Math/_IntegerGMP.py:104: in <module>
+    lib = load_lib("gmp", gmp_defs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+../linkscribe-dev-venv/lib/python3.12/site-packages/Cryptodome/Util/_raw_api.py:107: in load_lib
+    lib = ffi.dlopen(name, ffi.RTLD_DEEPBIND)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../linkscribe-dev-venv/lib/python3.12/site-packages/cffi/api.py:143: in dlopen
+    lib, function_cache = _make_ffi_library(self, name, flags)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../linkscribe-dev-venv/lib/python3.12/site-packages/cffi/api.py:827: in _make_ffi_library
+    backendlib = _load_backend_lib(backend, libname, flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../linkscribe-dev-venv/lib/python3.12/site-packages/cffi/api.py:813: in _load_backend_lib
+    path = ctypes.util.find_library(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/ctypes/util.py:332: in find_library
+    return _findSoname_ldconfig(name) or \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/ctypes/util.py:292: in _findSoname_ldconfig
+    with subprocess.Popen(['/sbin/ldconfig', '-p'],
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1823: in _execute_child
+    sys.audit("subprocess.Popen", executable, args, cwd, env)
+docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py:21: in forbid_execution
+    raise AssertionError("Native/network execution is forbidden in source controls: " + event)
+E   AssertionError: Native/network execution is forbidden in source controls: subprocess.Popen
+=========================== short test summary info ============================
+ERROR docs/asr-speaker-timing-integration-2026-11-28/preparation-history/hosted-before-review/test_speaker_hosted_qa.py
+ERROR docs/krikri-source-spelling-screen-2026-11-28/test_source_context.py
+ERROR docs/krikri-summary-schema-prompt-2026-11-28/test_protocol.py
+ERROR docs/krikri-summary-screen-2026-11-28/test_protocol.py
+ERROR tests/test_provider_runtime.py - AssertionError: Native/network executi...
+!!!!!!!!!!!!!!!!!!! Interrupted: 5 errors during collection !!!!!!!!!!!!!!!!!!!!
+5 errors in 1.19s

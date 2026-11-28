@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "phase": "source-only guard boundary control",
+  "command": "python -B docs/krikri-marker-grammar-preparation-2026-11-28/check_guard_boundary.py",
+  "helper_sha256": "4b0c8ead48072347f6b2b64fe75de1c83eee22193d81bc71b2b2f06daadebc9c",
+  "exit_code": 1,
+  "error_type": "ModuleNotFoundError",
+  "error_message": "No module named 'regex'",
+  "failure_location": "Frozen protection.py import loads the existing pure boundary-normalizer module, whose declared regex dependency is absent from the default Python.",
+  "model_native_detector_tokenizer_converter_calls": 0,
+  "source_or_package_changes": false,
+  "resolution": "Run unchanged helper with the previously declared isolated linkscribe-m2m100-runtime/venv/bin/python, which already contains regex.",
+  "previous_experiment_evidence_unchanged": true
+}

@@ -39,8 +39,8 @@ def _worker(phase: str, directory: Path) -> None:
         target.write_bytes(b"synthetic media; never passed to a real decoder")
         return target, f"Synthetic {source.video_id}"
 
-    def recognize(_path, _language, _model):
-        return [{"start": 0.0, "end": 1.25, "text": "Synthetic speech about Bitcoin."}], "en"
+    def recognize(_path, _language, _model, **_kwargs):
+        return app.RecognitionResult([{"start": 0.0, "end": 1.25, "text": "Synthetic speech about Bitcoin."}], "en")
 
     app._download_source_audio = download
     app._recognize = recognize

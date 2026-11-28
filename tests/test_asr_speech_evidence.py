@@ -8,7 +8,7 @@ import pytest
 import app
 
 
-def configure(monkeypatch, scores, *, speech=None, failure=None, word_timestamps=False):
+def configure(monkeypatch, scores, *, speech=None, failure=None):
     # Cover the supplied one-second segments without changing the quiet samples.
     audio = np.zeros(max(1, len(scores)) * 16000, dtype=np.float32)
     audio[:5] = [0, 0.1, -0.1, 0, 1e-30]
@@ -28,6 +28,7 @@ def configure(monkeypatch, scores, *, speech=None, failure=None, word_timestamps
         assert options["vad_filter"] is False
         assert options["no_speech_threshold"] == app.ASR_NO_SPEECH_THRESHOLD
         assert options["condition_on_previous_text"] is False
+        assert options["word_timestamps"] is False
         events.append(("transcribe", options))
 
         def generate():
@@ -63,22 +64,25 @@ def test_consistent_no_speech_without_corroboration_rejects_whole_output(monkeyp
 
 
 @pytest.mark.parametrize("scores", [[0.1, 0.999], [0.999, 0.1], [0.6, 0.999]])
-@pytest.mark.parametrize("word_timestamps", [False, True])
-def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, word_timestamps):
+@pytest.mark.parametrize("speaker_timing", [False, True])
+def test_one_asr_anchor_preserves_every_segment_without_loading_vad(monkeypatch, tmp_path, scores, speaker_timing):
     audio, before, segments, events = configure(monkeypatch, scores)
-    result, language = app._recognize(tmp_path / "owned.wav", "el", "small", word_timestamps=word_timestamps)
-    assert language == "el" and [s["text"] for s in result] == [s.text for s in segments]
-    assert [s["start"] for s in result] == [s.start for s in segments]
-    assert all(("_words" in s) is word_timestamps for s in result)
+    result = app._recognize(tmp_path / "owned.wav", "el", "small", speaker_timing=speaker_timing)
+    assert result.language == "el" and [s["text"] for s in result.segments] == [s.text for s in segments]
+    assert [s["start"] for s in result.segments] == [s.start for s in segments]
+    assert all("_words" not in s for s in result.segments)
+    if speaker_timing:
+        assert result.speaker_segments == [{**s, "_words": []} for s in result.segments]
     assert not any(e[0] == "corroborate" for e in events)
     assert audio.tobytes() == before
 
 
 def test_one_vad_interval_preserves_entire_output_without_cropping(monkeypatch, tmp_path):
     audio, before, segments, events = configure(monkeypatch, [0.99, 0.98], speech=[{"start": 1, "end": 2}])
-    result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small", word_timestamps=True)
-    assert [s["text"] for s in result] == [s.text for s in segments]
-    assert len(result) == 2 and result[-1]["_words"][0]["word"] == "word 1"
+    result = app._recognize(tmp_path / "owned.wav", "auto", "small", speaker_timing=True)
+    assert [s["text"] for s in result.segments] == [s.text for s in segments]
+    assert len(result.segments) == 2 and result.speaker_segments[-1]["text"] == "Owned phrase 1"
+    assert result.speaker_segments[-1]["_words"] == []  # Incomplete native stub, no invented timing.
     assert [e[0] for e in events].count("corroborate") == 1
     assert audio.tobytes() == before
 
@@ -95,8 +99,8 @@ def test_diagnostic_failure_is_specific_and_retains_cause(monkeypatch, tmp_path)
 @pytest.mark.parametrize("score", [None, float("nan"), float("inf"), float("-inf"), "0.99"])
 def test_invalid_score_cannot_establish_consistent_no_speech(monkeypatch, tmp_path, score):
     _, _, segments, events = configure(monkeypatch, [0.99, score])
-    result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
-    assert [s["text"] for s in result] == [s.text for s in segments]
+    result = app._recognize(tmp_path / "owned.wav", "auto", "small")
+    assert [s["text"] for s in result.segments] == [s.text for s in segments]
     assert not any(e[0] == "corroborate" for e in events)
 
 
@@ -117,6 +121,6 @@ def test_empty_output_does_not_call_corroborator(monkeypatch, tmp_path):
 def test_threshold_cannot_drift_from_actual_transcribe_option(monkeypatch, tmp_path):
     monkeypatch.setattr(app, "ASR_NO_SPEECH_THRESHOLD", 0.7)
     _, _, segments, events = configure(monkeypatch, [0.65, 0.99])
-    result, _ = app._recognize(tmp_path / "owned.wav", "auto", "small")
-    assert [s["text"] for s in result] == [s.text for s in segments]
+    result = app._recognize(tmp_path / "owned.wav", "auto", "small")
+    assert [s["text"] for s in result.segments] == [s.text for s in segments]
     assert not any(e[0] == "corroborate" for e in events)

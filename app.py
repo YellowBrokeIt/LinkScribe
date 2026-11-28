@@ -26,6 +26,7 @@ import uuid
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
+from copy import deepcopy
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 from functools import lru_cache
@@ -38,6 +39,7 @@ import library
 import batch_store
 import library_backup
 import diagnostics
+import asr_timing
 from sources import Source, parse_source
 from runtime_check import runtime_details, yt_dlp_js_options
 from enhancements import EnhancementError, assign_speakers, translate_segments, summarize_segments
@@ -114,6 +116,16 @@ class Batch:
     stage: str = "Waiting for processing..."
     created_at: float = field(default_factory=time.time)
     finished_at: float = 0.0
+
+
+@dataclass
+class RecognitionResult:
+    """Private recognition/optional-timing result; no model or waveform escapes."""
+    segments: list[dict[str, Any]]
+    language: str
+    speaker_segments: list[dict[str, Any]] | None = None
+    warnings: list[str] = field(default_factory=list)
+    asr_provenance: dict[str, Any] = field(default_factory=dict)
 
 
 jobs: dict[str, Job] = {}
@@ -391,7 +403,7 @@ def _bounded_asr_interval(start: Any, end: Any, duration: float) -> tuple[float,
     return start, min(end, duration)
 
 
-def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool = False) -> tuple[list[dict[str, Any]], str]:
+def _recognize(path: Path, language: str, model: str, *, speaker_timing: bool = False) -> RecognitionResult:
     try:
         from faster_whisper.audio import decode_audio
         audio = decode_audio(str(path), sampling_rate=16000)
@@ -415,10 +427,12 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             vad_filter=False,
             no_speech_threshold=ASR_NO_SPEECH_THRESHOLD,
             condition_on_previous_text=False,
-            **({"word_timestamps": True} if word_timestamps else {}),
+            # Speaker timing must never change recognition's later seek/text.
+            word_timestamps=False,
         )
         # transcribe() returns a generator, which must be consumed.
         output = []
+        raw_segments = [] if speaker_timing else None
         all_marked_no_speech = True
         for segment in segments:
             if not segment.text.strip():
@@ -435,18 +449,19 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             if public_start >= public_end:
                 public_start, public_end = start, end
             item = {"start": public_start, "end": public_end, "text": segment.text.strip()}
-            if word_timestamps:
-                words = []
+            if raw_segments is not None:
                 try:
-                    for word in (getattr(segment, "words", None) or []):
-                        word_start, word_end = _bounded_asr_interval(word.start, word.end, duration)
-                        words.append({"start": word_start, "end": word_end, "word": word.word})
-                except (ReadableError, AttributeError, TypeError, ValueError):
-                    # Optional alignment evidence must not discard recognized text.
-                    # An empty list keeps the existing whole-segment speaker warning/fallback.
-                    words = []
-                item["_words"] = words
+                    raw_segments.append({"start": segment.start, "end": segment.end,
+                                         "text": segment.text, "tokens": list(segment.tokens),
+                                         "seek": segment.seek})
+                except Exception:
+                    # A missing optional native interface cannot invalidate the
+                    # accepted text. Never reconstruct its tokens from that text.
+                    raw_segments = None
             output.append(item)
+        # In particular, release the original full frontend before recomputing
+        # optional timing features on the same complete decoded array.
+        del segments
     except ReadableError:
         raise
     except Exception as exc:
@@ -464,7 +479,30 @@ def _recognize(path: Path, language: str, model: str, *, word_timestamps: bool =
             raise ReadableError("Speech detection could not verify this recording. Try again or choose another speech model.") from exc
         if not speech:
             raise ReadableError("No spoken words were detected in this recording.")
-    return output, str(info.language or language)
+    result = RecognitionResult(output, str(info.language or language),
+                               asr_provenance={"engine": "faster-whisper", "model": model,
+                                               "word_timestamps": False})
+    if speaker_timing:
+        try:
+            timing = asr_timing.align_fixed_segments(engine, audio, result.language,
+                                                     deepcopy(output), deepcopy(raw_segments),
+                                                     bound=_bounded_asr_interval)
+            if (not isinstance(timing.segments, list) or
+                    [s["text"] for s in timing.segments] != [s["text"] for s in output]):
+                raise asr_timing.TimingUnavailable("Optional timing changed source text or order")
+            for candidate in timing.segments:
+                start, end = _bounded_asr_interval(candidate["start"], candidate["end"], duration)
+                if (start, end) != (candidate["start"], candidate["end"]):
+                    raise asr_timing.TimingUnavailable("Optional timing left physical source bounds")
+        except Exception as exc:
+            # Optional timing, including a late native failure, never replaces
+            # accepted speech. Do not retain exception/traceback/audio references.
+            print(f"[LinkScribe] Optional word timing unavailable ({type(exc).__name__})")
+            timing = asr_timing.unavailable(output)
+        result.speaker_segments = timing.segments
+        result.warnings = timing.warnings
+        result.asr_provenance["speaker_timing"] = timing.provenance
+    return result
 
 
 def _millisecond_timecode(ms: int, subtitle_format: str) -> str:
@@ -492,14 +530,15 @@ def _subtitle_interval_ms(segment: dict[str, Any]) -> tuple[int, int]:
     return start_ms, end_ms
 
 
-def _release_audio_models() -> None:
-    """Drop finished audio models before text inference; next audio use reloads."""
+def _release_audio_models(*, recognizer_only: bool = False) -> None:
+    """Release recognition before speakers, or all audio models before text AI."""
     caches = [_whisper_model]
-    for module_name, function_name in (("diarization", "_encoder"),
-                                        ("faster_whisper.vad", "get_vad_model")):
-        module = sys.modules.get(module_name)
-        if module is not None:
-            caches.append(getattr(module, function_name, None))
+    if not recognizer_only:
+        for module_name, function_name in (("diarization", "_encoder"),
+                                            ("faster_whisper.vad", "get_vad_model")):
+            module = sys.modules.get(module_name)
+            if module is not None:
+                caches.append(getattr(module, function_name, None))
     released = False
     for cached in caches:
         info, clear = getattr(cached, "cache_info", None), getattr(cached, "cache_clear", None)
@@ -658,26 +697,35 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
 
 def _enhance_and_save(job_id: str, segments: list[dict[str,Any]], language: str,
                       method: str, audio: Path | None, speakers: bool, target: str, summary_enabled: bool,
-                      asr_model: str | None = None, highlights_enabled: bool = False) -> None:
+                      recognition: RecognitionResult | None = None, highlights_enabled: bool = False) -> None:
     # Feature problems must never destroy the original recognized transcript.
-    warnings: list[str] = []
+    baseline = deepcopy(segments)
+    warnings: list[str] = list(recognition.warnings) if recognition else []
     metadata: dict[str, Any] = {}
-    if asr_model and method == "local_audio_ai":
-        metadata["asr"] = {"engine": "faster-whisper", "model": asr_model, "word_timestamps": speakers}
+    if recognition is not None and method == "local_audio_ai":
+        metadata["asr"] = deepcopy(recognition.asr_provenance)
     if speakers:
         if audio is None:
             warnings.append("Speaker labels require speech audio; use Audio AI mode.")
         else:
             _set(job_id, stage="Identifying speaker turns locally...")
             try:
-                speaker_report = assign_speakers(audio, segments, include_report=True)
+                candidate = (recognition.speaker_segments if recognition is not None and
+                             recognition.speaker_segments is not None else baseline)
+                # _recognize returned only data. Drop its cached engine before
+                # loading the separate speaker model; keep reusable VAD/speaker caches.
+                _release_audio_models(recognizer_only=True)
+                speaker_report = assign_speakers(audio, deepcopy(candidate), include_report=True)
                 segments = speaker_report["segments"]
                 warnings.extend(speaker_report["warnings"])
                 metadata["speakers"] = speaker_report["provenance"]
-            except EnhancementError as exc: warnings.append(str(exc))
+            except EnhancementError as exc:
+                segments = baseline
+                warnings.append(str(exc))
             except Exception as exc:
                 # Optional model bugs must never discard already recognized speech.
                 print(f"[LinkScribe] Speaker labeling failed ({type(exc).__name__}) for job {job_id}")
+                segments = baseline
                 warnings.append("Speaker labeling failed unexpectedly; original transcript retained.")
     # Word timings are transient alignment evidence. Persist the resulting text
     # groups and model provenance, without raw audio or voice embeddings.
@@ -729,6 +777,7 @@ def _process_link(job_id: str, source: Source, mode: str, language: str, model: 
     used_language = language
     method = "local_audio_ai"
     audio = None
+    recognition = None
     # Forced audio for diarization, so that speaker labels are evidence-based.
     if source.provider == "youtube" and mode != "audio" and not speakers:
         _set(job_id, stage="Checking available captions...")
@@ -742,9 +791,10 @@ def _process_link(job_id: str, source: Source, mode: str, language: str, model: 
         _set(job_id, stage="Fetching the video's audio...")
         audio, title = _download_source_audio(job_id, source)
         _set(job_id, title=title, stage="Recognizing speech locally...")
-        segments, used_language = _recognize(audio, language, model, **({"word_timestamps": True} if speakers else {}))
+        recognition = _recognize(audio, language, model, speaker_timing=speakers)
+        segments, used_language = recognition.segments, recognition.language
     _enhance_and_save(job_id, segments, used_language, method, audio, speakers, target, summary_enabled,
-                      asr_model=model, highlights_enabled=highlights_enabled)
+                      recognition=recognition, highlights_enabled=highlights_enabled)
 
 
 def _process_upload(job_id: str, file_path: Path, language: str, model: str,
@@ -753,9 +803,9 @@ def _process_upload(job_id: str, file_path: Path, language: str, model: str,
     _set(job_id, stage="Checking media file...")
     _check_uploaded_duration(file_path)
     _set(job_id, stage="Recognizing speech locally...")
-    segments, detected_language = _recognize(file_path, language, model, **({"word_timestamps": True} if speakers else {}))
-    _enhance_and_save(job_id, segments, detected_language, "local_audio_ai", file_path,
-                      speakers, target, summary_enabled, asr_model=model, highlights_enabled=highlights_enabled)
+    recognition = _recognize(file_path, language, model, speaker_timing=speakers)
+    _enhance_and_save(job_id, recognition.segments, recognition.language, "local_audio_ai", file_path,
+                      speakers, target, summary_enabled, recognition=recognition, highlights_enabled=highlights_enabled)
 
 
 def _batch_archive(batch_id: str) -> bytes:

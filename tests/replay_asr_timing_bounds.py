@@ -81,11 +81,12 @@ def main():
 
             with patch.object(audio_module, "decode_audio", observe_decode), \
                     patch.object(app, "_whisper_model", lambda _: RecordedEngine()):
-                segments, language = app._recognize(artifact / "inputs" / (case["id"] + ".wav"),
-                                                    "auto", "large-v3", word_timestamps=False)
+                recognized = app._recognize(artifact / "inputs" / (case["id"] + ".wav"),
+                                            "auto", "large-v3")
+                segments, language = recognized.segments, recognized.language
             assert len(decoded) == len(calls) == 1
             assert decoded[0]["pcm_sha256"] == case["pcm_sha256"]
-            assert calls[0] == case["actual_transcribe_request"]
+            assert calls[0] == {**case["actual_transcribe_request"], "word_timestamps": False}
             expected = deepcopy(case["production_segments"])
             if case["id"] == "fleurs-en_us-validation-0-1548":
                 assert expected[0]["end"] == 7.0
@@ -105,7 +106,8 @@ def main():
             saved_records[identifier] = saved
             row = {"id": case["id"], "library_id": identifier, "decoded": decoded[0],
                 "decode_calls": len(decoded), "recorded_engine_calls": len(calls), "actual_options": calls[0],
-                "all_request_options_equal_historical": True, "text_and_order_unchanged": True,
+                "request_options_equal_historical_with_explicit_word_timestamps_false": True,
+                "text_and_order_unchanged": True,
                 "historical_segments": case["production_segments"], "current_segments": segments,
                 "source_duration_samples": case["sample_count"], "source_duration_seconds": case["sample_count"] / 16000,
                 "saved_and_json_export_equal": True, "exports": {}}

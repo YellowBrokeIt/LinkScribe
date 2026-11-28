@@ -56,7 +56,9 @@ def test_completed_audio_models_are_released_before_text_models(monkeypatch):
     monkeypatch.setattr(app, "_write_exports", lambda *args, **kwargs: order.append("save"))
 
     def speakers(audio, source, **kwargs):
-        assert all(cache.cache_info().currsize == 1 for cache in caches)
+        assert caches[0].cache_info().currsize == 0 and references[0]() is None
+        assert all(cache.cache_info().currsize == 1 for cache in caches[1:])
+        assert all(reference() is not None for reference in references[1:])
         order.append("speakers")
         return {"segments": source, "warnings": [], "provenance": {"backend": "synthetic"}}
 
@@ -76,10 +78,24 @@ def test_completed_audio_models_are_released_before_text_models(monkeypatch):
     source = segments()
     before = deepcopy(source)
     app._enhance_and_save("test", source, "en", "local_audio_ai", Path("owned.wav"), True, "el", True)
-    assert order == ["speakers", "collect", "translation", "summary", "save"]
+    assert order == ["collect", "speakers", "collect", "translation", "summary", "save"]
     assert source == before
     caches[0]()  # A later audio job can safely reload the cleared cache.
     assert caches[0].cache_info().currsize == 1
+
+
+def test_speaker_only_job_releases_recognizer_and_preserves_speaker_vad_caches(monkeypatch):
+    caches, references = prime_audio(monkeypatch)
+    monkeypatch.setattr(app, "_set", lambda *args, **kwargs: None)
+    monkeypatch.setattr(app, "_write_exports", lambda *args, **kwargs: None)
+    def speakers(audio, source, **kwargs):
+        assert caches[0].cache_info().currsize == 0 and references[0]() is None
+        assert all(cache.cache_info().currsize == 1 for cache in caches[1:])
+        return {"segments": source, "warnings": [], "provenance": {"backend": "synthetic"}}
+    monkeypatch.setattr(app, "assign_speakers", speakers)
+    app._enhance_and_save("test", segments(), "en", "local_audio_ai", Path("owned.wav"), True, "none", False)
+    assert all(cache.cache_info().currsize == 1 for cache in caches[1:])
+    assert all(reference() is not None for reference in references[1:])
 
 
 @pytest.mark.parametrize("target", ["none", "en"])
@@ -130,8 +146,8 @@ def test_long_summary_unloads_between_pairs_and_at_the_end(monkeypatch):
         events.append(control)
         if control:
             return {"done": True, "done_reason": "unload"}
-        system = payload["messages"][0]["content"]
-        if "key_points" in system:
+        schema = payload.get("format")
+        if isinstance(schema, dict) and "key_points" in schema.get("properties", {}):
             value = {"summary": "A synthetic result.", "key_points": ["A point"], "chapter_title": "Topic"}
         else:
             value = {"notes": "Synthetic factual notes.", "chapter_title": "Topic"}
@@ -365,9 +381,10 @@ def test_summary_observer_and_fresh_reload_exclude_control_from_inference_counts
             return {"version": "synthetic-runtime"}
         if ai.is_ollama_control_request(payload):
             return {"done": True, "done_reason": "unload"}
-        system = payload["messages"][0]["content"]
-        value = ({"notes": "Factual notes.", "chapter_title": "Topic"} if "key_points" not in system else
-                 {"summary": "A synthetic result.", "key_points": ["A point"], "chapter_title": "Topic"})
+        schema = payload.get("format")
+        value = ({"summary": "A synthetic result.", "key_points": ["A point"], "chapter_title": "Topic"}
+                 if isinstance(schema, dict) and "key_points" in schema.get("properties", {}) else
+                 {"notes": "Factual notes.", "chapter_title": "Topic"})
         return {"done": True, "message": {"content": json.dumps(value)}}
 
     monkeypatch.setattr(ai, "local_ollama_json", transport)
@@ -376,5 +393,6 @@ def test_summary_observer_and_fresh_reload_exclude_control_from_inference_counts
     case = json.loads(output.read_text())["cases"][0]
     assert case["control_request_count"] == 1
     assert case["inference_request_count"] == len(case["requests"]) - 1
+    assert case["requests"][0]["phase"] == "direct"
     assert case["requests"][-1]["phase"] == "unload"
     assert case["checks"]["fresh_interpreter_matches"] is True

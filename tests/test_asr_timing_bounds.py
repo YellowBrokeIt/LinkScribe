@@ -31,7 +31,7 @@ def local(monkeypatch, tmp_path):
     app.jobs.clear(); app.batches.clear()
 
 
-def replay(monkeypatch, path, audio, segments, *, language="en", words=False):
+def replay(monkeypatch, path, audio, segments, *, language="en"):
     calls, decodes = [], []
     def decode(filename, sampling_rate):
         decodes.append((filename, sampling_rate))
@@ -48,10 +48,21 @@ def replay(monkeypatch, path, audio, segments, *, language="en", words=False):
             return iter(native), SimpleNamespace(language=language)
     monkeypatch.setattr(importlib.import_module("faster_whisper.audio"), "decode_audio", decode)
     monkeypatch.setattr(app, "_whisper_model", lambda _: Engine())
-    result = app._recognize(path, "auto", "large-v3", word_timestamps=words)
+    result = app._recognize(path, "auto", "large-v3")
     assert decodes == [(str(path), 16000)]
     assert len(calls) == 1 and calls[0][0] is audio
-    return result, calls[0][1]
+    return (result.segments, result.language), calls[0][1]
+
+
+def project_optional_words(native, duration):
+    """Replay retained timing evidence only; no new recognizer/aligner is run."""
+    start, end = app._bounded_asr_interval(native["start"], native["end"], duration)
+    baseline = [{"start": start, "end": end, "text": native["text"].strip()}]
+    # Tokens are not decoded by this pure boundary projection. Where a synthetic
+    # timing fixture lacks IDs, give both copies the same explicit synthetic ID.
+    raw = {**native, "tokens": native.get("tokens", [1])}
+    return app.asr_timing.project_segments(baseline, [raw], [deepcopy(raw)], [True],
+        [(0, duration)], duration, app._bounded_asr_interval).segments
 
 
 def record(segments, **extra):
@@ -68,7 +79,7 @@ def test_all_retained_large_v3_outputs_keep_text_and_settings_with_only_actual_e
     assert hashlib.sha256(audio.tobytes()).hexdigest() == case["pcm_sha256"]
     (segments, language), options = replay(monkeypatch, tmp_path / "retained.wav", audio,
         case["raw_segments"], language=case["detected_language"])
-    assert options == case["actual_transcribe_request"]
+    assert options == {**case["actual_transcribe_request"], "word_timestamps": False}
     expected = deepcopy(case["production_segments"])
     if case["id"] == "fleurs-en_us-validation-0-1548":
         assert expected[0]["end"] == 7.0
@@ -110,16 +121,15 @@ def test_valid_short_cue_is_not_extended_to_a_fabricated_hundred_ms():
     assert "00:00:06,500 --> 00:00:06,540" in app._render_subtitles([segment], "srt")
 
 
-def test_actual_historical_zero_duration_word_uses_whole_segment_fallback(monkeypatch, tmp_path):
+def test_actual_historical_zero_duration_word_uses_whole_segment_fallback():
     path = ROOT / "docs/asr-official-tail-2026-11-28/alignment-only-results/official_tears_of_steel-report.json"
     assert hashlib.sha256(path.read_bytes()).hexdigest() == "abf6ad93ec75a2a3c95138e3e8c2d9181e2daf52b01edc7a9c8eb5b57a384f17"
     events = json.loads(path.read_text(encoding="utf-8"))["alignment_only_protocol"]["events"]
     native = next(e["segment"] for e in events if e.get("kind") == "asr_segment_created" and
                   any(w["start"] == w["end"] for w in e["segment"].get("words", [])))
     assert native["text"] == " Oh, what have I done?"
-    # Synthetic nonzero buffer supplies a valid physical bound; no new ASR occurs.
-    (segments, _), _ = replay(monkeypatch, tmp_path / "synthetic.wav", np.ones(44 * 16000, dtype=np.float32),
-                             [native], words=True)
+    # A declared physical bound suffices for this retained-output-only check.
+    segments = project_optional_words(native, 44.0)
     assert segments[0]["text"] == native["text"].strip() and segments[0]["_words"] == []
     labeled, warnings, timed = enhancements._word_speaker_alignment(
         segments, [{"start": 0.0, "end": 44.0, "speaker": "Speaker 1"}])
@@ -127,11 +137,10 @@ def test_actual_historical_zero_duration_word_uses_whole_segment_fallback(monkey
     assert any("text was retained" in warning for warning in warnings)
 
 
-def test_private_word_end_is_bounded_without_changing_its_start_or_string(monkeypatch, tmp_path):
+def test_private_word_end_is_bounded_without_changing_its_start_or_string():
     native = {"start": 0, "end": 7, "text": "Last word", "words": [
         {"start": 0, "end": 3, "word": " Last"}, {"start": 3, "end": 7, "word": " word"}]}
-    (segments, _), _ = replay(monkeypatch, tmp_path / "synthetic.wav", np.ones(104640, dtype=np.float32),
-                             [native], words=True)
+    segments = project_optional_words(native, 104640 / 16000)
     assert segments[0]["_words"] == [{"start": 0.0, "end": 3.0, "word": " Last"},
                                       {"start": 3.0, "end": 6.54, "word": " word"}]
 

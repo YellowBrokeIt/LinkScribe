@@ -68,7 +68,7 @@ def fake_audio(job_id, source):
 
 
 def fake_recognize(path, language, model, **_kwargs):
-    return ([{"start":0.0,"end":2.2,"text":"Hello world"},
+    return module.RecognitionResult([{"start":0.0,"end":2.2,"text":"Hello world"},
              {"start":2.2,"end":4.0,"text":"Welcome back"}],"en")
 
 
@@ -155,7 +155,7 @@ def test_rejected_translation_keeps_original_library_and_exports_with_warning(
     assert job["status"] == "done" and not job["extras"]["translation_language"]
     assert any(expected_warning in warning for warning in job["warnings"])
     record = client.get(f"/api/library/{job_id}").json()
-    assert record["translations"] == {} and record["segments"] == fake_recognize(None, None, None)[0]
+    assert record["translations"] == {} and record["segments"] == fake_recognize(None, None, None).segments
     assert any(expected_warning in warning for warning in record["processing_metadata"]["warnings"])
     assert client.get(f"/api/jobs/{job_id}/download/translation_txt").status_code == 404
     archive = zipfile.ZipFile(io.BytesIO(client.get(f"/api/library/{job_id}/download/zip").content))

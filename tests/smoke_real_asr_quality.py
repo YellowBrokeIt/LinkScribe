@@ -286,7 +286,7 @@ def main() -> int:
     default_language = inspect.signature(application.submit_upload).parameters["language"].default.default
     assert (args.model or default_model) in application.MODELS, "The real app does not expose this model option"
     assert args.language_mode != "auto" or default_language == "auto", "App's omitted language field is no longer auto"
-    sources = {name: sha256(ROOT / name) for name in ("app.py", "library.py", "batch_store.py", "tests/smoke_real_asr_quality.py")}
+    sources = {name: sha256(ROOT / name) for name in ("app.py", "asr_timing.py", "library.py", "batch_store.py", "tests/smoke_real_asr_quality.py")}
     versions = {}
     for name in ("faster-whisper", "ctranslate2", "av", "fastapi", "starlette", "huggingface-hub", "onnxruntime"):
         versions[name] = metadata.version(name)

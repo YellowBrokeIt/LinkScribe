@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "Independent source-only review, no execution authorization.",
+  "plan_sha256": "b908a3783109737c8a60080295ec2a8233138be1a0b3dc8eff333c3c987460fb",
+  "preparation_freeze_sha256": "f43b9969ccc0bea12452e0458816857935c73591668395c397df97ed7bab96b7",
+  "plan_bindings_verified": 104,
+  "freeze_bindings_verified": 27,
+  "prior_manifest_files_verified": 45,
+  "whole_ast_differences": [
+    {
+      "ast_path": "module.body[41].body[6].body[0].value.args[0].right.value",
+      "before": "JSON only: {\"summary\":\"concise factual summary\",\"key_points\":[\"point\"],\"chapter_title\":\"short topical title\"}.",
+      "after": "Return only JSON matching the supplied schema."
+    },
+    {
+      "ast_path": "module.body[41].body[10].body[0].value.args[0].right.value",
+      "before": "Keep notes under 700 characters. JSON only: {\"notes\":\"concise factual notes\",\"chapter_title\":\"short topical title\"}.",
+      "after": "Keep notes under 700 characters. Return only JSON with the string fields `notes` and `chapter_title`."
+    },
+    {
+      "ast_path": "module.body[41].body[13].value.args[0].right.value",
+      "before": "JSON only: {\"summary\":\"concise factual summary\",\"key_points\":[\"point\"]}.",
+      "after": "Return only JSON matching the supplied schema."
+    }
+  ],
+  "only_three_declared_prompt_endings_differ": true,
+  "reused_files_verified": {
+    "source-cases.json": "2b7edc5d44c92e1966e0c5637a524e2dce5d1e28f99ade3b2b83a193152c618b",
+    "review-criteria.json": "b551d2f89ea30e037d2ea42c058df4161aaa4479f24e84681b1ceacd23a1c9da",
+    "enhancements-production.py": "edc1a064d1918c780343fc1b32da354370a864511d393e152326032cbfa7598b",
+    "protocol.py": "fce42f36469b3541b3142325b997846d3a649525884e81d774945458bf6b1532",
+    "native_preflight.py": "e231d44ffb37d44d9834e7a3e77047d26a3f010854d1b7391d53aca24ffe0df3",
+    "native_session.py": "192196756f2c75df2d414f45a8d2b990b87cbb56f9c537d347a68a88c832422a",
+    "prepare_native.py": "7e250cde3eaa0094e01b04ddea1ac7a5e8318d4fe81e4148ae5166c177cb9fbe",
+    "infer_native.py": "4be0a1fc91a896041786ed26842187b1d660b46174bd3bc7116e3ee6456637a6",
+    "resource_monitor.py": "76380c2e83a700a11f2cb31772b96c8378fb8ffebe741b2f3d564a0c1044a08d",
+    "run_native.py": "0e2a9264f18afd5733862930cef34b2162bc1881efee2ac6613f5380af9c8ebd",
+    "request_contract.py": "3b565e16db8dd9eeda06d06d0781121de32109af1d5f8de714c513fae499ece8",
+    "test_protocol.py": "6735b1d000673a83c1175b3ecf18144ee87a709e00728cdcf1fc01bc1b860599",
+    "native-preflight-layout-only.patch": "101b02ed0f0140d220097928c395605b8414ec01cc8bd198e29ced264f8fe7e7"
+  },
+  "context_only_private_path_change": true,
+  "candidate_adapter_sha256": "e160b326750d15b1f124327fab0380fbcc11d5beab97efcbc10a5d606a4cc634",
+  "source_cases_sha256": "2b7edc5d44c92e1966e0c5637a524e2dce5d1e28f99ade3b2b83a193152c618b",
+  "review_criteria_sha256": "b551d2f89ea30e037d2ea42c058df4161aaa4479f24e84681b1ceacd23a1c9da",
+  "expected_requests_sha256": "2088f81d135464f335d947ffabee7fff6467543b20bbf7ab1bb1373a6a701ac6",
+  "cases": [
+    {
+      "id": "summary-en-consent-and-roles",
+      "complete_excerpt_bytes": 957,
+      "only_request_change": "request.messages[0].content",
+      "unchanged_source_metadata": true
+    },
+    {
+      "id": "summary-el-workshop-counts",
+      "complete_excerpt_bytes": 1618,
+      "only_request_change": "request.messages[0].content",
+      "unchanged_source_metadata": true
+    }
+  ],
+  "model_runtime_python_and_resource_limits_equal_original": true,
+  "subsequent_phase_files_seen_without_inspecting_outputs": [
+    "prepare-authorization.json"
+  ],
+  "subsequent_phase_scope": "Root independently issued the prepare receipt while this source review was in progress; outputs are outside this audit.",
+  "controls": {
+    "count": 9,
+    "names": [
+      "test_both_real_summary_requests_reproduce_frozen_full_source_with_no_transport",
+      "test_external_exact_authorization_and_exclusive_slot_required",
+      "test_english_semantic_review_is_exact_and_cannot_be_empty_or_self_approved",
+      "test_phase_budget_accumulates_without_reset_and_rejects_prior_failures",
+      "test_final_completion_gate_rejects_recorded_limits_or_missing_results",
+      "test_actual_app_trimming_and_chapter_limit_preserve_raw_response",
+      "test_invalid_inner_json_is_retained_and_never_repaired",
+      "test_failed_unload_rejects_a_returned_summary_without_discarding_it",
+      "test_rejected_native_render_is_checkpointed_before_preflight_validation"
+    ],
+    "command": [
+      "/workspace/scratch/94360995dd61/linkscribe-m2m100-runtime/venv/bin/python",
+      "-B",
+      "/workspace/scratch/94360995dd61/krikri-summary-schema-prompt-independent-review-2026-11-28/run_nine_controls.py"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.16622200300116674,
+    "log_sha256": "2f0c20ba441988f755913e9b644afb0ca73e3b9e9b06bb973f6478e35222ed33",
+    "harness_sha256": "c76b3820fe00325b89e2e9a3692f3b4bdf7589185c244cf90a197e2836a9728f",
+    "network_subprocess_and_model_tokenizer_imports_blocked": true,
+    "synthetic_cleanup_warning_expected": true
+  },
+  "frozen_inputs_unchanged_after_review": true,
+  "new_model_native_tokenizer_detector_or_network_calls": 0,
+  "independent_audit_script_sha256": "de485bf7bfabecd4015168505aaec142816b9a2ad011134c7db3de311dd3462d"
+}

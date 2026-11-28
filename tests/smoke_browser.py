@@ -70,9 +70,9 @@ def serve(data_root: Path, asr: str) -> None:
 
     app._captions = captions
     if asr == "stub":
-        def recognize(path, language, model):
+        def recognize(path, language, model, **_kwargs):
             time.sleep(1.8)
-            return [{"start": 0.0, "end": 8.0, "text": SPEECH}], "en"
+            return app.RecognitionResult([{"start": 0.0, "end": 8.0, "text": SPEECH}], "en")
         app._recognize = recognize
 
     segments = [{"start": float(i * 2), "end": float(i * 2 + 1.5),
@@ -120,7 +120,7 @@ def run(args) -> int:
         "production_origin_guard": "unchanged_fixed_local_port_8765",
         "semantic_translation_quality": "not_evaluated",
         "source_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
-                          for name in ["app.py", "static/index.html", "library.py", "library_backup.py",
+                          for name in ["app.py", "asr_timing.py", "static/index.html", "library.py", "library_backup.py",
                                        "batch_store.py", "source_highlights.py", "sources.py", "tests/smoke_browser.py"]},
         "checks": [], "console_errors": [], "page_errors": [], "screenshots": [],
     }

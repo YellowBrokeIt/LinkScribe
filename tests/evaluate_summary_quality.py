@@ -226,6 +226,21 @@ def inspect_case(case, record, requests, payloads, source_chunks):
     return checks, identities
 
 
+def summary_request_phase(payload, *, control):
+    """Describe the actual schema/task shape, independently of example values."""
+    if control:
+        return "unload"
+    schema = payload.get("format")
+    if isinstance(schema, dict) and "key_points" in schema.get("properties", {}):
+        return "direct" if "chapter_title" in schema["properties"] else "synthesis"
+    system = payload["messages"][0]["content"]
+    if schema == "json" and system.startswith("Summarize a transcript excerpt factually."):
+        return "map"
+    if schema == "json" and system.startswith("Condense these chronological notes,"):
+        return "reduce"
+    return "unknown"
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--corpus", type=Path, default=ROOT / "tests/fixtures/summary_quality_cases.json")
@@ -281,9 +296,7 @@ def main(argv=None):
             if active is None:
                 raise RuntimeError("Inference occurred outside an active summary case.")
             control = enhancements.is_ollama_control_request(payload)
-            system = "" if control else payload["messages"][0]["content"]
-            phase = ("unload" if control else "direct" if "chapter_title" in system and "key_points" in system
-                     else "map" if "chapter_title" in system else "synthesis" if "key_points" in system else "reduce")
+            phase = summary_request_phase(payload, control=control)
             event = {"kind": "control" if control else "inference", "phase": phase, "request": deepcopy(payload), "timeout_seconds": timeout,
                      "response_json": None, "response_evidence_available": False}
             active["requests"].append(event)

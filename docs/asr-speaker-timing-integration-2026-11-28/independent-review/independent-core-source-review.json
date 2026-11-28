@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "review_type": "Independent bounded source/test review; no model execution",
+  "decision": "No concrete production-source blocker identified in the reviewed timing integration.",
+  "source_files": [
+    {
+      "path": "app.py",
+      "bytes": 64797,
+      "sha256": "56f515e6943c49fa75565086e41b840816af3972909ceb5e95ed8d8a7fa99e3b"
+    },
+    {
+      "path": "asr_timing.py",
+      "bytes": 16471,
+      "sha256": "7780261b5ebeba913fe82836547408e7b0562381a7cc616d01f76822ce00db5e"
+    },
+    {
+      "path": "enhancements.py",
+      "bytes": 47605,
+      "sha256": "129d0f8c7dbbd5e621b8017d73c7aff204a40446d8ed59f7df8904c87efb579e"
+    },
+    {
+      "path": "diarization.py",
+      "bytes": 16708,
+      "sha256": "89e497f711c538413c3df79a77421c3ef5272bb63f784df2943ad1c5deccbe47"
+    },
+    {
+      "path": "tests/test_asr_speaker_timing.py",
+      "bytes": 22058,
+      "sha256": "25918d4e586cc1c49c7641043cedfc7ff043c83d9f3bb355ac63be2ea6b4cfe3"
+    },
+    {
+      "path": "tests/test_model_lifecycle.py",
+      "bytes": 18895,
+      "sha256": "db4375b9564fe148154e3e0601d4a240259d02a7c3b5983bcfaa120264ba4ee9"
+    },
+    {
+      "path": "tests/test_speaker_integration.py",
+      "bytes": 10961,
+      "sha256": "0fafc1eba59c5f1e8332b59728145480ccba5d85246921b2a83e8f0f72ad45ae"
+    }
+  ],
+  "reviewed_contract": [
+    {
+      "area": "ordinary recognition",
+      "finding": "The single complete decoded float32 waveform goes through one ordinary transcribe call with word_timestamps=False, VAD disabled, unchanged beam/no-speech/previous-text settings. Native generator is fully consumed before the optional pass. Existing no-speech corroboration and physical-bound policy remain."
+    },
+    {
+      "area": "source binding",
+      "finding": "The optional pass receives independent copies of accepted baseline segments and original native text/tokens/seek, plus the same full waveform and engine. Native token decoding must equal original text. Original seek groups are contiguous and strictly increasing. No text re-encoding, generation or seek modification enters the timing adapter."
+    },
+    {
+      "area": "native timing",
+      "finding": "Only inspected FW1.2.1/CT2 4.9.1 is used for optional timing. Full-waveform feature normalization occurs once; original seek slices are padded without changing source audio. A per-call alignment-only adapter binds encoded identity, SOT, text tokens, frame extent and one native call. Native path coverage includes terminal row N. Upstream get_end, rather than the different method return, supplies sequential timing state."
+    },
+    {
+      "area": "fallback and bounds",
+      "finding": "Projection verifies unchanged text/tokens, complete token-to-word boundaries, physical and original-window bounds. Invalid optional word evidence becomes an empty word list. Crossing segment intervals revert both endpoints to the exact ordered baseline and propagate until stable. This never synthesizes text or new fallback durations. A late exception or malformed helper result restores independent baseline data."
+    },
+    {
+      "area": "warning and persistence scope",
+      "finding": "Timing produces at most two aggregate partial warnings or one unavailable warning. Speaker failure restores authoritative baseline. Private _words are removed before text AI or persistence; accepted source and warning/provenance data remain available."
+    },
+    {
+      "area": "lifetime",
+      "finding": "RecognitionResult carries only data. _recognize returns before recognizer-only cache release; the release runs before assign_speakers and leaves reusable speaker/VAD caches. Full audio-model caches are cleared before actual translation or summary, including cyclic wrapper collection. No promise is made that native allocator pages immediately return to the OS."
+    }
+  ],
+  "tests_read_not_rerun": [
+    "test_asr_speaker_timing: complete 80/128-mel waveform binding, original token/window/terminal checks, get_end state, late failure, mutated/malformed output fallback, unsupported version, local conflict propagation, bounded warning persistence and exact five retained pure projections.",
+    "test_model_lifecycle: weak-reference/cache/order checks for recognizer-before-speakers, all-audio-before-text-AI, speaker-only cache reuse and absent optional modules.",
+    "test_speaker_integration: complete source words preserved, optional invalid word intervals fall back to whole-segment labeling, raw embeddings/audio excluded from persisted provenance."
+  ],
+  "scope_limits": [
+    "This review is not fresh acoustic or semantic validation and performs no model, provider or native inference.",
+    "Unsupported native versions may retain ordinary recognition while reporting optional timing unavailable.",
+    "Already overlapping baseline segment intervals cause full optional fallback; source retention does not claim to repair original recognition ordering.",
+    "Timing estimates do not establish that recognized words were actually spoken.",
+    "The upcoming hosted test disables translation and summary. Its actual lifecycle observation can establish recognizer release before ECAPA; all-audio-before-text-AI remains source and controlled-test evidence.",
+    "Hosted helper findings and final contract approval are recorded separately after its owner freezes corrections."
+  ],
+  "hosted_findings_sent": [
+    {
+      "id": "memory-completeness",
+      "status": "Owner correction requested",
+      "detail": "Historical group_rss silently suppresses PermissionError; new helper must retain per-member completeness and reject unreadable owned members. Worker-only high-water RSS does not account for an omitted child."
+    },
+    {
+      "id": "native-return-retention",
+      "status": "Owner correction requested",
+      "detail": "Initial smoke observer logged native results only after _AlignOnly path validation. A malformed returned native path was lost on rejection; capture must occur before that validator."
+    }
+  ],
+  "speechbrain_cache_source_review": {
+    "primary_source_provenance": "speechbrain-source-provenance.json",
+    "finding": "Pinned v1.1.2 from_hparams fetches hyperparams then sets Pretrainer collect_in=savedir. fetch returns existing savedir destinations before the HF branch when overwrite/allow_updates are false. There is no custom.py fetch in this path.",
+    "retained_prior_success": {
+      "path": "docs/speaker-evaluation-2026-11-26/speaker-app-initial.json",
+      "bytes": 25577,
+      "sha256": "9f3573231be107d12d6cb4736e261e44de21449ce8bc064695bc1aea8bfd230f"
+    },
+    "prior_success_detail": "The complete historical report binds the identical fixture, pinned speaker revision, and exact five planned checkpoint/YAML hashes. This is prior execution, not current offline cache proof.",
+    "narrow_limit": "Exact YAML bytes are absent. Automatic approval review rejected the small pinned metadata download as outside no-download scope. It was not retried or routed around. Owner was asked to inspect non-instantiating YAML nodes during separately authorized hosted acquisition before inference."
+  },
+  "actions": {
+    "repo_edits": false,
+    "git_mutations": false,
+    "model_download_or_load": false,
+    "inference": false,
+    "fresh_inputs_opened": false,
+    "optional_tests_rerun": false
+  }
+}

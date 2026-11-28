@@ -2,6 +2,17 @@
 
 LinkScribe is a **real, locally hosted** Python web app for downloading captions or transcribing permitted video/audio. The stable release lives on `master`. Reliability work for v0.3 is being reviewed on `feature/linkscribe-v03-reliability`; it must pass independent GitHub-hosted tests before merging.
 
+The next candidate integrates [optional timing after recognition](docs/asr-speaker-timing-integration-2026-11-28/README.md).
+Speaker labeling now uses one ordinary recognition pass followed by a separate
+fixed-text timing pass. Unusable timing preserves the original transcript and
+adds a saved warning, and the recognizer is released before the speaker model
+runs. A separate narrow summary-prompt change removes example answer values
+that a tested model copied as filler. These changes require their own complete
+hosted verification. The complete maintained local suite passed **834 tests and
+54 subtests** after a recorded archival-test discovery correction; the earlier
+hosted results below apply to their named commits. Version **0.3.0** and the open
+v1.0 gates remain unchanged.
+
 The published **0.3.0 integration checkpoint `6de3fad`** passed **777 tests and
 54 subtests** on Ubuntu and independent Python 3.11/3.13 configurations. Windows
 and macOS each passed 773 tests and 54 subtests, with four Linux-only process-group
@@ -105,10 +116,18 @@ All six existing segment-window checks pass, but only three word-window checks
 pass; original recognition errors and broader timing uncertainty remain.
 This diagnostic is separate from the published application's behavior.
 
+The later [source-spelling-context translation screen](docs/krikri-source-spelling-screen-2026-11-28/RESULTS.md)
+completed one acceptable translation, then omitted every protected marker in its
+second response. The guard rejected that response before restoration; four cases
+remain unrun. The [schema-only summary prompt screen](docs/krikri-summary-schema-prompt-2026-11-28/RESULTS.md)
+replaced the filler paragraph with a factual paragraph but still weakened a
+required per-quotation check. Its English result is rejected and Greek remains
+unrun. Neither experiment changes the default model or approves generated meaning.
+
 ## Features
 
 - **Single links or batches of 1–20 links**: accepts allowlisted YouTube, Vimeo and Dailymotion URLs; sequential processing and batch ZIP of successful results. Accepted URL formats do not guarantee provider access. Vimeo/Dailymotion currently use audio recognition, not pre-existing captions. See [verified provider scope](#verified-provider-scope).
-- **Speaker labels (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from a public CPU model, with no account or access token. Extra dependencies are required. Actual Whisper word timestamps allow text to split at estimated speaker changes; uncertain speech remains `Unknown speaker`. Overlapping voices are not separated, and names must be assigned manually.
+- **Speaker labels (opt-in)**: anonymous `Speaker 1`, `Speaker 2` labels from a public CPU model, with no account or access token. Extra dependencies are required. A separate timing pass preserves the recognized words and can split text at estimated speaker changes. Unusable word timing falls back to whole segments with saved warnings; uncertain speech remains `Unknown speaker`. Overlapping voices are not separated, and names must be assigned manually.
 - **Experimental translation drafts**: English ⇄ Greek (and other source languages into English/Greek) with **local Ollama**; retains original segment times for translated subtitle exports. Actual evaluations found material meaning errors, so compare translations with the original transcript.
 - **AI summary and chapters**: local Ollama creates summaries, key points and chapter titles anchored to transcript segment timestamps. Review outputs for errors.
 - **Source highlights (opt-in)**: locally selects verbatim passages with original timestamps, without a language model or extra downloads. Open an excerpt's source segments to review context. Short sources may be retained completely, with an explicit notice. This is separate from the AI summary and does not promise complete coverage or correct recognition.
@@ -464,6 +483,12 @@ To restore, select the saved ZIP and choose **Restore backup**. LinkScribe check
 ./.venv/bin/python -m pip install pytest httpx
 ./.venv/bin/python -m pytest -q
 ```
+
+`pytest.ini` selects the maintained `tests/` suite. Scripts retained under
+`docs/` belong to frozen experiments and have their own recorded interpreter,
+source bindings and execution rules. Run those only using their documented
+invocations; importing archival snapshots into the application suite can install
+experiment-specific process guards or collide with old module names.
 
 For the optional real annotation-alignment check without downloading the gated speaker model, also install `pyannote.core==6.1.0`. CI installs it as a test dependency; the base app does not require it.
 

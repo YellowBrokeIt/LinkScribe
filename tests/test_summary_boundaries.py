@@ -24,7 +24,7 @@ def test_short_source_has_one_direct_call_with_known_language(monkeypatch):
     assert len(calls) == 1
     system, user = [item["content"] for item in calls[0]["messages"]]
     assert "directly from this transcript" in system and "in Greek" in system
-    assert "key_points" in system and "chapter_title" in system
+    assert set(calls[0]["response_schema"]["required"]) == {"summary", "key_points", "chapter_title"}
     assert user == "[0.5s] Η Άνθη περιμένει ακόμη.\n[4.0s] Δεν έχει εγκρίνει την αλλαγή."
     assert result["chapters"] == [{"start": 0.5, "title": "Εκκρεμής αλλαγή"}]
     assert source == original

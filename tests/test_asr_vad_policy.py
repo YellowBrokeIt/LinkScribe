@@ -19,8 +19,8 @@ def stub_decode(monkeypatch, audio):
     return calls
 
 
-@pytest.mark.parametrize("word_timestamps", [False, True])
-def test_asr_preserves_full_input_and_optional_word_timing(monkeypatch, tmp_path, word_timestamps):
+@pytest.mark.parametrize("speaker_timing", [False, True])
+def test_asr_preserves_full_input_and_optional_word_timing(monkeypatch, tmp_path, speaker_timing):
     calls = []
     # The declared late speech must lie inside the complete decoded recording.
     audio = np.zeros(561 * 16000, dtype=np.float32)
@@ -37,21 +37,29 @@ def test_asr_preserves_full_input_and_optional_word_timing(monkeypatch, tmp_path
             # A prefilter request would recreate the boundary that lost real
             # later speech in the recorded hosted provider diagnosis.
             assert options["vad_filter"] is False
+            assert options["word_timestamps"] is False
             return iter(spoken), SimpleNamespace(language="en")
 
     monkeypatch.setattr(app, "_whisper_model", lambda model: Engine())
     path = tmp_path / "owned.wav"
-    segments, language = app._recognize(path, "auto", "small", word_timestamps=word_timestamps)
+    result = app._recognize(path, "auto", "small", speaker_timing=speaker_timing)
+    segments, language = result.segments, result.language
     assert decodes == [(str(path), 16000)]
     assert calls[0][0] is audio
     assert np.array_equal(audio, original)
     assert language == "en" and [s["text"] for s in segments] == [s.text for s in spoken]
     assert calls[0][1]["language"] is None
     assert calls[0][1]["condition_on_previous_text"] is False
-    assert calls[0][1].get("word_timestamps", False) is word_timestamps
+    assert len(calls) == 1 and calls[0][1]["word_timestamps"] is False
     assert calls[0][1].get("hallucination_silence_threshold") is None
     assert "temperature" not in calls[0][1]  # Fixed-zero fallback lost real dialogue.
-    assert all(("_words" in segment) is word_timestamps for segment in segments)
+    assert all("_words" not in segment for segment in segments)
+    if speaker_timing:
+        # This deliberately incomplete stub has no native seek/token interface.
+        assert result.speaker_segments == [{**s, "_words": []} for s in segments]
+        assert result.warnings and result.asr_provenance["speaker_timing"]["status"] == "unavailable"
+    else:
+        assert result.speaker_segments is None and not result.warnings
 
 
 @pytest.mark.parametrize("kind", ["empty", "positive_zero", "negative_zero"])
@@ -81,8 +89,8 @@ def test_tiniest_nonzero_float_is_preserved_and_reaches_model(monkeypatch, tmp_p
             return iter([SimpleNamespace(start=0, end=0.008, text="Synthetic tiny input result")]), SimpleNamespace(language="el")
 
     monkeypatch.setattr(app, "_whisper_model", lambda *_: Engine())
-    result, language = app._recognize(tmp_path / "owned.wav", "el", "small")
-    assert language == "el" and result[0]["text"] == "Synthetic tiny input result"
+    result = app._recognize(tmp_path / "owned.wav", "el", "small")
+    assert result.language == "el" and result.segments[0]["text"] == "Synthetic tiny input result"
     assert len(decodes) == len(calls) == 1 and calls[0][0] is audio
     assert audio.tobytes() == before and calls[0][1]["vad_filter"] is False
 
@@ -111,7 +119,7 @@ def test_decoded_duration_limit_is_exact_and_never_trims(monkeypatch, tmp_path, 
             app._recognize(tmp_path / "owned.wav", "auto", "small")
         assert caught.value.__cause__ is None and not calls
     else:
-        assert app._recognize(tmp_path / "owned.wav", "auto", "small")[0]
+        assert app._recognize(tmp_path / "owned.wav", "auto", "small").segments
         assert len(calls) == 1
     assert len(decodes) == 1 and len(audio) == samples
 

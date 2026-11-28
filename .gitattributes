@@ -1,6 +1,7 @@
 # These QA declarations verify exact bytes on Linux, macOS and Windows.
 # Keep the recorded LF source identities through checkout; do not normalize hashes.
 .gitattributes text eol=lf
+pytest.ini text eol=lf
 tests/qa_qwen3_asr_candidate.py text eol=lf
 tests/test_qwen3_asr_candidate_qa.py text eol=lf
 .github/workflows/qwen3-asr-candidate-qa.yml text eol=lf
@@ -134,3 +135,44 @@ docs/krikri-visible-name-tag-screen-2026-11-28/** text eol=lf
 docs/krikri-summary-screen-2026-11-28/** text eol=lf
 docs/post-asr-alignment-diagnostic-2026-11-28/** text eol=lf
 docs/post-asr-local-projection-2026-11-28/** text eol=lf
+
+# New fixed-text integration and sealed language follow-ups retain exact bytes.
+app.py text eol=lf
+asr_timing.py text eol=lf
+enhancements.py text eol=lf
+tests/test_asr_speaker_timing.py text eol=lf
+tests/smoke_real_speaker_app.py text eol=lf
+tests/qa_speaker_integration.py text eol=lf
+.github/workflows/speaker-integration-qa.yml text eol=lf
+docs/asr-speaker-timing-integration-2026-11-28/** text eol=lf
+docs/krikri-source-spelling-context-2026-11-28/** text eol=lf
+docs/krikri-source-spelling-screen-2026-11-28/** text eol=lf
+docs/krikri-summary-schema-prompt-2026-11-28/** text eol=lf
+docs/summary-action-preservation-feasibility-2026-11-28/** text eol=lf
+docs/summary-placeholder-production-fix-2026-11-28/** text eol=lf
+docs/asr-timing-packaging-review-2026-11-28/** text eol=lf
+
+# Preserve all exact source bindings used by the cross-platform plan validation.
+diarization.py text eol=lf
+library.py text eol=lf
+library_backup.py text eol=lf
+batch_store.py text eol=lf
+sources.py text eol=lf
+source_highlights.py text eol=lf
+runtime_check.py text eol=lf
+diagnostics.py text eol=lf
+requirements.txt text eol=lf
+requirements-speakers-free.txt text eol=lf
+tests/smoke_real_speakers.py text eol=lf
+docs/asr-speaker-timing-integration-2026-11-28/hosted-runtime.txt text eol=lf
+docs/speaker-evaluation-2026-11-26/selected_sources_fresh_holdout.json text eol=lf
+docs/speaker-evaluation-2026-11-26/speaker-app-initial.json text eol=lf
+
+# New source-only grammar plans and complete integration verification.
+docs/krikri-marker-grammar-feasibility-2026-11-28/** text eol=lf
+docs/krikri-marker-grammar-preparation-2026-11-28/** text eol=lf
+docs/integration-2026-11-28/speaker-timing-local/** text eol=lf
+docs/pytest-discovery-packaging-addendum-2026-11-28/** text eol=lf
+tests/test_speaker_hosted_qa.py text eol=lf
+tests/test_summary_prompt_contract.py text eol=lf
+tests/evaluate_summary_quality.py text eol=lf

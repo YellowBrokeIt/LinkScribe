@@ -37,7 +37,7 @@ def fake_audio(job_id, source):
 
 
 def fake_recognize(path: Path, language: str, model: str, **_kwargs):
-    return ([{"start": 0.0, "end": 1.5, "text": "This speech should be preserved."}], "en")
+    return module.RecognitionResult([{"start": 0.0, "end": 1.5, "text": "This speech should be preserved."}], "en")
 
 
 def test_unexpected_optional_model_errors_keep_transcript(client, monkeypatch):

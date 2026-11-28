@@ -1,0 +1,2287 @@
+{
+  "schema_version": 1,
+  "probes": [
+    {
+      "id": "dev-en-el-transcript-terminology:all-order-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:literal-unicode",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά <x0/> τέλος.\",\"λόγος café ά  τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:json-short-escapes",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\ <x0/> text.\",\"Text \\\"quote\\\" / \\\\  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:no-ordinary-prose",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"<x0/>\",\"\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:unconstrained-ordinary-prose",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left. <x0/> text.\",\"The amount is 987 and he left.  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:missing-<x0/>",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "missing-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:duplicate-<x0/>",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "duplicate-<x0/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x0/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:cross-entry-<x0/>",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "cross-entry-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<x0/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:unknown-in-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:opening-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:closing-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.</x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:uppercase-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<X9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:spaced-prefix-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.< x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:angle-prose-entry-0",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text. a < b \",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:unknown-in-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:opening-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:closing-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:uppercase-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:spaced-prefix-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:angle-prose-entry-1",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:too-few-entries",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:too-many-entries",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:zero-entries",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:null-entry",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:numeric-entry",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:nested-entry",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text <x0/> text.\"],\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:extra-property",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:duplicate-property",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"translations\":[\"Text <x0/> text.\", \"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:wrong-root-type",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text <x0/> text.\", \"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:truncated-json",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:invalid-escape",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:raw-control",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001 <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:unicode-escaped-prose",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:unicode-escaped-hidden-tag",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/> <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:escaped-property-name",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:escaped-required-angle",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "escaped-required-angle",
+      "raw_json": "{\"translations\":[\"Text \\u003cx0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:escaped-required-slash",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "escaped-required-slash",
+      "raw_json": "{\"translations\":[\"Text <x0\\/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-transcript-terminology:normalization-lookalike",
+      "case_id": "dev-en-el-transcript-terminology",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.＜ｘ9999/＞\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-2",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-2",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-3",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-3",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-4",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-4",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-5",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-5",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-6",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-6",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-7",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-7",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-8",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-8",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-9",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-9",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-10",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-10",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-11",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-11",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x2/> text <x1/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-12",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-12",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-13",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-13",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-14",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-14",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-15",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-15",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-16",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-16",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-17",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-17",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text <x2/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-18",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-18",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-19",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-19",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-20",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-20",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-21",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-21",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-22",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-22",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-23",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-23",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x2/> text <x0/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-24",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-24",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-25",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-25",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-26",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-26",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-27",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-27",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-28",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-28",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-29",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-29",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x0/> text <x1/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-30",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-30",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-31",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-31",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x3/> text <x5/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-32",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-32",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x4/> text <x3/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-33",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-33",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x4/> text <x5/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-34",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-34",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x5/> text <x3/> text <x4/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:all-order-35",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "all-order-35",
+      "raw_json": "{\"translations\":[\"Text <x2/> text <x1/> text <x0/> text.\",\"Text <x5/> text <x4/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:literal-unicode",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά <x0/> · <x1/> · <x2/> τέλος.\",\"λόγος café ά <x3/> · <x4/> · <x5/> τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:json-short-escapes",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\ <x0/>\\n\\t\\r\\b\\f <x1/>\\n\\t\\r\\b\\f <x2/> text.\",\"Text \\\"quote\\\" / \\\\ <x3/>\\n\\t\\r\\b\\f <x4/>\\n\\t\\r\\b\\f <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:no-ordinary-prose",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"<x0/><x1/><x2/>\",\"<x3/><x4/><x5/>\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-el-en-people-and-roles:unconstrained-ordinary-prose",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left. <x0/> text <x1/> text <x2/> text.\",\"The amount is 987 and he left. <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x0/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x0/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x0/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x0/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x0/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x0/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x1/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text  text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x1/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x1/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x1/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text  text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x1/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x2/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text  text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x2/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x2/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x2/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text  text.\",\"Text <x3/> text <x4/> text <x5/> text.<x2/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:unknown-in-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x9999/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:opening-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x9999>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:closing-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.</x9999>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:uppercase-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<X9999/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:spaced-prefix-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.< x9999/>\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:angle-prose-entry-0",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text. a < b \",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x3/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text  text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x3/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x3/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x3/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x3/>\",\"Text  text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x4/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x4/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text  text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x4/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x4/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x4/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x4/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x4/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x4/>\",\"Text <x3/> text  text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:missing-<x5/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "missing-<x5/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-<x5/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-<x5/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x5/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:cross-entry-<x5/>",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "cross-entry-<x5/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.<x5/>\",\"Text <x3/> text <x4/> text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:unknown-in-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:opening-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:closing-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:uppercase-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:spaced-prefix-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:angle-prose-entry-1",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:too-few-entries",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:too-many-entries",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:zero-entries",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:null-entry",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:numeric-entry",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:nested-entry",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text <x0/> text <x1/> text <x2/> text.\"],\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:extra-property",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:duplicate-property",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"],\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\", \"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:wrong-root-type",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text <x0/> text <x1/> text <x2/> text.\", \"Text <x3/> text <x4/> text <x5/> text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:truncated-json",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:invalid-escape",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:raw-control",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001 <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:unicode-escaped-prose",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-el-en-people-and-roles:unicode-escaped-hidden-tag",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/> <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:escaped-property-name",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text <x0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:escaped-required-angle",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "escaped-required-angle",
+      "raw_json": "{\"translations\":[\"Text \\u003cx0/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:escaped-required-slash",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "escaped-required-slash",
+      "raw_json": "{\"translations\":[\"Text <x0\\/> text <x1/> text <x2/> text.\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-people-and-roles:normalization-lookalike",
+      "case_id": "dev-el-en-people-and-roles",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text <x2/> text.＜ｘ9999/＞\",\"Text <x3/> text <x4/> text <x5/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:all-order-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:literal-unicode",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά  τέλος.\",\"λόγος café ά  τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:json-short-escapes",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\  text.\",\"Text \\\"quote\\\" / \\\\  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:no-ordinary-prose",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"\",\"\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:unconstrained-ordinary-prose",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left.  text.\",\"The amount is 987 and he left.  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:unknown-in-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text.<x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:opening-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text.<x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:closing-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text.</x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:uppercase-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text.<X9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:spaced-prefix-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text.< x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:angle-prose-entry-0",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text  text. a < b \",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:unknown-in-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:opening-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:closing-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:uppercase-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:spaced-prefix-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:angle-prose-entry-1",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:too-few-entries",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:too-many-entries",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:zero-entries",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:null-entry",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:numeric-entry",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:nested-entry",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text  text.\"],\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:extra-property",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:duplicate-property",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"],\"translations\":[\"Text  text.\", \"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:wrong-root-type",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text  text.\", \"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:truncated-json",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:invalid-escape",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:raw-control",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:unicode-escaped-prose",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:unicode-escaped-hidden-tag",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/>  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:escaped-property-name",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-bitcoin-amounts:normalization-lookalike",
+      "case_id": "dev-en-el-bitcoin-amounts",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text  text.＜ｘ9999/＞\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    },
+    {
+      "id": "dev-el-en-negation-scope:all-order-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:literal-unicode",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά <x0/> τέλος.\",\"λόγος café ά  τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:json-short-escapes",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\ <x0/> text.\",\"Text \\\"quote\\\" / \\\\  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:no-ordinary-prose",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"<x0/>\",\"\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-el-en-negation-scope:unconstrained-ordinary-prose",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left. <x0/> text.\",\"The amount is 987 and he left.  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-el-en-negation-scope:missing-<x0/>",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "missing-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:duplicate-<x0/>",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "duplicate-<x0/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x0/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:cross-entry-<x0/>",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "cross-entry-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<x0/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:unknown-in-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:opening-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:closing-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.</x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:uppercase-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<X9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:spaced-prefix-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.< x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:angle-prose-entry-0",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text. a < b \",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:unknown-in-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:opening-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:closing-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:uppercase-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:spaced-prefix-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:angle-prose-entry-1",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:too-few-entries",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:too-many-entries",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:zero-entries",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:null-entry",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:numeric-entry",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:nested-entry",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text <x0/> text.\"],\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:extra-property",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:duplicate-property",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"translations\":[\"Text <x0/> text.\", \"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:wrong-root-type",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text <x0/> text.\", \"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:truncated-json",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:invalid-escape",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:raw-control",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001 <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:unicode-escaped-prose",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-el-en-negation-scope:unicode-escaped-hidden-tag",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/> <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:escaped-property-name",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:escaped-required-angle",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "escaped-required-angle",
+      "raw_json": "{\"translations\":[\"Text \\u003cx0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:escaped-required-slash",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "escaped-required-slash",
+      "raw_json": "{\"translations\":[\"Text <x0\\/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-negation-scope:normalization-lookalike",
+      "case_id": "dev-el-en-negation-scope",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.＜ｘ9999/＞\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    },
+    {
+      "id": "dev-en-el-conditional-publication:all-order-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:all-order-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "all-order-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x3/> text <x2/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:all-order-2",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "all-order-2",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:all-order-3",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "all-order-3",
+      "raw_json": "{\"translations\":[\"Text <x1/> text <x0/> text.\",\"Text <x3/> text <x2/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:literal-unicode",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά <x0/> · <x1/> τέλος.\",\"λόγος café ά <x2/> · <x3/> τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:json-short-escapes",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\ <x0/>\\n\\t\\r\\b\\f <x1/> text.\",\"Text \\\"quote\\\" / \\\\ <x2/>\\n\\t\\r\\b\\f <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:no-ordinary-prose",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"<x0/><x1/>\",\"<x2/><x3/>\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-en-el-conditional-publication:unconstrained-ordinary-prose",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left. <x0/> text <x1/> text.\",\"The amount is 987 and he left. <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-en-el-conditional-publication:missing-<x0/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "missing-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:duplicate-<x0/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "duplicate-<x0/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x0/>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:cross-entry-<x0/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "cross-entry-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text <x1/> text.\",\"Text <x2/> text <x3/> text.<x0/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:missing-<x1/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "missing-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text  text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:duplicate-<x1/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "duplicate-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x1/>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:cross-entry-<x1/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "cross-entry-<x1/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text  text.\",\"Text <x2/> text <x3/> text.<x1/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:unknown-in-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x9999/>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:opening-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x9999>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:closing-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.</x9999>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:uppercase-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<X9999/>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:spaced-prefix-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.< x9999/>\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:angle-prose-entry-0",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text. a < b \",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:missing-<x2/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "missing-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text  text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:duplicate-<x2/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "duplicate-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.<x2/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:cross-entry-<x2/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "cross-entry-<x2/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x2/>\",\"Text  text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:missing-<x3/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "missing-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:duplicate-<x3/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "duplicate-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.<x3/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:cross-entry-<x3/>",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "cross-entry-<x3/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.<x3/>\",\"Text <x2/> text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:unknown-in-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:opening-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:closing-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:uppercase-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:spaced-prefix-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:angle-prose-entry-1",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:too-few-entries",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:too-many-entries",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:zero-entries",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:null-entry",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:numeric-entry",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:nested-entry",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text <x0/> text <x1/> text.\"],\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:extra-property",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:duplicate-property",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"],\"translations\":[\"Text <x0/> text <x1/> text.\", \"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:wrong-root-type",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text <x0/> text <x1/> text.\", \"Text <x2/> text <x3/> text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:truncated-json",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:invalid-escape",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:raw-control",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001 <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:unicode-escaped-prose",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-en-el-conditional-publication:unicode-escaped-hidden-tag",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/> <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:escaped-property-name",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text <x0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:escaped-required-angle",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "escaped-required-angle",
+      "raw_json": "{\"translations\":[\"Text \\u003cx0/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:escaped-required-slash",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "escaped-required-slash",
+      "raw_json": "{\"translations\":[\"Text <x0\\/> text <x1/> text.\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-en-el-conditional-publication:normalization-lookalike",
+      "case_id": "dev-en-el-conditional-publication",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text <x0/> text <x1/> text.＜ｘ9999/＞\",\"Text <x2/> text <x3/> text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    },
+    {
+      "id": "dev-el-en-uncertain-question:all-order-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "all-order-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:literal-unicode",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "literal-unicode",
+      "raw_json": "{\"translations\":[\"λόγος café ά <x0/> τέλος.\",\"λόγος café ά  τέλος.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:json-short-escapes",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "json-short-escapes",
+      "raw_json": "{\"translations\":[\"Text \\\"quote\\\" / \\\\ <x0/> text.\",\"Text \\\"quote\\\" / \\\\  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:no-ordinary-prose",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "no-ordinary-prose",
+      "raw_json": "{\"translations\":[\"<x0/>\",\"\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: a native structural pass can omit all ordinary meaning; empty entries also fail the unchanged app guard."
+    },
+    {
+      "id": "dev-el-en-uncertain-question:unconstrained-ordinary-prose",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "unconstrained-ordinary-prose",
+      "raw_json": "{\"translations\":[\"The amount is 987 and he left. <x0/> text.\",\"The amount is 987 and he left.  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: grammar cannot establish amounts, gender, roles or any source proposition; this is synthetic probe text only."
+    },
+    {
+      "id": "dev-el-en-uncertain-question:missing-<x0/>",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "missing-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:duplicate-<x0/>",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "duplicate-<x0/>",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x0/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:cross-entry-<x0/>",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "cross-entry-<x0/>",
+      "raw_json": "{\"translations\":[\"Text  text.\",\"Text  text.<x0/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:unknown-in-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "unknown-in-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:opening-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "opening-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:closing-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "closing-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.</x9999>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:uppercase-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "uppercase-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.<X9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:spaced-prefix-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "spaced-prefix-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.< x9999/>\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:angle-prose-entry-0",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "angle-prose-entry-0",
+      "raw_json": "{\"translations\":[\"Text <x0/> text. a < b \",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:unknown-in-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "unknown-in-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:opening-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "opening-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:closing-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "closing-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.</x9999>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:uppercase-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "uppercase-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.<X9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:spaced-prefix-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "spaced-prefix-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.< x9999/>\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:angle-prose-entry-1",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "angle-prose-entry-1",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text. a < b \"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:too-few-entries",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "too-few-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:too-many-entries",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "too-many-entries",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\",\"Text\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:zero-entries",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "zero-entries",
+      "raw_json": "{\"translations\":[]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:null-entry",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "null-entry",
+      "raw_json": "{\"translations\":[null,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:numeric-entry",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "numeric-entry",
+      "raw_json": "{\"translations\":[1,\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:nested-entry",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "nested-entry",
+      "raw_json": "{\"translations\":[[\"Text <x0/> text.\"],\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:extra-property",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "extra-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"extra\":true}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:duplicate-property",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "duplicate-property",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"],\"translations\":[\"Text <x0/> text.\", \"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:wrong-root-type",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "wrong-root-type",
+      "raw_json": "[\"Text <x0/> text.\", \"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:truncated-json",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "truncated-json",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.\",\"Text  text.\"]",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:invalid-escape",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "invalid-escape",
+      "raw_json": "{\"translations\":[\"Text \\q <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:raw-control",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "raw-control",
+      "raw_json": "{\"translations\":[\"Text \u0001 <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:unicode-escaped-prose",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "unicode-escaped-prose",
+      "raw_json": "{\"translations\":[\"\\u03bb <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "Literal Unicode is permitted; all serialized Unicode escapes are outside this bounded profile."
+    },
+    {
+      "id": "dev-el-en-uncertain-question:unicode-escaped-hidden-tag",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "unicode-escaped-hidden-tag",
+      "raw_json": "{\"translations\":[\"\\u003cx9999/> <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:escaped-property-name",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "escaped-property-name",
+      "raw_json": "{\"transl\\u0061tions\":[\"Text <x0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:escaped-required-angle",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "escaped-required-angle",
+      "raw_json": "{\"translations\":[\"Text \\u003cx0/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:escaped-required-slash",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "escaped-required-slash",
+      "raw_json": "{\"translations\":[\"Text <x0\\/> text.\",\"Text  text.\"]}",
+      "expected_native_acceptance": false,
+      "note": "structural probe, not translation evidence"
+    },
+    {
+      "id": "dev-el-en-uncertain-question:normalization-lookalike",
+      "case_id": "dev-el-en-uncertain-question",
+      "kind": "normalization-lookalike",
+      "raw_json": "{\"translations\":[\"Text <x0/> text.＜ｘ9999/＞\",\"Text  text.\"]}",
+      "expected_native_acceptance": true,
+      "note": "Known limit: literal Unicode gap permits this; unchanged NFKC-aware marker guard must reject after decoding."
+    }
+  ],
+  "native_or_converter_execution": false,
+  "independent_native_acceptance_required": true
+}

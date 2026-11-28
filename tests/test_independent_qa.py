@@ -40,8 +40,8 @@ def _fake_result(job_id, source):
     return target, 'Example / Video'
 
 
-def _fake_recognition(path, language, size):
-    return ([{'start': 0., 'end': 1.2, 'text': 'Bitcoin and cafés'},
+def _fake_recognition(path, language, size, **_kwargs):
+    return app.RecognitionResult([{'start': 0., 'end': 1.2, 'text': 'Bitcoin and cafés'},
              {'start': 1.2, 'end': 2.5, 'text': 'Ελληνικό κείμενο'}], 'en')
 
 

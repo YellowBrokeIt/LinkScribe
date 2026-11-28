@@ -29,7 +29,7 @@ jobs:
         run: python -m pytest -q
       - name: Verify packaging and shell scripts
         run: |
-          python -m compileall -q app.py library.py sources.py source_highlights.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py
+          python -m compileall -q app.py asr_timing.py library.py sources.py source_highlights.py enhancements.py runtime_check.py batch_store.py library_backup.py diagnostics.py
           python -m pip check
           bash -n start_linux.sh launch.sh
 
