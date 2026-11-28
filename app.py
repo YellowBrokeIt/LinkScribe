@@ -649,10 +649,15 @@ def _exports(record: dict[str, Any], *, requested: str | None = None,
         contents["export-notes.txt"] = ("\n".join(export_notes) + "\n").encode("utf-8")
     if requested is None and include_zip:
         stream = io.BytesIO()
-        with zipfile.ZipFile(stream,"w",compression=zipfile.ZIP_DEFLATED) as z:
-            for name, data in contents.items(): z.writestr(name,data)
+        _write_transcript_zip(contents, stream)
         contents["transcript.zip"] = stream.getvalue()
     return contents
+
+
+def _write_transcript_zip(contents: dict[str, bytes], stream: BinaryIO) -> None:
+    with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for name, data in contents.items():
+            archive.writestr(name, data)
 
 
 def _valid_highlights(record: dict[str, Any]) -> dict[str, Any] | None:
@@ -690,9 +695,8 @@ def _complete_job(job_id: str, record: dict[str, Any], stage: str = "Ready to do
          extras={"translation_language": next(iter(translations), ""), "summary": bool(record.get("summary")),
                  "highlights": _valid_highlights(record) is not None,
                  "speakers": any(s.get("speaker") for s in segments)},
+         warnings=record.get("processing_metadata", {}).get("warnings", []),
          library_id=job_id, finished_at=time.time())
-    if record.get("processing_metadata", {}).get("warnings"):
-        _set(job_id, warnings=record["processing_metadata"]["warnings"])
 
 
 def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, method: str,
@@ -703,7 +707,7 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
     record = {"source": job.source, "title": job.title, "language": lang, "method": method,
               "segments": segments, "translations": translations or {}, "summary": summary,
               "processing_metadata": processing_metadata or {}, "highlights": highlights}
-    contents = _exports(record)
+    contents = _exports(record, include_zip=False)
     if "export-notes.txt" in contents:
         metadata = dict(record["processing_metadata"])
         warnings = list(metadata.get("warnings", []))
@@ -712,9 +716,13 @@ def _write_exports(job_id: str, segments: list[dict[str, Any]], lang: str, metho
                 warnings.append(note)
         metadata["warnings"] = warnings
         record["processing_metadata"] = metadata
-        contents = _exports(record)
+        contents = _exports(record, include_zip=False)
     for filename, payload in contents.items():
         (job.workdir / filename).write_bytes(payload)
+    # Keep the existing on-disk job exports for diagnostics and integrations,
+    # but do not build a second in-memory copy of the complete archive.
+    with (job.workdir / "transcript.zip").open("wb") as stream:
+        _write_transcript_zip(contents, stream)
     library.save(job.id, job.source, job.title, lang, method, segments, translations, summary, record["processing_metadata"], highlights)
     _complete_job(job_id, record)
 
@@ -897,6 +905,26 @@ class _ZipArchiveResponse(StreamingResponse):
 class _BatchArchiveResponse(_ZipArchiveResponse):
     def __init__(self, stream: BinaryIO, batch_id: str):
         super().__init__(stream, f"linkscr-batch-{batch_id[:8]}.zip")
+
+
+def _transcript_download(record: dict[str, Any], name: str) -> StreamingResponse:
+    # Downloads always reflect the durable record, including edits, not the
+    # original job's cached exports. ZIP generation uses owned disk storage.
+    if name == "transcript.zip":
+        stream = tempfile.TemporaryFile(mode="w+b")
+        try:
+            _write_transcript_zip(_exports(record, include_zip=False), stream)
+            return _ZipArchiveResponse(stream, name)
+        except BaseException:
+            stream.close()
+            raise
+    available = _exports(record, requested=name)
+    if name not in available:
+        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
+    mime = "application/json" if name.endswith(".json") else "text/plain; charset=utf-8"
+    return StreamingResponse(io.BytesIO(available[name]), media_type=mime,
+                             headers={"Content-Disposition": f'attachment; filename="{name}"',
+                                      "Cache-Control": "no-store"})
 
 
 def _process_batch(batch_id: str, items: list[Source], mode: str, language: str,
@@ -1229,14 +1257,7 @@ def download(job_id: str,file_type: str):
     if not record: raise HTTPException(404,"Transcript was deleted from the library.")
     key=_export_key(file_type,record)
     if not key: raise HTTPException(404,"Requested enhancement was not generated.")
-    available = _exports(record, requested=key)  # Current saved edits, never stale temporary exports.
-    if key not in available:
-        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
-    contents = available[key]
-    mime="application/zip" if key.endswith(".zip") else ("application/json" if key.endswith(".json") else "text/plain; charset=utf-8")
-    return StreamingResponse(io.BytesIO(contents),media_type=mime,
-                             headers={"Content-Disposition":f'attachment; filename="{key}"',
-                                      "Cache-Control":"no-store"})
+    return _transcript_download(record, key)
 
 
 @app.get("/api/library")
@@ -1384,12 +1405,5 @@ def library_download(item_id: str, file_type: str):
     if not record: raise HTTPException(404,"Transcript not found.")
     name=_export_key(file_type,record)
     if not name: raise HTTPException(404,"Requested enhancement not available.")
-    available = _exports(record, requested=name)
-    if name not in available:
-        raise HTTPException(422, "These timestamps are too close together to create subtitles. TXT and JSON remain available.")
-    content = available[name]
-    mime="application/zip" if name.endswith(".zip") else ("application/json" if name.endswith(".json") else "text/plain; charset=utf-8")
-    return StreamingResponse(io.BytesIO(content),media_type=mime,
-                             headers={"Content-Disposition":f'attachment; filename="{name}"',
-                                      "Cache-Control":"no-store"})
+    return _transcript_download(record, name)
 
