@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import math
 import sqlite3
+import unicodedata
 import time
 from pathlib import Path
 from typing import Any
@@ -195,15 +196,22 @@ def get_processing_warnings(identifiers: list[str]) -> dict[str, list[str]]:
     return result
 
 
+def _search_key(value: str) -> str:
+    """Canonical, Unicode caseless search without changing stored text."""
+    return unicodedata.normalize("NFC", unicodedata.normalize("NFD", value).casefold())
+
+
 def list_items(query: str = "", limit: int = 50) -> list[dict[str, Any]]:
     limit = min(max(int(limit), 1), 100)
     with _connect() as connection:
         if query:
-            escaped = query.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-            term = "%" + escaped + "%"
+            # SQLite LIKE folds ASCII only. instr treats %, _ and backslashes
+            # literally and lets Python normalize Greek and other Unicode text.
+            connection.create_function("linkscribe_search_key", 1, _search_key, deterministic=True)
+            term = _search_key(query)
             rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
-                 created_at,updated_at FROM transcripts WHERE title LIKE ? ESCAPE '\\' OR
-                 plain_text LIKE ? ESCAPE '\\' ORDER BY created_at DESC LIMIT ?""", (term,term,limit)).fetchall()
+                 created_at,updated_at FROM transcripts WHERE instr(linkscribe_search_key(title), ?) > 0 OR
+                 instr(linkscribe_search_key(plain_text), ?) > 0 ORDER BY created_at DESC LIMIT ?""", (term,term,limit)).fetchall()
         else:
             rows = connection.execute("""SELECT id,source,title,language,method,substr(plain_text,1,180) preview,
                 created_at,updated_at FROM transcripts ORDER BY created_at DESC LIMIT ?""", (limit,)).fetchall()
