@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-28T03:14:15.981382+00:00",
+  "reviewer": "independent package_verification agent",
+  "contract_accepted_for_authorized_hosted_screen": true,
+  "blocking_findings": [],
+  "decision": "No execution-breaking or false-pass defect found in the bounded source, native-runtime, input, completion and resource review. Proceed only with the already authorized one hosted development screen. Semantic quality remains unreviewed.",
+  "scope": "Read-only code and retained metadata inspection plus standard-library validate-only command. No model import, installation, weight download, initialization or inference.",
+  "files_sha256": {
+    "tests/qa_large_v3_candidate.py": "cd7f933b27fc297fcdd0f1901657306ee90d17211ceae16dd0c4d9d23200c451",
+    "tests/qa_qwen3_asr_candidate.py": "f578d2b534506e42f8636d45bd5d43d2fea64902961ad265f62b82b3a5d0fc8f",
+    "tests/test_large_v3_candidate_qa.py": "b383028077a6d81ace6ee5c76d04827b4f519ac9722310ef114c9fbdaba69bcd",
+    ".github/workflows/large-v3-candidate-qa.yml": "fddd840a6851921d0aa46720e40c0d7c75c2e14d2e588eb19841c0f174c71838",
+    ".gitattributes": "6412b53e1870d568f8ee90fe0b6a0ff13cdb83ed623bd638a67d3a14ccd9a820",
+    "docs/large-v3-screen-2026-11-28/plan.json": "b9b779a48cb265e28c060fbf433d40e54058bb86290decc042e620ec363851f2",
+    "docs/large-v3-screen-2026-11-28/production-policy.json": "2f0d178461fa195e81b7d31731adac92045b6d8ee77020ccbd5a461102208724",
+    "docs/large-v3-screen-2026-11-28/runtime-requirements.txt": "8e145688c61be66a67f97020a2d1de377ea9f0618ce410b6888892995a1ce5ad",
+    "docs/large-v3-screen-2026-11-28/model-files.json": "a0e074bc0bd225b4d958747637aadd3d409e7fa61e0da8f95a3aa36b95bd4992",
+    "docs/large-v3-screen-2026-11-28/model-metadata-provenance.json": "506bf773724e4e35bb5c2df0d6ed13b90fb96218a002cb486a71d85ee9282ea4",
+    "docs/large-v3-screen-2026-11-28/runtime-pin-review.json": "78a6daeb4488bbe94d4b2b34cf7b11b5bef4caa3dc55245fe26ced49040a5b44",
+    "docs/large-v3-screen-2026-11-28/local-validation.json": "53aef4e5a753bbdfe1e22abd766c17618b2bafc4a450795e4cbcff7a7cdf6637",
+    "docs/large-v3-screen-2026-11-28/README.md": "1bfbb12a09b432752a64f2d5309b2b0952f5775b5babc843476ee8fc4f64b921"
+  },
+  "criteria": {
+    "path": "source-and-criteria-before-output.json",
+    "sha256": "e57ce6808f6315656c6e8c67a39b3a00d3454b5ce8ad32a3f899d16be830c7d9",
+    "cases": 8,
+    "source_audio_duration_seconds": 52.44,
+    "reference_and_criteria_unchanged": true,
+    "exposed_development_only": true,
+    "fresh_validation_opened": false,
+    "classifications": {
+      "acceptable": "No material content error observed; accepted punctuation, contraction or spelling conventions may differ.",
+      "minor_issue": "A limited word, spelling, grammar or precision problem needs correction while the central proposition remains recoverable.",
+      "major_error": "A proper name, proposition, semantic relationship or substantial content is incorrectly recognized.",
+      "not_evaluable": "No completed aligned transcript is available."
+    }
+  },
+  "observed_policy": {
+    "current_app_sha256": "0d4dab9d64a70ba051ff95b08acff53a633e4711a57bf8c337d33ea51df2590a",
+    "function_ast_sha256": "c6ff3c56a963ff04f7f03f377a4f098ff701bd4cb90c195e53c9e585ff0ffc9b",
+    "constants": {
+      "MAX_SECONDS": 7200,
+      "ASR_NO_SPEECH_THRESHOLD": 0.6
+    },
+    "current_function_executes_unchanged": true,
+    "module_digest_is_provenance_not_unrelated_edit_gate": true,
+    "native_request": {
+      "language": null,
+      "beam_size": 5,
+      "vad_filter": false,
+      "no_speech_threshold": 0.6,
+      "condition_on_previous_text": false
+    },
+    "conditional_word_timestamps": false,
+    "no_glossary_prompt_language_forcing_or_silence_heuristic": true,
+    "separate_app_integration_claim": false
+  },
+  "native_runtime_review": {
+    "versions": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.9.1",
+      "numpy": "2.5.5",
+      "av": "16.1.0",
+      "onnxruntime": "1.32.0",
+      "huggingface-hub": "2.5.0",
+      "tokenizers": "0.23.3"
+    },
+    "runtime_pin_review_sha256": "78a6daeb4488bbe94d4b2b34cf7b11b5bef4caa3dc55245fe26ced49040a5b44",
+    "direct_pins_dependency_and_wheel_identity_checks_pass": true,
+    "native_transcribe_source_sha256": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+    "read_defaults_match_declared_profile": true,
+    "ctranslate2_official_api_source": "https://opennmt.net/CTranslate2/python/ctranslate2.models.Whisper.html",
+    "official_api_version_seen": "4.9.1",
+    "api_attributes_verified": [
+      "device",
+      "compute_type",
+      "model_is_loaded",
+      "num_workers",
+      "n_mels",
+      "is_multilingual"
+    ],
+    "additional_primary_source": "https://opennmt.net/CTranslate2/python/ctranslate2.models.WhisperGenerationResult.html",
+    "ctranslate2_result_usage_matches_native_faster_whisper_source": true
+  },
+  "reviewed_guards": {
+    "exact_pinned_model_and_companions_verified_before_and_after": true,
+    "same_full_original_WAV_and_PCM_hashes": true,
+    "complete_PCM_checked_at_actual_transcribe_and_frontend": true,
+    "one_initialization_and_one_production_call_per_clip": true,
+    "native_effective_options_and_fallback_calls_retained": true,
+    "raw_segments_tokens_text_before_production_trimming_retained": true,
+    "generator_exhaustion_and_strictly_below_cap_sequence_checks": true,
+    "native_times_finite_positive_ordered_and_overruns_retained": true,
+    "no_word_timing_or_terminal_EOS_proof_claim": true,
+    "offline_and_CPU_pins_set_before_model_import": true,
+    "four_CPU_affinity_maximum_and_one_native_worker": true,
+    "external_100ms_RSS_series_and_OS_worker_highwater": true,
+    "startup_180s_case_180s_total_1800s_RSS_6GiB_limits": true,
+    "post_exit_recorded_limit_checks": true,
+    "owned_group_cleanup_including_children_after_leader_exit": true,
+    "always_uploads_failure_and_partial_evidence": true,
+    "weights_and_runtime_excluded_from_artifact": true,
+    "workflow_runner_temp_set_by_initial_shell_step": true,
+    "checkout_without_persisted_credentials": true,
+    "scope_LF_rules_present": true,
+    "gitattributes_digest_is_observed_checkout_provenance_only_not_frozen_execution_dependency": true
+  },
+  "verification": {
+    "independent_validate_only_sha256": "889b48edde49125083c323d985c7fed0eee80af2bd42951eb221778807276372",
+    "independent_validate_only_passed": true,
+    "peer_retained_non_model_tests_passed": 14,
+    "peer_retained_full_input_decode_checks_passed": 8,
+    "peer_checks_not_reexecuted": true
+  },
+  "limitations": [
+    "No actual large-v3 result exists yet. Passing setup or protocol cannot establish semantic fidelity.",
+    "The complete eight recordings are previously exposed development material; this is not fresh held-out validation.",
+    "Generation length checking plus full generator exhaustion is not a terminal-EOS proof, as the native API does not promise one in returned sequence IDs.",
+    "100ms process-group RSS sampling can miss transient peaks; worker OS high-water is checked separately. This is not a kernel memory cap or full-app/whole-machine resource approval.",
+    "Native segment timestamp overruns are preserved for review, not clipped or replaced; no subtitle, word-alignment or speaker-accuracy approval.",
+    "The entire current _recognize function and constants execute, but the web application, persistence and downstream workflows are not exercised by this isolated screen."
+  ]
+}

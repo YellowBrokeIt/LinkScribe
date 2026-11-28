@@ -1,0 +1,81 @@
+name: Full large-v3 native candidate QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['qa/large-v3-*']
+    paths:
+      - '.github/workflows/large-v3-candidate-qa.yml'
+      - 'tests/qa_large_v3_candidate.py'
+      - 'docs/large-v3-screen-2026-11-28/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-large-v3-qa-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  native-full-large-v3:
+    name: Exposed English/Greek clips / production policy / full large-v3 int8
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      ORT_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - name: Define the runner-local screen directory
+        shell: bash
+        run: |
+          printf '%s\n' "LARGE_V3_QA_ROOT=$RUNNER_TEMP/linkscribe-full-large-v3-candidate" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen declarations without ML imports
+        shell: bash
+        run: |
+          python tests/qa_large_v3_candidate.py --action validate \
+            --plan docs/large-v3-screen-2026-11-28/plan.json \
+            --evidence "$LARGE_V3_QA_ROOT/evidence"
+      - name: Install isolated already-used native CPU runtime
+        shell: bash
+        run: |
+          python -m venv "$LARGE_V3_QA_ROOT/runtime"
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" -m pip install --only-binary=:all: \
+            --report "$LARGE_V3_QA_ROOT/evidence/runtime-install.json" \
+            -r docs/large-v3-screen-2026-11-28/runtime-requirements.txt \
+            > "$LARGE_V3_QA_ROOT/evidence/runtime-install.log" 2>&1
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" -m pip freeze > "$LARGE_V3_QA_ROOT/evidence/installed-packages.txt"
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" -m pip check > "$LARGE_V3_QA_ROOT/evidence/pip-check.txt"
+      - name: Recover the same complete original recordings and PCM arrays
+        shell: bash
+        run: |
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" tests/qa_large_v3_candidate.py --action prepare-inputs \
+            --plan docs/large-v3-screen-2026-11-28/plan.json \
+            --work "$LARGE_V3_QA_ROOT/work" --evidence "$LARGE_V3_QA_ROOT/evidence"
+      - name: Download and verify the pinned public full model
+        shell: bash
+        run: |
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" tests/qa_large_v3_candidate.py --action download-model \
+            --plan docs/large-v3-screen-2026-11-28/plan.json \
+            --work "$LARGE_V3_QA_ROOT/work" --evidence "$LARGE_V3_QA_ROOT/evidence"
+      - name: Run one bounded offline recognition per full clip
+        shell: bash
+        run: |
+          "$LARGE_V3_QA_ROOT/runtime/bin/python" tests/qa_large_v3_candidate.py --action execute \
+            --plan docs/large-v3-screen-2026-11-28/plan.json \
+            --work "$LARGE_V3_QA_ROOT/work" --evidence "$LARGE_V3_QA_ROOT/evidence"
+      - name: Preserve raw segments, tokens, complete inputs and resource samples
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-large-v3-native-int8-${{ github.sha }}
+          path: ${{ env.LARGE_V3_QA_ROOT }}/evidence/
+          if-no-files-found: warn
+          retention-days: 30
